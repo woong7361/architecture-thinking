@@ -166,16 +166,28 @@ PS.
 
 #### 3.3 이 시나리오에서의 선택 방향
 
-이 시나리오에서는 Redis Sorted Set 기반 대기열을 중심으로 선택하는 것이 가장 적합하다. Redis INCR로 서버 기준 순번을 발급하고, Sorted Set에 사용자와 순번을 저장한다. 이후 DB, 결제, 좌석 확정 API가 감당 가능한 처리량에 맞춰 앞 순번 사용자부터 꺼내고, 구매 단계에 진입할 사용자에게 짧은 TTL의 admission token을 발급한다.
+이 시나리오에서는 Redis Sorted Set 기반 대기열을 중심으로 선택하는 것이 가장 적합하다. Redis INCR로 서버 기준 순번을 발급하고, Sorted Set에 사용자와 순번을 저장한다. 이후 별도의 admitter가 DB, 결제, 좌석 확정 API가 감당 가능한 처리량에 맞춰 앞 순번 사용자를 batch 단위로 선별하고, 구매 단계에 진입할 사용자에게 짧은 TTL의 admission token을 발급한다.
 
-이 조합에서 역할은 분리된다.
+최종 구조는 다음과 같이 역할을 분리한다.
 
-1. Redis INCR은 중복 없는 순번 발급을 담당한다.
-2. Redis Sorted Set은 대기열 순서, 현재 위치 조회, 이탈자 제거, 순차 방출을 담당한다.
+1. Waiting Room: 사용자를 구매 API 앞에서 대기시킨다. 사용자는 대기 화면에서 순번과 입장 가능 여부를 조회한다.
+2. Queue / 순번 저장소: Redis INCR과 Redis Sorted Set으로 순서와 대기 상태를 관리한다.
+3. Admitter: 시스템 처리량에 맞춰 앞 순번 사용자 일부를 입장 가능 상태로 바꾸고 admission token을 발급한다.
+4. Admission Token / Cookie: 입장 허가를 받은 사용자만 구매 API에 접근할 수 있도록 검증한다.
+5. Protected API: token 또는 cookie를 검증한 뒤 좌석 점유, 주문 생성, 결제 같은 구매 단계를 처리한다.
 
 Kafka나 message queue는 대량 이벤트를 안정적으로 저장하고 소비하는 데는 강하지만, 사용자별 현재 순번을 보여주고 이탈자를 제거해야 하는 Waiting Room 대기열에는 무겁다. DB sequence table은 영속성은 좋지만, 10만 명의 진입 요청과 순번 조회를 DB로 보내면 핵심 DB를 보호하려는 목적과 충돌한다.
 
-따라서 요청 순서를 유지해야 하는 대기열은 Redis Sorted Set으로 관리하고, 구매 API 접근은 admission token으로 제한한다. 서버 수평 확장과 CDN/cache는 대기 화면, 공연 정보 조회, 정적 리소스 처리에는 사용하되, 핵심 재고 차감 구간으로 들어가는 요청 수는 대기열 방출 속도로 제한해야 한다.
+---
+
+#### 3.4 선택한 조합의 Trade-off
+
+- Redis Sorted Set은 대기 순서와 상태 관리는 편하지만, MQ처럼 요청을 직접 쌓아두고 consumer가 가져가는 구조는 아니다.
+  - 보완: Waiting Room API를 수평 확장하고, 상태 조회 polling 주기를 조절해 앞단 API 부하를 줄인다.
+- 10만 명이 짧은 주기로 status API를 polling하면 Waiting Room API와 Redis read 부하가 커질 수 있다.
+  - 보완: 대기 순번이 먼 사용자는 긴 주기로 조회하고, 입장이 가까운 사용자만 짧은 주기로 조회하게 한다. 대기 화면과 정적 리소스는 CDN/cache를 사용한다.
+- Redis 장애나 failover 과정에서 대기열 상태가 유실되거나 순서가 어긋날 수 있다.
+  - 보완: Redis replication, persistence, failover 구성을 두고, admission token 발급 기록이나 최소한의 순번 발급 로그를 별도로 남긴다.
 
 ---
 
