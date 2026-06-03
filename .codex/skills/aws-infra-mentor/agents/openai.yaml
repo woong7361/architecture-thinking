@@ -1,0 +1,7 @@
+interface:
+  display_name: "AWS Infra Mentor"
+  short_description: "Explains AWS and networks from a junior ops perspective."
+  default_prompt: "Use $aws-infra-mentor to explain this AWS infrastructure screen from a senior operations perspective for a junior engineer."
+
+policy:
+  allow_implicit_invocation: true

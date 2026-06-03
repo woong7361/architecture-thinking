@@ -16,8 +16,8 @@
 
 #### 1.3 문제를 나누어 보는 관점
 
+- 대기열 / 트래픽 제어 문제: 10만 명의 요청을 순서대로 보내되 한꺼번에 핵심 트랜잭션 구간으로 보내지 않는 문제
 - 동시성 제어 문제: 같은 재고 또는 좌석에 대한 경쟁 요청 중 하나만 성공시키는 문제
-- 대기열 / 트래픽 제어 문제: 10만 명의 요청을 한꺼번에 핵심 트랜잭션 구간으로 보내지 않는 문제
 - 결제와 좌석 확정의 원자성 문제: 외부 결제 시스템과 내부 주문/좌석 상태를 최종적으로 일관되게 맞추는 문제
 
 ---
@@ -245,32 +245,33 @@ DB sequence table은 영속성은 좋지만, 10만 명의 진입 요청과 순�
 
 ---
 
-##### 4.3.4 Single Writer / Inventory Service
+##### 4.3.4 Redis Atomic Counter / Lua Script
 
 ###### 이 시나리오에서 1차 선택으로 보기 어려운 이유
 
-- 재고 변경 순서를 한 흐름으로 모을 수는 있지만, 이 문제에서는 먼저 10만 명의 진입량을 제어하고 짧은 재고 임계 구역을 보호하는 것이 핵심이다.
-- Single Writer를 두면 queue, consumer, command id, idempotency, 재처리, 장애 복구, 순서 보장 같은 오케스트레이션이 필요해 구조가 크게 복잡해진다.
-- 결제와 좌석 확정 흐름까지 연결하면 트랜잭션 경계가 여러 시스템으로 끊기므로, 결국 상태 머신과 보상 처리를 별도로 설계해야 한다.
-- 따라서 대규모 플랫폼에서 장기적으로 고려할 수는 있지만, 이 시나리오의 핵심 정합성 전략으로 바로 선택하기에는 비용이 크다.
-
----
-
-##### 4.3.5 Redis Atomic Counter / Lua Script
-
-###### 이 시나리오에서 1차 선택으로 보기 어려운 이유
-
-- Redis에서 재고 확인과 차감을 원자적으로 처리할 수는 있지만, Redis 값과 DB의 주문/좌석 상태가 어긋날 수 있다.
+- Redis에서 재고 확인과 차감을 원자적으로 처리할 수는 있지만, Redis 값과 DB의 주문/좌석 상태가 어긋날 수 있다. 최종 정합성을 DB에서 다시 보장해야 한다면, Redis를 재고의 단일 진실 공급원처럼 두는 방식은 이 시나리오에서 부담이 크다.
 - Redis 장애, persistence 설정 문제, failover 과정에서 재고 값 유실이나 중복 처리 가능성을 고려해야 한다.
-- 이를 보완하려면 DB와 Redis 사이의 동기화, 대사 작업, 복구 로직이 필요해져 운영 복잡도가 커진다.
-- 좌석 지정 예매에서는 단순 수량 차감만으로 동일 좌석 중복 배정을 막기 어렵기 때문에 DB unique constraint가 결국 필요하다.
-- 최종 정합성을 DB에서 다시 보장해야 한다면, Redis를 재고의 단일 진실 공급원처럼 두는 방식은 이 시나리오에서 부담이 크다.
-
 ---
 
 #### 4.4 이 시나리오에서의 선택 방향
 
 정확히 1만 명에게만 판매하려면 10만 명의 요청을 모두 DB 락 경합으로 보내면 안 된다. 재고 차감이나 좌석 점유 같은 짧은 임계 구역은 Redis 같은 외부 분산 락으로 보호하고, 최종 정합성은 DB 조건부 update와 unique constraint로 다시 보장하는 방향이 적합하다.
+
+```
+Redis lock 획득
+  -> DB transaction 짧게 시작
+    -> 좌석/재고 가능 여부 확인
+    -> 주문 PENDING 생성
+    -> 좌석/재고를 expires_at 있는 임시 예약 상태로 변경
+  -> DB transaction 종료
+Redis lock 해제
+
+외부 결제 API 호출
+
+결제 완료 webhook
+  -> order 상태가 PENDING이고 예약이 유효할 때만 PAID/CONFIRMED 전이
+  -> 중복 webhook은 idempotency key로 무시
+```
 
 DB pessimistic lock은 특정 좌석 확정처럼 좁은 구간에는 쓸 수 있지만, 재고 차감의 주력 방식으로 쓰면 DB 커넥션과 row lock 대기 시간이 길어질 수 있다. Optimistic lock은 재고 차감처럼 충돌이 집중되는 구간에는 재시도 비용이 커지지만, 결제 상태나 예약 상태처럼 개인 주문 단위로 나뉘는 row에는 보조적으로 쓰기 좋다.
 
@@ -281,6 +282,23 @@ DB pessimistic lock은 특정 좌석 확정처럼 좁은 구간에는 쓸 수 �
 3. 좌석 단위 unique constraint로 중복 배정 방지
 4. idempotency key로 중복 요청 방지
 5. 결제/예약/주문 상태는 optimistic lock으로 중복 webhook과 재처리 방어
+
+외부 결제 API가 포함된 흐름에서는 DB transaction이나 lock을 외부 API 호출까지 길게 유지하지 않는다.
+외부 API는 지연, 타임아웃, 중복 응답, 응답 유실이 발생할 수 있으므로 transaction 안에 넣으면 DB connection과 row lock을 오래 점유하게 된다. 
+
+그래서 외부 API 결제 호출은 tx1과 tx2사이의 트랜잭션 경계에 위치해 있으며 이는 lock이 아니라 version check, snapshot, 상태 전이 조건으로 막고 감사하는 것이 좋다.
+
+```
+1. TX1: balance 상태와 금액을 검증한다.
+2. TX1: 사용할 금액을 `available_balance`에서 `held_balance`로 이동한다.
+3. TX1: hold/payment row에 `PENDING`, `expires_at`, `balance_version`, 주요 상태 snapshot을 저장한다.
+4. TX1: commit한다.
+5. 외부 결제 API를 호출한다.
+6. TX2: hold/payment row가 여전히 유효한지 확인한다.
+7. TX2: version 또는 snapshot 기반으로 확정 가능한 상태인지 다시 검증한다.
+8. TX2: 성공이면 `CONFIRMED`, 실패/만료면 `RELEASED`로 상태 전이한다.
+9. TX2: commit한다.
+```
 
 ---
 
