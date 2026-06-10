@@ -1,0 +1,47 @@
+# rubric.yaml · DeckBrew Newsletter Pipeline
+axes:
+- name: structure
+weight: 0.15
+scale:
+1: "주장·근거·예시 구분 없이 한 덩어리"
+3: "구분은 있으나 하나가 과도하게 짧거나 길다"
+5: "3요소 균형 + 결론까지 명시적으로 분리"
+- name: evidence
+weight: 0.20
+scale:
+1: "모든 주장이 근거 없음"
+3: "일부 주장에만 근거"
+5: "모든 주장에 직인용·수치·케이스 중 하나 이상"
+- name: tone
+weight: 0.15
+scale:
+1: "브랜드 톤에서 이탈한 구어체·외국어 혼재"
+3: "대부분 톤 유지, 한두 문장에서 이탈"
+5: "전체 문서가 브랜드 보이스 가이드 준수"
+- name: hook
+weight: 0.15
+scale:
+1: "배경 설명으로 시작, 첫 문단 지나도 핵심 안 나옴"
+3: "두 번째 문단에서 핵심 등장"
+5: "첫 문장부터 독자 상황 직격"
+- name: uniqueness
+weight: 0.15
+scale:
+1: "일반론 나열, 이 뉴스레터만의 관점 없음"
+3: "저자 고유 관점 한 군데 등장"
+5: "여러 문단에 저자 고유 비유·조어 등장"
+- name: actionability
+weight: 0.10
+scale:
+1: "독자가 읽고 난 뒤 무엇을 할지 모호"
+3: "다음 행동이 암시되나 구체적이지 않음"
+5: "다음 행동이 명시적으로 제시, 소요 시간까지"
+- name: length_calibration
+weight: 0.10
+scale:
+1: "의도 길이의 50% 미만 또는 200% 초과"
+3: "의도 범위 안이나 밀도가 고르지 않음"
+5: "의도 범위 안 + 문단별 밀도 균일"
+min_total: 2.8 # 가중 평균이 이 값 미만이면 REJECT
+
+assert abs(sum(a["weight"] for a in rubric["axes"]) - 1.0) < 1e-6

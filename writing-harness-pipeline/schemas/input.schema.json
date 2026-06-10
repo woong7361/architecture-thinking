@@ -1,0 +1,23 @@
+{
+"$schema": "https://json-schema.org/draft/2020-12/schema",
+"title": "Pipeline Input",
+"type": "object",
+"required": ["brief_hash", "brief", "created_at"],
+"properties": {
+"brief_hash": {
+"type": "string",
+"pattern": "^[a-f0-9]{8,}$",
+"description": "브리프 해시. 한 건을 관통하는 유일 식별자"
+},
+"brief": {
+"type": "object",
+"required": ["topic"],
+"additionalProperties": true
+},
+"created_at": {
+"type": "string",
+"format": "date-time"
+}
+},
+"additionalProperties": false
+}
