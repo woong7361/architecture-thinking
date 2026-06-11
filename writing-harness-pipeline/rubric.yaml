@@ -42,6 +42,18 @@ scale:
 1: "의도 길이의 50% 미만 또는 200% 초과"
 3: "의도 범위 안이나 밀도가 고르지 않음"
 5: "의도 범위 안 + 문단별 밀도 균일"
-min_total: 2.8 # 가중 평균이 이 값 미만이면 REJECT
 
-assert abs(sum(a["weight"] for a in rubric["axes"]) - 1.0) < 1e-6
+
+min_total: 2.8
+notes: |
+ - min_total 미만이면 validate.py가 REJECT
+ - 평가자 프롬프트에는 '5점은 드뭅니다. 평균 3.0 기준' 문구 포함 필수
+ - 가중치 합 검증은 validate.py 실행 시 1회 수행 (assert)
+
+
+# 가중치 합 검증을 위해 이 파일을 로드하는 쪽에서 한 줄 추가.
+
+# import yaml, pathlib
+# rubric = yaml.safe_load(pathlib.Path("rubric.yaml").read_text())
+# assert abs(sum(a["weight"] for a in rubric["axes"]) - 1.0) < 1e-6, \
+# "rubric weight sum is not 1.0"
