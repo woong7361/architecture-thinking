@@ -11,20 +11,12 @@
     },
     "brief": {
       "type": "object",
-      "description": "글쓰기 요청 본문. 내부 확장 허용",
       "required": ["topic"],
-      "properties": {
-        "topic": {
-          "type": "string",
-          "description": "글의 주제"
-        }
-      },
       "additionalProperties": true
     },
     "created_at": {
       "type": "string",
-      "format": "date-time",
-      "description": "입력 파일이 생성된 시각"
+      "format": "date-time"
     }
   },
   "additionalProperties": false

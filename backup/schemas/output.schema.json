@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Pipeline Output (Generator Artifact)",
+  "type": "object",
+  "required": ["brief_hash", "content", "generated_at"],
+  "properties": {
+    "brief_hash": {"type": "string", "pattern": "^[a-f0-9]{8,}$"},
+    "content": {"type": "string", "minLength": 1},
+    "generated_at": {"type": "string", "format": "date-time"},
+    "generator_model": {"type": "string"},
+    "generator_commit": {"type": "string"}
+  },
+  "additionalProperties": false
+}

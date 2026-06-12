@@ -1,82 +1,115 @@
-# validate가 잡음 | validate가 못 잡음
-# JSON 필드 누락 | 주장과 근거 배치의 설득력
-# 길이 상·하한 위반 | 인용 선택의 자연스러움
-# 금칙어 등장 | 문단 사이 흐름
-# 스키마 타입 오류 | 톤의 미묘한 일관성
-# brief_hash 불일치 | 독자가 느낄 신선함
-
-# 왼쪽은 기계가 검사 가능한 영역, 오른쪽은 가치 판단이 필요한 영역입니다.
-
-
-# validate.py — P3 Sprint Contract 실전 구현
-# 사용: python validate.py <output.json> <verdict.json>
-# 의존: pip install jsonschema pyyaml
+import argparse
 import json
 import sys
 from pathlib import Path
-from jsonschema import validate as jsonschema_validate, ValidationError
-import yaml
-# ----- 1. 스키마 정의 (파이프라인마다 교체) -----
-ARTIFACT_SCHEMA = {
-"type": "object",
-"required": ["content", "brief_hash", "generated_at"],
-"properties": {
-"content": {"type": "string", "minLength": 1},
-"brief_hash": {"type": "string", "pattern": "^[a-f0-9]{8,}$"},
-"generated_at": {"type": "string", "format": "date-time"},
-"generator_model": {"type": "string"},
- },
-"additionalProperties": True,
-}
-LENGTH_MIN = 300
-LENGTH_MAX = 4000
-QUALITY_MIN = 2.5
-BANNED_WORDS = ["무조건", "완벽보장", "절대안전", "반드시성공"]
-# ----- 2. 개별 체크 -----
-def check_schema(artifact: dict) -> list[str]:
-try:
- jsonschema_validate(artifact, ARTIFACT_SCHEMA)
-return []
-except ValidationError as e:
-return [f"schema: {e.message}"]
-def check_length(content: str) -> list[str]:
- n = len(content)
-if n < LENGTH_MIN:
-return [f"length: {n} < {LENGTH_MIN}"]
-if n > LENGTH_MAX:
-return [f"length: {n} > {LENGTH_MAX}"]
-return []
-def check_banned(content: str) -> list[str]:
-return [f"banned: '{w}'" for w in BANNED_WORDS if w in content]
-def check_quality(rubric_scores: dict) -> list[str]:
- scores = rubric_scores.get("scores", {})
+from typing import Any
 
- weights = rubric_scores.get("weights", {})
-if not scores or not weights:
-return ["quality: missing scores or weights"]
- total = sum(scores[k] * weights[k] for k in scores if k in weights)
-if total < QUALITY_MIN:
-return [f"quality: {total:.2f} < {QUALITY_MIN}"]
-return []
-# ----- 3. 합친 contract -----
-def validate_contract(artifact_path: Path, verdict_path: Path) -> dict:
- artifact = json.loads(Path(artifact_path).read_text())
- verdict_existing = {}
-if Path(verdict_path).exists():
- verdict_existing = json.loads(Path(verdict_path).read_text())
- rubric_scores = verdict_existing.get("rubric_scores", {})
- errors = []
- errors += check_schema(artifact)
- errors += check_length(artifact.get("content", ""))
- errors += check_banned(artifact.get("content", ""))
- errors += check_quality(rubric_scores)
- verdict = {
-**verdict_existing,
-"contract_errors": errors,
-"verdict": "REJECT" if errors else "PASS",
- }
- Path(verdict_path).write_text(json.dumps(verdict, ensure_ascii=False, indent=2))
-return verdict
+from jsonschema import Draft202012Validator, FormatChecker
+
+PROJECT_DIR = Path(__file__).resolve().parent
+SCHEMA_DIR = PROJECT_DIR / "schemas"
+ARTIFACT_SCHEMAS = {
+    "input": SCHEMA_DIR / "input.schema.json",
+    "gen_output": SCHEMA_DIR / "gen_output.schema.json",
+    "draft": SCHEMA_DIR / "draft.schema.json",
+}
+
+DRAFT_FORBIDDEN_FIELDS = {
+    "self_score",
+    "self_critique",
+    "verdict",
+    "rubric_scores",
+    "contract_errors",
+}
+
+
+def load_json(path: Path) -> Any:
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        raise ValueError(f"invalid JSON: {exc}") from exc
+
+
+def validate_file(
+    file_path: Path,
+    artifact: str,
+    expected_brief_hash: str | None = None,
+    expected_iteration: str | None = None,
+) -> dict:
+    if artifact not in ARTIFACT_SCHEMAS:
+        raise ValueError(f"unknown artifact: {artifact}")
+
+    data = load_json(file_path)
+    schema = load_json(ARTIFACT_SCHEMAS[artifact])
+    errors = validate_schema(data, schema)
+
+    if artifact == "draft" and isinstance(data, dict):
+        errors += validate_draft_contract(data, expected_brief_hash, expected_iteration)
+
+    return {
+        "artifact": artifact,
+        "checked_file": str(file_path),
+        "status": "REJECT" if errors else "PASS",
+        "errors": errors,
+    }
+
+
+def write_result(result: dict[str, Any], output_path: Path) -> None:
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(
+        json.dumps(result, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+
+def validate_schema(data: Any, schema: dict[str, Any]) -> list[str]:
+    validator = Draft202012Validator(schema, format_checker=FormatChecker())
+    return [
+        format_schema_error(error)
+        for error in sorted(validator.iter_errors(data), key=lambda item: list(item.path))
+    ]
+
+
+def format_schema_error(error: Any) -> str:
+    path = "$"
+    if error.path:
+        path += "".join(f"[{part}]" if isinstance(part, int) else f".{part}" for part in error.path)
+    return f"schema {path}: {error.message}"
+
+
+def validate_draft_contract(data: dict, expected_brief_hash: str | None, expected_iteration: str | None) -> list[str]:
+    errors = []
+    if expected_brief_hash and data.get("brief_hash") != expected_brief_hash:
+        errors.append("brief_hash mismatch")
+    if expected_iteration and data.get("iteration") != expected_iteration:
+        errors.append("iteration mismatch")
+    for key in sorted(DRAFT_FORBIDDEN_FIELDS & data.keys()):
+        errors.append(f"draft must not include {key}")
+    return errors
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Validate a pipeline JSON artifact.")
+    parser.add_argument("file", type=Path)
+    parser.add_argument("--artifact", required=True, choices=["input", "gen_output", "draft"])
+    parser.add_argument("--brief-hash")
+    parser.add_argument("--iteration")
+    parser.add_argument("--write-result", type=Path)
+    args = parser.parse_args()
+
+    result = validate_file(
+        file_path=args.file,
+        artifact=args.artifact,
+        expected_brief_hash=args.brief_hash,
+        expected_iteration=args.iteration,
+    )
+
+    if args.write_result:
+        write_result(result, args.write_result)
+
+    print(json.dumps(result, ensure_ascii=False, indent=2))
+    return 0 if result["status"] == "PASS" else 1
+
+
 if __name__ == "__main__":
- out = validate_contract(Path(sys.argv[1]), Path(sys.argv[2]))
-print(json.dumps(out, ensure_ascii=False, indent=2))
+    sys.exit(main())

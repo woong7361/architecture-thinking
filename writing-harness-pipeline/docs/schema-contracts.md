@@ -214,7 +214,7 @@ Schema 작성 기준:
   "stage": "gen",
   "content": "처음에는 프롬프트를 잘 쓰는 일이 핵심이라고 생각했다...",
   "generated_at": "2026-06-12T15:34:00+09:00",
-  "model": "gpt-5",
+  "model": "gpt-5.5",
   "metadata": {
     "prompt_version": "gen_system:v1",
     "source_files": ["a1b2c3d4_input.json"]
@@ -514,7 +514,7 @@ Schema 작성 기준:
     "originality": "AI 하네스 관점은 좋지만 개인적 발견이 더 필요하다."
   },
   "evaluated_at": "2026-06-12T15:41:00+09:00",
-  "model": "gpt-5",
+  "model": "gpt-5.5",
   "calibration_note": "평균 3.0을 기준으로, 실제 장면 부족을 엄격하게 반영했다."
 }
 ```

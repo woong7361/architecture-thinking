@@ -246,6 +246,103 @@ max_iterations: 3
 
 `max_iterations`에 도달했는데도 PASS하지 못하면 `{brief_hash}_final.json`을 만들지 않고 `{brief_hash}_failed.json`을 남긴다. 실패도 학습 데이터이므로 삭제하지 않는다.
 
+## 실패 정책
+
+실패는 단순히 "좋지 않은 초안"이 아니라 다음 단계로 안전하게 넘길 수 없는 상태를 뜻한다. 따라서 runner는 실패를 숨기거나 덮어쓰지 않고, 원인과 조치가 보이도록 파일로 남긴다.
+
+실패 상태는 크게 두 가지로 나눈다.
+
+- `REJECT`: 파일은 정상적으로 생성됐지만 schema, 계약, 품질 하한, 필수 조건을 통과하지 못한 상태다. 대개 refine으로 회복 가능하다.
+- `ERROR`: stage 실행, 파일 읽기/쓰기, JSON 파싱, schema/rubric 로딩처럼 파이프라인 자체가 다음 단계로 진행하지 못한 상태다. 같은 입력으로 재시도하거나 환경을 고쳐야 한다.
+
+`REJECT` 또는 `ERROR`가 발생하면 그 사유를 다음 `category` 중 하나로 기록한다. 모든 category가 에러를 뜻하지는 않는다. `quality_reject`처럼 파이프라인은 정상 동작했지만 품질 기준을 넘지 못해 재작성으로 보내는 거절 사유도 있다.
+
+| category | 의미 | 기본 조치 |
+| --- | --- | --- |
+| `schema_error` | JSON 구조, required 필드, 타입, enum, additionalProperties 위반 | 같은 stage 재생성 또는 stage prompt/schema 수정 |
+| `contract_error` | 길이, 금칙어, `brief_hash` 불일치, 필수 조건 누락 같은 기계적 계약 위반 | refine request에 포함 |
+| `quality_reject` | 실행 에러가 아니라 루브릭 총점 또는 핵심 축 점수가 하한 미만인 품질 거절 | weak_axes와 함께 refine request에 포함 |
+| `role_boundary_violation` | draft에 `self_score`, eval에 `verdict`처럼 역할을 침범한 필드가 포함됨 | 해당 stage prompt와 schema 수정 |
+| `stage_error` | LLM 호출 실패, timeout, 빈 응답, invalid JSON 응답 | 동일 stage 재시도 후 계속 실패하면 terminal failure |
+| `runner_error` | 파일 경로, 권한, schema/rubric 파일 누락, I/O 실패 | 즉시 terminal failure로 처리하고 실행 환경 또는 runner 수정 |
+| `max_iteration_exceeded` | 최대 반복 횟수까지 PASS하지 못함 | `{brief_hash}_failed.json` 생성 |
+
+각 validate 호출은 검사 대상 파일을 수정하지 않는다. `PASS`한 검사는 기본적으로 별도 파일을 남기지 않고, 최종 통과 시 `final.json`의 `contract_result`에 요약한다. 단, `REJECT` 또는 `ERROR`가 발생한 validate 호출은 원인 분석을 위해 별도 결과 파일을 남긴다.
+
+```text
+{brief_hash}_input.validation.json
+iter_001/{brief_hash}_iter-001_draft.validation.json
+iter_001/{brief_hash}_iter-001_critique.validation.json
+iter_001/{brief_hash}_iter-001_eval.validation.json
+iter_001/{brief_hash}_iter-001_refine-request.validation.json
+```
+
+실패 validation 결과 파일의 기본 형태는 다음과 같다.
+
+```json
+{
+  "brief_hash": "a1b2c3d4",
+  "iteration": "001",
+  "artifact": "draft",
+  "checked_file": "iter_001/a1b2c3d4_iter-001_draft.json",
+  "checked_at": "2026-06-12T16:10:00+09:00",
+  "status": "REJECT",
+  "checked_rules": ["schema", "brief_hash", "length", "banned_words"],
+  "failures": [
+    {
+      "category": "contract_error",
+      "rule": "length_min",
+      "severity": "medium",
+      "retryable": true,
+      "message": "content length is below minimum",
+      "expected": ">= 1200",
+      "actual": 980,
+      "json_path": "$.content",
+      "next_action": "refine에서 구체적 사례를 추가해 길이 하한을 맞춘다"
+    }
+  ]
+}
+```
+
+성공한 validation의 세부 결과를 매번 파일로 남기지 않는 이유는 run 디렉토리의 노이즈를 줄이기 위해서다. 성공은 다음 단계가 실행됐다는 사실과 최종 `final.json`의 `contract_result.checked_rules`로 확인한다. 실패한 validation의 `failures`는 사람이 읽을 수 있는 `message`와 기계가 분류할 수 있는 `category`, `rule`, `severity`, `retryable`을 함께 가진다. 이렇게 해야 나중에 실패 run을 모아 "schema가 자주 깨지는가", "품질 하한이 너무 높은가", "특정 stage prompt가 JSON을 자주 망가뜨리는가"를 분석할 수 있다.
+
+최종 실패 파일인 `{brief_hash}_failed.json`은 run 루트에 한 번만 만든다. 이 파일은 마지막 오류만 담지 않고, 어떤 iteration에서 어떤 이유로 막혔는지 요약한다.
+
+```json
+{
+  "brief_hash": "a1b2c3d4",
+  "run_id": "2026-06-12_a1b2c3d4",
+  "failed_at": "2026-06-12T16:30:00+09:00",
+  "terminal_reason": "max_iteration_exceeded",
+  "last_iteration": "003",
+  "failure_counts_by_category": {
+    "contract_error": 2,
+    "quality_reject": 3
+  },
+  "last_failures": [
+    {
+      "category": "quality_reject",
+      "rule": "min_axis.evidence",
+      "severity": "high",
+      "retryable": false,
+      "message": "evidence score stayed below minimum after max iterations"
+    }
+  ],
+  "lineage": {
+    "input": "a1b2c3d4_input.json",
+    "last_draft": "iter_003/a1b2c3d4_iter-003_draft.json",
+    "last_critique": "iter_003/a1b2c3d4_iter-003_critique.json",
+    "last_eval": "iter_003/a1b2c3d4_iter-003_eval.json"
+  },
+  "next_actions": [
+    "원본 brief에 구체적 사례를 추가한다",
+    "evidence 축 기준이 현재 글 유형에 과하게 높은지 확인한다"
+  ]
+}
+```
+
+`failed.json`은 `final.json`의 대체물이 아니다. 통과한 초안이 없다는 사실과 실패 원인을 고정하는 실행 로그다. 따라서 실패 run도 archive 전까지 그대로 보존하고, 다음 실험에서는 `failed.json`과 각 `*.validation.json`을 함께 본다.
+
 ## 반복 정책
 
 반복은 다음 조건에서 발생한다.
