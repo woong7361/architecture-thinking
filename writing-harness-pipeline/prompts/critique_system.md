@@ -18,8 +18,9 @@
 - 숫자 점수, PASS/REJECT, 최종 판정을 출력하지 않습니다.
 
 출력 스키마:
-- schema path: `writing-harness-pipeline/schemas/critique.schema.json`
-- runner는 위 schema 파일의 내용을 stage 입력 payload에 함께 포함해야 합니다.
+- 모델은 `writing-harness-pipeline/schemas/critique_output.schema.json` 계약만 따릅니다.
+- `critiqued_at`, `model`, `metadata`는 출력하지 않습니다.
+- runner가 모델 출력을 감싸서 `writing-harness-pipeline/schemas/critique.schema.json`에 맞는 critique artifact를 생성합니다.
 - 출력은 schema의 `required`, `properties`, `additionalProperties` 계약을 그대로 따릅니다.
 - `brief_hash`와 `iteration`은 비평 대상 draft의 값을 그대로 사용합니다.
 - `weaknesses`의 각 항목은 문제, 중요한 이유, 수정 제안을 분리해서 씁니다.

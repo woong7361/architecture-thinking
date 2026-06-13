@@ -120,6 +120,8 @@ writing-harness-pipeline/
 │   └── refine_system.md # Refiner 역할 지시
 ├── schemas/ # 파일 계약 JSON schema
 │   ├── input.schema.json # 사용자 입력 계약
+│   ├── gen_output.schema.json # Generator 직접 출력 계약
+│   ├── critique_output.schema.json # Critique 직접 출력 계약
 │   ├── draft.schema.json # 초안 산출물 계약
 │   ├── critique.schema.json # 비평 산출물 계약
 │   ├── eval.schema.json # 평가 산출물 계약

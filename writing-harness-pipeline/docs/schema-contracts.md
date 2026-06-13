@@ -239,7 +239,7 @@ Schema 작성 기준:
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Pipeline Critique",
   "type": "object",
-  "required": ["brief_hash", "iteration", "summary", "strengths", "weaknesses", "revision_directions", "reader_risks"],
+  "required": ["brief_hash", "iteration", "summary", "strengths", "weaknesses", "revision_directions", "reader_risks", "critiqued_at", "model", "metadata"],
   "properties": {
     "brief_hash": {
       "type": "string",
@@ -269,7 +269,7 @@ Schema 작성 기준:
       "description": "수정해야 할 약점 목록",
       "items": {
         "type": "object",
-        "required": ["issue", "why_it_matters", "suggestion"],
+        "required": ["issue", "why_it_matters", "suggestion", "severity"],
         "properties": {
           "issue": {
             "type": "string",
@@ -310,6 +310,39 @@ Schema 작성 기준:
         "type": "string",
         "minLength": 1
       }
+    },
+    "critiqued_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "비평 artifact 생성 시각"
+    },
+    "model": {
+      "type": "string",
+      "minLength": 1,
+      "description": "비평을 만든 모델 또는 실행 프로필"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "재현성에 필요한 부가 정보. 내부 확장 허용",
+      "properties": {
+        "prompt_version": {
+          "type": "string",
+          "description": "비평 생성에 사용한 prompt 버전"
+        },
+        "source_files": {
+          "type": "array",
+          "description": "runner가 stage에 전달한 입력 파일 목록",
+          "items": {
+            "type": "string"
+          }
+        },
+        "token_usage": {
+          "type": "object",
+          "description": "비용과 품질 비교를 위한 토큰 사용량",
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
     }
   },
   "additionalProperties": false
@@ -327,12 +360,16 @@ Schema 작성 기준:
 - `weaknesses`: 독자가 약하게 느낄 지점이다.
 - `revision_directions`: Refine이 참고할 수정 방향이다.
 - `reader_risks`: 독자의 이탈, 오해, 피로를 만들 수 있는 위험이다.
+- `critiqued_at`: runner가 critique artifact를 만든 시각이다.
+- `model`: critique stage를 실행한 모델 또는 실행 프로필이다.
+- `metadata`: runner가 붙이는 재현성 정보다.
 
 권장 필드와 규칙:
 
 - 약점은 3개를 기본값으로 한다.
-- 각 약점은 `issue`, `why_it_matters`, `suggestion`을 포함한다.
+- 각 약점은 `issue`, `why_it_matters`, `suggestion`, `severity`를 포함한다.
 - `severity`는 `low`, `medium`, `high` 중 하나로 둔다.
+- `metadata.prompt_version`, `metadata.source_files`, `metadata.token_usage`는 runner가 관리한다.
 - `reader_risks`는 "있다/없다"가 아니라 어떤 독자 반응이 생기는지로 적는다.
 - 점수는 쓰지 않는다.
 

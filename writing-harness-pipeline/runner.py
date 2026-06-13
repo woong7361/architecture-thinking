@@ -11,6 +11,7 @@ from pathlib import Path
 
 sys.dont_write_bytecode = True
 
+from stages.critique import critique
 from stages.generator import generate
 from validate import validate_file, write_result
 
@@ -72,6 +73,14 @@ class RunContext:
     @property
     def draft_validation_path(self) -> Path:
         return self.iter_dir / f"{self.brief_hash}_iter-{self.iteration}_draft.validation.json"
+
+    @property
+    def critique_path(self) -> Path:
+        return self.iter_dir / f"{self.brief_hash}_iter-{self.iteration}_critique.json"
+
+    @property
+    def critique_validation_path(self) -> Path:
+        return self.iter_dir / f"{self.brief_hash}_iter-{self.iteration}_critique.validation.json"
 
 
 def load_json(path: Path) -> dict:
@@ -161,6 +170,30 @@ def build_draft(
     }
 
 
+def build_critique(
+    critique_output: dict,
+    iteration: str,
+    model_name: str,
+    token_usage: dict | None = None,
+) -> dict:
+    metadata = {
+        "prompt_version": "critique_system:v1",
+        "source_files": [
+            f'{critique_output["brief_hash"]}_input.json',
+            f'{critique_output["brief_hash"]}_iter-{iteration}_draft.json',
+        ],
+    }
+    if token_usage:
+        metadata["token_usage"] = token_usage
+
+    return {
+        **critique_output,
+        "critiqued_at": now_iso(),
+        "model": model_name,
+        "metadata": metadata,
+    }
+
+
 def run(args: argparse.Namespace) -> dict:
     stage = "input_validate"
     input_path = args.input.resolve()
@@ -177,6 +210,7 @@ def run(args: argparse.Namespace) -> dict:
     lineage = {
         "input": str(context.copied_input_path),
         "draft": str(context.draft_path),
+        "critique": str(context.critique_path),
     }
     config = {
         "codex_bin": args.codex_bin,
@@ -193,6 +227,8 @@ def run(args: argparse.Namespace) -> dict:
         if not args.overwrite:
             if context.draft_path.exists():
                 raise FileExistsError(f"refusing to overwrite existing file: {context.draft_path}")
+            if context.critique_path.exists():
+                raise FileExistsError(f"refusing to overwrite existing file: {context.critique_path}")
 
         with tempfile.TemporaryDirectory(prefix="writing-harness-gen-") as temp_dir:
             temp_gen_output_path = Path(temp_dir) / "gen-output.json"
@@ -229,6 +265,42 @@ def run(args: argparse.Namespace) -> dict:
             expected_iteration=args.iteration,
         )
         ensure_pass(draft_result, context.draft_validation_path)
+
+        with tempfile.TemporaryDirectory(prefix="writing-harness-critique-") as temp_dir:
+            temp_critique_path = Path(temp_dir) / "critique.json"
+
+            stage = "critique"
+            token_usage = critique(
+                input_path=context.copied_input_path,
+                draft_path=context.draft_path,
+                output_path=temp_critique_path,
+                codex_bin=args.codex_bin,
+                model=config["agent_models"][AGENT_CRITIQUE],
+                timeout_seconds=args.timeout_seconds,
+            )
+
+            stage = "critique_output_validate"
+            critique_output_result = validate_file(temp_critique_path, artifact="critique_output")
+            ensure_pass(critique_output_result)
+            critique_output = load_json(temp_critique_path)
+
+        stage = "critique_write"
+        critique_artifact = build_critique(
+            critique_output=critique_output,
+            iteration=args.iteration,
+            model_name=config["agent_models"][AGENT_CRITIQUE] or "codex-cli-default",
+            token_usage=token_usage,
+        )
+        write_json(context.critique_path, critique_artifact, overwrite=args.overwrite)
+
+        stage = "critique_validate"
+        critique_result = validate_file(
+            context.critique_path,
+            artifact="critique",
+            expected_brief_hash=brief_hash,
+            expected_iteration=args.iteration,
+        )
+        ensure_pass(critique_result, context.critique_validation_path)
     except Exception as exc:
         failed_path = write_failed(context.run_dir, brief_hash, context.run_id, stage, exc, lineage, config)
         raise RuntimeError(f"pipeline failed at {stage}; wrote {failed_path}") from exc
@@ -238,6 +310,7 @@ def run(args: argparse.Namespace) -> dict:
         "run_id": context.run_id,
         "input": str(context.copied_input_path),
         "draft": str(context.draft_path),
+        "critique": str(context.critique_path),
     }
 
 
@@ -247,15 +320,18 @@ def resolve_agent_models(args: argparse.Namespace) -> dict[str, str | None]:
         models[AGENT_GEN] = args.model
     if args.gen_model:
         models[AGENT_GEN] = args.gen_model
+    if args.critique_model:
+        models[AGENT_CRITIQUE] = args.critique_model
     return models
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Run MVP: input.json -> gen -> draft.json -> validate.")
+    parser = argparse.ArgumentParser(description="Run pipeline: input -> gen -> draft validate -> critique validate.")
     parser.add_argument("input", type=Path, help="Path to an input JSON file matching input.schema.json.")
     parser.add_argument("--codex-bin", default="codex")
     parser.add_argument("--model", help="Alias for --gen-model in the current MVP.")
     parser.add_argument("--gen-model", help="Model for the Gen agent. Defaults to the official Codex recommended model.")
+    parser.add_argument("--critique-model", help="Model for the Critique agent. Defaults to the Codex CLI default model.")
     parser.add_argument("--runs-dir", type=Path, default=RUNS_DIR)
     parser.add_argument("--iteration", default="001")
     parser.add_argument("--timeout-seconds", type=int, default=600)

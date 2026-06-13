@@ -11,7 +11,9 @@ SCHEMA_DIR = PROJECT_DIR / "schemas"
 ARTIFACT_SCHEMAS = {
     "input": SCHEMA_DIR / "input.schema.json",
     "gen_output": SCHEMA_DIR / "gen_output.schema.json",
+    "critique_output": SCHEMA_DIR / "critique_output.schema.json",
     "draft": SCHEMA_DIR / "draft.schema.json",
+    "critique": SCHEMA_DIR / "critique.schema.json",
 }
 
 DRAFT_FORBIDDEN_FIELDS = {
@@ -20,6 +22,14 @@ DRAFT_FORBIDDEN_FIELDS = {
     "verdict",
     "rubric_scores",
     "contract_errors",
+}
+
+CRITIQUE_FORBIDDEN_FIELDS = {
+    "score",
+    "rubric_scores",
+    "weighted_total",
+    "verdict",
+    "rewritten_content",
 }
 
 
@@ -39,12 +49,23 @@ def validate_file(
     if artifact not in ARTIFACT_SCHEMAS:
         raise ValueError(f"unknown artifact: {artifact}")
 
-    data = load_json(file_path)
+    try:
+        data = load_json(file_path)
+    except ValueError as exc:
+        return {
+            "artifact": artifact,
+            "checked_file": str(file_path),
+            "status": "ERROR",
+            "errors": [str(exc)],
+        }
+
     schema = load_json(ARTIFACT_SCHEMAS[artifact])
     errors = validate_schema(data, schema)
 
     if artifact == "draft" and isinstance(data, dict):
         errors += validate_draft_contract(data, expected_brief_hash, expected_iteration)
+    if artifact == "critique" and isinstance(data, dict):
+        errors += validate_critique_contract(data, expected_brief_hash, expected_iteration)
 
     return {
         "artifact": artifact,
@@ -88,10 +109,21 @@ def validate_draft_contract(data: dict, expected_brief_hash: str | None, expecte
     return errors
 
 
+def validate_critique_contract(data: dict, expected_brief_hash: str | None, expected_iteration: str | None) -> list[str]:
+    errors = []
+    if expected_brief_hash and data.get("brief_hash") != expected_brief_hash:
+        errors.append("brief_hash mismatch")
+    if expected_iteration and data.get("iteration") != expected_iteration:
+        errors.append("iteration mismatch")
+    for key in sorted(CRITIQUE_FORBIDDEN_FIELDS & data.keys()):
+        errors.append(f"critique must not include {key}")
+    return errors
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Validate a pipeline JSON artifact.")
     parser.add_argument("file", type=Path)
-    parser.add_argument("--artifact", required=True, choices=["input", "gen_output", "draft"])
+    parser.add_argument("--artifact", required=True, choices=["input", "gen_output", "critique_output", "draft", "critique"])
     parser.add_argument("--brief-hash")
     parser.add_argument("--iteration")
     parser.add_argument("--write-result", type=Path)
