@@ -27,11 +27,12 @@
 - 총점 원문을 근거로 수정 지시를 만들지 않습니다.
 
 출력 스키마:
-- schema path: `writing-harness-pipeline/schemas/eval.schema.json`
-- runner는 위 schema 파일의 내용을 stage 입력 payload에 함께 포함해야 합니다.
+- 모델은 `writing-harness-pipeline/schemas/eval_output.schema.json` 계약만 따릅니다.
+- `evaluated_at`, `model`, `metadata`는 출력하지 않습니다.
+- runner가 모델 출력을 감싸서 `writing-harness-pipeline/schemas/eval.schema.json`에 맞는 eval artifact를 생성합니다.
 - 출력은 schema의 `required`, `properties`, `additionalProperties` 계약을 그대로 따릅니다.
 - `brief_hash`와 `iteration`은 평가 대상 draft의 값을 그대로 사용합니다.
-- `scores`, `weights`, `axis_rationales`의 축 이름은 전달받은 rubric의 축 이름과 일치해야 합니다.
+- `rubric_scores.scores`, `rubric_scores.weights`, `axis_rationales`의 축 이름은 전달받은 rubric의 축 이름과 일치해야 합니다.
 
 루브릭 적용:
 - rubric에 `structure`, `evidence`, `sentence`, `originality` 외의 축이 있으면 해당 축도 `scores`, `weights`, `axis_rationales`에 포함합니다.

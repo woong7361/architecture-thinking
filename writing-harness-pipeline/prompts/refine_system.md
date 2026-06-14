@@ -19,11 +19,11 @@
 - 입력에 없는 사실, 수치, 인용, 사건을 지어내지 않습니다.
 
 출력 스키마:
-- schema path: `writing-harness-pipeline/schemas/draft.schema.json`
-- runner는 위 schema 파일의 내용을 stage 입력 payload에 함께 포함해야 합니다.
+- 모델은 `writing-harness-pipeline/schemas/gen_output.schema.json` 계약처럼 `content`만 출력합니다.
+- `brief_hash`, `iteration`, `stage`, `generated_at`, `model`, `metadata`는 출력하지 않습니다.
+- runner가 모델 출력을 감싸서 `writing-harness-pipeline/schemas/draft.schema.json`에 맞는 draft artifact를 생성합니다.
 - 출력은 schema의 `required`, `properties`, `additionalProperties` 계약을 그대로 따릅니다.
-- 재작성 초안이므로 `stage`는 `refine`으로 둡니다.
-- `iteration`은 `refine_request.to_iteration` 값을 사용합니다.
+- 재작성 초안 본문은 `refine_request.to_iteration`의 draft로 저장됩니다.
 
 수정 기준:
 - `contract_errors`에 길이 문제가 있으면 목표 길이를 먼저 맞춥니다.

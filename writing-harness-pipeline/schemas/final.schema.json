@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Pipeline Final",
+  "type": "object",
+  "required": ["brief_hash", "final_iteration", "content", "accepted_at", "quality_snapshot", "contract_result", "lineage"],
+  "properties": {
+    "brief_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{8,}$"
+    },
+    "final_iteration": {
+      "type": "string",
+      "pattern": "^[0-9]{3}$"
+    },
+    "content": {
+      "type": "string",
+      "minLength": 1
+    },
+    "accepted_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "quality_snapshot": {
+      "type": "object",
+      "required": ["rubric_name", "weighted_total", "scores", "weak_axes"],
+      "properties": {
+        "rubric_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "weighted_total": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 5
+        },
+        "scores": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 5
+          }
+        },
+        "weak_axes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "contract_result": {
+      "type": "object",
+      "required": ["verdict", "contract_errors", "checked_rules"],
+      "properties": {
+        "verdict": {
+          "type": "string",
+          "enum": ["PASS"]
+        },
+        "contract_errors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "checked_rules": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "lineage": {
+      "type": "object",
+      "required": ["run_id", "input", "draft", "critique", "eval"],
+      "properties": {
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "input": {
+          "type": "string",
+          "minLength": 1
+        },
+        "draft": {
+          "type": "string",
+          "minLength": 1
+        },
+        "critique": {
+          "type": "string",
+          "minLength": 1
+        },
+        "eval": {
+          "type": "string",
+          "minLength": 1
+        },
+        "refine_request": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

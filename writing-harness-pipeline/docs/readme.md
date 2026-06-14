@@ -21,7 +21,7 @@
 1. **Gen**: 주제, 재료, 의도, 독자, 톤을 받아 1차 초안을 만든다.
 2. **Critique**: 새 세션의 시니어 편집자 역할로 초안의 약점과 개선 방향을 뽑는다.
 3. **Eval**: 루브릭 기반 점수와 점수 근거를 낸다.
-4. **Refine**: 비평과 평가 결과를 근거로 다음 초안을 만든다.
+4. **Refine**: 비평과 필터링된 평가/검증 신호를 근거로 다음 초안을 만든다.
 
 각 역할은 파일을 통해서만 핸드오프한다. 함수 import, 공유 메모리, 대화 히스토리 공유를 기본값으로 삼지 않는다.
 
@@ -42,8 +42,7 @@
 {brief_hash}_iter-{iteration}_eval.json
  ↓ validate eval schema + final contract checks
  ├─ PASS   → {brief_hash}_final.json
- └─ REJECT → {brief_hash}_iter-{iteration}_refine-request.json
-              ↓ validate refine request schema
+ └─ REJECT → runner builds in-memory refine payload
               ↓ refine
             {brief_hash}_iter-{next_iteration}_draft.json
               ↺ critique → eval → validate
@@ -51,7 +50,8 @@
 
 반복은 `iter_N` 단위로 관리한다. 한 run 안에서 초안 버전이 늘어나며, 각 iteration은 동일한 파일 이름 계약을 유지한다.
 
-`validate`는 하나의 파일만 검사하는 단일 위치가 아니다. 각 단계의 출력 JSON을 다음 단계 입력으로 사용해도 되는지 확인하는 공통 함수다. `{brief_hash}_iter-{iteration}_eval.json` 이후의 validate 호출은 스키마, 길이, 금칙어, 루브릭 점수 하한처럼 기계적으로 판정 가능한 항목을 검사하고, runner는 그 결과로 `final.json` 또는 `refine-request.json`을 만든다.
+`validate`는 하나의 파일만 검사하는 단일 위치가 아니다. 각 단계의 출력 JSON을 다음 단계 입력으로 사용해도 되는지 확인하는 공통 함수다. `{brief_hash}_iter-{iteration}_eval.json` 이후의 validate 호출은 스키마, 길이, 금칙어, 루브릭 점수 하한처럼 기계적으로 판정 가능한 항목을 검사하고, runner는 그 결과로 `final.json`을 만들거나 Refine 호출을 준비한다.
+`REJECT`가 발생하면 별도 재작성 요청 파일을 만들지 않고, runner가 Refine 호출 직전에 메모리 payload를 조립한다. 이 payload는 원본 input, 직전 draft, critique 전체와 eval/validation 결과에서 필터링한 재작성 신호만 포함한다.
 
 ## 설계 원칙
 
@@ -73,15 +73,15 @@ Validator는 기계적 계약 검사자다. 글의 문학적 품질을 판단하
 
 | 단계 | 입력으로 봐도 되는 파일 | 보면 안 되는 파일 |
 | --- | --- | --- |
-| Gen | `{brief_hash}_input.json` | critique, eval, refine request |
-| Critique | `{brief_hash}_input.json`, `{brief_hash}_iter-{iteration}_draft.json` | eval 점수, refine request |
+| Gen | `{brief_hash}_input.json` | critique, eval, refine payload |
+| Critique | `{brief_hash}_input.json`, `{brief_hash}_iter-{iteration}_draft.json` | eval 점수, refine payload |
 | Eval | `{brief_hash}_input.json`, `{brief_hash}_iter-{iteration}_draft.json`, `rubric.yaml` | generator 히스토리, critique |
 | Validate | 검사 대상 JSON, 해당 schema, 기계적 계약, rubric threshold | LLM 대화 히스토리 |
-| Refine | `{brief_hash}_input.json`, `{brief_hash}_iter-{iteration}_draft.json`, `{brief_hash}_iter-{iteration}_critique.json`, `{brief_hash}_iter-{iteration}_refine-request.json` | eval 총점 원문, generator 내부 히스토리 |
+| Refine | `{brief_hash}_input.json`, `{brief_hash}_iter-{iteration}_draft.json`, `{brief_hash}_iter-{iteration}_critique.json`, runner가 필터링한 eval/validation feedback | eval 총점 원문, `rubric_scores` 원점수, generator 내부 히스토리 |
 
 Eval은 Critique의 판단에 anchor되지 않고 초안 자체를 독립 채점해야 하므로 `critique.json`을 입력으로 받지 않는다.
 
-특히 Refine 단계에는 총점을 그대로 넘기지 않는다. 총점을 넘기면 모델이 숫자를 맞추려는 방향으로 움직일 수 있다. 대신 `weak_axes`, `contract_errors`, `critique_summary`, `revision_instructions`만 넘긴다.
+특히 Refine 단계에는 `eval.json` 원문을 그대로 넘기지 않는다. 총점과 축별 점수를 넘기면 모델이 글보다 점수 맞추기에 반응할 수 있다. runner는 Refine 호출 직전에 `eval.json`과 validation 결과에서 필요한 정보만 필터링해 메모리 payload를 만든다. 이 payload에는 `weak_axes`, 약한 축의 근거, `contract_errors`, `to_iteration`처럼 재작성에 필요한 신호만 포함한다.
 
 파일명에 `brief_hash`와 `iteration`을 넣는 것은 정보 차단 그 자체가 아니다. 따라서 runner는 각 단계에 허용된 파일만 읽고, 그 내용을 agent 입력 payload로 구성해 넘긴다.
 
@@ -125,7 +125,6 @@ writing-harness-pipeline/
 │   ├── draft.schema.json # 초안 산출물 계약
 │   ├── critique.schema.json # 비평 산출물 계약
 │   ├── eval.schema.json # 평가 산출물 계약
-│   ├── refine_request.schema.json # 재작성 요청 계약
 │   └── final.schema.json # 최종 초안 계약
 ├── rubrics/ # 평가 기준
 │   └── writing.yaml # 에세이와 회고 공통 평가 루브릭
@@ -136,7 +135,7 @@ writing-harness-pipeline/
 │       │   ├── a1b2c3d4_iter-001_draft.json # 현재 iteration 초안
 │       │   ├── a1b2c3d4_iter-001_critique.json # 현재 iteration 비평
 │       │   ├── a1b2c3d4_iter-001_eval.json # 현재 iteration 평가
-│       │   └── a1b2c3d4_iter-001_refine-request.json # 다음 iteration 재작성 요청
+│       │   # REJECT 시 refine 입력 payload는 runner가 메모리에서 조립한다
 │       ├── iter_002/ # 두 번째 생성/평가 반복
 │       │   ├── a1b2c3d4_iter-002_draft.json # 재작성 초안
 │       │   ├── a1b2c3d4_iter-002_critique.json # 재작성 초안 비평
@@ -262,8 +261,8 @@ max_iterations: 3
 | category | 의미 | 기본 조치 |
 | --- | --- | --- |
 | `schema_error` | JSON 구조, required 필드, 타입, enum, additionalProperties 위반 | 같은 stage 재생성 또는 stage prompt/schema 수정 |
-| `contract_error` | 길이, 금칙어, `brief_hash` 불일치, 필수 조건 누락 같은 기계적 계약 위반 | refine request에 포함 |
-| `quality_reject` | 실행 에러가 아니라 루브릭 총점 또는 핵심 축 점수가 하한 미만인 품질 거절 | weak_axes와 함께 refine request에 포함 |
+| `contract_error` | 길이, 금칙어, `brief_hash` 불일치, 필수 조건 누락 같은 기계적 계약 위반 | Refine payload의 `contract_errors`에 포함 |
+| `quality_reject` | 실행 에러가 아니라 루브릭 총점 또는 핵심 축 점수가 하한 미만인 품질 거절 | Refine payload의 `weak_axes`에 포함 |
 | `role_boundary_violation` | draft에 `self_score`, eval에 `verdict`처럼 역할을 침범한 필드가 포함됨 | 해당 stage prompt와 schema 수정 |
 | `stage_error` | LLM 호출 실패, timeout, 빈 응답, invalid JSON 응답 | 동일 stage 재시도 후 계속 실패하면 terminal failure |
 | `runner_error` | 파일 경로, 권한, schema/rubric 파일 누락, I/O 실패 | 즉시 terminal failure로 처리하고 실행 환경 또는 runner 수정 |
@@ -276,7 +275,6 @@ max_iterations: 3
 iter_001/{brief_hash}_iter-001_draft.validation.json
 iter_001/{brief_hash}_iter-001_critique.validation.json
 iter_001/{brief_hash}_iter-001_eval.validation.json
-iter_001/{brief_hash}_iter-001_refine-request.validation.json
 ```
 
 실패 validation 결과 파일의 기본 형태는 다음과 같다.
@@ -425,7 +423,8 @@ Refiner 시스템 프롬프트는 재작성자 역할을 준다.
 - `validate.py`는 `stages/`가 아니라 `validators/` 또는 `contracts/`로 분리할지 결정한다.
 - `critique.py`, `refine.py`의 파일 계약을 위 구조에 맞춘다.
 - `output.schema.json`은 `draft.schema.json`으로 이름을 바꾸는 편이 명확하다.
-- `verdict.schema.json`은 `eval.schema.json`으로 정리하고, validate 결과는 `refine_request.schema.json`과 `final.schema.json`에 필요한 필드만 포함한다.
+- `verdict.schema.json`은 `eval.schema.json`으로 정리하고, validate 결과는 `final.schema.json`과 runner의 Refine payload builder가 필요한 필드만 포함한다.
+- `refine_request.schema.json`은 정식 파일 계약에서 제외하고, 필요해질 때 디버그 artifact로 승격할지 다시 판단한다.
 - `rubric.yaml`은 기본 4축과 확장 축을 구분하도록 정리한다.
 - `prompts/refine_systme.md`는 `prompts/refine_system.md`로 수정한다.
 
