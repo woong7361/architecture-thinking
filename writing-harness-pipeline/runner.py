@@ -1,10 +1,13 @@
 from __future__ import annotations
 
 import argparse
+from contextlib import contextmanager
 import json
 import shutil
 import sys
 import tempfile
+import threading
+import time
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -71,6 +74,144 @@ DEFAULT_RUBRIC = {
 }
 
 FINAL_CHECKED_RULES = ["schema", "brief_hash", "min_total", "min_axis"]
+
+
+def format_duration(seconds: float) -> str:
+    return f"{seconds:.2f}s"
+
+
+def format_running_duration(seconds: float) -> str:
+    return f"{int(seconds)}s"
+
+
+def format_score(value: object) -> str:
+    if isinstance(value, (int, float)):
+        return f"{value:g}"
+    return "n/a"
+
+
+def display_model(model: str | None) -> str:
+    return model or "codex-cli-default"
+
+
+def summarize_errors(errors: list[object], limit: int = 3) -> str:
+    if not errors:
+        return ""
+    visible_errors = [str(error) for error in errors[:limit]]
+    if len(errors) > limit:
+        visible_errors.append(f"... +{len(errors) - limit} more")
+    return "; ".join(visible_errors)
+
+
+def format_eval_scores(eval_artifact: dict, rubric: dict) -> str:
+    rubric_scores = eval_artifact.get("rubric_scores", {})
+    if not isinstance(rubric_scores, dict):
+        return "total=n/a"
+
+    total = rubric_scores.get("weighted_total")
+    scale = rubric.get("scale", {})
+    max_score = scale.get("max", 5) if isinstance(scale, dict) else 5
+    min_total = rubric.get("thresholds", {}).get("min_total", "n/a")
+    scores = rubric_scores.get("scores", {})
+    axes = ""
+    if isinstance(scores, dict):
+        axes = " axes=" + " ".join(f"{axis}:{format_score(score)}" for axis, score in scores.items())
+
+    return f"total={format_score(total)}/{format_score(max_score)} min={format_score(min_total)}{axes}"
+
+
+class ProgressReporter:
+    def __init__(self, stream=sys.stderr, refresh_seconds: float = 1.0) -> None:
+        self.stream = stream
+        self.refresh_seconds = refresh_seconds
+        self.interactive = bool(stream.isatty())
+        self._lock = threading.Lock()
+        self._last_live_length = 0
+
+    def line(self, message: str) -> None:
+        with self._lock:
+            self.stream.write(f"[{self._timestamp()}] {message}\n")
+            self.stream.flush()
+
+    @contextmanager
+    def step(self, label: str, live: bool = False):
+        start = time.perf_counter()
+        live_line = _LiveProgressLine(self, label, start) if live and self.interactive else None
+        if live_line:
+            live_line.start()
+        else:
+            self.line(f"{label} start")
+
+        try:
+            yield
+        except Exception as exc:
+            elapsed = time.perf_counter() - start
+            message = f"{label} ERROR {format_duration(elapsed)} error={type(exc).__name__}"
+            if live_line:
+                live_line.finish(message)
+            else:
+                self.line(message)
+            raise
+        else:
+            elapsed = time.perf_counter() - start
+            message = f"{label} done {format_duration(elapsed)}"
+            if live_line:
+                live_line.finish(message)
+            else:
+                self.line(message)
+
+    def validation(self, label: str, result: dict, extra: str = "") -> None:
+        if result["status"] == "PASS":
+            return
+        suffix = f" {extra}" if extra else ""
+        error_summary = summarize_errors(result.get("errors", []))
+        errors = f" errors={error_summary}" if error_summary else ""
+        self.line(f"{label} {result['status']}{suffix}{errors}")
+
+    def _write_live(self, message: str) -> None:
+        with self._lock:
+            padded = message.ljust(self._last_live_length)
+            self.stream.write(f"\r{padded}")
+            self.stream.flush()
+            self._last_live_length = len(message)
+
+    def _finish_live(self, message: str) -> None:
+        with self._lock:
+            padded = message.ljust(self._last_live_length)
+            self.stream.write(f"\r{padded}\n")
+            self.stream.flush()
+            self._last_live_length = 0
+
+    def _timestamp(self) -> str:
+        return datetime.now(KST).strftime("%H:%M:%S")
+
+
+class _LiveProgressLine:
+    def __init__(self, reporter: ProgressReporter, label: str, started_at: float) -> None:
+        self.reporter = reporter
+        self.label = label
+        self.started_at = started_at
+        self._stop = threading.Event()
+        self._thread = threading.Thread(target=self._run, daemon=True)
+
+    def start(self) -> None:
+        self._write()
+        self._thread.start()
+
+    def finish(self, message: str) -> None:
+        self._stop.set()
+        self._thread.join()
+        self.reporter._finish_live(f"[{self.reporter._timestamp()}] {message}")
+
+    def _run(self) -> None:
+        while not self._stop.wait(self.reporter.refresh_seconds):
+            self._write()
+
+    def _write(self) -> None:
+        elapsed = time.perf_counter() - self.started_at
+        self.reporter._write_live(
+            f"[{self.reporter._timestamp()}] {self.label} running {format_running_duration(elapsed)}"
+        )
 
 
 @dataclass(frozen=True)
@@ -446,9 +587,12 @@ def failure_rule(error: str) -> str:
 
 
 def run(args: argparse.Namespace) -> dict:
+    progress = ProgressReporter()
+    pipeline_started_at = time.perf_counter()
     stage = "input_validate"
     input_path = args.input.resolve()
     input_result = validate_file(input_path, artifact="input")
+    progress.validation(stage, input_result)
     ensure_pass(input_result)
 
     input_data = load_json(input_path)
@@ -476,6 +620,10 @@ def run(args: argparse.Namespace) -> dict:
     }
     eval_rejections: list[dict] = []
     last_refine_request_lineage: str | None = None
+    progress.line(
+        f"run start brief={brief_hash} iteration={args.iteration} max_iterations={args.max_iterations} "
+        f"run_id={root_context.run_id}"
+    )
 
     try:
         stage = "prepare"
@@ -483,6 +631,8 @@ def run(args: argparse.Namespace) -> dict:
 
         for iteration_number in range(start_iteration, args.max_iterations + 1):
             iteration = f"{iteration_number:03d}"
+            iteration_label = f"iter {iteration}/{args.max_iterations:03d}"
+            progress.line(f"{iteration_label} start")
             context = RunContext.create(brief_hash=brief_hash, iteration=iteration, runs_dir=args.runs_dir)
             context.iter_dir.mkdir(parents=True, exist_ok=True)
             lineage.update(
@@ -498,16 +648,21 @@ def run(args: argparse.Namespace) -> dict:
                     temp_gen_output_path = Path(temp_dir) / "gen-output.json"
 
                     stage = f"iter_{iteration}_gen"
-                    token_usage = generate(
-                        input_path=root_context.copied_input_path,
-                        output_path=temp_gen_output_path,
-                        codex_bin=args.codex_bin,
-                        model=config["agent_models"][AGENT_GEN],
-                        timeout_seconds=args.timeout_seconds,
-                    )
+                    with progress.step(
+                        f"{iteration_label} gen model={display_model(config['agent_models'][AGENT_GEN])}",
+                        live=True,
+                    ):
+                        token_usage = generate(
+                            input_path=root_context.copied_input_path,
+                            output_path=temp_gen_output_path,
+                            codex_bin=args.codex_bin,
+                            model=config["agent_models"][AGENT_GEN],
+                            timeout_seconds=args.timeout_seconds,
+                        )
 
                     stage = f"iter_{iteration}_gen_validate"
                     gen_result = validate_file(temp_gen_output_path, artifact="gen_output")
+                    progress.validation(f"{iteration_label} gen_output_validate", gen_result)
                     ensure_pass(gen_result)
                     gen_output = load_json(temp_gen_output_path)
 
@@ -516,7 +671,7 @@ def run(args: argparse.Namespace) -> dict:
                     input_data=input_data,
                     stage_output=gen_output,
                     iteration=iteration,
-                    model_name=config["agent_models"][AGENT_GEN] or "codex-cli-default",
+                    model_name=display_model(config["agent_models"][AGENT_GEN]),
                     token_usage=token_usage,
                     source_stage=AGENT_GEN,
                 )
@@ -531,6 +686,7 @@ def run(args: argparse.Namespace) -> dict:
                 expected_brief_hash=brief_hash,
                 expected_iteration=iteration,
             )
+            progress.validation(f"{iteration_label} draft_validate", draft_result)
             ensure_pass(draft_result, context.draft_validation_path)
             draft = load_json(context.draft_path)
 
@@ -538,17 +694,22 @@ def run(args: argparse.Namespace) -> dict:
                 temp_critique_path = Path(temp_dir) / "critique.json"
 
                 stage = f"iter_{iteration}_critique"
-                token_usage = critique(
-                    input_path=root_context.copied_input_path,
-                    draft_path=context.draft_path,
-                    output_path=temp_critique_path,
-                    codex_bin=args.codex_bin,
-                    model=config["agent_models"][AGENT_CRITIQUE],
-                    timeout_seconds=args.timeout_seconds,
-                )
+                with progress.step(
+                    f"{iteration_label} critique model={display_model(config['agent_models'][AGENT_CRITIQUE])}",
+                    live=True,
+                ):
+                    token_usage = critique(
+                        input_path=root_context.copied_input_path,
+                        draft_path=context.draft_path,
+                        output_path=temp_critique_path,
+                        codex_bin=args.codex_bin,
+                        model=config["agent_models"][AGENT_CRITIQUE],
+                        timeout_seconds=args.timeout_seconds,
+                    )
 
                 stage = f"iter_{iteration}_critique_output_validate"
                 critique_output_result = validate_file(temp_critique_path, artifact="critique_output")
+                progress.validation(f"{iteration_label} critique_output_validate", critique_output_result)
                 ensure_pass(critique_output_result)
                 critique_output = load_json(temp_critique_path)
 
@@ -556,7 +717,7 @@ def run(args: argparse.Namespace) -> dict:
             critique_artifact = build_critique(
                 critique_output=critique_output,
                 iteration=iteration,
-                model_name=config["agent_models"][AGENT_CRITIQUE] or "codex-cli-default",
+                model_name=display_model(config["agent_models"][AGENT_CRITIQUE]),
                 token_usage=token_usage,
             )
             write_json(context.critique_path, critique_artifact, overwrite=args.overwrite)
@@ -568,24 +729,30 @@ def run(args: argparse.Namespace) -> dict:
                 expected_brief_hash=brief_hash,
                 expected_iteration=iteration,
             )
+            progress.validation(f"{iteration_label} critique_validate", critique_result)
             ensure_pass(critique_result, context.critique_validation_path)
 
             with tempfile.TemporaryDirectory(prefix="writing-harness-eval-") as temp_dir:
                 temp_eval_path = Path(temp_dir) / "eval.json"
 
                 stage = f"iter_{iteration}_eval"
-                token_usage = evaluate(
-                    input_path=root_context.copied_input_path,
-                    draft_path=context.draft_path,
-                    rubric=DEFAULT_RUBRIC,
-                    output_path=temp_eval_path,
-                    codex_bin=args.codex_bin,
-                    model=config["agent_models"][AGENT_EVAL],
-                    timeout_seconds=args.timeout_seconds,
-                )
+                with progress.step(
+                    f"{iteration_label} eval model={display_model(config['agent_models'][AGENT_EVAL])}",
+                    live=True,
+                ):
+                    token_usage = evaluate(
+                        input_path=root_context.copied_input_path,
+                        draft_path=context.draft_path,
+                        rubric=DEFAULT_RUBRIC,
+                        output_path=temp_eval_path,
+                        codex_bin=args.codex_bin,
+                        model=config["agent_models"][AGENT_EVAL],
+                        timeout_seconds=args.timeout_seconds,
+                    )
 
                 stage = f"iter_{iteration}_eval_output_validate"
                 eval_output_result = validate_file(temp_eval_path, artifact="eval_output")
+                progress.validation(f"{iteration_label} eval_output_validate", eval_output_result)
                 ensure_pass(eval_output_result)
                 eval_output = load_json(temp_eval_path)
 
@@ -593,7 +760,7 @@ def run(args: argparse.Namespace) -> dict:
             eval_artifact = build_eval(
                 eval_output=eval_output,
                 iteration=iteration,
-                model_name=config["agent_models"][AGENT_EVAL] or "codex-cli-default",
+                model_name=display_model(config["agent_models"][AGENT_EVAL]),
                 token_usage=token_usage,
             )
             write_json(context.eval_path, eval_artifact, overwrite=args.overwrite)
@@ -606,6 +773,13 @@ def run(args: argparse.Namespace) -> dict:
                 expected_iteration=iteration,
                 rubric=DEFAULT_RUBRIC,
             )
+            eval_summary = format_eval_scores(eval_artifact, DEFAULT_RUBRIC)
+            if eval_result["status"] == "PASS":
+                progress.line(f"{iteration_label} eval PASS {eval_summary}")
+            else:
+                error_summary = summarize_errors(eval_result.get("errors", []))
+                errors = f" errors={error_summary}" if error_summary else ""
+                progress.line(f"{iteration_label} eval {eval_result['status']} {eval_summary}{errors}")
             if eval_result["status"] == "PASS":
                 stage = f"iter_{iteration}_final_write"
                 final_artifact = build_final(
@@ -625,7 +799,11 @@ def run(args: argparse.Namespace) -> dict:
                     artifact="final",
                     expected_brief_hash=brief_hash,
                 )
+                progress.validation(f"{iteration_label} final_validate", final_result)
                 ensure_pass(final_result)
+                progress.line(
+                    f"run PASS iteration={iteration} total_elapsed={format_duration(time.perf_counter() - pipeline_started_at)}"
+                )
                 return {
                     "status": "PASS",
                     "run_id": context.run_id,
@@ -648,10 +826,15 @@ def run(args: argparse.Namespace) -> dict:
 
             if iteration_number >= args.max_iterations:
                 stage = f"iter_{iteration}_max_iteration_exceeded"
-                failed_path = write_max_iteration_failed(
-                    context=context,
-                    eval_rejections=eval_rejections,
-                    config=config,
+                with progress.step(f"{iteration_label} max_iteration_exceeded"):
+                    failed_path = write_max_iteration_failed(
+                        context=context,
+                        eval_rejections=eval_rejections,
+                        config=config,
+                    )
+                progress.line(
+                    "run FAILED terminal_reason=max_iteration_exceeded "
+                    f"last_iteration={iteration} total_elapsed={format_duration(time.perf_counter() - pipeline_started_at)}"
                 )
                 return {
                     "status": "FAILED",
@@ -662,15 +845,16 @@ def run(args: argparse.Namespace) -> dict:
                 }
 
             to_iteration = next_iteration(iteration)
-            refine_request = build_refine_request(
-                input_data=input_data,
-                draft=draft,
-                critique_artifact=critique_artifact,
-                eval_artifact=eval_artifact,
-                eval_result=eval_result,
-                rubric=DEFAULT_RUBRIC,
-                to_iteration=to_iteration,
-            )
+            with progress.step(f"iter {iteration}->{to_iteration} refine_request"):
+                refine_request = build_refine_request(
+                    input_data=input_data,
+                    draft=draft,
+                    critique_artifact=critique_artifact,
+                    eval_artifact=eval_artifact,
+                    eval_result=eval_result,
+                    rubric=DEFAULT_RUBRIC,
+                    to_iteration=to_iteration,
+                )
             last_refine_request_lineage = f"memory:{iteration}->{to_iteration}"
             next_context = RunContext.create(brief_hash=brief_hash, iteration=to_iteration, runs_dir=args.runs_dir)
             next_context.iter_dir.mkdir(parents=True, exist_ok=True)
@@ -679,19 +863,24 @@ def run(args: argparse.Namespace) -> dict:
                 temp_refine_output_path = Path(temp_dir) / "refine-output.json"
 
                 stage = f"iter_{iteration}_refine_to_{to_iteration}"
-                token_usage = refine(
-                    input_path=root_context.copied_input_path,
-                    draft_path=context.draft_path,
-                    critique_path=context.critique_path,
-                    refine_request=refine_request,
-                    output_path=temp_refine_output_path,
-                    codex_bin=args.codex_bin,
-                    model=config["agent_models"][AGENT_REFINE],
-                    timeout_seconds=args.timeout_seconds,
-                )
+                with progress.step(
+                    f"iter {iteration}->{to_iteration} refine model={display_model(config['agent_models'][AGENT_REFINE])}",
+                    live=True,
+                ):
+                    token_usage = refine(
+                        input_path=root_context.copied_input_path,
+                        draft_path=context.draft_path,
+                        critique_path=context.critique_path,
+                        refine_request=refine_request,
+                        output_path=temp_refine_output_path,
+                        codex_bin=args.codex_bin,
+                        model=config["agent_models"][AGENT_REFINE],
+                        timeout_seconds=args.timeout_seconds,
+                    )
 
                 stage = f"iter_{iteration}_refine_output_validate"
                 refine_result = validate_file(temp_refine_output_path, artifact="refine_output")
+                progress.validation(f"iter {iteration}->{to_iteration} refine_output_validate", refine_result)
                 ensure_pass(refine_result)
                 refine_output = load_json(temp_refine_output_path)
 
@@ -700,13 +889,18 @@ def run(args: argparse.Namespace) -> dict:
                 input_data=input_data,
                 stage_output=refine_output,
                 iteration=to_iteration,
-                model_name=config["agent_models"][AGENT_REFINE] or "codex-cli-default",
+                model_name=display_model(config["agent_models"][AGENT_REFINE]),
                 token_usage=token_usage,
                 source_stage=AGENT_REFINE,
             )
             write_json(next_context.draft_path, refined_draft, overwrite=args.overwrite)
     except Exception as exc:
+        progress.line(
+            f"run ERROR stage={stage} total_elapsed={format_duration(time.perf_counter() - pipeline_started_at)} "
+            f"error={type(exc).__name__}"
+        )
         failed_path = write_failed(root_context.run_dir, brief_hash, root_context.run_id, stage, exc, lineage, config)
+        progress.line(f"run failed artifact={failed_path}")
         raise RuntimeError(f"pipeline failed at {stage}; wrote {failed_path}") from exc
 
     raise RuntimeError("pipeline ended without PASS or FAILED status")
