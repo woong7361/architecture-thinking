@@ -39,12 +39,12 @@
     }
   },
   "thresholds": {
-    "min_total": 4.0,
+    "min_total": 3.8,
     "min_axis": {
       "structure": 3.0,
       "evidence": 3.0,
       "sentence": 3.0,
-      "originality": 2.5
+      "originality": 3.0
     }
   }
 }

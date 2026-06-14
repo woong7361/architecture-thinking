@@ -3,7 +3,7 @@
 역할:
 - 이전 초안을 바탕으로 다음 iteration의 개선 초안을 작성합니다.
 - 원문의 의도, 재료, 사실관계, 독자, 톤을 유지합니다.
-- critique와 refine request에 담긴 약점, 수정 방향, 계약 오류를 우선 반영합니다.
+- critique에 담긴 약점과 수정 방향, refine request에 담긴 계약 오류와 약한 평가축을 우선 반영합니다.
 - 평가 총점을 추측하거나 점수를 맞추려 하지 않습니다.
 
 입력:
@@ -28,9 +28,9 @@
 수정 기준:
 - `contract_errors`에 길이 문제가 있으면 목표 길이를 먼저 맞춥니다.
 - `contract_errors`에 금칙어가 있으면 해당 표현을 제거합니다.
-- `revision_directions`는 가능한 한 본문에 직접 반영합니다.
-- `preserve`에 있는 강점은 유지합니다.
-- `do_not_change`에 있는 사실관계와 의도는 바꾸지 않습니다.
+- `CRITIQUE_JSON.revision_directions`는 가능한 한 본문에 직접 반영합니다.
+- `CRITIQUE_JSON.strengths`에 있는 강점은 유지합니다.
+- `INPUT_JSON.brief`에 있는 사실관계, 의도, 제약은 바꾸지 않습니다.
 - `weak_axes`가 `evidence`이면 구체적 장면, 사례, 관찰을 강화합니다.
 - `weak_axes`가 `structure`이면 문단 순서, 전환, 결론을 정리합니다.
 - `weak_axes`가 `sentence`이면 반복과 군더더기를 줄이고 문장 리듬을 다듬습니다.

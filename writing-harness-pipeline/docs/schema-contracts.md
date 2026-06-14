@@ -573,7 +573,7 @@ Schema 작성 기준:
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Pipeline Refine Request",
   "type": "object",
-  "required": ["brief_hash", "from_iteration", "to_iteration", "previous_draft", "critique_summary", "revision_directions", "contract_errors", "weak_axes", "original_brief_constraints"],
+  "required": ["brief_hash", "from_iteration", "to_iteration", "contract_errors", "weak_axes"],
   "properties": {
     "brief_hash": {
       "type": "string",
@@ -589,37 +589,6 @@ Schema 작성 기준:
       "type": "string",
       "pattern": "^[0-9]{3}$",
       "description": "재작성 후 생성할 초안 번호"
-    },
-    "previous_draft": {
-      "type": "object",
-      "description": "재작성할 직전 초안",
-      "required": ["iteration", "content"],
-      "properties": {
-        "iteration": {
-          "type": "string",
-          "pattern": "^[0-9]{3}$",
-          "description": "직전 초안의 반복 번호"
-        },
-        "content": {
-          "type": "string",
-          "minLength": 1,
-          "description": "직전 초안 본문"
-        }
-      },
-      "additionalProperties": false
-    },
-    "critique_summary": {
-      "type": "string",
-      "minLength": 1,
-      "description": "비평의 핵심 요약"
-    },
-    "revision_directions": {
-      "type": "array",
-      "description": "Refiner가 실제로 반영해야 할 수정 지시",
-      "items": {
-        "type": "string",
-        "minLength": 1
-      }
     },
     "contract_errors": {
       "type": "array",
@@ -637,40 +606,10 @@ Schema 작성 기준:
         "minLength": 1
       }
     },
-    "original_brief_constraints": {
+    "weak_axis_rationales": {
       "type": "object",
-      "description": "원본 입력에서 유지해야 할 제약. 내부 확장 허용",
-      "properties": {
-        "target_length": {
-          "type": "string",
-          "description": "목표 길이"
-        },
-        "tone": {
-          "type": "string",
-          "description": "유지해야 할 톤"
-        },
-        "must_include": {
-          "type": "array",
-          "description": "반드시 포함할 내용",
-          "items": {
-            "type": "string"
-          }
-        }
-      },
-      "additionalProperties": true
-    },
-    "preserve": {
-      "type": "array",
-      "description": "다음 초안에서도 유지해야 할 강점",
-      "items": {
-        "type": "string",
-        "minLength": 1
-      }
-    },
-    "do_not_change": {
-      "type": "array",
-      "description": "사용자 의도, 사실관계, 톤 중 건드리면 안 되는 항목",
-      "items": {
+      "description": "기준 이하인 루브릭 축에 대한 평가 근거",
+      "additionalProperties": {
         "type": "string",
         "minLength": 1
       }
@@ -688,26 +627,21 @@ Schema 작성 기준:
 }
 ```
 
-`refine_request`는 Refiner에게 필요한 정보만 좁혀 전달하는 방화벽이다. 총점 원문이나 평가 전문을 넘기면 모델이 글보다 점수 맞추기에 반응할 수 있으므로, 수정에 필요한 약점과 계약 오류만 전달한다.
+`refine_request`는 Refiner에게 필요한 정보만 좁혀 전달하는 방화벽이다. input, previous draft, critique 원문은 Refine 프롬프트에 별도로 전달되므로, 이 payload에는 runner가 필터링하거나 계산한 재작성 신호만 담는다. 총점 원문이나 평가 전문을 넘기면 모델이 글보다 점수 맞추기에 반응할 수 있으므로, 수정에 필요한 약점과 계약 오류만 전달한다.
 
 필수 필드:
 
 - `brief_hash`: 재작성 대상 입력 식별자다.
 - `from_iteration`: 어떤 draft를 고치는지 나타낸다.
 - `to_iteration`: 다음 draft가 어떤 번호로 생성되어야 하는지 나타낸다.
-- `previous_draft`: 직전 초안 본문과 최소 식별 정보를 담는다.
-- `critique_summary`: 비평의 핵심 요약이다.
-- `revision_directions`: Refiner가 실제로 반영해야 할 지시다.
 - `contract_errors`: 길이, 금칙어, 필수 조건 누락 같은 기계적 오류다.
 - `weak_axes`: 기준 이하인 루브릭 축 이름만 담는다.
-- `original_brief_constraints`: 원본 입력에서 유지해야 할 길이, 톤, 필수 포함 요소다.
 
 `contract_errors`는 validate가 만든 기계적 오류 목록이다. `weak_axes`에는 기준 이하인 평가축 이름만 넣는다. Refine 단계로 넘길 때도 총점보다 이 필드를 우선한다.
 
 권장 필드:
 
-- `preserve`: 다음 초안에서도 유지해야 할 강점이다.
-- `do_not_change`: 사용자 의도, 사실관계, 톤 중 건드리면 안 되는 항목이다.
+- `weak_axis_rationales`: 기준 이하인 축의 평가 근거다.
 - `revision_priority`: 여러 문제가 있을 때 우선순위를 명시한다.
 
 금지 필드:
@@ -723,27 +657,13 @@ Schema 작성 기준:
   "brief_hash": "a1b2c3d4",
   "from_iteration": "001",
   "to_iteration": "002",
-  "previous_draft": {
-    "iteration": "001",
-    "content": "처음에는 프롬프트를 잘 쓰는 일이 핵심이라고 생각했다..."
-  },
-  "critique_summary": "실패 장면이 추상적이라 회고의 밀도가 약하다.",
-  "revision_directions": [
-    "첫 문단에 실제 실패 사례를 배치한다",
-    "다음 실험을 한 가지로 좁혀 결론을 선명하게 만든다"
-  ],
   "contract_errors": [
     "length: 980 < 1200"
   ],
   "weak_axes": ["evidence", "originality"],
-  "original_brief_constraints": {
-    "target_length": "1200-1800 Korean characters",
-    "tone": "차분하고 구체적인 개발자 회고",
-    "must_include": ["실패 사례", "다음 실험"]
+  "weak_axis_rationales": {
+    "evidence": "구체 사례가 부족해 핵심 주장을 충분히 받치지 못한다"
   },
-  "preserve": [
-    "파일 계약이 프롬프트보다 중요했다는 문제의식"
-  ],
   "revision_priority": [
     "구체적 장면 추가",
     "결론 압축",

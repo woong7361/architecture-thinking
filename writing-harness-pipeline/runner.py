@@ -409,6 +409,13 @@ def get_weak_axes(eval_data: dict, rubric: dict) -> list[str]:
     return weak_axes
 
 
+def get_refine_contract_errors(eval_result: dict) -> list[object]:
+    errors = eval_result.get("errors", [])
+    if not isinstance(errors, list):
+        return []
+    return [error for error in errors if categorize_failure(str(error)) == "contract_error"]
+
+
 def build_refine_request(
     input_data: dict,
     draft: dict,
@@ -437,21 +444,9 @@ def build_refine_request(
         "brief_hash": input_data["brief_hash"],
         "from_iteration": draft["iteration"],
         "to_iteration": to_iteration,
-        "previous_draft": {
-            "iteration": draft["iteration"],
-            "content": draft["content"],
-        },
-        "critique_summary": critique_artifact.get("summary", ""),
-        "revision_directions": critique_artifact.get("revision_directions", []),
-        "contract_errors": eval_result.get("errors", []),
+        "contract_errors": get_refine_contract_errors(eval_result),
         "weak_axes": weak_axes,
         "weak_axis_rationales": weak_axis_rationales,
-        "original_brief_constraints": input_data.get("brief", {}).get("constraints", {}),
-        "preserve": critique_artifact.get("strengths", []),
-        "do_not_change": [
-            f'topic: {input_data.get("brief", {}).get("topic", "")}',
-            f'intent: {input_data.get("brief", {}).get("intent", "")}',
-        ],
         "revision_priority": revision_priority,
     }
 

@@ -101,7 +101,7 @@ python -B -c "from pathlib import Path; files=['runner.py','validate.py','stages
 | Validate | 검사 대상 JSON, schema, 기계적 계약 | LLM 대화 히스토리 |
 | Refine | input, previous draft, critique, refine request | eval 총점 원문, generator 내부 히스토리 |
 
-특히 Eval은 Critique에 anchor되지 않아야 한다. Refine에는 `weak_axes`, `contract_errors`, `critique_summary`, `revision_instructions`처럼 수정에 필요한 정보만 넘기고, `weighted_total` 같은 총점 원문은 넘기지 않는다.
+특히 Eval은 Critique에 anchor되지 않아야 한다. Refine request에는 `weak_axes`, `contract_errors`, `revision_priority`처럼 runner가 필터링하거나 계산한 신호만 넘기고, `weighted_total` 같은 총점 원문은 넘기지 않는다.
 
 ## 프롬프트 규칙
 
