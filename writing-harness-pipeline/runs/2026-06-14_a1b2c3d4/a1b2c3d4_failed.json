@@ -1,0 +1,116 @@
+{
+  "brief_hash": "a1b2c3d4",
+  "run_id": "2026-06-14_a1b2c3d4",
+  "failed_at": "2026-06-14T16:50:13+09:00",
+  "terminal_reason": "max_iteration_exceeded",
+  "last_iteration": "003",
+  "failure_counts_by_category": {
+    "quality_reject": 3
+  },
+  "last_failures": [
+    {
+      "category": "quality_reject",
+      "rule": "min_total",
+      "severity": "high",
+      "retryable": false,
+      "message": "min_total: 3.84 < 4.0"
+    }
+  ],
+  "lineage": {
+    "input": "a1b2c3d4_input.json",
+    "last_draft": "iter_003/a1b2c3d4_iter-003_draft.json",
+    "last_critique": "iter_003/a1b2c3d4_iter-003_critique.json",
+    "last_eval": "iter_003/a1b2c3d4_iter-003_eval.json"
+  },
+  "iteration_rejections": [
+    {
+      "iteration": "001",
+      "validation": "C:\\Users\\이현웅\\Desktop\\project\\thinking\\writing-harness-pipeline\\runs\\2026-06-14_a1b2c3d4\\iter_001\\a1b2c3d4_iter-001_eval.validation.json",
+      "errors": [
+        "min_total: 3.7 < 4.0"
+      ]
+    },
+    {
+      "iteration": "002",
+      "validation": "C:\\Users\\이현웅\\Desktop\\project\\thinking\\writing-harness-pipeline\\runs\\2026-06-14_a1b2c3d4\\iter_002\\a1b2c3d4_iter-002_eval.validation.json",
+      "errors": [
+        "min_total: 3.65 < 4.0"
+      ]
+    },
+    {
+      "iteration": "003",
+      "validation": "C:\\Users\\이현웅\\Desktop\\project\\thinking\\writing-harness-pipeline\\runs\\2026-06-14_a1b2c3d4\\iter_003\\a1b2c3d4_iter-003_eval.validation.json",
+      "errors": [
+        "min_total: 3.84 < 4.0"
+      ]
+    }
+  ],
+  "config": {
+    "codex_bin": "codex",
+    "codex_access": "dangerously-bypass-approvals-and-sandbox",
+    "agent_models": {
+      "gen": "gpt-5.4-mini",
+      "critique": "gpt-5.4-mini",
+      "eval": "gpt-5.4-mini",
+      "refine": "gpt-5.4-mini"
+    },
+    "iteration": "001",
+    "max_iterations": 3,
+    "timeout_seconds": 600,
+    "rubric_path": "C:\\Users\\이현웅\\Desktop\\project\\thinking\\writing-harness-pipeline\\rubric.yaml",
+    "rubric": {
+      "name": "writing:v1",
+      "scale": {
+        "min": 0,
+        "max": 5
+      },
+      "axes": {
+        "structure": {
+          "weight": 0.3,
+          "scale": {
+            "1": "흐름이 끊기고 주장, 근거, 결론의 연결을 따라가기 어렵다",
+            "3": "기본 흐름은 있으나 전환, 근거 배열, 결론 중 일부가 약하다",
+            "5": "문제의식, 근거, 전환, 결론이 자연스럽게 이어지고 핵심이 선명하다"
+          }
+        },
+        "evidence": {
+          "weight": 0.3,
+          "scale": {
+            "1": "주장이 일반론에 머물고 경험, 사례, 관찰이 거의 없다",
+            "3": "일부 구체 사례가 있으나 핵심 주장 전체를 충분히 받치지는 못한다",
+            "5": "경험, 장면, 관찰, 인용, 수치 중 적절한 근거가 글의 주요 주장을 단단히 받친다"
+          }
+        },
+        "sentence": {
+          "weight": 0.2,
+          "scale": {
+            "1": "문장이 장황하거나 반복이 많아 읽는 흐름이 자주 막힌다",
+            "3": "대체로 읽히지만 일부 문단에서 밀도, 리듬, 군더더기 문제가 보인다",
+            "5": "문장 밀도와 리듬이 안정적이고 군더더기가 적어 끝까지 읽히는 힘이 있다"
+          }
+        },
+        "originality": {
+          "weight": 0.2,
+          "scale": {
+            "1": "누구나 할 수 있는 일반론에 가깝고 고유한 판단이나 언어가 거의 없다",
+            "3": "개인적 관점은 드러나지만 표현이나 발견이 아직 익숙한 범위에 머문다",
+            "5": "이 사람만의 관점, 판단, 언어가 여러 문단에서 뚜렷하게 드러난다"
+          }
+        }
+      },
+      "thresholds": {
+        "min_total": 4.0,
+        "min_axis": {
+          "structure": 3.0,
+          "evidence": 3.0,
+          "sentence": 3.0,
+          "originality": 2.5
+        }
+      }
+    }
+  },
+  "next_actions": [
+    "원본 brief에 구체적 사례와 제약을 보강한다",
+    "반복 실패의 주된 category를 보고 rubric threshold 또는 stage prompt를 조정한다"
+  ]
+}

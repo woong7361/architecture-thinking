@@ -1,0 +1,8 @@
+{
+  "artifact": "eval",
+  "checked_file": "C:\\Users\\이현웅\\Desktop\\project\\thinking\\writing-harness-pipeline\\runs\\2026-06-14_a1b2c3d4\\iter_003\\a1b2c3d4_iter-003_eval.json",
+  "status": "REJECT",
+  "errors": [
+    "min_total: 3.84 < 4.0"
+  ]
+}

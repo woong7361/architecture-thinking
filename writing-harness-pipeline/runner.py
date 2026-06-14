@@ -23,6 +23,7 @@ from validate import validate_file, write_result
 
 PROJECT_DIR = Path(__file__).resolve().parent
 RUNS_DIR = PROJECT_DIR / "runs"
+RUBRIC_PATH = PROJECT_DIR / "rubric.yaml"
 KST = timezone(timedelta(hours=9))
 
 MODEL_CODEX_DEFAULT = None
@@ -41,38 +42,6 @@ AGENT_MODELS = {
     AGENT_CRITIQUE: MODEL_GPT_5_4_MINI,
     AGENT_EVAL: MODEL_GPT_5_4_MINI,
     AGENT_REFINE: MODEL_GPT_5_4_MINI,
-}
-
-DEFAULT_RUBRIC = {
-    "name": "writing:v1",
-    "scale": {"min": 0, "max": 5},
-    "axes": {
-        "structure": {
-            "weight": 0.3,
-            "description": "글의 흐름, 주장과 근거의 배열, 결론의 선명함",
-        },
-        "evidence": {
-            "weight": 0.3,
-            "description": "경험, 사례, 관찰, 인용, 수치가 주장을 받치는 정도",
-        },
-        "sentence": {
-            "weight": 0.2,
-            "description": "문장 밀도, 리듬, 군더더기, 읽히는 힘",
-        },
-        "originality": {
-            "weight": 0.2,
-            "description": "일반론이 아니라 이 사람의 관점과 언어가 드러나는 정도",
-        },
-    },
-    "thresholds": {
-        "min_total": 3.2,
-        "min_axis": {
-            "structure": 3.0,
-            "evidence": 3.0,
-            "sentence": 3.0,
-            "originality": 2.5,
-        },
-    },
 }
 
 FINAL_CHECKED_RULES = ["schema", "brief_hash", "min_total", "min_axis"]
@@ -291,6 +260,19 @@ def write_json(path: Path, data: dict, overwrite: bool = False) -> None:
         raise FileExistsError(f"refusing to overwrite existing file: {path}")
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+def load_rubric(path: Path) -> dict:
+    text = path.read_text(encoding="utf-8")
+    try:
+        import yaml  # type: ignore[import-not-found]
+    except ModuleNotFoundError:
+        data = json.loads(text)
+    else:
+        data = yaml.safe_load(text)
+    if not isinstance(data, dict):
+        raise ValueError(f"expected rubric YAML object: {path}")
+    return data
 
 
 def copy_input(source: Path, destination: Path, overwrite: bool = False) -> None:
@@ -602,6 +584,8 @@ def run(args: argparse.Namespace) -> dict:
     start_iteration = int(args.iteration)
     if args.max_iterations < start_iteration:
         raise ValueError("--max-iterations must be greater than or equal to --iteration")
+    rubric_path = args.rubric.resolve()
+    rubric = load_rubric(rubric_path)
 
     root_context = RunContext.create(
         brief_hash=brief_hash,
@@ -618,13 +602,14 @@ def run(args: argparse.Namespace) -> dict:
         "iteration": args.iteration,
         "max_iterations": args.max_iterations,
         "timeout_seconds": args.timeout_seconds,
-        "rubric": DEFAULT_RUBRIC,
+        "rubric_path": str(rubric_path),
+        "rubric": rubric,
     }
     eval_rejections: list[dict] = []
     last_refine_request_lineage: str | None = None
     progress.line(
         f"run start brief={brief_hash} iteration={args.iteration} max_iterations={args.max_iterations} "
-        f"run_id={root_context.run_id}"
+        f"rubric={rubric.get('name', rubric_path.name)} run_id={root_context.run_id}"
     )
 
     try:
@@ -745,7 +730,7 @@ def run(args: argparse.Namespace) -> dict:
                     token_usage = evaluate(
                         input_path=root_context.copied_input_path,
                         draft_path=context.draft_path,
-                        rubric=DEFAULT_RUBRIC,
+                        rubric=rubric,
                         output_path=temp_eval_path,
                         codex_bin=args.codex_bin,
                         model=config["agent_models"][AGENT_EVAL],
@@ -773,9 +758,9 @@ def run(args: argparse.Namespace) -> dict:
                 artifact="eval",
                 expected_brief_hash=brief_hash,
                 expected_iteration=iteration,
-                rubric=DEFAULT_RUBRIC,
+                rubric=rubric,
             )
-            eval_summary = format_eval_scores(eval_artifact, DEFAULT_RUBRIC)
+            eval_summary = format_eval_scores(eval_artifact, rubric)
             if eval_result["status"] == "PASS":
                 progress.line(f"{iteration_label} eval PASS {eval_summary}")
             else:
@@ -790,7 +775,7 @@ def run(args: argparse.Namespace) -> dict:
                     draft=draft,
                     eval_artifact=eval_artifact,
                     eval_result=eval_result,
-                    rubric=DEFAULT_RUBRIC,
+                    rubric=rubric,
                     refine_request_lineage=last_refine_request_lineage,
                 )
                 write_json(context.final_path, final_artifact, overwrite=args.overwrite)
@@ -854,7 +839,7 @@ def run(args: argparse.Namespace) -> dict:
                     critique_artifact=critique_artifact,
                     eval_artifact=eval_artifact,
                     eval_result=eval_result,
-                    rubric=DEFAULT_RUBRIC,
+                    rubric=rubric,
                     to_iteration=to_iteration,
                 )
             last_refine_request_lineage = f"memory:{iteration}->{to_iteration}"
@@ -933,6 +918,7 @@ def main() -> int:
     parser.add_argument("--eval-model", help="Model for the Eval agent. Defaults to the Codex CLI default model.")
     parser.add_argument("--refine-model", help="Model for the Refine agent. Defaults to the Codex CLI default model.")
     parser.add_argument("--runs-dir", type=Path, default=RUNS_DIR)
+    parser.add_argument("--rubric", type=Path, default=RUBRIC_PATH)
     parser.add_argument("--iteration", default="001")
     parser.add_argument("--max-iterations", type=int, default=3)
     parser.add_argument("--timeout-seconds", type=int, default=600)

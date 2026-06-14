@@ -4,10 +4,10 @@
   "rubric_name": "writing:v1",
   "rubric_scores": {
     "scores": {
-      "structure": 4.2,
-      "evidence": 3.1,
-      "sentence": 3.6,
-      "originality": 3.3
+      "structure": 4,
+      "evidence": 4,
+      "sentence": 4,
+      "originality": 3
     },
     "weights": {
       "structure": 0.3,
@@ -15,16 +15,16 @@
       "sentence": 0.2,
       "originality": 0.2
     },
-    "weighted_total": 3.57
+    "weighted_total": 3.7
   },
   "axis_rationales": {
-    "structure": "문제 인식, 시행착오, 역할 분리, MVP 고정, 다음 실험으로 이어지는 흐름이 분명해 글의 논지가 안정적으로 전개된다.",
-    "evidence": "runner.py, generator.py, validate.py, MVP 경로 같은 구체 명칭은 있으나 실제 사건이나 관찰의 밀도가 낮아 근거가 다소 개념적이다.",
-    "sentence": "문장이 전반적으로 군더더기 없이 읽히고 리듬도 안정적이지만, 표현 패턴이 비슷해 중반부에 약간의 반복감이 있다.",
-    "originality": "파일 계약과 역할 분리를 회고의 핵심 교훈으로 잡은 관점은 명확하지만, 발상 자체는 비교적 익숙해 독자적 색채가 아주 강하진 않다."
+    "structure": "문제의식에서 시행착오, 역할 분리, MVP 고정, 다음 실험으로 흐름이 자연스럽게 이어져 회고의 구조가 안정적이다.",
+    "evidence": "runner.py, generator.py, validate.py와 MVP 범위를 구체적으로 언급해 핵심 주장을 실제 설계 관찰로 받치고 있다.",
+    "sentence": "문장이 대체로 간결하고 반복이 적으며, 문단별 리듬도 안정적이라 끝까지 무리 없이 읽힌다.",
+    "originality": "역할 분리와 파일 계약을 핵심 교훈으로 잡은 점은 분명하지만, 표현과 발견은 아직 익숙한 개발자 회고의 범위 안에 있다."
   },
-  "calibration_note": "평균 3.0을 기준으로 보수적으로 채점했으며, 구체성은 충분하지만 실제 에피소드와 수치가 거의 없어 evidence와 originality는 4점 미만으로 유지했다.",
-  "evaluated_at": "2026-06-14T16:20:26+09:00",
+  "calibration_note": "루브릭 가중치를 그대로 적용해 계산했으며, 구조와 근거는 충분히 강하지만 독창성은 과장하지 않고 보수적으로 봤다.",
+  "evaluated_at": "2026-06-14T16:45:43+09:00",
   "model": "gpt-5.4-mini",
   "metadata": {
     "prompt_version": "eval_system:v1",
@@ -33,10 +33,10 @@
       "a1b2c3d4_iter-001_draft.json"
     ],
     "token_usage": {
-      "input_tokens": 30584,
-      "cached_input_tokens": 16640,
-      "output_tokens": 1534,
-      "reasoning_output_tokens": 1016
+      "input_tokens": 14624,
+      "cached_input_tokens": 2432,
+      "output_tokens": 813,
+      "reasoning_output_tokens": 516
     }
   }
 }
