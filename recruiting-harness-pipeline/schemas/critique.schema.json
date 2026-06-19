@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Analysis Critique",
+  "type": "object",
+  "required": ["brief_hash", "stage", "axis_critiques", "signal_critiques", "critic"],
+  "properties": {
+    "brief_hash": {
+      "type": "string",
+      "description": "입력부터 최종 산출물까지 공유하는 brief hash"
+    },
+    "stage": {
+      "type": "string",
+      "enum": ["critique"]
+    },
+    "axis_critiques": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/axis_critique"
+      }
+    },
+    "signal_critiques": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/signal_critique"
+      }
+    },
+    "critic": {
+      "$ref": "#/$defs/critic"
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "axis_critique": {
+      "type": "object",
+      "required": ["axis", "weakness", "required_action"],
+      "properties": {
+        "axis": {
+          "type": "string",
+          "enum": [
+            "evidence_linkage",
+            "inference_discipline",
+            "pattern_quality",
+            "alternative_reading",
+            "distribution_awareness"
+          ]
+        },
+        "weakness": {
+          "type": "string"
+        },
+        "required_action": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "signal_critique": {
+      "type": "object",
+      "required": ["signal_id", "weaknesses", "required_action"],
+      "properties": {
+        "signal_id": {
+          "type": "string"
+        },
+        "weaknesses": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "required_action": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "critic": {
+      "type": "object",
+      "required": ["summary", "weaknesses", "revision_instructions"],
+      "properties": {
+        "summary": {
+          "type": "string"
+        },
+        "weaknesses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/weakness"
+          }
+        },
+        "revision_instructions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "weakness": {
+      "type": "object",
+      "required": ["weakness_id", "severity", "target_type", "target_id", "issue", "required_action"],
+      "properties": {
+        "weakness_id": {
+          "type": "string",
+          "description": "예: w001"
+        },
+        "severity": {
+          "type": "string",
+          "enum": ["low", "medium", "high"]
+        },
+        "target_type": {
+          "type": "string",
+          "enum": [
+            "analysis",
+            "sample_summary",
+            "frequency_summary",
+            "signal",
+            "evidence_distribution"
+          ]
+        },
+        "target_id": {
+          "type": "string",
+          "description": "signal이면 signal_id, 전체 분석이면 빈 문자열"
+        },
+        "issue": {
+          "type": "string"
+        },
+        "required_action": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

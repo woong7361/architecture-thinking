@@ -1,0 +1,59 @@
+{
+  "name": "recruiting_analysis:v1",
+  "scale": {
+    "min": 0,
+    "max": 5
+  },
+  "axes": {
+    "evidence_linkage": {
+      "weight": 0.3,
+      "scale": {
+        "1": "source_item_ids가 없거나 실제 keyword item과 맞지 않는다",
+        "3": "source_item_ids는 대체로 맞지만 일부 count나 pattern 연결이 약하다",
+        "5": "모든 source_item_ids와 evidence_distribution이 실제 keyword item 분포와 일치한다"
+      }
+    },
+    "inference_discipline": {
+      "weight": 0.25,
+      "scale": {
+        "1": "근거 없는 추론이나 과잉 일반화를 사실처럼 단정한다",
+        "3": "대체로 근거 기반이지만 일부 표현이나 confidence가 다소 강하다",
+        "5": "모든 추론이 근거 item에서 나오며 표본 한계를 반영해 보수적으로 표현한다"
+      }
+    },
+    "pattern_quality": {
+      "weight": 0.2,
+      "scale": {
+        "1": "단순 빈도 나열이거나 관련 없는 item을 묶는다",
+        "3": "반복 패턴은 보이지만 일부 signal의 묶음이나 capability_type이 애매하다",
+        "5": "반복 표현과 문맥이 명확한 signal로 묶이고 capability_type도 자연스럽다"
+      }
+    },
+    "alternative_reading": {
+      "weight": 0.15,
+      "scale": {
+        "1": "다른 해석이나 한계가 없거나 추론을 반복한다",
+        "3": "다른 해석과 한계가 있으나 일부 signal에서 구체성이 부족하다",
+        "5": "모든 signal에 구분되는 다른 해석과 구체적인 한계가 있다"
+      }
+    },
+    "distribution_awareness": {
+      "weight": 0.1,
+      "scale": {
+        "1": "표본 수와 분포 편중을 무시하고 넓게 일반화한다",
+        "3": "분포를 언급하지만 confidence나 한계에 일관되게 반영하지 못한다",
+        "5": "표본 수와 회사 규모/도메인 분포에 맞춰 결론 범위와 confidence를 제한한다"
+      }
+    }
+  },
+  "thresholds": {
+    "min_total": 3.8,
+    "min_axis": {
+      "evidence_linkage": 4.0,
+      "inference_discipline": 4.0,
+      "pattern_quality": 3.0,
+      "alternative_reading": 3.0,
+      "distribution_awareness": 3.0
+    }
+  }
+}

@@ -1,0 +1,312 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Frequency and Subtext Analysis",
+  "type": "object",
+  "required": ["brief_hash", "stage", "sample_summary", "frequency_summary", "signals"],
+  "properties": {
+    "brief_hash": {
+      "type": "string",
+      "description": "입력부터 최종 산출물까지 공유하는 brief hash"
+    },
+    "stage": {
+      "type": "string",
+      "enum": ["analyze"]
+    },
+    "sample_summary": {
+      "$ref": "#/$defs/sample_summary"
+    },
+    "frequency_summary": {
+      "$ref": "#/$defs/frequency_summary"
+    },
+    "signals": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/signal"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "sample_summary": {
+      "type": "object",
+      "required": ["posting_count", "company_size_counts", "domain_counts"],
+      "properties": {
+        "posting_count": {
+          "type": "integer"
+        },
+        "company_size_counts": {
+          "$ref": "#/$defs/company_size_count_map"
+        },
+        "domain_counts": {
+          "$ref": "#/$defs/domain_count_map"
+        }
+      },
+      "additionalProperties": false
+    },
+    "frequency_summary": {
+      "type": "object",
+      "required": ["term_frequencies", "item_type_counts"],
+      "properties": {
+        "term_frequencies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/term_frequency"
+          }
+        },
+        "item_type_counts": {
+          "$ref": "#/$defs/item_type_count_map"
+        }
+      },
+      "additionalProperties": false
+    },
+    "term_frequency": {
+      "type": "object",
+      "required": ["term", "count", "posting_ids"],
+      "properties": {
+        "term": {
+          "type": "string"
+        },
+        "count": {
+          "type": "integer"
+        },
+        "posting_ids": {
+          "$ref": "#/$defs/id_list"
+        }
+      },
+      "additionalProperties": false
+    },
+    "signal": {
+      "type": "object",
+      "required": [
+        "signal_id",
+        "source_item_ids",
+        "evidence_distribution",
+        "surface_pattern",
+        "capability_type",
+        "inferred_expectation",
+        "confidence",
+        "reasoning",
+        "alternative_reading",
+        "limitations"
+      ],
+      "properties": {
+        "signal_id": {
+          "type": "string",
+          "description": "예: s001"
+        },
+        "source_item_ids": {
+          "$ref": "#/$defs/id_list"
+        },
+        "evidence_distribution": {
+          "$ref": "#/$defs/evidence_distribution"
+        },
+        "surface_pattern": {
+          "type": "string"
+        },
+        "capability_type": {
+          "type": "string",
+          "enum": [
+            "scale_operation",
+            "ownership",
+            "product_sense",
+            "collaboration",
+            "execution_speed",
+            "architecture_design",
+            "quality_engineering",
+            "domain_adaptation",
+            "leadership",
+            "learning_agility",
+            "other"
+          ]
+        },
+        "inferred_expectation": {
+          "type": "string"
+        },
+        "confidence": {
+          "type": "string",
+          "enum": ["low", "medium", "high"]
+        },
+        "reasoning": {
+          "type": "string"
+        },
+        "alternative_reading": {
+          "type": "string"
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "evidence_distribution": {
+      "type": "object",
+      "required": [
+        "unique_posting_count",
+        "supporting_item_count",
+        "company_size_counts",
+        "domain_counts",
+        "posting_ids"
+      ],
+      "properties": {
+        "unique_posting_count": {
+          "type": "integer"
+        },
+        "supporting_item_count": {
+          "type": "integer"
+        },
+        "company_size_counts": {
+          "$ref": "#/$defs/company_size_count_map"
+        },
+        "domain_counts": {
+          "$ref": "#/$defs/domain_count_map"
+        },
+        "posting_ids": {
+          "$ref": "#/$defs/id_list"
+        }
+      },
+      "additionalProperties": false
+    },
+    "company_size_count_map": {
+      "type": "object",
+      "required": ["startup", "scaleup", "mid_size", "enterprise", "unknown"],
+      "properties": {
+        "startup": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "scaleup": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "mid_size": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "enterprise": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "unknown": {
+          "$ref": "#/$defs/non_negative_integer"
+        }
+      },
+      "additionalProperties": false
+    },
+    "domain_count_map": {
+      "type": "object",
+      "required": [
+        "education",
+        "healthcare",
+        "finance",
+        "commerce",
+        "saas",
+        "game",
+        "ai",
+        "content",
+        "public_sector",
+        "manufacturing",
+        "mobility",
+        "unknown"
+      ],
+      "properties": {
+        "education": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "healthcare": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "finance": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "commerce": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "saas": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "game": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "ai": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "content": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "public_sector": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "manufacturing": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "mobility": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "unknown": {
+          "$ref": "#/$defs/non_negative_integer"
+        }
+      },
+      "additionalProperties": false
+    },
+    "item_type_count_map": {
+      "type": "object",
+      "required": [
+        "technical_stack",
+        "required_experience",
+        "responsibility",
+        "collaboration",
+        "product_context",
+        "domain_context",
+        "culture",
+        "process",
+        "seniority",
+        "benefit",
+        "other"
+      ],
+      "properties": {
+        "technical_stack": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "required_experience": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "responsibility": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "collaboration": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "product_context": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "domain_context": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "culture": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "process": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "seniority": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "benefit": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "other": {
+          "$ref": "#/$defs/non_negative_integer"
+        }
+      },
+      "additionalProperties": false
+    },
+    "non_negative_integer": {
+      "type": "integer"
+    },
+    "id_list": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
