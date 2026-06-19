@@ -201,7 +201,7 @@ a1b2c3d4_final.json
 
 초기에는 에세이와 회고를 `writing.yaml` 하나로 평가한다.
 
-기본 축은 다음 4개로 시작한다.
+기본 축은 다음 5개로 시작한다.
 
 | 축 | 설명 |
 | --- | --- |
@@ -209,6 +209,7 @@ a1b2c3d4_final.json
 | `evidence` | 경험, 사례, 관찰, 인용, 수치가 주장을 받치는 정도 |
 | `sentence` | 문장 밀도, 리듬, 군더더기, 읽히는 힘 |
 | `originality` | 일반론이 아니라 이 사람의 관점과 언어가 드러나는 정도 |
+| `purpose_fit` | 요청의 목적, 예상 독자, 핵심 질문에 맞는 정도 |
 
 확장 축은 필요할 때만 추가한다.
 
@@ -217,7 +218,7 @@ a1b2c3d4_final.json
 - `tone`: 의도한 화자성과 독자 거리감
 - `length_calibration`: 목표 길이에 맞는 밀도
 
-처음부터 많은 축을 쓰면 평가가 정교해지는 대신 Refine 요청이 산만해질 수 있다. 따라서 기본 운영은 4축으로 시작하고, 필요해질 때만 확장 축이나 글 유형별 루브릭을 분리한다.
+처음부터 많은 축을 쓰면 평가가 정교해지는 대신 Refine 요청이 산만해질 수 있다. 따라서 기본 운영은 5축으로 시작하고, 필요해질 때만 확장 축이나 글 유형별 루브릭을 분리한다.
 
 ## PASS/REJECT 기준
 
@@ -242,6 +243,7 @@ min_axis:
   evidence: 3.0
   sentence: 3.0
   originality: 2.5
+  purpose_fit: 3.0
 max_iterations: 3
 ```
 
@@ -414,26 +416,3 @@ Refiner 시스템 프롬프트는 재작성자 역할을 준다.
 - 7일 이상 지난 PASS run은 archive로 이동
 - 실패 run은 분석이 끝난 뒤 archive로 이동
 - archive 이동 시 파일 내용은 변경하지 않는다
-
-## 현재 설계상 우선 정리할 것
-
-현재 파일 구조와 설계 문서 사이에는 몇 가지 정리 지점이 있다.
-
-- `generator.py`, `critique.py`, `evaluator.py`, `refine.py`는 `stages/`로 이동할지 결정한다.
-- `validate.py`는 `stages/`가 아니라 `validators/` 또는 `contracts/`로 분리할지 결정한다.
-- `critique.py`, `refine.py`의 파일 계약을 위 구조에 맞춘다.
-- `output.schema.json`은 `draft.schema.json`으로 이름을 바꾸는 편이 명확하다.
-- `verdict.schema.json`은 `eval.schema.json`으로 정리하고, validate 결과는 `final.schema.json`과 runner의 Refine payload builder가 필요한 필드만 포함한다.
-- `refine_request.schema.json`은 정식 파일 계약에서 제외하고, 필요해질 때 디버그 artifact로 승격할지 다시 판단한다.
-- `rubric.yaml`은 기본 4축과 확장 축을 구분하도록 정리한다.
-- `prompts/refine_systme.md`는 `prompts/refine_system.md`로 수정한다.
-
-## 성공 기준
-
-이 설계가 잘 동작한다는 것은 다음을 의미한다.
-
-- 초안이 왜 통과했는지 파일만 보고 설명할 수 있다.
-- 초안이 왜 거절됐는지 파일만 보고 설명할 수 있다.
-- Refine 단계가 어떤 약점을 고쳤는지 추적할 수 있다.
-- Generator와 Evaluator가 서로의 역할을 침범하지 않는다.
-- 실패한 run도 다음 프롬프트, 루브릭, 계약 개선에 사용할 수 있다.

@@ -22,23 +22,25 @@
       "properties": {
         "scores": {
           "type": "object",
-          "required": ["structure", "evidence", "sentence", "originality"],
+          "required": ["structure", "evidence", "sentence", "originality", "purpose_fit"],
           "properties": {
             "structure": { "type": "number", "minimum": 0, "maximum": 5 },
             "evidence": { "type": "number", "minimum": 0, "maximum": 5 },
             "sentence": { "type": "number", "minimum": 0, "maximum": 5 },
-            "originality": { "type": "number", "minimum": 0, "maximum": 5 }
+            "originality": { "type": "number", "minimum": 0, "maximum": 5 },
+            "purpose_fit": { "type": "number", "minimum": 0, "maximum": 5 }
           },
           "additionalProperties": false
         },
         "weights": {
           "type": "object",
-          "required": ["structure", "evidence", "sentence", "originality"],
+          "required": ["structure", "evidence", "sentence", "originality", "purpose_fit"],
           "properties": {
             "structure": { "type": "number", "minimum": 0, "maximum": 1 },
             "evidence": { "type": "number", "minimum": 0, "maximum": 1 },
             "sentence": { "type": "number", "minimum": 0, "maximum": 1 },
-            "originality": { "type": "number", "minimum": 0, "maximum": 1 }
+            "originality": { "type": "number", "minimum": 0, "maximum": 1 },
+            "purpose_fit": { "type": "number", "minimum": 0, "maximum": 1 }
           },
           "additionalProperties": false
         },
@@ -52,12 +54,13 @@
     },
     "axis_rationales": {
       "type": "object",
-      "required": ["structure", "evidence", "sentence", "originality"],
+      "required": ["structure", "evidence", "sentence", "originality", "purpose_fit"],
       "properties": {
         "structure": { "type": "string", "minLength": 1 },
         "evidence": { "type": "string", "minLength": 1 },
         "sentence": { "type": "string", "minLength": 1 },
-        "originality": { "type": "string", "minLength": 1 }
+        "originality": { "type": "string", "minLength": 1 },
+        "purpose_fit": { "type": "string", "minLength": 1 }
       },
       "additionalProperties": false
     },

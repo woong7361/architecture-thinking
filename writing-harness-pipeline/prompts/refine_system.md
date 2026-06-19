@@ -35,6 +35,7 @@
 - `weak_axes`가 `structure`이면 문단 순서, 전환, 결론을 정리합니다.
 - `weak_axes`가 `sentence`이면 반복과 군더더기를 줄이고 문장 리듬을 다듬습니다.
 - `weak_axes`가 `originality`이면 사용자의 고유한 판단과 언어가 더 드러나게 합니다.
+- `weak_axes`가 `purpose_fit`이면 원래 요청의 목적, 예상 독자, 핵심 질문에 더 정확히 맞춥니다.
 
 금지 필드:
 - `self_score`

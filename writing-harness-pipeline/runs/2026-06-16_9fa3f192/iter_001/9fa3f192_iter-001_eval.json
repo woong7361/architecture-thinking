@@ -1,0 +1,45 @@
+{
+  "brief_hash": "9fa3f192",
+  "iteration": "001",
+  "rubric_name": "writing:v1",
+  "rubric_scores": {
+    "scores": {
+      "structure": 4.2,
+      "evidence": 3.8,
+      "sentence": 4.1,
+      "originality": 3.6,
+      "purpose_fit": 4.4
+    },
+    "weights": {
+      "structure": 0.25,
+      "evidence": 0.25,
+      "sentence": 0.2,
+      "originality": 0.15,
+      "purpose_fit": 0.15
+    },
+    "weighted_total": 4.03
+  },
+  "axis_rationales": {
+    "structure": "README의 핵심 설계 요소에서 장점, 불편, 보완, 다음 실험으로 이어지는 흐름이 안정적이며 결론도 통제감이라는 중심 감각으로 잘 회수된다.",
+    "evidence": "역할 분리, 파일 핸드오프, 정보 차단, 검증 게이트, 실패 정책 등 README 기반 근거는 구체적이나 실제 사용 중 겪은 장면이나 관찰은 상대적으로 적다.",
+    "sentence": "문장은 차분하고 밀도 있게 이어지며 반복도 크지 않지만, 일부 문단은 설명적 문장이 길게 누적되어 리듬이 다소 평평해진다.",
+    "originality": "하네스를 자동화 도구보다 통제와 추적 장치로 보는 판단은 선명하지만, 표현과 발견의 상당 부분은 설계 리뷰의 익숙한 범위에 머문다.",
+    "purpose_fit": "AI native 개발 방식과 글쓰기 자동화에 관심 있는 개발자를 겨냥해 장단점, 보완점, 다음 실험을 모두 다루며 과장된 생산성 찬양도 피한다."
+  },
+  "calibration_note": "5점은 드물다는 기준에 맞춰, 완성도는 높지만 실제 사용 경험의 장면성과 고유한 발견이 더 필요하다고 보아 4점 초반으로 보정했다.",
+  "evaluated_at": "2026-06-16T22:26:55+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_system:v1",
+    "source_files": [
+      "9fa3f192_input.json",
+      "9fa3f192_iter-001_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 17840,
+      "cached_input_tokens": 2432,
+      "output_tokens": 850,
+      "reasoning_output_tokens": 439
+    }
+  }
+}
