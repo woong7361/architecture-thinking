@@ -6,7 +6,7 @@
   },
   "axes": {
     "evidence_linkage": {
-      "weight": 0.3,
+      "weight": 0.25,
       "scale": {
         "1": "source_item_ids가 없거나 실제 keyword item과 맞지 않는다",
         "3": "source_item_ids는 대체로 맞지만 일부 count나 pattern 연결이 약하다",
@@ -14,15 +14,23 @@
       }
     },
     "inference_discipline": {
-      "weight": 0.25,
+      "weight": 0.2,
       "scale": {
         "1": "근거 없는 추론이나 과잉 일반화를 사실처럼 단정한다",
         "3": "대체로 근거 기반이지만 일부 표현이나 confidence가 다소 강하다",
         "5": "모든 추론이 근거 item에서 나오며 표본 한계를 반영해 보수적으로 표현한다"
       }
     },
+    "subtext_quality": {
+      "weight": 0.15,
+      "scale": {
+        "1": "표면 문구를 과잉해석하거나 팀 내부 사정을 사실처럼 단정한다",
+        "3": "행간 해석은 있으나 일부가 일반론적이거나 지원자 관점 시사점이 약하다",
+        "5": "표면 문구, 가능한 팀 맥락, 지원자 기회를 근거와 한계 안에서 구체적으로 분리한다"
+      }
+    },
     "pattern_quality": {
-      "weight": 0.2,
+      "weight": 0.15,
       "scale": {
         "1": "단순 빈도 나열이거나 관련 없는 item을 묶는다",
         "3": "반복 패턴은 보이지만 일부 signal의 묶음이나 capability_type이 애매하다",
@@ -51,6 +59,7 @@
     "min_axis": {
       "evidence_linkage": 4.0,
       "inference_discipline": 4.0,
+      "subtext_quality": 3.0,
       "pattern_quality": 3.0,
       "alternative_reading": 3.0,
       "distribution_awareness": 3.0

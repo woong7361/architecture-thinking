@@ -1,0 +1,38 @@
+{
+  "brief_hash": "5ba8958d",
+  "stage": "evaluate",
+  "rubric_name": "recruiting_analysis:v1",
+  "axis_scores": [
+    {
+      "axis": "evidence_linkage",
+      "score": 4,
+      "rationale": "signals와 subtext_readings의 source_item_ids 대부분은 keyword_artifacts의 실제 item과 연결되고, evidence_distribution의 unique_posting_count, company_size_counts, domain_counts도 대체로 실제 posting 분포와 일치한다. 다만 frequency_summary의 일부 기술어 집계에는 누락 가능성이 보이고, s003 reasoning에서 source_item_ids에 없는 p038 계열 문맥을 언급하는 등 일부 연결이 완전하지 않다."
+    },
+    {
+      "axis": "inference_discipline",
+      "score": 4,
+      "rationale": "inferred_expectation과 subtext의 plain_translation 대부분이 '가능성이 있다', '읽을 수 있다'처럼 보수적으로 표현되고 confidence, alternative_reading, limitations가 함께 제공된다. 다만 일부 high confidence signal은 회사 규모나 도메인 편중이 있는 상태에서도 비교적 강하게 표현되어 5점 기준에는 약간 못 미친다."
+    },
+    {
+      "axis": "subtext_quality",
+      "score": 4,
+      "rationale": "subtext_readings는 representative_surface_phrases, plain_translation, possible_team_context, candidate_opportunity를 분리하고 있으며 대표 문구도 대체로 keyword item의 source_spans에서 확인된다. 다만 r006처럼 회사 소개 성격 문구를 도메인 규칙 이해로 확장하거나 r009처럼 benefit 문구를 작은 팀 역할 범위로 읽는 부분은 해석 강도가 다소 높다."
+    },
+    {
+      "axis": "pattern_quality",
+      "score": 4,
+      "rationale": "signals는 Java/Spring 기본기, 운영 안정성, DB 정합성, DevOps, AI 적용, 문서화, ownership 등 반복 표현을 비교적 명확한 capability_type으로 묶고 있다. 다만 s002와 s008, s003와 s010처럼 일부 패턴이 겹치고, s010은 코드 리뷰·테스트·AI 코드리뷰 자동화·DB 튜닝 효과 검증이 섞여 있어 묶음의 선명도가 조금 떨어진다."
+    },
+    {
+      "axis": "alternative_reading",
+      "score": 5,
+      "rationale": "모든 signal에 alternative_reading과 limitations가 있으며, 관용구 가능성, 채용 브랜딩 가능성, 우대사항 수준 가능성, 실제 권한·책임 범위 불명확성 등 주된 반대 해석이 구분되어 제시된다. subtext_readings에도 별도 alternative_reading과 limitations가 반복적으로 포함되어 있다."
+    },
+    {
+      "axis": "distribution_awareness",
+      "score": 4,
+      "rationale": "각 signal과 subtext에 evidence_distribution이 포함되고, 일부 reasoning은 startup·scaleup·SaaS 편중이나 특정 도메인 집중을 직접 언급한다. 다만 analysis_goal이 회사 규모별 언어 차이 분석인데 최종 신호들은 규모별 차이를 체계적으로 대비하기보다 전체 반복 패턴 중심으로 정리되어 있어 분포 인식이 결론 구조에 완전히 반영되지는 않았다."
+    }
+  ],
+  "summary": "전체적으로 근거 item 연결, 분포 집계, 보수적 추론, 대안 해석을 잘 갖춘 평가 가능한 analysis다. 주요 감점 요인은 일부 집계·연결의 작은 불일치, 몇몇 signal의 묶음 겹침, 그리고 회사 규모별 차이보다는 전체 반복 패턴 중심으로 결론이 구성된 점이다."
+}

@@ -405,6 +405,52 @@ Keyword Extract 금지 필드:
       "alternative_reading": "현재 사용 중인 기술 스택에 바로 적응할 수 있는 사람을 찾는 의미일 수도 있다.",
       "limitations": ["표본 수가 3건이라 강한 일반화는 어렵다."]
     }
+  ],
+  "subtext_readings": [
+    {
+      "reading_id": "r001",
+      "source_item_ids": ["p023-k008", "p033-k002", "p040-k011"],
+      "linked_signal_ids": ["s001"],
+      "evidence_distribution": {
+        "unique_posting_count": 3,
+        "supporting_item_count": 3,
+        "company_size_counts": {
+          "startup": 0,
+          "scaleup": 2,
+          "mid_size": 1,
+          "enterprise": 0,
+          "unknown": 0
+        },
+        "domain_counts": {
+          "education": 1,
+          "healthcare": 0,
+          "finance": 0,
+          "commerce": 0,
+          "saas": 2,
+          "game": 0,
+          "ai": 0,
+          "content": 0,
+          "public_sector": 0,
+          "manufacturing": 0,
+          "mobility": 0,
+          "unknown": 0
+        },
+        "posting_ids": ["p023", "p033", "p040"]
+      },
+      "surface_phrase_group": "주도성 / 문제 해결 / 먼저 제안",
+      "representative_surface_phrases": [
+        "원활하고 주도적인 커뮤니케이션 능력",
+        "프로젝트를 주도적으로 이끌어본 경험이 있으신 분",
+        "기존 코드/시스템의 비효율이나 구조적 문제를 발견하고 개선을 주도해본 경험"
+      ],
+      "plain_translation": "시키는 일만 기다리기보다 문제를 먼저 발견하고 해결 방향을 제안하는 사람을 원할 가능성이 있다.",
+      "possible_team_context": "업무 범위가 명확히 쪼개져 있지 않거나 리더가 모든 문제를 직접 정의해주기 어려운 환경일 수 있다.",
+      "candidate_opportunity": "지원자는 주도적이라는 표현보다 문제 발견, 제안, 실행, 결과까지 이어진 사례를 보여주는 편이 강하다.",
+      "confidence": "medium",
+      "reasoning": "주도, 먼저 제안, 문제 발견, 개선 주도 표현이 여러 공고에서 반복된다.",
+      "alternative_reading": "일부는 실제 조직 결핍보다 일반적인 인재상 문구일 수 있다.",
+      "limitations": ["팀 내부 상황은 공고만으로 단정할 수 없다."]
+    }
   ]
 }
 ```
@@ -426,8 +472,24 @@ Keyword Extract 금지 필드:
 - `signals[].reasoning`
 - `signals[].alternative_reading`
 - `signals[].limitations`
+- `subtext_readings`
+- `subtext_readings[].reading_id`
+- `subtext_readings[].source_item_ids`
+- `subtext_readings[].linked_signal_ids`
+- `subtext_readings[].evidence_distribution`
+- `subtext_readings[].surface_phrase_group`
+- `subtext_readings[].representative_surface_phrases`
+- `subtext_readings[].plain_translation`
+- `subtext_readings[].possible_team_context`
+- `subtext_readings[].candidate_opportunity`
+- `subtext_readings[].confidence`
+- `subtext_readings[].reasoning`
+- `subtext_readings[].alternative_reading`
+- `subtext_readings[].limitations`
 
 `evidence_distribution`은 signal이 적용되는 일반화 범위가 아니라, 이 입력 묶음 안에서 해당 패턴이 어디에서 관찰되었는지를 나타낸다. `unique_posting_count`는 몇 개 공고에서 관찰됐는지, `supporting_item_count`는 근거 item이 총 몇 개인지를 뜻한다. 예를 들어 `company_size_counts.startup = 3`은 "스타트업 전체가 그렇다"가 아니라 "이번 입력에서 startup으로 표시된 공고 3건에서 관찰되었다"는 뜻이다.
+
+`subtext_readings`는 전체 keyword item을 모두 번역하는 목록이 아니라, 반복 빈도와 해석 가치가 높은 채용 문구 묶음을 최대 10개만 선정한 행간 해석이다. `representative_surface_phrases`는 keyword item의 `source_spans[].text`에서 가져온 대표 문구이고, `plain_translation`, `possible_team_context`, `candidate_opportunity`는 각각 실제 기대, 가능한 팀 맥락, 지원자 관점의 기회를 분리한다. 팀 내부 사정은 공고만으로 단정하지 않고 가설로 표현한다.
 
 권장 `capability_type` 값:
 
@@ -639,6 +701,7 @@ Report의 `claim_scope`는 최종 리포트에서 claim을 어디까지 말할�
 - keyword item에는 `item_id`, `source_spans[].text`, `terms`가 있어야 한다.
 - keyword item에는 `inferred_expectation`, `confidence`, `reasoning`, `alternative_reading`, `capability_type`이 없어야 한다.
 - analysis signal에는 `source_item_ids`, `evidence_distribution`, `surface_pattern`, `capability_type`, `inferred_expectation`, `confidence`, `reasoning`, `alternative_reading`이 있어야 한다.
+- analysis subtext_reading에는 `source_item_ids`, `linked_signal_ids`, `evidence_distribution`, `representative_surface_phrases`, `plain_translation`, `possible_team_context`, `candidate_opportunity`, `confidence`, `alternative_reading`이 있어야 한다.
 - eval의 `signal_reviews[].signal_id`는 analysis의 signal id를 참조해야 한다.
 - report의 `claims[].evidence_signal_ids`는 analysis의 signal id를 참조해야 한다.
 - final의 lineage 파일들은 같은 `brief_hash`를 공유해야 한다.

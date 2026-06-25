@@ -1,0 +1,78 @@
+{
+  "brief_hash": "5ba8958d",
+  "stage": "critique",
+  "axis_critiques": [
+    {
+      "axis": "evidence_linkage",
+      "weakness": "frequency_summary.term_frequencies의 count와 posting_ids가 여러 항목에서 불일치한다. 예: java는 count 32인데 posting_ids는 18개, spring boot는 count 22인데 posting_ids는 14개, 서류전형은 count 20인데 posting_ids는 17개다. 이 때문에 빈도 요약과 이를 근거로 삼은 일부 signal의 근거 연결 신뢰도가 약해진다.",
+      "required_action": "term_frequencies 전체를 keyword_artifacts 기준으로 재계산한다. count가 '등장 item 수'인지 '고유 posting 수'인지 하나로 고정하고, posting_ids는 count 산식과 일치하게 맞춘다. 가능하면 supporting_item_count와 unique_posting_count를 분리해 빈도 요약에도 명시한다."
+    },
+    {
+      "axis": "distribution_awareness",
+      "weakness": "signals의 evidence_distribution은 대체로 source_item_ids와 맞지만, frequency_summary의 count 오류가 규모별/도메인별 반복성 판단에 간접 영향을 준다. 특히 s001처럼 빈도 기반 표현이 강한 signal은 실제 고유 공고 수와 등장 횟수를 구분해야 한다.",
+      "required_action": "각 signal의 evidence_distribution을 source_item_ids에서 다시 산출하고, surface_pattern과 reasoning에서는 '고유 공고 수'와 'item 등장 수'를 구분해 표현한다. count 오류가 있던 term을 근거로 confidence를 유지할 경우 limitations에 빈도 산식 변경 여부를 반영한다."
+    }
+  ],
+  "signal_critiques": [
+    {
+      "signal_id": "s001",
+      "weaknesses": [
+        "Java/Spring 반복성을 주장하지만 frequency_summary의 java, spring boot count가 posting_ids 개수와 맞지 않아 근거 수치가 불안정하다.",
+        "source_item_ids는 실제 item과 대체로 맞지만, surface_pattern과 reasoning에서 '반복된다'는 표현이 고유 공고 수 기준인지 item 등장 수 기준인지 불명확하다."
+      ],
+      "required_action": "s001의 source_item_ids를 유지하되 evidence_distribution.unique_posting_count, supporting_item_count, frequency_summary의 java/spring boot/rdbms/rest api 산식을 다시 맞춘다. reasoning에는 '13개 고유 공고에서 관찰'처럼 source_item_ids 기준 수치를 직접 사용하고, frequency_summary count를 그대로 인용하지 않는다."
+    },
+    {
+      "signal_id": "s010",
+      "weaknesses": [
+        "코드 리뷰, 테스트, 검증 체계, 코드리뷰테스트가 함께 묶여 있어 source_item_ids 간 문맥이 일부 섞인다.",
+        "p023-k010은 hiring_process의 코드리뷰테스트이고 p034-k001은 DB 튜닝 효과 검증 체계라, 개발 품질 문화의 근거로 쓰려면 responsibility/required_experience의 코드 리뷰·테스트 근거와 구분해야 한다."
+      ],
+      "required_action": "s010은 source_item_ids를 재검토해 '개발 문화/품질 습관' 근거와 '채용 전형/업무 산출물 검증' 근거를 분리한다. 유지한다면 alternative_reading과 limitations에 process item과 responsibility item이 섞였다는 한계를 명시하고 confidence를 보수적으로 유지한다."
+    }
+  ],
+  "critic": {
+    "summary": "주요 약점은 분석 내용의 해석보다 기계적 근거 연결이다. 다음 analyze는 frequency_summary의 count 산식을 먼저 고정하고, 그 산식에 맞춰 posting_ids와 signal reasoning을 다시 정렬해야 한다.",
+    "weaknesses": [
+      {
+        "weakness_id": "w001",
+        "severity": "high",
+        "target_type": "frequency_summary",
+        "target_id": "",
+        "issue": "term_frequencies의 count와 posting_ids가 반복적으로 불일치해 evidence_linkage 축의 핵심 결함이 된다.",
+        "required_action": "keyword_artifacts의 모든 items.terms를 기준으로 term별 등장 item 수와 고유 posting 수를 재계산하고, count와 posting_ids가 같은 기준을 쓰도록 수정한다."
+      },
+      {
+        "weakness_id": "w002",
+        "severity": "medium",
+        "target_type": "signal",
+        "target_id": "s001",
+        "issue": "s001의 Java/Spring 기본기 패턴은 타당해 보이나 frequency_summary 오류의 영향을 받아 반복성 근거가 과장되어 보일 수 있다.",
+        "required_action": "s001 reasoning에서 잘못된 frequency_summary count를 참조하지 말고 source_item_ids와 evidence_distribution의 고유 공고 수 기준으로 다시 설명한다."
+      },
+      {
+        "weakness_id": "w003",
+        "severity": "medium",
+        "target_type": "signal",
+        "target_id": "s010",
+        "issue": "품질공학 패턴 안에 코드 리뷰 문화, 채용 전형의 코드리뷰테스트, DB 튜닝 효과 검증이 함께 들어가 문맥 연결이 느슨하다.",
+        "required_action": "s010의 source_item_ids를 품질 검증 습관과 직접 연결되는 item 중심으로 좁히거나, 서로 다른 문맥을 limitations와 alternative_reading에 명확히 분리한다."
+      },
+      {
+        "weakness_id": "w004",
+        "severity": "medium",
+        "target_type": "evidence_distribution",
+        "target_id": "",
+        "issue": "signal별 evidence_distribution은 대체로 맞지만 frequency_summary 오류 때문에 분석 전체의 분포 기반 주장에 대한 신뢰가 낮아진다.",
+        "required_action": "frequency_summary 재계산 후 각 signal의 evidence_distribution.company_size_counts, domain_counts, posting_ids를 source_item_ids에서 다시 산출해 불일치 여부를 점검한다."
+      }
+    ],
+    "revision_instructions": [
+      "frequency_summary.term_frequencies를 먼저 전면 재계산한다. count의 의미를 item 등장 횟수로 둘지 고유 posting 수로 둘지 결정하고, posting_ids 배열과 모순되지 않게 맞춘다.",
+      "count가 item 등장 횟수라면 posting_ids 개수와 다를 수 있으므로 frequency_summary에 unique_posting_count 같은 별도 필드를 둘 수 있는지 schema를 확인한다. schema 변경이 불가하면 count를 고유 posting 수로 맞춘다.",
+      "s001의 reasoning, surface_pattern, confidence는 재계산된 source_item_ids와 evidence_distribution만 근거로 다시 작성한다. 'Java count 32'처럼 불일치했던 빈도 수치는 사용하지 않는다.",
+      "s010은 source_item_ids별 section과 item_type을 확인해 코드 리뷰·테스트·검증이라는 같은 패턴으로 묶을 수 있는지 재판단한다. 묶음이 유지되면 process item과 responsibility item이 섞인 한계를 limitations에 직접 적는다.",
+      "전체 signals와 subtext_readings의 evidence_distribution을 source_item_ids에서 다시 산출해 unique_posting_count, supporting_item_count, company_size_counts, domain_counts, posting_ids가 실제 keyword item과 일치하는지 검증한다."
+    ]
+  }
+}

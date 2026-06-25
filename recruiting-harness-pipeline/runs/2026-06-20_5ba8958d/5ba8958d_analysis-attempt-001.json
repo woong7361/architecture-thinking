@@ -1,0 +1,1713 @@
+{
+  "brief_hash": "5ba8958d",
+  "stage": "analyze",
+  "sample_summary": {
+    "posting_count": 32,
+    "company_size_counts": {
+      "startup": 10,
+      "scaleup": 9,
+      "mid_size": 8,
+      "enterprise": 5,
+      "unknown": 0
+    },
+    "domain_counts": {
+      "education": 2,
+      "healthcare": 1,
+      "finance": 6,
+      "commerce": 1,
+      "saas": 7,
+      "game": 0,
+      "ai": 5,
+      "content": 3,
+      "public_sector": 0,
+      "manufacturing": 0,
+      "mobility": 2,
+      "unknown": 5
+    }
+  },
+  "frequency_summary": {
+    "term_frequencies": [
+      {
+        "term": "java",
+        "count": 32,
+        "posting_ids": [
+          "p001",
+          "p002",
+          "p004",
+          "p005",
+          "p007",
+          "p012",
+          "p013",
+          "p019",
+          "p021",
+          "p024",
+          "p026",
+          "p028",
+          "p029",
+          "p031",
+          "p034",
+          "p036",
+          "p037",
+          "p040"
+        ]
+      },
+      {
+        "term": "spring boot",
+        "count": 22,
+        "posting_ids": [
+          "p001",
+          "p004",
+          "p012",
+          "p013",
+          "p017",
+          "p019",
+          "p021",
+          "p024",
+          "p026",
+          "p028",
+          "p031",
+          "p036",
+          "p037",
+          "p040"
+        ]
+      },
+      {
+        "term": "aws",
+        "count": 17,
+        "posting_ids": [
+          "p001",
+          "p005",
+          "p007",
+          "p011",
+          "p017",
+          "p019",
+          "p021",
+          "p028",
+          "p029",
+          "p031",
+          "p040"
+        ]
+      },
+      {
+        "term": "mysql",
+        "count": 16,
+        "posting_ids": [
+          "p001",
+          "p011",
+          "p012",
+          "p013",
+          "p019",
+          "p020",
+          "p021",
+          "p024",
+          "p026",
+          "p028",
+          "p030",
+          "p031",
+          "p034",
+          "p037"
+        ]
+      },
+      {
+        "term": "git",
+        "count": 14,
+        "posting_ids": [
+          "p001",
+          "p002",
+          "p004",
+          "p005",
+          "p012",
+          "p013",
+          "p014",
+          "p016",
+          "p019",
+          "p020",
+          "p021",
+          "p026",
+          "p031",
+          "p040"
+        ]
+      },
+      {
+        "term": "docker",
+        "count": 13,
+        "posting_ids": [
+          "p005",
+          "p011",
+          "p013",
+          "p014",
+          "p016",
+          "p018",
+          "p020",
+          "p029",
+          "p030",
+          "p031",
+          "p034"
+        ]
+      },
+      {
+        "term": "python",
+        "count": 11,
+        "posting_ids": [
+          "p005",
+          "p007",
+          "p014",
+          "p016",
+          "p018",
+          "p020",
+          "p021",
+          "p026",
+          "p033",
+          "p040"
+        ]
+      },
+      {
+        "term": "redis",
+        "count": 10,
+        "posting_ids": [
+          "p001",
+          "p005",
+          "p012",
+          "p018",
+          "p019",
+          "p024",
+          "p030",
+          "p031",
+          "p032"
+        ]
+      },
+      {
+        "term": "rest api",
+        "count": 10,
+        "posting_ids": [
+          "p014",
+          "p018",
+          "p019",
+          "p024",
+          "p026",
+          "p028",
+          "p034",
+          "p037",
+          "p040"
+        ]
+      },
+      {
+        "term": "nosql",
+        "count": 10,
+        "posting_ids": [
+          "p005",
+          "p017",
+          "p021",
+          "p023",
+          "p024",
+          "p031",
+          "p036"
+        ]
+      },
+      {
+        "term": "kafka",
+        "count": 9,
+        "posting_ids": [
+          "p001",
+          "p012",
+          "p030",
+          "p031",
+          "p032",
+          "p036",
+          "p040"
+        ]
+      },
+      {
+        "term": "typescript",
+        "count": 7,
+        "posting_ids": [
+          "p011",
+          "p014",
+          "p020",
+          "p030",
+          "p032"
+        ]
+      },
+      {
+        "term": "node.js",
+        "count": 7,
+        "posting_ids": [
+          "p001",
+          "p011",
+          "p014",
+          "p020",
+          "p032",
+          "p040"
+        ]
+      },
+      {
+        "term": "kubernetes",
+        "count": 7,
+        "posting_ids": [
+          "p001",
+          "p011",
+          "p023",
+          "p030",
+          "p031",
+          "p034"
+        ]
+      },
+      {
+        "term": "msa",
+        "count": 7,
+        "posting_ids": [
+          "p001",
+          "p023",
+          "p028",
+          "p033",
+          "p036",
+          "p038",
+          "p040"
+        ]
+      },
+      {
+        "term": "rdbms",
+        "count": 7,
+        "posting_ids": [
+          "p002",
+          "p023",
+          "p024",
+          "p026",
+          "p031",
+          "p036",
+          "p037"
+        ]
+      },
+      {
+        "term": "spring framework",
+        "count": 7,
+        "posting_ids": [
+          "p001",
+          "p023",
+          "p024",
+          "p026",
+          "p037",
+          "p040"
+        ]
+      },
+      {
+        "term": "ci/cd",
+        "count": 6,
+        "posting_ids": [
+          "p011",
+          "p012",
+          "p016",
+          "p021",
+          "p029",
+          "p031"
+        ]
+      },
+      {
+        "term": "fastapi",
+        "count": 6,
+        "posting_ids": [
+          "p014",
+          "p016",
+          "p018",
+          "p033"
+        ]
+      },
+      {
+        "term": "협업",
+        "count": 7,
+        "posting_ids": [
+          "p001",
+          "p002",
+          "p011",
+          "p019",
+          "p026",
+          "p031",
+          "p033"
+        ]
+      },
+      {
+        "term": "커뮤니케이션",
+        "count": 5,
+        "posting_ids": [
+          "p011",
+          "p015",
+          "p029",
+          "p037"
+        ]
+      },
+      {
+        "term": "장애 대응",
+        "count": 4,
+        "posting_ids": [
+          "p001",
+          "p011",
+          "p012",
+          "p015"
+        ]
+      },
+      {
+        "term": "대규모 트래픽",
+        "count": 4,
+        "posting_ids": [
+          "p001",
+          "p015",
+          "p023",
+          "p036"
+        ]
+      },
+      {
+        "term": "ai 에이전트",
+        "count": 3,
+        "posting_ids": [
+          "p029",
+          "p032"
+        ]
+      },
+      {
+        "term": "claude code",
+        "count": 3,
+        "posting_ids": [
+          "p017",
+          "p032",
+          "p040"
+        ]
+      },
+      {
+        "term": "코드 리뷰",
+        "count": 3,
+        "posting_ids": [
+          "p002",
+          "p019",
+          "p020"
+        ]
+      },
+      {
+        "term": "서류전형",
+        "count": 20,
+        "posting_ids": [
+          "p002",
+          "p004",
+          "p011",
+          "p012",
+          "p014",
+          "p015",
+          "p016",
+          "p019",
+          "p021",
+          "p024",
+          "p025",
+          "p030",
+          "p033",
+          "p035",
+          "p036",
+          "p037",
+          "p038"
+        ]
+      },
+      {
+        "term": "최종합격",
+        "count": 18,
+        "posting_ids": [
+          "p004",
+          "p011",
+          "p012",
+          "p014",
+          "p016",
+          "p019",
+          "p020",
+          "p021",
+          "p025",
+          "p030",
+          "p031",
+          "p033",
+          "p035",
+          "p037"
+        ]
+      },
+      {
+        "term": "과제전형",
+        "count": 3,
+        "posting_ids": [
+          "p011",
+          "p024",
+          "p040"
+        ]
+      }
+    ],
+    "item_type_counts": {
+      "technical_stack": 29,
+      "required_experience": 58,
+      "responsibility": 51,
+      "collaboration": 11,
+      "product_context": 15,
+      "domain_context": 17,
+      "culture": 18,
+      "process": 28,
+      "seniority": 17,
+      "benefit": 20,
+      "other": 2
+    }
+  },
+  "signals": [
+    {
+      "signal_id": "s001",
+      "source_item_ids": [
+        "p001-k005",
+        "p002-k006",
+        "p004-k003",
+        "p012-k003",
+        "p013-k004",
+        "p019-k009",
+        "p021-k006",
+        "p024-k004",
+        "p026-k005",
+        "p028-k005",
+        "p031-k006",
+        "p037-k002",
+        "p040-k005"
+      ],
+      "evidence_distribution": {
+        "unique_posting_count": 13,
+        "supporting_item_count": 13,
+        "company_size_counts": {
+          "startup": 3,
+          "scaleup": 3,
+          "mid_size": 4,
+          "enterprise": 3,
+          "unknown": 0
+        },
+        "domain_counts": {
+          "education": 0,
+          "healthcare": 1,
+          "finance": 3,
+          "commerce": 0,
+          "saas": 4,
+          "game": 0,
+          "ai": 1,
+          "content": 1,
+          "public_sector": 0,
+          "manufacturing": 0,
+          "mobility": 0,
+          "unknown": 3
+        },
+        "posting_ids": [
+          "p001",
+          "p002",
+          "p004",
+          "p012",
+          "p013",
+          "p019",
+          "p021",
+          "p024",
+          "p026",
+          "p028",
+          "p031",
+          "p037",
+          "p040"
+        ]
+      },
+      "surface_pattern": "Java, Spring Boot 또는 Spring Framework, RDBMS, REST API가 기본 백엔드 역량 묶음으로 반복된다.",
+      "capability_type": "architecture_design",
+      "inferred_expectation": "이번 입력에서는 특정 도메인보다 JVM/Spring 기반 서버를 설계, 구현, 운영할 수 있는 검증된 기본기를 기대할 가능성이 있다.",
+      "confidence": "high",
+      "reasoning": "기업 규모와 도메인을 가로질러 Java/Spring, RDBMS, REST API가 반복되며, 단순 기술명뿐 아니라 설계, 운영, 개발 경험과 함께 등장한다.",
+      "alternative_reading": "일부 공고에서는 실제 요구 역량보다 사람인 기술 태그나 범용 백엔드 키워드가 넓게 붙었을 가능성도 있다.",
+      "limitations": [
+        "기술 태그 위주로 추출된 공고가 일부 포함되어 세부 수준의 요구 강도는 확인하기 어렵다."
+      ]
+    },
+    {
+      "signal_id": "s002",
+      "source_item_ids": [
+        "p001-k003",
+        "p001-k004",
+        "p011-k006",
+        "p012-k002",
+        "p015-k003",
+        "p015-k008",
+        "p019-k005",
+        "p023-k005",
+        "p028-k003",
+        "p037-k005",
+        "p038-k003",
+        "p040-k002"
+      ],
+      "evidence_distribution": {
+        "unique_posting_count": 10,
+        "supporting_item_count": 12,
+        "company_size_counts": {
+          "startup": 4,
+          "scaleup": 3,
+          "mid_size": 2,
+          "enterprise": 1,
+          "unknown": 0
+        },
+        "domain_counts": {
+          "education": 0,
+          "healthcare": 1,
+          "finance": 2,
+          "commerce": 0,
+          "saas": 5,
+          "game": 0,
+          "ai": 0,
+          "content": 0,
+          "public_sector": 0,
+          "manufacturing": 0,
+          "mobility": 0,
+          "unknown": 2
+        },
+        "posting_ids": [
+          "p001",
+          "p011",
+          "p012",
+          "p015",
+          "p019",
+          "p023",
+          "p028",
+          "p037",
+          "p038",
+          "p040"
+        ]
+      },
+      "surface_pattern": "장애 대응, 모니터링, 트러블슈팅, 재발 방지, 시스템 안정성 표현이 반복된다.",
+      "capability_type": "scale_operation",
+      "inferred_expectation": "서비스를 만든 뒤 끝나는 개발자가 아니라 운영 중 발생하는 장애와 성능 문제를 지표, 로그, 구조 개선으로 다룰 사람을 기대할 가능성이 있다.",
+      "confidence": "high",
+      "reasoning": "SRE, 결제, SaaS, 헬스케어, 금융 등에서 운영 안정성 표현이 반복되고, 장애 대응이 설계 개선이나 모니터링과 함께 제시된다.",
+      "alternative_reading": "운영 안정성 표현은 백엔드 공고의 관용구일 수 있으며 실제 온콜이나 장애 책임 범위는 공고만으로 확정할 수 없다.",
+      "limitations": [
+        "장애 대응의 빈도와 강도, 온콜 여부는 keyword item만으로 알 수 없다."
+      ]
+    },
+    {
+      "signal_id": "s003",
+      "source_item_ids": [
+        "p011-k006",
+        "p014-k001",
+        "p015-k002",
+        "p019-k004",
+        "p020-k001",
+        "p021-k006",
+        "p024-k005",
+        "p028-k005",
+        "p031-k006",
+        "p034-k001",
+        "p034-k003",
+        "p034-k005",
+        "p034-k007",
+        "p036-k004",
+        "p037-k003"
+      ],
+      "evidence_distribution": {
+        "unique_posting_count": 12,
+        "supporting_item_count": 15,
+        "company_size_counts": {
+          "startup": 5,
+          "scaleup": 4,
+          "mid_size": 3,
+          "enterprise": 0,
+          "unknown": 0
+        },
+        "domain_counts": {
+          "education": 0,
+          "healthcare": 1,
+          "finance": 1,
+          "commerce": 1,
+          "saas": 3,
+          "game": 0,
+          "ai": 2,
+          "content": 0,
+          "public_sector": 0,
+          "manufacturing": 0,
+          "mobility": 0,
+          "unknown": 4
+        },
+        "posting_ids": [
+          "p011",
+          "p014",
+          "p015",
+          "p019",
+          "p020",
+          "p021",
+          "p024",
+          "p028",
+          "p031",
+          "p034",
+          "p036",
+          "p037"
+        ]
+      },
+      "surface_pattern": "DB 설계, 데이터 정합성, 쿼리 최적화, 인덱스, 모델링, 상태 전이 표현이 반복된다.",
+      "capability_type": "quality_engineering",
+      "inferred_expectation": "데이터를 저장하는 수준을 넘어 도메인 규칙, 정합성, 성능까지 고려해 데이터 구조를 책임질 사람을 기대할 가능성이 있다.",
+      "confidence": "high",
+      "reasoning": "스타트업부터 스케일업까지 DB 설계와 쿼리 최적화가 책임 또는 자격요건으로 반복되며, p019와 p038처럼 상태 전이와 트랜잭션 맥락이 함께 나타난다.",
+      "alternative_reading": "일부 공고에서는 DB 경험이 깊은 모델링 역량보다 CRUD 구현 경험을 의미할 수 있다.",
+      "limitations": [
+        "각 공고의 실제 데이터 규모나 정합성 요구 수준은 원문 전체 없이 확인할 수 없다."
+      ]
+    },
+    {
+      "signal_id": "s004",
+      "source_item_ids": [
+        "p001-k007",
+        "p011-k005",
+        "p012-k003",
+        "p014-k004",
+        "p016-k007",
+        "p019-k009",
+        "p020-k003",
+        "p021-k008",
+        "p023-k005",
+        "p029-k006",
+        "p031-k007",
+        "p032-k005",
+        "p036-k006"
+      ],
+      "evidence_distribution": {
+        "unique_posting_count": 13,
+        "supporting_item_count": 13,
+        "company_size_counts": {
+          "startup": 6,
+          "scaleup": 3,
+          "mid_size": 3,
+          "enterprise": 1,
+          "unknown": 0
+        },
+        "domain_counts": {
+          "education": 0,
+          "healthcare": 0,
+          "finance": 1,
+          "commerce": 1,
+          "saas": 6,
+          "game": 0,
+          "ai": 2,
+          "content": 1,
+          "public_sector": 0,
+          "manufacturing": 0,
+          "mobility": 0,
+          "unknown": 2
+        },
+        "posting_ids": [
+          "p001",
+          "p011",
+          "p012",
+          "p014",
+          "p016",
+          "p019",
+          "p020",
+          "p021",
+          "p023",
+          "p029",
+          "p031",
+          "p032",
+          "p036"
+        ]
+      },
+      "surface_pattern": "Docker, Kubernetes, CI/CD, AWS, 배포 자동화, 인프라 운영 경험이 백엔드 요구와 함께 반복된다.",
+      "capability_type": "scale_operation",
+      "inferred_expectation": "백엔드 개발자가 코드 구현뿐 아니라 배포, 운영 환경, 클라우드 자원과의 연결까지 다룰 수 있기를 기대할 가능성이 있다.",
+      "confidence": "high",
+      "reasoning": "특히 startup과 SaaS 계열에서 CI/CD, Docker, AWS가 책임 범위에 포함되며, mid_size와 scaleup에서도 운영 경험과 클라우드 기반 개발이 반복된다.",
+      "alternative_reading": "전담 DevOps가 없는 조직의 넓은 역할 요구일 수도 있고, 단순 사용 경험 수준의 우대사항일 수도 있다.",
+      "limitations": [
+        "전담 인프라 조직 유무와 실제 운영 권한 범위는 확인할 수 없다."
+      ]
+    },
+    {
+      "signal_id": "s005",
+      "source_item_ids": [
+        "p004-k004",
+        "p014-k003",
+        "p014-k011",
+        "p016-k003",
+        "p016-k007",
+        "p018-k002",
+        "p018-k003",
+        "p029-k002",
+        "p029-k006",
+        "p032-k003",
+        "p032-k006",
+        "p040-k005",
+        "p040-k007"
+      ],
+      "evidence_distribution": {
+        "unique_posting_count": 7,
+        "supporting_item_count": 13,
+        "company_size_counts": {
+          "startup": 3,
+          "scaleup": 2,
+          "mid_size": 1,
+          "enterprise": 1,
+          "unknown": 0
+        },
+        "domain_counts": {
+          "education": 0,
+          "healthcare": 0,
+          "finance": 0,
+          "commerce": 0,
+          "saas": 2,
+          "game": 0,
+          "ai": 3,
+          "content": 2,
+          "public_sector": 0,
+          "manufacturing": 0,
+          "mobility": 0,
+          "unknown": 0
+        },
+        "posting_ids": [
+          "p004",
+          "p014",
+          "p016",
+          "p018",
+          "p029",
+          "p032",
+          "p040"
+        ]
+      },
+      "surface_pattern": "AI 서버 연동, AI 분석 결과 처리, LLM API, AI 에이전트, AI 코딩 도구 활용 표현이 반복된다.",
+      "capability_type": "learning_agility",
+      "inferred_expectation": "AI 연구 자체보다 AI 결과를 제품 기능, 백엔드 API, 개발 워크플로우에 붙이고 검증할 수 있는 적용형 역량을 기대할 가능성이 있다.",
+      "confidence": "medium",
+      "reasoning": "AI 관련 표현은 AI 도메인 공고뿐 아니라 SaaS와 콘텐츠 공고에서도 관찰되며, 서비스 연동과 개발 효율 개선 문맥으로 함께 등장한다.",
+      "alternative_reading": "일부 공고는 최신 기술 친화성을 보여주는 채용 브랜딩 문구일 수 있다.",
+      "limitations": [
+        "AI 관련 요구가 특정 회사와 도메인에 몰려 있어 전체 표본 일반화에는 주의가 필요하다."
+      ]
+    },
+    {
+      "signal_id": "s006",
+      "source_item_ids": [
+        "p011-k002",
+        "p015-k004",
+        "p015-k008",
+        "p019-k007",
+        "p021-k010",
+        "p023-k006",
+        "p026-k007",
+        "p029-k005",
+        "p037-k004",
+        "p040-k006"
+      ],
+      "evidence_distribution": {
+        "unique_posting_count": 9,
+        "supporting_item_count": 10,
+        "company_size_counts": {
+          "startup": 3,
+          "scaleup": 2,
+          "mid_size": 4,
+          "enterprise": 0,
+          "unknown": 0
+        },
+        "domain_counts": {
+          "education": 0,
+          "healthcare": 0,
+          "finance": 0,
+          "commerce": 0,
+          "saas": 5,
+          "game": 0,
+          "ai": 0,
+          "content": 1,
+          "public_sector": 0,
+          "manufacturing": 0,
+          "mobility": 0,
+          "unknown": 3
+        },
+        "posting_ids": [
+          "p011",
+          "p015",
+          "p019",
+          "p021",
+          "p023",
+          "p026",
+          "p029",
+          "p037",
+          "p040"
+        ]
+      },
+      "surface_pattern": "협업, 커뮤니케이션, 문서화, API 문서, 기술적 의견 정리 표현이 반복된다.",
+      "capability_type": "collaboration",
+      "inferred_expectation": "구현 능력뿐 아니라 요구사항 정리, 의사결정 공유, 부서 간 조율 비용을 낮추는 사람을 기대할 가능성이 있다.",
+      "confidence": "high",
+      "reasoning": "협업 표현이 기획, 프론트, QA, 여러 부서, 글로벌 팀, 문서 기반 커뮤니케이션과 연결되어 나타난다.",
+      "alternative_reading": "많은 공고의 일반적인 소프트스킬 문구일 수 있으며 실제 협업 방식은 팀마다 다를 수 있다.",
+      "limitations": [
+        "문서화 도구, 리뷰 프로세스, 회의 방식의 구체성은 제한적으로만 관찰된다."
+      ]
+    },
+    {
+      "signal_id": "s007",
+      "source_item_ids": [
+        "p011-k001",
+        "p011-k006",
+        "p012-k002",
+        "p016-k008",
+        "p019-k010",
+        "p023-k003",
+        "p032-k001",
+        "p033-k002",
+        "p036-k004",
+        "p036-k006",
+        "p040-k003",
+        "p040-k006",
+        "p038-k004"
+      ],
+      "evidence_distribution": {
+        "unique_posting_count": 10,
+        "supporting_item_count": 13,
+        "company_size_counts": {
+          "startup": 4,
+          "scaleup": 5,
+          "mid_size": 1,
+          "enterprise": 0,
+          "unknown": 0
+        },
+        "domain_counts": {
+          "education": 1,
+          "healthcare": 0,
+          "finance": 1,
+          "commerce": 1,
+          "saas": 6,
+          "game": 0,
+          "ai": 1,
+          "content": 0,
+          "public_sector": 0,
+          "manufacturing": 0,
+          "mobility": 0,
+          "unknown": 0
+        },
+        "posting_ids": [
+          "p011",
+          "p012",
+          "p016",
+          "p019",
+          "p023",
+          "p032",
+          "p033",
+          "p036",
+          "p038",
+          "p040"
+        ]
+      },
+      "surface_pattern": "단순 구현이 아닌, 주도, End-to-End, 문제 정의, 다음 버전 제안, 개선 주도 표현이 반복된다.",
+      "capability_type": "ownership",
+      "inferred_expectation": "요구사항을 받아 구현만 하는 사람보다 문제를 정의하고 방향을 제안하며 출시 이후 개선까지 책임지는 사람을 기대할 가능성이 있다.",
+      "confidence": "high",
+      "reasoning": "startup과 scaleup에서 특히 반복되며, 제품 성장, 기술 방향, 운영 개선, 문제 정의 표현과 함께 나타난다.",
+      "alternative_reading": "작은 팀의 넓은 역할 범위를 매력적으로 포장한 표현일 수 있다.",
+      "limitations": [
+        "주도성이 실제 권한 위임인지, 부족한 기획/관리 리소스의 보완 요구인지는 공고만으로 구분하기 어렵다."
+      ]
+    },
+    {
+      "signal_id": "s008",
+      "source_item_ids": [
+        "p001-k004",
+        "p002-k004",
+        "p014-k009",
+        "p015-k003",
+        "p015-k009",
+        "p021-k008",
+        "p023-k005",
+        "p024-k005",
+        "p028-k003",
+        "p030-k005",
+        "p032-k005",
+        "p038-k003"
+      ],
+      "evidence_distribution": {
+        "unique_posting_count": 11,
+        "supporting_item_count": 12,
+        "company_size_counts": {
+          "startup": 2,
+          "scaleup": 2,
+          "mid_size": 5,
+          "enterprise": 2,
+          "unknown": 0
+        },
+        "domain_counts": {
+          "education": 0,
+          "healthcare": 1,
+          "finance": 3,
+          "commerce": 0,
+          "saas": 3,
+          "game": 0,
+          "ai": 1,
+          "content": 1,
+          "public_sector": 0,
+          "manufacturing": 0,
+          "mobility": 1,
+          "unknown": 1
+        },
+        "posting_ids": [
+          "p001",
+          "p002",
+          "p014",
+          "p015",
+          "p021",
+          "p023",
+          "p024",
+          "p028",
+          "p030",
+          "p032",
+          "p038"
+        ]
+      },
+      "surface_pattern": "대규모 트래픽, 실시간 이벤트, 비동기 처리, 메시지 큐, 고가용성, 분산 환경 표현이 반복된다.",
+      "capability_type": "scale_operation",
+      "inferred_expectation": "피크 트래픽과 비동기 작업, 실시간 이벤트를 고려해 병목과 장애를 예방하는 설계 역량을 기대할 가능성이 있다.",
+      "confidence": "high",
+      "reasoning": "콘텐츠, 금융, SaaS, 헬스케어, 모빌리티에서 모두 관찰되며 Kafka, RabbitMQ, Redis, SQS 같은 메시징 키워드와 함께 나타난다.",
+      "alternative_reading": "일부 표현은 현재 트래픽보다 미래 확장 가능성을 염두에 둔 우대사항일 수 있다.",
+      "limitations": [
+        "실제 트래픽 규모와 SLA 수준은 keyword artifact만으로 확인할 수 없다."
+      ]
+    },
+    {
+      "signal_id": "s009",
+      "source_item_ids": [
+        "p012-k001",
+        "p013-k001",
+        "p018-k001",
+        "p024-k001",
+        "p028-k001",
+        "p031-k004",
+        "p036-k001",
+        "p036-k004",
+        "p038-k001",
+        "p038-k002"
+      ],
+      "evidence_distribution": {
+        "unique_posting_count": 8,
+        "supporting_item_count": 10,
+        "company_size_counts": {
+          "startup": 3,
+          "scaleup": 3,
+          "mid_size": 2,
+          "enterprise": 0,
+          "unknown": 0
+        },
+        "domain_counts": {
+          "education": 0,
+          "healthcare": 1,
+          "finance": 3,
+          "commerce": 1,
+          "saas": 1,
+          "game": 0,
+          "ai": 0,
+          "content": 1,
+          "public_sector": 0,
+          "manufacturing": 0,
+          "mobility": 0,
+          "unknown": 1
+        },
+        "posting_ids": [
+          "p012",
+          "p013",
+          "p018",
+          "p024",
+          "p028",
+          "p031",
+          "p036",
+          "p038"
+        ]
+      },
+      "surface_pattern": "결제, 정산, 여신, 헬스케어, 관제, 광고 정산, 현장 탐색처럼 도메인 흐름을 이해해야 하는 표현이 반복된다.",
+      "capability_type": "domain_adaptation",
+      "inferred_expectation": "기술 스택만 맞는 사람보다 도메인 규칙과 운영 흐름을 이해하고 백엔드 모델로 옮길 사람을 기대할 가능성이 있다.",
+      "confidence": "medium",
+      "reasoning": "도메인별 표현은 다양하지만 공통적으로 거래 흐름, 정책, 현장, 데이터 처리, 정산 등 업무 맥락과 시스템 구현이 연결된다.",
+      "alternative_reading": "도메인 설명은 회사 소개 성격일 수 있으며 실제 입사 후 깊은 도메인 지식보다 학습 능력이 더 중요할 수 있다.",
+      "limitations": [
+        "도메인이 서로 달라 공통 기대를 넓게 추론해야 한다."
+      ]
+    },
+    {
+      "signal_id": "s010",
+      "source_item_ids": [
+        "p002-k008",
+        "p015-k004",
+        "p019-k006",
+        "p019-k011",
+        "p020-k001",
+        "p020-k006",
+        "p023-k010",
+        "p032-k003",
+        "p034-k001",
+        "p040-k007"
+      ],
+      "evidence_distribution": {
+        "unique_posting_count": 8,
+        "supporting_item_count": 10,
+        "company_size_counts": {
+          "startup": 3,
+          "scaleup": 3,
+          "mid_size": 1,
+          "enterprise": 1,
+          "unknown": 0
+        },
+        "domain_counts": {
+          "education": 0,
+          "healthcare": 0,
+          "finance": 0,
+          "commerce": 0,
+          "saas": 4,
+          "game": 0,
+          "ai": 1,
+          "content": 1,
+          "public_sector": 0,
+          "manufacturing": 0,
+          "mobility": 0,
+          "unknown": 2
+        },
+        "posting_ids": [
+          "p002",
+          "p015",
+          "p019",
+          "p020",
+          "p023",
+          "p032",
+          "p034",
+          "p040"
+        ]
+      },
+      "surface_pattern": "코드 리뷰, 테스트, 검증 체계, AI 코드리뷰 자동화, 코드리뷰테스트 표현이 반복된다.",
+      "capability_type": "quality_engineering",
+      "inferred_expectation": "개별 기능 구현 속도보다 변경 품질을 검증하고 리뷰 가능한 산출물로 만드는 습관을 기대할 가능성이 있다.",
+      "confidence": "medium",
+      "reasoning": "코드 리뷰와 테스트는 협업 문화, 채용 전형, AI 자동화, 효과 검증 체계 등 여러 맥락에서 관찰된다.",
+      "alternative_reading": "일부는 실제 개발 문화보다 채용 절차나 우대사항에 가까운 표현일 수 있다.",
+      "limitations": [
+        "테스트 커버리지나 리뷰 기준의 실제 엄격함은 확인할 수 없다."
+      ]
+    }
+  ],
+  "subtext_readings": [
+    {
+      "reading_id": "r001",
+      "source_item_ids": [
+        "p011-k001",
+        "p016-k008",
+        "p032-k001",
+        "p040-k006",
+        "p036-k004"
+      ],
+      "linked_signal_ids": [
+        "s007"
+      ],
+      "evidence_distribution": {
+        "unique_posting_count": 5,
+        "supporting_item_count": 5,
+        "company_size_counts": {
+          "startup": 2,
+          "scaleup": 3,
+          "mid_size": 0,
+          "enterprise": 0,
+          "unknown": 0
+        },
+        "domain_counts": {
+          "education": 0,
+          "healthcare": 0,
+          "finance": 0,
+          "commerce": 1,
+          "saas": 3,
+          "game": 0,
+          "ai": 1,
+          "content": 0,
+          "public_sector": 0,
+          "manufacturing": 0,
+          "mobility": 0,
+          "unknown": 0
+        },
+        "posting_ids": [
+          "p011",
+          "p016",
+          "p032",
+          "p040",
+          "p036"
+        ]
+      },
+      "surface_phrase_group": "단순 구현이 아닌 / End-to-End / 문제 정의와 개선 주도",
+      "representative_surface_phrases": [
+        "단순 구현이 아닌, 서비스 구조와 기술 방향을 함께 만들어갈 백엔드 시니어 개발자를 찾습니다.",
+        "문제를 단순 구현이 아닌 구조적으로 바라보고자 하는 분",
+        "제품의 성장을 위해 아키텍처 설계부터 구현, 운영까지 End-to-End로 프로젝트를 주도합니다.",
+        "기존 코드/시스템의 비효율이나 구조적 문제를 발견하고 개선을 주도해본 경험",
+        "현장 탐색 > 문제 정의 > 백엔드 구현 > 성과 검증의 사이클을 책임집니다."
+      ],
+      "plain_translation": "시키는 기능만 구현하는 사람보다 문제를 먼저 구조화하고, 설계와 운영 결과까지 책임지는 사람을 원한다는 의미로 읽을 수 있다.",
+      "possible_team_context": "제품이나 시스템이 빠르게 바뀌는 상황에서 기획, 설계, 운영 경계가 명확히 나뉘지 않아 개발자가 의사결정에 더 깊게 들어오길 기대할 가능성이 있다.",
+      "candidate_opportunity": "문제 발견, 설계 선택지 비교, 출시 후 지표나 장애를 보고 개선한 경험을 증거로 보여주면 유리할 수 있다.",
+      "confidence": "high",
+      "reasoning": "동일한 표현 묶음이 startup과 scaleup에 걸쳐 반복되고, 구조, 방향, 운영, 개선이 함께 등장한다.",
+      "alternative_reading": "역할 범위가 넓은 환경을 긍정적으로 표현한 문구일 수 있다.",
+      "limitations": [
+        "권한과 책임의 균형은 공고만으로 확인할 수 없다."
+      ]
+    },
+    {
+      "reading_id": "r002",
+      "source_item_ids": [
+        "p001-k003",
+        "p012-k002",
+        "p015-k003",
+        "p023-k005",
+        "p037-k005"
+      ],
+      "linked_signal_ids": [
+        "s002",
+        "s008"
+      ],
+      "evidence_distribution": {
+        "unique_posting_count": 5,
+        "supporting_item_count": 5,
+        "company_size_counts": {
+          "startup": 2,
+          "scaleup": 1,
+          "mid_size": 1,
+          "enterprise": 1,
+          "unknown": 0
+        },
+        "domain_counts": {
+          "education": 0,
+          "healthcare": 0,
+          "finance": 1,
+          "commerce": 0,
+          "saas": 2,
+          "game": 0,
+          "ai": 0,
+          "content": 0,
+          "public_sector": 0,
+          "manufacturing": 0,
+          "mobility": 0,
+          "unknown": 2
+        },
+        "posting_ids": [
+          "p001",
+          "p012",
+          "p015",
+          "p023",
+          "p037"
+        ]
+      },
+      "surface_phrase_group": "장애 대응 / 모니터링 / 재발 방지 / 운영 안정성",
+      "representative_surface_phrases": [
+        "장애 발생 시 문제를 해결하고, 재발 방지를 위한 개발과 설계를 주도하고 해법을 마련합니다.",
+        "실시간 거래 데이터 처리, 장애 대응, 정산 연계 등 결제 서비스 운영에 필요한 핵심 시스템을 개발하고 있습니다.",
+        "운영 이슈 대응 및 모니터링/로깅 기반 문제 해결",
+        "대규모 트래픽 환경에서의 성능 최적화 및 시스템 안정성 확보 경험",
+        "성능 튜닝 및 모니터링 경험 보유자"
+      ],
+      "plain_translation": "장애가 나면 임시 조치만 하는 사람이 아니라 원인을 찾고 재발하지 않도록 시스템을 바꿀 사람을 원한다는 뜻일 수 있다.",
+      "possible_team_context": "운영 중인 서비스의 안정성 부담이 있고, 장애 대응 경험이 개발자의 평가 포인트로 연결될 가능성이 있다.",
+      "candidate_opportunity": "장애 원인 분석, 로그와 지표 기반 진단, 재발 방지 설계, 모니터링 개선 사례를 구체적으로 제시하는 것이 좋다.",
+      "confidence": "high",
+      "reasoning": "여러 규모와 도메인에서 운영 안정성 표현이 반복되며, 대응과 설계 개선이 함께 묶여 있다.",
+      "alternative_reading": "실제 장애 대응 책임은 SRE나 인프라 팀과 나뉘어 있을 수 있다.",
+      "limitations": [
+        "온콜, SLA, 장애 대응 빈도는 확인할 수 없다."
+      ]
+    },
+    {
+      "reading_id": "r003",
+      "source_item_ids": [
+        "p015-k008",
+        "p019-k007",
+        "p023-k006",
+        "p026-k007",
+        "p040-k006"
+      ],
+      "linked_signal_ids": [
+        "s006"
+      ],
+      "evidence_distribution": {
+        "unique_posting_count": 5,
+        "supporting_item_count": 5,
+        "company_size_counts": {
+          "startup": 2,
+          "scaleup": 1,
+          "mid_size": 2,
+          "enterprise": 0,
+          "unknown": 0
+        },
+        "domain_counts": {
+          "education": 0,
+          "healthcare": 0,
+          "finance": 0,
+          "commerce": 0,
+          "saas": 3,
+          "game": 0,
+          "ai": 0,
+          "content": 0,
+          "public_sector": 0,
+          "manufacturing": 0,
+          "mobility": 0,
+          "unknown": 2
+        },
+        "posting_ids": [
+          "p015",
+          "p019",
+          "p023",
+          "p026",
+          "p040"
+        ]
+      },
+      "surface_phrase_group": "커뮤니케이션 / 문서화 / 기술 의견 정리",
+      "representative_surface_phrases": [
+        "원활한 커뮤니케이션 및 문서화 습관(이슈/원인/대응 공유)",
+        "API 문서(OpenAPI/Swagger) 작성 및 유지",
+        "아이디어와 기술적 의견을 명확하게 문서화할 수 있는 능력",
+        "협업에 능숙하고 원활하고 적극적인 커뮤니케이션 가능자",
+        "개발 중 만난 이슈나 배운 점을 틈틈이 기록하시는 분"
+      ],
+      "plain_translation": "말을 잘하는 사람보다 요구사항, 이슈, 의사결정을 문서와 공유 가능한 형태로 남겨 협업 비용을 줄이는 사람을 원한다는 의미로 읽힌다.",
+      "possible_team_context": "기획, 프론트, 운영, 여러 부서와 맞물리는 업무가 있어 구두 전달만으로는 누락과 재작업이 생길 수 있다고 보는 가능성이 있다.",
+      "candidate_opportunity": "API 문서, 장애 공유 문서, 설계 결정 기록, 요구사항 정리 경험을 보여주면 협업 역량의 증거가 될 수 있다.",
+      "confidence": "high",
+      "reasoning": "문서화가 단순 산출물이 아니라 커뮤니케이션, 기술 의견, 이슈 공유와 함께 반복된다.",
+      "alternative_reading": "문서화 요구가 실제 문화라기보다 희망사항 수준일 수 있다.",
+      "limitations": [
+        "문서 기반 협업이 실제로 얼마나 정착되어 있는지는 확인할 수 없다."
+      ]
+    },
+    {
+      "reading_id": "r004",
+      "source_item_ids": [
+        "p016-k007",
+        "p029-k006",
+        "p032-k003",
+        "p040-k005",
+        "p036-k006"
+      ],
+      "linked_signal_ids": [
+        "s005",
+        "s007",
+        "s010"
+      ],
+      "evidence_distribution": {
+        "unique_posting_count": 5,
+        "supporting_item_count": 5,
+        "company_size_counts": {
+          "startup": 1,
+          "scaleup": 3,
+          "mid_size": 1,
+          "enterprise": 0,
+          "unknown": 0
+        },
+        "domain_counts": {
+          "education": 0,
+          "healthcare": 0,
+          "finance": 0,
+          "commerce": 1,
+          "saas": 2,
+          "game": 0,
+          "ai": 1,
+          "content": 1,
+          "public_sector": 0,
+          "manufacturing": 0,
+          "mobility": 0,
+          "unknown": 0
+        },
+        "posting_ids": [
+          "p016",
+          "p029",
+          "p032",
+          "p040",
+          "p036"
+        ]
+      },
+      "surface_phrase_group": "AI 도구 / LLM / AI 에이전트 / 개발 워크플로우",
+      "representative_surface_phrases": [
+        "ChatGPT, Claude 등 생성형 AI 도구를 활용해 서비스를 구현해본 경험",
+        "LLM API, AI 에이전트, AI 도구 등을 개발 업무에 활용해 본 경험",
+        "AI 코딩 에이전트(Claude Code, Cursor 등)를 활용하여 개발 워크플로우를 최적화합니다.",
+        "AI 코딩 도구(Claude Code, Cursor 등)를 활용해 개발하고 결과물을 비판적으로 검토 및 검증해본 경험",
+        "AI 활용에 거부감이 없으며, 단순 프롬프트 엔지니어링을 넘어 작업 계획을 수립하고 Markdown 파일 기반의 문서 작성 및 리뷰에 익숙하신 분"
+      ],
+      "plain_translation": "AI를 써봤다는 수준보다 AI 결과물을 개발 프로세스나 서비스에 넣고, 사람이 검토해 품질을 통제할 수 있는 사람을 찾는다는 뜻일 수 있다.",
+      "possible_team_context": "생산성 향상과 AI 기능 출시를 동시에 시도하면서, 도구 사용 경험과 검증 습관을 가진 개발자를 선호할 가능성이 있다.",
+      "candidate_opportunity": "AI 도구로 개발 시간을 줄인 사례, LLM API 연동 사례, AI 산출물 검증과 리뷰 기준을 세운 경험을 보여주면 좋다.",
+      "confidence": "medium",
+      "reasoning": "AI 도구 표현이 scaleup과 일부 startup, mid_size에서 반복되지만 특정 회사군에 집중되어 있다.",
+      "alternative_reading": "AI 키워드를 채용 브랜딩으로 강조한 것일 수 있다.",
+      "limitations": [
+        "AI 요구가 필수 역량인지 우대 역량인지 공고별로 강도가 다르다."
+      ]
+    },
+    {
+      "reading_id": "r005",
+      "source_item_ids": [
+        "p002-k004",
+        "p014-k009",
+        "p021-k008",
+        "p030-k005",
+        "p038-k003"
+      ],
+      "linked_signal_ids": [
+        "s008"
+      ],
+      "evidence_distribution": {
+        "unique_posting_count": 5,
+        "supporting_item_count": 5,
+        "company_size_counts": {
+          "startup": 1,
+          "scaleup": 1,
+          "mid_size": 2,
+          "enterprise": 1,
+          "unknown": 0
+        },
+        "domain_counts": {
+          "education": 0,
+          "healthcare": 0,
+          "finance": 1,
+          "commerce": 0,
+          "saas": 1,
+          "game": 0,
+          "ai": 1,
+          "content": 1,
+          "public_sector": 0,
+          "manufacturing": 0,
+          "mobility": 1,
+          "unknown": 0
+        },
+        "posting_ids": [
+          "p002",
+          "p014",
+          "p021",
+          "p030",
+          "p038"
+        ]
+      },
+      "surface_phrase_group": "대용량 / 실시간 / 비동기 / 메시지큐",
+      "representative_surface_phrases": [
+        "대용량 트래픽과 실시간 이벤트를 처리하는 신뢰성",
+        "WebSocket 또는 Socket.IO를 활용한 실시간 데이터 처리 경험",
+        "1개 이상의 Message Queue 기술 실무 경험이 있으신 분",
+        "대용량 트랜잭션 처리 경험 보유",
+        "데이터 정합성·트랜잭션 처리·이벤트 연계 등 마이크로서비스 설계의 핵심 요소들을 직접 설계하고 구현해요."
+      ],
+      "plain_translation": "단순 CRUD보다 동시성, 이벤트, 지연, 정합성 같은 운영 중 복잡도를 다룰 수 있는 사람을 원한다는 뜻으로 읽힌다.",
+      "possible_team_context": "사용자 이벤트, 거래, 로봇, 팬덤, 금융처럼 시간성과 정합성이 중요한 기능이 있어 비동기 설계 경험을 찾을 가능성이 있다.",
+      "candidate_opportunity": "메시지 큐 도입, 실시간 처리, 트랜잭션 경계 설계, 부하 상황에서의 병목 개선 경험을 제시하면 좋다.",
+      "confidence": "high",
+      "reasoning": "서로 다른 도메인에서 실시간과 대용량, 이벤트 연계 표현이 반복된다.",
+      "alternative_reading": "일부는 당장 필요한 업무보다 향후 확장을 대비한 우대조건일 수 있다.",
+      "limitations": [
+        "실제 트래픽 지표와 시스템 규모는 제공되지 않았다."
+      ]
+    },
+    {
+      "reading_id": "r006",
+      "source_item_ids": [
+        "p012-k001",
+        "p013-k001",
+        "p036-k004",
+        "p038-k002",
+        "p024-k001"
+      ],
+      "linked_signal_ids": [
+        "s009"
+      ],
+      "evidence_distribution": {
+        "unique_posting_count": 5,
+        "supporting_item_count": 5,
+        "company_size_counts": {
+          "startup": 2,
+          "scaleup": 2,
+          "mid_size": 1,
+          "enterprise": 0,
+          "unknown": 0
+        },
+        "domain_counts": {
+          "education": 0,
+          "healthcare": 0,
+          "finance": 3,
+          "commerce": 1,
+          "saas": 1,
+          "game": 0,
+          "ai": 0,
+          "content": 0,
+          "public_sector": 0,
+          "manufacturing": 0,
+          "mobility": 0,
+          "unknown": 0
+        },
+        "posting_ids": [
+          "p012",
+          "p013",
+          "p036",
+          "p038",
+          "p024"
+        ]
+      },
+      "surface_phrase_group": "결제·정산·정책·현장 흐름 이해",
+      "representative_surface_phrases": [
+        "가맹점과 사용자 간의 결제 요청, 승인, 거래 처리, 정산까지 이어지는 금융 거래 흐름",
+        "공급망 금융을 통해 기존 금융서비스와 다른 새로운 자금조달 솔루션을 제공",
+        "현장 탐색 > 문제 정의 > 백엔드 구현 > 성과 검증의 사이클을 책임집니다.",
+        "정책 중심 로직을 도메인 기반 구조로 재해석하고 리팩토링",
+        "데이터 기반의 건강관리 대중화"
+      ],
+      "plain_translation": "프레임워크만 쓰는 사람이 아니라 업무 흐름과 정책을 이해해 시스템 모델로 바꿀 사람을 원한다는 의미로 읽힌다.",
+      "possible_team_context": "결제, 여신, 헬스케어, O2O처럼 도메인 규칙이 복잡해 개발자가 업무 언어를 기술 구조로 번역해야 할 가능성이 있다.",
+      "candidate_opportunity": "도메인 규칙을 데이터 모델, 상태 전이, API 계약으로 정리해 구현한 경험을 보여주면 좋다.",
+      "confidence": "medium",
+      "reasoning": "금융과 커머스 중심으로 강하게 관찰되지만 도메인 다양성이 있어 보수적으로 해석해야 한다.",
+      "alternative_reading": "일부 문구는 회사 소개에 가까워 실제 자격요건보다 배경 설명일 수 있다.",
+      "limitations": [
+        "도메인별 규제나 정책 세부사항은 keyword artifact에 없다."
+      ]
+    },
+    {
+      "reading_id": "r007",
+      "source_item_ids": [
+        "p019-k004",
+        "p034-k005",
+        "p031-k006",
+        "p011-k006",
+        "p028-k005"
+      ],
+      "linked_signal_ids": [
+        "s003"
+      ],
+      "evidence_distribution": {
+        "unique_posting_count": 5,
+        "supporting_item_count": 5,
+        "company_size_counts": {
+          "startup": 2,
+          "scaleup": 2,
+          "mid_size": 1,
+          "enterprise": 0,
+          "unknown": 0
+        },
+        "domain_counts": {
+          "education": 0,
+          "healthcare": 1,
+          "finance": 0,
+          "commerce": 0,
+          "saas": 2,
+          "game": 0,
+          "ai": 1,
+          "content": 0,
+          "public_sector": 0,
+          "manufacturing": 0,
+          "mobility": 0,
+          "unknown": 1
+        },
+        "posting_ids": [
+          "p019",
+          "p034",
+          "p031",
+          "p011",
+          "p028"
+        ]
+      },
+      "surface_phrase_group": "데이터 정합성 / DB 모델링 / 쿼리 성능",
+      "representative_surface_phrases": [
+        "정의된 스키마를 기반으로 한 데이터 정합성을 고려한 RDB 설계, 구현",
+        "SQL과 관계형 데이터베이스에 대한 이해 (실행계획을 읽고 쿼리 성능을 분석해본 경험)",
+        "MySQL 및 기타 관계형 RDBMS 설계 및 운영 경험이 있으신 분",
+        "데이터베이스 설계 및 성능 최적화 경험",
+        "데이터베이스 설계 및 최적화 경험 (RDB)"
+      ],
+      "plain_translation": "DB를 단순 저장소로 쓰는 것이 아니라 정합성, 성능, 조회 패턴을 고려해 설계할 수 있는 사람을 원한다는 뜻이다.",
+      "possible_team_context": "서비스가 커지면서 쿼리 성능, 상태 변경, 데이터 모델 변경이 장애나 운영 비용으로 이어질 수 있어 이를 줄이고 싶을 가능성이 있다.",
+      "candidate_opportunity": "인덱스 설계, 실행계획 분석, 데이터 모델 재설계, 정합성 버그 해결 사례를 보여주면 좋다.",
+      "confidence": "high",
+      "reasoning": "DB 관련 표현이 책임과 자격요건 양쪽에서 반복되며, 정합성과 성능이 함께 언급된다.",
+      "alternative_reading": "일부 공고에서는 깊은 DBA 수준보다 백엔드 개발자의 기본 DB 사용 경험을 의미할 수 있다.",
+      "limitations": [
+        "데이터 규모와 DB 운영 책임의 깊이는 공고만으로 알 수 없다."
+      ]
+    },
+    {
+      "reading_id": "r008",
+      "source_item_ids": [
+        "p001-k008",
+        "p017-k002",
+        "p019-k011",
+        "p033-k002",
+        "p038-k004"
+      ],
+      "linked_signal_ids": [
+        "s005",
+        "s007"
+      ],
+      "evidence_distribution": {
+        "unique_posting_count": 5,
+        "supporting_item_count": 5,
+        "company_size_counts": {
+          "startup": 2,
+          "scaleup": 2,
+          "mid_size": 0,
+          "enterprise": 1,
+          "unknown": 0
+        },
+        "domain_counts": {
+          "education": 1,
+          "healthcare": 0,
+          "finance": 3,
+          "commerce": 0,
+          "saas": 1,
+          "game": 0,
+          "ai": 0,
+          "content": 0,
+          "public_sector": 0,
+          "manufacturing": 0,
+          "mobility": 0,
+          "unknown": 0
+        },
+        "posting_ids": [
+          "p001",
+          "p017",
+          "p019",
+          "p033",
+          "p038"
+        ]
+      },
+      "surface_phrase_group": "빠른 학습 / 변화 대응 / 새로운 기술",
+      "representative_surface_phrases": [
+        "변화를 두려워하지 않고 새로운 기술에 빠르게 적응하며 지속적인 성장을 원하는 분",
+        "변화에 빠르게 대응할 수 있는 유연한 방법으로 문제를 분석합니다.",
+        "새로운 기술을 빠르게 학습하고 도입하는 능력",
+        "새로운 기술을 배우는데 즐거움을 느끼시는 분",
+        "복잡한 비즈니스 흐름이나 경험해보지 못한 기술 스택도 빠르게 학습하고 흡수하려는 태도를 갖춘 분이 필요해요."
+      ],
+      "plain_translation": "이미 아는 기술만 반복하는 사람보다 모르는 도메인과 스택을 빠르게 익혀 실행할 사람을 원한다는 의미로 읽힌다.",
+      "possible_team_context": "기술 전환, AI 도입, 도메인 확장, 조직 성장으로 인해 고정된 역할보다 적응력이 중요해졌을 가능성이 있다.",
+      "candidate_opportunity": "새 스택을 짧은 기간에 익혀 배포하거나 팀에 도입한 경험, 학습 후 검증한 사례를 보여주면 좋다.",
+      "confidence": "medium",
+      "reasoning": "학습과 변화 대응 표현이 여러 규모에서 관찰되지만 일부는 문화 문구에 가깝다.",
+      "alternative_reading": "성장 지향 인재상을 표현하는 일반 문구일 수 있다.",
+      "limitations": [
+        "학습 속도를 어떻게 평가하는지는 공고만으로 확인할 수 없다."
+      ]
+    },
+    {
+      "reading_id": "r009",
+      "source_item_ids": [
+        "p018-k007",
+        "p011-k007",
+        "p012-k002",
+        "p016-k009",
+        "p032-k001"
+      ],
+      "linked_signal_ids": [
+        "s004",
+        "s007"
+      ],
+      "evidence_distribution": {
+        "unique_posting_count": 5,
+        "supporting_item_count": 5,
+        "company_size_counts": {
+          "startup": 4,
+          "scaleup": 1,
+          "mid_size": 0,
+          "enterprise": 0,
+          "unknown": 0
+        },
+        "domain_counts": {
+          "education": 0,
+          "healthcare": 0,
+          "finance": 0,
+          "commerce": 0,
+          "saas": 3,
+          "game": 0,
+          "ai": 1,
+          "content": 1,
+          "public_sector": 0,
+          "manufacturing": 0,
+          "mobility": 0,
+          "unknown": 0
+        },
+        "posting_ids": [
+          "p018",
+          "p011",
+          "p012",
+          "p016",
+          "p032"
+        ]
+      },
+      "surface_phrase_group": "작은 팀 / 전 과정 / 영향력 / 멀티태스킹",
+      "representative_surface_phrases": [
+        "개인의 역할과 영향력이 크게 반영되는 작은 팀에서 빠르게 성장할 수 있어요.",
+        "SaaS의 개발 및 출시의 전 과정을 경험하신 분",
+        "본인이 개발한 기능이 실제 서비스에 직접 반영되는 환경입니다.",
+        "여러 프로젝트를 일정 관리하며 멀티태스킹에 부담 없으신 분",
+        "아키텍처 설계부터 구현, 운영까지 End-to-End로 프로젝트를 주도합니다."
+      ],
+      "plain_translation": "역할이 좁게 분리되어 있지 않고, 한 사람이 기능 개발부터 출시와 운영까지 넓게 맡을 수 있다는 의미로 읽힌다.",
+      "possible_team_context": "초기 또는 성장 중인 팀에서 인력 밀도가 높지 않아 한 개발자의 판단과 실행이 제품에 직접 영향을 줄 가능성이 있다.",
+      "candidate_opportunity": "기능의 전 생애주기, 여러 업무 우선순위 조정, 작은 팀에서의 책임 범위 확장 경험을 보여주면 좋다.",
+      "confidence": "medium",
+      "reasoning": "startup에 분포가 몰려 있어 작은 팀 맥락의 해석은 강하지만 전체 표본 일반화는 제한된다.",
+      "alternative_reading": "성장 기회를 강조하는 채용 마케팅 문구일 수 있다.",
+      "limitations": [
+        "startup 중심으로 관찰되어 규모별 비교 결론으로 확장하기 어렵다."
+      ]
+    },
+    {
+      "reading_id": "r010",
+      "source_item_ids": [
+        "p032-k001",
+        "p038-k002",
+        "p040-k003",
+        "p015-k004",
+        "p021-k005"
+      ],
+      "linked_signal_ids": [
+        "s007",
+        "s010"
+      ],
+      "evidence_distribution": {
+        "unique_posting_count": 5,
+        "supporting_item_count": 5,
+        "company_size_counts": {
+          "startup": 1,
+          "scaleup": 3,
+          "mid_size": 1,
+          "enterprise": 0,
+          "unknown": 0
+        },
+        "domain_counts": {
+          "education": 0,
+          "healthcare": 0,
+          "finance": 1,
+          "commerce": 0,
+          "saas": 3,
+          "game": 0,
+          "ai": 0,
+          "content": 0,
+          "public_sector": 0,
+          "manufacturing": 0,
+          "mobility": 0,
+          "unknown": 1
+        },
+        "posting_ids": [
+          "p032",
+          "p038",
+          "p040",
+          "p015",
+          "p021"
+        ]
+      },
+      "surface_phrase_group": "기술 부채 / 리팩토링 / 다음 버전 / 기능 개선",
+      "representative_surface_phrases": [
+        "기술 부채 해소 및 안정적인 시스템 운영에 기여합니다.",
+        "정책 중심 로직을 도메인 기반 구조로 재해석하고 리팩토링하며",
+        "기능을 만든 뒤 한 번 더 돌아보고, 다음 버전을 먼저 제안합니다.",
+        "테스트/리팩토링/코드리뷰 문화 내에서 품질 유지 및 개발 생산성 향상",
+        "기존 제품군 기능 개선 및 추가"
+      ],
+      "plain_translation": "새 기능만 빠르게 찍어내기보다 기존 시스템의 구조적 문제를 발견하고 장기 유지보수성을 높일 사람을 원한다는 뜻일 수 있다.",
+      "possible_team_context": "이미 운영 중인 제품이 있고, 빠른 개발의 누적으로 생긴 복잡도나 정책 변화 대응 비용을 줄이고 싶을 가능성이 있다.",
+      "candidate_opportunity": "리팩토링 전후 효과, 기술 부채 우선순위화, 테스트와 코드리뷰로 품질을 유지한 경험을 보여주면 좋다.",
+      "confidence": "high",
+      "reasoning": "scaleup과 mid_size, startup에서 개선과 리팩토링 표현이 반복되며 운영 안정성과 함께 나타난다.",
+      "alternative_reading": "일부 팀에서는 실제 리팩토링 시간보다 개선 의지를 기대하는 수준일 수 있다.",
+      "limitations": [
+        "리팩토링 권한과 일정 배정 수준은 확인할 수 없다."
+      ]
+    }
+  ]
+}

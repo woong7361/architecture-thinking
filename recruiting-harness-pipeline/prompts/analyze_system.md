@@ -25,6 +25,11 @@
 - `signals[].evidence_distribution`은 signal을 뒷받침한 item들이 이번 입력 안에서 어디에 분포했는지 요약합니다.
 - `evidence_distribution.company_size_counts`와 `domain_counts`는 시장 전체 일반화가 아니라 이번 입력 안의 관찰 분포입니다.
 - 모든 signal에 `limitations`를 포함합니다. 특별한 한계가 없으면 빈 배열 `[]`로 둡니다.
+- `subtext_readings`는 모든 keyword item을 나열하지 않고, 행간 해석 가치가 큰 반복 문구 묶음을 최대 10개만 선정합니다.
+- `subtext_readings[].source_item_ids`는 반드시 입력 keyword item의 `item_id`만 참조합니다.
+- `subtext_readings[].linked_signal_ids`는 관련 있는 `signals[].signal_id`를 참조합니다. 직접 연결할 signal이 없으면 빈 배열 `[]`로 둡니다.
+- `subtext_readings[].evidence_distribution`은 해당 행간 해석 묶음을 뒷받침한 item들이 이번 입력 안에서 어디에 분포했는지 요약합니다.
+- `subtext_readings[].representative_surface_phrases`는 `source_item_ids`에 해당하는 keyword item의 `source_spans[].text`에서 가져온 대표 표면 문구를 담습니다.
 - 표본이 작거나 한쪽 회사 규모에만 몰려 있으면 `confidence`를 낮추고 `limitations`에 한계를 남깁니다.
 - `reanalyze_context`가 있으면 critique의 `revision_instructions`와 `weaknesses`를 우선 반영하되, 새 출력은 반드시 analysis schema 전체를 다시 작성합니다.
 
@@ -34,6 +39,18 @@
 - `reasoning`은 왜 그런 추론을 했는지 source item들의 반복, 분포, 문맥을 근거로 설명합니다.
 - `alternative_reading`에는 같은 표면 패턴을 다르게 읽을 수 있는 가능성을 남깁니다.
 - 강한 단정 대신 "가능성이 있다", "암시할 수 있다", "이번 입력에서는 관찰된다"처럼 제한된 표현을 사용합니다.
+
+행간 해석 기준:
+- `subtext_readings`는 채용공고의 표면 문구를 채용자의 실제 기대, 가능한 팀 맥락, 지원자 관점의 기회로 번역합니다.
+- 단순 기술 스택 빈도보다 조직의 기대, 결핍, 업무 환경, 평가 포인트를 읽을 수 있는 표현을 우선합니다.
+- 예를 들어 "주도적으로 문제를 해결하는 분" 류의 표현은 "시키는 일만 기다리기보다 문제를 먼저 찾고 해결 방향을 제안하는 사람을 원한다"처럼 행동 기대치로 번역합니다.
+- 예를 들어 "AI/ML 경험 우대" 류의 표현은 "AI 연구자 자체보다 AI를 제품 기능이나 개발 워크플로우에 적용하고 결과를 검증할 사람을 찾을 수 있다"처럼 실제 적용 기대치로 번역합니다.
+- 예를 들어 "빠르게 성장하는 환경" 류의 표현은 "일이 많거나 체계가 덜 잡혀 있어 스스로 우선순위를 잡고 구조를 만들 사람을 원할 수 있다"처럼 업무 환경 가설로 번역합니다.
+- 예를 들어 "커뮤니케이션 능력" 류의 표현은 "기술 구현만이 아니라 요구사항 정리, 조율, 의사결정 공유에서 비용을 줄여줄 사람을 원할 수 있다"처럼 협업 비용 관점으로 번역합니다.
+- `possible_team_context`에는 왜 이런 문구가 들어갔는지에 대한 보수적 가설을 씁니다. "그 팀에 문제가 있었다"처럼 사실로 단정하지 말고, "그런 문제를 줄이고 싶을 가능성이 있다"처럼 제한합니다.
+- `candidate_opportunity`에는 지원자가 이 문구를 어떻게 기회로 바꿀 수 있는지 씁니다. 개별 이력서 문장을 만들지 말고, 어떤 경험 증거를 보여주면 좋은지 일반화해 적습니다.
+- `plain_translation`은 독자가 바로 이해할 수 있게 직설적으로 씁니다. 다만 공고만으로 확인할 수 없는 내부 사정을 사실처럼 말하지 않습니다.
+- 각 reading은 여러 item을 묶은 패턴이어야 합니다. 단일 공고에만 있는 독특한 문구는 매우 중요하지 않으면 제외합니다.
 
 capability_type 허용 값:
 - `scale_operation`

@@ -24,6 +24,7 @@
 채점 기준:
 - 인상이나 문장 완성도가 아니라 JSON 필드에서 확인 가능한 근거로만 채점합니다.
 - source_item_ids, evidence_distribution, confidence, alternative_reading, limitations를 직접 확인합니다.
+- subtext_readings는 대표 표면 문구가 keyword item의 source_spans에서 나왔는지, plain_translation/possible_team_context/candidate_opportunity가 근거와 한계 안에서 분리됐는지 확인합니다.
 - evidence_distribution의 count와 posting_ids가 source_item_ids의 실제 분포와 맞는지 확인합니다.
 
 금지:

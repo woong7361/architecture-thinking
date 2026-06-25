@@ -37,6 +37,7 @@
           "enum": [
             "evidence_linkage",
             "inference_discipline",
+            "subtext_quality",
             "pattern_quality",
             "alternative_reading",
             "distribution_awareness"

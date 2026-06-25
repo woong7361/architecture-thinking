@@ -184,6 +184,7 @@ def validate_analysis_contract(data: dict[str, Any], expected_brief_hash: str | 
         errors.append("stage must be analyze")
 
     signal_ids = []
+    reading_ids = []
     errors += validate_non_negative_counts(data)
 
     for signal_index, signal in enumerate(data.get("signals", [])):
@@ -202,9 +203,43 @@ def validate_analysis_contract(data: dict[str, Any], expected_brief_hash: str | 
             if not non_empty_string(signal.get(key)):
                 errors.append(f"signals[{signal_index}].{key} must be a non-empty string")
 
+    signal_id_set = set(signal_ids)
+    for reading_index, reading in enumerate(data.get("subtext_readings", [])):
+        if isinstance(reading, dict) and isinstance(reading.get("reading_id"), str):
+            reading_ids.append(reading["reading_id"])
+            if not re.fullmatch(r"r[0-9]{3}", reading["reading_id"]):
+                errors.append(f"subtext_readings[{reading_index}].reading_id must look like r001")
+        if not isinstance(reading, dict):
+            continue
+        if not reading.get("source_item_ids"):
+            errors.append(f"subtext_readings[{reading_index}].source_item_ids must not be empty")
+        evidence_distribution = reading.get("evidence_distribution", {})
+        if isinstance(evidence_distribution, dict) and not evidence_distribution.get("posting_ids"):
+            errors.append(f"subtext_readings[{reading_index}].evidence_distribution.posting_ids must not be empty")
+        if not reading.get("representative_surface_phrases"):
+            errors.append(f"subtext_readings[{reading_index}].representative_surface_phrases must not be empty")
+        for key in (
+            "surface_phrase_group",
+            "plain_translation",
+            "possible_team_context",
+            "candidate_opportunity",
+            "reasoning",
+            "alternative_reading",
+        ):
+            if not non_empty_string(reading.get(key)):
+                errors.append(f"subtext_readings[{reading_index}].{key} must be a non-empty string")
+        for signal_id in reading.get("linked_signal_ids", []):
+            if signal_id not in signal_id_set:
+                errors.append(
+                    f"subtext_readings[{reading_index}].linked_signal_ids references unknown signal_id: {signal_id}"
+                )
+
     duplicate_ids = sorted({signal_id for signal_id in signal_ids if signal_ids.count(signal_id) > 1})
     for signal_id in duplicate_ids:
         errors.append(f"duplicate signal_id: {signal_id}")
+    duplicate_reading_ids = sorted({reading_id for reading_id in reading_ids if reading_ids.count(reading_id) > 1})
+    for reading_id in duplicate_reading_ids:
+        errors.append(f"duplicate reading_id: {reading_id}")
     return errors
 
 
@@ -218,6 +253,7 @@ def validate_eval_contract(data: dict[str, Any], expected_brief_hash: str | None
     expected_axes = {
         "evidence_linkage",
         "inference_discipline",
+        "subtext_quality",
         "pattern_quality",
         "alternative_reading",
         "distribution_awareness",

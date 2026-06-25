@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from contextlib import contextmanager
 import json
 import shutil
@@ -235,6 +236,22 @@ class RunContext:
         return self.run_dir / f"{self.brief_hash}_failed.json"
 
 
+@dataclass(frozen=True)
+class KeywordBatchResult:
+    index: int
+    batch_no: str
+    relative_path: str
+    artifact: dict[str, Any]
+
+
+class KeywordBatchError(RuntimeError):
+    def __init__(self, stage: str, batch_no: str, error: Exception) -> None:
+        super().__init__(f"batch {batch_no} failed at {stage}: {error}")
+        self.stage = stage
+        self.batch_no = batch_no
+        self.error = error
+
+
 def load_json(path: Path) -> dict[str, Any]:
     with path.open("r", encoding="utf-8") as file:
         data = json.load(file)
@@ -251,6 +268,8 @@ def write_json(path: Path, data: dict[str, Any], overwrite: bool = False) -> Non
 
 
 def copy_input(source: Path, destination: Path, overwrite: bool = False) -> None:
+    if source.resolve() == destination.resolve():
+        return
     if destination.exists() and not overwrite:
         current = destination.read_text(encoding="utf-8")
         incoming = source.read_text(encoding="utf-8")
@@ -295,6 +314,139 @@ def build_keyword_batch_input(input_data: dict[str, Any], postings: list[dict[st
         "analysis_goal": input_data["analysis_goal"],
         "postings": postings,
     }
+
+
+def run_keyword_batch(
+    index: int,
+    total_batches: int,
+    input_data: dict[str, Any],
+    postings: list[dict[str, Any]],
+    context: RunContext,
+    model: str | None,
+    codex_bin: str,
+    timeout_seconds: int,
+    overwrite: bool,
+    progress: ProgressReporter,
+) -> KeywordBatchResult:
+    current_batch_no = batch_no(index)
+    output_path = context.keyword_path(current_batch_no)
+    validation_path = context.keyword_validation_path(current_batch_no)
+    batch_input = build_keyword_batch_input(input_data, postings, current_batch_no)
+    started_at = time.perf_counter()
+    stage = f"keyword_extract_batch_{current_batch_no}"
+
+    progress.line(
+        f"batch {current_batch_no}/{total_batches:03d} keyword_extract start "
+        f"model={display_model(model)}"
+    )
+    try:
+        if output_path.exists() and not overwrite:
+            raise FileExistsError(f"refusing to overwrite existing file: {output_path}")
+
+        with tempfile.TemporaryDirectory(prefix="recruiting-keyword-extract-") as temp_dir:
+            temp_output_path = Path(temp_dir) / "keyword-extraction.json"
+            keyword_extract(
+                batch_input=batch_input,
+                output_path=temp_output_path,
+                codex_bin=codex_bin,
+                model=model,
+                timeout_seconds=timeout_seconds,
+            )
+
+            stage = f"keyword_extract_batch_{current_batch_no}_validate"
+            keyword_result = validate_file(
+                temp_output_path,
+                artifact="keyword_extraction",
+                expected_brief_hash=input_data["brief_hash"],
+                expected_batch_no=current_batch_no,
+            )
+            progress.validation(f"batch {current_batch_no} keyword_validate", keyword_result)
+            ensure_pass(keyword_result, validation_path)
+            keyword_output = load_json(temp_output_path)
+
+        stage = f"keyword_extract_batch_{current_batch_no}_write"
+        write_json(output_path, keyword_output, overwrite=overwrite)
+    except Exception as exc:
+        progress.line(
+            f"batch {current_batch_no}/{total_batches:03d} keyword_extract ERROR "
+            f"{format_duration(time.perf_counter() - started_at)} error={type(exc).__name__}"
+        )
+        raise KeywordBatchError(stage, current_batch_no, exc) from exc
+
+    progress.line(
+        f"batch {current_batch_no}/{total_batches:03d} keyword_extract done "
+        f"{format_duration(time.perf_counter() - started_at)}"
+    )
+    return KeywordBatchResult(
+        index=index,
+        batch_no=current_batch_no,
+        relative_path=relative_to_run(output_path, context.run_dir),
+        artifact=keyword_output,
+    )
+
+
+def run_keyword_batches(
+    posting_batches: list[list[dict[str, Any]]],
+    input_data: dict[str, Any],
+    context: RunContext,
+    model: str | None,
+    codex_bin: str,
+    timeout_seconds: int,
+    overwrite: bool,
+    keyword_workers: int,
+    progress: ProgressReporter,
+) -> list[KeywordBatchResult]:
+    total_batches = len(posting_batches)
+    if total_batches == 0:
+        return []
+
+    workers = min(keyword_workers, total_batches)
+    if workers == 1:
+        return [
+            run_keyword_batch(
+                index=index,
+                total_batches=total_batches,
+                input_data=input_data,
+                postings=postings,
+                context=context,
+                model=model,
+                codex_bin=codex_bin,
+                timeout_seconds=timeout_seconds,
+                overwrite=overwrite,
+                progress=progress,
+            )
+            for index, postings in enumerate(posting_batches, start=1)
+        ]
+
+    progress.line(f"keyword_extract parallel start batches={total_batches} workers={workers}")
+    results: list[KeywordBatchResult] = []
+    with ThreadPoolExecutor(max_workers=workers, thread_name_prefix="keyword-extract") as executor:
+        futures = [
+            executor.submit(
+                run_keyword_batch,
+                index,
+                total_batches,
+                input_data,
+                postings,
+                context,
+                model,
+                codex_bin,
+                timeout_seconds,
+                overwrite,
+                progress,
+            )
+            for index, postings in enumerate(posting_batches, start=1)
+        ]
+        try:
+            for future in as_completed(futures):
+                results.append(future.result())
+        except Exception:
+            for future in futures:
+                future.cancel()
+            raise
+
+    progress.line(f"keyword_extract parallel done batches={total_batches} workers={workers}")
+    return sorted(results, key=lambda result: result.index)
 
 
 def build_analysis_input(
@@ -400,6 +552,124 @@ def validate_report_markdown(path: Path) -> list[str]:
     return errors
 
 
+def collect_existing_keyword_files(context: RunContext) -> list[str]:
+    paths = sorted(context.run_dir.glob(f"{context.brief_hash}_batch-*_keywords.json"))
+    if not paths:
+        raise FileNotFoundError(f"no keyword artifacts found in existing run: {context.run_dir}")
+    return [relative_to_run(path, context.run_dir) for path in paths]
+
+
+def run_report_stage(
+    input_data: dict[str, Any],
+    context: RunContext,
+    analysis_data: dict[str, Any],
+    eval_data: dict[str, Any],
+    threshold_result: dict[str, Any],
+    keyword_files: list[str],
+    model: str | None,
+    codex_bin: str,
+    timeout_seconds: int,
+    overwrite: bool,
+    progress: ProgressReporter,
+) -> None:
+    report_input = build_report_input(
+        input_data=input_data,
+        analysis_data=analysis_data,
+        eval_data=eval_data,
+        threshold_result=threshold_result,
+        keyword_files=keyword_files,
+        analysis_file=relative_to_run(context.analysis_path, context.run_dir),
+        eval_file=relative_to_run(context.eval_path, context.run_dir),
+    )
+    if context.report_markdown_path.exists() and not overwrite:
+        raise FileExistsError(f"refusing to overwrite existing file: {context.report_markdown_path}")
+    with progress.step(
+        f"report markdown model={display_model(model)}",
+        live=True,
+    ):
+        report(
+            report_input=report_input,
+            output_path=context.report_markdown_path,
+            codex_bin=codex_bin,
+            model=model,
+            timeout_seconds=timeout_seconds,
+        )
+    report_errors = validate_report_markdown(context.report_markdown_path)
+    if report_errors:
+        raise RuntimeError(json.dumps({"artifact": "report", "errors": report_errors}, ensure_ascii=False))
+
+
+def run_report_only(
+    args: argparse.Namespace,
+    input_data: dict[str, Any],
+    context: RunContext,
+    rubric: dict[str, Any],
+    models: dict[str, str | None],
+    progress: ProgressReporter,
+    pipeline_started_at: float,
+) -> dict[str, Any]:
+    if not context.run_dir.exists():
+        raise FileNotFoundError(f"existing run directory does not exist: {context.run_dir}")
+
+    stage = "report_only_load"
+    keyword_files = collect_existing_keyword_files(context)
+
+    stage = "report_only_analysis_validate"
+    analysis_result = validate_file(
+        context.analysis_path,
+        artifact="analysis",
+        expected_brief_hash=input_data["brief_hash"],
+    )
+    progress.validation(stage, analysis_result)
+    ensure_pass(analysis_result)
+    analysis_data = load_json(context.analysis_path)
+
+    stage = "report_only_eval_validate"
+    eval_result = validate_file(
+        context.eval_path,
+        artifact="eval",
+        expected_brief_hash=input_data["brief_hash"],
+    )
+    progress.validation(stage, eval_result)
+    ensure_pass(eval_result)
+    eval_data = load_json(context.eval_path)
+
+    threshold_result = calculate_threshold_result(eval_data, rubric)
+    if not threshold_result["passed"]:
+        raise RuntimeError("refusing to create report-only output because existing eval is below threshold")
+
+    stage = "report_only"
+    run_report_stage(
+        input_data=input_data,
+        context=context,
+        analysis_data=analysis_data,
+        eval_data=eval_data,
+        threshold_result=threshold_result,
+        keyword_files=keyword_files,
+        model=models[STAGE_REPORT],
+        codex_bin=args.codex_bin,
+        timeout_seconds=args.timeout_seconds,
+        overwrite=args.overwrite,
+        progress=progress,
+    )
+    progress.line(
+        f"run PASS stage={STAGE_REPORT} mode=report-only batches={len(keyword_files)} "
+        f"total_elapsed={format_duration(time.perf_counter() - pipeline_started_at)}"
+    )
+    return {
+        "status": "PASS",
+        "run_id": context.run_id,
+        "input": str(context.copied_input_path),
+        "keyword_batches": [str(context.run_dir / path) for path in keyword_files],
+        "analysis": str(context.analysis_path),
+        "eval": str(context.eval_path),
+        "report": str(context.report_markdown_path),
+        "stage": STAGE_REPORT,
+        "mode": "report-only",
+        "threshold_result": threshold_result,
+    }
+
+
 def validate_analysis_references(analysis_data: dict[str, Any], keyword_artifacts: list[dict[str, Any]]) -> list[str]:
     item_ids = set()
     posting_ids = set()
@@ -415,6 +685,11 @@ def validate_analysis_references(analysis_data: dict[str, Any], keyword_artifact
                     item_ids.add(item["item_id"])
 
     errors = []
+    signal_ids = {
+        signal["signal_id"]
+        for signal in analysis_data.get("signals", [])
+        if isinstance(signal, dict) and isinstance(signal.get("signal_id"), str)
+    }
     for signal_index, signal in enumerate(analysis_data.get("signals", [])):
         if not isinstance(signal, dict):
             continue
@@ -428,6 +703,26 @@ def validate_analysis_references(analysis_data: dict[str, Any], keyword_artifact
             if posting_id not in posting_ids:
                 errors.append(
                     f"signals[{signal_index}].evidence_distribution.posting_ids references unknown posting_id: {posting_id}"
+                )
+    for reading_index, reading in enumerate(analysis_data.get("subtext_readings", [])):
+        if not isinstance(reading, dict):
+            continue
+        for item_id in reading.get("source_item_ids", []):
+            if item_id not in item_ids:
+                errors.append(f"subtext_readings[{reading_index}].source_item_ids references unknown item_id: {item_id}")
+        for signal_id in reading.get("linked_signal_ids", []):
+            if signal_id not in signal_ids:
+                errors.append(
+                    f"subtext_readings[{reading_index}].linked_signal_ids references unknown signal_id: {signal_id}"
+                )
+        evidence_distribution = reading.get("evidence_distribution", {})
+        if not isinstance(evidence_distribution, dict):
+            continue
+        for posting_id in evidence_distribution.get("posting_ids", []):
+            if posting_id not in posting_ids:
+                errors.append(
+                    "subtext_readings"
+                    f"[{reading_index}].evidence_distribution.posting_ids references unknown posting_id: {posting_id}"
                 )
     return errors
 
@@ -544,7 +839,11 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 
     input_data = load_json(input_path)
     brief_hash = input_data["brief_hash"]
-    context = RunContext.create(brief_hash=brief_hash, runs_dir=args.runs_dir)
+    context = (
+        RunContext(brief_hash=brief_hash, runs_dir=args.runs_dir.resolve(), run_id=args.run_id)
+        if args.run_id
+        else RunContext.create(brief_hash=brief_hash, runs_dir=args.runs_dir)
+    )
     models = resolve_agent_models(args)
     batch_size = args.batch_size or input_data["batch_size"]
     rubric = load_rubric(args.rubric.resolve())
@@ -565,59 +864,58 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "codex_access": "dangerously-bypass-approvals-and-sandbox",
         "agent_models": models,
         "batch_size": batch_size,
+        "keyword_workers": args.keyword_workers,
         "max_analysis_attempts": args.max_analysis_attempts,
         "rubric_path": str(args.rubric.resolve()),
         "timeout_seconds": args.timeout_seconds,
         "until_stage": args.until_stage,
+        "report_only": args.report_only,
+        "run_id": args.run_id,
     }
 
     progress.line(
         f"run start brief={brief_hash} postings={len(input_data['postings'])} "
-        f"batch_size={batch_size} run_id={context.run_id}"
+        f"batch_size={batch_size} keyword_workers={args.keyword_workers} "
+        f"run_id={context.run_id} report_only={args.report_only}"
     )
 
     try:
+        if args.report_only:
+            stage = "report_only"
+            return run_report_only(
+                args=args,
+                input_data=input_data,
+                context=context,
+                rubric=rubric,
+                models=models,
+                progress=progress,
+                pipeline_started_at=pipeline_started_at,
+            )
+
         stage = "prepare"
         copy_input(input_path, context.copied_input_path, overwrite=args.overwrite)
 
         posting_batches = batched(input_data["postings"], batch_size)
-        for index, postings in enumerate(posting_batches, start=1):
-            current_batch_no = batch_no(index)
-            output_path = context.keyword_path(current_batch_no)
-            validation_path = context.keyword_validation_path(current_batch_no)
-            batch_input = build_keyword_batch_input(input_data, postings, current_batch_no)
+        stage = STAGE_KEYWORD_EXTRACT
+        try:
+            keyword_results = run_keyword_batches(
+                posting_batches=posting_batches,
+                input_data=input_data,
+                context=context,
+                model=models[STAGE_KEYWORD_EXTRACT],
+                codex_bin=args.codex_bin,
+                timeout_seconds=args.timeout_seconds,
+                overwrite=args.overwrite,
+                keyword_workers=args.keyword_workers,
+                progress=progress,
+            )
+        except KeywordBatchError as exc:
+            stage = exc.stage
+            raise
 
-            with tempfile.TemporaryDirectory(prefix="recruiting-keyword-extract-") as temp_dir:
-                temp_output_path = Path(temp_dir) / "keyword-extraction.json"
-                stage = f"keyword_extract_batch_{current_batch_no}"
-                with progress.step(
-                    f"batch {current_batch_no}/{len(posting_batches):03d} keyword_extract "
-                    f"model={display_model(models[STAGE_KEYWORD_EXTRACT])}",
-                    live=True,
-                ):
-                    keyword_extract(
-                        batch_input=batch_input,
-                        output_path=temp_output_path,
-                        codex_bin=args.codex_bin,
-                        model=models[STAGE_KEYWORD_EXTRACT],
-                        timeout_seconds=args.timeout_seconds,
-                    )
-
-                stage = f"keyword_extract_batch_{current_batch_no}_validate"
-                keyword_result = validate_file(
-                    temp_output_path,
-                    artifact="keyword_extraction",
-                    expected_brief_hash=brief_hash,
-                    expected_batch_no=current_batch_no,
-                )
-                progress.validation(f"batch {current_batch_no} keyword_validate", keyword_result)
-                ensure_pass(keyword_result, validation_path)
-                keyword_output = load_json(temp_output_path)
-
-            stage = f"keyword_extract_batch_{current_batch_no}_write"
-            write_json(output_path, keyword_output, overwrite=args.overwrite)
-            keyword_batches.append(relative_to_run(output_path, context.run_dir))
-            keyword_artifacts.append(keyword_output)
+        for keyword_result in keyword_results:
+            keyword_batches.append(keyword_result.relative_path)
+            keyword_artifacts.append(keyword_result.artifact)
 
         if args.until_stage == STAGE_KEYWORD_EXTRACT:
             progress.line(
@@ -775,32 +1073,20 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                 lineage["analysis"] = str(context.analysis_path)
                 lineage["eval"] = str(context.eval_path)
 
-                report_input = build_report_input(
+                stage = "report"
+                run_report_stage(
                     input_data=input_data,
+                    context=context,
                     analysis_data=analysis_output,
                     eval_data=eval_output,
                     threshold_result=threshold_result,
                     keyword_files=keyword_batches,
-                    analysis_file=relative_to_run(context.analysis_path, context.run_dir),
-                    eval_file=relative_to_run(context.eval_path, context.run_dir),
+                    model=models[STAGE_REPORT],
+                    codex_bin=args.codex_bin,
+                    timeout_seconds=args.timeout_seconds,
+                    overwrite=args.overwrite,
+                    progress=progress,
                 )
-                stage = "report"
-                if context.report_markdown_path.exists() and not args.overwrite:
-                    raise FileExistsError(f"refusing to overwrite existing file: {context.report_markdown_path}")
-                with progress.step(
-                    f"report markdown model={display_model(models[STAGE_REPORT])}",
-                    live=True,
-                ):
-                    report(
-                        report_input=report_input,
-                        output_path=context.report_markdown_path,
-                        codex_bin=args.codex_bin,
-                        model=models[STAGE_REPORT],
-                        timeout_seconds=args.timeout_seconds,
-                    )
-                report_errors = validate_report_markdown(context.report_markdown_path)
-                if report_errors:
-                    raise RuntimeError(json.dumps({"artifact": "report", "errors": report_errors}, ensure_ascii=False))
                 lineage["report"] = str(context.report_markdown_path)
                 progress.line(
                     f"run PASS stage={STAGE_REPORT} attempts={attempt} batches={len(keyword_batches)} "
@@ -929,6 +1215,21 @@ def main() -> int:
     )
     parser.add_argument("--max-analysis-attempts", type=int, default=3)
     parser.add_argument("--timeout-seconds", type=int, default=600)
+    parser.add_argument(
+        "--keyword-workers",
+        type=int,
+        default=5,
+        help="Number of Keyword Extract batches to run concurrently.",
+    )
+    parser.add_argument(
+        "--report-only",
+        action="store_true",
+        help="Regenerate only the Markdown report from existing input, analysis, eval, and keyword artifacts.",
+    )
+    parser.add_argument(
+        "--run-id",
+        help="Existing run directory name to use with --report-only, for example 2026-06-20_5ba8958d.",
+    )
     parser.add_argument("--overwrite", action="store_true", help="Overwrite existing artifacts for the same run.")
     args = parser.parse_args()
 
@@ -936,6 +1237,10 @@ def main() -> int:
         raise ValueError("--batch-size must be at least 1")
     if args.max_analysis_attempts < 1:
         raise ValueError("--max-analysis-attempts must be at least 1")
+    if args.keyword_workers < 1:
+        raise ValueError("--keyword-workers must be at least 1")
+    if args.run_id and not args.report_only:
+        raise ValueError("--run-id can only be used with --report-only")
 
     result = run(args)
     print(json.dumps(result, ensure_ascii=False, indent=2))

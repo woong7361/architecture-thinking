@@ -1,0 +1,38 @@
+{
+  "brief_hash": "5ba8958d",
+  "stage": "evaluate",
+  "rubric_name": "recruiting_analysis:v1",
+  "axis_scores": [
+    {
+      "axis": "evidence_linkage",
+      "score": 3.0,
+      "rationale": "sample_summary의 posting_count, company_size_counts, domain_counts는 keyword_artifacts의 32개 공고 분포와 대체로 맞고, signals와 subtext_readings의 source_item_ids도 대부분 실제 item에 존재한다. 그러나 frequency_summary에서 term_frequencies의 count가 posting_ids 개수와 맞지 않는 항목이 다수 있다. 예를 들어 java는 count 32인데 posting_ids는 18개이고, spring boot는 count 22인데 posting_ids는 14개이며, 서류전형은 count 20인데 posting_ids는 17개다. 일부 signal의 evidence_distribution은 source_item_ids 기준 분포와 맞지만, 전체 근거 연결의 기계적 일관성은 완전하지 않다."
+    },
+    {
+      "axis": "inference_discipline",
+      "score": 4.0,
+      "rationale": "signals의 inferred_expectation은 대부분 '가능성이 있다', '기대할 가능성이 있다'처럼 보수적으로 표현되어 있고 confidence, alternative_reading, limitations가 함께 제공된다. s005, s009처럼 특정 도메인에 몰린 신호는 medium confidence로 제한했다. 다만 s001의 빈도 기반 주장은 frequency_summary count 오류의 영향을 받을 수 있고, 일부 high confidence 신호는 실제 책임 강도나 운영 권한이 확인되지 않는다는 limitation에 비해 다소 강하게 보일 수 있다."
+    },
+    {
+      "axis": "subtext_quality",
+      "score": 5.0,
+      "rationale": "subtext_readings는 representative_surface_phrases를 실제 source_item_ids의 source_spans에서 가져오고, plain_translation, possible_team_context, candidate_opportunity를 분리해 작성한다. 예를 들어 r002는 p001-k003, p012-k002, p015-k003 등에서 장애 대응과 모니터링 문구를 연결하고, 온콜과 SLA는 limitations로 제한한다. r004도 AI 도구 활용을 서비스 적용과 검증 습관으로 해석하되 채용 브랜딩 가능성을 alternative_reading에 둔다."
+    },
+    {
+      "axis": "pattern_quality",
+      "score": 4.0,
+      "rationale": "signals는 Java/Spring/RDBMS/REST API, 장애 대응/모니터링, DB 정합성/쿼리 최적화, Docker/CI/CD/AWS, AI 도구/LLM, 문서화/협업처럼 반복 표현과 문맥이 비교적 명확한 묶음으로 구성되어 있다. capability_type도 대체로 자연스럽다. 다만 s001의 capability_type이 architecture_design으로 넓고, s010은 코드 리뷰, 채용 전형의 코드리뷰테스트, 효과 검증 체계가 함께 묶여 있어 품질공학 패턴으로는 일부 맥락이 섞인다."
+    },
+    {
+      "axis": "alternative_reading",
+      "score": 5.0,
+      "rationale": "모든 signal과 subtext_readings에 alternative_reading과 limitations가 별도로 존재한다. 내용도 단순 반복이 아니라 '기술 태그 위주 추출', '관용구일 가능성', 'DevOps 전담 조직 부재', '채용 브랜딩 문구', '실제 트래픽/SLA 미확인', '권한과 책임 균형 미확인'처럼 해당 신호의 약점을 구체적으로 짚는다."
+    },
+    {
+      "axis": "distribution_awareness",
+      "score": 4.0,
+      "rationale": "각 signal과 subtext_reading은 evidence_distribution에 unique_posting_count, company_size_counts, domain_counts, posting_ids를 포함하고, s005, s009, r009처럼 특정 회사 규모나 도메인에 몰린 경우 confidence를 medium으로 낮추거나 limitations에 일반화 한계를 적는다. 다만 일부 high confidence 신호는 표본 전체 32개 중 8~13개 수준의 관찰에 기반하고, frequency_summary의 count 오류가 분포 인식의 신뢰도를 일부 낮춘다."
+    }
+  ],
+  "summary": "근거 item 연결과 행간 해석 구조는 전반적으로 좋지만, frequency_summary의 count와 posting_ids 불일치가 눈에 띄는 기계적 결함이다. 신호와 한계는 대체로 보수적으로 분리되어 있어 평가 가능한 분석이다."
+}

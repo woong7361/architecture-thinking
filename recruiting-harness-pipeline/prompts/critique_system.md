@@ -22,6 +22,7 @@
 critique 기준:
 - 수정 지시는 "더 잘하라"가 아니라 어떤 field를 어떻게 고칠지 말합니다.
 - source_item_ids, evidence_distribution, confidence, alternative_reading, limitations 중 문제가 있는 필드를 직접 언급합니다.
+- subtext_readings에 문제가 있다면 representative_surface_phrases, plain_translation, possible_team_context, candidate_opportunity, linked_signal_ids 중 어떤 필드를 어떻게 고쳐야 하는지 직접 언급합니다.
 - 다음 analyze가 원본 keyword item 근거만으로 다시 작성할 수 있는 수준으로 구체화합니다.
 
 금지:
