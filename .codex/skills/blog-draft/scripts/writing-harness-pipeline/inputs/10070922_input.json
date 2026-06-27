@@ -1,0 +1,22 @@
+{
+  "brief_hash": "10070922",
+  "created_at": "2026-06-27T11:44:56+09:00",
+  "brief": {
+    "topic": "blog-draft skill로 글쓰기 초안 자동화하기",
+    "raw_text": "writing-harness-pipeline을 blog-draft skill로 복사하고 raw_text를 보존한 뒤 필요한 의도 질문만 묻는 구조로 바꾸고 싶다.",
+    "piece_type": "retrospective",
+    "intent": "글쓰기 하네스를 skill로 전환하는 설계 판단을 회고한다",
+    "audience": "AI native 개발 방식에 관심 있는 개발자",
+    "constraints": {
+      "target_length": "3000-4000 Korean characters",
+      "tone": "차분하고 구체적인 개발자 회고",
+      "emphasis": [
+        "raw_text 보존",
+        "필요한 질문만 묻는 intake"
+      ],
+      "avoid": [
+        "AI가 모든 것을 자동으로 해결한다는 과장"
+      ]
+    }
+  }
+}
