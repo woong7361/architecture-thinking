@@ -1,0 +1,4 @@
+interface:
+  display_name: "BlogDraft"
+  short_description: "Draft blogs from raw materials"
+  default_prompt: "Use $blog-draft to turn these materials into a blog draft."

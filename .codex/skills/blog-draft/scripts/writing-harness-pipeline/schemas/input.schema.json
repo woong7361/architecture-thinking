@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Pipeline Input",
+  "type": "object",
+  "required": ["brief_hash", "brief", "created_at"],
+  "properties": {
+    "brief_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{8,}$",
+      "description": "브리프 해시. 한 건을 관통하는 유일 식별자"
+    },
+    "brief": {
+      "type": "object",
+      "description": "글쓰기 요청 본문. 내부 확장 허용",
+      "required": ["topic", "raw_text", "intent", "audience"],
+      "properties": {
+        "topic": {
+          "type": "string",
+          "minLength": 1,
+          "description": "글의 주제"
+        },
+        "raw_text": {
+          "type": "string",
+          "minLength": 1,
+          "description": "사용자가 제공한 원재료 원문"
+        },
+        "piece_type": {
+          "type": "string",
+          "enum": ["retrospective", "essay", "technical_note"],
+          "description": "글 유형"
+        },
+        "intent": {
+          "type": "string",
+          "minLength": 1,
+          "description": "글을 쓰는 이유와 목적"
+        },
+        "audience": {
+          "type": "string",
+          "minLength": 1,
+          "description": "예상 독자"
+        },
+        "constraints": {
+          "type": "object",
+          "description": "글쓰기 방향과 제약",
+          "properties": {
+            "target_length": {
+              "type": "string",
+              "minLength": 1,
+              "description": "목표 분량"
+            },
+            "tone": {
+              "type": "string",
+              "minLength": 1,
+              "description": "글의 톤과 화자 거리감"
+            },
+            "emphasis": {
+              "type": "array",
+              "description": "강조할 관점이나 메시지",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "must_include": {
+              "type": "array",
+              "description": "반드시 포함할 내용",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "avoid": {
+              "type": "array",
+              "description": "피해야 할 주장, 표현, 방향",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "summary": false,
+        "intake_answers": false,
+        "source_summary": false
+      },
+      "additionalProperties": true
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "입력 파일이 생성된 시각"
+    }
+  },
+  "additionalProperties": false
+}
