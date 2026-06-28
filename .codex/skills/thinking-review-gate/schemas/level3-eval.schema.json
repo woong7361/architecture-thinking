@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Thinking Review Gate Level 3 Eval Scores",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "run_id", "scores", "score_reasons"],
+  "properties": {
+    "version": { "type": "integer", "const": 1 },
+    "run_id": { "type": "string", "minLength": 1 },
+    "scores": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidence_count",
+        "evidence_quality",
+        "claim_coverage",
+        "uncertainty_boundary",
+        "consistency",
+        "alternatives_tradeoff"
+      ],
+      "properties": {
+        "evidence_count": { "enum": [1, 2, 3, 4, 5] },
+        "evidence_quality": { "enum": [1, 2, 3, 4, 5] },
+        "claim_coverage": { "enum": [1, 2, 3, 4, 5] },
+        "uncertainty_boundary": { "enum": [1, 2, 3, 4, 5] },
+        "consistency": { "enum": [1, 2, 3, 4, 5] },
+        "alternatives_tradeoff": { "enum": [1, 2, 3, 4, 5] }
+      }
+    },
+    "score_reasons": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidence_count",
+        "evidence_quality",
+        "claim_coverage",
+        "uncertainty_boundary",
+        "consistency",
+        "alternatives_tradeoff"
+      ],
+      "properties": {
+        "evidence_count": { "type": "string", "minLength": 1 },
+        "evidence_quality": { "type": "string", "minLength": 1 },
+        "claim_coverage": { "type": "string", "minLength": 1 },
+        "uncertainty_boundary": { "type": "string", "minLength": 1 },
+        "consistency": { "type": "string", "minLength": 1 },
+        "alternatives_tradeoff": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

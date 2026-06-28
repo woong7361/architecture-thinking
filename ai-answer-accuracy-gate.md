@@ -1,69 +1,105 @@
 # AI 답변 정확성 게이트 논점 정리
 
-## 우리가 고민하는 문제
+## 목차
+
+- [1. 우리가 고민하는 문제](#1-우리가-고민하는-문제)
+- [2. 핵심 쟁점](#2-핵심-쟁점)
+  - [2.1 정확성보다 사용자 검증 가능성이 먼저다](#21-정확성보다-사용자-검증-가능성이-먼저다)
+  - [2.2 결정적 확인과 비결정적 사고 평가를 분리해야 한다](#22-결정적-확인과-비결정적-사고-평가를-분리해야-한다)
+  - [2.3 AGENTS.md만으로는 부족하다](#23-agentsmd만으로는-부족하다)
+  - [2.4 검토 강도는 level로 올린다](#24-검토-강도는-level로-올린다)
+  - [2.6 질문 전에 프로젝트 문맥을 먼저 탐색한다](#26-질문-전에-프로젝트-문맥을-먼저-탐색한다)
+- [3. 생각 검토 루브릭 초안](#3-생각-검토-루브릭-초안)
+- [4. 역할 분리](#4-역할-분리)
+- [5. 실무 적용 방향](#5-실무-적용-방향)
+
+## 1. 우리가 고민하는 문제
 
 현재의 핵심 문제는 AI의 답변 품질, 특히 **정확성**을 사용자의 직감, 컨디션, 그날의 추궁 능력에 맡기지 않고 반복 가능한 시스템으로 만들 수 있는가이다.
 
 T7에서 AI를 날카롭게 추궁하면서 좋은 답변을 끌어냈지만, 그 방식은 사람의 대화 능력에 크게 의존한다. 실무에서 재현 가능한 품질을 얻으려면 "잘 물어보는 사람의 직감"을 시스템 안의 검증 장치로 바꿔야 한다.
 
-따라서 질문은 다음과 같다.
+따라서 질문은 다음과 같다. 이 문서의 초점은 코드 리뷰나 테스트 검증이 아니라, AI가 내놓은 **생각, 판단, 설계안, 설명**을 사용자가 검토 가능한 형태로 만드는 것이다.
 
 ```text
-AI가 답변을 잘했는지 사람이 매번 감으로 판단하지 않고,
-답변 생성 후 정확성 벤치마크를 돌려
-통과한 답변만 사용자에게 보여줄 수 있는가?
+AI의 생각이 타당한지 사람이 매번 감으로 추궁하지 않고,
+답변의 claim, 근거, 가정, 불확실성, 대안을 드러내
+사용자가 검토 가능한 상태로 만들 수 있는가?
 ```
 
-## 핵심 쟁점
+핵심 전환은 다음과 같다.
 
-### 1. 정확성은 직접 판정하기 어렵다
+```text
+정확성을 보장한다
+  -> 사용자가 검토 가능한 사고 표면을 만든다
+
+AI가 스스로 맞다고 말한다
+  -> claim, 근거, 가정, 대안, trade-off, 확인 필요를 드러낸다
+
+대화 감각에 의존한다
+  -> Level 1/2/3 검토 ladder와 디버깅용 review case로 검토 기준을 테스트한다
+```
+
+## 2. 핵심 쟁점
+
+### 2.1 정확성보다 사용자 검증 가능성이 먼저다
 
 "이 답변이 정확한가?"는 너무 큰 질문이다. 이 질문 자체는 비결정적이다. 답변의 품질, 맥락 적합성, 설명의 깊이, 누락 여부를 한 번에 결정적으로 판별하기 어렵기 때문이다.
 
-실무적으로는 답변 전체가 아니라 **답변 안의 claim**을 기준으로 봐야 한다.
+따라서 AI가 사용자에게 줄 수 있는 것은 "정확성 보증"이 아니라 **검증 가능한 표면**이다. 사용자는 답변의 결론만 보는 것이 아니라, 그 결론이 어떤 claim, 근거, 가정, 대안, trade-off 위에 서 있는지 볼 수 있어야 한다.
+
+실무적으로는 답변 전체를 믿게 만드는 것이 아니라, 답변을 다음 단위로 분해해 사용자가 검토할 수 있게 만들어야 한다.
 
 ```text
-답변 정확성 =
-- 답변의 주요 claim이 근거를 가지는가
-- 근거와 모순되지 않는가
-- 제공된 문맥 밖의 내용을 사실처럼 말하지 않는가
-- 추정은 추정으로 표시되는가
-- 사용자 질문의 핵심을 누락하지 않는가
+사용자 검증 가능성 =
+- 주요 claim은 무엇인가
+- 각 claim의 evidence anchor는 무엇인가
+- 숨은 가정은 무엇인가
+- 고려한 대안은 무엇인가
+- 각 대안의 trade-off는 무엇인가
+- 추정과 확인된 사실은 구분되어 있는가
+- 사용자가 추가로 확인해야 할 지점은 무엇인가
 ```
 
-즉, 정확성 벤치마크의 단위는 `answer`가 아니라 `claim`이다.
+즉, 생각 검토의 단위는 `answer` 전체가 아니라 `claim`, `evidence anchor`, `assumption`, `alternative`, `trade-off`, `open question`이다. 정확성을 직접 줄 수 없다면, 사용자가 정확성을 판단할 수 있는 재료를 제공해야 한다.
 
-### 2. 결정적 검증과 비결정적 평가를 분리해야 한다
+### 2.2 결정적 확인과 비결정적 사고 평가를 분리해야 한다
 
-모든 검증을 결정적으로 만들 수는 없다. 하지만 일부는 확실히 결정적으로 만들 수 있다.
+모든 사고 평가를 결정적으로 만들 수는 없다. 하지만 일부는 확실히 결정적으로 확인할 수 있다.
 
-결정적으로 검증 가능한 것:
+결정적으로 확인 가능한 것:
 
-- 파일이나 라인 참조가 실제 존재하는가
-- 명령 실행 결과와 답변의 주장이 일치하는가
-- 테스트, 빌드, 린트가 통과했는가
+- claim에 연결된 evidence anchor가 실제 존재하는가
+  - 파일/라인 참조
+  - URL/reference link
+  - 공식 문서 섹션
+  - 사용자 제공 문맥
+- 답변이 인용한 사용자 발화나 문서 조각이 실제로 존재하는가
+- 답변이 제시한 전제, 가정, 결정 기준이 누락 없이 적혀 있는가
 - JSON schema가 valid인가
 - 필수 필드가 채워졌는가
 - 금지 패턴이 포함되지 않았는가
 
 비결정적 평가가 필요한 것:
 
-- 이 claim이 정말 근거 없는 주장인가
+- evidence anchor가 claim을 충분히 지지하는가
+- 근거가 여러 의미로 해석될 때 답변이 과도하게 확정했는가
 - 사용자 질문의 핵심 요구를 누락했는가
 - 답변이 문맥을 왜곡했는가
-- 설계 trade-off를 충분히 다뤘는가
+- 선택지와 trade-off를 충분히 다뤘는가
 
 따라서 구조는 다음과 같이 나뉘어야 한다.
 
 ```text
-결정적 검증 = script, schema, test, hook의 pass/fail
-비결정적 평가 = evaluator AI의 claim grounding, coverage 평가
-최종 차단 = hook 또는 runner의 hard gate
+결정적 확인 = evidence anchor 존재 여부, 필수 필드, 금지 패턴
+비결정적 사고 평가 = Level 1 inline review 또는 Level 2 critique review
+초기 최종 판단 = critique 결과를 반영한 main agent
+후속 자동화 = Level 3 file hand-off / schema / runner 기반 정형 검사
 ```
 
-중요한 점은 evaluator AI의 판단은 여전히 비결정적이라는 것이다. 다만 hook은 evaluator가 낸 구조화된 결과를 기준으로 결정적인 pass/fail을 수행할 수 있다.
+중요한 점은 evaluator AI의 판단은 여전히 비결정적이라는 것이다. 따라서 기본 대화에서는 Level 1 inline review나 Level 2 critique review로 빠르게 검토하고, 검토 기록과 재현성이 필요할 때만 Level 3 file hand-off와 runner로 자동화 수준을 높인다.
 
-### 3. AGENTS.md만으로는 부족하다
+### 2.3 AGENTS.md만으로는 부족하다
 
 `AGENTS.md`는 기준을 선언할 수 있지만, 기준을 강제하지는 못한다.
 
@@ -72,7 +108,7 @@ AI가 답변을 잘했는지 사람이 매번 감으로 판단하지 않고,
 - 정확성 원칙을 선언한다.
 - 답변 시 지켜야 할 행동 규칙을 정의한다.
 - 실패 시 재작성하거나 확인 요청하라는 정책을 둔다.
-- 반복되는 실패를 skill, hook, script로 승격하라는 기준을 둔다.
+- 반복되는 실패를 skill, sub-agent workflow, script로 승격하라는 기준을 둔다.
 
 `AGENTS.md`가 하기 어려운 일:
 
@@ -81,151 +117,184 @@ AI가 답변을 잘했는지 사람이 매번 감으로 판단하지 않고,
 - 답변 점수를 계산한다.
 - 기준 미달 답변을 실제로 내보내지 못하게 막는다.
 
-따라서 `AGENTS.md`는 헌법처럼 기준을 담고, 실제 집행은 hook, script, evaluator가 맡아야 한다.
+따라서 `AGENTS.md`는 헌법처럼 기준을 담고, 초기 집행은 main agent의 Level 1 review와 Level 2 critique workflow가 맡는다. 이후 자동화가 안정되면 Level 3의 script와 runner로 집행 범위를 넓힌다.
 
-### 4. hook은 실행과 차단을 맡아야 한다
+### 2.4 검토 강도는 level로 올린다
 
-hook의 역할은 "좋은 답변을 하라"고 지시하는 것이 아니라, 답변 생성 이후 검증 파이프라인을 실행하고 통과하지 못한 답변을 막는 것이다.
+검토 방식은 v1/v2처럼 별도 skill로 나누지 않고, 하나의 `thinking-review-gate` skill 안에서 Level 1, Level 2, Level 3으로 올린다. 이 구분은 버전이 아니라 검토 강도다.
 
-예상 흐름:
+이렇게 나누는 이유는 답변의 신속성, 즉 생산성과 답변 품질 사이의 trade-off를 다루기 위해서다. 모든 답변을 무거운 검토 흐름으로 보내면 응답 속도가 떨어지고, 반대로 검토를 아예 하지 않으면 근거 없는 단정, 숨은 가정, 잘못된 방향 제안 때문에 사용자가 되묻거나 재작업해야 할 가능성이 커진다. 즉, 무검토도 장기적으로는 생산성을 낮출 수 있다.
 
-```text
-user question
-  -> draft answer
-  -> claim extraction
-  -> grounding / coverage evaluation
-  -> deterministic gate script
-  -> pass면 최종 응답
-  -> fail이면 revise loop
-  -> max loop 초과 시 중단 또는 사용자 확인 요청
-```
+따라서 모든 답변에는 최소한의 Level 1 inline verifier review를 적용한다. 다만 검토 비용이 답변 가치보다 커지지 않도록, 판단 비용과 실패 비용이 커질 때만 Level 2나 Level 3으로 올린다.
 
-hook이 직접 판단하지 않아도 된다. hook은 evaluator와 script를 호출하고, 그 결과가 기준을 만족하는지만 판정한다.
+레벨 선택은 결정적 규칙으로 수행한다. 단, 각 레벨 안에서 claim의 타당성, 근거 충분성, 대안의 품질을 평가하는 일은 여전히 비결정적일 수 있다. 즉, 결정적으로 고정하는 것은 "어떤 검토 흐름을 실행할 것인가"이고, 의미 판단 자체를 완전히 결정적으로 만든다는 뜻은 아니다.
 
-### 5. 벤치마크가 있어야 loop가 의미를 가진다
+아래 표는 level을 결정하기 위한 요약이다. 실제 수행 절차는 6.2의 level별 상세 흐름을 따른다.
 
-벤치마크 없이 loop를 돌리면 AI가 자기 답변을 다시 보고 "좋아진 것 같다"고 말하는 수준에 머무른다. 이는 여전히 비결정적이다.
+| Level | 레벨 분류 방법 | 요약 흐름 |
+| --- | --- | --- |
+| Level 1: inline verifier review | Level 2/3 조건에 걸리지 않는 기본 답변. 빠른 설명, 짧은 판단, 단순 요약, 낮은 위험의 방향성 답변. | 문맥 확인 -> 초안 -> inline critique -> 수정 -> 최종 답변 |
+| Level 2: inline critique review | 설계, 추천, 의사결정, 구현 방향, 대안 비교, 최신성/정책/가격/API 변경 가능성, 여러 claim이 얽힌 답변. 단, file artifact나 pass/fail gate가 필요하지 않은 경우. | 문맥 확인 -> 초안 -> critique -> 수정 -> 최종 답변 |
+| Level 3: file hand-off agentic review | 사용자가 명시적으로 review case, file hand-off, eval, gate, runner, 재현 가능한 기록, schema validation, CI/hook 후보 검증을 요청한 경우. 또는 검토 결과를 artifact로 남겨야 하는 경우. | run 생성 -> artifact 작성 -> validation -> artifact 재확인 -> 최종 답변 또는 fail 보고 |
 
-벤치마크가 있으면 loop는 다음처럼 작동한다.
+분류 규칙은 위에서 아래로 적용한다.
 
 ```text
-초안 생성
-  -> 벤치마크 검사
-  -> 실패 항목 식별
-  -> 실패 항목만 수정
-  -> 재검사
-  -> 통과 또는 중단
+1. Level 3 조건이 있으면 Level 3을 선택한다.
+2. Level 3 조건이 없고 Level 2 조건이 있으면 Level 2를 선택한다.
+3. 둘 다 아니면 Level 1을 선택한다.
 ```
 
-따라서 "loop를 돌린다"는 말은 반드시 "무엇을 기준으로 통과/실패를 판정하는가"와 함께 정의되어야 한다.
+이 방식은 완전히 결정적이지 않지만, 지금 단계에서는 훨씬 현실적이다. 모든 답변을 무거운 file hand-off로 보내지 않고, 필요한 답변만 더 강한 검토 단계로 올릴 수 있기 때문이다. 동시에 모든 답변을 무검토로 두지 않기 때문에, 빠른 응답과 기본 품질 사이의 균형을 잡을 수 있다.
 
-## 정확성 벤치마크 초안
+### 2.6 질문 전에 프로젝트 문맥을 먼저 탐색한다
 
-### Hard fail
+사용자에게 바로 질문하는 것이 항상 좋은 것은 아니다. 특히 프로젝트 안에서 이미 확인할 수 있는 정보라면, 먼저 탐색하고 나서 질문해야 한다. 그렇지 않으면 사용자는 AI가 알 수 있는 것을 되묻는다고 느끼고, 질문 자체도 부정확해진다.
 
-아래 항목은 하나라도 발생하면 점수와 무관하게 실패로 본다.
+원칙은 단순하다. 프로젝트 안에서 확인 가능한 것은 AI가 먼저 탐색하고, 사용자의 판단이 필요한 것만 질문한다. `AGENTS.md`, 관련 문서, 사용자가 언급한 파일, 기존 스킬과 하네스처럼 이미 확인 가능한 정보는 AI가 먼저 본다. 사용자는 우선순위, 목적, 검토 강도, 독자, 자동화 범위처럼 프로젝트 안에서 결정할 수 없는 의사결정만 답하면 된다.
+
+```text
+나쁜 흐름:
+  사용자 질문
+    -> 바로 추가 질문
+    -> 사용자가 프로젝트 문맥을 다시 설명
+
+좋은 흐름:
+  사용자 질문
+    -> 프로젝트 문맥 탐색
+    -> 이미 알 수 있는 사실 정리
+    -> 남은 불확실성만 질문
+    -> 답변 초안
+    -> 필요한 level의 검토
+```
+
+따라서 Level 2나 Level 3으로 올리기 전에도 main agent는 먼저 프로젝트 문맥을 수집해야 한다. critique/eval agent는 맨땅에서 판단하는 역할이 아니라, main agent가 모은 문맥과 초안을 바탕으로 생각의 빈틈을 찾는 역할이다.
+
+## 3. 생각 검토 루브릭 초안
+
+### Simple scoring axes
+
+초기에는 복잡한 scoring engine을 만들지 않는다. 사람이 봐도 바로 확인할 수 있는 축부터 작게 시작한다. 핵심은 "AI가 정답을 보장한다"가 아니라 "사용자가 답변의 근거 수준을 빠르게 판단할 수 있다"이다.
+
+처음에는 1/3/5점을 기준점으로 둔다. 다만 비율로 계산 가능한 축은 2점과 4점도 중간 구간으로 둔다. 점수의 목적은 정답을 보장하는 것이 아니라, 사용자가 답변의 검증 가능성을 빠르게 판단하게 하는 것이다.
+
+점수는 후하게 주지 않는다. 3점은 평균적이고 수용 가능한 수준, 4점은 뚜렷하게 좋지만 일부 개선점이 남은 수준, 5점은 매우 드문 수준으로 둔다. 통과 가능한 답변도 3점 또는 4점일 수 있으며, 조건 누락, 범위 누락, 근거 연결 약함, 경계 불명확성이 있으면 관련 축에는 5점을 주지 않는다.
 
 ```yaml
-hard_fail:
-  - fabricated_file_or_line_reference
-  - contradicted_by_source
-  - unsupported_factual_claim
-  - hidden_failed_command
-  - stale_claim_without_freshness_check
-  - answered_beyond_available_context_as_fact
+base_axes:
+  evidence_count:
+    1: 연결된 근거가 없다.
+    3: 연결된 근거가 1개 있다.
+    5: 연결된 근거가 3개 이상 있다.
+
+  evidence_quality:
+    1: 출처를 확인하기 어렵거나, 근거가 답변 안에만 있다.
+    3: 일반 블로그, 커뮤니티 글, 2차 자료와 연결되어 있다.
+    5: 공식 문서, 프로젝트 파일, 실행 결과, 테스트 결과, 사용자가 제공한 자료와 연결되어 있다.
+
+  claim_coverage:
+    metric: 근거 또는 불확실성 표시와 연결된 claim 수 / 전체 claim 수
+    1: 30% 미만이다.
+    2: 30% 이상 60% 미만이다.
+    3: 60% 이상 80% 미만이다.
+    4: 80% 이상 100% 미만이다.
+    5: 100%다.
+
+  uncertainty_boundary:
+    metric: 추정, 한계, 최신성 필요, 확인 불가 중 하나로 표시된 claim 수 / 불확실성 표시가 필요한 claim 수
+    1: 30% 미만이다.
+    2: 30% 이상 60% 미만이다.
+    3: 60% 이상 80% 미만이다.
+    4: 80% 이상 100% 미만이다.
+    5: 100%다.
+
+  consistency:
+    1: 답변 내부 모순 또는 근거와의 모순이 1개 이상 있다.
+    3: 모순은 0개지만 조건, 범위, 전제 누락이 1개 이상 있다.
+    5: 모순, 조건 누락, 범위 누락, 전제 누락이 모두 0개다.
+
+  alternatives_tradeoff:
+    applies_when: 설계, 추천, 선택, 의사결정 답변
+    1: 하나의 답을 유일한 정답처럼 제시한다.
+    3: 대안이 2개 이상 있지만 trade-off 또는 추천 이유 중 하나가 빠져 있다.
+    5: 대안이 2개 이상이고, 각 대안의 trade-off와 추천 이유가 함께 제시된다.
 ```
 
-### Scoring axes
+예를 들어 어떤 답변의 핵심 주장이 세 개이고, 각 주장에 프로젝트 파일이나 공식 문서 링크가 붙어 있다면 `evidence_count=5`, `evidence_quality=5`, `claim_coverage=5`로 볼 수 있다. 반대로 근거 링크가 하나뿐이고 그 링크가 일반 블로그라면 `evidence_count=3`, `evidence_quality=3`이다. 근거가 충분해도 답변 내부에서 서로 다른 결론을 말하거나, 인용한 근거와 반대되는 주장을 하면 `consistency=1`이다.
 
-점수화가 필요한 경우 다음 축으로 나눈다.
+이 점수는 답변의 참/거짓을 보장하지 않는다. 대신 사용자가 "이 답변은 얼마나 검증 가능한가"를 빠르게 보는 표지판 역할을 한다. 다만 점수는 기본 대화 경로에 노출하지 않고, Level 3의 eval artifact나 review case 평가에서만 사용한다.
 
-```yaml
-scoring:
-  grounding: 40
-  coverage: 25
-  contradiction_free: 20
-  uncertainty_handling: 10
-  concision_relevance: 5
-```
-
-각 축의 의미:
-
-| 축 | 의미 |
-| --- | --- |
-| `grounding` | 주요 claim이 파일, 문서, 명령 결과, 공식 출처와 연결되는가 |
-| `coverage` | 사용자 질문의 핵심 요구를 빠뜨리지 않았는가 |
-| `contradiction_free` | 제공된 문맥이나 출처와 모순되지 않는가 |
-| `uncertainty_handling` | 추정, 한계, 확인 필요를 사실처럼 말하지 않았는가 |
-| `concision_relevance` | 정확성을 해치지 않으면서 질문 범위에 머무르는가 |
-
-### Pass rule
-
-초기 통과 기준은 다음처럼 잡을 수 있다.
-
-```yaml
-pass:
-  hard_fail_count: 0
-  total_score: ">= 85"
-  grounding: ">= 35/40"
-  contradiction_free: "20/20"
-```
-
-중요한 원칙은 **hard fail은 절대 게이트**라는 점이다. 예를 들어 총점이 92점이어도 `unsupported_factual_claim`이 하나 있으면 실패로 처리한다.
-
-## 역할 분리
+## 4. 역할 분리
 
 ```text
 AGENTS.md
   = 원칙, 기준, 실패 시 행동 정책
 
-hook
-  = 매번 검증 실행, pass/fail 차단, 로그 저장
+thinking-review-gate
+  = 하나의 skill 안에서 Level 1/2/3 검토 강도를 선택하는 workflow
 
-evaluator AI
-  = claim extraction, grounding 평가, question coverage 평가
+Level 1 inline verifier review
+  = main agent가 현재 세션에서 직접 claim, evidence, uncertainty, alternatives를 점검
 
-script
-  = schema 검증, 점수 계산, threshold 판정, loop 제어
+Level 2 inline critique review
+  = critique sub-agent가 main agent 초안의 문제 지점과 수정 제안을 Markdown으로 반환
 
-benchmark dataset
-  = 과거 실패 사례와 기대 답변을 모은 회귀 테스트 세트
+Level 3 file hand-off agentic review
+  = critique/eval artifact, schema validation, runner, pass/fail 판정을 사용
+
+review cases
+  = Level 3와 rubric을 디버깅하기 위한 테스트 샘플
 ```
 
-이 구조에서 핵심은 "AI 평가를 믿는다"가 아니라 "AI 평가 결과를 구조화하고, 그 결과에 대한 통과 기준을 결정적으로 적용한다"이다.
+이 구조에서 핵심은 "AI 평가를 믿는다"가 아니라 "검토 강도를 필요할 때만 올리고, 안정화된 뒤에는 구조화된 artifact에 대한 통과 기준을 결정적으로 적용한다"이다.
 
-## 실무 적용 방향
+## 5. 실무 적용 방향
 
-처음부터 큰 시스템을 만들 필요는 없다. 작은 벤치마크 세트로 시작해서 실제 실패를 누적하는 편이 낫다.
+처음부터 큰 시스템을 만들 필요는 없다. 기본 대화는 Level 1로 처리하고, 판단 비용이 있으면 Level 2, 기록과 재현성이 필요하면 Level 3으로 올린다. 이 level 구조의 목적은 검토를 많이 하는 것이 아니라, 답변 신속성과 품질의 균형점을 매번 작게 선택하는 것이다.
 
-초기 MVP:
+운영 기준:
 
 ```text
-1. 실제 대화 20개를 benchmark case로 저장한다.
-2. 각 case마다 expected_points, forbidden_claims, required_uncertainty를 정의한다.
-3. 답변 초안에서 claim을 추출한다.
-4. claim별 evidence 여부와 질문 coverage를 evaluator가 평가한다.
-5. script가 hard fail과 점수를 계산한다.
-6. 기준 미달이면 최대 2회 revise loop를 돈다.
-7. 그래도 실패하면 답변을 내보내지 않고 확인 필요로 중단한다.
+Level 1:
+  - 기본값
+  - 모든 답변에 적용하는 최소 검토
+  - 빠른 방향성, 낮은 위험, 짧은 답변
+  - 별도 artifact 없음
+
+Level 2:
+  - 설계, 추천, 의사결정, 대안 비교
+  - critique sub-agent 사용
+  - 점수와 eval JSON 없음
+
+Level 3:
+  - review case, 고위험 gate, 검토 시스템 디버깅
+  - file hand-off, critique/eval 분리
+  - schema validation, runner, pass/fail 가능
 ```
 
-벤치마크 케이스 예시:
+review case 예시:
 
 ```yaml
 - id: agents-md-determinism-001
   user_input: "AGENTS.md만으로 결정적 검증이 가능해?"
-  context_files:
+  project_context_sources:
     - AGENTS.md
-  expected_points:
+    - ai-answer-accuracy-gate.md
+    - .codex/skills/
+  expected_claims:
     - "AGENTS.md는 행동 규약이지 실행 검증 장치가 아니다"
-    - "결정적 검증은 script/test/schema/hook에서 나온다"
+    - "기본 의미 검토는 Level 1 inline review 또는 Level 2 critique review로 처리할 수 있다"
+    - "결정적 확인은 Level 3의 schema/runner에서 나온다"
     - "단일 대화에서는 self-check 정도만 가능하다"
+  expected_alternatives:
+    - "AGENTS.md만 강화하는 방법"
+    - "Level 2 critique workflow를 추가하는 방법"
+    - "Level 3 schema/runner로 자동화하는 방법"
   forbidden_claims:
     - "AGENTS.md만으로 완전한 결정적 검증이 가능하다"
     - "LLM self-check는 결정적이다"
   required_uncertainty:
     - "완전 결정성은 어렵다는 한계"
-  pass_threshold: 85
 ```
 
 운영 방식:
@@ -233,27 +302,8 @@ benchmark dataset
 ```text
 AI가 틀린 답변을 한다
   -> 왜 틀렸는지 분류한다
-  -> forbidden_claim 또는 expected_point를 추가한다
-  -> benchmark dataset에 회귀 케이스로 넣는다
+  -> forbidden_claim 또는 expected_claim을 추가한다
+  -> test fixture에 회귀 케이스로 넣는다
   -> 다음부터 같은 유형의 실패를 자동 검출한다
 ```
-
-## 현재 잠정 결론
-
-정확성 문제는 `AGENTS.md`만으로 해결하기 어렵다. `AGENTS.md`는 기준을 선언하는 곳이고, 정확성을 실제로 높이려면 hook, evaluator AI, deterministic script, benchmark dataset이 함께 필요하다.
-
-가장 현실적인 구조는 다음과 같다.
-
-```text
-답변을 믿지 않는다.
-답변이 벤치마크를 통과했는지를 믿는다.
-```
-
-그리고 벤치마크의 중심 질문은 "좋은 답변인가?"가 아니라 다음이어야 한다.
-
-```text
-근거 없는 주장, 출처와의 모순, 질문 누락, 불확실성 은폐가 0개인가?
-```
-
-이 기준을 통과하지 못한 답변은 재작성하거나, 그래도 통과하지 못하면 답변을 중단하고 사용자 확인을 요청해야 한다.
 

@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "run_id": "level-ladder-design-20260628",
+  "source_eval_path": "C:\\Users\\이현웅\\Desktop\\project\\thinking\\.codex\\skills\\thinking-review-gate\\runs\\level-ladder-design-20260628\\eval.json",
+  "schema_valid": true,
+  "schema_errors": [],
+  "min_score": 3.6,
+  "scores": {
+    "evidence_count": 5,
+    "evidence_quality": 5,
+    "claim_coverage": 4,
+    "uncertainty_boundary": 4,
+    "consistency": 4,
+    "alternatives_tradeoff": 5
+  },
+  "score_reasons": {
+    "evidence_count": "`ai-answer-accuracy-gate.md`, `SKILL.md`, `PROBLEM.md` 등 3개 이상의 프로젝트 문서 근거에 직접 연결한다.",
+    "evidence_quality": "근거가 외부 추정이 아니라 프로젝트 파일, 현재 skill 지침, 사용자 제공 context에 기반해 사용자가 따라 확인할 수 있다.",
+    "claim_coverage": "핵심 claim 대부분이 문서 근거나 명시된 불확실성과 연결되어 있지만, '균형이 가장 좋다'는 판단은 운영 데이터 없이 평가적 결론으로 남는다.",
+    "uncertainty_boundary": "실제 운영 데이터 부족을 남은 불확실성으로 표시하며 현재 문서 기준 판단임을 드러낸다. 다만 Level 2 호출 비용이나 분류 기준 튜닝의 불확실성은 더 명시될 수 있다.",
+    "consistency": "초안은 제공된 context와 대체로 일관된다. 다만 Level 2를 'sub-agent 또는 분리된 critique reviewer'라고 표현해 현재 `SKILL.md`의 sub-agent 필수 규칙보다 약간 넓게 읽힐 여지가 있다.",
+    "alternatives_tradeoff": "Level 1 only, Level 3 과잉 적용, 현재 ladder 유지의 3가지 대안을 제시하고 각각의 비용과 추천 이유를 비교한다."
+  },
+  "weak_axes": [],
+  "weighted_score": 4.45,
+  "gate_result": "pass",
+  "summary": "gate_result=pass, weighted_score=4.45, weak_axes=none"
+}

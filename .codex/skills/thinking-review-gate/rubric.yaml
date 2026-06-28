@@ -1,0 +1,82 @@
+version: 1
+name: thinking-review-gate-rubric
+purpose: >
+  Level 3 eval agent가 답변 초안을 축별로 평가하고 validate.py가 pass/fail을 계산하기 위한 최소 루브릭.
+  점수는 정답 보장이 아니라 사용자가 답변을 검증할 수 있는지 판단하기 위한 보조값이다.
+
+gate_result:
+  pass: >
+    점수 축의 가중 평균이 최소 pass 기준 이상이며, 남은 문제를 최종 응답에 표시할 수 있는 상태.
+  fail: >
+    점수 축의 가중 평균이 최소 pass 기준을 넘지 못하거나, 사용자 선택 또는 추가 정보 없이는 답변을 단정할 수 없는 상태.
+
+scoring:
+  min_score: 3.6
+
+axes:
+  evidence_count:
+    label: 근거 개수
+    weight: 0.15
+    question: 연결된 근거가 충분한가?
+    scores:
+      1: 연결된 근거가 없다.
+      3: 연결된 근거가 1개 있다.
+      5: 연결된 근거가 3개 이상 있다.
+
+  evidence_quality:
+    label: 근거 품질
+    weight: 0.2
+    question: 근거를 사용자가 신뢰하고 따라갈 수 있는가?
+    scores:
+      1: 출처를 확인하기 어렵거나, 근거가 답변 안에만 있다.
+      3: 일반 블로그, 커뮤니티 글, 2차 자료와 연결되어 있다.
+      5: 공식 문서, 프로젝트 파일, 실행 결과, 테스트 결과, 사용자가 제공한 자료와 연결되어 있다.
+
+  claim_coverage:
+    label: claim 커버리지
+    weight: 0.2
+    question: 주요 claim이 근거 또는 불확실성 표시와 연결되어 있는가?
+    metric: 근거 또는 불확실성 표시와 연결된 claim 수 / 전체 주요 claim 수
+    scores:
+      1: 30% 미만이다.
+      2: 30% 이상 60% 미만이다.
+      3: 60% 이상 80% 미만이다.
+      4: 80% 이상 100% 미만이다.
+      5: 100%다.
+
+  uncertainty_boundary:
+    label: 불확실성 경계
+    weight: 0.15
+    question: 추정, 한계, 최신성 필요, 확인 불가가 필요한 곳에 표시되어 있는가?
+    metric: 불확실성 표시가 필요한 claim 중 실제 표시된 claim 수 / 불확실성 표시가 필요한 claim 수
+    scores:
+      1: 30% 미만이다.
+      2: 30% 이상 60% 미만이다.
+      3: 60% 이상 80% 미만이다.
+      4: 80% 이상 100% 미만이다.
+      5: 100%다.
+
+  consistency:
+    label: 일관성
+    weight: 0.2
+    question: 답변 내부 또는 근거와 모순되지 않는가?
+    scores:
+      1: 답변 내부 모순 또는 근거와의 모순이 1개 이상 있다.
+      3: 모순은 없지만 조건, 범위, 전제 누락이 1개 이상 있다.
+      5: 모순, 조건 누락, 범위 누락, 전제 누락이 모두 없다.
+
+  alternatives_tradeoff:
+    label: 대안과 trade-off
+    weight: 0.1
+    question: 설계, 추천, 선택, 의사결정 답변에서 대안과 trade-off가 드러나는가?
+    applies_when:
+      - 설계
+      - 추천
+      - 선택
+      - 의사결정
+      - 구현 방향
+      - 실행 계획
+    scores:
+      1: 하나의 답을 유일한 정답처럼 제시한다.
+      3: 대안이 2개 이상 있지만 trade-off 또는 추천 이유 중 하나가 빠져 있다.
+      5: 대안이 2개 이상이고, 각 대안의 trade-off와 추천 이유가 함께 제시된다.
