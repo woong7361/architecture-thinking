@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Run Level 3 critique and eval artifact agents in parallel."""
+"""Run Level 2 critique and eval artifact agents in parallel."""
 
 from __future__ import annotations
 
@@ -16,14 +16,14 @@ from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 SKILL_DIR = SCRIPT_DIR.parent
-SCHEMA = SKILL_DIR / "schemas" / "level3-eval.schema.json"
+SCHEMA = SKILL_DIR / "schemas" / "level2-eval.schema.json"
 VALIDATE = SCRIPT_DIR / "validate.py"
 
 
 @dataclass(frozen=True)
 class AgentJob:
     name: str
-    prompt_path: Path
+    prompt: str
     output_path: Path
     output_schema: Path | None
     model: str | None
@@ -56,6 +56,66 @@ def ensure_can_write(path: Path, overwrite: bool) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
 
 
+def attempts_dir(run_dir: Path) -> Path:
+    return run_dir / "attempts"
+
+
+def attempt_dir(run_dir: Path, attempt: int) -> Path:
+    return attempts_dir(run_dir) / str(attempt)
+
+
+def latest_attempt_number(run_dir: Path) -> int:
+    existing = []
+    for child in attempts_dir(run_dir).iterdir():
+        if child.is_dir() and child.name.isdigit():
+            existing.append(int(child.name))
+    if not existing:
+        raise FileNotFoundError(f"missing attempts under: {attempts_dir(run_dir)}")
+    return max(existing)
+
+
+def resolve_attempt_dir(run_dir: Path, attempt: int | None) -> Path:
+    number = attempt if attempt is not None else latest_attempt_number(run_dir)
+    return attempt_dir(run_dir, number)
+
+
+def artifact_prompt(system_path: Path, run_dir: Path, current_attempt_dir: Path, output_name: str) -> str:
+    return f"""# Level 2 Artifact Task
+
+Use the system instructions in:
+
+```text
+{system_path}
+```
+
+Read these inputs:
+
+```text
+{run_dir / "input.md"}
+{current_attempt_dir / "draft.md"}
+```
+
+Additional references:
+
+```text
+rubric: {SKILL_DIR / "rubric.yaml"}
+schema: {SCHEMA}
+```
+
+Artifact output path:
+
+```text
+{current_attempt_dir / output_name}
+```
+
+Your final response is the complete artifact content. The caller saves that final
+message to the artifact output path with Codex CLI `--output-last-message`.
+
+Do not write a separate receipt. Do not wrap the artifact in Markdown fences
+unless the artifact format itself is Markdown.
+"""
+
+
 def build_command(args: argparse.Namespace, job: AgentJob, workspace: Path) -> list[str]:
     command = [args.codex_bin]
     if args.approval:
@@ -79,10 +139,8 @@ def build_command(args: argparse.Namespace, job: AgentJob, workspace: Path) -> l
 
 
 def run_job(args: argparse.Namespace, job: AgentJob, workspace: Path) -> AgentResult:
-    ensure_file(job.prompt_path, f"{job.name} prompt")
     ensure_can_write(job.output_path, args.overwrite)
 
-    prompt = job.prompt_path.read_text(encoding="utf-8")
     command = build_command(args, job, workspace)
 
     if args.dry_run:
@@ -94,7 +152,7 @@ def run_job(args: argparse.Namespace, job: AgentJob, workspace: Path) -> AgentRe
     try:
         completed = subprocess.run(
             command,
-            input=prompt,
+            input=job.prompt,
             text=True,
             capture_output=True,
             encoding="utf-8",
@@ -116,9 +174,9 @@ def run_job(args: argparse.Namespace, job: AgentJob, workspace: Path) -> AgentRe
     return AgentResult(job.name, job.output_path, completed.returncode, elapsed)
 
 
-def validate_eval(run_dir: Path, no_exit_on_gate_fail: bool) -> int:
-    eval_path = run_dir / "eval.json"
-    validation_path = run_dir / "validation.json"
+def validate_eval(current_attempt_dir: Path, no_exit_on_gate_fail: bool) -> int:
+    eval_path = current_attempt_dir / "eval.json"
+    validation_path = current_attempt_dir / "validation.json"
     command = [
         sys.executable,
         str(VALIDATE),
@@ -131,8 +189,8 @@ def validate_eval(run_dir: Path, no_exit_on_gate_fail: bool) -> int:
     return subprocess.call(command)
 
 
-def load_gate_result(run_dir: Path) -> str | None:
-    validation_path = run_dir / "validation.json"
+def load_gate_result(current_attempt_dir: Path) -> str | None:
+    validation_path = current_attempt_dir / "validation.json"
     if not validation_path.exists():
         return None
     try:
@@ -147,21 +205,38 @@ def run_parallel(args: argparse.Namespace) -> int:
     run_dir = args.run_dir.resolve()
     workspace = (args.workspace or Path.cwd()).resolve()
     ensure_file(run_dir / "manifest.json", "manifest")
+    ensure_file(run_dir / "input.md", "input")
+    current_attempt_dir = resolve_attempt_dir(run_dir, args.attempt)
+    ensure_file(current_attempt_dir / "draft.md", "draft")
+    critique_system = SKILL_DIR / "prompts" / "level2-critique.system.md"
+    eval_system = SKILL_DIR / "prompts" / "level2-eval.system.md"
+    ensure_file(critique_system, "critique system prompt")
+    ensure_file(eval_system, "eval system prompt")
 
     critique_model = args.critique_model or args.model
     eval_model = args.eval_model or args.model
     jobs = [
         AgentJob(
             name="critique",
-            prompt_path=run_dir / "critique.prompt.md",
-            output_path=run_dir / "critique.md",
+            prompt=artifact_prompt(
+                critique_system,
+                run_dir,
+                current_attempt_dir,
+                "critique.md",
+            ),
+            output_path=current_attempt_dir / "critique.md",
             output_schema=None,
             model=critique_model,
         ),
         AgentJob(
             name="eval",
-            prompt_path=run_dir / "eval.prompt.md",
-            output_path=run_dir / "eval.json",
+            prompt=artifact_prompt(
+                eval_system,
+                run_dir,
+                current_attempt_dir,
+                "eval.json",
+            ),
+            output_path=current_attempt_dir / "eval.json",
             output_schema=SCHEMA,
             model=eval_model,
         ),
@@ -207,8 +282,8 @@ def run_parallel(args: argparse.Namespace) -> int:
         validation_code = None
     else:
         line("validate start")
-        validation_code = validate_eval(run_dir, args.no_exit_on_gate_fail)
-        gate_result = load_gate_result(run_dir)
+        validation_code = validate_eval(current_attempt_dir, args.no_exit_on_gate_fail)
+        gate_result = load_gate_result(current_attempt_dir)
         run_result = "completed" if validation_code == 0 else "validation-failed"
         line(
             "validate done "
@@ -234,9 +309,10 @@ def run_parallel(args: argparse.Namespace) -> int:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Run Level 3 critique and eval Codex CLI agents in parallel."
+        description="Run Level 2 critique and eval Codex CLI agents in parallel."
     )
-    parser.add_argument("run_dir", type=Path, help="Level 3 run directory")
+    parser.add_argument("run_dir", type=Path, help="Level 2 run directory")
+    parser.add_argument("--attempt", type=int, help="Attempt number to run. Defaults to latest.")
     parser.add_argument("--workspace", type=Path, help="Workspace passed to Codex CLI -C")
     parser.add_argument("--codex-bin", default="codex")
     parser.add_argument("--model", help="Model for both agents")

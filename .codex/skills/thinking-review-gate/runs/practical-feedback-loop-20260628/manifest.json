@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "run_id": "practical-feedback-loop-20260628",
+  "created_at": "2026-06-28T11:01:33.763687+00:00",
+  "model": "inherit",
+  "paths": {
+    "run_dir": "C:\\Users\\이현웅\\Desktop\\project\\thinking\\.codex\\skills\\thinking-review-gate\\runs\\practical-feedback-loop-20260628",
+    "input": "C:\\Users\\이현웅\\Desktop\\project\\thinking\\.codex\\skills\\thinking-review-gate\\runs\\practical-feedback-loop-20260628\\input.md",
+    "attempts_dir": "C:\\Users\\이현웅\\Desktop\\project\\thinking\\.codex\\skills\\thinking-review-gate\\runs\\practical-feedback-loop-20260628\\attempts",
+    "latest_attempt": "C:\\Users\\이현웅\\Desktop\\project\\thinking\\.codex\\skills\\thinking-review-gate\\runs\\practical-feedback-loop-20260628\\attempts\\1"
+  },
+  "prompt_templates": {
+    "critique": "C:\\Users\\이현웅\\Desktop\\project\\thinking\\.codex\\skills\\thinking-review-gate\\prompts\\level2-critique.system.md",
+    "eval": "C:\\Users\\이현웅\\Desktop\\project\\thinking\\.codex\\skills\\thinking-review-gate\\prompts\\level2-eval.system.md"
+  }
+}

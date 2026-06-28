@@ -1,7 +1,7 @@
 version: 1
 name: thinking-review-gate-rubric
 purpose: >
-  Level 3 eval agent가 답변 초안을 축별로 평가하고 validate.py가 pass/fail을 계산하기 위한 최소 루브릭.
+  Level 2 eval agent가 답변 초안을 축별로 평가하고 validate.py가 pass/fail을 계산하기 위한 최소 루브릭.
   점수는 정답 보장이 아니라 사용자가 답변을 검증할 수 있는지 판단하기 위한 보조값이다.
 
 gate_result:

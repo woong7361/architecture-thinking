@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Validate Level 3 eval scores and calculate the gate result.
+"""Validate Level 2 eval scores and calculate the gate result.
 
 The eval agent writes axis scores and score reasons. This script validates the
 shape, calculates the weighted total from those axis scores, and decides the
@@ -143,7 +143,7 @@ def write_validation(path: Path, validation: dict[str, Any]) -> None:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Validate Level 3 eval.json")
+    parser = argparse.ArgumentParser(description="Validate Level 2 eval.json")
     parser.add_argument("eval_json", type=Path, help="Path to eval.json")
     parser.add_argument(
         "--output",

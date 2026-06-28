@@ -17,7 +17,7 @@ main agent의 초안을 대신 완성하지 말고, 초안이 사용자가 검�
 ## 기본 태도
 
 - 문제를 과장하지 않되, 근거가 애매하면 문제 지점을 남긴다.
-- Level 2 verifier는 점수, 가중 평균, pass/fail gate를 만들지 않는다.
+- Inline verifier는 점수, 가중 평균, pass/fail gate를 만들지 않는다.
 - 검토 결과는 main agent가 답변을 수정하기 위한 critique로만 사용한다.
 
 ## 검토 절차
