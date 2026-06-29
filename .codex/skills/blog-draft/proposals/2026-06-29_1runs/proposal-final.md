@@ -1,0 +1,73 @@
+# Slow Loop Proposal — 2026-06-29 (1개 run 분석)
+
+## 신호 요약
+- [S1] critique 반복 지적: '1·2절(CLAUDE.md redirect, 코드 중복 정리)이 multi-provider 확장보다 비중이 ' (1/1 run, 비율=100%)
+- [S2] critique 반복 지적: '`build_prompt`의 system/user 분리 결정이 draft에서 완전히 사라졌다' (1/1 run, 비율=100%)
+- [S3] critique 반복 지적: '마지막 단락이 한계를 나열하지만, 독자가 가져갈 단서를 남기지 않는다' (1/1 run, 비율=100%)
+
+## 제안
+
+### P1 — [위험: 중] prompts/gen_system.md
+**진단:** gen_system.md는 `brief.constraints.emphasis`를 '방향 제약으로 반영'하라고만 명시하고, 해당 주제가 글의 비중 중심이어야 한다는 지시가 없다. 이 메커니즘으로 인해 모델이 emphasis 주제(multi-provider 확장) 외의 소재(CLAUDE.md redirect, 코드 중복 정리)를 같은 비중으로 다루거나 더 많은 분량을 할애하는 초안을 생성한다.
+**겨냥 axis:** originality
+**근거 신호:** S1
+**효과 경로:** gen_system.md에 emphasis 주제를 비중 중심으로 삼으라는 명시적 지시 추가 → 초안 생성 시 emphasis 주제가 주된 섹션을 차지하고 비emphasis 소재는 보조 역할로 축소 → 필자 고유 관점(emphasis 선택)이 글 구조에 드러나 originality 개선. S1 신호에서 지적된 '1·2절이 multi-provider보다 비중이 크다'는 패턴이 해소됨
+**배제한 원인:**
+  - rubric.yaml purpose_fit 기준 강화: purpose_fit 점수가 이미 4.0으로 통과 수준이므로 rubric 기준 변경이 이 신호를 유발하지 않음. 채점 기준 변경으로는 gen 단계의 비중 분배 행동을 바꿀 수 없음
+  - refine_system.md 수정으로 비중 재조정 지시 추가: 비중 문제는 draft 초안에서 이미 발생하므로(critique가 초안을 보고 S1을 지적함) refine 단계보다 gen 단계가 원인에 더 근접함. refine 수정은 gen 문제를 우회하는 처리이며 첫 iteration에서 효과가 없음
+**부작용:** emphasis가 없는 brief에서는 이 규칙이 적용되지 않아 부작용 없음. emphasis가 있는 경우 단일 주제에 과집중해 다른 맥락 소재가 지나치게 약해질 수 있으나, 이는 brief 작성자가 emphasis 선택으로 이미 의도한 방향임
+**diff:**
+```
+anchor: - `brief.constraints.emphasis`, `brief.constraints.must_include`, `brief.constraints.avoid`가 있으면 글의 방향 제약으로 반영합니다.
+change: - `brief.constraints.emphasis`, `brief.constraints.must_include`, `brief.constraints.avoid`가 있으면 글의 방향 제약으로 반영합니다.
+- `brief.constraints.emphasis`에 명시된 주제가 있으면 해당 주제를 글의 비중 중심으로 삼고, 다른 소재는 보조 역할로만 배치합니다.
+```
+**validator:** PASS
+**eval 총점:** 4.7
+**축별 점수:** {'diagnosis_specificity': 5, 'effect_plausibility': 5, 'alternative_elimination': 5, 'side_effect_awareness': 3, 'priority_justification': 5}
+
+### P2 — [위험: 중] prompts/gen_system.md
+**진단:** gen_system.md는 `raw_text`를 '글의 근거와 장면으로 사용'하라고 하지만, raw_text에 포함된 핵심 기술 결정(예: `build_prompt`의 system/user 분리 선택)을 반드시 본문에 포함하라는 지시가 없다. 이 메커니즘으로 인해 모델이 분량 조절 과정에서 구체적 설계 결정을 생략하고 더 넓은 흐름 서술로 대체하는 초안을 만든다.
+**겨냥 axis:** evidence
+**근거 신호:** S2
+**효과 경로:** gen_system.md에 raw_text 내 핵심 기술 결정을 생략 금지하는 지시 추가 → 초안 생성 시 설계 결정(why 포함)이 본문에 포함됨 → 주장을 뒷받침하는 구체 사례·관찰 밀도 증가 → evidence 개선. S2 신호에서 지적된 '`build_prompt`의 system/user 분리 결정이 완전히 사라졌다'는 패턴이 해소됨
+**배제한 원인:**
+  - critique_system.md 수정으로 더 강하게 지적하게 함: S2가 critique에서 이미 지적되고 있으므로(신호 자체가 critique 반복 지적임) critique 강화는 이미 작동 중인 메커니즘을 반복하는 것. 지적 자체보다 gen에서 처음부터 포함하게 하는 것이 근본 원인 수정임
+  - refine_system.md에서 evidence 약점 수정 시 결정 포함 지시: 초안에서 완전히 사라진 내용은 refiner가 재구성하기 어려움. brief에 있는 재료이지만 draft에 없으면 모델이 새로 유추해야 하므로 정보 손실 위험이 있음. gen에서 포함하는 것이 정보 보전에 더 안전함
+**부작용:** raw_text에 기술 결정이 많은 경우 모든 결정을 포함하려다 글이 길어지거나 나열형이 될 수 있음. 단, '글의 근거와 장면으로 사용'이라는 기존 지시와 함께 읽히므로 단순 나열보다 맥락화된 포함을 유도함
+**diff:**
+```
+anchor: - `brief.raw_text`가 있으면 원재료로 반드시 참고하되, 원문을 요약 출력하지 말고 글의 근거와 장면으로 사용합니다.
+change: - `brief.raw_text`가 있으면 원재료로 반드시 참고하되, 원문을 요약 출력하지 말고 글의 근거와 장면으로 사용합니다.
+- `brief.raw_text`에 명시된 핵심 기술 결정, 선택 이유, 설계 판단은 반드시 본문에 포함합니다. 분량 조절 과정에서 이 결정들을 생략하지 않습니다.
+```
+**validator:** PASS
+**eval 총점:** 5.0
+**축별 점수:** {'diagnosis_specificity': 5, 'effect_plausibility': 5, 'alternative_elimination': 5, 'side_effect_awareness': 5, 'priority_justification': 5}
+
+### P3 — [위험: 중] prompts/gen_system.md
+**진단:** gen_system.md의 결론 지시 '결론은 글의 변화나 다음 행동을 선명하게 남깁니다'가 '다음 행동'을 한계 나열이나 남은 과제 목록으로 해석되게 한다. 이 메커니즘으로 인해 모델이 결론 단락을 '~가 어렵다, ~를 해야 한다' 같은 한계 목록으로 채우고, 독자가 이 글에서 가져갈 수 있는 판단이나 단서를 생략한다.
+**겨냥 axis:** originality
+**근거 신호:** S3
+**효과 경로:** gen_system.md 결론 지시를 '독자가 가져갈 판단이나 단서'로 구체화 → 초안 결론 단락이 한계 나열 대신 필자의 고유 판단을 전달하는 방식으로 작성됨 → 필자만의 언어와 판단이 결론에 드러나 originality 개선. S3 신호에서 지적된 '한계를 나열하지만 독자가 가져갈 단서를 남기지 않는다'는 패턴이 해소됨
+**배제한 원인:**
+  - rubric originality 최저 기준 강화(3.0 → 4.0): originality 점수가 3.0으로 최저 통과이므로 기준 강화 방향은 맞으나, rubric 수정은 채점 기준을 높이는 것이고 생성 행동을 바꾸지 않음. 모델이 더 좋은 결론을 쓰게 하려면 gen prompt에서 직접 지시해야 함
+  - refine_system.md에서 originality weak_axes 처리 시 결론 개선 지시 추가: refine 단계에서 originality를 보강할 때 결론을 고칠 수 있으나, 이는 두 번째 iteration 이후에만 작동하고 초안부터 이 패턴이 반복되고 있음. gen에서 처음부터 구체 지시를 주면 iteration 비용 없이 효과를 볼 수 있음
+**부작용:** 결론에 '독자가 가져갈 판단'을 요구하면 brief 재료가 빈약한 경우 모델이 없는 사실을 지어낼 위험이 있음. 단, gen_system.md에 '입력에 없는 사실을 지어내지 않습니다' 금지 규칙이 이미 존재하므로 이 위험은 기존 규칙이 완화함
+**diff:**
+```
+anchor: - 결론은 글의 변화나 다음 행동을 선명하게 남깁니다.
+change: - 결론은 한계나 남은 과제를 나열하는 것으로 끝내지 않고, 이 글을 읽은 독자가 가져갈 수 있는 판단, 관점, 또는 다음 실험의 단서로 마무리합니다.
+```
+**validator:** PASS
+**eval 총점:** 4.6
+**축별 점수:** {'diagnosis_specificity': 5, 'effect_plausibility': 5, 'alternative_elimination': 3, 'side_effect_awareness': 5, 'priority_justification': 5}
+
+## 적용 순서
+1. P3: S3(결론 패턴)은 신호 강도 high이고 변경 범위가 한 줄 교체로 가장 좁음. 부작용이 기존 금지 규칙으로 이미 완화되므로 위험 대비 효과가 가장 높음
+2. P1: S1(비중 문제)은 신호 강도 high이고 emphasis 있는 brief에서만 적용되어 범위가 제한적. P3와 같은 파일(gen_system.md)을 건드리므로 한 번에 적용하면 맥락을 공유해 일관성이 높음
+3. P2: S2(핵심 결정 누락)는 신호 강도 high이나 raw_text 길이에 따라 분량 팽창 부작용이 P1/P3보다 크게 나타날 수 있어 마지막에 적용해 효과를 확인하는 것이 안전함
+
+---
+analysis_id: 2026-06-29_1runs
+generated_at: 2026-06-29T17:47:46+09:00

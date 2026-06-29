@@ -18,7 +18,6 @@ from __future__ import annotations
 
 import json
 import sys
-import tempfile
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -27,9 +26,10 @@ sys.dont_write_bytecode = True
 from stages.scripts.llm_client import LLMClient
 
 PROJECT_DIR = Path(__file__).resolve().parent.parent
+SKILL_DIR = PROJECT_DIR.parent
 PROMPTS_DIR = PROJECT_DIR / "prompts"
 SCHEMAS_DIR = PROJECT_DIR / "schemas"
-CHANGELOG_DIR = PROJECT_DIR / "changelog"
+PROPOSALS_DIR = SKILL_DIR / "proposals"
 
 PROPOSE_GEN_SYSTEM = PROMPTS_DIR / "propose_gen_system.md"
 PROPOSE_CRITIQUE_SYSTEM = PROMPTS_DIR / "propose_critique_system.md"
@@ -304,10 +304,14 @@ def build_proposal_md(
     lines = [
         f"# Slow Loop Proposal — {datetime.now(KST).date().isoformat()} ({analysis['pending_count']}개 run 분석)",
         "",
-        "## 신호 요약",
+        "## 분석 요약",
     ]
-    for sig in analysis.get("signals", []):
-        lines.append(f"- [{sig['id']}] {sig['summary']}")
+    for axis, stats in analysis.get("axis_stats", {}).items():
+        lines.append(
+            f"- {axis}: 평균 {stats['mean']} (미달 {stats['below_min_count']}/{analysis.get('pending_count', '?')} run)"
+        )
+    weakness_count = len(analysis.get("critique_weaknesses", []))
+    lines.append(f"- critique weakness 수집: {weakness_count}건")
     lines.append("")
 
     lines.append("## 제안")
@@ -404,35 +408,40 @@ def run_proposal_pipeline(
 
     log(f"analysis_id={analysis_id} signals={len(analysis.get('signals', []))}")
 
+    # proposals/{analysis_id}/ 디렉토리를 run 루트로 사용
+    run_dir = PROPOSALS_DIR / analysis_id
+    run_dir.mkdir(parents=True, exist_ok=True)
+
     iteration = "001"
     proposal_data: dict = {}
     eval_data: dict = {}
+    validator_errors_by_id: dict[str, list[str]] = {}
 
     for iter_num in range(1, MAX_ITERATIONS + 1):
         iteration = f"{iter_num:03d}"
         log(f"iter {iteration} start")
 
-        with tempfile.TemporaryDirectory(prefix="slow-loop-gen-") as tmp:
-            gen_out = Path(tmp) / "gen_out.json"
-            log(f"iter {iteration} gen")
-            propose_gen(
-                analysis=analysis,
-                target_files=target_files,
-                output_path=gen_out,
-                client=client,
-                model=model,
-            )
-            proposal_data = load_json(gen_out)
+        iter_dir = run_dir / f"iter_{iteration}"
+        iter_dir.mkdir(parents=True, exist_ok=True)
+
+        gen_out = iter_dir / "gen.json"
+        log(f"iter {iteration} gen")
+        propose_gen(
+            analysis=analysis,
+            target_files=target_files,
+            output_path=gen_out,
+            client=client,
+            model=model,
+        )
+        proposal_data = load_json(gen_out)
 
         # validator 4검사 (LLM 없이)
         touched_files = load_touched_files(proposal_data.get("proposals", []))
-        validator_errors_by_id: dict[str, list[str]] = {}
-        all_validator_pass = True
+        validator_errors_by_id = {}
         for p in proposal_data.get("proposals", []):
             errs = validate_proposal(p, analysis, touched_files)
             if errs:
                 validator_errors_by_id[p["id"]] = errs
-                all_validator_pass = False
                 log(f"iter {iteration} validator REJECT {p['id']}: {errs}")
 
         # validator 실패 제안은 eval에 가지 않는다.
@@ -448,39 +457,38 @@ def run_proposal_pipeline(
                     "status": "FAILED",
                     "reason": "all proposals failed validator in all iterations",
                     "analysis_id": analysis_id,
+                    "run_dir": str(run_dir),
                     "validator_errors": validator_errors_by_id,
                 }
             continue
 
         # critique (validator 통과 제안만 대상)
         passing_data = {**proposal_data, "proposals": passing_proposals}
-        with tempfile.TemporaryDirectory(prefix="slow-loop-critique-") as tmp:
-            crit_out = Path(tmp) / "crit_out.json"
-            log(f"iter {iteration} critique")
-            propose_critique(
-                analysis=analysis,
-                proposal_data=passing_data,
-                touched_files=touched_files,
-                output_path=crit_out,
-                client=client,
-                model=model,
-            )
-            critique_data = load_json(crit_out)
+        crit_out = iter_dir / "critique.json"
+        log(f"iter {iteration} critique")
+        propose_critique(
+            analysis=analysis,
+            proposal_data=passing_data,
+            touched_files=touched_files,
+            output_path=crit_out,
+            client=client,
+            model=model,
+        )
+        critique_data = load_json(crit_out)
 
         # eval (critique를 받지 않음 — 층위 1)
-        with tempfile.TemporaryDirectory(prefix="slow-loop-eval-") as tmp:
-            eval_out = Path(tmp) / "eval_out.json"
-            log(f"iter {iteration} eval")
-            propose_eval(
-                analysis=analysis,
-                proposal_data=passing_data,
-                touched_files=touched_files,
-                rubric=rubric,
-                output_path=eval_out,
-                client=client,
-                model=model,
-            )
-            eval_data = load_json(eval_out)
+        eval_out = iter_dir / "eval.json"
+        log(f"iter {iteration} eval")
+        propose_eval(
+            analysis=analysis,
+            proposal_data=passing_data,
+            touched_files=touched_files,
+            rubric=rubric,
+            output_path=eval_out,
+            client=client,
+            model=model,
+        )
+        eval_data = load_json(eval_out)
 
         if passes_gate(eval_data, rubric):
             log(f"iter {iteration} gate PASS")
@@ -493,24 +501,21 @@ def run_proposal_pipeline(
         # refine: eval 총점 원문은 넘기지 않고 weak_axes만
         weak_axes = get_proposal_weak_axes(eval_data, rubric)
         log(f"iter {iteration} refine weak_axes={weak_axes}")
-        with tempfile.TemporaryDirectory(prefix="slow-loop-refine-") as tmp:
-            refine_out = Path(tmp) / "refine_out.json"
-            propose_refine(
-                analysis=analysis,
-                proposal_data=passing_data,
-                critique_data=critique_data,
-                touched_files=touched_files,
-                weak_axes=weak_axes,
-                output_path=refine_out,
-                client=client,
-                model=model,
-            )
-            proposal_data = load_json(refine_out)
+        refine_out = iter_dir / "refine.json"
+        propose_refine(
+            analysis=analysis,
+            proposal_data=passing_data,
+            critique_data=critique_data,
+            touched_files=touched_files,
+            weak_axes=weak_axes,
+            output_path=refine_out,
+            client=client,
+            model=model,
+        )
+        proposal_data = load_json(refine_out)
 
-    # proposal-final.md 생성
-    today = datetime.now(KST).date().isoformat()
-    proposal_path = CHANGELOG_DIR / "proposals" / f"{today}_{analysis_id}.md"
-    proposal_path.parent.mkdir(parents=True, exist_ok=True)
+    # proposal-final.md 생성 (run_dir 안에)
+    proposal_path = run_dir / "proposal-final.md"
     md = build_proposal_md(
         analysis=analysis,
         proposal_data=proposal_data,
@@ -525,6 +530,7 @@ def run_proposal_pipeline(
     return {
         "status": status,
         "analysis_id": analysis_id,
+        "run_dir": str(run_dir),
         "proposal_path": str(proposal_path),
         "final_iteration": iteration,
         "validator_errors": validator_errors_by_id,
