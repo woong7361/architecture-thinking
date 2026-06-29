@@ -1,0 +1,24 @@
+{
+  "brief_hash": "3930539b",
+  "created_at": "2026-06-29T12:15:15+09:00",
+  "brief": {
+    "topic": "AI 작업 환경을 점진적으로 개선하기: 관리 포인트 최소화와 multi-provider 파이프라인 확장",
+    "raw_text": "## 오늘 작업 내용\n\n### 1. writing-harness-pipeline 중복 정리\n\n워크스페이스 루트에 `writing-harness-pipeline/`이 있고, `.codex/skills/blog-draft/scripts/writing-harness-pipeline/`에도 동일한 디렉토리가 있었다. diff로 확인하니 두 버전이 갈라져 있었고, skill 쪽이 더 최신이었다. run_draft.py가 워크스페이스 루트의 `runs/` 디렉토리를 기본 출력 경로로 쓰는 코드가 있었지만, 해당 경로가 없으면 skill 내부로 자동 fallback되는 구조였다. 루트의 `runs/`에 과거 실행 결과 3개가 있었지만 보관 불필요로 판단, 루트 디렉토리 전체 삭제.\n\n### 2. CLAUDE.md vs AGENTS.md 관리 포인트 논의\n\n이 워크스페이스는 Codex로 작업하던 공간이라 AGENTS.md와 `.codex/skills/`가 이미 있었다. Claude도 자동으로 컨텍스트를 읽게 하려면 CLAUDE.md가 필요한데, 관리 포인트가 하나 더 늘어나는 문제가 있었다.\n\n결론: CLAUDE.md를 `See AGENTS.md for all project context and AI behavior rules.` 한 줄짜리 redirect로 만들었다. AGENTS.md가 단일 진실 소스로 남고, CLAUDE.md는 관리할 내용이 없다.\n\nskill은 `.codex/skills/`가 이미 두 하네스(Codex, Claude Code)에서 모두 읽히고 있는 것을 확인. 별도 `.claude/skills/`를 만들 필요 없이 현재 구조 유지.\n\n### 3. writing-harness-pipeline multi-provider 확장\n\n기존 파이프라인은 Codex CLI만 지원했다. 사용하는 에이전트(Claude, Codex)에 따라 적절한 LLM을 호출하도록 확장하는 작업.\n\n**설계 결정**:\n- CLI 방식 vs Python SDK 비교 → SDK 선택. Claude는 Python SDK가 있으니 subprocess 오버헤드 없이 token usage가 바로 나오고 에러 처리가 깔끔하다. Codex는 외부 프로세스 호출이 필수라 CLI 방식 유지.\n- provider 선택: `--provider codex|claude` 플래그. 블로그 작성 intake 대화에서 사용자에게 질문.\n\n**구현 내용**:\n- `LLMClient` 추상 인터페이스 + `create_client()` 팩토리 신규 작성\n- `ClaudeClient`: Anthropic SDK 호출, JSON 파싱(코드블록 fallback 포함), output_path 직접 write\n- `CodexClient`: 기존 CLI 방식 유지, `run_prompt(prompt)` → `run_prompt(system, user)` 시그니처 변경 (내부에서 합쳐 stdin 전달)\n- 4개 stage (generator, critique, evaluator, refine): `codex_bin`/`timeout_seconds` 파라미터 → `client: LLMClient`로 교체, `build_prompt`가 `(system, user)` 튜플 반환\n- `runner.py`: `--provider` 추가, provider별 모델 기본값 분리 (Codex → gpt-5.5, Claude → claude-sonnet-4-6), client 한 번 생성 후 모든 stage에 전달\n- `run_draft.py`: `--provider` 추가 후 runner에 전달\n- `SKILL.md`: intake 질문 목록에 provider 추가\n\n**핵심 trade-off**:\n- Codex CLI는 `--output-schema`로 schema 검증을 CLI가 처리하지만, ClaudeClient는 Python에서 JSON 파싱 후 파이프라인의 `validate_file()`이 schema 검증을 담당한다. 역할 분리가 달라지지만 검증 결과는 동일하다.\n- `build_prompt`를 `(system, user)` 튜플로 분리한 것은 Claude SDK에서 system/user를 명확히 분리할 수 있기 때문. Codex는 내부에서 합쳐서 stdin에 전달.",
+    "piece_type": "retrospective",
+    "intent": "AI 작업 환경을 만들 때 관리 포인트를 줄이는 실무 판단과, writing-harness를 multi-provider로 확장한 설계 결정을 솔직하게 공유한다",
+    "audience": "AI native 개발 방식에 관심 있는 개발자",
+    "constraints": {
+      "target_length": "2500-3500 Korean characters",
+      "tone": "실무 개발자 회고 — 판단 근거와 trade-off를 솔직하게 적는 스타일",
+      "emphasis": [
+        "관리 포인트를 줄이는 실무 판단",
+        "설계 결정의 근거와 trade-off",
+        "writing-harness multi-provider 확장 구조"
+      ],
+      "avoid": [
+        "AI가 모든 것을 자동으로 해결한다는 과장",
+        "기술 나열식 설명"
+      ]
+    }
+  }
+}

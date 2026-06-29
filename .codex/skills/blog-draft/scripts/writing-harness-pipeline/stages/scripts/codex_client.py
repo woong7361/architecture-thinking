@@ -15,11 +15,13 @@ class CodexClient:
 
     def run_prompt(
         self,
-        prompt: str,
+        system: str,
+        user: str,
         output_schema: Path,
         output_path: Path,
         model: str | None = None,
     ) -> dict | None:
+        prompt = f"{system}\n\n{user}"
         command = self.build_command(
             output_schema=output_schema,
             output_path=output_path,

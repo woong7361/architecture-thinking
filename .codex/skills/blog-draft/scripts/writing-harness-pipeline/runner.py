@@ -18,6 +18,7 @@ from stages.critique import critique
 from stages.evaluator import evaluate
 from stages.generator import generate
 from stages.refine import refine
+from stages.scripts.llm_client import create_client
 from validate import validate_file, write_result
 
 
@@ -26,22 +27,36 @@ RUNS_DIR = PROJECT_DIR / "runs"
 RUBRIC_PATH = PROJECT_DIR / "rubric.yaml"
 KST = timezone(timedelta(hours=9))
 
+PROVIDER_CODEX = "codex"
+PROVIDER_CLAUDE = "claude"
+
 MODEL_CODEX_DEFAULT = None
 MODEL_GPT_5_5 = "gpt-5.5"
 MODEL_GPT_5_4 = "gpt-5.4"
 MODEL_GPT_5_4_MINI = "gpt-5.4-mini"
 MODEL_O3 = "o3"
 
+MODEL_CLAUDE_DEFAULT = None
+MODEL_CLAUDE_SONNET = "claude-sonnet-4-6"
+MODEL_CLAUDE_OPUS = "claude-opus-4-8"
+
 AGENT_GEN = "gen"
 AGENT_CRITIQUE = "critique"
 AGENT_EVAL = "eval"
 AGENT_REFINE = "refine"
 
-AGENT_MODELS = {
+CODEX_DEFAULT_MODELS = {
     AGENT_GEN: MODEL_GPT_5_5,
     AGENT_CRITIQUE: MODEL_GPT_5_5,
     AGENT_EVAL: MODEL_GPT_5_5,
     AGENT_REFINE: MODEL_GPT_5_5,
+}
+
+CLAUDE_DEFAULT_MODELS = {
+    AGENT_GEN: MODEL_CLAUDE_DEFAULT,
+    AGENT_CRITIQUE: MODEL_CLAUDE_DEFAULT,
+    AGENT_EVAL: MODEL_CLAUDE_DEFAULT,
+    AGENT_REFINE: MODEL_CLAUDE_DEFAULT,
 }
 
 FINAL_CHECKED_RULES = ["schema", "brief_hash", "min_total", "min_axis"]
@@ -61,8 +76,10 @@ def format_score(value: object) -> str:
     return "n/a"
 
 
-def display_model(model: str | None) -> str:
-    return model or "codex-cli-default"
+def display_model(model: str | None, provider: str = PROVIDER_CODEX) -> str:
+    if model:
+        return model
+    return "claude-sonnet-4-6" if provider == PROVIDER_CLAUDE else "codex-cli-default"
 
 
 def summarize_errors(errors: list[object], limit: int = 3) -> str:
@@ -590,16 +607,23 @@ def run(args: argparse.Namespace) -> dict:
     lineage = {
         "input": str(root_context.copied_input_path),
     }
+    agent_models = resolve_agent_models(args)
     config = {
+        "provider": args.provider,
         "codex_bin": args.codex_bin,
-        "codex_access": "dangerously-bypass-approvals-and-sandbox",
-        "agent_models": resolve_agent_models(args),
+        "agent_models": agent_models,
         "iteration": args.iteration,
         "max_iterations": args.max_iterations,
         "timeout_seconds": args.timeout_seconds,
         "rubric_path": str(rubric_path),
         "rubric": rubric,
     }
+    client = create_client(
+        provider=args.provider,
+        project_dir=PROJECT_DIR,
+        timeout_seconds=args.timeout_seconds,
+        codex_bin=args.codex_bin,
+    )
     eval_rejections: list[dict] = []
     last_refine_request_lineage: str | None = None
     progress.line(
@@ -631,15 +655,14 @@ def run(args: argparse.Namespace) -> dict:
 
                     stage = f"iter_{iteration}_gen"
                     with progress.step(
-                        f"{iteration_label} gen model={display_model(config['agent_models'][AGENT_GEN])}",
+                        f"{iteration_label} gen model={display_model(config['agent_models'][AGENT_GEN], args.provider)}",
                         live=True,
                     ):
                         token_usage = generate(
                             input_path=root_context.copied_input_path,
                             output_path=temp_gen_output_path,
-                            codex_bin=args.codex_bin,
+                            client=client,
                             model=config["agent_models"][AGENT_GEN],
-                            timeout_seconds=args.timeout_seconds,
                         )
 
                     stage = f"iter_{iteration}_gen_validate"
@@ -653,7 +676,7 @@ def run(args: argparse.Namespace) -> dict:
                     input_data=input_data,
                     stage_output=gen_output,
                     iteration=iteration,
-                    model_name=display_model(config["agent_models"][AGENT_GEN]),
+                    model_name=display_model(config["agent_models"][AGENT_GEN], args.provider),
                     token_usage=token_usage,
                     source_stage=AGENT_GEN,
                 )
@@ -677,16 +700,15 @@ def run(args: argparse.Namespace) -> dict:
 
                 stage = f"iter_{iteration}_critique"
                 with progress.step(
-                    f"{iteration_label} critique model={display_model(config['agent_models'][AGENT_CRITIQUE])}",
+                    f"{iteration_label} critique model={display_model(config['agent_models'][AGENT_CRITIQUE], args.provider)}",
                     live=True,
                 ):
                     token_usage = critique(
                         input_path=root_context.copied_input_path,
                         draft_path=context.draft_path,
                         output_path=temp_critique_path,
-                        codex_bin=args.codex_bin,
+                        client=client,
                         model=config["agent_models"][AGENT_CRITIQUE],
-                        timeout_seconds=args.timeout_seconds,
                     )
 
                 stage = f"iter_{iteration}_critique_output_validate"
@@ -699,7 +721,7 @@ def run(args: argparse.Namespace) -> dict:
             critique_artifact = build_critique(
                 critique_output=critique_output,
                 iteration=iteration,
-                model_name=display_model(config["agent_models"][AGENT_CRITIQUE]),
+                model_name=display_model(config["agent_models"][AGENT_CRITIQUE], args.provider),
                 token_usage=token_usage,
             )
             write_json(context.critique_path, critique_artifact, overwrite=args.overwrite)
@@ -719,7 +741,7 @@ def run(args: argparse.Namespace) -> dict:
 
                 stage = f"iter_{iteration}_eval"
                 with progress.step(
-                    f"{iteration_label} eval model={display_model(config['agent_models'][AGENT_EVAL])}",
+                    f"{iteration_label} eval model={display_model(config['agent_models'][AGENT_EVAL], args.provider)}",
                     live=True,
                 ):
                     token_usage = evaluate(
@@ -727,9 +749,8 @@ def run(args: argparse.Namespace) -> dict:
                         draft_path=context.draft_path,
                         rubric=rubric,
                         output_path=temp_eval_path,
-                        codex_bin=args.codex_bin,
+                        client=client,
                         model=config["agent_models"][AGENT_EVAL],
-                        timeout_seconds=args.timeout_seconds,
                     )
 
                 stage = f"iter_{iteration}_eval_output_validate"
@@ -742,7 +763,7 @@ def run(args: argparse.Namespace) -> dict:
             eval_artifact = build_eval(
                 eval_output=eval_output,
                 iteration=iteration,
-                model_name=display_model(config["agent_models"][AGENT_EVAL]),
+                model_name=display_model(config["agent_models"][AGENT_EVAL], args.provider),
                 token_usage=token_usage,
             )
             write_json(context.eval_path, eval_artifact, overwrite=args.overwrite)
@@ -846,7 +867,7 @@ def run(args: argparse.Namespace) -> dict:
 
                 stage = f"iter_{iteration}_refine_to_{to_iteration}"
                 with progress.step(
-                    f"iter {iteration}->{to_iteration} refine model={display_model(config['agent_models'][AGENT_REFINE])}",
+                    f"iter {iteration}->{to_iteration} refine model={display_model(config['agent_models'][AGENT_REFINE], args.provider)}",
                     live=True,
                 ):
                     token_usage = refine(
@@ -855,9 +876,8 @@ def run(args: argparse.Namespace) -> dict:
                         critique_path=context.critique_path,
                         refine_request=refine_request,
                         output_path=temp_refine_output_path,
-                        codex_bin=args.codex_bin,
+                        client=client,
                         model=config["agent_models"][AGENT_REFINE],
-                        timeout_seconds=args.timeout_seconds,
                     )
 
                 stage = f"iter_{iteration}_refine_output_validate"
@@ -871,7 +891,7 @@ def run(args: argparse.Namespace) -> dict:
                 input_data=input_data,
                 stage_output=refine_output,
                 iteration=to_iteration,
-                model_name=display_model(config["agent_models"][AGENT_REFINE]),
+                model_name=display_model(config["agent_models"][AGENT_REFINE], args.provider),
                 token_usage=token_usage,
                 source_stage=AGENT_REFINE,
             )
@@ -889,7 +909,8 @@ def run(args: argparse.Namespace) -> dict:
 
 
 def resolve_agent_models(args: argparse.Namespace) -> dict[str, str | None]:
-    models = AGENT_MODELS.copy()
+    defaults = CLAUDE_DEFAULT_MODELS if args.provider == PROVIDER_CLAUDE else CODEX_DEFAULT_MODELS
+    models = defaults.copy()
     if args.model:
         models[AGENT_GEN] = args.model
     if args.gen_model:
@@ -906,12 +927,13 @@ def resolve_agent_models(args: argparse.Namespace) -> dict[str, str | None]:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Run pipeline: input -> gen/refine -> critique -> eval -> final/failed.")
     parser.add_argument("input", type=Path, help="Path to an input JSON file matching input.schema.json.")
+    parser.add_argument("--provider", choices=[PROVIDER_CODEX, PROVIDER_CLAUDE], default=PROVIDER_CODEX)
     parser.add_argument("--codex-bin", default="codex")
     parser.add_argument("--model", help="Alias for --gen-model in the current MVP.")
-    parser.add_argument("--gen-model", help="Model for the Gen agent. Defaults to the official Codex recommended model.")
-    parser.add_argument("--critique-model", help="Model for the Critique agent. Defaults to the Codex CLI default model.")
-    parser.add_argument("--eval-model", help="Model for the Eval agent. Defaults to the Codex CLI default model.")
-    parser.add_argument("--refine-model", help="Model for the Refine agent. Defaults to the Codex CLI default model.")
+    parser.add_argument("--gen-model", help="Model for the Gen agent.")
+    parser.add_argument("--critique-model", help="Model for the Critique agent.")
+    parser.add_argument("--eval-model", help="Model for the Eval agent.")
+    parser.add_argument("--refine-model", help="Model for the Refine agent.")
     parser.add_argument("--runs-dir", type=Path, default=RUNS_DIR)
     parser.add_argument("--rubric", type=Path, default=RUBRIC_PATH)
     parser.add_argument("--iteration", default="001")

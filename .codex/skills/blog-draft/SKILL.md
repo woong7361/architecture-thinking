@@ -14,6 +14,7 @@ Create a blog draft from raw material through a short intake conversation and th
 1. Read the user's material from the conversation or referenced UTF-8 text files.
 2. Infer draft defaults from the material before asking questions.
 3. Ask only for missing or high-impact choices:
+   - provider (codex / claude) — which LLM backend to run the pipeline with
    - tone
    - emphasis
    - target length
@@ -53,6 +54,9 @@ Use `scripts/writing-harness-pipeline/schemas/input.schema.json` as the canonica
 Important contract points:
 
 - Preserve original material in `brief.raw_text`.
+- Put the full original material in `brief.raw_text` whenever possible, even when it is long.
+- Do not summarize, shorten, excerpt, normalize, or omit parts of the user's material when building `brief.raw_text`.
+- If context or tool limits make it difficult to include the full original material, stop and ask the user how to split or reference the source instead of silently shortening it.
 - Put writing intent under `brief.intent`.
 - Put audience under `brief.audience`.
 - Put tone, length, emphasis, required points, and avoid rules under `brief.constraints`.
@@ -78,7 +82,10 @@ Use `scripts/run_draft.py` to run the bundled harness:
 
 ```bash
 python -B .codex/skills/blog-draft/scripts/run_draft.py \
-  .codex/skills/blog-draft/scripts/writing-harness-pipeline/inputs/a1b2c3d4_input.json
+  .codex/skills/blog-draft/scripts/writing-harness-pipeline/inputs/a1b2c3d4_input.json \
+  --provider claude   # or --provider codex (default)
 ```
+
+By default, `run_draft.py` writes run artifacts to `writing-harness-pipeline/runs` under the current workspace when that directory exists. Override this with `--runs-dir` when needed.
 
 The pipeline copy lives under `scripts/writing-harness-pipeline/`. Do not edit the original repository-level pipeline when using this skill unless the user explicitly asks to sync improvements back.

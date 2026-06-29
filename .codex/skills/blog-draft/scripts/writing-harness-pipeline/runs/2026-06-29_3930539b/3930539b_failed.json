@@ -1,0 +1,125 @@
+{
+  "brief_hash": "3930539b",
+  "run_id": "2026-06-29_3930539b",
+  "failed_at": "2026-06-29T12:35:41+09:00",
+  "terminal_reason": "max_iteration_exceeded",
+  "last_iteration": "003",
+  "failure_counts_by_category": {
+    "quality_reject": 3
+  },
+  "last_failures": [
+    {
+      "category": "quality_reject",
+      "rule": "min_total",
+      "severity": "high",
+      "retryable": false,
+      "message": "min_total: 3.725 < 4.1"
+    }
+  ],
+  "lineage": {
+    "input": "3930539b_input.json",
+    "last_draft": "iter_003/3930539b_iter-003_draft.json",
+    "last_critique": "iter_003/3930539b_iter-003_critique.json",
+    "last_eval": "iter_003/3930539b_iter-003_eval.json"
+  },
+  "iteration_rejections": [
+    {
+      "iteration": "001",
+      "validation": "/home/woong/workspace/project/architecture-thinking/.codex/skills/blog-draft/scripts/writing-harness-pipeline/runs/2026-06-29_3930539b/iter_001/3930539b_iter-001_eval.validation.json",
+      "errors": [
+        "min_total: 3.43 < 4.1"
+      ]
+    },
+    {
+      "iteration": "002",
+      "validation": "/home/woong/workspace/project/architecture-thinking/.codex/skills/blog-draft/scripts/writing-harness-pipeline/runs/2026-06-29_3930539b/iter_002/3930539b_iter-002_eval.validation.json",
+      "errors": [
+        "min_total: 3.43 < 4.1"
+      ]
+    },
+    {
+      "iteration": "003",
+      "validation": "/home/woong/workspace/project/architecture-thinking/.codex/skills/blog-draft/scripts/writing-harness-pipeline/runs/2026-06-29_3930539b/iter_003/3930539b_iter-003_eval.validation.json",
+      "errors": [
+        "min_total: 3.725 < 4.1"
+      ]
+    }
+  ],
+  "config": {
+    "provider": "claude",
+    "codex_bin": "codex",
+    "agent_models": {
+      "gen": null,
+      "critique": null,
+      "eval": null,
+      "refine": null
+    },
+    "iteration": "001",
+    "max_iterations": 3,
+    "timeout_seconds": 600,
+    "rubric_path": "/home/woong/workspace/project/architecture-thinking/.codex/skills/blog-draft/scripts/writing-harness-pipeline/rubric.yaml",
+    "rubric": {
+      "name": "writing:v1",
+      "scale": {
+        "min": 0,
+        "max": 5
+      },
+      "axes": {
+        "structure": {
+          "weight": 0.25,
+          "scale": {
+            "1": "흐름이 끊기고 주장, 근거, 결론의 연결을 따라가기 어렵다",
+            "3": "기본 흐름은 있으나 전환, 근거 배열, 결론 중 일부가 약하다",
+            "5": "문제의식, 근거, 전환, 결론이 자연스럽게 이어지고 핵심이 선명하다"
+          }
+        },
+        "evidence": {
+          "weight": 0.25,
+          "scale": {
+            "1": "주장이 일반론에 머물고 경험, 사례, 관찰이 거의 없다",
+            "3": "일부 구체 사례가 있으나 핵심 주장 전체를 충분히 받치지는 못한다",
+            "5": "경험, 장면, 관찰, 인용, 수치 중 적절한 근거가 글의 주요 주장을 단단히 받친다"
+          }
+        },
+        "sentence": {
+          "weight": 0.2,
+          "scale": {
+            "1": "문장이 장황하거나 반복이 많아 읽는 흐름이 자주 막힌다",
+            "3": "대체로 읽히지만 일부 문단에서 밀도, 리듬, 군더더기 문제가 보인다",
+            "5": "문장 밀도와 리듬이 안정적이고 군더더기가 적어 끝까지 읽히는 힘이 있다"
+          }
+        },
+        "originality": {
+          "weight": 0.15,
+          "scale": {
+            "1": "누구나 할 수 있는 일반론에 가깝고 고유한 판단이나 언어가 거의 없다",
+            "3": "개인적 관점은 드러나지만 표현이나 발견이 아직 익숙한 범위에 머문다",
+            "5": "이 사람만의 관점, 판단, 언어가 여러 문단에서 뚜렷하게 드러난다"
+          }
+        },
+        "purpose_fit": {
+          "weight": 0.15,
+          "scale": {
+            "1": "요청의 핵심 목적이나 예상 독자를 거의 반영하지 못하고 글이 다른 방향으로 흐른다",
+            "3": "대체로 요청에 맞지만 독자 수준, 글의 목적, 핵심 질문 중 일부가 흐릿하다",
+            "5": "요청의 목적, 예상 독자, 핵심 질문을 정확히 겨냥하며 글 전체의 선택이 그 목적에 맞게 정렬되어 있다"
+          }
+        }
+      },
+      "thresholds": {
+        "min_total": 4.1,
+        "min_axis": {
+          "structure": 3.0,
+          "evidence": 3.0,
+          "sentence": 3.0,
+          "originality": 3.0,
+          "purpose_fit": 3.0
+        }
+      }
+    }
+  },
+  "next_actions": [
+    "원본 brief에 구체적 사례와 제약을 보강한다",
+    "반복 실패의 주된 category를 보고 rubric threshold 또는 stage prompt를 조정한다"
+  ]
+}
