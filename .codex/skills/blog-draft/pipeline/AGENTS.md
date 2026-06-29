@@ -121,6 +121,76 @@ python -B -c "from pathlib import Path; files=['runner.py','validate.py','stages
 - validate 호출은 검사 대상 파일을 직접 수정하지 않는다.
 - `max_iterations`까지 통과하지 못하면 `final.json` 대신 `{brief_hash}_failed.json`을 남기는 설계를 따른다.
 
+## Slow Loop (v2)
+
+fast loop이 남긴 run 기록을 모아 파이프라인 자체를 개선하는 제안을 만드는 두 번째 루프다. 구현은 `analyze_runs.py`, `stages/proposer.py`, `run_propose.py`를 참조한다.
+
+### 트리거
+
+`run_draft.py` 완료 후 `runs/pending/` 아래 통과 run이 5개 이상이면 자동 실행된다.
+
+### 상태 표현
+
+run 검토 여부는 폴더 위치로만 표현한다. 별도 문서를 두지 않는다.
+
+- `runs/pending/`: fast loop이 여기 쓴다 (미검토).
+- `runs/reviewed/`: slow loop 분석 완료 후 여기로 이동한다.
+
+### 단계별 역할 경계
+
+#### Analyze
+
+- 입력: `runs/pending/` 전체 (통과 run의 eval/critique만. ERROR·failed.json 제외)
+- 출력: `changelog/analysis_{id}.json`
+- 책임: axis별 점수 집계, 기준 미달 비율 계산, critique 반복 지적 집계, 신호 id 부여.
+- 금지: rubric/prompt/코드 직접 수정, 품질 주관 판단, target 단정.
+
+#### Propose Gen
+
+- 입력: `analysis.json` + 후보 target 전체 (rubric, 모든 prompt, AGENTS.md, stage 코드)
+- 출력: 제안 JSON (`propose_gen_output.schema.json`)
+- 책임: 근본 원인 진단, 대상별 구체 diff 초안 작성, 위험도 표시.
+- 금지: 파일 직접 수정, 사람 승인 없는 적용, `cited_signals`에 없는 신호 id 인용.
+
+#### Propose Critique
+
+- 입력: `analysis.json` + 제안 + 제안이 건드린 파일만
+- 출력: critique JSON
+- 책임: 제안의 약점 지적, 강점 분리.
+- 금지: 점수 생성, 제안 재작성, propose eval 결과 참조.
+
+#### Propose Eval
+
+- 입력: `analysis.json` + 제안 + 제안이 건드린 파일만 + `proposal:v1` rubric
+- 출력: eval JSON (제안별 `proposal:v1` 채점)
+- 책임: 사다리 기준으로 각 제안을 독립 채점.
+- 금지: propose critique 참조 (anchoring 방지), PASS/REJECT 최종 판정, 제안 재작성.
+
+#### Propose Refine
+
+- 입력: `analysis.json` + 직전 제안 + critique + 제안이 건드린 파일만 + `weak_axes`
+- 출력: 다음 iteration 제안 JSON (gen과 같은 형태)
+- 책임: "구체화·축소" 방향으로만 다듬기.
+- 금지: 진단 자체를 키우는 재작성, eval 총점 원문 참조, `weak_axes` 없는 새 원인 생성.
+
+### 정보 차단: 두 층위
+
+fast loop과 달리 slow loop은 context 파일(대상 파일)을 읽는다.
+
+- **층위 1 (파이프라인 내부):** propose critique는 propose eval을 읽지 않는다. propose eval은 propose critique를 읽지 않는다.
+- **층위 2 (context 범위):** gen만 후보 target 전체를 읽는다. critique/eval/refine은 제안이 건드린 파일만 읽는다.
+- **이중 방어:** runner가 payload를 물리적으로 차단(1차)하고, 각 `propose_*_system.md`가 범위를 명시(2차)한다.
+
+### 고정점 원칙
+
+slow loop이 쓰는 `proposal:v1` rubric(`rubric_proposal.yaml`)과 `propose_*_system.md` 프롬프트는 **사람만 변경한다.** slow loop이 자기 기준을 자동으로 고치면 순환이 끊기지 않는다.
+
+### 버저닝
+
+- 각 component는 자기 버전 태그를 유지한다 (`writing:vN`, `gen_system:vN`, ...).
+- 사람이 제안을 수락·적용하면 `changelog/CHANGELOG.md`에 한 줄을 남긴다: 날짜 / 무엇을 / 왜 / 근거 run hash / 위험도 / commit 해시.
+- 과거 버전은 git이 관리한다. 별도 스냅샷을 만들지 않는다.
+
 ## 금지 행동
 
 - LLM stage가 허용되지 않은 파일을 임의로 읽게 하지 않는다.

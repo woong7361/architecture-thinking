@@ -1,0 +1,87 @@
+{
+  "analysis_id": "2026-06-29_1runs",
+  "generated_at": "2026-06-29T17:06:53+09:00",
+  "pending_count": 1,
+  "runs_included": [
+    "2026-06-29_3930539b"
+  ],
+  "rubric_name": "writing:v1",
+  "axis_stats": {
+    "structure": {
+      "mean": 4.0,
+      "min": 4.0,
+      "max": 4.0,
+      "below_min_count": 0,
+      "below_min_ratio": 0.0
+    },
+    "evidence": {
+      "mean": 3.5,
+      "min": 3.5,
+      "max": 3.5,
+      "below_min_count": 0,
+      "below_min_ratio": 0.0
+    },
+    "sentence": {
+      "mean": 4.0,
+      "min": 4.0,
+      "max": 4.0,
+      "below_min_count": 0,
+      "below_min_ratio": 0.0
+    },
+    "originality": {
+      "mean": 3.0,
+      "min": 3.0,
+      "max": 3.0,
+      "below_min_count": 0,
+      "below_min_ratio": 0.0
+    },
+    "purpose_fit": {
+      "mean": 4.0,
+      "min": 4.0,
+      "max": 4.0,
+      "below_min_count": 0,
+      "below_min_ratio": 0.0
+    }
+  },
+  "signals": [
+    {
+      "id": "S1",
+      "kind": "critique_repeat",
+      "summary": "critique 반복 지적: '1·2절(CLAUDE.md redirect, 코드 중복 정리)이 multi-provider 확장보다 비중이 ' (1/1 run, 비율=100%)",
+      "strength": "high",
+      "occurrence_count": 1,
+      "run_refs": [
+        "2026-06-29_3930539b"
+      ],
+      "example_quotes": [
+        "1·2절(CLAUDE.md redirect, 코드 중복 정리)이 multi-provider 확장보다 비중이 크다"
+      ]
+    },
+    {
+      "id": "S2",
+      "kind": "critique_repeat",
+      "summary": "critique 반복 지적: '`build_prompt`의 system/user 분리 결정이 draft에서 완전히 사라졌다' (1/1 run, 비율=100%)",
+      "strength": "high",
+      "occurrence_count": 1,
+      "run_refs": [
+        "2026-06-29_3930539b"
+      ],
+      "example_quotes": [
+        "`build_prompt`의 system/user 분리 결정이 draft에서 완전히 사라졌다"
+      ]
+    },
+    {
+      "id": "S3",
+      "kind": "critique_repeat",
+      "summary": "critique 반복 지적: '마지막 단락이 한계를 나열하지만, 독자가 가져갈 단서를 남기지 않는다' (1/1 run, 비율=100%)",
+      "strength": "high",
+      "occurrence_count": 1,
+      "run_refs": [
+        "2026-06-29_3930539b"
+      ],
+      "example_quotes": [
+        "마지막 단락이 한계를 나열하지만, 독자가 가져갈 단서를 남기지 않는다"
+      ]
+    }
+  ]
+}

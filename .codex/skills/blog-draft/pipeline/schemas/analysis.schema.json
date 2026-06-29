@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Slow Loop Analysis",
+  "description": "analyze_runs.py가 통과한 run들에서 집계한 결정적 신호. proposer gen의 입력이며, 제안의 cited_signals는 여기 signals[].id를 참조한다.",
+  "type": "object",
+  "required": [
+    "analysis_id",
+    "generated_at",
+    "pending_count",
+    "runs_included",
+    "rubric_name",
+    "axis_stats",
+    "signals"
+  ],
+  "properties": {
+    "analysis_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "이 분석 배치 식별자. runner가 제어한다."
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "pending_count": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "분석에 포함된 통과 run 개수."
+    },
+    "runs_included": {
+      "type": "array",
+      "description": "분석에 포함된 run 디렉토리 이름들.",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "rubric_name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "포함된 run들이 채점된 writing rubric 버전 (예: writing:v1)."
+    },
+    "axis_stats": {
+      "type": "object",
+      "description": "axis별 결정적 집계. 키는 writing rubric의 축 이름.",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["mean", "min", "max", "below_min_count", "below_min_ratio"],
+        "properties": {
+          "mean": { "type": "number", "minimum": 0, "maximum": 5 },
+          "min": { "type": "number", "minimum": 0, "maximum": 5 },
+          "max": { "type": "number", "minimum": 0, "maximum": 5 },
+          "below_min_count": { "type": "integer", "minimum": 0 },
+          "below_min_ratio": { "type": "number", "minimum": 0, "maximum": 1 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "signals": {
+      "type": "array",
+      "description": "패턴 룰로 추출된 제안 후보 신호. 각 신호는 stable id를 가진다.",
+      "items": {
+        "type": "object",
+        "required": ["id", "kind", "summary", "strength", "occurrence_count", "run_refs"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^S[0-9]+$",
+            "description": "신호 식별자 (예: S1). 제안의 cited_signals가 이 값을 참조한다."
+          },
+          "kind": {
+            "type": "string",
+            "enum": ["axis_below_threshold", "critique_repeat", "rationale_pattern"]
+          },
+          "axis": {
+            "type": "string",
+            "description": "관련된 writing rubric 축 (있으면)."
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1,
+            "description": "신호 내용 한 줄 요약."
+          },
+          "strength": {
+            "type": "string",
+            "enum": ["low", "medium", "high"],
+            "description": "신호 강도 (미달 비율·반복 횟수 기반의 결정적 분류)."
+          },
+          "occurrence_count": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "이 신호가 관측된 run 또는 항목 수."
+          },
+          "run_refs": {
+            "type": "array",
+            "description": "이 신호가 나온 run 디렉토리 이름들.",
+            "items": { "type": "string", "minLength": 1 }
+          },
+          "example_quotes": {
+            "type": "array",
+            "description": "신호의 근거가 된 rationale/critique 원문 발췌.",
+            "items": { "type": "string", "minLength": 1 }
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

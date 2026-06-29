@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Proposal Critique Direct Output",
+  "description": "propose critique의 직접 출력. 제안을 점수화하지 않고 약점만 짚는다.",
+  "type": "object",
+  "required": [
+    "analysis_id",
+    "iteration",
+    "summary",
+    "strengths",
+    "weaknesses"
+  ],
+  "properties": {
+    "analysis_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "검토 대상 제안 배치 식별자."
+    },
+    "iteration": {
+      "type": "string",
+      "pattern": "^[0-9]{3}$",
+      "description": "검토 대상 제안의 iteration."
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1,
+      "description": "제안 묶음에 대한 짧은 검토 요약."
+    },
+    "strengths": {
+      "type": "array",
+      "description": "다음 퇴고에서 보존할 제안의 강점.",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "weaknesses": {
+      "type": "array",
+      "description": "다음 퇴고가 다뤄야 할 제안의 약점. 각 항목은 어느 제안에 대한 것인지 명시한다.",
+      "items": {
+        "type": "object",
+        "required": ["proposal_id", "issue", "why_it_matters", "suggestion", "severity"],
+        "properties": {
+          "proposal_id": {
+            "type": "string",
+            "pattern": "^P[0-9]+$",
+            "description": "약점이 가리키는 제안 id."
+          },
+          "issue": { "type": "string", "minLength": 1 },
+          "why_it_matters": { "type": "string", "minLength": 1 },
+          "suggestion": { "type": "string", "minLength": 1 },
+          "severity": {
+            "type": "string",
+            "enum": ["low", "medium", "high"]
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -8,9 +8,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 
-SCRIPT_DIR = Path(__file__).resolve().parent
-PIPELINE_DIR = SCRIPT_DIR / "writing-harness-pipeline"
-DEFAULT_OUTPUT_DIR = PIPELINE_DIR / "inputs"
+PIPELINE_DIR = Path(__file__).resolve().parent
 KST = timezone(timedelta(hours=9))
 
 
@@ -101,7 +99,7 @@ def main() -> int:
     parser.add_argument("--emphasis", action="append", help="Repeat or separate values with semicolons.")
     parser.add_argument("--must-include", action="append", help="Repeat or separate values with semicolons.")
     parser.add_argument("--avoid", action="append", help="Repeat or separate values with semicolons.")
-    parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
+    parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--overwrite", action="store_true")
     args = parser.parse_args()
 

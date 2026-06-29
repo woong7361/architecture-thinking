@@ -1,0 +1,11 @@
+{
+  "artifact": "eval",
+  "checked_file": "/home/woong/workspace/project/architecture-thinking/.codex/skills/blog-draft/runs/2026-06-29_4ef5692d/iter_001/4ef5692d_iter-001_eval.json",
+  "status": "REJECT",
+  "errors": [
+    "min_total: 2.83 < 4.1",
+    "min_axis.evidence: 2.0 < 3.0",
+    "min_axis.originality: 2.5 < 3.0",
+    "min_axis.purpose_fit: 2.5 < 3.0"
+  ]
+}

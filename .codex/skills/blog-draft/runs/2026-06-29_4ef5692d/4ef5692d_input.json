@@ -1,0 +1,11 @@
+{
+  "brief_hash": "4ef5692d",
+  "created_at": "2026-06-29T13:55:50+09:00",
+  "brief": {
+    "topic": "test topic",
+    "raw_text": "some raw text content",
+    "piece_type": "retrospective",
+    "intent": "test intent",
+    "audience": "developers"
+  }
+}

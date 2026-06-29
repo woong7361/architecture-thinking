@@ -23,7 +23,7 @@ from validate import validate_file, write_result
 
 
 PROJECT_DIR = Path(__file__).resolve().parent
-RUNS_DIR = PROJECT_DIR / "runs"
+RUNS_DIR = PROJECT_DIR.parent / "runs"
 RUBRIC_PATH = PROJECT_DIR / "rubric.yaml"
 KST = timezone(timedelta(hours=9))
 

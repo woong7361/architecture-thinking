@@ -1,0 +1,24 @@
+{
+  "brief_hash": "3930539b",
+  "final_iteration": "003",
+  "content": "(test stub)",
+  "accepted_at": "2026-06-29T12:36:00+09:00",
+  "quality_snapshot": {
+    "rubric_name": "writing:v1",
+    "weighted_total": 3.725,
+    "scores": {
+      "structure": 4.0,
+      "evidence": 3.5,
+      "sentence": 4.0,
+      "originality": 3.0,
+      "purpose_fit": 4.0
+    },
+    "weak_axes": []
+  },
+  "contract_result": {
+    "verdict": "PASS",
+    "contract_errors": [],
+    "checked_rules": []
+  },
+  "lineage": {}
+}
