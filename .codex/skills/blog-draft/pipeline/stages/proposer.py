@@ -294,6 +294,54 @@ def passes_gate(eval_data: dict, rubric: dict) -> bool:
 # proposal-final 문서 생성
 # ---------------------------------------------------------------------------
 
+def build_changelog_draft(
+    proposals: list[dict],
+    validator_errors_by_id: dict[str, list[str]],
+    analysis: dict,
+    today: str,
+) -> str:
+    """validator를 통과한 제안들의 CHANGELOG 초안 섹션을 만든다. Python만 사용, LLM 없음."""
+    passing = [p for p in proposals if p["id"] not in validator_errors_by_id]
+    if not passing:
+        return ""
+
+    run_refs = ", ".join(analysis.get("runs_included", []))
+    signal_map = {s["id"]: s["summary"] for s in analysis.get("signals", []) if isinstance(s, dict)}
+
+    lines = [
+        "## CHANGELOG 초안",
+        "",
+        "*(적용 시 CHANGELOG.md에 복사·수정하세요. `vN`은 현재 버전+1, commit 해시는 적용 후 기입합니다.)*",
+        "",
+    ]
+
+    for p in passing:
+        target_file = p.get("target_file", "")
+        component = Path(target_file).stem if target_file else "unknown"
+        risk = p.get("risk", "?")
+        target_axis = p.get("target_axis", "")
+
+        diff = p.get("diff", {})
+        change_text = diff.get("change", "") if isinstance(diff, dict) else ""
+        change_summary = change_text.splitlines()[0] if change_text else "(diff 내용 확인)"
+
+        cited = p.get("cited_signals", [])
+        근거 = "; ".join(signal_map[sid] for sid in cited if sid in signal_map) or "(신호 없음)"
+
+        lines += [
+            f"### {component}:vN ({today})",
+            f"- 변경: {change_summary}",
+            f"- 겨냥 axis: {target_axis}",
+            f"- 근거: {근거}",
+            f"- 분석 run: {run_refs}",
+            f"- 위험: {risk}",
+            f"- commit: (적용 후 기입)",
+            "",
+        ]
+
+    return "\n".join(lines)
+
+
 def build_proposal_md(
     analysis: dict,
     proposal_data: dict,
@@ -372,6 +420,16 @@ def build_proposal_md(
         for p in priority:
             lines.append(f"{p['rank']}. {p['proposal_id']}: {p['rationale']}")
         lines.append("")
+
+    today = datetime.now(KST).date().isoformat()
+    changelog_section = build_changelog_draft(
+        proposals=proposal_data.get("proposals", []),
+        validator_errors_by_id=validator_errors_by_id,
+        analysis=analysis,
+        today=today,
+    )
+    if changelog_section:
+        lines.append(changelog_section)
 
     lines.append(f"---")
     lines.append(f"analysis_id: {analysis_id}")

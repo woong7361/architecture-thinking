@@ -291,15 +291,37 @@ runs/
 - 버저닝 + 단일 CHANGELOG
 - **고정점 원칙은 규칙으로 명시**: slow loop 자신의 rubric/prompt는 사람만 변경 (기계 없이 문장으로)
 
-### v3 — 미룬다: 검사기를 검사하는 메타 장치
+### v3 — 검사기를 검사하는 메타 장치
 
-지금 만들어도 검증할 데이터가 없어서 미룬다.
+#### 문제의식
 
-- **적중률 측정 (탐지)**: 적용된 제안이 겨냥한 axis가 실제로 개선됐는지 후속 run으로 측정. proposer가 체계적으로 오진하는지 자동 신호.
-- **케이스 샘플 비교 (검증)**: slow loop 자신의 rubric/prompt를 바꿀 때, 구버전 vs 신버전을 최근 사례에 돌려 사람이 라이브 비교. 정답 키가 아니라 회전하는 사례 + 라이브 판단.
-- **failed/ERROR 신호 분리**: `failed.json`(시스템이 못 고친 케이스)과 validation 반복 실패를 통과 run 분석과 별도 트랙으로 다룬다.
+v2까지 만든 시스템에서 남아있는 구조적 공백:
 
-이 둘이 들어와야 "그냥 제안 생성기"에서 진짜 자기 학습으로 넘어간다. v2는 그 전 단계다.
+1. **proposal:v1 rubric이 좋은 rubric인지 알 수 없다.** proposal이 높은 점수를 받았어도 실제로 axis가 개선됐는지 피드백이 돌아오지 않는다. rubric 품질을 측정하는 장치가 없어 사람이 가끔 들여다보는 것 외에 방법이 없다.
+
+2. **axis 점수만으로 판단하면 편향된다.** axis는 같은 LLM이 rubric 기준으로 채점한 값이다. Goodhart's Law에 따라 pipeline이 "좋은 글"이 아니라 "axis 점수가 높은 글" 방향으로 드리프트할 수 있다. 단일 측정 지표는 그 자체가 최적화 목표로 오염된다.
+
+3. **CHANGELOG가 사람 수작업이다.** 제안을 적용할 때 사람이 CHANGELOG를 직접 작성해야 한다. 오기입·누락 가능성이 있고, AI가 대신할 수 있는 단순 작업이다.
+
+#### 목표
+
+- proposal:v1 rubric이 실제 개선을 예측하는지 간접 측정할 수 있게 한다.
+- axis 외 독립 신호를 추가해 편향을 분산한다.
+- CHANGELOG 작성을 AI가 초안을 만들고 사람이 검토·수정하는 방식으로 바꾼다.
+
+#### 완료된 것
+
+- **CHANGELOG 초안 자동 생성**: `proposer.py`의 `build_changelog_draft()`가 validator를 통과한 제안마다 CHANGELOG 형식의 초안 섹션을 `proposal-final.md` 끝에 추가한다. Python만 사용하며 LLM 없이 deterministic하게 생성. `겨냥 axis` 필드 포함. 사람은 `vN`과 commit 해시만 채워 CHANGELOG.md에 복사하면 된다.
+
+#### 남은 것
+
+- **적중률 측정**: CHANGELOG의 `겨냥 axis`를 근거로, 적용 후 쌓인 runs의 해당 axis 분포를 before/after로 비교. `analyze_runs.py`에 버전별 집계(`version_deltas`) 추가 필요. 이 값이 `analysis.json`에 포함되면 다음 proposer가 이전 제안의 예측 정확도를 context로 받는다.
+
+- **critique 반복 지적 감소 추적**: axis delta와 별개로, 적용 후 critique가 같은 지적을 반복하는지 여부를 `version_deltas`에 포함. axis 점수 편향을 보완하는 독립 신호.
+
+- **failed/ERROR 신호 분리**: `failed.json`과 validation 반복 실패를 통과 run 분석과 별도 트랙으로 처리.
+
+이 측정들이 쌓이면 proposal:v1 rubric 자체의 품질을 간접 평가할 수 있게 된다. rubric이 좋은 proposal에 높은 점수를 주는데 실제 개선이 없다면, rubric을 사람이 수정해야 한다는 신호가 된다.
 
 ## 확정 결정 요약
 
