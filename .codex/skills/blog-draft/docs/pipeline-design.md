@@ -99,54 +99,55 @@ Eval은 Critique의 판단에 anchor되지 않고 초안 자체를 독립 채점
 
 ## 디렉토리 구조
 
+아래는 현재 구현 기준의 실제 레이아웃이다. 이 파이프라인은 skill 번들에서 `pipeline/` 아래에 위치한다.
+
 ```text
-writing-harness-pipeline/
+pipeline/
 ├── AGENTS.md # 파이프라인 작업 규칙과 금지 행동
-├── README.md # 파이프라인 설계와 운영 기준
-├── schema-contracts.md # schema별 파일 계약 상세
-├── runner.py # 전체 실행 순서와 파일 핸드오프 제어
+├── runner.py # fast loop 실행 순서와 파일 핸드오프 제어
+├── run_draft.py # fast loop entrypoint (input 검증 → 파이프라인 → slow loop 트리거)
+├── run_propose.py # slow loop entrypoint (제안 파이프라인 실행)
+├── intake_to_input.py # intake 값 → input.json 생성·검증
+├── analyze_runs.py # slow loop 1단계: pending 신호 집계 → analysis.json
+├── validate.py # 각 단계 사이의 기계적 계약 검사 게이트 (schema 검사 포함)
+├── rubric.yaml # 글 평가 루브릭 (writing:v1)
+├── rubric_proposal.yaml # 제안 평가 루브릭 (proposal:v1)
 ├── stages/ # LLM을 호출하는 역할별 단계
 │   ├── generator.py # input을 받아 초안 생성
 │   ├── critique.py # 초안의 약점과 수정 방향 비평
 │   ├── evaluator.py # 루브릭 기반 독립 평가
-│   └── refine.py # 비평과 검증 결과를 반영해 재작성
-├── validators/ # 기계적 검증 유틸
-│   ├── validate.py # 검증 흐름을 조합하는 entrypoint
-│   └── schema.py # JSON schema 검사
+│   ├── refine.py # 비평과 검증 결과를 반영해 재작성
+│   ├── proposer.py # slow loop 제안 gen/critique/eval/refine
+│   └── scripts/ # provider별 LLM client (claude/codex)
 ├── prompts/ # 역할별 system prompt
 │   ├── gen_system.md # Generator 역할 지시
 │   ├── critique_system.md # Critique 역할 지시
 │   ├── eval_system.md # Evaluator 역할 지시
-│   └── refine_system.md # Refiner 역할 지시
-├── schemas/ # 파일 계약 JSON schema
-│   ├── input.schema.json # 사용자 입력 계약
-│   ├── gen_output.schema.json # Generator 직접 출력 계약
-│   ├── critique_output.schema.json # Critique 직접 출력 계약
-│   ├── draft.schema.json # 초안 산출물 계약
-│   ├── critique.schema.json # 비평 산출물 계약
-│   ├── eval.schema.json # 평가 산출물 계약
-│   └── final.schema.json # 최종 초안 계약
-├── rubrics/ # 평가 기준
-│   └── writing.yaml # 에세이와 회고 공통 평가 루브릭
-├── runs/ # 실행 결과 저장소
-│   └── 2026-06-12_a1b2c3d4/ # run_id 단위 실행 디렉토리
-│       ├── a1b2c3d4_input.json # 원본 입력
-│       ├── iter_001/ # 첫 번째 생성/평가 반복
-│       │   ├── a1b2c3d4_iter-001_draft.json # 현재 iteration 초안
-│       │   ├── a1b2c3d4_iter-001_critique.json # 현재 iteration 비평
-│       │   ├── a1b2c3d4_iter-001_eval.json # 현재 iteration 평가
-│       │   # REJECT 시 refine 입력 payload는 runner가 메모리에서 조립한다
-│       ├── iter_002/ # 두 번째 생성/평가 반복
-│       │   ├── a1b2c3d4_iter-002_draft.json # 재작성 초안
-│       │   ├── a1b2c3d4_iter-002_critique.json # 재작성 초안 비평
-│       │   └── a1b2c3d4_iter-002_eval.json # 재작성 초안 평가
-│       └── a1b2c3d4_final.json # 통과한 최종 초안
-└── archive/ # 7일 이상 지난 run 보관
+│   ├── refine_system.md # Refiner 역할 지시
+│   └── propose_*_system.md # slow loop 제안 단계 역할 지시
+├── schemas/ # 파일 계약 JSON schema (input/draft/critique/eval/final, propose_*, analysis)
+└── runs/ # 실행 결과 저장소
+    ├── pending/ # slow loop 분석 대기 run
+    ├── reviewed/ # 분석이 끝난 run
+    └── 2026-06-12_a1b2c3d4/ # run_id 단위 실행 디렉토리
+        ├── a1b2c3d4_input.json # 원본 입력
+        ├── iter_001/ # 첫 번째 생성/평가 반복
+        │   ├── a1b2c3d4_iter-001_draft.json # 현재 iteration 초안
+        │   ├── a1b2c3d4_iter-001_critique.json # 현재 iteration 비평
+        │   ├── a1b2c3d4_iter-001_eval.json # 현재 iteration 평가
+        │   # REJECT 시 refine 입력 payload는 runner가 메모리에서 조립한다
+        ├── iter_002/ # 두 번째 생성/평가 반복
+        │   ├── a1b2c3d4_iter-002_draft.json # 재작성 초안
+        │   ├── a1b2c3d4_iter-002_critique.json # 재작성 초안 비평
+        │   └── a1b2c3d4_iter-002_eval.json # 재작성 초안 평가
+        └── a1b2c3d4_final.json # 통과한 최종 초안
 ```
 
-현재처럼 루트에 `generator.py`, `evaluator.py`, `validate.py`를 둘 수도 있지만, 설계 기준으로는 창작/판단 에이전트는 `stages/` 아래에 모으고, 기계적 검증은 `validators/` 아래로 분리하는 편이 낫다. `validate.py`는 하나의 에이전트 단계가 아니라 모든 단계 사이에서 호출되는 공통 게이트이기 때문이다.
+창작/판단 에이전트는 `stages/` 아래에 모으고, 기계적 검증인 `validate.py`는 pipeline 루트에 둔다. `validate.py`는 하나의 에이전트 단계가 아니라 모든 단계 사이에서 호출되는 공통 게이트이기 때문이다. 별도 `schema.py`로 분리하지 않고, JSON 구조 검사와 계약 검사를 `validate.py` 안에서 함께 수행한다.
 
-`schema.py`는 JSON 구조가 맞는지만 본다. `validate.py`는 schema 검사와 함께 글자 수 범위, 금칙어, `brief_hash` 일치, 루브릭 총점 하한, 축별 최소 점수 같은 기계적 계약 검사를 수행하고, runner가 사용할 `PASS/REJECT`, `contract_errors`, `weak_axes`를 돌려준다.
+`validate.py`는 schema 검사와 함께 글자 수 범위, 금칙어, `brief_hash` 일치, 루브릭 총점 하한, 축별 최소 점수 같은 기계적 계약 검사를 수행하고, runner가 사용할 `PASS/REJECT`, `contract_errors`, `weak_axes`를 돌려준다.
+
+이 설계 문서, 파이프라인 운영 기준, schema별 파일 계약 상세는 `pipeline/`이 아니라 skill 루트의 `docs/`(`pipeline-design.md`, `slow-loop-design.md`, `schema-contracts.md`)에 둔다. 7일 경과 run 아카이브 정책은 아래 "아카이브 정책"을 참조한다.
 
 ## Run 식별자
 
@@ -199,7 +200,7 @@ a1b2c3d4_final.json
 
 ## Rubric 설계
 
-초기에는 에세이와 회고를 `writing.yaml` 하나로 평가한다.
+초기에는 에세이와 회고를 `rubric.yaml`(`writing:v1`) 하나로 평가한다.
 
 기본 축은 다음 5개로 시작한다.
 

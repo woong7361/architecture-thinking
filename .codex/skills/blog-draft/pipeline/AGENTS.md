@@ -103,6 +103,14 @@ python -B -c "from pathlib import Path; files=['runner.py','validate.py','stages
 
 특히 Eval은 Critique에 anchor되지 않아야 한다. Refine request에는 `weak_axes`, `contract_errors`, `revision_priority`처럼 runner가 필터링하거나 계산한 신호만 넘기고, `weighted_total` 같은 총점 원문은 넘기지 않는다.
 
+## 사용자 개인화 주입
+
+저자의 지속적 목소리(`soul.md`)와 누적 교훈(`memory.md`)을 gen / refine의 system prompt 앞에 `AUTHOR_CONTEXT` 블록으로 주입한다. `stages/scripts/context.py`가 담당하며 두 파일이 없으면 빈 문자열이라 동작이 바뀌지 않는다.
+
+- **Gen / Refine 만 주입 대상이다.** Critique / Eval에는 주입하지 않는다. Eval이 개인 취향을 받으면 판정자가 rubric이 아니라 취향에 anchor되어 드리프트하기 때문이다(위 "정보 차단 규칙"의 연장).
+- 주입 블록은 글의 재료(raw_text)가 아니라 "어떻게 쓸지"에 대한 지침임을 명시한다. 요약·인용 대상이 아니다.
+- 개인화 파일은 사람이 관리한다. 피드백 캡처와 승격 규칙은 스킬의 `SKILL.md`와 `docs/personalization-design.md`를 따른다.
+
 ## 프롬프트 규칙
 
 - 역할별 system prompt를 섞지 않는다.

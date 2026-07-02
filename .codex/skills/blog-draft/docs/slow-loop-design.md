@@ -57,7 +57,7 @@ fast loop은 "점수 매기기(LLM, 흔들림)"와 "기준 넘었는지 판정(�
 | critique가 같은 지적 반복 | gen/refine prompt (생성이 못 잡음) |
 | eval rationale에 "이건 못 봤다" 반복 | `eval_system.md` (평가 시야) |
 
-`analyze_runs.py`는 통과한 run의 `eval.json`, `critique.json`을 긁는다. ERROR와 `failed.json`은 제외한다(위 "대상" 참조). validation 반복 실패와 failed run 패턴은 v3에서 다룬다.
+`analyze_runs.py`는 통과한 run의 `eval.json`, `critique.json`을 긁고, 실패한 run의 `failed.json`은 별도 `failure_signals` 블록으로 집계한다(위 "대상" 참조). ERROR(파이프라인 크래시)는 제외한다. iteration별 validation 반복 실패의 세부 패턴은 v3에서 더 다룬다.
 
 패턴 임계값(기본): **한 axis가 pending의 60% 이상에서 `min_axis` 미달이면 제안 후보로 올린다.** (pending 5개 중 3개)
 
@@ -67,14 +67,14 @@ fast loop은 "점수 매기기(LLM, 흔들림)"와 "기준 넘었는지 판정(�
 
 - 입력: `runs/pending/` 전체
 - 출력: `analysis.json`
-- 대상: **통과한 run의 eval/critique만** 수집한다. ERROR(파이프라인 크래시)는 인프라 노이즈라 제외하고, `failed.json`(max_iterations 미통과)도 표본을 왜곡하므로 v2에서는 제외한다. failed run의 "시스템이 못 고친 케이스"라는 신호는 가치가 있으나 v3에서 별도로 다룬다.
+- 대상: **통과한 run의 eval/critique**를 통과 표본으로 수집하고, **실패한 run의 `failed.json`**을 별도의 `failure_signals` 블록으로 집계한다. 두 표본은 섞지 않는다(통과 표본 통계에 실패 run을 넣지 않는다). ERROR(파이프라인 크래시)는 인프라 노이즈라 여전히 제외한다. failed run 수집은 원래 v3로 미뤄 두었으나, `min_total` 같은 실패가 통과 run에는 절대 안 나타나 rubric 하한이 사각지대가 되는 문제 때문에 앞당겼다.
 - 책임:
-  - axis별 평균/최저 점수
-  - axis별 "기준 미달 run 비율"
+  - axis별 평균/최저 점수 (통과 표본)
+  - axis별 "기준 미달 run 비율" (통과 표본)
   - 미달 axis의 rationale 텍스트 모음
   - critique 반복 지적 집계
-  - 패턴 룰 적용 → 제안 후보 목록
-- 금지: rubric/prompt/코드 직접 수정, 품질의 주관적 판단, target 단정, ERROR/failed run 수집.
+  - 실패 run의 terminal_reason 분포, category별 합계, rule별 실패 run 수(`failure_signals`)
+- 금지: rubric/prompt/코드 직접 수정, 품질의 주관적 판단, target 단정, ERROR run 수집, 통과 표본과 실패 표본을 한 통계로 섞기.
 
 ### 제안 파이프라인 (LLM, fast loop과 같은 gen/critique/eval/refine 구조)
 

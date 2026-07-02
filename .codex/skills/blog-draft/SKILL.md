@@ -22,9 +22,10 @@ Create a blog draft from raw material through a short intake conversation and th
    - intent
    - avoid list
 4. Show the inferred defaults and ask for confirmation in one compact message.
-5. Generate an input JSON with `scripts/intake_to_input.py`.
-6. Validate and run the pipeline with `scripts/run_draft.py`.
+5. Generate an input JSON with `pipeline/intake_to_input.py`.
+6. Validate and run the pipeline with `pipeline/run_draft.py`.
 7. Report the final draft path, or the failed artifact path if the harness does not pass.
+8. Capture user feedback on the draft (see "사용자 개인화" below).
 
 ## Intake Rules
 
@@ -49,7 +50,7 @@ If the user says to proceed, use the proposed defaults. If the user gives change
 
 ## Input Contract
 
-Use `scripts/writing-harness-pipeline/schemas/input.schema.json` as the canonical input contract. Do not duplicate the full JSON shape in this file.
+Use `pipeline/schemas/input.schema.json` as the canonical input contract. Do not duplicate the full JSON shape in this file.
 
 Important contract points:
 
@@ -61,31 +62,39 @@ Important contract points:
 - Put audience under `brief.audience`.
 - Put tone, length, emphasis, required points, and avoid rules under `brief.constraints`.
 - Do not include `summary` or `intake_answers` in the MVP input.
-- Validate every generated input through `scripts/intake_to_input.py` or `validate.py --artifact input` before running the harness.
+- Validate every generated input through `pipeline/intake_to_input.py` or `pipeline/validate.py --artifact input` before running the harness.
+
+## 피드백 캡처 (step 8)
+
+초안 제시 후 사용자가 주목할 반응(부정/긍정)을 주면 기록한다. 근거·설계는 `docs/personalization-design.md` 참조.
+
+1. `problem.md`의 "사용자 피드백 누적 > 항목"에 추가: `(YYYY-MM-DD, run_id, verdict=pos|neg) 반응 요약 → 교훈`. `run_id`는 `run_draft.py` 결과 JSON에서 얻는다.
+2. 일반화 가능한 교훈이면 `memory.md`에 `- [neg|pos] (날짜, run_id) 교훈 한 줄` 추가.
+3. 명백한 지속 취향이면 **사용자 확인 후** `soul.md`에 반영한다. 확인 없이 `soul.md`를 수정하지 않는다.
 
 ## Scripts
 
-Use `scripts/intake_to_input.py` to create and validate input JSON from intake values:
+Use `pipeline/intake_to_input.py` to create and validate input JSON from intake values:
 
 ```bash
-python -B .codex/skills/blog-draft/scripts/intake_to_input.py \
+python -B .codex/skills/blog-draft/pipeline/intake_to_input.py \
   --raw-text-file /tmp/material.txt \
   --topic "..." \
   --intent "..." \
   --audience "..." \
   --tone "..." \
   --target-length "3000-4000 Korean characters" \
-  --output-dir .codex/skills/blog-draft/scripts/writing-harness-pipeline/inputs
+  --output-dir .codex/skills/blog-draft/pipeline/inputs
 ```
 
-Use `scripts/run_draft.py` to run the bundled harness:
+Use `pipeline/run_draft.py` to run the bundled harness:
 
 ```bash
-python -B .codex/skills/blog-draft/scripts/run_draft.py \
-  .codex/skills/blog-draft/scripts/writing-harness-pipeline/inputs/a1b2c3d4_input.json \
+python -B .codex/skills/blog-draft/pipeline/run_draft.py \
+  .codex/skills/blog-draft/pipeline/inputs/a1b2c3d4_input.json \
   --provider claude   # or --provider codex (default)
 ```
 
-By default, `run_draft.py` writes run artifacts to `writing-harness-pipeline/runs` under the current workspace when that directory exists. Override this with `--runs-dir` when needed.
+By default, `run_draft.py` writes run artifacts to `runs/` (the sibling of `pipeline/`), and the fast loop writes each run under `runs/pending/`. Override the location with `--runs-dir` when needed.
 
-The pipeline copy lives under `scripts/writing-harness-pipeline/`. Do not edit the original repository-level pipeline when using this skill unless the user explicitly asks to sync improvements back.
+The pipeline lives under `pipeline/`. Do not edit the original repository-level pipeline when using this skill unless the user explicitly asks to sync improvements back.

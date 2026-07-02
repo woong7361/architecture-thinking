@@ -2,11 +2,13 @@
 
 Slow loop 1단계: pending run들의 eval/critique 원문을 수집해 analysis.json을 만든다.
 
-패턴 판단은 하지 않는다. axis 점수 통계(deterministic)와 rationale·weakness 원문을
-그대로 담아 proposer(LLM)에게 넘긴다.
+패턴 판단은 하지 않는다. axis 점수 통계(deterministic)와 rationale·weakness 원문,
+그리고 실패 run의 구조화된 신호를 그대로 담아 proposer(LLM)에게 넘긴다.
 
-대상: runs/pending/ 아래 통과한 run들의 eval.json, critique.json.
-      ERROR(파이프라인 크래시)와 failed.json(max_iterations 초과)은 제외한다.
+대상:
+- 통과 run: eval.json, critique.json → axis_stats / rationale / weakness (통과 표본)
+- 실패 run: failed.json → failure_signals (terminal_reason / category / rule별 실패 run 수)
+두 표본은 섞지 않고 별도 블록으로 둔다. 통과 표본 통계에 실패 run을 넣지 않는다.
 출력: proposals/{analysis_id}/analysis.json
 
 Usage:
@@ -56,6 +58,86 @@ def collect_passing_runs(pending_dir: Path) -> list[Path]:
         if list(run_dir.glob("*_final.json")):
             runs.append(run_dir)
     return runs
+
+
+def collect_failed_runs(pending_dir: Path) -> list[Path]:
+    """pending/ 아래에서 failed.json이 있는 run 디렉토리만 반환한다.
+
+    final.json이 있으면 통과 run으로 간주하고 실패 표본에서 제외한다(이중 집계 방지).
+    """
+    if not pending_dir.exists():
+        return []
+    runs = []
+    for run_dir in sorted(pending_dir.iterdir()):
+        if not run_dir.is_dir():
+            continue
+        if list(run_dir.glob("*_final.json")):
+            continue
+        if list(run_dir.glob("*_failed.json")):
+            runs.append(run_dir)
+    return runs
+
+
+def compute_failure_signals(failed_dirs: list[Path]) -> dict:
+    """실패 run의 failed.json을 결정적으로 집계한다.
+
+    - by_terminal_reason: terminal_reason 분포
+    - by_category: failure_counts_by_category 합
+    - rule_run_counts: rule별로 그 rule에서 막힌 서로 다른 실패 run 수와 비율
+      (last_failures[].rule + iteration_rejections[].errors의 rule prefix, run 단위 dedup)
+    """
+    included: list[str] = []
+    by_terminal: dict[str, int] = defaultdict(int)
+    by_category: dict[str, int] = defaultdict(int)
+    rule_runs: dict[str, int] = defaultdict(int)
+
+    for run_dir in failed_dirs:
+        failed_files = list(run_dir.glob("*_failed.json"))
+        if not failed_files:
+            continue
+        data = load_json(failed_files[0])
+        if not data:
+            continue
+        included.append(run_dir.name)
+
+        tr = data.get("terminal_reason")
+        if isinstance(tr, str) and tr:
+            by_terminal[tr] += 1
+
+        counts = data.get("failure_counts_by_category")
+        if isinstance(counts, dict):
+            for cat, val in counts.items():
+                if isinstance(val, (int, float)):
+                    by_category[cat] += int(val)
+
+        rules: set[str] = set()
+        for f in data.get("last_failures", []):
+            if isinstance(f, dict) and isinstance(f.get("rule"), str) and f["rule"]:
+                rules.add(f["rule"])
+        for rej in data.get("iteration_rejections", []):
+            if not isinstance(rej, dict):
+                continue
+            for err in rej.get("errors", []):
+                if isinstance(err, str):
+                    rule = err.split(":", 1)[0].strip()
+                    if rule:
+                        rules.add(rule)
+        for r in rules:
+            rule_runs[r] += 1
+
+    n = len(included)
+    rule_run_counts = {
+        rule: {"runs": cnt, "ratio": round(cnt / n, 3)}
+        for rule, cnt in sorted(rule_runs.items(), key=lambda kv: (-kv[1], kv[0]))
+    } if n else {}
+
+    return {
+        "failed_count": n,
+        "by_terminal_reason": dict(by_terminal),
+        "by_category": dict(by_category),
+        "rule_run_counts": rule_run_counts,
+        "runs_included": included,
+    }
 
 
 def collect_evals(run_dirs: list[Path]) -> list[tuple[str, dict]]:
@@ -190,12 +272,20 @@ def run(args: argparse.Namespace) -> dict:
     print(f"[analyze] pending_dir={pending_dir}", file=sys.stderr)
 
     run_dirs = collect_passing_runs(pending_dir)
-    print(f"[analyze] passing runs found={len(run_dirs)}", file=sys.stderr)
+    failed_dirs = collect_failed_runs(pending_dir)
+    total = len(run_dirs) + len(failed_dirs)
+    print(
+        f"[analyze] passing runs found={len(run_dirs)} failed runs found={len(failed_dirs)}",
+        file=sys.stderr,
+    )
 
-    if len(run_dirs) < args.min_runs:
+    if total < args.min_runs:
         return {
             "status": "SKIP",
-            "reason": f"passing runs ({len(run_dirs)}) < min_runs ({args.min_runs})",
+            "reason": (
+                f"analyzable runs ({total} = passing {len(run_dirs)} + failed {len(failed_dirs)}) "
+                f"< min_runs ({args.min_runs})"
+            ),
             "pending_dir": str(pending_dir),
         }
 
@@ -211,19 +301,23 @@ def run(args: argparse.Namespace) -> dict:
     eval_rationales = collect_eval_rationales(evals, rubric_axes)
     critique_weaknesses = collect_critique_weaknesses(critiques)
     rubric_name = infer_rubric_name(evals)
+    failure_signals = compute_failure_signals(failed_dirs)
 
     today = datetime.now(KST).date().isoformat()
-    analysis_id = f"{today}_{len(run_dirs)}runs"
+    analysis_id = f"{today}_{total}runs"
 
     analysis = {
         "analysis_id": analysis_id,
         "generated_at": now_iso(),
         "pending_count": len(run_dirs),
+        "failed_count": len(failed_dirs),
         "runs_included": [r.name for r in run_dirs],
+        "failed_runs_included": [r.name for r in failed_dirs],
         "rubric_name": rubric_name,
         "axis_stats": axis_stats,
         "eval_rationales": eval_rationales,
         "critique_weaknesses": critique_weaknesses,
+        "failure_signals": failure_signals,
     }
 
     if args.dry_run:
