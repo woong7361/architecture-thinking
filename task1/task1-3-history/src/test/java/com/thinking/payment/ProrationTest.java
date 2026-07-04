@@ -33,4 +33,15 @@ class ProrationTest {
 
         assertThat(remaining).isEqualTo(expected);
     }
+
+    @ParameterizedTest(name = "{0}원 {1}일 중 {2}일 경과 → 무료환불 전액 {3}원")
+    @DisplayName("무료환불 정책: elapsed<=7 이면 일할계산과 무관하게 전액(price)이 환불된다")
+    @CsvSource({
+        "30000, 30, 7, 30000" // 정책 경계: elapsed=7(포함) → 전액. 일할계산이면 1000*23=23000이라 이 값이 정책을 강제한다.
+    })
+    void 경과일이_칠일_이하면_일할계산과_무관하게_전액_환불된다(int price, int totalDays, int elapsedDays, int expected) {
+        int remaining = Proration.calculate(price, totalDays, elapsedDays);
+
+        assertThat(remaining).isEqualTo(expected);
+    }
 }
