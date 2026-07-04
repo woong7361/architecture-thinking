@@ -8,7 +8,7 @@
 | 사이클 | Red (기대·실패 이유) | Green (최소) | Refactor (무엇을 줄였나) | 커밋 |
 |--------|---------------------|-------------|------------------------|------|
 | 1 | 30000/30일/15일 → 15000 / **컴파일 실패 확인**(`cannot find symbol: Proration`) | `return 15000;` — 예제 1개뿐이라 삼각측량 규율상 하드코딩이 최소. 일반식은 아직 근거 없음(다음 예제가 깨뜨릴 때 창발) | — | `[Red]` 6ea678d · `[Green]` ca4a5da |
-| 2 | 30000/30일/**20일** → 10000 / **단언 실패 확인**(`expected: 10000 but was: 15000` — 하드코딩 깨짐) | `remaining=total-elapsed; dailyRate=price/total(버림); dailyRate*remaining` — 두 점이 강제한 최소 일반식 | **테스트 중복 제거**: 구조 같고 데이터만 다른 test1·test2를 `@ParameterizedTest`+`@CsvSource` 한 메서드로 통합. **데이터 점 2개는 유지**(줄이면 하드코딩 뮤턴트 부활). 프로덕션 코드는 dailyRate 지역변수로 이미 의도 노출 → 손 안 댐 | `[Red]` 915576c · `[Green]` 57a09a5 · `[Refactor]` (아래) |
+| 2 | 30000/30일/**20일** → 10000 / **단언 실패 확인**(`expected: 10000 but was: 15000` — 하드코딩 깨짐) | `remaining=total-elapsed; dailyRate=price/total(버림); dailyRate*remaining` — 두 점이 강제한 최소 일반식 | **테스트 중복 제거**: 구조 같고 데이터만 다른 test1·test2를 `@ParameterizedTest`+`@CsvSource` 한 메서드로 통합. **데이터 점 2개는 유지**(줄이면 하드코딩 뮤턴트 부활). 프로덕션 코드는 dailyRate 지역변수로 이미 의도 노출 → 손 안 댐 | `[Red]` 915576c · `[Green]` 57a09a5 · `[Refactor]` 0e03aae |
 | 3 | | | | |
 | 4 | | | | |
 | 5 | | | | |
