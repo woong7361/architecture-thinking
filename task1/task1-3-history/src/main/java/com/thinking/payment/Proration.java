@@ -3,8 +3,8 @@ package com.thinking.payment;
 /**
  * 일할계산(PRORATION) 순수 도메인 로직.
  *
- * 사이클 1 Green: 예제가 하나뿐이라 삼각측량 규율에 따라 하드코딩으로 최소 통과시킨다.
- * 다음 사이클(30000/30/10 → 10000)이 이 하드코딩을 깨뜨릴 때 일반식으로 넘어간다.
+ * 사이클 2 Green: 두 예제(15000, 10000)가 하드코딩을 깨뜨려 일반식이 창발했다.
+ * 일단가를 원 단위로 먼저 버림한 뒤(정수 나눗셈) 남은 일수를 곱한다.
  */
 public final class Proration {
 
@@ -12,6 +12,8 @@ public final class Proration {
     }
 
     public static int calculate(int price, int totalDays, int elapsedDays) {
-        return 15000;
+        int remaining = totalDays - elapsedDays;
+        int dailyRate = price / totalDays; // 원 단위 버림 (정수 나눗셈)
+        return dailyRate * remaining;
     }
 }
