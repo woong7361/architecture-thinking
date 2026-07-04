@@ -23,7 +23,8 @@ class ProrationTest {
     @DisplayName("일할계산: 일단가(price/total 버림) × 남은 일수(total-elapsed) 가 잔여금액이다")
     @CsvSource({
         "30000, 30, 15, 15000", // 일단가 1000 × 남은 15일
-        "30000, 30, 20, 10000"  // 일단가 1000 × 남은 10일 (삼각측량 두 번째 점)
+        "30000, 30, 20, 10000", // 일단가 1000 × 남은 10일 (삼각측량 두 번째 점)
+        "30000, 30, 30, 0"      // 경계: 전액 소진, remaining=0
     })
     void 남은_기간만큼_일할계산한_금액이_잔여금액이다(int price, int totalDays, int elapsedDays, int expected) {
         int remaining = Proration.calculate(price, totalDays, elapsedDays);
