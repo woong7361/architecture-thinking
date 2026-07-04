@@ -10,7 +10,7 @@
 
 ## 스택 규칙
 
-- 언어: Java 24 이상
+- 언어: Java 17 이상 (원래 목표는 Java 24였으나, 로컬에 설치된 JDK가 corretto-17이라 17로 맞춘다. 일할계산 등 순수 도메인 로직에는 17로 충분하다.)
 - 단위테스트: JUnit 5 + Mockito + AssertJ
 - 인수테스트: Cucumber-JVM (Gherkin)
 - 빌드: Maven — Cucumber-JVM 공식 레퍼런스가 Maven 기준이라 학습 마찰 최소화
