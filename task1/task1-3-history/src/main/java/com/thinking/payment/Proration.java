@@ -3,9 +3,9 @@ package com.thinking.payment;
 /**
  * 일할계산(PRORATION) 순수 도메인 로직.
  *
- * 사이클 2 Green: 두 예제(15000, 10000)가 하드코딩을 깨뜨려 일반식이 창발했다.
- * 일단가를 원 단위로 먼저 버림한 뒤(정수 나눗셈) 남은 일수를 곱한다.
- * 사이클 6 Green: elapsed<=7 무료환불 정책 분기 추가(일할계산 위의 얇은 정책 레이어).
+ * calculate = 무료환불 정책(seam 바깥쪽) + prorate 순수 일할계산(seam 안쪽)의 조합 진입점.
+ * 정책과 계산을 한 메서드에 접어두면 새 정책이 추가될 때마다 계산 로직까지 다시 읽어야 한다 —
+ * 분리해두면 정책 변경은 calculate만, 계산 규칙 변경은 prorate만 건드리면 된다.
  */
 public final class Proration {
 
@@ -18,7 +18,10 @@ public final class Proration {
         if (elapsedDays <= FREE_REFUND_DAY_LIMIT) {
             return price;
         }
+        return prorate(price, totalDays, elapsedDays);
+    }
 
+    private static int prorate(int price, int totalDays, int elapsedDays) {
         int remaining = totalDays - elapsedDays;
         int dailyRate = price / totalDays; // 원 단위 버림 (정수 나눗셈)
         return dailyRate * remaining;
