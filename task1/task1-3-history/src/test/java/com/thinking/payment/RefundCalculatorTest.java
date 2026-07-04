@@ -15,23 +15,15 @@ import org.junit.jupiter.params.provider.CsvSource;
  */
 class RefundCalculatorTest {
 
-    @ParameterizedTest(name = "{0}원 {1}일 중 {2}일 경과 → 무료환불 전액 {3}원")
-    @DisplayName("무료환불 정책: elapsed<=7 이면 일할계산과 무관하게 전액(price)이 환불된다")
+    // straddle pair: elapsed=7과 8 두 행을 한 테이블에 나란히 둬 정책 경계(≤7 전액 / >7 일할계산)를
+    // 한눈에 대조할 수 있게 한다. 구조(호출+단언)가 같은 두 케이스를 병합했다(사이클2와 동일한 판단).
+    @ParameterizedTest(name = "{0}원 {1}일 중 {2}일 경과 → 환불 {3}원")
+    @DisplayName("무료환불 정책 경계: elapsed<=7 이면 전액(price), elapsed>7 이면 일할계산 금액이 환불된다")
     @CsvSource({
-        "30000, 30, 7, 30000" // 정책 경계: elapsed=7(포함) → 전액. 일할계산이면 1000*23=23000이라 이 값이 정책을 강제한다.
+        "30000, 30, 7, 30000", // 정책 경계: elapsed=7(포함) → 전액. 일할계산이면 1000*23=23000이라 이 값이 정책을 강제한다.
+        "30000, 30, 8, 22000"  // straddle pair: elapsed=8 → 일할계산 위임, 일단가1000×남은22일=22000
     })
-    void 경과일이_칠일_이하면_일할계산과_무관하게_전액_환불된다(int price, int totalDays, int elapsedDays, int expected) {
-        int remaining = RefundCalculator.calculate(price, totalDays, elapsedDays);
-
-        assertThat(remaining).isEqualTo(expected);
-    }
-
-    @ParameterizedTest(name = "{0}원 {1}일 중 {2}일 경과 → 일할계산 전환 {3}원")
-    @DisplayName("무료환불 정책 경계 전환: elapsed=8(>7)부터는 전액이 아니라 일할계산 금액이 환불된다")
-    @CsvSource({
-        "30000, 30, 8, 22000" // 9번(elapsed=7→전액30000)과 straddle pair. 일단가1000×남은22일=22000
-    })
-    void 경과일이_칠일_초과면_일할계산금액이_환불된다(int price, int totalDays, int elapsedDays, int expected) {
+    void 무료환불_경계를_기준으로_전액_또는_일할계산_금액이_환불된다(int price, int totalDays, int elapsedDays, int expected) {
         int remaining = RefundCalculator.calculate(price, totalDays, elapsedDays);
 
         assertThat(remaining).isEqualTo(expected);
