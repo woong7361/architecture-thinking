@@ -14,6 +14,7 @@
 | 5 | 10000/30일/**20일**(안 나눠떨어짐) → 3330 / **Red 없음 — 추가 즉시 Green**(Java 정수 나눗셈이 양수에서 이미 버림과 동일: `10000/30=333`) | 코드 변경 없음 — 단, 버림 규칙을 **처음으로 실제 실행**시켜 고정하는 핵심 회귀 테스트(결함주입 후보5: 반올림으로 바꾸면 잡혀야 함) | — | `[Green]` 03f5092 |
 | 6 | 무료환불 정책: 30000/30일/**7일** → 30000 / **단언 실패 확인**(`expected: 30000 but was: 23000` — 일할계산 새는 중, 정책 분기 없음) | `if (elapsed<=FREE_REFUND_DAY_LIMIT) return price;` 를 일반식 앞단에 추가 — 백로그가 못박은 정책값(7)을 상수로 명명 | **설계 노트 실행**(test-list.md): 일할계산 본식을 private `prorate()`로 분리, `calculate()`는 정책+계산 조합 진입점만 담당. 동작 불변(6/6 그대로 통과) | `[Red]` 72cfd4d · `[Green]` e390520 · `[Refactor]` d347f27 |
 | 7 | (Refactor 전용, 새 Red 없음) | — | **SRP 위반 발견 후 클래스 경계 분리**: 사이클6의 private `prorate()` 분리는 가독성 정리일 뿐 책임 분리가 아니었음(CLAUDE.md SRP 체크리스트 §4 신설 계기). `Proration`은 정책을 전혀 모르는 순수 계산만 담당하도록 되돌리고, 새 클래스 `RefundPolicy`가 "elapsed≤7 전액, 아니면 Proration에 위임"을 담당. 정책 테스트(`경과일이_칠일_이하면...`)도 `ProrationTest`→`RefundPolicyTest`로 이동(assertion 값 불변, seam만 이동). 동작 불변(6/6 그대로 통과) | `[Refactor]` 3c58955 |
+| 8 | (Refactor 전용, 새 Red 없음) | — | **네이밍 정정**: `RefundPolicy`는 최종 환불 금액(int)을 반환하는 진입점인데 이름이 "정책 판정만 함"으로 들려 이름-책임 괴리(SRP 체크리스트의 "이름이 거짓말한다" 신호). `RefundCalculator`로 리네임(파일·클래스·테스트 파일·테스트 내부 호출 전부). assertion 값 불변, 동작 불변(6/6 그대로 통과) | `[Refactor]` (아래) |
 
 ## 대상 B: Order 상태 전이
 
