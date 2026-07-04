@@ -25,4 +25,15 @@ class RefundCalculatorTest {
 
         assertThat(remaining).isEqualTo(expected);
     }
+
+    @ParameterizedTest(name = "{0}원 {1}일 중 {2}일 경과 → 일할계산 전환 {3}원")
+    @DisplayName("무료환불 정책 경계 전환: elapsed=8(>7)부터는 전액이 아니라 일할계산 금액이 환불된다")
+    @CsvSource({
+        "30000, 30, 8, 22000" // 9번(elapsed=7→전액30000)과 straddle pair. 일단가1000×남은22일=22000
+    })
+    void 경과일이_칠일_초과면_일할계산금액이_환불된다(int price, int totalDays, int elapsedDays, int expected) {
+        int remaining = RefundCalculator.calculate(price, totalDays, elapsedDays);
+
+        assertThat(remaining).isEqualTo(expected);
+    }
 }
