@@ -25,7 +25,8 @@ class ProrationTest {
         "30000, 30, 15, 15000", // 일단가 1000 × 남은 15일
         "30000, 30, 20, 10000", // 일단가 1000 × 남은 10일 (삼각측량 두 번째 점)
         "30000, 30, 30, 0",     // 경계: 전액 소진, remaining=0
-        "30000, 30, 0, 30000"   // 경계: 미사용, remaining=30 (무료환불 구간과 값이 같아 정책을 못 가름 — 9번이 담당)
+        "30000, 30, 0, 30000",  // 경계: 미사용, remaining=30 (무료환불 구간과 값이 같아 정책을 못 가름 — 9번이 담당)
+        "10000, 30, 20, 3330"   // 버림 고정: 일단가 floor(10000/30)=333 (버림) × 남은 10일 = 3330 (반올림이면 3333/3334)
     })
     void 남은_기간만큼_일할계산한_금액이_잔여금액이다(int price, int totalDays, int elapsedDays, int expected) {
         int remaining = Proration.calculate(price, totalDays, elapsedDays);
