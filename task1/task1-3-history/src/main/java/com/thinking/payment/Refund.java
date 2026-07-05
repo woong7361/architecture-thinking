@@ -27,4 +27,8 @@ public final class Refund {
     void succeed() {
         status = RefundStatus.SUCCEEDED;
     }
+
+    void fail() {
+        status = RefundStatus.FAILED;
+    }
 }

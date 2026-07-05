@@ -16,5 +16,8 @@ public final class RefundService {
             refund.succeed();
             order.applyRefund(refundAmount);
         }
+        if (result.isRejected()) {
+            refund.fail();
+        }
     }
 }
