@@ -16,6 +16,17 @@ public final class RefundCalculator {
     }
 
     public static int calculate(int price, int totalDays, int elapsedDays) {
+        validateInputs(price, totalDays, elapsedDays);
+        if (elapsedDays <= FREE_REFUND_DAY_LIMIT) {
+            return price;
+        }
+        return Proration.calculate(price, totalDays, elapsedDays);
+    }
+
+    // 입력검증은 정책 판정보다 앞단이다(도메인 규칙: "검증이 정책보다 먼저").
+    // private 메서드 그룹핑 = 가독성 정리이지 책임 분리가 아니다. 검증 불변식이
+    // 정책과 독립적으로 변할 압력이 생기면 그때 별도 Validator 클래스로 승격을 재검토한다.
+    private static void validateInputs(int price, int totalDays, int elapsedDays) {
         if (price < 0) {
             throw new IllegalArgumentException("금액은 음수일 수 없습니다: " + price);
         }
@@ -23,9 +34,5 @@ public final class RefundCalculator {
             throw new IllegalArgumentException(
                 "경과일수는 0 이상 총일수 이하여야 합니다: elapsed=" + elapsedDays + ", total=" + totalDays);
         }
-        if (elapsedDays <= FREE_REFUND_DAY_LIMIT) {
-            return price;
-        }
-        return Proration.calculate(price, totalDays, elapsedDays);
     }
 }
