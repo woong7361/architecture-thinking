@@ -28,7 +28,7 @@
 
 | 사이클 | Red | Green | Refactor | 끼운 Mock·이유 | 커밋 |
 |--------|-----|-------|----------|---------------|------|
-| 1 | | | | | |
+| 1 | PG 성공 시 `Refund=SUCCEEDED`, `Order=REFUNDED`, `cancelPayment(payment-uuid-1, 30000)` 호출 / **컴파일 실패 확인**(`cannot find symbol`: `PgClient`, `Order`, `Refund`, `RefundService` 등 대상 C 타입 부재) | `PgClient` 포트와 `RefundService.cancel(order, refund)` 성공 경로만 추가. `Refund.proration(30,7)`이 기존 `RefundCalculator`로 30000을 계산하고, PG 성공이면 `Refund.succeed()` + `Order.applyRefund(...)`를 호출한다. 실패/타임아웃/부분환불은 다음 Red가 요구할 때 열기 위해 미구현 | **없음(지울 중복 0)** — SRP 점검: `RefundService`는 PG 호출 결과에 따른 조립, `RefundCalculator`는 금액 계산, `Order`/`Refund`는 상태 보유·전이로 축을 나눴다. 아직 성공 분기 1개뿐이라 응답 분기 구조 일반화는 보류 | `PgClient`만 Mock — PG는 비관리형 외부 시스템이고 성공/실패 응답을 단위테스트에서 결정적으로 재현해야 하므로 내 포트만 목 처리. `RefundCalculator`·`Order`·`Refund`는 진짜 객체 | `[Red]` cc04008 · `[Green]` 0b5ec99 |
 
 ---
 

@@ -27,7 +27,7 @@
 
 > **한 사이클에 하나만** Red로. `[x]` = Green 통과, 옆에 사이클 번호. tdd-log '대상 C'와 대조.
 
-- [ ] **1. 성공 → 환불 성공 처리** *(happy)* — PG 성공 시 `Refund` `SUCCEEDED`, `Order` `REFUNDED`, `verify(pg).cancelPayment(uuid, amount)`.
+- [x] **1. 성공 → 환불 성공 처리** *(happy)* — PG 성공 시 `Refund` `SUCCEEDED`, `Order` `REFUNDED`, `verify(pg).cancelPayment(uuid, amount)`. *(사이클1 Green)*
 - [ ] **2. 명확한 거부 → 환불 실패 처리** *(경계)* — 거부 stub 시 `Refund` `FAILED`, `Order` 그대로(미적용).
 - [ ] **3. 타임아웃·불확실 → 보류 처리** *(경계)* — 불확실 stub 시 `Refund` `TIMED_OUT`, `Order` 그대로.
 
@@ -46,4 +46,4 @@
 
 - 대상 A와 동일 모듈. **JDK**: corretto-17. **실행**: `cd task1/task1-3-history && ./mvnw test`.
 - **의존성**: Mockito 첫 사용 → `pom.xml`에 `mockito-junit-jupiter` 확인/추가(사이클1 시작 시).
-- **현재 상태**: 대상 C 미착수. `RefundService`·`PgClient`·`Order`/`Refund` 미존재. 첫 Red = 목록 1번.
+- **현재 상태**: 대상 C 사이클1 완료. `RefundService`·`PgClient`·`Order`/`Refund` 최소 골격 존재. 다음 Red = 목록 2번(명확한 거부).
