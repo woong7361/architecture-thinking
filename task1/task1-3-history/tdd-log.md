@@ -29,6 +29,7 @@
 | 사이클 | Red | Green | Refactor | 끼운 Mock·이유 | 커밋 |
 |--------|-----|-------|----------|---------------|------|
 | 1 | PG 성공 시 `Refund=SUCCEEDED`, `Order=REFUNDED`, `cancelPayment(payment-uuid-1, 30000)` 호출 / **컴파일 실패 확인**(`cannot find symbol`: `PgClient`, `Order`, `Refund`, `RefundService` 등 대상 C 타입 부재) | `PgClient` 포트와 `RefundService.cancel(order, refund)` 성공 경로만 추가. `Refund.proration(30,7)`이 기존 `RefundCalculator`로 30000을 계산하고, PG 성공이면 `Refund.succeed()` + `Order.applyRefund(...)`를 호출한다. 실패/타임아웃/부분환불은 다음 Red가 요구할 때 열기 위해 미구현 | **없음(지울 중복 0)** — SRP 점검: `RefundService`는 PG 호출 결과에 따른 조립, `RefundCalculator`는 금액 계산, `Order`/`Refund`는 상태 보유·전이로 축을 나눴다. 아직 성공 분기 1개뿐이라 응답 분기 구조 일반화는 보류 | `PgClient`만 Mock — PG는 비관리형 외부 시스템이고 성공/실패 응답을 단위테스트에서 결정적으로 재현해야 하므로 내 포트만 목 처리. `RefundCalculator`·`Order`·`Refund`는 진짜 객체 | `[Red]` cc04008 · `[Green]` 0b5ec99 |
+| 2 | PG 명확한 거부 시 `Refund=FAILED`, `Order=PAID`, `cancelPayment(payment-uuid-1, 30000)` 호출 / **컴파일 문제 확인**(`PgCancelResult.rejected()`와 `RefundStatus.FAILED` 부재) | `PgCancelResult.REJECTED`/`rejected()`/`isRejected()`, `RefundStatus.FAILED`, `Refund.fail()`을 추가하고 `RefundService.cancel()`에 거부 분기만 추가. 거부 시 `order.applyRefund(...)`를 호출하지 않아 주문 상태를 유지한다 | **테스트 중복 제거**: 두 테스트에 반복되던 주문/환불 fixture와 PG Mock 이유 주석을 상수·helper·필드 주석으로 모았다. 프로덕션 분기는 성공/거부 2개뿐이라 `switch` 등 구조 일반화는 타임아웃 Red까지 보류 | `PgClient`만 Mock — PG 거부 응답은 비관리형 외부 시스템의 실패 분기라 단위테스트에서 포트 stub으로 결정적으로 재현한다. `Order`·`Refund`는 진짜 객체로 상태를 단언 | `[Red]` 6f0d1e1 · `[Green]` fc8bb1b · `[Refactor]` 78f6405 |
 
 ---
 
