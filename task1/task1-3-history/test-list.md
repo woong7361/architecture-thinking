@@ -45,7 +45,7 @@
 - [x] **4. 미사용 (경계)** — 30000 / 30 / 0 → 30000  *(⚠️ 무료환불 구간이라 값이 30000으로 같음 — 정책을 **못 가른다**. 정책 판별은 9번이 담당. 사이클4: Red 없이 즉시 Green)*
 - [x] **5. 안 나눠떨어짐 (버림 규칙 고정)** — 10000 / 30 / 20 → 3330  *(일단가 먼저 버림, elapsed 20 > 7 → 일할계산 구간. 사이클5: Red 없이 즉시 Green, 결함주입 후보5의 핵심 회귀테스트로 등록)*
 - [ ] **6. 총일수 0 (예외)** — price / **0** / elapsed → 예외 throw
-- [ ] **7. 경과일수 범위 위반 (예외)** — elapsed > total, 또는 elapsed < 0 → 예외 throw
+- [x] **7. 경과일수 범위 위반 (예외)** — elapsed > total, 또는 elapsed < 0 → 예외 throw  *(사이클11: Red 2행(elapsed=40, -1 둘 다 예외 없이 샘) → Green(`elapsed<0 || elapsed>total` 복합 가드) → Refactor(검증 가드 2개를 private `validateInputs()`로 그룹핑). 2점이 복합 조건 강제)*
 - [x] **8. 음수 금액 (예외)** — price < 0 → 예외 throw  *(사이클10: Red(예외 부재로 단언 실패) → Green(`RefundCalculator`에 `price<0` 가드를 정책 분기 앞단 추가). 예외 타입=`IllegalArgumentException`, 가드 위치=정책보다 앞단 확정)*
 - [x] **9. 무료환불 상한 (정책 경계·핵심)** — 30000 / 30 / **7** → 30000  *(≤7 전액. 일할계산이면 23000이라 이 케이스가 7일 규칙을 **강제**한다. 사이클6: Red(23000) 확인 → Green(정책 분기 추가))*
 - [x] **10. 일할계산 전환 (정책 경계)** — 30000 / 30 / **8** → 22000  *(≥8 첫 일할 값. 9와 straddle pair. 사이클9: Red 없이 즉시 Green — 기존 `elapsed<=7` 분기+`Proration` 위임이 자연히 처리)*
@@ -93,6 +93,6 @@
 ### 지금 상태 (스냅샷)
 
 - 빌드 골격·wrapper·의존성 다운로드 정상.
-- **대상 A(PRORATION/환불계산) 사이클 10까지 완료**: 체크리스트 1~5, 8, 9, 10번 Green. `Proration`(순수 계산)/`RefundCalculator`(정책 판정+조합) 클래스 분리 완료(사이클7~8 SRP 리팩터). `RefundCalculator`에 음수 금액 가드 추가(사이클10).
-- **예외 타입 관례 확정(사이클10)**: 입력검증 예외 = `IllegalArgumentException`, 가드 위치 = `RefundCalculator`의 정책 분기 **앞단**. 6·7번도 이 관례를 따른다(단, 6번 총일수0은 `ArithmeticException`(0나누기)과의 선택을 Red에서 재확인).
-- **다음 할 일**: 체크리스트 6~7번(총일수 0 / 경과일수 범위 위반 예외). 검증 가드가 `RefundCalculator`에 2개 이상 쌓이면 SRP상 `validateInputs()` 추출/검증 seam 분리 재검토(사이클10 미룬 판단). 이후 대상 B(Order 상태 전이), 대상 C(Facade+Mockito)로 확장.
+- **대상 A(PRORATION/환불계산) 사이클 11까지 완료**: 체크리스트 1~5, 7, 8, 9, 10번 Green. `Proration`(순수 계산)/`RefundCalculator`(정책 판정+조합+검증) 클래스 분리 완료(사이클7~8 SRP 리팩터). `RefundCalculator`에 음수 금액 가드(사이클10) + 경과일수 범위 가드(사이클11) 추가, 검증 2개를 private `validateInputs()`로 그룹핑(사이클11 Refactor).
+- **예외 타입 관례 확정(사이클10~11)**: 입력검증 예외 = `IllegalArgumentException`, 가드 위치 = `RefundCalculator.validateInputs()`(정책 분기 **앞단**). 6번도 이 관례를 따른다(단, 총일수0은 `ArithmeticException`(0나누기)과의 선택을 Red에서 재확인).
+- **다음 할 일**: 체크리스트 **6번(총일수 0 예외)** 하나 남음 — `validateInputs()`에 `totalDays==0`(또는 `totalDays<=0`) 가드 추가 예정. 별도 `Validator` 클래스 승격은 검증 불변식의 독립 변화 압력이 없어 계속 미룸(사이클11 판단). 이후 대상 B(Order 상태 전이), 대상 C(Facade+Mockito)로 확장.
