@@ -55,4 +55,15 @@ class RefundCalculatorTest {
         assertThatThrownBy(() -> RefundCalculator.calculate(price, totalDays, elapsedDays))
             .isInstanceOf(IllegalArgumentException.class);
     }
+
+    // 총일수 0은 계산 이전에 거부한다. "0으로 나누니 ArithmeticException이 나겠지"가 아니다 —
+    // elapsed=0은 정책 지름길(≤7)로 빠져 나눗셈에 도달조차 안 하므로 조용히 price가 새어나간다.
+    // (elapsed>0 이면 범위 가드가 이미 잡으므로 total=0을 실제로 통과시키는 유일한 값이 elapsed=0이다.)
+    // 따라서 명시적 입력 가드로 IllegalArgumentException을 선제하는 것이 관례상 옳다.
+    @Test
+    @DisplayName("총일수 0은 계산 이전에 거부한다: totalDays == 0 이면 IllegalArgumentException")
+    void 총일수가_0이면_계산_이전에_예외를_던진다() {
+        assertThatThrownBy(() -> RefundCalculator.calculate(30000, 0, 0))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
 }
