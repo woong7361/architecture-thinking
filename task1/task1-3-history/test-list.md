@@ -1,4 +1,9 @@
-# 일할계산(PRORATION) — 테스트 목록 & 전략
+# 환불 비용 계산 (REFUND) — 테스트 목록 & 전략
+
+> **범위 정정(사이클13 이후)**: 이 문서의 산출물은 **환불 비용 계산**이다. "일할계산(proration)"은
+> 그 안의 한 갈래(무료환불 기간이 아닐 때의 계산 규칙)일 뿐이라, 애초 제목이 하위 규칙을 전체로 오인하게
+> 했다. 진입점은 `RefundCalculator.calculate`(최종 환불액 반환), 일할계산은 그것이 위임하는 내부 순수계산
+> `Proration.calculate`다. 코드는 이미 이 구조라 이번 정정은 문서(제목·시그니처)만 손댄다.
 
 > **이 문서의 목적**: 세션이 끊겨도 이어갈 수 있는 캐리 문서.
 > Kent Beck의 *테스트 목록(test list)* 처럼 **살아있는 to-do**로 굴린다 —
@@ -12,7 +17,8 @@
 
 한 번 정한 계약. 바꾸면 이 절부터 고치고 그 아래 목록을 재정렬한다.
 
-- **시그니처**: `int Proration.calculate(int price, int totalDays, int elapsedDays)`
+- **시그니처(공개 진입점)**: `int RefundCalculator.calculate(int price, int totalDays, int elapsedDays)`
+  → 최종 **환불액**을 반환한다. 내부의 일할계산은 `int Proration.calculate(int price, int totalDays, int elapsedDays)`가 담당(정책이 전액환불이 아닐 때 위임받는 순수계산). 두 클래스 시그니처는 동일하고, 계약의 무게중심이 `Proration`(하위 규칙)에서 `RefundCalculator`(진입점)로 옮겨온 것이다.
 - **남은 일수는 파라미터가 아니다** → 내부에서 `remaining = totalDays - elapsedDays`
 - **환불 정책 분기 (7일 무료환불)**: `elapsedDays ≤ 7` → **무료(전액) 환불 = price**. `elapsedDays ≥ 8` → **일할계산**.
   - `7일 이하`는 7 **포함**(≤ 7). 전자상거래 청약철회처럼 초기엔 사용량과 무관하게 전액 환불.
@@ -26,10 +32,6 @@
 - **버림 우선**: 일단가를 원 단위로 먼저 버림한 뒤 곱한다
   `일단가 = floor(price / totalDays)`, `결과 = 일단가 × remaining`
   (전체 계산 후 버림이 아니다. 예: 10000/30/20 → floor(10000/30)=333 → 333×10 = **3330**)
-- **`totalDays == 0` → 예외** (0으로 나누기)
-- **입력은 원시값(days) 기반**: 날짜(LocalDate)가 아니라 일수를 받는다.
-  "며칠 남았나 세기"(달력 문제)와 "그 비율로 얼마인가"(계산 규칙)의 **seam을 분리**한 결정.
-- **`Money` 값객체는 지금 쓰지 않는다** → 필요해지면 Refactor에서 창발시킨다 (현재는 `int`).
 - **Mock 없음**: 순수 로직(seam 안쪽)이라 진짜 실행한다. Mock이 끼면 seam을 잘못 그은 신호.
 
 ---
@@ -93,6 +95,6 @@
 ### 지금 상태 (스냅샷)
 
 - 빌드 골격·wrapper·의존성 다운로드 정상.
-- **대상 A(PRORATION/환불계산) 사이클 12까지 완료 — 체크리스트 1~10번 전부 Green**. `Proration`(순수 계산)/`RefundCalculator`(정책 판정+조합+검증) 클래스 분리 완료(사이클7~8 SRP 리팩터). `RefundCalculator.validateInputs()`에 입력 가드 3종 완비: 음수 금액(사이클10)·경과일수 범위(사이클11)·총일수 0(사이클12).
+- **대상 A(환불 비용 계산) 사이클 13까지 완료 — 체크리스트 1~10번 전부 Green**(사이클13은 코드 리뷰 발견 Refactor: 스테일 Javadoc 링크 수정). `Proration`(순수 계산)/`RefundCalculator`(정책 판정+조합+검증) 클래스 분리 완료(사이클7~8 SRP 리팩터). `RefundCalculator.validateInputs()`에 입력 가드 3종 완비: 음수 금액(사이클10)·경과일수 범위(사이클11)·총일수 0(사이클12).
 - **예외 타입 관례 확정(사이클10~12)**: 입력검증 예외 = `IllegalArgumentException`, 가드 위치 = `RefundCalculator.validateInputs()`(정책 분기 **앞단**). 총일수 0은 `ArithmeticException`이 아니라 명시적 `IllegalArgumentException`으로 선제 차단(정책 지름길 때문에 나눗셈에 도달조차 안 하므로 명시 가드가 필수임이 Red에서 드러남).
 - **다음 할 일**: 대상 A 예외까지 완료 → (a) **수행내용 4번 고의 결함 주입**(아래 "고의 결함 후보" 절 실행, 회귀 안전망이 진짜 결함을 잡는지 확인), (b) **대상 B(Order 상태 전이)**, (c) **대상 C(Facade+Mockito)**. `Validator` 클래스 승격은 검증 불변식의 독립 변화 압력이 없어 계속 미룸(사이클11~12 판단).
