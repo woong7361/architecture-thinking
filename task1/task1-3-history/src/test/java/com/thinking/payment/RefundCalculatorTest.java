@@ -40,4 +40,19 @@ class RefundCalculatorTest {
         assertThatThrownBy(() -> RefundCalculator.calculate(-1, 30, 15))
             .isInstanceOf(IllegalArgumentException.class);
     }
+
+    // 경과일수는 [0, total] 범위여야 한다. 두 경계 위반을 한 테이블에 둔다:
+    //  - elapsed > total: remaining=total-elapsed 가 음수라 계산이 무의미
+    //  - elapsed < 0    : 정책 지름길(≤7)로 새어 전액이 잘못 반환됨
+    // 한쪽 조건만 막는 가드는 다른 행이 살아남으므로, 2점이 범위 가드(elapsed<0 || elapsed>total)를 강제한다.
+    @ParameterizedTest(name = "price={0}, total={1}, elapsed={2} → 범위 위반 예외")
+    @DisplayName("경과일수가 유효 범위[0, total]를 벗어나면 IllegalArgumentException")
+    @CsvSource({
+        "30000, 30, 40", // elapsed > total: remaining 음수
+        "30000, 30, -1"  // elapsed < 0
+    })
+    void 경과일수가_유효_범위를_벗어나면_예외를_던진다(int price, int totalDays, int elapsedDays) {
+        assertThatThrownBy(() -> RefundCalculator.calculate(price, totalDays, elapsedDays))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
 }
