@@ -21,13 +21,10 @@
 | 12 | 총일수 0(예외): price=30000/**0**/**0** → `IllegalArgumentException` / **단언 실패 확인**(`Expecting code to raise a throwable`, 컴파일 아님). **관찰: `ArithmeticException`(0나누기)조차 안 남** — elapsed=0은 total=0을 범위 가드 통과시키는 유일한 값인데(elapsed>0이면 범위 가드가 잡음), 그 elapsed=0은 정책 지름길(≤7)로 빠져 `price/0` 나눗셈에 도달조차 안 하고 조용히 price(30000)를 반환. → 명시적 입력 가드 없으면 샌다는 걸 드러냄 | `if (totalDays==0) throw ...` 를 `validateInputs()` 안, **범위 가드보다 앞단**에 추가(총일수 유효성이 가장 근본, `elapsed>totalDays` 비교는 total 유효할 때만 의미). 도메인 규칙 line29에 정확히 맞춘 최소. 11/11 통과 | **없음(지울 중복 0)** — 가드 3개가 이미 사이클11 `validateInputs()`에 모여 한 줄만 추가됨. SRP 재점검: 3개 모두 "입력 유효성" 한 축의 단순·안정 불변식 → 별도 `Validator` 클래스 승격 여전히 과함, 계속 미룸(근거 사이클11 동일) | `[Red]` 9b3c0b1 · `[Green]` c6534a5 |
 | 13 | (Refactor 전용, 새 Red 없음 — 코드 리뷰 발견) | — | **깨진 Javadoc 링크 수정**: `Proration`의 `{@link RefundPolicy}`가 사이클8 리네임(RefundPolicy→RefundCalculator) 때 누락된 스테일 참조 → 존재하지 않는 클래스를 가리켜 `@link`가 깨짐. `{@link RefundCalculator}`로 정정. CLAUDE.md SRP 체크리스트의 "이름이 거짓말한다" 신호의 문서판. 문서 전용, 동작 불변(11/11 그대로) | `[Refactor]` f97adc4 |
 
-## 대상 B: Order 상태 전이
+## 대상 C: 결제 취소 — PG 호출 → 상태 전이 (수행내용 2번, PG만 Mock)
 
-| 사이클 | Red | Green | Refactor | 커밋 |
-|--------|-----|-------|----------|------|
-| 1 | | | | |
-
-## 대상 C: Facade + Mockito (수행내용 2번, seam 바깥만 Mock)
+> 환불 처리 흐름 전체가 아니라, **PG 하나만 닿는 실행 슬라이스**로 좁힘(오케스트레이터 전체는 mock 범벅=냄새).
+> 백로그·전략은 [test-list-refund-service.md](./test-list-refund-service.md). 이 표는 사이클별 실행 서사만 쌓는다.
 
 | 사이클 | Red | Green | Refactor | 끼운 Mock·이유 | 커밋 |
 |--------|-----|-------|----------|---------------|------|

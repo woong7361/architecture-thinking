@@ -1,5 +1,8 @@
 # 환불 비용 계산 (REFUND) — 테스트 목록 & 전략
 
+> **형제 문서**: 결제 취소(RefundService + PG Mock) 백로그는 [test-list-refund-service.md](./test-list-refund-service.md).
+> 이 문서는 **순수 계산 도메인**(seam 안쪽, Mock 없음)만 담는다.
+
 > **범위 정정(사이클13 이후)**: 이 문서의 산출물은 **환불 비용 계산**이다. "일할계산(proration)"은
 > 그 안의 한 갈래(무료환불 기간이 아닐 때의 계산 규칙)일 뿐이라, 애초 제목이 하위 규칙을 전체로 오인하게
 > 했다. 진입점은 `RefundCalculator.calculate`(최종 환불액 반환), 일할계산은 그것이 위임하는 내부 순수계산
@@ -64,8 +67,6 @@
   - 2번 Red 가 하드코딩을 깨뜨림 → `일단가 × remaining` 일반식 창발
   - **9번 Red(elapsed=7→30000)가 일할 일반식을 깨뜨림** → `if (elapsed ≤ 7) return price;` 정책 분기 창발
 - **Refactor 방향**: 테스트와 코드에 박힌 중복(하드코딩 기대값)을 지우며 `dailyRate` 추출.
-  정책 분기가 자리잡으면 `일할계산`과 `정책 판정`을 별 메서드/클래스로 분리(seam)할지 검토.
-  `Money` 값객체는 이 흐름에서 필요가 드러날 때만 도입.
 - **예외 처리 위치**: 6~8은 가드 절(guard clause)로 **정책 분기보다 앞단**에서 던진다.
   어떤 예외 타입을 쓸지는 6번 Red를 쓸 때 단언으로 먼저 못박는다 (예: `IllegalArgumentException`).
 
@@ -97,4 +98,4 @@
 - 빌드 골격·wrapper·의존성 다운로드 정상.
 - **대상 A(환불 비용 계산) 사이클 13까지 완료 — 체크리스트 1~10번 전부 Green**(사이클13은 코드 리뷰 발견 Refactor: 스테일 Javadoc 링크 수정). `Proration`(순수 계산)/`RefundCalculator`(정책 판정+조합+검증) 클래스 분리 완료(사이클7~8 SRP 리팩터). `RefundCalculator.validateInputs()`에 입력 가드 3종 완비: 음수 금액(사이클10)·경과일수 범위(사이클11)·총일수 0(사이클12).
 - **예외 타입 관례 확정(사이클10~12)**: 입력검증 예외 = `IllegalArgumentException`, 가드 위치 = `RefundCalculator.validateInputs()`(정책 분기 **앞단**). 총일수 0은 `ArithmeticException`이 아니라 명시적 `IllegalArgumentException`으로 선제 차단(정책 지름길 때문에 나눗셈에 도달조차 안 하므로 명시 가드가 필수임이 Red에서 드러남).
-- **다음 할 일**: 대상 A 예외까지 완료 → (a) **수행내용 4번 고의 결함 주입**(아래 "고의 결함 후보" 절 실행, 회귀 안전망이 진짜 결함을 잡는지 확인), (b) **대상 B(Order 상태 전이)**, (c) **대상 C(Facade+Mockito)**. `Validator` 클래스 승격은 검증 불변식의 독립 변화 압력이 없어 계속 미룸(사이클11~12 판단).
+- **다음 할 일**: 대상 A 예외까지 완료 → (a) **수행내용 4번 고의 결함 주입**(아래 "고의 결함 후보" 절 실행, 회귀 안전망이 진짜 결함을 잡는지 확인), (b) **대상 C(Facade+Mockito)** — 백로그·전략은 [test-list-refund-service.md](./test-list-refund-service.md). (대상 B(Order 상태 전이)는 범위에서 제외.) `Validator` 클래스 승격은 검증 불변식의 독립 변화 압력이 없어 계속 미룸(사이클11~12 판단).
