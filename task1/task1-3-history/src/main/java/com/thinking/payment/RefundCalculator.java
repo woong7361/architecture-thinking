@@ -19,6 +19,10 @@ public final class RefundCalculator {
         if (price < 0) {
             throw new IllegalArgumentException("금액은 음수일 수 없습니다: " + price);
         }
+        if (elapsedDays < 0 || elapsedDays > totalDays) {
+            throw new IllegalArgumentException(
+                "경과일수는 0 이상 총일수 이하여야 합니다: elapsed=" + elapsedDays + ", total=" + totalDays);
+        }
         if (elapsedDays <= FREE_REFUND_DAY_LIMIT) {
             return price;
         }
