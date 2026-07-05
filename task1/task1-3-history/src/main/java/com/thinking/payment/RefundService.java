@@ -12,15 +12,13 @@ public final class RefundService {
         int refundAmount = refund.amountFor(order.amount());
         PgCancelResult result = pg.cancelPayment(order.paymentUuid(), refundAmount);
 
-        if (result.isSucceeded()) {
-            refund.succeed();
-            order.applyRefund(refundAmount);
-        }
-        if (result.isRejected()) {
-            refund.fail();
-        }
-        if (result.isTimedOut()) {
-            refund.timeOut();
+        switch (result) {
+            case SUCCEEDED -> {
+                refund.succeed();
+                order.applyRefund(refundAmount);
+            }
+            case REJECTED -> refund.fail();
+            case TIMED_OUT -> refund.timeOut();
         }
     }
 }

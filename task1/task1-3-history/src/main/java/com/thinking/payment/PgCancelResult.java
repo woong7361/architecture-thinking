@@ -16,16 +16,4 @@ public enum PgCancelResult {
     public static PgCancelResult timedOut() {
         return TIMED_OUT;
     }
-
-    boolean isSucceeded() {
-        return this == SUCCEEDED;
-    }
-
-    boolean isRejected() {
-        return this == REJECTED;
-    }
-
-    boolean isTimedOut() {
-        return this == TIMED_OUT;
-    }
 }
