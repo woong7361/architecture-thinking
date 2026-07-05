@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "run_id": "task1-4B-code-review",
+  "created_at": "2026-07-05T08:58:43.340328+00:00",
+  "model": "inherit",
+  "paths": {
+    "run_dir": "C:\\Users\\이현웅\\Desktop\\project\\thinking\\.codex\\skills\\thinking-review-gate\\runs\\task1-4B-code-review",
+    "input": "C:\\Users\\이현웅\\Desktop\\project\\thinking\\.codex\\skills\\thinking-review-gate\\runs\\task1-4B-code-review\\input.md",
+    "attempts_dir": "C:\\Users\\이현웅\\Desktop\\project\\thinking\\.codex\\skills\\thinking-review-gate\\runs\\task1-4B-code-review\\attempts",
+    "latest_attempt": "C:\\Users\\이현웅\\Desktop\\project\\thinking\\.codex\\skills\\thinking-review-gate\\runs\\task1-4B-code-review\\attempts\\1"
+  },
+  "prompt_templates": {
+    "critique": "C:\\Users\\이현웅\\Desktop\\project\\thinking\\.codex\\skills\\thinking-review-gate\\prompts\\level2-critique.system.md",
+    "eval": "C:\\Users\\이현웅\\Desktop\\project\\thinking\\.codex\\skills\\thinking-review-gate\\prompts\\level2-eval.system.md"
+  }
+}
