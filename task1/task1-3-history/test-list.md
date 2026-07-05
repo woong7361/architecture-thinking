@@ -44,7 +44,7 @@
 - [x] **3. 전액 소진 (경계)** — 30000 / 30 / 30 → 0  *(remaining = 0, 사이클3: Red 없이 즉시 Green — 일반식이 자연히 처리, 회귀 안전망으로 등록)*
 - [x] **4. 미사용 (경계)** — 30000 / 30 / 0 → 30000  *(⚠️ 무료환불 구간이라 값이 30000으로 같음 — 정책을 **못 가른다**. 정책 판별은 9번이 담당. 사이클4: Red 없이 즉시 Green)*
 - [x] **5. 안 나눠떨어짐 (버림 규칙 고정)** — 10000 / 30 / 20 → 3330  *(일단가 먼저 버림, elapsed 20 > 7 → 일할계산 구간. 사이클5: Red 없이 즉시 Green, 결함주입 후보5의 핵심 회귀테스트로 등록)*
-- [ ] **6. 총일수 0 (예외)** — price / **0** / elapsed → 예외 throw
+- [x] **6. 총일수 0 (예외)** — price / **0** / elapsed → 예외 throw  *(사이클12: Red(`0/0`이 예외 없이 price 반환 — 정책 지름길 탓에 ArithmeticException조차 안 남) → Green(`validateInputs()`에 `totalDays==0` 가드를 범위 가드 앞단). elapsed=0이 total=0을 통과시키는 유일한 값)*
 - [x] **7. 경과일수 범위 위반 (예외)** — elapsed > total, 또는 elapsed < 0 → 예외 throw  *(사이클11: Red 2행(elapsed=40, -1 둘 다 예외 없이 샘) → Green(`elapsed<0 || elapsed>total` 복합 가드) → Refactor(검증 가드 2개를 private `validateInputs()`로 그룹핑). 2점이 복합 조건 강제)*
 - [x] **8. 음수 금액 (예외)** — price < 0 → 예외 throw  *(사이클10: Red(예외 부재로 단언 실패) → Green(`RefundCalculator`에 `price<0` 가드를 정책 분기 앞단 추가). 예외 타입=`IllegalArgumentException`, 가드 위치=정책보다 앞단 확정)*
 - [x] **9. 무료환불 상한 (정책 경계·핵심)** — 30000 / 30 / **7** → 30000  *(≤7 전액. 일할계산이면 23000이라 이 케이스가 7일 규칙을 **강제**한다. 사이클6: Red(23000) 확인 → Green(정책 분기 추가))*
@@ -93,6 +93,6 @@
 ### 지금 상태 (스냅샷)
 
 - 빌드 골격·wrapper·의존성 다운로드 정상.
-- **대상 A(PRORATION/환불계산) 사이클 11까지 완료**: 체크리스트 1~5, 7, 8, 9, 10번 Green. `Proration`(순수 계산)/`RefundCalculator`(정책 판정+조합+검증) 클래스 분리 완료(사이클7~8 SRP 리팩터). `RefundCalculator`에 음수 금액 가드(사이클10) + 경과일수 범위 가드(사이클11) 추가, 검증 2개를 private `validateInputs()`로 그룹핑(사이클11 Refactor).
-- **예외 타입 관례 확정(사이클10~11)**: 입력검증 예외 = `IllegalArgumentException`, 가드 위치 = `RefundCalculator.validateInputs()`(정책 분기 **앞단**). 6번도 이 관례를 따른다(단, 총일수0은 `ArithmeticException`(0나누기)과의 선택을 Red에서 재확인).
-- **다음 할 일**: 체크리스트 **6번(총일수 0 예외)** 하나 남음 — `validateInputs()`에 `totalDays==0`(또는 `totalDays<=0`) 가드 추가 예정. 별도 `Validator` 클래스 승격은 검증 불변식의 독립 변화 압력이 없어 계속 미룸(사이클11 판단). 이후 대상 B(Order 상태 전이), 대상 C(Facade+Mockito)로 확장.
+- **대상 A(PRORATION/환불계산) 사이클 12까지 완료 — 체크리스트 1~10번 전부 Green**. `Proration`(순수 계산)/`RefundCalculator`(정책 판정+조합+검증) 클래스 분리 완료(사이클7~8 SRP 리팩터). `RefundCalculator.validateInputs()`에 입력 가드 3종 완비: 음수 금액(사이클10)·경과일수 범위(사이클11)·총일수 0(사이클12).
+- **예외 타입 관례 확정(사이클10~12)**: 입력검증 예외 = `IllegalArgumentException`, 가드 위치 = `RefundCalculator.validateInputs()`(정책 분기 **앞단**). 총일수 0은 `ArithmeticException`이 아니라 명시적 `IllegalArgumentException`으로 선제 차단(정책 지름길 때문에 나눗셈에 도달조차 안 하므로 명시 가드가 필수임이 Red에서 드러남).
+- **다음 할 일**: 대상 A 예외까지 완료 → (a) **수행내용 4번 고의 결함 주입**(아래 "고의 결함 후보" 절 실행, 회귀 안전망이 진짜 결함을 잡는지 확인), (b) **대상 B(Order 상태 전이)**, (c) **대상 C(Facade+Mockito)**. `Validator` 클래스 승격은 검증 불변식의 독립 변화 압력이 없어 계속 미룸(사이클11~12 판단).
