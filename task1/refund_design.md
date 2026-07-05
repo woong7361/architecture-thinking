@@ -18,143 +18,78 @@
 
 ### 이번 scope
 
-- 환불 금액 산출 (일할 계산, 수동 지정)
+- 환불 금액 산출 (일할 계산, 수동 지정, 7일 이하 무료)
 - 환불 후 주문 상태 전이
 - 환불 엔티티 상태 전이
-- PG 연동, DB, 구독 취소는 scope 밖 (외부 의존 → Mock 대상)
+- 결제 취소(외부 의존), DB, 구독 취소는 scope 밖 (→ Mock 대상)
 
 ---
 
-## 2. 순서 다이어그램
+## 2. 도메인 흐름 (순서 다이어그램)
 
-### 2-1. 전체 흐름 (Happy Path)
+> 인프라(Client / API 서버 / PG 세부)가 아니라 **도메인 개념 간의 상호작용**만 표현한다.
+> 외부 결제 취소는 하나의 "외부 의존"으로만 추상화한다.
 
-```mermaid
-sequenceDiagram
-    actor Client
-    participant Handler
-    participant RefundFacade
-    participant Order
-    participant RefundCalculator
-    participant RefundRecord
-    participant PG as PG API (PortOne)
-    participant Subscription
-
-    Client->>Handler: POST /orders/{orderUUID}/refund
-    Handler->>RefundFacade: refund(orderUUID, policy, manualAmount)
-
-    rect rgb(220, 235, 255)
-        Note over RefundFacade,RefundRecord: Phase 1 — TX1: 환불 레코드 생성
-        RefundFacade->>Order: findByUUID(orderUUID)
-        Order-->>RefundFacade: OrderEntity
-
-        RefundFacade->>Order: validateRefundable()
-        Note right of Order: PAID / PARTIALLY_REFUNDED 만 허용
-        Order-->>RefundFacade: OK
-
-        RefundFacade->>Order: checkNoPendingOrder(memberId)
-        Note right of Order: 결제 진행 중이면 환불 차단
-        Order-->>RefundFacade: OK
-
-        RefundFacade->>RefundRecord: checkNoActiveRefund(orderId)
-        Note right of RefundRecord: REQUESTED/TIMED_OUT 환불 중이면 차단
-        RefundRecord-->>RefundFacade: OK
-
-        RefundFacade->>RefundCalculator: calculate(policy, order, subscription)
-        Note right of RefundCalculator: PRORATION: 일할 계산<br/>MANUAL: 지정금액 검증
-        RefundCalculator-->>RefundFacade: refundAmount
-
-        RefundFacade->>RefundRecord: create(REQUESTED, refundAmount)
-        RefundRecord-->>RefundFacade: RefundEntity
-    end
-
-    rect rgb(255, 245, 220)
-        Note over RefundFacade,PG: Phase 2 — PG 환불 API 호출 (TX 밖)
-        RefundFacade->>PG: cancelPayment(attemptUUID, refundAmount)
-        PG-->>RefundFacade: CancelResponse
-    end
-
-    rect rgb(220, 255, 230)
-        Note over RefundFacade,Subscription: Phase 3-A — TX2: 성공 처리
-        RefundFacade->>RefundRecord: succeed()
-        RefundRecord-->>RefundFacade: SUCCEEDED
-
-        RefundFacade->>Order: applyRefund(refundAmount)
-        Note right of Order: canceledAmount 누적<br/>REFUNDED or PARTIALLY_REFUNDED
-        Order-->>RefundFacade: 상태 전이 완료
-
-        RefundFacade->>Subscription: cancel()
-        Subscription-->>RefundFacade: CANCELED
-    end
-
-    RefundFacade-->>Handler: RefundResult
-    Handler-->>Client: 200 OK
-```
-
-### 2-2. 실패 분기
+### 2-1. 환불 처리 흐름 (Happy Path)
 
 ```mermaid
 sequenceDiagram
-    participant RefundFacade
-    participant PG as PG API (PortOne)
-    participant RefundRecord
+    participant 요청 as 환불 요청
+    participant 주문 as 주문(Order)
+    participant 계산 as 환불 금액 산출
+    participant 환불 as 환불(Refund)
+    participant 외부 as 결제 취소(외부 의존)
 
-    Note over RefundFacade,PG: Phase 2 — PG 호출 결과에 따른 분기
+    요청->>주문: 환불 가능 여부 검증
+    Note right of 주문: PAID / PARTIALLY_REFUNDED 만 허용
+    주문-->>요청: OK (환불 가능 금액 확인)
 
-    RefundFacade->>PG: cancelPayment(...)
+    요청->>계산: 정책에 따라 환불 금액 산출
+    Note right of 계산: PRORATION / MANUAL / 7일 이하 무료
+    계산-->>요청: 환불 금액
 
-    alt PG 명확한 거부 (잔액 부족 등)
-        PG-->>RefundFacade: 명확한 실패 에러
-        RefundFacade->>RefundRecord: fail()
-        RefundRecord-->>RefundFacade: FAILED
-        RefundFacade-->>RefundFacade: ErrRefundFailed 반환
-    else 네트워크 오류 / 응답 불확실
-        PG-->>RefundFacade: timeout / unknown 에러
-        RefundFacade->>RefundRecord: timeOut()
-        RefundRecord-->>RefundFacade: TIMED_OUT
-        RefundFacade-->>RefundFacade: ErrPaymentUncertain 반환
-        Note over RefundFacade: 관리자 수동 처리 필요
-    end
+    요청->>환불: 환불 생성 (REQUESTED)
+
+    요청->>외부: 결제 취소 요청
+    외부-->>요청: 취소 결과
+
+    요청->>환불: 성공 처리 (SUCCEEDED)
+    요청->>주문: 환불 적용 → 상태 전이
+    Note right of 주문: 전액 → REFUNDED<br/>부분 → PARTIALLY_REFUNDED
 ```
 
-### 2-3. task1 scope (순수 도메인만)
+### 2-2. 결제 취소 결과에 따른 분기
 
 ```mermaid
 sequenceDiagram
-    participant Test
-    participant Order
-    participant RefundCalculator
-    participant Refund
+    participant 요청 as 환불 요청
+    participant 외부 as 결제 취소(외부 의존)
+    participant 환불 as 환불(Refund)
 
-    Note over Test,Refund: 이 범위만 단위테스트 대상 (외부 의존 없음)
+    요청->>외부: 결제 취소 요청
 
-    Test->>Order: new Order(amount=30000, status=PAID)
-    Test->>Order: validateRefundable()
-    Order-->>Test: OK
-
-    Test->>Order: cancellableAmount()
-    Order-->>Test: 30000
-
-    Test->>RefundCalculator: calculate(PRORATION, paidAt, expiredAt, now)
-    RefundCalculator-->>Test: refundAmount=15000
-
-    Test->>Refund: new Refund(REQUESTED, amount=15000)
-    Test->>Refund: succeed()
-    Refund-->>Test: status=SUCCEEDED
-
-    Test->>Order: applyRefund(15000)
-    Order-->>Test: status=REFUNDED or PARTIALLY_REFUNDED
+    alt 명확한 거부 (잔액 부족 등)
+        외부-->>요청: 실패
+        요청->>환불: 실패 처리 (FAILED)
+    else 결과 불확실 (네트워크 오류 등)
+        외부-->>요청: 응답 불확실
+        요청->>환불: 타임아웃 처리 (TIMED_OUT)
+        Note over 환불: 관리자 수동 처리 필요
+    end
 ```
+
+> **task1 단위테스트 범위**: 결제 취소(외부 의존)를 제외한 부분 —
+> 주문 환불 가능 검증 · 환불 금액 산출 · 환불/주문 상태 전이. (외부 없이 실행 가능)
 
 ---
 
 ## 3. 상태 다이어그램
 
-### 2-1. 주문(Order) 상태
+### 3-1. 주문(Order) 상태
 
 ```
 [PAID] ──────────────────────────────▶ [REFUNDED]
-  │          (환불금액 >= 전체금액)
+  │          (환불금액 == 전체금액)
   │
   └──────────────────────────────────▶ [PARTIALLY_REFUNDED]
                (환불금액 < 전체금액)
@@ -167,7 +102,7 @@ sequenceDiagram
 - `REFUNDED` 상태에서는 추가 환불 불가
 - `PENDING`, `FAILED` 상태에서는 환불 불가
 
-### 2-2. 환불(Refund) 상태
+### 3-2. 환불(Refund) 상태
 
 ```
               [REQUESTED]
@@ -176,16 +111,16 @@ sequenceDiagram
      [SUCCEEDED] [FAILED] [TIMED_OUT]
 ```
 
-- `REQUESTED`: 환불 요청이 생성된 상태. PG 호출 전.
-- `SUCCEEDED`: PG 환불 성공.
-- `FAILED`: PG가 환불을 명확히 거부 (잔액 부족 등).
+- `REQUESTED`: 환불 요청이 생성된 상태. 결제 취소 전.
+- `SUCCEEDED`: 결제 취소 성공.
+- `FAILED`: 결제 취소가 명확히 거부됨 (잔액 부족 등).
 - `TIMED_OUT`: 네트워크 오류 등 결과 불확실. 관리자 수동 처리 필요.
 
 ---
 
-## 3. 환불 정책 (RefundPolicy)
+## 4. 환불 정책 (RefundPolicy)
 
-### 3-1. PRORATION (일할 계산)
+### 4-1. PRORATION (일할 계산)
 
 구독 기간 중 사용하지 않은 일수에 비례하여 환불한다.
 
@@ -208,9 +143,9 @@ sequenceDiagram
 
 > 소수점 이하는 절사(floor). 단가 = price / totalDays (정수 나눗셈).
 
-### 3-2. MANUAL (수동 지정)
+### 4-2. MANUAL (수동 지정)
 
-관리자가 환불 금액을 직접 지정한다.
+관리자가 환불 금액을 직접 지정한다. **모든 규칙보다 우선한다** — MANUAL이 지정되면 7일 무료·일할 계산과 무관하게 지정 금액을 따른다.
 
 ```
 환불금액 = 지정금액
@@ -218,22 +153,45 @@ sequenceDiagram
 단, 지정금액 <= 0 → 오류
 ```
 
+### 4-3. 7일 이하 무료 (청약 철회)
+
+결제일로부터 경과일이 7일 이하이면 전액 환불한다 (위약금 없음). 단, MANUAL 지정이 없을 때만 적용된다.
+
+```
+경과일 <= 7  → 전액 환불 (무료)
+경과일 >= 8  → PRORATION 적용
+```
+
+- 전자상거래법상 청약철회 기간에 대응한다.
+- PRORATION보다 우선하지만, **MANUAL보다는 후순위**다.
+- 경과일 기준: 결제 시각의 날짜 기준 (UTC, 시/분/초 제거).
+
+### 4-4. 정책 우선순위
+
+환불 금액 산출 시 아래 순서로 판정한다.
+
+```
+1. MANUAL 지정이 있으면      → 지정 금액 (최우선)
+2. 경과일 <= 7 이면          → 전액 환불 (무료)
+3. 그 외                     → PRORATION 일할 계산
+```
+
 ---
 
-## 4. 환불 유형 결정
+## 5. 환불 유형 결정
 
 환불 금액이 확정된 후 환불 유형을 결정한다.
 
 ```
-환불금액 >= 환불 가능 금액 → FULL
+환불금액 == 환불 가능 금액 → FULL
 환불금액 <  환불 가능 금액 → PARTIAL
 ```
 
 ---
 
-## 5. 경계값 및 예외 케이스
+## 6. 경계값 및 예외 케이스
 
-### 5-1. 일할 계산 경계값
+### 6-1. 일할 계산 경계값
 
 | 케이스 | 입력 | 기대 결과 |
 |--------|------|----------|
@@ -243,7 +201,15 @@ sequenceDiagram
 | 소수점 절사 | 10,000원 / 30일 × 7일 | 2,331원 |
 | totalDays <= 0 | 잘못된 구독 기간 | 예외 발생 |
 
-### 5-2. 환불 가능 여부 경계값
+### 6-2. 7일 이하 무료 경계값
+
+| 케이스 | 조건 | 기대 결과 |
+|--------|------|----------|
+| 당일 환불 | 경과일 0일 | 전액 환불 |
+| 무료 경계 | 경과일 7일 | 전액 환불 |
+| 무료 종료 직후 | 경과일 8일 | 선택 정책 적용 |
+
+### 6-3. 환불 가능 여부 경계값
 
 | 케이스 | 조건 | 기대 결과 |
 |--------|------|----------|
@@ -255,7 +221,7 @@ sequenceDiagram
 | 부분 환불 후 전액 도달 | canceledAmount + refundAmount == amount | REFUNDED 전이 |
 | 부분 환불 후 미도달 | canceledAmount + refundAmount < amount | PARTIALLY_REFUNDED 유지 |
 
-### 5-3. 주문 상태 전이 경계값
+### 6-4. 주문 상태 전이 경계값
 
 | 환불 전 주문 상태 | 환불 후 상태 | 조건 |
 |-----------------|-------------|------|
@@ -266,22 +232,41 @@ sequenceDiagram
 
 ---
 
-## 6. 도메인 객체 후보
+## 7. 동시성 처리
 
-> 코드 설계가 아닌 책임 분리 기준. 구현 시 변경될 수 있다.
+> task1(순수 도메인) scope 밖이지만, 실서비스 정합성을 위해 설계 기준으로 남긴다.
 
-| 객체 | 책임 |
-|------|------|
-| `RefundCalculator` | 정책에 따른 환불금액 산출 (PRORATION / MANUAL) |
-| `ProratedAmount` | 일할 계산 결과 값 객체 (totalDays, remainingDays, dailyRate, refundAmount) |
-| `Order` | 환불 가능 여부 검증, 환불 적용 후 상태 전이 |
-| `Refund` | 환불 상태 전이 (REQUESTED → SUCCEEDED / FAILED / TIMED_OUT) |
+결제 취소 API 호출 때문에 트랜잭션이 둘로 나뉜다. 이 사이 구간에 같은 주문에 대한 다른 환불 요청이 끼어들면 이중 환불·상태 꼬임이 생긴다.
+
+```
+TX1: 환불 생성(REQUESTED)  →  [외부 결제취소 API]  →  TX2: 환불 상태 변경(SUCCEEDED/FAILED/TIMED_OUT)
+                              └ TX 밖, 이 구간이 위험 ┘
+```
+
+### 7-1. 주문 락 — 환불 요청 시점 (TX1)
+
+- TX1에서 대상 Order를 락으로 잡는다 (비관적 락).
+- 동시에 들어온 두 요청이 같은 주문에 REQUESTED를 두 번 만드는 것을 막는다.
+- "진행 중 환불(REQUESTED/TIMED_OUT)이 있으면 차단" 검증과 함께 동작한다.
+
+### 7-2. 상태 변경 낙관적 락 — 환불 완료 시점 (TX2)
+
+- TX2에서 환불 상태를 바꿀 때, 현재 상태가 **여전히 REQUESTED인지** 낙관적 락(version)으로 확인한다.
+- 이미 다른 처리(예: 관리자 수동 처리, TIMED_OUT 재처리)가 상태를 바꿨다면 충돌로 실패시켜 이중 반영을 막는다.
 
 ---
 
-## 7. 미결 사항
+## 8. 의사결정 기록
 
-- [ ] 소수점 절사 기준: floor vs round → 실서비스 기준으로 **floor(절사) 확정**
-- [ ] 잔여일 계산 기준: 환불 요청 시각 기준 UTC 날짜로 계산 (시/분/초 제거)
-- [ ] MANUAL 정책에서 0원 환불 허용 여부 → **불허 (0 이하 예외)**
-- [ ] 부분 환불 후 cancellableAmount 재계산: `amount - canceledAmount` 로 확정
+### 결정 사항
+
+- 소수점 절사 기준: **floor(절사)** — 실서비스 기준.
+- 잔여일/경과일 계산 기준: 결제·환불 요청 시각의 **UTC 날짜**로 계산 (시/분/초 제거).
+- MANUAL 정책 0원 환불: **불허** (0 이하 예외).
+- 부분 환불 후 환불 가능 금액: `amount - canceledAmount`로 재계산.
+- 정책 우선순위: **MANUAL > 7일 이하 무료 > PRORATION**.
+- 동시성: 환불 요청 시 **Order 비관적 락**, 상태 변경 시 **REQUESTED 낙관적 락**.
+
+### 미결 사항
+
+- 현재 없음.

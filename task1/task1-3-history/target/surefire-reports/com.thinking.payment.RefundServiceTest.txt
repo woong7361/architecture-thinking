@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.thinking.payment.RefundServiceTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.421 s -- in com.thinking.payment.RefundServiceTest

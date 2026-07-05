@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.thinking.payment.RefundCalculatorTest" time="0.054" tests="6" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.thinking.payment.RefundServiceTest" time="1.421" tests="3" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -57,10 +57,7 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="61.0"/>
   </properties>
-  <testcase name="음수_금액이면_계산_이전에_예외를_던진다" classname="com.thinking.payment.RefundCalculatorTest" time="0.016"/>
-  <testcase name="총일수가_0이면_계산_이전에_예외를_던진다" classname="com.thinking.payment.RefundCalculatorTest" time="0.001"/>
-  <testcase name="무료환불_경계를_기준으로_전액_또는_일할계산_금액이_환불된다(int, int, int, int)[1]" classname="com.thinking.payment.RefundCalculatorTest" time="0.0"/>
-  <testcase name="무료환불_경계를_기준으로_전액_또는_일할계산_금액이_환불된다(int, int, int, int)[2]" classname="com.thinking.payment.RefundCalculatorTest" time="0.002"/>
-  <testcase name="경과일수가_유효_범위를_벗어나면_예외를_던진다(int, int, int)[1]" classname="com.thinking.payment.RefundCalculatorTest" time="0.014"/>
-  <testcase name="경과일수가_유효_범위를_벗어나면_예외를_던진다(int, int, int)[2]" classname="com.thinking.payment.RefundCalculatorTest" time="0.001"/>
+  <testcase name="pg_취소_성공이면_환불과_주문을_성공_상태로_전이한다" classname="com.thinking.payment.RefundServiceTest" time="1.396"/>
+  <testcase name="pg_명확한_거부이면_환불은_실패하고_주문은_변하지_않는다" classname="com.thinking.payment.RefundServiceTest" time="0.004"/>
+  <testcase name="pg_응답이_불확실하면_환불은_타임아웃이고_주문은_변하지_않는다" classname="com.thinking.payment.RefundServiceTest" time="0.004"/>
 </testsuite>

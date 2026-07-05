@@ -15,7 +15,68 @@
 
 ### 제출물
 
-- [ ]  단위테스트 코드(순수 로직 하나 + Mockito 적용 하나)를 GitHub에.
-- [ ]  테스트 실행 결과가 전부 통과하는 화면 또는 로그.
-- [ ]  가짜 객체를 어디에 왜 끼웠는지 주석이나 메모.
-- [ ]  일부러 낸 결함 1개와 그때의 테스트 결과(빨개졌는지 여부). 안 잡혔다면 무엇을 보태 잡았는지.
+- [x]  단위테스트 코드(순수 로직 하나 + Mockito 적용 하나)를 GitHub에. → 아래 "테스트 코드 위치" 참조.
+- [x]  테스트 실행 결과가 전부 통과하는 화면 또는 로그. → 아래 "테스트 실행 로그" 참조.
+- [x]  가짜 객체를 어디에 왜 끼웠는지 주석이나 메모. → 아래 "가짜 객체(Mock) 사용 메모" 참조.
+- [x]  일부러 낸 결함 1개와 그때의 테스트 결과(빨개졌는지 여부). 안 잡혔다면 무엇을 보태 잡았는지. → 아래 "고의 결함 주입 메모" 참조.
+
+---
+
+### 테스트 코드 위치 (워크스페이스 상대 경로)
+
+| 무엇 | 경로 |
+|------|------|
+| 순수 로직 — 대상 코드 | `task1/task1-3-history/src/main/java/com/thinking/payment/Proration.java`, `RefundCalculator.java` |
+| 순수 로직 — 테스트 | `task1/task1-3-history/src/test/java/com/thinking/payment/ProrationTest.java`, `RefundCalculatorTest.java` |
+| Mockito — 대상 코드 | `task1/task1-3-history/src/main/java/com/thinking/payment/RefundService.java` (+ 포트 `PgClient.java`) |
+| Mockito — 테스트 | `task1/task1-3-history/src/test/java/com/thinking/payment/RefundServiceTest.java` |
+
+---
+
+### 테스트 실행 로그 (전부 통과)
+
+`cd task1/task1-3-history && ./mvnw test` (JDK: corretto-17)
+
+```text
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.thinking.payment.ProrationTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.208 s -- in com.thinking.payment.ProrationTest
+[INFO] Running com.thinking.payment.RefundCalculatorTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.054 s -- in com.thinking.payment.RefundCalculatorTest
+[INFO] Running com.thinking.payment.RefundServiceTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.421 s -- in com.thinking.payment.RefundServiceTest
+[INFO] Tests run: 15, Failures: 0, Errors: 0, Skipped: 0
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+```
+
+---
+
+### 고의 결함 주입 메모 (수행내용 4번)
+
+**낸 결함**: `Proration.calculate`의 일단가 계산을 **버림 → 반올림**으로 바꿈.
+
+```java
+int dailyRate = price / totalDays;                          // 원래 (버림)
+int dailyRate = (int) Math.round((double) price / totalDays); // 결함
+```
+
+**결과**: 처음엔 **안 잡힘**(11개 초록 그대로). 기존 데이터가 전부 딱 떨어지거나(`30000/30`) 소수부 .33이라(`10000/30→333`) 반올림해도 값이 같았다. → 소수부 .67인 `"20000, 30, 20, 6660"` 한 점을 보태니 **Red**(`expected: 6660 but was: 6670`).
+
+확인 후 코드는 버림으로 원복, 보탠 단언은 유지(11→12개 초록). 상세는 `task1-3-history/tdd-log.md` 결함 표 #1.
+
+---
+
+### 어디에 끼웠나 (파일·위치)
+
+| 무엇 | 파일 · 위치 |
+|------|-----------|
+| Mock 대상(포트) | `src/main/.../PgClient.java` — 우리가 정의한 인터페이스(포트) |
+| Mock 선언 | `RefundServiceTest.java:22-23` (`@Mock private PgClient pg;`), 이유 주석 `:21` |
+
+### 왜 `PgClient`에만 끼웠나
+
+1. **PG(PortOne)는 비관리형 외부 시스템이다.** 실제 결제 취소라는 부작용이 밖으로 나가고, 느리고, 결과가 매번 같지 않다. 특히 **명확한 거부·타임아웃 같은 실패 분기는 실물 호출로 마음대로 재현할 수 없다.** 3분기(SUCCEEDED / REJECTED / TIMED_OUT)를 결정론적으로 검증하려면 Stub으로 응답을 주입하는 것이 유일한 방법이다.
+2. **내가 소유한 타입(포트)을 목했다.** PortOne SDK·HTTP를 직접 목하지 않고, 우리 도메인 언어 인터페이스 `PgClient`를 목했다. 남의 API를 직접 목하면 실제 계약과 어긋난 목을 붙들게 되므로, 어댑터 뒤의 포트만 목한다.

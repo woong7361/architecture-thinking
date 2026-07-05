@@ -49,6 +49,7 @@
 - [x] **3. 전액 소진 (경계)** — 30000 / 30 / 30 → 0  *(remaining = 0, 사이클3: Red 없이 즉시 Green — 일반식이 자연히 처리, 회귀 안전망으로 등록)*
 - [x] **4. 미사용 (경계)** — 30000 / 30 / 0 → 30000  *(⚠️ 무료환불 구간이라 값이 30000으로 같음 — 정책을 **못 가른다**. 정책 판별은 9번이 담당. 사이클4: Red 없이 즉시 Green)*
 - [x] **5. 안 나눠떨어짐 (버림 규칙 고정)** — 10000 / 30 / 20 → 3330  *(일단가 먼저 버림, elapsed 20 > 7 → 일할계산 구간. 사이클5: Red 없이 즉시 Green, 결함주입 후보5의 핵심 회귀테스트로 등록)*
+  - ⚠️ **결함주입(수행내용4) 실행 결과**: 이 3330 케이스는 **버림→반올림 결함을 못 잡았다**(10000/30=333.33, 반올림해도 333). 소수부 .67인 **`20000 / 30 / 20 → 6660`** 데이터를 보태야 잡힌다(반올림 시 667×10=6670). 상세는 [tdd-log.md](./tdd-log.md) 결함 표 #1.
 - [x] **6. 총일수 0 (예외)** — price / **0** / elapsed → 예외 throw  *(사이클12: Red(`0/0`이 예외 없이 price 반환 — 정책 지름길 탓에 ArithmeticException조차 안 남) → Green(`validateInputs()`에 `totalDays==0` 가드를 범위 가드 앞단). elapsed=0이 total=0을 통과시키는 유일한 값)*
 - [x] **7. 경과일수 범위 위반 (예외)** — elapsed > total, 또는 elapsed < 0 → 예외 throw  *(사이클11: Red 2행(elapsed=40, -1 둘 다 예외 없이 샘) → Green(`elapsed<0 || elapsed>total` 복합 가드) → Refactor(검증 가드 2개를 private `validateInputs()`로 그룹핑). 2점이 복합 조건 강제)*
 - [x] **8. 음수 금액 (예외)** — price < 0 → 예외 throw  *(사이클10: Red(예외 부재로 단언 실패) → Green(`RefundCalculator`에 `price<0` 가드를 정책 분기 앞단 추가). 예외 타입=`IllegalArgumentException`, 가드 위치=정책보다 앞단 확정)*
@@ -59,32 +60,6 @@
 
 ---
 
-## 진행 전략 (seam & 삼각측량)
-
-- **순서**: happy(1~2)로 일할 일반식을 세운 뒤 → 경계(3~5) → **정책 분기(9~10)** → 예외(6~8)로 확장.
-- **삼각측량**: 예제가 하나뿐일 땐 하드코딩으로 Green, **다음 예제가 그걸 깨뜨릴 때** 일반식으로 넘어간다.
-  - 1번 Green = `return 15000;` (하드코딩)
-  - 2번 Red 가 하드코딩을 깨뜨림 → `일단가 × remaining` 일반식 창발
-  - **9번 Red(elapsed=7→30000)가 일할 일반식을 깨뜨림** → `if (elapsed ≤ 7) return price;` 정책 분기 창발
-- **Refactor 방향**: 테스트와 코드에 박힌 중복(하드코딩 기대값)을 지우며 `dailyRate` 추출.
-- **예외 처리 위치**: 6~8은 가드 절(guard clause)로 **정책 분기보다 앞단**에서 던진다.
-  어떤 예외 타입을 쓸지는 6번 Red를 쓸 때 단언으로 먼저 못박는다 (예: `IllegalArgumentException`).
-
----
-
-## 고의 결함 후보 (수행내용 4번 — 나중에)
-
-통과 후 일부러 틀려서 테스트가 Red가 되는지 확인할 지점:
-
-- **5번**: 버림을 반올림으로 바꾸거나, `floor` 제거 → 3330 이 3333/3334로 → 잡히는가?
-- **3번**: 경계 부등호 `elapsed >= total` 를 `>` 로 뒤집기 → remaining=0 케이스가 새는가?
-- **9번(정책 경계)**: `elapsed <= 7` 을 `< 7` 로 바꾸기 → elapsed=7이 일할계산(23000)으로 새는가? (9번이 30000을 단언하므로 잡혀야 정상)
-- **일반식**: `일단가 × remaining` 의 `×`를 `+`로, `remaining` 을 `elapsed`로 바꾸기.
-
-→ 결과는 [tdd-log.md](./tdd-log.md) 하단 "고의 결함 주입" 표에 기록.
-
----
-
 ## 세션 재개 방법 (환경)
 
 - **JDK**: `~/.jdks/corretto-17.0.7` (JAVA_HOME). 전역 `mvn`·Java 24 없음 — 17로 진행.
@@ -92,10 +67,3 @@
   - 전역 Maven 설치 없음. wrapper(`mvnw`)가 Maven 3.9.6을 자체 부트스트랩.
   - `JAVA_HOME` 이 corretto-17로 잡혀 있어야 함.
 - **현재 상태 대조**: [tdd-log.md](./tdd-log.md) 표(사이클별 R/G/R) + 커밋 접두어 `[Red]`/`[Green]`/`[Refactor]`.
-
-### 지금 상태 (스냅샷)
-
-- 빌드 골격·wrapper·의존성 다운로드 정상.
-- **대상 A(환불 비용 계산) 사이클 13까지 완료 — 체크리스트 1~10번 전부 Green**(사이클13은 코드 리뷰 발견 Refactor: 스테일 Javadoc 링크 수정). `Proration`(순수 계산)/`RefundCalculator`(정책 판정+조합+검증) 클래스 분리 완료(사이클7~8 SRP 리팩터). `RefundCalculator.validateInputs()`에 입력 가드 3종 완비: 음수 금액(사이클10)·경과일수 범위(사이클11)·총일수 0(사이클12).
-- **예외 타입 관례 확정(사이클10~12)**: 입력검증 예외 = `IllegalArgumentException`, 가드 위치 = `RefundCalculator.validateInputs()`(정책 분기 **앞단**). 총일수 0은 `ArithmeticException`이 아니라 명시적 `IllegalArgumentException`으로 선제 차단(정책 지름길 때문에 나눗셈에 도달조차 안 하므로 명시 가드가 필수임이 Red에서 드러남).
-- **다음 할 일**: 대상 A 예외까지 완료 → (a) **수행내용 4번 고의 결함 주입**(아래 "고의 결함 후보" 절 실행, 회귀 안전망이 진짜 결함을 잡는지 확인), (b) **대상 C(Facade+Mockito)** — 백로그·전략은 [test-list-refund-service.md](./test-list-refund-service.md). (대상 B(Order 상태 전이)는 범위에서 제외.) `Validator` 클래스 승격은 검증 불변식의 독립 변화 압력이 없어 계속 미룸(사이클11~12 판단).
