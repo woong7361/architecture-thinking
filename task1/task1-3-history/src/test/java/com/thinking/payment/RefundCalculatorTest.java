@@ -1,8 +1,10 @@
 package com.thinking.payment;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -27,5 +29,15 @@ class RefundCalculatorTest {
         int remaining = RefundCalculator.calculate(price, totalDays, elapsedDays);
 
         assertThat(remaining).isEqualTo(expected);
+    }
+
+    // 입력검증은 7일 정책 판정보다 앞단에서 던진다(도메인 규칙: "정책보다 입력 검증이 먼저").
+    // elapsed=15(>7)로 잡아 정책 지름길이 아니라 일할계산 위임 경로에서도 가드가 필요함을 드러낸다.
+    // 가드가 없으면 Proration이 예외 없이 음수/0을 계산해 새어나간다 → 예외 부재로 Red.
+    @Test
+    @DisplayName("음수 금액은 계산 이전에 거부한다: price < 0 이면 IllegalArgumentException")
+    void 음수_금액이면_계산_이전에_예외를_던진다() {
+        assertThatThrownBy(() -> RefundCalculator.calculate(-1, 30, 15))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 }
