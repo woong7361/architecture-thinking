@@ -31,4 +31,8 @@ public final class Refund {
     void fail() {
         status = RefundStatus.FAILED;
     }
+
+    void timeOut() {
+        status = RefundStatus.TIMED_OUT;
+    }
 }

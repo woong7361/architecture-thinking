@@ -19,5 +19,8 @@ public final class RefundService {
         if (result.isRejected()) {
             refund.fail();
         }
+        if (result.isTimedOut()) {
+            refund.timeOut();
+        }
     }
 }
