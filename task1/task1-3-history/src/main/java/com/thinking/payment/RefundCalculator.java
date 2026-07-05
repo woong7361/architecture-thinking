@@ -30,6 +30,9 @@ public final class RefundCalculator {
         if (price < 0) {
             throw new IllegalArgumentException("금액은 음수일 수 없습니다: " + price);
         }
+        if (totalDays == 0) {
+            throw new IllegalArgumentException("총일수는 0일 수 없습니다 (0으로 나누기)");
+        }
         if (elapsedDays < 0 || elapsedDays > totalDays) {
             throw new IllegalArgumentException(
                 "경과일수는 0 이상 총일수 이하여야 합니다: elapsed=" + elapsedDays + ", total=" + totalDays);
