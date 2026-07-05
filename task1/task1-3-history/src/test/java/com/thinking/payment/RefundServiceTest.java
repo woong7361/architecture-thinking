@@ -56,6 +56,23 @@ class RefundServiceTest {
         verify(pg).cancelPayment(PAYMENT_UUID, PRICE);
     }
 
+    @Test
+    @DisplayName("PG 응답이 불확실하면 환불은 타임아웃, 주문은 기존 상태를 유지한다")
+    void pg_응답이_불확실하면_환불은_타임아웃이고_주문은_변하지_않는다() {
+        Order order = paidOrder();
+        Refund refund = freePeriodRefund();
+        RefundService service = new RefundService(pg);
+
+        when(pg.cancelPayment(PAYMENT_UUID, PRICE))
+            .thenReturn(PgCancelResult.timedOut());
+
+        service.cancel(order, refund);
+
+        assertThat(refund.status()).isEqualTo(RefundStatus.TIMED_OUT);
+        assertThat(order.status()).isEqualTo(OrderStatus.PAID);
+        verify(pg).cancelPayment(PAYMENT_UUID, PRICE);
+    }
+
     private Order paidOrder() {
         return Order.paid(PAYMENT_UUID, PRICE);
     }
