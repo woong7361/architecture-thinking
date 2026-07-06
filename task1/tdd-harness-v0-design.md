@@ -1,13 +1,5 @@
 # TDD 하네스 v0 설계 (A-5 결정 문서)
 
-> 목적: A-5 "요구사항 → 테스트" 파이프라인의 **결정된 v0 설계**. 무엇을 만들지 확정한다.
-> 관계: `tdd-harness-design.md`(2스트림 outside-in 탐색안)를 구체 빌드안으로 좁힌 것.
-> 이식 대상: `.codex/skills/blog-draft/pipeline/` (Gen·Critique·Eval·Refine·Validate + JSON 스키마
->            + YAML 루브릭 + runs/ 반복 수렴). `recruiting-harness-pipeline/`도 같은 골격의 다른 응용.
-> 통과시킬 요구사항: `refund_design.md`(경계·실패 표), A-3 단위테스트, A-4 Gherkin.
-> LLM 호출: **codex CLI** (`codex-cli 0.139.0` 설치 확인, claude CLI 없음) → `--provider codex`.
-> 주의: 아래는 설계 확정안이지 실행 결과가 아니다. 로그·비교는 실행 후 채운다.
-
 ---
 
 ## 0. 큰 결정: v0에서 두 방향을 만들어 A/B 비교한다
@@ -49,6 +41,56 @@ bundled를 추가로 얹는 비용 ≈ gen 프롬프트 1개 + rubric 1개 + 가
 
 ---
 
+## 0-A. 결정 갱신 (2026-07-06) — input/intake/Gen/Eval 역할 재정의
+
+초기 설계(§2·§5)는 refund_design §6의 경계·실패 표를 input의 `boundary_cases[]`·`failure_cases[]`로
+실어 coverage를 결정적으로 만들려 했다. **이 방향을 폐기한다.** 판정기준(테스트 케이스)을 input에 넣으면
+사람이 이미 경계·실패를 다 열거한 셈이라 **Gen이 생성할 게 없어진다**(목록 포맷팅으로 전락). 테스트 생성
+하네스의 존재 이유 — 정책에서 경계값을 스스로 발굴 — 와 모순된다.
+
+역할을 다시 긋는다:
+
+```
+사용자 도메인 입력 (정책/요구사항 원문, 느슨해도 됨)
+   │
+   ▼ intake  ── 정책이 미흡하면 질문. 단 "판정기준"이 아니라 "정책"을 보강한다.
+   │            (예: "딱 7일째는 무료야 8일부터야?" ← 정책 모호성)
+ input.json = 명확해진 정책 (테스트 케이스 없음)
+   │
+   ▼ Gen    ── 여기서 판정기준(gherkin/unit 케이스)을 생성
+   ▼ Eval/Critique ── 정책 대비 coverage 판정
+```
+
+| 단계 | 다루는 것 |
+|---|---|
+| **input** | 사용자가 준 도메인 **정책/요구사항**(+원문 보존). 테스트 케이스 없음. |
+| **intake** | 정책이 미흡하면 질문으로 **정책**을 보강(미정의 경계·규칙 우선순위 명확화). 판정기준은 만들지 않는다. |
+| **Gen** | 정책 → **판정기준(테스트 케이스) 생성**. |
+| **Eval/Critique** | 생성된 테스트가 정책이 함의하는 경계를 덮었는지 판정. |
+
+- input은 **도메인 무관하게 일반적**이어야 한다. refund §6 표 형태를 스키마에 박지 않는다.
+- 경계/실패를 별도 배열로 나누지 않는다(그건 한 도메인의 우연). input 형태:
+  `requirement` + `source_material`(요약 금지, 필수) + 선택 `policy_rules`(정책을 **규칙**으로 분해 —
+  케이스가 아니라 규칙) + 선택 `external_dependencies`(mock 판정 근거) + 선택 `constraints`.
+  - `policy_rules` 예: "MANUAL > 7일무료 > PRORATION"은 **규칙**. "경과일 7↔8 경계 테스트"는 Gen이 그
+    규칙에서 파생할 **케이스**. 규칙은 input, 케이스는 Gen 산출물.
+
+### "count 기반 결정적 coverage"의 위치 — Eval이 자체 수행
+
+결정성은 **고정된 외부 목록**이 아니라 **Eval의 채점 방법이 기계적**인 데서 온다. rubric이 Eval에게
+다음 형식을 강제한다: (1) 정책에서 함의되는 경계·실패를 **열거**, (2) 생성 테스트에 각각 **매핑**,
+(3) `덮은 수 / 열거한 수`로 **점수**. → "6/8 덮음, 누락: totalDays<=0, 마지막날" 같은 셀 수 있는 판정
+(느낌 점수 아님).
+
+- Eval 전용 coverage 체크리스트 아티팩트는 **만들지 않는다**(초안에서 잠깐 도입했다 폐기).
+- Gen도 Eval도 **정책만** 본다. 같은 목록을 주입·공유하지 않아 §4 정보 차단과도 일치.
+- Eval 자체 열거가 run마다 흔들릴 수 있는 신뢰성 문제는, 손 A-3/A-4를 **per-run 주입이 아니라
+  Phase 4 비교 시점의 외부 기준**으로 대조해 검증한다(수행내용 2).
+
+> 아래 §1·§2·§4·§5 중 `boundary_cases[]`/`failure_cases[]`를 input에 싣는다는 서술은 이 절로 대체된다.
+
+---
+
 ## 1. 구조
 
 ### 1-1. 디렉터리 (재사용/신설 매핑 — 수행내용 1의 뼈대)
@@ -67,6 +109,7 @@ tdd-harness-pipeline/
     input|gen_output|critique_output|eval_output|draft|critique|eval|final.schema.json  [신설]
   runs/
     bundled/…   split/…    [재사용]  attempt별 로그 보존, 모드별 분리 (수행내용 3)
+                                      └ eval.json(axis점수+rationale)·critique.json 구조화 보존 → v1 slow-loop 입력 (§5 참조)
   frozen/       [신설]  split에서 승인된 계약 refund.feature (읽기 전용 승격)
 ```
 
@@ -98,9 +141,10 @@ Run 2 (unit)     NL 요구사항 + frozen/refund.feature ─► 단위테스트 
 - **Run 2 제약**: Gen/Refine 프롬프트에 "동결 계약과 모순 금지, 계약을 재서술 말고 계약이 남긴
   산술 세부(절사·마지막날 금액)를 단위로 채워라".
 
-핵심: **input을 skill이 생성**한다(blog `intake_to_input.py` 재사용). Gen이 요구사항을 지어내지
-않도록 refund_design §6 경계·실패 표를 input의 `boundary_cases[]`·`failure_cases[]`로 **명시적으로
-실어** 넣는다. 이 목록이 coverage 채점을 결정적으로 만든다.
+핵심: **input을 skill이 생성**한다(blog `intake_to_input.py` 재사용). input에는 **정책만** 담는다
+(§0-A) — `requirement` + `source_material`(원문 보존) + 선택 `policy_rules`·`external_dependencies`.
+Gen이 정책 밖 요구사항을 지어내지 않도록 `source_material`을 요약 없이 싣고, 판정기준(테스트 케이스)은
+Gen이 생성한다. coverage 결정성은 Eval의 열거→매핑→카운트 방법에서 온다(§0-A).
 
 ---
 
@@ -141,7 +185,8 @@ thresholds:
   min_axis: { coverage: 3.5, unambiguity: 3.5, <나머지>: 3.0 }   # coverage·unambiguity가 게이트 핵심
 ```
 
-결정성 장치: **count 기반 채점**(coverage/unambiguity를 input 목록·금지패턴 개수로 검증) +
+결정성 장치: **count 기반 채점** — coverage는 Eval이 정책에서 함의 경계를 열거→생성 테스트에 매핑→
+`덮은 수/열거 수`로 채점(§0-A, input에 케이스를 싣지 않는다), unambiguity는 금지패턴 개수로 검증 +
 게이트 축(coverage·unambiguity 3.5, 나머지 3.0).
 
 ---
@@ -180,7 +225,7 @@ blog-draft 격리 규칙 이식. "Gen·Critique·Eval 모두 AI라 블라인드 
 
 | Agent | 받는 것 | 못 보는 것 (차단) | 왜 |
 |---|---|---|---|
-| **Gen** | `input`(요구사항+경계/실패 목록, split-unit은 +frozen 계약) | eval 점수, critique, validator 판정 | 백지에서 생성 |
+| **Gen** | `input`(정책: requirement+source_material+policy_rules, split-unit은 +frozen 계약) | eval 점수, critique, validator 판정, **coverage 열거 목록** | 백지에서 케이스 발굴 |
 | **Critique** | `input` + 현재 draft | **eval 점수·validator 판정** | 편향 방지("안 봤다고 가정") |
 | **Eval** | `input` + draft + rubric | **critique** | 독립 채점("당신이 만들지 않았다") |
 | **Refine** | `input` + 이전 draft + critique + refine_request(`weak_axes`,`contract_errors`) | **eval 원문·weighted_total** | 점수 맞추기(리워드 해킹) 방지 |
@@ -198,7 +243,8 @@ blog-draft 격리 규칙 이식. "Gen·Critique·Eval 모두 AI라 블라인드 
 - **스모크 테스트**: 작은 input 1건 → gen 1회 → codex가 스키마 맞는 JSON을 실제로 뱉는지 확인.
 
 ### Phase 2 — split 먼저 (baseline, 권장 설계)
-- `input.schema.json`(requirement + boundary_cases[] + failure_cases[]), intake(refund_design+A-4→input).
+- `input.schema.json`(정책만: requirement + source_material + 선택 policy_rules/external_dependencies — §0-A),
+  intake(정책 미흡 시 정책 보강 → input).
 - contract: `contract.rubric.yaml`, gen_contract, 행동-고도 가드 → 실행 → **y/n 승인 → frozen/**.
 - unit: `unit.rubric.yaml`, gen_unit(frozen 계약 제약) → 실행.
 
@@ -214,13 +260,38 @@ blog-draft 격리 규칙 이식. "Gen·Critique·Eval 모두 AI라 블라인드 
 - **v0 포함**: 2모드(bundled/split), y/n 동결 게이트, 고도별 루브릭, 행동-고도 가드, 정보 차단, runs/ 로그.
 - **v1로 미룸**: slow-loop(루브릭 자기개선), 계약 자동 회귀 판정 자동화.
 
+#### slow-loop를 v0에서 빼는 이유 (blog-draft에는 있음)
+
+blog-draft에는 fast loop이 남긴 run 로그를 모아 **파이프라인 자체(루브릭·프롬프트·코드)를 고치는 제안**을
+만드는 두 번째 느린 루프가 있다(`slow-loop-design.md`). 여기엔 의도적으로 넣지 않는다.
+
+1. **데이터가 없다.** slow-loop 트리거는 `pending ≥ 5` run 누적이다. v0는 run을 처음 돌려보는 단계라
+   집계할 로그 자체가 없다. blog-draft도 slow-loop는 v2였고 fast loop(v1)이 먼저였다.
+2. **v0의 목적이 다르다.** 이 하네스 v0의 실험 목표는 루브릭 자기개선이 아니라 **bundled vs split vs
+   손 A-3/A-4 비교**(Phase 4)다. slow-loop는 그 비교 결과가 나온 *다음*에 "그래서 뭘 고칠까"를
+   자동화하는 층이라 순서상 뒤다.
+3. **비용.** §0에서 밝혔듯 v0의 유일한 실질 비용은 실험·분석 면적이다. slow-loop를 얹으면 proposal
+   rubric·proposer stage·analyze 스크립트가 통째로 추가돼 v0 범위를 넘는다.
+
+#### 단, 로그는 v0에서 집계 가능한 형태로 남긴다 (slow-loop의 씨앗)
+
+slow-loop 본체는 v1로 미루되, **그 입력이 되는 run 로그 포맷은 v0에서 미리 맞춘다.** blog-draft가
+`analyze_runs.py`로 긁을 수 있었던 이유는 각 run이 **axis 점수 + rationale**를 구조화해 남겼기 때문이다.
+v0의 `runs/{bundled,split}/…`도 attempt별로 다음을 남겨, v1에서 slow-loop를 얹을 때 로그 포맷을
+갈아엎지 않게 한다.
+
+- `eval.json`: axis별 점수 + **근거 1줄(rationale)** + `rubric_name`(예: `contract:v0`) + weighted_total
+- `critique.json`: weaknesses(issue/why/severity) — 같은 지적 반복 여부를 나중에 집계할 수 있게
+- attempt 메타: `mode`, `iteration`, terminal_reason(PASS/FAIL/MAX_ITER)
+- 이 셋만 있으면 v1의 analyze가 "같은 axis 반복 미달 / critique 반복 지적"을 그대로 집계할 수 있다.
+
 ---
 
 ## TODO
 
 - [ ] blog-draft 골격 복제, `--mode`/`--provider codex` 배선, 재사용/신설 매핑표 (수행내용 1)
 - [ ] codex 스모크 테스트 (인증·JSON 출력 확인)
-- [ ] input.schema.json(boundary_cases·failure_cases) + intake
+- [ ] input.schema.json(정책만: requirement+source_material+선택 policy_rules) + intake(정책 보강)
 - [ ] contract/unit/bundled rubric 3종
 - [ ] gen_contract/gen_unit/gen_bundled + 공유 critique/eval/refine
 - [ ] 행동-고도 가드(mode 분기) validate 규칙

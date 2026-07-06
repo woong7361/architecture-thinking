@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Pipeline Eval",
+  "description": "축 이름은 rubric이 정한다. 축 집합이 rubric과 일치하는지는 validate_eval_contract가 대조한다.",
+  "type": "object",
+  "required": ["brief_hash", "iteration", "rubric_name", "rubric_scores", "axis_rationales", "evaluated_at", "model", "metadata"],
+  "properties": {
+    "brief_hash": { "type": "string", "pattern": "^[a-f0-9]{8,}$" },
+    "iteration": { "type": "string", "pattern": "^[0-9]{3}$" },
+    "rubric_name": { "type": "string", "minLength": 1 },
+    "rubric_scores": {
+      "type": "object",
+      "required": ["scores", "weights", "weighted_total"],
+      "properties": {
+        "scores": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": { "type": "number", "minimum": 0, "maximum": 5 }
+        },
+        "weights": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": { "type": "number", "minimum": 0, "maximum": 1 }
+        },
+        "weighted_total": { "type": "number", "minimum": 0, "maximum": 5 }
+      },
+      "additionalProperties": false
+    },
+    "axis_rationales": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "type": "string", "minLength": 1 }
+    },
+    "evaluated_at": { "type": "string", "format": "date-time" },
+    "model": { "type": "string", "minLength": 1 },
+    "calibration_note": { "type": "string" },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "prompt_version": { "type": "string" },
+        "source_files": { "type": "array", "items": { "type": "string" } },
+        "token_usage": { "type": "object", "additionalProperties": true }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

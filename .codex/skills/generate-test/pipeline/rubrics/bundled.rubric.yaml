@@ -1,0 +1,58 @@
+{
+  "name": "bundled:v0",
+  "scale": { "min": 0, "max": 5 },
+  "_note": "계약(gherkin)과 단위를 한 draft로 채점하는 5축. draft content는 `// ===== FILE: <path> =====` 헤더로 파일들을 이어붙인 텍스트다. behavioral_altitude는 `.feature` 파일만, mock_discipline은 `.java` 파일만 본다. 파일마다 어정쩡하게 걸리는 문제를 일부러 남겨 split과 대비한다(설계 §2-3).",
+  "axes": {
+    "coverage": {
+      "weight": 0.25,
+      "method": "정책에서 함의되는 경계·실패 케이스를 스스로 열거 → `.feature`와 `.java` 파일 전체에서 덮였는지 매핑 → (덮은 수 / 열거 수)로 채점. axis_rationale에 '열거 N개, 덮음 M개, 누락: [...]' 필수. 입력에 케이스 목록 없음 — 정책에서 파생.",
+      "scale": {
+        "1": "Happy만. 경계·실패 거의 못 덮음 (덮음 < 1/3)",
+        "3": "일부 경계. 열거의 절반 이상 누락",
+        "5": "열거한 각 항목이 계약 또는 단위 중 최소 1개에 대응 (누락 0)"
+      }
+    },
+    "unambiguity": {
+      "weight": 0.25,
+      "scale": {
+        "1": "'should work'·빈 기대값 등 검증 불가 단언(어느 파일이든)",
+        "3": "대부분 구체값이나 일부 모호",
+        "5": "gherkin Then과 단위 단언 모두 구체 기대값으로 결정적"
+      }
+    },
+    "behavioral_altitude": {
+      "weight": 0.15,
+      "scale": {
+        "1": "`.feature` 파일에 클래스명·메서드명 등 구현 세부 노출",
+        "3": "대체로 도메인 언어이나 일부 구현 용어 섞임",
+        "5": "`.feature` 파일이 구현 세부 없이 도메인 언어로만 서술 (`.java` 파일은 이 축에서 제외)"
+      }
+    },
+    "mock_discipline": {
+      "weight": 0.15,
+      "scale": {
+        "1": "`.java` 파일이 순수 계산·상태전이를 Mock으로 감쌈",
+        "3": "외부 의존은 Mock하나 일부 과한 verify/stub",
+        "5": "`.java` 파일이 외부 의존만 Mock, 순수 로직은 실제 객체 상태검증 (`.feature` 파일은 이 축에서 제외)"
+      }
+    },
+    "independence_executability": {
+      "weight": 0.20,
+      "scale": {
+        "1": "시나리오·테스트가 순서·공유상태에 의존하거나 구현 불가",
+        "3": "대체로 독립·구현 가능하나 일부 공유 픽스처·시그니처 모호",
+        "5": "각 시나리오/테스트가 자기 입력만으로 독립 실행, 즉시 구현 가능(FIRST)"
+      }
+    }
+  },
+  "thresholds": {
+    "min_total": 3.8,
+    "min_axis": {
+      "coverage": 3.5,
+      "unambiguity": 3.5,
+      "behavioral_altitude": 3.0,
+      "mock_discipline": 3.0,
+      "independence_executability": 3.0
+    }
+  }
+}

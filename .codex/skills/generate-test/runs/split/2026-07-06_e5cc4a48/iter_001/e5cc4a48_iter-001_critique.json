@@ -1,0 +1,57 @@
+{
+  "brief_hash": "e5cc4a48",
+  "iteration": "001",
+  "summary": "현재 테스트는 정책 우선순위, 7일 무료 경계, PRORATION 절사, MANUAL 범위, 환불 가능 금액, 주문/환불 상태 전이를 넓게 고정하고 있다. 다만 일부 정책 조합은 개별 단위로만 검증되어 실제 환불 처리 흐름에서 잘못 연결돼도 놓칠 수 있고, 환불 상태 전이의 허용 출발 상태와 0원 환불 처리 같은 실패 경계가 약하다.",
+  "strengths": [
+    "MANUAL > 7일 무료 > PRORATION 우선순위를 명시적인 케이스로 고정해 정책 역전 위험을 줄였다.",
+    "UTC 날짜 기준 0일, 7일, 8일 경계를 Examples로 분리해 무료 환불 경계가 비교적 선명하다.",
+    "PRORATION의 당일 전액, 중간 일할, 마지막 날, 0일, 정수 나눗셈 절사 케이스를 포함해 산술 회귀를 잘 잡을 수 있다.",
+    "cancellableAmount = amount - canceledAmount 기준으로 FULL/PARTIAL 유형과 부분 환불 후 상태 전이를 함께 검증한다.",
+    "PG 결제 취소는 Mock으로 두고 성공, 명확한 거부, 결과 불확실 분기를 확인해 외부 의존 경계를 대체로 잘 지켰다."
+  ],
+  "weaknesses": [
+    {
+      "issue": "7일 이하 무료 정책으로 산출한 전액 환불이 실제 주문 적용까지 이어지는 흐름이 직접 검증되지 않는다.",
+      "why_it_matters": "동결 계약의 첫 시나리오는 7일 무료 정책 산출, FULL 유형, 주문 REFUNDED 전이를 한 흐름으로 묶는다. 현재는 무료 정책 계산 테스트와 주문 applyRefund 테스트가 분리되어 있어 서비스나 조립 코드가 무료 정책 결과를 잘못 적용해도 red가 되지 않을 수 있다.",
+      "suggestion": "MANUAL이 없는 7일 경계 입력으로 refundService 또는 동일한 애플리케이션 흐름을 실행해 환불금액 30000원, 유형 FULL, 환불 상태 SUCCEEDED, 주문 상태 REFUNDED, 누적 환불액 30000원을 한 테스트에서 단언하라.",
+      "severity": "medium"
+    },
+    {
+      "issue": "환불 상태 전이가 REQUESTED에서만 허용되는지에 대한 실패 케이스가 없다.",
+      "why_it_matters": "정책은 환불 상태를 REQUESTED -> SUCCEEDED/FAILED/TIMED_OUT로 정의한다. 현재 테스트는 REQUESTED에서 각 결과로 가는 정상 전이만 검증하므로, 이미 SUCCEEDED/FAILED/TIMED_OUT인 환불에 결제 취소 결과를 다시 적용하는 구현을 허용해도 테스트가 통과할 수 있다.",
+      "suggestion": "이미 최종 상태인 환불에 결제 취소 결과 도메인 사건을 적용하면 예외가 발생하거나 상태가 불변이라는 정책을 코드가 택한 방식대로 고정하는 실패 케이스를 추가하라.",
+      "severity": "medium"
+    },
+    {
+      "issue": "환불 가능 검증에서 환불금액 0원 또는 음수에 대한 기대가 명확히 고정되어 있지 않다.",
+      "why_it_matters": "PRORATION의 remainingDays == 0은 환불금액 0원을 산출하지만, MANUAL은 0 이하를 거절한다. 현재 validateRefundable은 양수 금액만 통과/초과 케이스로 다뤄서 0원 산출을 실제 환불 요청으로 허용할지, 산출만 허용하고 적용은 막을지 경계가 봉인되지 않는다.",
+      "suggestion": "정책 의도가 0원 PRORATION을 유효한 산출 결과로만 둘지 실제 환불 적용까지 허용할지 확인한 뒤, 근거가 있는 범위에서 validateRefundable/applyRefund/service 중 해당 경계 테스트를 추가하라.",
+      "severity": "medium"
+    }
+  ],
+  "revision_directions": [
+    "동결 Gherkin의 대표 end-to-end 도메인 흐름을 하나 이상 단위 테스트 조합으로 고정하라. 특히 7일 무료 전액 환불과 주문 REFUNDED 전이를 한 흐름에서 확인한다.",
+    "환불 상태 머신은 정상 전이뿐 아니라 최종 상태에서의 재전이 시도 같은 실패 경계를 추가해 상태 전이 방향을 닫아라.",
+    "0원 환불은 PRORATION 산출, 환불 가능 검증, 주문 적용 중 어느 단계까지 허용되는지 정책 근거에 맞춰 테스트 의도를 분리하라."
+  ],
+  "reader_risks": [
+    "계산기는 맞지만 서비스 조립이 잘못되어 무료 전액 환불 결과가 주문에 적용되지 않는 가짜 통과가 생길 수 있다.",
+    "환불 최종 상태에서 중복 결제 취소 결과를 다시 반영하는 구현이 테스트에 잡히지 않을 수 있다.",
+    "0원 PRORATION 산출이 실제 환불 요청이나 주문 상태 전이에 어떤 영향을 가져야 하는지 불명확해 구현마다 다른 해석이 통과할 수 있다."
+  ],
+  "critiqued_at": "2026-07-06T11:26:37+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "critique_system:v1",
+    "source_files": [
+      "e5cc4a48_input.json",
+      "e5cc4a48_iter-001_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 32244,
+      "cached_input_tokens": 2432,
+      "output_tokens": 1628,
+      "reasoning_output_tokens": 516
+    }
+  }
+}

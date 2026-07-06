@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Evaluator Output (bundled mode)",
+  "description": "codex --output-schema 전용. bundled 5축(계약+단위 합침)을 named/closed로 못박는다. 검증은 eval_output.schema.json(축-불가지론)+validate_eval_contract가 한다.",
+  "type": "object",
+  "required": ["brief_hash", "iteration", "rubric_name", "rubric_scores", "axis_rationales", "calibration_note"],
+  "properties": {
+    "brief_hash": { "type": "string" },
+    "iteration": { "type": "string" },
+    "rubric_name": { "type": "string" },
+    "rubric_scores": {
+      "type": "object",
+      "required": ["scores", "weights", "weighted_total"],
+      "properties": {
+        "scores": {
+          "type": "object",
+          "required": ["coverage", "unambiguity", "behavioral_altitude", "mock_discipline", "independence_executability"],
+          "properties": {
+            "coverage": { "type": "number", "minimum": 0, "maximum": 5 },
+            "unambiguity": { "type": "number", "minimum": 0, "maximum": 5 },
+            "behavioral_altitude": { "type": "number", "minimum": 0, "maximum": 5 },
+            "mock_discipline": { "type": "number", "minimum": 0, "maximum": 5 },
+            "independence_executability": { "type": "number", "minimum": 0, "maximum": 5 }
+          },
+          "additionalProperties": false
+        },
+        "weights": {
+          "type": "object",
+          "required": ["coverage", "unambiguity", "behavioral_altitude", "mock_discipline", "independence_executability"],
+          "properties": {
+            "coverage": { "type": "number", "minimum": 0, "maximum": 1 },
+            "unambiguity": { "type": "number", "minimum": 0, "maximum": 1 },
+            "behavioral_altitude": { "type": "number", "minimum": 0, "maximum": 1 },
+            "mock_discipline": { "type": "number", "minimum": 0, "maximum": 1 },
+            "independence_executability": { "type": "number", "minimum": 0, "maximum": 1 }
+          },
+          "additionalProperties": false
+        },
+        "weighted_total": { "type": "number", "minimum": 0, "maximum": 5 }
+      },
+      "additionalProperties": false
+    },
+    "axis_rationales": {
+      "type": "object",
+      "required": ["coverage", "unambiguity", "behavioral_altitude", "mock_discipline", "independence_executability"],
+      "properties": {
+        "coverage": { "type": "string" },
+        "unambiguity": { "type": "string" },
+        "behavioral_altitude": { "type": "string" },
+        "mock_discipline": { "type": "string" },
+        "independence_executability": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "calibration_note": { "type": "string" }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Pipeline Draft",
+  "type": "object",
+  "required": ["brief_hash", "iteration", "stage", "content", "files", "generated_at", "model"],
+  "properties": {
+    "brief_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{8,}$",
+      "description": "어떤 입력에서 나온 초안인지 연결하는 브리프 해시"
+    },
+    "iteration": {
+      "type": "string",
+      "pattern": "^[0-9]{3}$",
+      "description": "몇 번째 반복에서 만들어진 초안인지 나타내는 번호"
+    },
+    "stage": {
+      "type": "string",
+      "enum": ["gen", "refine"],
+      "description": "생성 주체. 최초 생성은 gen, 퇴고 생성은 refine"
+    },
+    "content": {
+      "type": "string",
+      "minLength": 1,
+      "description": "다음 단계(critique/eval/guard)가 읽을 초안 본문. files를 헤더로 이어붙인 텍스트 뷰다."
+    },
+    "files": {
+      "type": "array",
+      "minItems": 1,
+      "description": "초안의 파일 매니페스트. materialize가 이걸 실제 파일로 승격한다.",
+      "items": {
+        "type": "object",
+        "required": ["path", "content"],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "content": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "초안 생성 시각"
+    },
+    "model": {
+      "type": "string",
+      "minLength": 1,
+      "description": "초안을 만든 모델 또는 실행 프로필"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "재현성에 필요한 부가 정보. 내부 확장 허용",
+      "properties": {
+        "prompt_version": {
+          "type": "string",
+          "description": "초안 생성에 사용한 prompt 버전"
+        },
+        "source_files": {
+          "type": "array",
+          "description": "runner가 stage에 전달한 입력 파일 목록",
+          "items": {
+            "type": "string"
+          }
+        },
+        "token_usage": {
+          "type": "object",
+          "description": "비용과 품질 비교를 위한 토큰 사용량",
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

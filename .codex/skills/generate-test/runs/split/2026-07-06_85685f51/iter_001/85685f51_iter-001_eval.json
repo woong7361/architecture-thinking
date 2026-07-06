@@ -1,0 +1,42 @@
+{
+  "brief_hash": "85685f51",
+  "iteration": "001",
+  "rubric_name": "contract:v0",
+  "rubric_scores": {
+    "scores": {
+      "coverage": 4.8,
+      "unambiguity": 4.6,
+      "behavioral_altitude": 5,
+      "independence": 4.8
+    },
+    "weights": {
+      "coverage": 0.3,
+      "unambiguity": 0.3,
+      "behavioral_altitude": 0.2,
+      "independence": 0.2
+    },
+    "weighted_total": 4.78
+  },
+  "axis_rationales": {
+    "coverage": "열거 22개, 덮음 21개, 누락: [MANUAL 지정이 7일 초과 구간에서 PRORATION보다 우선하는 별도 케이스]; PRORATION 경계, 7일 무료 경계, 수동 금액 오류, 환불 가능 상태/불가 상태, 초과 환불, 환불 유형, 주문/환불 상태 전이는 모두 대응된다.",
+    "unambiguity": "대부분 금액·상태·경과일·예외 사유가 구체값으로 고정되어 결정적이나, 거절 Then은 예외타입보다 도메인 사유 문구 중심이라 약간의 해석 여지가 있다.",
+    "behavioral_altitude": "클래스명·메서드명·DB/API 세부 없이 주문, 환불, 정책, 도메인 사건 등 정책 언어로만 서술한다.",
+    "independence": "각 시나리오가 주문금액, 이미 환불된 금액, 상태, 시각, 정책 입력을 자체 Given으로 제공하며 실행 순서나 이전 시나리오 상태에 의존하지 않는다."
+  },
+  "calibration_note": "5점은 누락이 없고 예외 기대값까지 완전히 결정적인 경우로 제한했다; 이 초안은 정책 대부분을 촘촘히 덮지만 MANUAL 우선순위의 PRORATION 대비 케이스가 별도로 고정되지 않아 coverage를 소폭 감점했다.",
+  "evaluated_at": "2026-07-06T11:22:09+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_system:v1",
+    "source_files": [
+      "85685f51_input.json",
+      "85685f51_iter-001_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 28955,
+      "cached_input_tokens": 2432,
+      "output_tokens": 943,
+      "reasoning_output_tokens": 516
+    }
+  }
+}

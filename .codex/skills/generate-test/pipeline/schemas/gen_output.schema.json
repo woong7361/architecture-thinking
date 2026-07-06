@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Generator Direct Output",
+  "type": "object",
+  "required": ["files"],
+  "properties": {
+    "files": {
+      "type": "array",
+      "minItems": 1,
+      "description": "생성한 테스트 산출물의 파일 매니페스트. 각 항목이 실제 파일 하나로 승격된다.",
+      "items": {
+        "type": "object",
+        "required": ["path", "content"],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "description": "run_dir/artifact/ 기준 상대 경로. 예: RefundCalculatorTest.java, refund.feature. 절대경로·상위이동(..) 금지."
+          },
+          "content": {
+            "type": "string",
+            "minLength": 1,
+            "description": "그 파일의 전체 본문(여러 줄)."
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

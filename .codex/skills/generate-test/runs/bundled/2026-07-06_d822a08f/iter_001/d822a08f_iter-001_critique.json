@@ -1,0 +1,64 @@
+{
+  "brief_hash": "d822a08f",
+  "iteration": "001",
+  "summary": "정책 우선순위, 금액 산출 경계값, 주문 상태 전이를 폭넓게 고정한 초안이다. 다만 0원 환불의 후속 처리, Refund 상태 전이의 금지 경로, UTC 날짜 경계의 반대편 케이스가 약해 잘못된 구현이 일부 통과할 수 있다.",
+  "strengths": [
+    "MANUAL > 7일 이하 무료 > PRORATION 우선순위를 Gherkin과 단위 테스트 양쪽에서 명시적으로 다룬다.",
+    "PRORATION의 당일, 중간일, 마지막 날, 만료 후, 정수 나눗셈 절사 예시를 포함해 금액 산출 핵심 경계값을 잘 보존했다.",
+    "PAID와 PARTIALLY_REFUNDED의 환불 가능 상태, REFUNDED/PENDING/FAILED의 거절, 누적 환불액에 따른 주문 상태 전이를 분리해 읽기 쉽다.",
+    "외부 결제 취소 자체를 Mock으로 끌어오지 않고 Refund 상태 전이만 도메인 수준에서 다룬 점은 scope와 맞다."
+  ],
+  "weaknesses": [
+    {
+      "issue": "PRORATION 결과가 0원인 경우의 환불 유형과 주문 적용 가능 여부가 고정되어 있지 않다.",
+      "why_it_matters": "정책은 remainingDays == 0이면 환불금액 0원이라고 하면서, 환불 유형은 환불금액과 cancellableAmount 비교로 결정한다고 한다. 현재 PRORATION 테스트는 0원 금액만 확인하고, 0원이 PARTIAL인지, 주문에 적용 가능한지, 적용 시 상태와 누적 환불액이 어떻게 되는지는 막지 못한다.",
+      "suggestion": "remainingDays == 0으로 산출된 0원 환불에 대해 환불 유형과 주문 적용 결과를 별도 케이스로 고정하라. 정책상 0원 환불을 일반 환불에서도 금지하려는 의도라면 MANUAL 외 일반 환불금액 0원 금지 규칙을 정책에 먼저 명시한 뒤 거절 케이스로 추가하라.",
+      "severity": "medium"
+    },
+    {
+      "issue": "Refund 상태 전이는 허용 경로만 있고 금지 경로가 없다.",
+      "why_it_matters": "정책의 상태도는 REQUESTED에서 SUCCEEDED/FAILED/TIMED_OUT으로 끝나는 전이를 뜻한다. 현재 테스트는 REQUESTED에서 종료 상태로 가는 성공만 확인하므로, 이미 SUCCEEDED인 환불을 FAILED로 바꾸거나 REQUESTED로 다시 완료 처리하는 구현도 테스트를 통과할 수 있다.",
+      "suggestion": "Refund가 SUCCEEDED, FAILED, TIMED_OUT 같은 종료 상태에 도달한 뒤 다시 상태를 바꾸려 하면 예외가 나는 케이스를 추가하라. API가 허용한다면 completeAs(REQUESTED)처럼 종료 상태가 아닌 값으로 완료 처리하는 입력도 거절하도록 고정하라.",
+      "severity": "medium"
+    },
+    {
+      "issue": "UTC 날짜 기준 경과일 계산은 일부 대표값만 있어 시/분/초 제거를 깨는 구현을 충분히 잡지 못한다.",
+      "why_it_matters": "제약은 UTC 날짜 기준이며 시/분/초 제거라고 되어 있다. 현재 테스트는 무료 기간 내부와 8일 이후를 다루지만, 같은 절대 시간 차이처럼 보이는 입력에서 날짜 차이만으로 7일/8일이 갈리는 반대편 경계를 충분히 묶어 보여주지 않는다.",
+      "suggestion": "요청 시각과 결제 시각의 시/분/초가 경계에 걸리는 7일과 8일 케이스를 짝으로 추가하라. 예를 들어 UTC 날짜로는 7일 차라 전액이어야 하는 케이스와 UTC 날짜로는 8일 차라 PRORATION이어야 하는 케이스를 같은 테스트 그룹에서 비교하라.",
+      "severity": "medium"
+    },
+    {
+      "issue": "Gherkin의 실패 Then이 오류 종류 문자열에만 기대고 있어 어떤 상태나 금액이 보존되어야 하는지 약하다.",
+      "why_it_matters": "환불 가능 검증 실패나 금액 산출 실패에서 단순히 거절 문자열만 확인하면, 실패 전에 주문 상태나 이미 환불된 금액을 변경하는 구현을 잡지 못할 수 있다. 인수 계약은 실패 시 부작용이 없다는 도메인 기대를 더 잘 드러내야 한다.",
+      "suggestion": "거절 시나리오의 Then에 주문 상태와 이미 환불된 금액이 변경되지 않았음을 추가하라. 단위 테스트에서도 예외 발생 후 기존 Order의 status, canceledAmount, cancellableAmount가 유지되는지 확인하라.",
+      "severity": "low"
+    }
+  ],
+  "revision_directions": [
+    "0원 PRORATION 결과를 금액 산출에서 끝내지 말고 RefundType 결정과 Order 적용까지 이어지는 케이스로 보강한다.",
+    "Refund 상태 전이 테스트에 종료 상태 이후 재전이 금지와 비종료 값 완료 처리 금지를 추가한다.",
+    "UTC 날짜 경계는 7일/8일 쌍으로 구성해 시/분/초가 아니라 UTC 날짜 차이로 판정된다는 점을 더 강하게 고정한다.",
+    "거절 시나리오는 오류 발생 여부뿐 아니라 관련 도메인 객체 상태가 변경되지 않는다는 기대를 함께 단언한다."
+  ],
+  "reader_risks": [
+    "0원 환불을 잘못 FULL로 분류하거나 주문 상태를 PARTIALLY_REFUNDED로 바꾸는 구현이 가짜로 통과할 수 있다.",
+    "Refund가 종료 상태에서 다시 바뀌는 회귀를 놓쳐 운영상 환불 이력이 덮이는 결함을 발견하지 못할 수 있다.",
+    "UTC 날짜가 아니라 Instant 차이나 로컬 날짜로 경과일을 계산하는 구현이 일부 경계 테스트를 피해 통과할 수 있다.",
+    "실패 케이스에서 예외는 던지지만 주문의 누적 환불액이나 상태를 먼저 변경하는 구현이 봉인된 단언 없이 통과할 수 있다."
+  ],
+  "critiqued_at": "2026-07-06T12:02:25+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "critique_system:v1",
+    "source_files": [
+      "d822a08f_input.json",
+      "d822a08f_iter-001_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 34707,
+      "cached_input_tokens": 2432,
+      "output_tokens": 1837,
+      "reasoning_output_tokens": 516
+    }
+  }
+}
