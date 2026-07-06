@@ -26,10 +26,10 @@
 
 | 무엇 | 경로 |
 |------|------|
-| 순수 로직 — 대상 코드 | `task1/task1-3-history/src/main/java/com/thinking/payment/Proration.java`, `RefundCalculator.java` |
-| 순수 로직 — 테스트 | `task1/task1-3-history/src/test/java/com/thinking/payment/ProrationTest.java`, `RefundCalculatorTest.java` |
-| Mockito — 대상 코드 | `task1/task1-3-history/src/main/java/com/thinking/payment/RefundService.java` (+ 포트 `PgClient.java`) |
-| Mockito — 테스트 | `task1/task1-3-history/src/test/java/com/thinking/payment/RefundServiceTest.java` |
+| 순수 로직 — 대상 코드 | [task1/task1-3-history/src/main/java/com/thinking/payment/Proration.java](https://github.com/woong7361/architecture-thinking/blob/main/task1/task1-3-history/src/main/java/com/thinking/payment/Proration.java), [RefundCalculator.java](https://github.com/woong7361/architecture-thinking/blob/main/task1/task1-3-history/src/main/java/com/thinking/payment/RefundCalculator.java) |
+| 순수 로직 — 테스트 | [task1/task1-3-history/src/test/java/com/thinking/payment/ProrationTest.java](https://github.com/woong7361/architecture-thinking/blob/main/task1/task1-3-history/src/test/java/com/thinking/payment/ProrationTest.java), [RefundCalculatorTest.java](https://github.com/woong7361/architecture-thinking/blob/main/task1/task1-3-history/src/test/java/com/thinking/payment/RefundCalculatorTest.java) |
+| Mockito — 대상 코드 | [task1/task1-3-history/src/main/java/com/thinking/payment/RefundService.java](https://github.com/woong7361/architecture-thinking/blob/main/task1/task1-3-history/src/main/java/com/thinking/payment/RefundService.java) (+ 포트 [PgClient.java](https://github.com/woong7361/architecture-thinking/blob/main/task1/task1-3-history/src/main/java/com/thinking/payment/PgClient.java)) |
+| Mockito — 테스트 | [task1/task1-3-history/src/test/java/com/thinking/payment/RefundServiceTest.java](https://github.com/woong7361/architecture-thinking/blob/main/task1/task1-3-history/src/test/java/com/thinking/payment/RefundServiceTest.java) |
 
 ---
 
@@ -65,7 +65,7 @@ int dailyRate = (int) Math.round((double) price / totalDays); // 결함
 
 **결과**: 처음엔 **안 잡힘**(11개 초록 그대로). 기존 데이터가 전부 딱 떨어지거나(`30000/30`) 소수부 .33이라(`10000/30→333`) 반올림해도 값이 같았다. → 소수부 .67인 `"20000, 30, 20, 6660"` 한 점을 보태니 **Red**(`expected: 6660 but was: 6670`).
 
-확인 후 코드는 버림으로 원복, 보탠 단언은 유지(11→12개 초록). 상세는 `task1-3-history/tdd-log.md` 결함 표 #1.
+확인 후 코드는 버림으로 원복, 보탠 단언은 유지(11→12개 초록). 상세는 [task1-3-history/tdd-log.md](https://github.com/woong7361/architecture-thinking/blob/main/task1/task1-3-history/tdd-log.md) 결함 표 #1.
 
 ---
 
@@ -73,8 +73,8 @@ int dailyRate = (int) Math.round((double) price / totalDays); // 결함
 
 | 무엇 | 파일 · 위치 |
 |------|-----------|
-| Mock 대상(포트) | `src/main/.../PgClient.java` — 우리가 정의한 인터페이스(포트) |
-| Mock 선언 | `RefundServiceTest.java:22-23` (`@Mock private PgClient pg;`), 이유 주석 `:21` |
+| Mock 대상(포트) | [src/main/.../PgClient.java](https://github.com/woong7361/architecture-thinking/blob/main/task1/task1-3-history/src/main/java/com/thinking/payment/PgClient.java) — 우리가 정의한 인터페이스(포트) |
+| Mock 선언 | [RefundServiceTest.java:22-23](https://github.com/woong7361/architecture-thinking/blob/main/task1/task1-3-history/src/test/java/com/thinking/payment/RefundServiceTest.java#L22-L23) (`@Mock private PgClient pg;`), 이유 주석 `:21` |
 
 ### 왜 `PgClient`에만 끼웠나
 

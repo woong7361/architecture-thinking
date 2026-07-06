@@ -18,16 +18,16 @@
 - B(task1-4-history-B): 구현을 먼저 하고 인수테스트를 나중에 돌렸다.
 
 # A 구현 (인수테스트 18/18 통과)
-- Feature:         task1/task1-4-history-A/src/test/resources/features/refund.feature
-- Step Definition: task1/task1-4-history-A/src/test/java/com/thinking/payment/steps/RefundStepDefinitions.java
-- 실행 진입점:      task1/task1-4-history-A/src/test/java/com/thinking/payment/CucumberAcceptanceTest.java
-- 도메인 코드:      task1/task1-4-history-A/src/main/java/com/thinking/payment/
+- Feature:         https://github.com/woong7361/architecture-thinking/blob/main/task1/task1-4-history-A/src/test/resources/features/refund.feature
+- Step Definition: https://github.com/woong7361/architecture-thinking/blob/main/task1/task1-4-history-A/src/test/java/com/thinking/payment/steps/RefundStepDefinitions.java
+- 실행 진입점:      https://github.com/woong7361/architecture-thinking/blob/main/task1/task1-4-history-A/src/test/java/com/thinking/payment/CucumberAcceptanceTest.java
+- 도메인 코드:      https://github.com/woong7361/architecture-thinking/tree/main/task1/task1-4-history-A/src/main/java/com/thinking/payment/
 
 # B 구현 (16/18, 플랫폼 거절 2개 실패)
-- Feature:         task1/task1-4-history-B/src/test/resources/features/refund.feature
-- Step Definition: task1/task1-4-history-B/src/test/java/com/thinking/payment/steps/RefundFeatureStepDefinitions.java
-- 실행 진입점:      task1/task1-4-history-B/src/test/java/com/thinking/payment/CucumberAcceptanceTest.java
-- 도메인 코드:      task1/task1-4-history-B/src/main/java/com/thinking/payment/domain/
+- Feature:         https://github.com/woong7361/architecture-thinking/blob/main/task1/task1-4-history-B/src/test/resources/features/refund.feature
+- Step Definition: https://github.com/woong7361/architecture-thinking/blob/main/task1/task1-4-history-B/src/test/java/com/thinking/payment/steps/RefundFeatureStepDefinitions.java
+- 실행 진입점:      https://github.com/woong7361/architecture-thinking/blob/main/task1/task1-4-history-B/src/test/java/com/thinking/payment/CucumberAcceptanceTest.java
+- 도메인 코드:      https://github.com/woong7361/architecture-thinking/tree/main/task1/task1-4-history-B/src/main/java/com/thinking/payment/domain/
 ```
 
 - [ ]  'Unhappy Path를 먼저 떠올린 과정'을 적어 주세요. 실패 시나리오를 떠올리는 근육이 곧 검증 역량입니다. (최소 300자)

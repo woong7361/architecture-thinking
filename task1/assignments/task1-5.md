@@ -27,19 +27,19 @@
 
 ### 파이프라인 코드 · 프롬프트 · 스키마 · 루브릭
 
-- 파이프라인 골격: [.codex/skills/generate-test/pipeline/runner.py](../../.codex/skills/generate-test/pipeline/runner.py) — `--mode {contract,unit,bundled}`가 gen 프롬프트·rubric·runs 그룹을 함께 고른다. 그 외 `intake_to_input.py`, `validate.py`, `run_draft.py`, `stages/` 동일 디렉토리.
-- 오케스트레이션(동결 게이트 포함): [.codex/skills/generate-test/SKILL.md](../../.codex/skills/generate-test/SKILL.md)
-- 프롬프트: [.codex/skills/generate-test/pipeline/prompts/](../../.codex/skills/generate-test/pipeline/prompts/)
+- 파이프라인 골격: [.codex/skills/generate-test/pipeline/runner.py](https://github.com/woong7361/architecture-thinking/blob/main/.codex/skills/generate-test/pipeline/runner.py) — `--mode {contract,unit,bundled}`가 gen 프롬프트·rubric·runs 그룹을 함께 고른다. 그 외 `intake_to_input.py`, `validate.py`, `run_draft.py`, `stages/` 동일 디렉토리.
+- 오케스트레이션(동결 게이트 포함): [.codex/skills/generate-test/SKILL.md](https://github.com/woong7361/architecture-thinking/blob/main/.codex/skills/generate-test/SKILL.md)
+- 프롬프트: [.codex/skills/generate-test/pipeline/prompts/](https://github.com/woong7361/architecture-thinking/tree/main/.codex/skills/generate-test/pipeline/prompts/)
   - Gen(모드별): `gen_contract.md` · `gen_unit.md` · `gen_bundled.md`
   - 공유 3단: `critique_system.md` · `eval_system.md` · `refine_system.md`
-- 스키마: [.codex/skills/generate-test/pipeline/schemas/](../../.codex/skills/generate-test/pipeline/schemas/)
+- 스키마: [.codex/skills/generate-test/pipeline/schemas/](https://github.com/woong7361/architecture-thinking/tree/main/.codex/skills/generate-test/pipeline/schemas/)
   - 입력/산출: `input.schema.json` · `gen_output.schema.json` · `final.schema.json`
   - eval(축-불가지론 + 모드별 closed): `eval.schema.json` · `eval_output.{contract,unit,bundled}.schema.json`
-- 루브릭: [.codex/skills/generate-test/pipeline/rubrics/](../../.codex/skills/generate-test/pipeline/rubrics/) — `contract.rubric.yaml` · `unit.rubric.yaml` · `bundled.rubric.yaml`
+- 루브릭: [.codex/skills/generate-test/pipeline/rubrics/](https://github.com/woong7361/architecture-thinking/tree/main/.codex/skills/generate-test/pipeline/rubrics/) — `contract.rubric.yaml` · `unit.rubric.yaml` · `bundled.rubric.yaml`
 
 ### 실행 로그 · 수렴 기록
 
-split run 그룹 루트: [.codex/skills/generate-test/runs/split/2026-07-06_f1ba346d/](../../.codex/skills/generate-test/runs/split/2026-07-06_f1ba346d/)
+split run 그룹 루트: [.codex/skills/generate-test/runs/split/2026-07-06_f1ba346d/](https://github.com/woong7361/architecture-thinking/tree/main/.codex/skills/generate-test/runs/split/2026-07-06_f1ba346d/)
 
 | 스트림 | 경로 | iteration별 로그 | 수렴 |
 |---|---|---|---|
