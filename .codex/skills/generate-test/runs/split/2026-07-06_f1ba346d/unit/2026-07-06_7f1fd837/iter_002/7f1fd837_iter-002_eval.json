@@ -1,0 +1,42 @@
+{
+  "brief_hash": "7f1fd837",
+  "iteration": "002",
+  "rubric_name": "unit:v1",
+  "rubric_scores": {
+    "scores": {
+      "coverage": 5,
+      "unambiguity": 3,
+      "mock_discipline": 5,
+      "executability": 4
+    },
+    "weights": {
+      "coverage": 0.3,
+      "unambiguity": 0.25,
+      "mock_discipline": 0.25,
+      "executability": 0.2
+    },
+    "weighted_total": 4.3
+  },
+  "axis_rationales": {
+    "coverage": "열거 30개, 누락 0개: []; MANUAL 우선·0/-1·초과, 7일 무료 0/7/8, UTC 날짜 절단 7/8, PRORATION 전액/중간/마지막날/0원/절사/totalDays<=0, 환불유형 FULL/PARTIAL, 주문상태 PAID/PARTIALLY_REFUNDED/REFUNDED/PENDING/FAILED, 주문 전이 4종, 환불 REQUESTED/SUCCEEDED/FAILED/TIMED_OUT 및 실패·타임아웃 주문 미변경이 매핑된다.",
+    "unambiguity": "대부분 구체값 단언이지만 calculatedRefundAmount 파라미터에 대한 isGreaterThan은 SUT 결과가 아닌 fixture 단언이고, never().cancel(order, amount)는 다른 금액 호출을 봉인하지 못해 최대 3에 걸린다.",
+    "mock_discipline": "Mock은 외부 의존인 PaymentCancellationGateway에만 사용하고 계산·주문·환불 상태 전이는 실제 객체 상태로 검증한다.",
+    "executability": "JUnit5+Mockito+AssertJ 구조와 입력·기대값은 명확하나, 도메인 API 시그니처를 테스트가 꽤 구체적으로 선점하고 있어 구현 쪽에서 소폭 보완이 필요할 수 있다."
+  },
+  "calibration_note": "coverage는 누락 0개와 핵심 경계 쌍 검증으로 높게 보되, unambiguity는 느슨·비봉인 단언 캡을 엄격히 적용했다.",
+  "evaluated_at": "2026-07-06T15:22:14+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_system:v1",
+    "source_files": [
+      "7f1fd837_input.json",
+      "7f1fd837_iter-002_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 131836,
+      "cached_input_tokens": 85632,
+      "output_tokens": 3800,
+      "reasoning_output_tokens": 3119
+    }
+  }
+}

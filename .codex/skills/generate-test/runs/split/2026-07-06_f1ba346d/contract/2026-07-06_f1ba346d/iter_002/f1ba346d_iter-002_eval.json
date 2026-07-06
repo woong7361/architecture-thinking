@@ -1,0 +1,42 @@
+{
+  "brief_hash": "f1ba346d",
+  "iteration": "002",
+  "rubric_name": "contract:v1",
+  "rubric_scores": {
+    "scores": {
+      "coverage": 4.0,
+      "unambiguity": 4.0,
+      "behavioral_altitude": 4.0,
+      "independence": 5.0
+    },
+    "weights": {
+      "coverage": 0.3,
+      "unambiguity": 0.3,
+      "behavioral_altitude": 0.2,
+      "independence": 0.2
+    },
+    "weighted_total": 4.3
+  },
+  "axis_rationales": {
+    "coverage": "열거 25개, 누락 0개: []. 매핑: MANUAL 우선, 무료 0/7/8일, UTC 날짜 절삭, PRORATION 전액/중간/마지막날/만료/절사/totalDays<=0, manual<=0, 초과환불, PAID/PARTIALLY 가능, REFUNDED/PENDING/FAILED 거절, FULL/PARTIAL 유형, 주문 상태 4전이, Refund SUCCEEDED/FAILED/TIMED_OUT 모두 포함. 다만 manual exact-full 산출과 일부 경계는 별도 안/밖 짝이 약해 5점은 아님.",
+    "unambiguity": "금액·상태·예외 타입이 대부분 구체값으로 봉인되어 있으나, '결제 취소 결과는 도메인 사건으로만 주어진다', '거절된 경우 도메인 오류는 없음' 같은 일부 표현은 실행 스텝 정의에 의존해 약간 느슨하다.",
+    "behavioral_altitude": "클래스명·메서드명·필드 같은 구현 세부는 노출하지 않고 주문, 환불, 결제 취소 결과, 도메인 오류 중심으로 서술한다. 다만 UTC 시각·REQUESTED 같은 기술/상태 표현은 정책 용어라 허용 가능한 수준이다.",
+    "independence": "각 Scenario/Outline이 주문금액, 기존 환불금액, 주문상태, 날짜, 금액을 모두 자체 Given/Examples로 제공해 실행 순서나 이전 시나리오 상태에 의존하지 않는다."
+  },
+  "calibration_note": "평균 3.0 기준의 엄격 게이트로 보정했다. 누락은 없지만 coverage는 일부 핵심 경계의 삼각측량이 완전하지 않아 4점으로 제한했고, weighted_total은 0.3*4.0 + 0.3*4.0 + 0.2*4.0 + 0.2*5.0 = 4.3이다.",
+  "evaluated_at": "2026-07-06T15:07:47+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_system:v1",
+    "source_files": [
+      "f1ba346d_input.json",
+      "f1ba346d_iter-002_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 33201,
+      "cached_input_tokens": 2432,
+      "output_tokens": 1068,
+      "reasoning_output_tokens": 516
+    }
+  }
+}

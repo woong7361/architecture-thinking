@@ -1,0 +1,56 @@
+{
+  "brief_hash": "7f1fd837",
+  "iteration": "003",
+  "summary": "현재 draft는 정책 우선순위, UTC 날짜 경계, PRORATION 산술, 환불 가능 금액, 주문/환불 상태 전이의 핵심 축을 대부분 단위 테스트로 고정하고 있다. 다만 오케스트레이션 계층에서 환불 불가 주문을 외부 결제 취소 전에 차단하는 케이스와 일부 입력 경계가 아직 약하다.",
+  "strengths": [
+    "MANUAL > 7일 이하 무료 > PRORATION 우선순위를 계산 단위와 서비스 흐름 양쪽에서 검증해 정책 충돌 가능성을 잘 줄였다.",
+    "UTC 시분초 제거 기준을 별도 파라미터 테스트로 분리해 7일/8일 경계가 잘못 구현되면 red가 되도록 했다.",
+    "PRORATION의 정수 일할 단가, 잔여일 30/15/1/0, 소수점 절사 예시를 명시적으로 고정했다.",
+    "결제 취소 실패와 결과 불확실 시 환불 상태만 바뀌고 주문 누적 환불 금액과 주문 상태가 유지되는 흐름을 서비스 테스트로 검증한다."
+  ],
+  "weaknesses": [
+    {
+      "issue": "RefundApplicationServiceTest가 REFUNDED, PENDING, FAILED 주문에 대한 환불 요청을 외부 결제 취소 전에 거절하는지 검증하지 않는다.",
+      "why_it_matters": "OrderTest는 도메인 객체 단위의 환불 가능 여부를 검증하지만, 서비스가 계산 후 gateway.cancel을 먼저 호출하거나 잘못된 순서로 orchestration해도 현재 서비스 테스트만으로는 놓칠 수 있다. 정책은 PAID와 PARTIALLY_REFUNDED만 환불 가능하고 결제 취소는 scope 밖 외부 의존이라고 명시한다.",
+      "suggestion": "서비스 테스트에 REFUNDED, PENDING, FAILED 주문으로 refund를 호출했을 때 ORDER_NOT_REFUNDABLE이 발생하고, 주문 상태/누적 환불 금액이 유지되며, paymentCancellationGateway에는 상호작용이 없음을 검증하는 파라미터 케이스를 추가한다.",
+      "severity": "high"
+    },
+    {
+      "issue": "PRORATION 입력에서 remainingDays가 totalDays를 초과하거나 음수인 경우가 검증되지 않는다.",
+      "why_it_matters": "정책은 잔여 일수 기반 산술과 totalDays <= 0 예외를 고정하지만, 잔여 일수 자체의 유효 범위는 테스트가 봉인하지 않는다. 구현이 remainingDays=-1을 음수 환불금액으로 만들거나 remainingDays>totalDays를 초과 환불로 처리해도 정책 의도와 충돌할 가능성이 있다.",
+      "suggestion": "정책/원문에 잔여 일수의 허용 범위 근거가 있다면 remainingDays < 0, remainingDays > totalDays를 도메인 오류로 고정하는 계산 테스트를 추가한다. 근거가 없다면 이 경계를 정책 보완 후보로 분리한다.",
+      "severity": "medium"
+    },
+    {
+      "issue": "Refund 엔티티의 최종 상태 이후 재전이 가능 여부가 테스트로 고정되지 않는다.",
+      "why_it_matters": "정책의 상태 다이어그램은 REQUESTED에서 SUCCEEDED, FAILED, TIMED_OUT으로 전이되는 단방향 흐름을 보여준다. 현재 테스트는 REQUESTED에서 한 번 complete되는 happy/branch path만 확인하므로, SUCCEEDED 이후 FAILED로 바뀌는 구현 같은 상태 무결성 결함을 잡지 못할 수 있다.",
+      "suggestion": "정책이 최종 상태의 재전이를 금지한다는 의미라면 SUCCEEDED, FAILED, TIMED_OUT 상태에서 complete를 다시 호출할 때 도메인 오류가 발생하고 기존 상태가 유지되는 케이스를 추가한다. 정책이 의도적으로 재전이를 허용한다면 그 결정을 명시한다.",
+      "severity": "medium"
+    }
+  ],
+  "revision_directions": [
+    "서비스 오케스트레이션 테스트에서 환불 불가 주문 상태가 외부 결제 취소 호출 전에 차단되는지 우선 보강한다.",
+    "잔여 일수의 유효 범위를 정책 근거와 맞춰 명시하고, 근거가 확인되면 음수/총일수 초과 경계를 계산 테스트에 추가한다.",
+    "Refund 상태 전이가 REQUESTED에서만 가능한지 정책 의도를 확인한 뒤, terminal state 재전이 방지 테스트를 추가하거나 의도적 허용으로 남긴다."
+  ],
+  "reader_risks": [
+    "서비스가 환불 불가 주문에도 외부 결제 취소를 호출하는 구현이 들어와도 일부 테스트는 통과할 수 있다.",
+    "잔여 일수 비정상 입력이 음수 환불금액이나 주문금액 초과 환불금액으로 흘러가는 결함이 봉인되지 않을 수 있다.",
+    "환불 최종 상태가 이후 다른 최종 상태로 덮이는 구현이 들어와도 현재 RefundTest는 이를 감지하지 못할 수 있다."
+  ],
+  "critiqued_at": "2026-07-06T15:25:20+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "critique_system:v1",
+    "source_files": [
+      "7f1fd837_input.json",
+      "7f1fd837_iter-003_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 43300,
+      "cached_input_tokens": 2432,
+      "output_tokens": 1594,
+      "reasoning_output_tokens": 516
+    }
+  }
+}

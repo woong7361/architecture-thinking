@@ -1,0 +1,58 @@
+{
+  "brief_hash": "7f1fd837",
+  "iteration": "001",
+  "summary": "정책 우선순위, UTC 날짜 경계, PRORATION 절사, 주문 상태 전이, 결제 취소 성공/거부/불확실 분기를 넓게 고정한 초안이다. 다만 환불 가능 금액 초과 검증이 MANUAL 중심으로 치우쳐 있고, 서비스 레벨 성공 경로가 부분 수동 환불에만 머물러 계약의 대표 성공 시나리오 일부가 약하다.",
+  "strengths": [
+    "MANUAL > 7일 이하 무료 > PRORATION 우선순위를 별도 테스트로 분리해 정책 의도를 보존하고 있다.",
+    "7일 무료 경계를 0일, 7일, 8일과 UTC 시분초 제거 사례로 검증해 날짜 기준 오류를 잡을 수 있다.",
+    "PRORATION의 remainingDays 30, 15, 1, 0 및 10000/30*7 절사 사례를 포함해 산술 경계값이 비교적 촘촘하다.",
+    "주문 상태별 환불 가능 여부와 성공 시 누적 환불 금액 기반 상태 전이를 별도 Order 테스트로 고정한 점은 좋다.",
+    "결제 취소 외부 의존만 Mockito로 격리하고 순수 도메인 계산과 엔티티 전이는 실제 객체로 검증해 Mock 남용 위험이 낮다."
+  ],
+  "weaknesses": [
+    {
+      "issue": "MANUAL이 아닌 7일 무료·PRORATION 산출액이 환불 가능 금액을 초과하는 케이스가 빠져 있다.",
+      "why_it_matters": "정책과 frozen contract에는 부분 환불된 주문에서 7일 무료 전액 환불 또는 PRORATION 결과가 cancellableAmount를 넘으면 도메인 오류가 되어야 한다는 예가 있다. 현재 초안은 초과 검증을 MANUAL 지정 금액에만 강하게 걸어, 자동 산출 경로에서 이미 환불된 금액을 무시하는 구현이 가짜 통과할 수 있다.",
+      "suggestion": "RefundCalculatorTest에 PARTIALLY_REFUNDED 주문에서 MANUAL 없음, 경과일 7일 이하로 전액 산출되는 경우와 경과일 8일 이후 PRORATION 산출액이 환불 가능 금액을 초과하는 경우를 추가하고 REFUND_AMOUNT_EXCEEDS_CANCELLABLE 및 주문 불변을 검증한다.",
+      "severity": "high"
+    },
+    {
+      "issue": "RefundApplicationServiceTest의 성공 경로가 MANUAL 부분 환불 하나만 다루어 대표 계약 성공 시나리오를 충분히 고정하지 못한다.",
+      "why_it_matters": "frozen contract의 첫 시나리오는 7일 이하 무료 환불 성공 시 FULL, SUCCEEDED, 누적 환불금액 전액, 주문 REFUNDED 전이를 요구한다. 현재 서비스 테스트는 SUCCESS여도 10000원 PARTIAL만 검증하므로 계산 정책과 결제 취소 성공 후 상태 적용이 함께 연결되는 전액 성공 경로의 회귀를 놓칠 수 있다.",
+      "suggestion": "서비스 레벨에 MANUAL 없는 7일 이하 무료 환불 성공 사례를 추가해 refund.amount=30000, type=FULL, status=SUCCEEDED, order.refundedAmount=30000, order.status=REFUNDED, gateway.cancel(order, 30000) 호출을 검증한다.",
+      "severity": "medium"
+    },
+    {
+      "issue": "환불 상태 전이가 REQUESTED에서만 최종 상태로 갈 수 있다는 제약이 약하게 표현되어 있다.",
+      "why_it_matters": "정책의 환불 상태 다이어그램은 REQUESTED에서 SUCCEEDED/FAILED/TIMED_OUT로 갈라지는 구조다. 현재 RefundTest는 REQUESTED 생성 후 complete 한 번만 확인하므로 이미 SUCCEEDED, FAILED, TIMED_OUT가 된 환불에 다시 complete를 호출하는 잘못된 중복 전이 허용 구현을 잡지 못할 가능성이 있다.",
+      "suggestion": "정책/원문에 최종 상태 이후 재전이 금지가 도메인 불변식으로 인정된다면, SUCCEEDED/FAILED/TIMED_OUT 상태에서 complete 재호출 시 도메인 오류 또는 상태 불변을 검증하는 경계 테스트를 추가한다.",
+      "severity": "medium"
+    }
+  ],
+  "revision_directions": [
+    "비MANUAL 자동 산출 경로에서도 계산된 환불금액이 cancellableAmount를 넘는지 검증하는 실패 케이스를 우선 추가한다.",
+    "서비스 레벨 테스트에 7일 이하 무료 전액 환불 성공 경로를 추가해 frozen contract의 대표 happy path를 하나의 흐름으로 고정한다.",
+    "환불 엔티티의 최종 상태 재전이 규칙이 정책 의도라면 REQUESTED 이후 중복 완료 처리에 대한 실패 또는 불변 테스트를 보강한다.",
+    "기존 장점인 UTC 날짜 경계, PRORATION 절사, 주문 상태 전이의 파라미터화 구조는 유지한다."
+  ],
+  "reader_risks": [
+    "자동 산출 경로가 이미 환불된 금액을 고려하지 않고 전액 또는 과다 금액을 반환해도 현재 테스트 일부는 통과할 수 있다.",
+    "서비스 오케스트레이션이 FULL 환불 성공 시 주문을 REFUNDED로 바꾸지 못하거나 PG 취소 요청 금액을 잘못 넘겨도 부분 수동 환불 테스트만으로는 드러나지 않을 수 있다.",
+    "환불 최종 상태가 여러 번 바뀌는 구현이 허용되면 결제 취소 결과 재처리나 중복 이벤트 상황에서 도메인 상태가 흔들릴 수 있다."
+  ],
+  "critiqued_at": "2026-07-06T15:17:44+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "critique_system:v1",
+    "source_files": [
+      "7f1fd837_input.json",
+      "7f1fd837_iter-001_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 38174,
+      "cached_input_tokens": 2432,
+      "output_tokens": 1721,
+      "reasoning_output_tokens": 516
+    }
+  }
+}

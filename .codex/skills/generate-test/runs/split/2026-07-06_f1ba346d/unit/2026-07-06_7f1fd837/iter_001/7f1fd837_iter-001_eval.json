@@ -1,0 +1,42 @@
+{
+  "brief_hash": "7f1fd837",
+  "iteration": "001",
+  "rubric_name": "unit:v1",
+  "rubric_scores": {
+    "scores": {
+      "coverage": 1,
+      "unambiguity": 5,
+      "mock_discipline": 5,
+      "executability": 4
+    },
+    "weights": {
+      "coverage": 0.3,
+      "unambiguity": 0.25,
+      "mock_discipline": 0.25,
+      "executability": 0.2
+    },
+    "weighted_total": 3.6
+  },
+  "axis_rationales": {
+    "coverage": "열거 24개, 누락 2개: [MANUAL이 없는 7일 이하 무료 전액 환불액이 부분환불 주문의 환불 가능 금액을 초과하면 산출/요청이 거절되는 케이스, MANUAL이 없는 PRORATION 산출액이 부분환불 주문의 환불 가능 금액을 초과하면 산출/요청이 거절되는 케이스]; 덮은 항목은 MANUAL 우선순위, MANUAL 0/-1, MANUAL 초과, 무료 0/7/8일, UTC 날짜 절단 7/8일, PRORATION 전액/중간/마지막날/0원/floor/totalDays<=0, 환불 유형 FULL/PARTIAL, 환불 가능 상태 PAID/PARTIALLY_REFUNDED와 불가 상태 REFUNDED/PENDING/FAILED, 주문 상태 4개 전이, 결제 취소 성공/거부/불확실 전이이다.",
+    "unambiguity": "모든 핵심 검증이 AssertJ의 구체 값 비교나 예외 타입/코드 비교로 작성되어 있고 null·범위·항상 참 단언 같은 봉인되지 않은 느슨한 단언이 보이지 않는다.",
+    "mock_discipline": "Mock은 scope 밖 외부 의존인 PaymentCancellationGateway에만 사용했고 환불 계산, 주문 상태 전이, 환불 상태 전이는 실제 객체 상태로 검증한다.",
+    "executability": "JUnit5, Mockito, AssertJ 기반 입력과 기대값은 명확하지만 RefundCalculator/RefundApplicationService/RefundRequest 등의 세부 시그니처를 생성 테스트가 선제 정의하는 면이 있어 기존 코드 없이 즉시 컴파일 가능하다고 보긴 어렵다."
+  },
+  "calibration_note": "coverage는 누락 2개 이상이므로 rubric 캡에 따라 1점으로 제한했다. 나머지 축은 캡 조건에 걸리지 않았다.",
+  "evaluated_at": "2026-07-06T15:18:08+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_system:v1",
+    "source_files": [
+      "7f1fd837_input.json",
+      "7f1fd837_iter-001_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 39655,
+      "cached_input_tokens": 2432,
+      "output_tokens": 1038,
+      "reasoning_output_tokens": 516
+    }
+  }
+}

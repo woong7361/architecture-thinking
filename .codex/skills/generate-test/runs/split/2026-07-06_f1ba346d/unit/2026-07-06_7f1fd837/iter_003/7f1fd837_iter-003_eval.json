@@ -1,0 +1,42 @@
+{
+  "brief_hash": "7f1fd837",
+  "iteration": "003",
+  "rubric_name": "unit:v1",
+  "rubric_scores": {
+    "scores": {
+      "coverage": 5,
+      "unambiguity": 4.5,
+      "mock_discipline": 5,
+      "executability": 4
+    },
+    "weights": {
+      "coverage": 0.3,
+      "unambiguity": 0.25,
+      "mock_discipline": 0.25,
+      "executability": 0.2
+    },
+    "weighted_total": 4.675
+  },
+  "axis_rationales": {
+    "coverage": "열거 40개, 누락 0개: []; MANUAL 우선·0·음수·초과·동일, 무료 0/7/8일과 UTC 날짜 절단, PRORATION 전액/중간/마지막날/0원/절사/totalDays<=0, 환불유형 FULL/PARTIAL, 주문 상태별 허용·거절, 주문/환불 상태 전이, 결제취소 성공·거부·불확실 및 주문 미변경까지 생성 테스트에 매핑된다.",
+    "unambiguity": "대부분 AssertJ의 구체값·예외 코드·상태 비교라 틀린 구현을 잡지만, 일부 거절 케이스는 계산기 단위 예외만 보고 서비스 레벨 비호출까지 모두 봉인하지는 않아 5점까지는 보류한다.",
+    "mock_discipline": "Mock은 외부 의존인 PaymentCancellationGateway에만 사용되고 계산·상태 전이는 실제 도메인 객체 상태로 검증하며 verify도 외부 호출 확인에 한정된다.",
+    "executability": "입력값과 기대값은 명확하고 JUnit5+Mockito+AssertJ로 구현 가능하지만, 도메인 클래스 시그니처와 패키지/import는 초안이 가정하고 있어 극소수 보완이 필요하다."
+  },
+  "calibration_note": "캡 조건 위반은 보이지 않으며, 평균 3.0 기준의 엄격 채점에서 coverage와 mock_discipline은 완성도가 높고 executability는 시그니처 가정 때문에 감점했다.",
+  "evaluated_at": "2026-07-06T15:26:34+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_system:v1",
+    "source_files": [
+      "7f1fd837_input.json",
+      "7f1fd837_iter-003_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 44781,
+      "cached_input_tokens": 2432,
+      "output_tokens": 3760,
+      "reasoning_output_tokens": 3313
+    }
+  }
+}

@@ -6,8 +6,8 @@
 ## 이게 뭔가
 
 요구사항(NL) → 실행 가능한 테스트(gherkin 계약 / JUnit 단위)를 **생성하는** 4단 루프 하네스다.
-blog-draft 파이프라인 골격을 복제해(runner·validate·codex 호출·스키마 래퍼 재사용), 테스트
-생성용으로 개조한다. 목적은 "테스트를 잘 뽑는 것" 자체가 아니라 **bundled vs split vs 손 A-3/A-4**
+runner·validate·codex 호출·스키마 래퍼를 공유하는 파이프라인 골격 위에서 테스트
+생성용으로 구성한다. 목적은 "테스트를 잘 뽑는 것" 자체가 아니라 **bundled vs split**
 토폴로지를 실제로 대보고 뭐가 계약을 덜 흔드는지 로그로 증명하는 것이다.
 
 루프(공통): `input → Gen → draft → Validate(스키마+가드) → Eval(rubric) → PASS면 final / FAIL면 Critique → Refine → 반복`.
@@ -21,17 +21,22 @@ blog-draft 파이프라인 골격을 복제해(runner·validate·codex 호출·�
 
 | mode | 무엇을 생성 | gen 프롬프트 | rubric | runs 그룹 |
 |---|---|---|---|---|
-| `contract` | gherkin 계약만 | `prompts/gen_contract.md` | `rubrics/contract.rubric.yaml` | `runs/split/` |
-| `unit` | JUnit 단위(동결 계약 제약) | `prompts/gen_unit.md` | `rubrics/unit.rubric.yaml` | `runs/split/` |
+| `contract` | gherkin 계약만 | `prompts/gen_contract.md` | `rubrics/contract.rubric.yaml` | `runs/split/<group>/contract/` |
+| `unit` | JUnit 단위(동결 계약 제약) | `prompts/gen_unit.md` | `rubrics/unit.rubric.yaml` | `runs/split/<group>/unit/` |
 | `bundled` | 한 draft에 계약+단위 | `prompts/gen_bundled.md` | `rubrics/bundled.rubric.yaml` | `runs/bundled/` |
 
-- `contract`·`unit`은 같은 **split 실험**의 두 스트림이라 `runs/split/` 아래로 모인다.
+- `contract`·`unit`은 같은 **split 실험**의 두 스트림이라 **하나의 그룹 폴더**로 묶는다:
+  `runs/split/<group>/contract/` 와 `.../unit/` (group = contract run_id `<오늘>_<contract_hash>`).
+  `MODE_RUN_GROUP`은 mode→`split`/`bundled` 최상위 그룹만 정하고, contract/unit을 한 그룹에 묶는
+  하위폴더(`<group>/{contract,unit}`)는 **skill이 `--runs-dir`로 넘긴다**(오케스트레이션은 skill 소유).
+  skill이 `--runs-dir`을 안 넘기면 `runs/split/` 바로 밑에 date_hash 폴더로 흩어진다.
 - 기본값은 `contract` (Phase 2 baseline이 여기서 시작).
 - 매핑은 [runner.py](pipeline/runner.py)의 `MODE_GEN_PROMPT` / `MODE_RUBRIC` / `MODE_RUN_GROUP`에 있다.
   이 셋을 고치면 모드 동작이 한 곳에서 바뀐다.
 - **산출물은 파일 매니페스트**: Gen/Refine 출력은 `files: [{path, content}]`(gen_output.schema).
   unit은 대상 클래스마다 별도 `.java`, contract는 `.feature`, bundled는 둘 다. PASS 시
-  `materialize_artifacts`가 각 파일을 `runs/<group>/<run_id>/artifact/<path>`로 승격한다(경로는
+  `materialize_artifacts`가 각 파일을 `<runs-dir>/<run_id>/artifact/<path>`로 승격한다(split이면
+  `runs/split/<group>/{contract,unit}/<run_id>/artifact/<path>`; 경로는
   `sanitize_rel_path`로 `..`·절대경로 차단). draft/final의 `content`는 매니페스트를
   `// ===== FILE: <path> =====` 헤더로 이어붙인 **텍스트 뷰**로, critique/eval/guard가 이걸 읽는다
   (`synthesize_content`). 즉 stage들은 mode 무관하게 content 문자열 하나만 보면 된다.
@@ -44,16 +49,18 @@ blog-draft 파이프라인 골격을 복제해(runner·validate·codex 호출·�
 
 ## split의 계약 동결 (반자동 게이트) — 설계됨, 아직 미구현
 
-split은 두 run이다. Run 1(contract)이 통과하면 **runner가 멈추고 `y/n` 승인을 묻고**, 승인분을
-`frozen/refund.feature`로 복사(읽기 전용 승격)한다. Run 2(unit)는 그 동결 계약을 **입력·제약으로만**
-받고 재생성하지 않는다. **사람이 계약을 소유한다**(자동 PASS만으로 동결하지 않는다).
+split은 두 run이다. Run 1(contract)이 통과하면 **skill이 멈추고 `y/n` 승인을 묻고**, 승인분을
+**제자리에서 읽기전용으로 잠근다(freeze-in-place)** — 별도 `frozen/` 폴더로 복사하지 않고 contract 아티팩트
+(`runs/split/<group>/contract/<run_id>/artifact/*.feature`)를 `chmod a-w`로 고정한다. Run 2(unit)는 그 동결
+계약을 **입력·제약으로만** 받고 재생성하지 않는다. **사람이 계약을 소유한다**(자동 PASS만으로 동결하지 않는다).
 
-> 현재 상태: y/n 동결 게이트와 `frozen/` 승격은 **아직 배선 전**이다. mode 선택 메커니즘까지만 되어 있다.
+> 동결 = 복사가 아니라 **제자리 잠금**. 계약 원문은 unit input JSON에 인라인되어 unit run이 소비하고,
+> 잠긴 아티팩트는 사람이 승인한 정본·감사 기준으로 그 자리에 남는다. skill-root의 전역 `frozen/` 폴더는 없앴다.
 
 ## 지금 되어 있는 것 / 다음 단계
 
 되어 있음:
-- blog-draft 골격 복제(slow-loop 계열 전부 제외), `run_draft.py` slow-loop 잔재 제거.
+- 파이프라인 골격 구성(slow-loop 계열 전부 제외), `run_draft.py` slow-loop 잔재 제거.
 - `--mode` 배선: mode → gen 프롬프트 · rubric · runs 그룹 · codex eval 스키마 선택. `--provider codex`는 골격에 이미 있음.
 - **input = 정책만** (설계 §0-A). `schemas/input.schema.json` + `intake_to_input.py` 교체 완료(정책 플래그).
   판정기준(테스트 케이스)은 input에 없다 — Gen 산출물이다.
@@ -66,14 +73,14 @@ split은 두 run이다. Run 1(contract)이 통과하면 **runner가 멈추고 `y
   out-in·빨강 가능성·순차 리팩터링). **contract 한 줄이 실제 codex run에서 end-to-end PASS 확인됨(4.59/5).**
 - 공유 프롬프트(`eval_system`·`critique_system`·`refine_system`) 문구를 글쓰기→테스트 생성으로 개조 완료.
 - **모호-단언 금지패턴 가드**(`validate.check_forbidden_assertions`, 한국어 부사+동작 조합). 위반은 하드 중단이
-  아니라 eval을 REJECT시켜 `contract_error`로 refine 루프에 전달 → MAX_ITER까지 자가 수정(task1-5 Step 4).
+  아니라 eval을 REJECT시켜 `contract_error`로 refine 루프에 전달 → MAX_ITER까지 자가 수정.
 
 - **unit 모드**: `prompts/gen_unit.md`(JUnit5+Mockito+AssertJ, Mock 규율·frozen 계약 제약) +
   `rubrics/unit.rubric.yaml`(coverage·unambiguity·mock_discipline·executability) + `eval_output.unit.schema.json`.
   경로·축 일치 로컬 검증 완료(실제 codex run은 아직).
 
 - **SKILL.md + 동결 게이트 정의**: 동결 게이트는 **skill이 소유**(runner 아님). SKILL.md에 split 오케스트레이션
-  (contract PASS → gherkin 제시 → y/n → `frozen/` 승격 → unit input에 주입 → unit run) 명문화.
+  (contract PASS → gherkin 제시 → y/n → 아티팩트 제자리 잠금 → unit input에 주입 → unit run) 명문화.
   intake에 `--frozen-contract-file` 추가, unit input에 `frozen_contract` 주입 검증 완료.
 
 - **bundled 모드**(Phase 3): `prompts/gen_bundled.md`(두 섹션을 `=== GHERKIN ===`/`=== UNIT ===` 구분자로 한 draft에) +
@@ -82,9 +89,8 @@ split은 두 run이다. Run 1(contract)이 통과하면 **runner가 멈추고 `y
 
 **세 모드(contract/unit/bundled) 모두 파일·배관 완비.** 아직 없음(Phase 4):
 1. 실제 codex로 3방향 관통(split: contract→동결→unit / bundled) — 실행/y/n은 skill 런타임.
-2. **Phase 4 비교**: bundled vs split vs 손 A-3/A-4 나란히, MAX_ITER 수렴 횟수·계약 churn을 `runs/`에서 기록.
-3. **결함 주입 1회** Red 확인(Goodhart 방어) → task1-5 제출물 작성.
-4. (선택) 클래스/메서드명 노출 하드 가드 — 지금은 rubric behavioral_altitude 축으로만 잡음.
+2. **Phase 4 비교**: bundled vs split 나란히, MAX_ITER 수렴 횟수·계약 churn을 `runs/`에서 기록·문서화.
+3. (선택) 클래스/메서드명 노출 하드 가드 — 지금은 rubric behavioral_altitude 축으로만 잡음.
 
 > 지금 `--mode contract` 실제 run은 gen→critique→eval→PASS까지 돈다(codex 호출·비용 발생).
 > 완주 검증은 step 완료 후 몰아서 — [[codex-run-pacing]].

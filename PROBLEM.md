@@ -4,6 +4,38 @@
 
 문제 기록은 당장 해결하지 않아도 되는 설계 쟁점, 반복되는 실패 패턴, 추후 skill/rule/hook/agent 개선 후보를 잊지 않기 위한 것이다.
 
+## 2026-07-06: generate-test slow-loop의 rubric 변경 효과 검증 (v2 열린 문제)
+
+상태: open (v2로 미룸)
+
+관련 설계: [.codex/skills/generate-test/docs/v1-slow-loop-design.md](.codex/skills/generate-test/docs/v1-slow-loop-design.md) §4·§6.
+
+### 문제
+
+generate-test v1 slow-loop은 실행/결함 주입 신호를 뺐다(SUT가 없어 생성 테스트를 못 돌림). 남은
+자동 신호는 rubric axis 점수(LLM 채점)와 critique 반복뿐이다. 두 가지가 걸린다.
+
+1. **순환성**: rubric 점수만 보고 고치면 채점자(rubric)가 곧 최적화 목표가 된다(Goodhart).
+2. **잣대 이동**: rubric을 바꾸면 그 axis의 before/after 비교가 정의상 무효 — 변경이 나아졌는지 잴 잣대가 사라진다.
+
+### 현재 임시 결정 (v1)
+
+- 제안을 대상별로 가른다: **생성기/프롬프트/intake 제안**은 rubric 고정이라 axis before/after가 유효 → 자유롭게.
+  **rubric 제안**은 위험="높음 + 효과 검증 장치 없음(v2까지 보류 권장)" 라벨 + proposer가 생성기 대상을 우선.
+- "점수가 낮다"는 rubric을 고칠 근거가 못 된다. "rubric이 사람 판정과 어긋난다"만 근거가 된다.
+- 적용은 사람. 사람이 라벨 보고 rubric 변경은 신중히.
+
+### 해결 조건 (v2)
+
+- [ ] **동결 캘리브레이션 셋**: 사람 verdict가 붙은 과거 아티팩트 소수를 얼려둠(출처: problem.md verdict).
+- [ ] **rubric 변경 검증**: rubric v→v'를 동결 셋에 재채점 → 어느 쪽이 사람 판정과 더 일치하는가로 판정(ground truth가 안 움직이므로 before/after 성립).
+- [ ] **적중률 측정**: CHANGELOG 겨냥 axis 기준 적용 후 분포 before/after 비교(`version_deltas`).
+
+### 나중에 결정할 것
+
+- rubric 제안을 허용하기 전 problem.md verdict를 최소 몇 건 요구할지(캘리브레이션 셋 최소 크기).
+- 정직한 제약: rubric을 신뢰성 있게 바꿀 수 있는 속도는 사람 verdict가 쌓이는 속도에 묶인다.
+
 ## 2026-06-28: thinking-review-gate의 verifier 출력과 hand-off 문제
 
 상태: resolved

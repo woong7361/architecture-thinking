@@ -1,0 +1,56 @@
+{
+  "brief_hash": "f1ba346d",
+  "iteration": "002",
+  "summary": "현재 draft는 환불 정책의 주요 축인 우선순위, 7일 무료 경계, PRORATION 절사, 환불 가능 금액, 주문/환불 상태 전이를 넓게 다룬다. 다만 일부 시나리오 데이터가 정책의 시간/잔여일 관계를 느슨하게 다루고, 검증 실패 시 외부 의존 호출 차단과 부분 환불 이후 산출 경계가 충분히 고정되지 않는다.",
+  "strengths": [
+    "MANUAL > 7일 이하 무료 > PRORATION 우선순위를 별도 시나리오로 분리해 핵심 정책 충돌을 드러낸 점은 보존할 만하다.",
+    "7일 무료의 0일, 7일, 8일 경계와 UTC 시분초 제거 기준을 예제로 고정한 점이 좋다.",
+    "PRORATION의 당일, 중간, 마지막 날, 만료 후, 정수 나눗셈 절사 예시를 함께 둬 산술 회귀를 잡기 쉽다.",
+    "주문 상태 전이와 Refund의 REQUESTED 이후 SUCCEEDED/FAILED/TIMED_OUT 전이를 별도 시나리오로 분리해 읽기 쉽다."
+  ],
+  "weaknesses": [
+    {
+      "issue": "일부 PRORATION 예제가 날짜 기준 정책과 잔여 일수 입력을 동시에 쓰면서 서로 맞지 않는 데이터를 허용한다.",
+      "why_it_matters": "예를 들어 PRORATION outline은 환불 요청일을 2026-07-10으로 두면서 remainingDays == totalDays인 전액 환불 예를 포함한다. 구현이 날짜, 경과일, 잔여일 관계를 잘못 계산해도 테스트가 독립 입력값만 믿고 통과할 수 있다.",
+      "suggestion": "순수 PRORATION 산출 시나리오는 날짜를 제거하거나 'PRORATION 적용이 확정된 상태'로 표현하고, 정책 우선순위 시나리오는 결제일·요청일·잔여일수가 서로 일관되도록 예제 데이터를 정렬한다.",
+      "severity": "medium"
+    },
+    {
+      "issue": "검증 실패 시 외부 결제 취소 Mock이 호출되지 않아야 한다는 부작용 차단 단언이 빠져 있다.",
+      "why_it_matters": "정책 흐름은 주문 환불 가능 여부 검증 이후 결제 취소 요청으로 진행된다. 현재는 주문 금액과 상태 유지까지만 확인하므로, 환불 불가 주문이나 초과 금액에서도 Refund REQUESTED를 만들거나 PG 취소 Mock을 호출하는 구현이 가짜 통과할 수 있다.",
+      "suggestion": "주문 상태 불가, 환불 가능 금액 초과, manualAmount <= 0, totalDays <= 0 거절 케이스에 '환불 요청 엔티티는 생성되지 않는다'와 '결제 취소 외부 의존은 호출되지 않는다'를 추가한다.",
+      "severity": "high"
+    },
+    {
+      "issue": "부분 환불 이력이 있는 주문에서 정책 산출 금액과 환불 가능 금액의 경계가 충분히 분리되어 있지 않다.",
+      "why_it_matters": "상태 전이 시나리오는 이미 확정된 환불금액으로 PARTIALLY_REFUNDED -> REFUNDED를 다루지만, 실제 정책 산출 단계에서 이미 환불된 금액을 고려해 FULL/PARTIAL을 결정하는 정상 경계가 약하다. 특히 7일 무료나 PRORATION 산출액이 환불 가능 금액과 같거나 조금 작은 경우를 놓치면 추가 환불 로직이 원 주문금액 기준으로만 동작해도 드러나지 않는다.",
+      "suggestion": "PARTIALLY_REFUNDED 주문에 대해 산출된 환불금액 == cancellableAmount인 정상 전액 도달 케이스와 산출된 환불금액 < cancellableAmount인 정상 부분 유지 케이스를 정책 산출 또는 요청 흐름 시나리오에 추가한다. 원문 근거상 산출액이 cancellableAmount를 넘으면 오류로 보는 해석을 유지한다면, 해당 오류 시나리오명에 그 해석을 명시한다.",
+      "severity": "medium"
+    }
+  ],
+  "revision_directions": [
+    "PRORATION 계산 전용 시나리오와 전체 정책 우선순위 시나리오의 입력 모델을 분리해 날짜/잔여일 모순을 없앤다.",
+    "거절 케이스에는 상태 유지뿐 아니라 Refund 미생성, 외부 결제 취소 Mock 미호출을 관찰 가능한 Then으로 고정한다.",
+    "이미 부분 환불된 주문에서 정책 산출 결과가 환불 가능 금액과 같거나 작은 정상 경계를 추가해 금액 산출, 환불 유형, 주문 상태 전이가 이어지는 흐름을 확인한다."
+  ],
+  "reader_risks": [
+    "테스트 데이터의 날짜와 잔여일이 어긋나면 구현자가 어떤 값을 진짜 기준으로 삼아야 하는지 혼란스러울 수 있다.",
+    "검증 실패 후 PG Mock 호출 여부가 봉인되지 않아 외부 부작용 순서 버그가 숨어 통과할 수 있다.",
+    "부분 환불 이후 추가 환불의 정상 산출 경계가 약해, 원 주문금액 기준 계산과 환불 가능 금액 기준 계산이 뒤섞이는 구현을 놓칠 수 있다."
+  ],
+  "critiqued_at": "2026-07-06T15:07:22+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "critique_system:v1",
+    "source_files": [
+      "f1ba346d_input.json",
+      "f1ba346d_iter-002_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 68952,
+      "cached_input_tokens": 4864,
+      "output_tokens": 3793,
+      "reasoning_output_tokens": 2560
+    }
+  }
+}

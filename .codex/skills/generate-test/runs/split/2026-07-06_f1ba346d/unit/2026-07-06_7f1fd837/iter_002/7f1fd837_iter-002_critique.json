@@ -1,0 +1,56 @@
+{
+  "brief_hash": "7f1fd837",
+  "iteration": "002",
+  "summary": "정책 우선순위, UTC 날짜 경계, PRORATION 절사, 주문/환불 상태 전이의 핵심 happy path와 주요 오류 경로를 넓게 고정한 초안이다. 다만 부분 환불 주문에서 자동 산출 금액이 환불 가능 금액 이하인 정상 경로와 MANUAL 전액 지정 경계가 약해, 누적 환불 금액 기준의 FULL/PARTIAL 결정이 일부 우회될 수 있다.",
+  "strengths": [
+    "7일 무료 경계 0일/7일/8일과 UTC 시분초 제거 사례를 별도 테스트로 분리해 날짜 계산 회귀를 잘 잡는다.",
+    "PRORATION의 당일 환불, 마지막 날, 만료 후 0원, 정수 나눗셈 절사 예시를 구체 금액으로 단언해 산술 구현 오류가 red가 되기 쉽다.",
+    "결제 취소 외부 의존은 PaymentCancellationGateway로만 Mock 처리하고, Order·Refund·RefundCalculator의 순수 도메인 로직은 직접 검증해 Mock 남용이 적다.",
+    "실패/타임아웃 시 주문 누적 환불 금액과 주문 상태가 유지되는지를 함께 단언해 상태 오염 위험을 잘 다룬다."
+  ],
+  "weaknesses": [
+    {
+      "issue": "부분 환불 주문에서 PRORATION 산출 금액이 환불 가능 금액 이하인 정상 경로가 부족하다.",
+      "why_it_matters": "정책은 부분 환불 후 환불 가능 금액을 amount - canceledAmount로 재계산하고, 환불금액이 그 금액과 같으면 FULL, 미만이면 PARTIAL이라고 한다. 현재 자동 산출의 부분 환불 케이스는 초과 오류만 강하게 검증하므로, 정상적으로 추가 환불이 가능한 경우의 타입·금액 계산이 잘못되어도 determineType 단독 테스트나 Order.applyRefund 테스트로만 간접적으로 잡힌다.",
+      "suggestion": "RefundCalculatorTest 또는 RefundApplicationServiceTest에 PARTIALLY_REFUNDED 주문에서 PRORATION 산출 금액이 cancellableAmount와 같은 경우 FULL, 미만인 경우 PARTIAL이 되는 정상 케이스를 추가한다.",
+      "severity": "high"
+    },
+    {
+      "issue": "MANUAL 지정 금액이 환불 가능 금액과 정확히 같은 경계가 calculate/service 흐름에서 직접 검증되지 않는다.",
+      "why_it_matters": "MANUAL은 모든 규칙보다 우선하며, 지정 금액이 환불 가능 금액을 초과하면 오류이고 같으면 허용되어 FULL이 되어야 한다. 현재 MANUAL 테스트는 부분 금액과 초과/0 이하만 있어, 구현이 manualAmount == cancellableAmount를 초과로 잘못 처리하거나 타입을 PARTIAL로 고정해도 일부 흐름에서 놓칠 수 있다.",
+      "suggestion": "PAID 주문에서 manualAmount == amount인 경우와 PARTIALLY_REFUNDED 주문에서 manualAmount == cancellableAmount인 경우를 산출 또는 서비스 테스트에 추가해 amount, cancellableAmount, type, 주문 상태 전이를 함께 단언한다.",
+      "severity": "medium"
+    },
+    {
+      "issue": "환불 생성부터 결제 취소 성공까지 REQUESTED 중간 상태를 서비스 레벨에서 관찰하지 못한다.",
+      "why_it_matters": "동결 계약은 성공 환불이 REQUESTED를 거쳐 SUCCEEDED가 된다고 표현한다. Refund 단위 테스트는 생성 시 REQUESTED와 complete 후 최종 상태를 나누어 검증하지만, 애플리케이션 서비스가 결제 취소 전에 REQUESTED 환불을 만들고 그 금액으로 외부 취소를 호출한다는 순서는 최종 반환값만으로는 약하게 고정된다.",
+      "suggestion": "현재 구조에서 중간 상태를 노출할 수 없다면 최소한 결제 취소 호출 전 계산된 금액으로 Refund.request가 생성되는 협력 지점을 테스트 가능한 도메인 이벤트나 팩토리로 분리할지 검토한다. 구조 변경이 과하다면 이 약점은 보류하고 Refund 단위 테스트를 보존한다.",
+      "severity": "low"
+    }
+  ],
+  "revision_directions": [
+    "부분 환불 주문의 정상 자동 산출 케이스를 추가해 cancellableAmount와 비교한 FULL/PARTIAL 경계를 직접 고정한다.",
+    "MANUAL 금액이 환불 가능 금액과 같은 허용 경계를 추가하고, 초과 오류 케이스와 쌍으로 배치한다.",
+    "새 케이스를 추가할 때 구현 클래스 내부 메서드 호출 순서보다는 정책 문장의 관찰 가능한 결과인 금액, 유형, 누적 환불 금액, 주문 상태, 외부 취소 호출 여부를 단언한다."
+  ],
+  "reader_risks": [
+    "부분 환불 이후 추가 환불이 정상 처리되는 실제 업무 경로가 테스트상 초과 오류 중심으로 보일 수 있어, 구현자가 자동 산출의 정상 누적 환불 경계를 놓칠 위험이 있다.",
+    "MANUAL 전액 환불이 허용되는지 명확히 고정되지 않아, 수동 환불을 항상 PARTIAL처럼 처리하는 구현이 가짜 통과할 수 있다.",
+    "REQUESTED를 거친다는 계약 문구가 서비스 흐름에서는 최종 상태 단언으로 봉인되어 있어, 중간 상태 생성 순서가 바뀌어도 테스트가 즉시 실패하지 않을 수 있다."
+  ],
+  "critiqued_at": "2026-07-06T15:20:49+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "critique_system:v1",
+    "source_files": [
+      "7f1fd837_input.json",
+      "7f1fd837_iter-002_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 40346,
+      "cached_input_tokens": 2432,
+      "output_tokens": 1677,
+      "reasoning_output_tokens": 516
+    }
+  }
+}
