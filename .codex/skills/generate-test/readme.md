@@ -96,22 +96,29 @@ bundled를 추가로 얹는 비용 ≈ gen 프롬프트 1개 + rubric 1개 + 가
 ### 1-1. 디렉터리 (재사용/신설 매핑)
 
 ```
-tdd-harness-pipeline/
-  intake_to_input.*     [재사용→개조]  요구사항 NL → input.json
-  runner.py             [재사용+신설]  루프·attempt·검증 골격 재사용 + --mode / y/n 동결 게이트 신설
+.codex/skills/generate-test/pipeline/          # 설계 초안의 가칭 tdd-harness-pipeline/ → 실물 경로
+  intake_to_input.py    [재사용→개조]  요구사항 NL → input.json
+  runner.py             [재사용+신설]  루프·attempt·검증 골격 재사용 + --mode 신설 (동결 게이트는 skill 소유, runner 아님)
   validate.py           [재사용+신설]  스키마 골격 그대로 + 금지패턴/행동-고도 가드(mode 분기) 신설
   prompts/
-    gen_bundled.md  gen_contract.md  gen_unit.md   [신설]  ← 유일하게 갈라지는 프롬프트
-    critique.md  eval.md  refine.md                [신설]  ← 3모드 공유
+    gen_bundled.md  gen_contract.md  gen_unit.md          [신설]  ← 유일하게 갈라지는 프롬프트
+    critique_system.md  eval_system.md  refine_system.md  [신설]  ← 3모드 공유
   rubrics/
     bundled.rubric.yaml  contract.rubric.yaml  unit.rubric.yaml   [신설]
   schemas/
-    input|gen_output|critique_output|eval_output|draft|critique|eval|final.schema.json  [신설]
+    input|gen_output|draft|critique|eval|final.schema.json         [신설]
+    eval_output.{contract,unit,bundled}.schema.json               [신설]  ← 모드별 named/closed
   runs/
-    bundled/…   split/…    [재사용]  attempt별 로그 보존, 모드별 분리
-                                      └ eval.json(axis점수+rationale)·critique.json 구조화 보존 → v1 slow-loop 입력 (§5 참조)
-  frozen/       [신설]  split에서 승인된 계약 refund.feature (읽기 전용 승격)
+    bundled/<run_id>/…                 [재사용]  attempt별 로그 보존
+    split/<group>/{contract,unit}/…    [재사용]  contract·unit 두 스트림을 한 그룹으로 묶어 보존
+        └ eval.json(axis점수+rationale)·critique.json 구조화 보존 → v1 slow-loop 입력 (§5 참조)
+        └ 승인된 contract 아티팩트(.../contract/<run_id>/artifact/*.feature)는 그 자리에서 chmod a-w로 잠금
+                                       [신설]  freeze-in-place — 별도 frozen/ 폴더 없음
 ```
+
+> **실물 반영 (2026-07-06):** 초기 설계는 가칭 `tdd-harness-pipeline/`에 별도 `frozen/` 폴더로 승인 계약을
+> 복사·승격하려 했으나, 실제 구현은 `.codex/skills/generate-test/pipeline/`이고 동결은 **복사가 아니라
+> 제자리 잠금(freeze-in-place)** 으로 바뀌었다. 아래 §1-2·§5의 서술도 이 결정에 맞춘다.
 
 runner에 `--mode {bundled, contract, unit}` 플래그를 두고, mode에 따라 gen 프롬프트·rubric·가드를 선택.
 
@@ -129,15 +136,18 @@ input.json ─► Gen ─► draft ─► Validate(스키마+금지패턴+가드
 split의 계약 동결 메커니즘:
 
 ```
-Run 1 (contract) NL 요구사항 ─► gherkin ─► ★runner 멈춤: y/n 승인★ ─► frozen/refund.feature (읽기전용)
-                                                                            │
-Run 2 (unit)     NL 요구사항 + frozen/refund.feature ─► 단위테스트 ◄─────────┘
+Run 1 (contract) NL 요구사항 ─► gherkin ─► ★skill 멈춤: y/n 승인★ ─► 제자리 잠금(chmod a-w)
+                                             runs/split/<group>/contract/<run_id>/artifact/*.feature
+                                                                            │ (원문을 unit input JSON에 인라인)
+Run 2 (unit)     NL 요구사항 + 인라인된 동결 계약 ─► 단위테스트 ◄────────────┘
                        (계약 재생성 안 함, 제약·재료로만 읽음)
 ```
 
-- **동결 = 파일 승격**: Run 1 통과분을 `frozen/`으로 복사, 이후 수정 금지. Run 2는 입력으로만 받음.
-- **사람 승인 게이트 (b 반자동)**: 자동 PASS만으로 동결하지 않는다. runner가 멈추고 `y/n`을 묻는다.
-  사람이 계약을 소유한다(`tdd-ai-notes.md`: "사람이 게이트를 소유, 테스트는 닻").
+- **동결 = 제자리 잠금(freeze-in-place)**: Run 1 승인분을 별도 `frozen/`으로 복사하지 않고, contract
+  아티팩트를 **그 자리에서 `chmod a-w`로 잠근다**. 계약 원문은 unit input JSON에 인라인되어 Run 2가 소비하고,
+  잠긴 아티팩트는 사람이 승인한 정본·감사 기준으로 그 자리에 남는다.
+- **사람 승인 게이트 (반자동)**: 자동 PASS만으로 동결하지 않는다. 게이트는 **skill이 소유**(runner 아님) —
+  skill이 멈추고 `y/n`을 묻는다. 사람이 계약을 소유한다(`tdd-ai-notes.md`: "사람이 게이트를 소유, 테스트는 닻").
 - **Run 2 제약**: Gen/Refine 프롬프트에 "동결 계약과 모순 금지, 계약을 재서술 말고 계약이 남긴
   산술 세부(절사·마지막날 금액)를 단위로 채워라".
 
@@ -237,15 +247,15 @@ thresholds:
 ## 5. 빌드 계획 & 범위
 
 ### Phase 1 — 스캐폴딩 & 제네릭화
-- `tdd-harness-pipeline/` 골격 구성. runner 루프·validate 골격 공유.
+- `.codex/skills/generate-test/pipeline/` 골격 구성. runner 루프·validate 골격 공유.
 - `--mode {bundled,contract,unit}` + `--provider codex` 배선. 재사용/신설 **매핑표** 산출.
 - **스모크 테스트**: 작은 input 1건 → gen 1회 → codex가 스키마 맞는 JSON을 실제로 뱉는지 확인.
 
 ### Phase 2 — split 먼저 (baseline, 권장 설계)
 - `input.schema.json`(정책만: requirement + source_material + 선택 policy_rules/external_dependencies — §0-A),
   intake(정책 미흡 시 정책 보강 → input).
-- contract: `contract.rubric.yaml`, gen_contract, 행동-고도 가드 → 실행 → **y/n 승인 → frozen/**.
-- unit: `unit.rubric.yaml`, gen_unit(frozen 계약 제약) → 실행.
+- contract: `contract.rubric.yaml`, gen_contract, 행동-고도 가드 → 실행 → **y/n 승인 → 아티팩트 제자리 잠금(freeze-in-place)**.
+- unit: `unit.rubric.yaml`, gen_unit(동결 계약 제약) → 실행.
 
 ### Phase 3 — bundled variant 얹기
 - `bundled.rubric.yaml`, gen_bundled, 가드 섹션 분기. 같은 요구사항으로 실행.
@@ -293,7 +303,7 @@ v0의 `runs/{bundled,split}/…`도 attempt별로 다음을 남겨, v1에서 slo
 - [ ] contract/unit/bundled rubric 3종
 - [ ] gen_contract/gen_unit/gen_bundled + 공유 critique/eval/refine
 - [ ] 행동-고도 가드(mode 분기) validate 규칙
-- [ ] y/n 동결 게이트 + frozen/ 승격
+- [ ] y/n 동결 게이트 + 아티팩트 제자리 잠금(freeze-in-place, skill 소유)
 - [ ] split 실행 → 동결 → unit 실행 (Phase 2)
 - [ ] bundled 실행 (Phase 3)
 - [ ] bundled vs split 비교 + 수렴·churn 기록 (Phase 4)

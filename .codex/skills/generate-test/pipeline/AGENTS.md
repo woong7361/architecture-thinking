@@ -129,35 +129,38 @@ python -B -c "from pathlib import Path; files=['runner.py','validate.py','stages
 - validate 호출은 검사 대상 파일을 직접 수정하지 않는다.
 - `max_iterations`까지 통과하지 못하면 `final.json` 대신 `{brief_hash}_failed.json`을 남기는 설계를 따른다.
 
-## Slow Loop (v2)
+## Slow Loop (v1)
 
-fast loop이 남긴 run 기록을 모아 파이프라인 자체를 개선하는 제안을 만드는 두 번째 루프다. 구현은 `analyze_runs.py`, `stages/proposer.py`, `run_propose.py`를 참조한다.
+fast loop이 남긴 run 기록을 모아 파이프라인 자체를 개선하는 제안을 만드는 두 번째 루프다.
+구현은 `analyze_runs.py`, `stages/proposer.py`, `run_propose.py`. 설계는 [../docs/v1-slow-loop-design.md](../docs/v1-slow-loop-design.md).
+오케스트레이션은 **skill(SKILL.md)이 소유**한다 — 자동 실행하지 않는다.
 
-### 트리거
+### 트리거 (§5-B)
 
-`run_draft.py` 완료 후 `runs/pending/` 아래 통과 run이 5개 이상이면 자동 실행된다.
+**자동 실행하지 않는다.** 미검토 run(`.reviewed` 마커 없는 run)이 5개 이상이면 skill이 사용자에게 발동을
+묻고, 승인 시 `analyze_runs.py` → `run_propose.py`를 돈다. 유료 codex 호출이라 사람이 켠다.
 
-### 상태 표현
+### 상태 표현 (§7)
 
-run 검토 여부는 폴더 위치로만 표현한다. 별도 문서를 두지 않는다.
-
-- `runs/pending/`: fast loop이 여기 쓴다 (미검토).
-- `runs/reviewed/`: slow loop 분석 완료 후 여기로 이동한다.
+run 검토 여부는 **제자리 `.reviewed` 마커**로 표현한다. 폴더를 옮기지 않는다(split 동결 아티팩트 경로 보존).
+`run_propose.py`가 proposal PASS 후 분석에 반영된 run에 `.reviewed`를 기록한다. 미검토 = 마커 없는 run.
 
 ### 단계별 역할 경계
 
-#### Analyze
+#### Analyze (`analyze_runs.py`, 결정적)
 
-- 입력: `runs/pending/` 전체 (통과 run의 eval/critique만. ERROR·failed.json 제외)
-- 출력: `changelog/analysis_{id}.json`
-- 책임: axis별 점수 집계, 기준 미달 비율 계산, critique 반복 지적 집계, 신호 id 부여.
-- 금지: rubric/prompt/코드 직접 수정, 품질 주관 판단, target 단정.
+- 입력: `runs/` 재귀 탐색, **미검토 run 전체**. 통과 run의 eval/critique + **실패 run의 failed.json(failure_signals)** + `problem.md` 사용자 피드백.
+- 그룹핑: **(mode × rubric_name)** — contract:v1 / unit:v1 / bundled:v1을 섞지 않는다. 그룹 total<`min_group`이면 `sufficient_sample=false`.
+- 출력: `changelog/proposals/<analysis_id>/analysis.json` (groups + `signals[]`(id 부여) + user_feedback).
+- 금지: rubric/prompt/코드 직접 수정, 품질 주관 판단, target 단정, 통과/실패 표본을 한 통계로 섞기.
 
 #### Propose Gen
 
-- 입력: `analysis.json` + 후보 target 전체 (rubric, 모든 prompt, AGENTS.md, stage 코드)
-- 출력: 제안 JSON (`propose_gen_output.schema.json`)
+- 입력: `analysis.json`(표본 충분 그룹 신호만) + 후보 target 전체 (rubrics, prompts(propose_* 제외), SKILL.md/CLAUDE.md/AGENTS.md, stage/파이프라인 코드).
+- 출력: 제안 JSON (`propose_gen_output.schema.json`).
 - 책임: 근본 원인 진단, 대상별 구체 diff 초안 작성, 위험도 표시.
+- **rubric 가드(§4):** 생성기/프롬프트/intake를 우선 겨냥. rubric 제안은 위험="높음"+"검증 없음(v2 보류)". "점수 낮음"은 rubric 변경 근거 아님.
+- **표본 게이트(§5-B):** `sufficient_sample=false` 그룹은 제안하지 않는다.
 - 금지: 파일 직접 수정, 사람 승인 없는 적용, `cited_signals`에 없는 신호 id 인용.
 
 #### Propose Critique
@@ -189,15 +192,23 @@ fast loop과 달리 slow loop은 context 파일(대상 파일)을 읽는다.
 - **층위 2 (context 범위):** gen만 후보 target 전체를 읽는다. critique/eval/refine은 제안이 건드린 파일만 읽는다.
 - **이중 방어:** runner가 payload를 물리적으로 차단(1차)하고, 각 `propose_*_system.md`가 범위를 명시(2차)한다.
 
-### 고정점 원칙
+### 고정점 원칙 (§5)
 
-slow loop이 쓰는 `proposal:v1` rubric(`rubric_proposal.yaml`)과 `propose_*_system.md` 프롬프트는 **사람만 변경한다.** slow loop이 자기 기준을 자동으로 고치면 순환이 끊기지 않는다.
+slow loop 자신의 **판정 장치와 코드**는 제안 대상에서 제외되며 **사람만 변경한다.** slow loop이 자기 기준을
+자동으로 고치면 순환이 끊기지 않는다. 제외 대상:
+
+- `proposal:v1` rubric (`rubric_proposal.yaml`)
+- `prompts/propose_*.md` (gen/critique/eval/refine)
+- slow-loop 코드: `proposer.py` · `analyze_runs.py` · `run_propose.py`
+
+`proposer.load_target_files()`가 이들을 후보에서 물리적으로 뺀다(1차 방어).
 
 ### 버저닝
 
-- 각 component는 자기 버전 태그를 유지한다 (`writing:vN`, `gen_system:vN`, ...).
-- 사람이 제안을 수락·적용하면 `changelog/CHANGELOG.md`에 한 줄을 남긴다: 날짜 / 무엇을 / 왜 / 근거 run hash / 위험도 / commit 해시.
+- 각 component는 자기 버전 태그를 유지한다 (`contract:vN`, `unit:vN`, `bundled:vN`, `gen_contract:vN`, ...).
+- 사람이 제안을 수락·적용하면 `changelog/CHANGELOG.md`에 한 줄을 남긴다: 날짜 / 무엇을 / 왜 / 근거 run hash / 겨냥 axis / 위험도 / commit 해시.
 - 과거 버전은 git이 관리한다. 별도 스냅샷을 만들지 않는다.
+- rubric 변경의 **효과 검증**(동결 캘리브레이션 셋)은 v2 과제다 ([../../../PROBLEM.md](../../../PROBLEM.md)).
 
 ## 금지 행동
 

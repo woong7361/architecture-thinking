@@ -15,10 +15,17 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <assertj.version>3.25.3</assertj.version>
         <cucumber.version>7.18.1</cucumber.version>
+        <junit.jupiter.version>5.10.2</junit.jupiter.version>
         <junit.platform.version>1.10.2</junit.platform.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>

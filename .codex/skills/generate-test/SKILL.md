@@ -39,6 +39,8 @@ description: 자연어 도메인 정책/요구사항을 실행 가능한 테스�
    가볍게 연다. 사용자가 생성 테스트에 반응하면(누락 지적/좋다/이건 틀렸다) `problem.md`에 한 줄 추가한다:
    `- (YYYY-MM-DD, run_id, verdict=pos|neg) 사용자 반응 요약 → 도출한 교훈`.
    긍정도 회귀 방지 신호이므로 기록한다. 매 run 강제 질문은 하지 않는다 — 사용자가 자발적으로 반응할 때만 캡처.
+9. **Slow-loop 트리거 확인 (§5-B).** 한 process가 끝난 시점에 **미검토 run(= `.reviewed` 마커 없는 run)이 5개 이상**이면
+   사용자에게 "미검토 run N개 쌓였습니다. slow-loop(파이프라인 자가개선 제안)을 돌릴까요?"를 **묻는다**. 자동 실행 금지 — 유료 codex 호출이라 사람이 켠다. 자세한 절차는 아래 "## Slow Loop (v1)".
 
 > **산출물 승격(materialize):** Gen/Refine은 **파일 매니페스트**(`files: [{path, content}]`)를 내고,
 > PASS 시 runner가 각 파일을 `<runs-dir>/<run_id>/artifact/<path>`로 떨군다 (split이면
@@ -130,3 +132,31 @@ python -B .codex/skills/generate-test/pipeline/run_draft.py \
 `run_draft.py`는 `--runs-dir` 미지정 시 mode에 따라 `runs/{split,bundled}/`로 쓴다(흩어짐).
 split은 위 5절대로 `--runs-dir runs/split/<group>/{contract,unit}`로 **한 그룹에 묶는다**.
 파이프라인은 `pipeline/` 아래에 있다. 사용자가 명시적으로 요청하지 않으면 저장소 레벨 원본 파이프라인은 건드리지 않는다.
+
+## Slow Loop (v1) — 파이프라인 자가개선 제안
+
+fast loop이 남긴 run 로그를 모아 **파이프라인 자체(gen 프롬프트·rubric·intake 등)를 고치는 제안**을 만든다.
+설계는 [docs/v1-slow-loop-design.md](docs/v1-slow-loop-design.md). **이 skill이 오케스트레이션을 소유한다** — 자동 실행하지 않고 사람이 켠다.
+
+**트리거(§5-B):** process가 끝난 시점에 미검토 run(`.reviewed` 없는 run)이 **5개 이상**이면 사용자에게 발동 여부를 묻는다.
+
+**절차 (사용자가 yes 하면):**
+
+```bash
+# 1) 신호 집계 (결정적, LLM 없음) → analysis.json
+python -B .codex/skills/generate-test/pipeline/analyze_runs.py     # 미검토<5면 SKIP
+
+# 2) 제안 생성 (gen/critique/eval/refine, 유료 codex) → proposal-final.md
+#    표본 충분한(그룹당 ≥3) 그룹만 제안. PASS면 분석한 run에 .reviewed 마킹.
+python -B .codex/skills/generate-test/pipeline/run_propose.py \
+  .codex/skills/generate-test/pipeline/changelog/proposals/<analysis_id>/analysis.json --provider codex
+```
+
+**적용은 사람이 한다.** proposal-final.md의 각 제안(위험 라벨·diff 초안·근거 신호)을 사람이 검토해
+직접 대상 파일을 고치고 `pipeline/changelog/CHANGELOG.md`에 한 줄 남긴다. **proposer는 파일을 자동 수정하지 않는다.**
+
+**고정점(§5):** slow loop 자신의 판정 장치 — `rubric_proposal.yaml`(proposal:v1), `prompts/propose_*.md`,
+slow-loop 코드(`proposer.py`·`analyze_runs.py`·`run_propose.py`) — 는 제안 대상에서 제외된다. **사람만 바꾼다.**
+
+**rubric 제안 가드(§4):** rubric 변경 제안은 위험="높음 + 효과 검증 장치 없음(v2까지 보류 권장)"으로 표기된다.
+"점수가 낮다"는 rubric을 고칠 근거가 못 된다 — 생성기를 먼저 고친다. rubric 변경 효과 검증은 v2 과제([PROBLEM.md](../../../PROBLEM.md)).
