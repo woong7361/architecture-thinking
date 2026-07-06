@@ -64,4 +64,5 @@
 ## 보존
 
 - git tag: `generate-test-v0-phase4`
-- commit id: <커밋 후 기입>
+- commit id: `c85cd27fa48f09554d10b57f6cc04d9ee3a51e58`
+- 재현: `git checkout generate-test-v0-phase4` (또는 위 commit id)
