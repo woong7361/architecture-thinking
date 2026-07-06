@@ -1,0 +1,56 @@
+{
+  "brief_hash": "8dbc7a7c",
+  "iteration": "003",
+  "summary": "정책 우선순위, 7일 경계, 일할 계산 절사, 주문/환불 상태 전이를 폭넓게 고정한 초안이다. 다만 일부 단위 테스트가 구현 API와 오케스트레이션 세부에 강하게 묶여 있고, 상태 전이 실패 경계와 환불 가능 금액 초과의 정책 적용 경계가 아직 약하다.",
+  "strengths": [
+    "MANUAL > 7일 이하 무료 > PRORATION 우선순위를 별도 시나리오와 단위 테스트로 분리해 보존할 가치가 있다.",
+    "UTC 날짜 기준 경과일 0일, 7일, 8일 경계를 paidAt/requestedAt 예시로 고정한 점이 좋다.",
+    "일할 계산의 당일, 마지막 날, 만료 후, 소수점 절사, totalDays <= 0 예외를 모두 포함해 산술 규칙 회귀를 잘 막는다.",
+    "주문 상태 전이는 PAID와 PARTIALLY_REFUNDED 각각에서 전액/부분 환불 결과를 모두 다뤄 핵심 도메인 규칙을 잘 드러낸다."
+  ],
+  "weaknesses": [
+    {
+      "issue": "일할 계산 결과가 환불 가능 금액을 초과하는 경우가 직접 고정되어 있지 않다.",
+      "why_it_matters": "정책은 어떤 산출 경로든 환불 금액이 cancellableAmount를 초과할 수 없다고 말한다. 현재 초과 테스트는 manualAmount와 Order.validateRefundable에 집중되어 있어, PRORATION 또는 7일 이하 무료 산출 후 부분 환불 주문의 환불 가능 금액을 넘는 조합이 잘못 통과할 수 있다.",
+      "suggestion": "PARTIALLY_REFUNDED 주문에서 수동 지정 없이 산출한 7일 이하 무료 또는 PRORATION 금액이 cancellableAmount를 넘지 않고 환불 가능 금액 기준으로 제한되거나 거절되는지, 정책 의도에 맞는 기대 결과를 별도 Gherkin/단위 테스트로 고정한다.",
+      "severity": "high"
+    },
+    {
+      "issue": "Refund 종료 상태에서 다른 종료 상태로 재전이할 수 없다는 단위 테스트는 있지만 Gherkin 인수 계약에는 이 불변식이 없다.",
+      "why_it_matters": "정책의 상태 다이어그램은 REQUESTED에서 SUCCEEDED, FAILED, TIMED_OUT 중 하나로 전이되는 단방향 모델을 암시한다. 인수 계약에 없으면 구현자가 종료 상태 재전이를 허용해도 상위 행동 계약에서는 red가 되지 않는다.",
+      "suggestion": "환불 상태가 이미 SUCCEEDED, FAILED, TIMED_OUT 중 하나일 때 성공/실패/타임아웃 처리를 다시 적용하면 거절되고 기존 상태가 유지된다는 Scenario Outline을 인수 계약에도 추가한다.",
+      "severity": "medium"
+    },
+    {
+      "issue": "RefundProcessorTest가 task1 단위테스트 범위를 넘어 외부 결제 취소 오케스트레이션과 mock 호출 세부를 검증한다.",
+      "why_it_matters": "원문은 task1 단위테스트 범위를 외부 결제 취소를 제외한 주문 검증, 금액 산출, 환불/주문 상태 전이로 한정한다. gateway.cancel 인자 verify는 도메인 규칙보다 구현 wiring에 가까워 테스트가 리팩터링에 취약해질 수 있다.",
+      "suggestion": "단위 테스트 초안에서는 Refund 엔티티의 REQUESTED -> SUCCEEDED/FAILED/TIMED_OUT 전이와 Order.applyRefund 결과만 유지하고, PaymentCancellationGateway mock을 쓰는 RefundProcessorTest는 별도 유스케이스/통합 성격 테스트로 분리한다고 명시한다.",
+      "severity": "medium"
+    }
+  ],
+  "revision_directions": [
+    "환불 가능 금액 초과 규칙을 manual 입력뿐 아니라 정책 산출 결과 전체에 적용하는 경계 케이스를 보강한다.",
+    "Refund 상태 다이어그램의 단방향성을 Gherkin 계약에도 올려 상위 행동 계약과 단위 테스트의 커버리지를 맞춘다.",
+    "task1 단위테스트 범위와 외부 의존 mock 테스트 범위를 파일명 또는 섹션으로 분리해 독자가 테스트 계층을 혼동하지 않게 한다."
+  ],
+  "reader_risks": [
+    "부분 환불 주문에서 무료 환불 또는 일할 계산 금액이 환불 가능 금액을 넘는 구현이 가짜 통과할 수 있다.",
+    "인수 계약만 보는 독자는 Refund의 종료 상태가 재전이 불가능하다는 제약을 놓칠 수 있다.",
+    "외부 PG mock 테스트가 단위 테스트 초안 안에 섞여 있어, 도메인 테스트와 오케스트레이션 테스트의 책임 경계가 흐려질 수 있다."
+  ],
+  "critiqued_at": "2026-07-06T21:11:40+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "critique_system:v1",
+    "source_files": [
+      "8dbc7a7c_input.json",
+      "8dbc7a7c_iter-003_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 39959,
+      "cached_input_tokens": 2432,
+      "output_tokens": 1551,
+      "reasoning_output_tokens": 516
+    }
+  }
+}

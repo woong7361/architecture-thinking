@@ -1,0 +1,9 @@
+{
+  "artifact": "eval",
+  "checked_file": "/home/woong/workspace/project/architecture-thinking/.codex/skills/generate-test/runs/bundled/2026-07-06_8dbc7a7c/iter_002/8dbc7a7c_iter-002_eval.json",
+  "status": "REJECT",
+  "errors": [
+    "min_total: 3.8 < 4.3",
+    "min_axis.independence_executability: 3.0 < 3.5"
+  ]
+}

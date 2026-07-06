@@ -34,10 +34,9 @@
 2. **그러나 split이 어려운 축(coverage)에서 더 멀리 간다.** split unit은 첫 draft가 coverage=1로 심하게
    빗나갔지만 refine 3회가 **1→5**로 구조했다. bundled는 coverage=4에서 **첫 판정에 PASS해버려 refine 압력을
    못 받았다** — 4에서 멈췄다. 즉 bundled의 빠른 수렴은 "덜 다듬어진 채 게이트를 넘은" 것이기도 하다.
-3. **계약 churn은 이 입력에선 어느 쪽도 실증되지 않았다(정직한 한계).** split은 동결로 구조적으로 0.
-   bundled는 refine이 안 일어나 gherkin을 흔들 기회 자체가 없었다. "bundled가 계약을 흔든다"는 가설은
-   *구조적 위험*(계약+단위가 한 draft라 refine이 계약을 건드릴 수 있음)일 뿐, **이 run으로 증명된 건 아니다.**
-   더 어려운/모호한 정책으로 bundled가 refine을 여러 번 돌 때라야 관찰된다.
+3. **계약 churn은 첫 run(위 표)에선 미실증이었으나, bundled 재실행에서 실증됐다(아래 "## 재관찰").**
+   첫 run은 bundled가 1회 통과라 refine이 없어 흔들 기회 자체가 없었다. 재실행에서 bundled가 게이트를
+   못 넘고 3회 refine을 돌자, **매 iteration마다 gherkin이 재작성**됐다.
 4. **split만 사람이 계약을 소유한다.** y/n 동결 게이트로 계약이 감사 정본으로 잠긴다. bundled엔 그 지점이 없다.
 
 ## 선택: split (권장 baseline 유지)
@@ -50,15 +49,40 @@
 - **어려운 축에서 더 높은 품질**: refine 압력을 받는 split이 coverage 5에 도달, bundled는 4에서 정지.
 - **사람 소유 게이트**: 계약이 y/n로 동결·감사된다.
 
-**대가(정직하게)**: split은 Gen 5회 대 bundled 1회 — **비용·지연이 크다.** 그리고 이 입력에선 bundled도 4.35로
-멀쩡히 PASS했다. 즉 "품질이 안정적이고 계약을 다시 안 건드려도 되는 단순 정책"에선 bundled가 합리적 선택일 수 있다.
+**대가(정직하게)**: split은 Gen 5회 대 bundled 1회(첫 run 기준) — **비용·지연이 크다.** 단, 아래 재관찰이
+보여주듯 bundled의 1회 수렴은 보장이 아니라 **운**이다(같은 입력이 게이트를 두고 진동). 계약 무결성이 필요하면
+그 변동성 자체가 split을 정당화한다.
 
-**언제 bundled를 쓰나**: 계약 재사용·감사가 불필요하고 빠른 1회 산출이 중요할 때. 계약을 여러 단위 run이
-제약으로 공유하거나 사람이 계약을 소유해야 하면 split.
+**언제 bundled를 쓰나**: 계약 재사용·감사가 불필요하고, 1회 통과에 실패해도 그만인 저위험·단순 정책일 때.
+계약을 여러 단위 run이 공유하거나 사람이 계약을 소유해야 하면 split.
+
+## 재관찰 — bundled 재실행에서 churn·비수렴 실증
+
+같은 refund 정책(해시 `8dbc7a7c`, 첫 run과 동일 입력)을 bundled로 **다시** 돌렸더니 정반대가 나왔다.
+게이트 min_total **4.3** / min_axis 3.5 기준:
+
+| iter | total | 반려 사유 | gherkin 줄수 |
+|---|---|---|---|
+| 001 | 4.2 | `min_total 4.2 < 4.3` | 110 |
+| 002 | **3.8** | `min_total 3.8 < 4.3` + `independence_executability 3.0 < 3.5` | 141 |
+| 003 | 4.0 | `min_total 4 < 4.3` | 162 |
+
+→ **max_iteration 초과 → FAILED**(수렴 실패).
+
+- **churn 실증**: refine마다 gherkin 재작성 — 110→141→162줄, **Background 삭제**, Given 어휘 전면 교체
+  (`주문은 결제 완료 상태다`→`주문 상태는 PAID이다`), 시나리오→Outline 개조, Examples 컬럼 추가, 제목 변경.
+  계약이 한 번도 안정되지 않았다.
+- **refine 퇴행**: iter2에서 총점 4.2→3.8, independence_executability 4→3. 단위 약점을 쫓다 draft 전체 악화.
+- **비수렴**: 같은 정책을 split은 통과(contract 4.3/unit 4.675)했는데 bundled는 3회 안에 못 넘고 실패.
+- **불안정성**: 같은 입력인데 첫 run은 4.35로 1회 통과, 이 run은 4.0~4.2에서 맴돌다 실패 —
+  bundled 품질이 4.3 게이트를 사이에 두고 **진동**한다.
+
+**함의**: split의 계약 동결은 이 churn·퇴행·발산을 **구조적으로 원천 차단**한다(계약이 별도 파일로 잠겨
+refine이 손댈 수 없음). bundled는 한 draft라 refine 압력이 계약으로 샌다. → §"선택: split"의 근거가 실증으로 굳었다.
 
 ## 다음 관찰 과제
 
-- 계약 churn을 실제로 보려면 **bundled가 refine을 여러 번 도는 더 모호한 정책**을 물려 gherkin 변동을 로그로 잡는다.
+- bundled 첫 run(1회 통과)과 재run(실패·churn)의 **분기 원인**을 더 좁힌다: gen 난수인지, 게이트 4.3이 bundled엔 과한지.
 - 이 관찰들이 쌓이면 v1 slow-loop이 (mode×rubric_name) 신호로 자동 집계한다([v1-slow-loop-design.md](v1-slow-loop-design.md) §2-1).
 
 ## 보존

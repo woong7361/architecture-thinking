@@ -1,0 +1,45 @@
+{
+  "brief_hash": "8dbc7a7c",
+  "iteration": "002",
+  "rubric_name": "bundled:v1",
+  "rubric_scores": {
+    "scores": {
+      "coverage": 4.0,
+      "unambiguity": 4.0,
+      "behavioral_altitude": 4.0,
+      "mock_discipline": 4.0,
+      "independence_executability": 3.0
+    },
+    "weights": {
+      "coverage": 0.25,
+      "unambiguity": 0.25,
+      "behavioral_altitude": 0.15,
+      "mock_discipline": 0.15,
+      "independence_executability": 0.2
+    },
+    "weighted_total": 3.8
+  },
+  "axis_rationales": {
+    "coverage": "열거 25개, 누락 0개: [] — MANUAL 우선/0이하/초과, 7일 경계 0·7·8, UTC 날짜, 일할 remaining total·1·0·floor·totalDays<=0, 주문 상태 허용/거절/초과, 주문 상태 전이 4종, Refund 생성 및 SUCCEEDED/FAILED/TIMED_OUT 전이를 모두 덮지만 일부 경계는 단일점 중심이라 5점은 아님.",
+    "unambiguity": "대부분 구체 금액·상태·예외 타입을 단언하나 Gherkin의 '거절된다/생성되지 않는다'는 예외 종류나 결과 객체가 다소 느슨하고 일부 단위 테스트도 IllegalArgumentException/IllegalStateException 수준까지만 고정한다.",
+    "behavioral_altitude": "feature는 대체로 주문, 환불, 결제 취소 결과 같은 도메인 언어로 쓰였고 클래스명·메서드명 노출은 없으나 UTC, PRORATION, FULL/PARTIAL 같은 기술적 enum 표현이 일부 남아 있다.",
+    "mock_discipline": "Java 테스트는 순수 계산과 상태 전이를 실제 객체로 검증하고 Mock은 PaymentCancellationGateway 외부 의존에만 사용하지만 RefundProcessorTest에서 verify가 동작 검증으로 다소 포함된다.",
+    "independence_executability": "대부분 독립 실행 가능하나 draft가 실제 프로덕션 클래스/빌더/API 시그니처를 상당히 가정하며 RefundProcessor.cancelZeroAmount 같은 정책 밖 보조 API와 feature Background의 환불 가능 금액 재정의가 있어 즉시 실행성은 중간 수준이다."
+  },
+  "calibration_note": "엄격 게이트 기준으로 평균 3.0을 기준 삼아 캡 조건을 확인했다. 순수 도메인 로직 Mock, 봉인된 단언, 명시적 순서 의존은 보이지 않지만, 실행 가능성은 가정한 API 표면이 넓어 낮췄다.",
+  "evaluated_at": "2026-07-06T21:08:26+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_system:v1",
+    "source_files": [
+      "8dbc7a7c_input.json",
+      "8dbc7a7c_iter-002_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 40594,
+      "cached_input_tokens": 2432,
+      "output_tokens": 1095,
+      "reasoning_output_tokens": 516
+    }
+  }
+}
