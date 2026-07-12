@@ -1,0 +1,118 @@
+# Task B-3: 도메인에 '행위'를 되돌려주기 (Anemic vs Rich Domain Model)
+
+(Grit's Why): B-2의 죽은 코드를 보면 데이터(Ticket)는 getter/setter만 있고 진짜 로직은 전부 Service에 흩어져 있습니다. 이것이 빈약한 도메인 모델(Anemic Domain Model)의 전형입니다. 객체지향의 핵심은 '데이터와 그 데이터를 다루는 행위가 한 객체 안에 같이 사는 것'입니다.
+
+### 수행 내용
+
+1. Anemic Domain Model과 Rich Domain Model을 리서치하고, 각각이 무엇이며 무엇을 잃고 얻는지 본인 언어로 정리해 주세요. (마틴 파울러의 'AnemicDomainModel' 글을 직접 인용)
+2. B-2의 TicketService를 진단해 주세요. 어떤 로직이 Service에 있지만 사실 도메인 객체(Ticket 등)의 책임이어야 하는지 짚고, Rich Domain Model로 옮기면 무엇이 달라지는지(예: ticket.reserve(userId)가 상태 검증과 변경을 스스로 책임) 설명해 주세요.
+3. '항상 Rich가 답인가'도 생각해 주세요. 단순 CRUD나 표현 계층 DTO처럼 Anemic이 합리적인 경우는 언제인지 본인 기준을 세워 주세요.
+
+### 제출물
+
+- [x]  Anemic vs Rich Domain Model 정리 + 본인 입장. (최소 400자)
+- [x]  TicketService의 Anemic 징후 진단 + Rich로 옮길 때의 변화. (최소 300자)
+- [x]  Rich가 과한 경우(Anemic이 합리적인 경우)에 대한 본인 기준. (최소 200자)
+
+---
+
+## 답안 0: 마틴 파울러 'AnemicDomainModel' 원문 먼저 읽기 (요약)
+
+- **증상.** 겉보기엔 진짜 도메인 모델 같다. 도메인 명사로 이름 붙은 객체들이 관계·구조까지 갖췄다. 그러나 행위를 보면 *"there is hardly any behavior on these objects, making them little more than bags of getters and setters"* — getter/setter 자루일 뿐이고, 로직은 Service로 밀려나 있다.
+- **근본 문제 — 객체지향의 부정.** 이 안티패턴의 핵심 공포는 **데이터와 행위(process)를 결합**한다는 객체지향 설계의 기본에 정면으로 반한다는 점이다. *"The anemic domain model is really just a procedural style design, exactly the kind of thing that object bigots like me (and Eric) have been fighting since our early days in Smalltalk."* 더 나쁜 건 **많은 사람이 이 빈약한 객체를 진짜 객체로 착각해, 객체지향의 요점을 통째로 놓친다**는 것이다.
+- **비용만 내고 이득은 없음.** *"they incur all of the costs of a domain model, without yielding any of the benefits."* ORM·영속 계층 같은 도메인 모델 비용은 다 치르면서, 복잡한 로직을 객체로 조직하는 이득은 못 챙기고 트랜잭션 스크립트로 끝난다.
+- **계층화와는 모순 아님.** 도메인에 행위를 넣는 것은 "도메인 로직을 영속성·프레젠테이션 책임과 분리"하는 계층화와 충돌하지 않는다. 도메인 객체에 들어갈 것은 **도메인 로직 — 검증·계산·비즈니스 규칙**이지, DB 접근이나 화면 로직이 아니다.
+- **Service Layer 자체는 죄가 아님.** 도메인 모델 위에 절차적 Service Layer를 얹는 건 정당하다. 다만 *"this isn't an argument to make the domain model void of behavior"* — 도메인을 행위 없는 껍데기로 만들라는 뜻이 아니다. Service 옹호자도 **행위가 풍부한 도메인과 함께** Service를 쓴다. Eric Evans(DDD) 역시 로직은 도메인에 두라며 경고한다. *"the more common mistake is to give up too easily on fitting the behavior into an appropriate object, gradually slipping toward procedural programming."*
+- **결론.** *"If all your logic is in services, you've robbed yourself blind."* 로직을 전부 Service에 두면 스스로를 탈탈 털어먹는 것이다.
+
+---
+
+## 답안 1: Anemic vs Rich Domain Model 정리 + 본인 입장
+
+**정의.**
+
+- **Anemic Domain Model(빈약한 도메인 모델).** 도메인 객체가 상태(필드)와 그에 대한 getter/setter만 갖고, **비즈니스 규칙·검증·상태 전이 같은 행위는 갖지 않는** 모델이다. 행위는 전부 도메인 바깥의 Service(트랜잭션 스크립트)로 나가고, 객체는 데이터 운반 그릇 역할만 한다. 파울러가 안티패턴으로 지목한 대상이며, 구조적으로는 데이터와 로직이 분리된 **절차지향 설계**다.
+- **Rich Domain Model(풍부한 도메인 모델).** 데이터와 **그 데이터를 다루는 도메인 로직(검증·계산·비즈니스 규칙·상태 전이)이 같은 객체 안에 사는** 모델이다. 객체는 공개 setter로 아무렇게나 바뀌지 않고, `reserve(userId)`처럼 **의미 있는 행위 메서드**를 통해서만 상태가 바뀌며, 그 메서드가 불변식(invariant)을 스스로 지킨다. 데이터와 행위를 한 객체에 결합한다는 객체지향 설계의 기본에 부합한다.
+- **경계.** Rich라고 해서 영속성(DB)·프레젠테이션 로직까지 도메인에 넣는 것은 아니다. 도메인 객체가 품는 것은 **순수 도메인 로직**뿐이고, I/O는 여전히 Service·Repository 등 바깥 계층이 담당한다
+
+**비유 — 인형 vs 로봇 장난감.**
+
+- **Anemic Domain Model = 스스로 못 움직이는 인형.** 인형(`Ticket`)은 팔·다리(데이터: `reserved`, `userId`, `price`)는 다 갖췄지만 스스로는 아무것도 못 한다. 움직이려면 항상 주인(`TicketService`)이 팔을 이렇게, 다리를 저렇게 하나하나 조종해야 한다. 규칙("이미 예약된 인형은 다시 예약하면 안 돼")도 인형은 모른다. **주인이 대신 기억**해야 한다. 그런데 주인이 깜빡하고 이미 예약된 인형을 또 예약해도, 인형은 "나 벌써 예약됐는데?"라고 말을 못 하니까 그냥 잘못된 채로 넘어간다. 주인이 여러 명이면 그중 한 명만 규칙을 까먹어도 사고가 난다.
+- **Rich Domain Model = 스스로 움직이는 로봇 장난감.** 로봇(`Ticket`)은 "예약해!" 버튼(`reserve(userId)`)만 누르면 **스스로** "나 이미 예약됐나?"를 확인하고, 괜찮을 때만 자기 상태를 바꾼다. 규칙이 로봇 몸속에 들어 있어서, 아무나 로봇 배를 열어 부품을 함부로 바꿀 수 없다(setter 봉인). 버튼을 누르는 사람(Service)은 규칙을 몰라도 되고, 그냥 "예약해"라고만 하면 된다.
+
+한 문장으로: **Anemic은 "데이터는 여기, 행위는 저기" 로 갈라놓은 것**이고, **Rich는 "데이터와 그 데이터를 다루는 행위를 한 몸에 둔 것"** 이다(그 행위가 규칙·불변식을 스스로 지킨다).
+
+**무엇을 잃고 무엇을 얻는가 (trade-off).**
+
+| 축 | Anemic | Rich |
+| --- | --- | --- |
+| 로직 위치 | Service에 흩어짐 | 객체 안에 응집 |
+| 불변식 | 열린 setter로 깨짐 | 행위 메서드가 강제 |
+| 테스트 | Mock 필요 | 값으로 검증 |
+| 단순함 | 쉬움 | 설계 비용 있음 |
+
+**본인 입장.** 나는 파울러에 원칙적으로 동의한다 — **로직이 자연스럽게 붙을 도메인 객체가 있는데도 Service로 밀어내는 것**은 손해다. 다만 이 판단의 기준은 "객체지향 순수주의"가 아니라 **"불변식이 있느냐"** 라고 본다. 지켜야 할 상태 규칙(예: 예약된 티켓은 재예약 불가)이 있는 개념이라면 그 규칙은 객체 안에서 강제돼야 하고(Rich), 그래야 잘못된 상태 자체를 만들 수 없다. 반대로 지킬 불변식이 없는, 값을 나르기만 하는 개념이라면 Anemic이 정직한 선택이다. 즉 Rich는 목표가 아니라 **"불변식 보호가 필요할 때 그것을 강제하기 위한 수단"** 이다(→ 답안 3의 기준).
+
+단, 이 기준의 한계도 인정한다. **불변식이 없어도** 계산·행위의 캡슐화(예: `Money.add()`)나 의도 표현(`setReserved(true)`보다 `reserve()`)이 목적이면 Rich가 나을 수 있다. "불변식 유무"는 Rich를 정당화하는 **가장 강한** 근거일 뿐, 유일한 근거는 아니다(그래서 파울러 본인은 나보다 더 "기본값은 Rich" 쪽이다).
+
+---
+
+## 답안 2: TicketService의 Anemic 징후 진단 + Rich로 옮길 때의 변화
+
+**Anemic 징후.** B-2의 `Ticket`은 상태 + getter/setter만 있고 행위가 없다. 그중 **티켓 책임인데 Service에 나가 있는 것**은 두 개다. ① **예약 가능 판단**(`if (ticket.isReserved()) throw ...`) — 티켓 자신의 불변식을 바깥이 대신 검사한다. ② **상태 전이**(`setReserved(true); setUserId(userId);`) — 공개 setter라 하나만 부르면 **"주인 없는 예약"** 같은 잘못된 상태가 컴파일·저장까지 통과한다. 반면 유저·티켓 조회, 결제, 저장은 **I/O**라 Service에 남는 게 맞다. 즉 "전부 Rich"가 아니라 **결정(도메인) vs I/O(Service)의 경계를 다시 긋는** 문제다.
+
+**Rich로 옮기면.** 판단+상태 전이를 `Ticket`으로 내린다.
+
+```java
+public class Ticket {
+    private boolean reserved;
+    private Long userId;
+    private final Money price;
+
+    public void reserve(long userId) {          // 상태 검증과 변경을 스스로 책임
+        if (this.reserved) {
+            throw new TicketAlreadyReservedException();
+        }
+        this.reserved = true;
+        this.userId = userId;
+    }
+    // setReserved/setUserId(공개 setter)는 제거 → 외부에서 상태 못 깸
+}
+```
+
+그러면 Service는 **조립(orchestration)만** 남는다.
+
+```java
+@Transactional
+public boolean reserveTicket(long userId, long ticketId, String paymentInfo) {
+    User user = userRepo.findById(userId);
+    if (user == null) throw new UserNotFoundException();
+
+    Ticket ticket = ticketRepo.findById(ticketId);
+    ticket.reserve(userId);   // ① 가능 검사 + 상태 전이 (안 되면 여기서 throw → 결제 안 함)
+
+    if (!paymentApi.charge(paymentInfo, ticket.getPrice())) {  // ② 자리 잡은 뒤 결제
+        throw new PaymentFailedException();
+    }
+    ticketRepo.save(ticket);
+    return true;
+}
+```
+
+**순서 주의:** `reserve()`를 **결제보다 먼저** 둬야 이미 예약된 티켓이 결제 전에 끊긴다(반대면 "남의 티켓인데 돈부터 빠지는" 회귀). 결제 실패 시 in-memory 변경이 커밋되지 않도록 `@Transactional` 롤백이 전제다(B-2 답안1의 "트랜잭션 경계 부재"와 같은 지점).
+
+**달라지는 것:** ① **불변식 강제** — 공개 setter가 없어 잘못된 상태를 만들 수 없다. ② **값 테스트** — `new Ticket(...).reserve(...)`로 Mock 0개 검증. ③ **규칙이 한 곳** — 다른 흐름(관리자 강제예약 등)도 `reserve()` 하나를 재사용.
+
+---
+
+## 답안 3: Rich가 과한 경우(Anemic이 합리적인 경우)에 대한 본인 기준
+
+'항상 Rich'는 아니다. 단 기준은 "불변식이 없다"만으론 부족하다. 앞서 답안 1에서 짚은 한계대로, **두 질문에 모두 "아니오"** 일 때만 Anemic이 정직하다 — ① 잘못된 상태를 막을 **불변식**이 있나? ② 담을 만한 **도메인 행위나 계산**이 있나? 둘 다 없으면 순수 값 운반이므로 Anemic이 맞다.
+
+- **DTO·API 요청/응답 모델.** 값을 계층 간 나르는 게 전부라 불변식도 행위도 없다. 오히려 행위를 넣으면 도메인 규칙이 경계 밖으로 샌다. getter/setter 자루가 맞다.
+- **규칙 없는 단순 CRUD.** 설정값·코드 테이블처럼 저장/조회가 전부이고 상태 전이 규칙이 없는 대상. 억지로 Rich를 만들면 이득 없는 추상화 비용, 즉 과설계가 된다.
+- **읽기 전용 조회 모델.** CQRS의 Query 쪽이나 리포트·뷰가 여기 해당한다. 상태를 바꾸지 않으니 강제할 불변식이 없어, 조회에 최적화된 평평한 구조가 낫다.
+
+즉 Anemic은 "게을러서"가 아니라 지킬 불변식도 담을 행위·계산도 없다는 사실을 정직하게 반영한 선택일 때 합리적이다. 단 값 운반이던 객체에 규칙이나 계산이 붙기 시작하면 그때 Rich로 옮기면 된다. 판정은 "지금 이 객체가 무엇을 담고 있나"로 한다.
+
+
