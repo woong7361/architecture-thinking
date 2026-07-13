@@ -1,0 +1,56 @@
+{
+  "brief_hash": "57796ebc",
+  "iteration": "002",
+  "summary": "현재 초안은 TicketService.reserveTicket의 주요 관찰 동작과 두 quirk를 대부분 잘 고정한다. 다만 일부 단언이 원문 계약보다 더 구체적인 내부 기본값에 기대고 있고, 성공/부분 실패 경로의 호출 순서와 불필요 호출 부재를 더 촘촘히 묶으면 회귀 탐지력이 올라간다.",
+  "strengths": [
+    "UserNotFoundException, TicketAlreadyReservedException, PaymentFailedException, NullPointerException, save 실패 전파까지 정책의 핵심 예외 경로를 별도 테스트로 분리했다.",
+    "TicketRepository, UserRepository, PaymentApi만 Mock으로 격리하고 Ticket/User는 실제 객체로 사용해 정책의 Mock 경계를 잘 지켰다.",
+    "정상 경로에서 실제 ticket price로 charge가 호출되는지와 ticket 상태 변경, userId 설정, save 호출을 함께 검증한다.",
+    "null 티켓 NPE와 저장 실패 후 롤백 없음 quirk를 이상적 정책으로 교정하지 않고 현재 동작으로 박제했다."
+  ],
+  "weaknesses": [
+    {
+      "issue": "결제 실패 테스트가 `ticket.getUserId()).isEqualTo(0L)`로 원문에 명시되지 않은 기본 userId 값까지 고정한다.",
+      "why_it_matters": "정책은 결제 실패 시 `setUserId`가 일어나지 않는다는 행동을 고정하라고 했지, Ticket 생성 직후 userId의 기본값이 0이라는 계약을 명시하지 않았다. 이 단언은 Ticket 데이터 객체 구현 변경에 과하게 민감해져 reserveTicket 회귀가 아닌 이유로 red가 될 수 있다.",
+      "suggestion": "결제 실패 전의 userId를 지역 변수로 캡처한 뒤 호출 후 같은 값인지 확인하거나, 정책 근거가 있는 경우에만 0L 기본값을 별도 계약으로 명시해 단언하라.",
+      "severity": "medium"
+    },
+    {
+      "issue": "성공 경로 테스트는 조회, 결제, 저장 외의 추가 협력자 호출이 없는지를 닫아 주지 않는다.",
+      "why_it_matters": "특성화 테스트는 리팩토링 전 관찰 가능한 부수효과를 고정하는 목적이므로, 성공 경로에서 같은 결제를 두 번 하거나 저장 뒤 추가 DB/API 호출이 생겨도 현재 테스트 일부는 통과할 여지가 있다.",
+      "suggestion": "성공 경로에서도 userRepo.findById, ticketRepo.findById, paymentApi.charge, ticketRepo.save를 검증한 뒤 `verifyNoMoreInteractions(userRepo, ticketRepo, paymentApi)`로 관찰 가능한 협력자 호출 범위를 닫아라.",
+      "severity": "medium"
+    },
+    {
+      "issue": "원자성 없음 quirk 테스트의 '보상 없음' 단언은 가능한 범위와 한계가 불명확하다.",
+      "why_it_matters": "PaymentApi 시그니처에는 취소나 환불 메서드가 없으므로 `verifyNoMoreInteractions(paymentApi)`는 추가 charge 같은 기존 인터페이스 호출 부재만 고정한다. 독자는 이 테스트가 실제 결제 취소 부재까지 증명한다고 오해할 수 있다.",
+      "suggestion": "테스트명 또는 DisplayName을 `PaymentApi에 charge 외 추가 호출이 없다`처럼 현재 인터페이스에서 관찰 가능한 범위로 좁히고, save 예외 전파와 ticket 객체 변경 잔존을 주된 단언으로 유지하라.",
+      "severity": "low"
+    }
+  ],
+  "revision_directions": [
+    "결제 실패 경로의 userId 단언을 원문 계약에 맞게 '변경되지 않음' 중심으로 조정한다.",
+    "정상 경로의 협력자 호출 검증을 조회, 결제, 저장, 추가 호출 없음까지 닫아 특성화 테스트의 회귀 탐지력을 높인다.",
+    "원자성 없음 테스트는 실제로 관찰 가능한 부수효과인 charge 선행, save 예외 전파, ticket 상태 변경 잔존, PaymentApi 추가 호출 없음의 범위를 분명히 드러내도록 이름과 단언을 정리한다."
+  ],
+  "reader_risks": [
+    "Ticket의 기본 userId가 0이 아닌 구현으로 바뀌거나 생성자 초기화가 달라지면 reserveTicket의 결제 실패 동작과 무관한 실패가 발생할 수 있다.",
+    "성공 경로에 중복 결제나 불필요한 추가 협력자 호출이 들어와도 일부 테스트가 이를 명확히 잡지 못해 가짜 통과가 생길 수 있다.",
+    "'보상 없음'이라는 표현이 현재 PaymentApi 인터페이스로 검증 가능한 범위보다 넓게 읽혀, 테스트가 실제 외부 결제 취소 부재까지 보장한다고 오해될 수 있다."
+  ],
+  "critiqued_at": "2026-07-13T15:36:46+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "critique_system:v1",
+    "source_files": [
+      "57796ebc_input.json",
+      "57796ebc_iter-002_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 29606,
+      "cached_input_tokens": 2432,
+      "output_tokens": 1546,
+      "reasoning_output_tokens": 516
+    }
+  }
+}

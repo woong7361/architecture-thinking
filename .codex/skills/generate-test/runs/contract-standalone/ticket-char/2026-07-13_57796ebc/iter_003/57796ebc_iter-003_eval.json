@@ -1,0 +1,42 @@
+{
+  "brief_hash": "57796ebc",
+  "iteration": "003",
+  "rubric_name": "contract:v1",
+  "rubric_scores": {
+    "scores": {
+      "coverage": 5,
+      "unambiguity": 5,
+      "behavioral_altitude": 3,
+      "independence": 5
+    },
+    "weights": {
+      "coverage": 0.3,
+      "unambiguity": 0.3,
+      "behavioral_altitude": 0.2,
+      "independence": 0.2
+    },
+    "weighted_total": 4.6
+  },
+  "axis_rationales": {
+    "coverage": "열거 7개, 누락 0개: []; 유저 없음, 이미 예약됨, 결제 실패, 정상 예약, charge-save 순서, null 티켓 NPE, 저장 실패 후 원자성 없음이 모두 별도 시나리오에 매핑되며 주요 분기 안/밖도 함께 검증된다.",
+    "unambiguity": "예외 타입, 반환값, charge 금액, 저장 대상 상태, 미호출, 호출 순서, 동일 예외 인스턴스까지 구체값으로 단언되어 봉인되거나 정성적인 Then 단언이 보이지 않는다.",
+    "behavioral_altitude": "Gherkin이 대체로 관찰 가능한 동작을 말하지만 TicketService.reserveTicket, Repository/API 메서드명, findById/save/charge 같은 구현 경계와 메서드명이 반복 노출되어 이 축은 최대 3에 묶인다.",
+    "independence": "각 Scenario/Scenario Outline이 자체 Given으로 유저, 티켓, 결제 응답, 저장 실패 조건을 모두 구성하며 앞 시나리오 상태나 실행 순서에 의존하지 않는다."
+  },
+  "calibration_note": "엄격 게이트 기준으로 구현 세부 노출 캡은 적용했지만, 정책 자체가 특성화 테스트와 협력자 경계 고정을 요구하므로 coverage와 unambiguity는 높게 평가했다.",
+  "evaluated_at": "2026-07-13T15:55:19+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_system:v1",
+    "source_files": [
+      "57796ebc_input.json",
+      "57796ebc_iter-003_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 30451,
+      "cached_input_tokens": 2432,
+      "output_tokens": 915,
+      "reasoning_output_tokens": 516
+    }
+  }
+}

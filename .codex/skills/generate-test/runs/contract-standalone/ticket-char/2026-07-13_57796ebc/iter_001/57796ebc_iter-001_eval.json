@@ -1,0 +1,42 @@
+{
+  "brief_hash": "57796ebc",
+  "iteration": "001",
+  "rubric_name": "contract:v1",
+  "rubric_scores": {
+    "scores": {
+      "coverage": 4,
+      "unambiguity": 3,
+      "behavioral_altitude": 3,
+      "independence": 5
+    },
+    "weights": {
+      "coverage": 0.3,
+      "unambiguity": 0.3,
+      "behavioral_altitude": 0.2,
+      "independence": 0.2
+    },
+    "weighted_total": 3.7
+  },
+  "axis_rationales": {
+    "coverage": "열거 7개, 누락 0개: [] — 정상, 유저 없음, 이미 예약됨, 결제 실패, charge-before-save 순서, null 티켓 NPE, save 예외 후 원자성 없음 quirk가 모두 별도 시나리오로 매핑되지만 경계 안/밖 삼각측량은 제한적이라 4점입니다.",
+    "unambiguity": "대부분 예외 타입·호출 횟수·금액·상태가 구체적이나 'userId는 초기값 그대로', '저장 예외가 그대로', '결제 취소나 보상 동작은 일어나지 않는다'가 실행 계약으로 다소 느슨해 최대 3점입니다.",
+    "behavioral_altitude": "특성화 테스트 요구상 클래스·메서드·협력자 노출은 일부 필요하지만 Feature/Scenario/Step 전반에 TicketService.reserveTicket, Repository, PaymentApi, save, charge 등 구현 용어가 반복되어 최대 3점입니다.",
+    "independence": "각 Scenario/Scenario Outline이 자체 Given으로 유저, 티켓, 결제 응답, 저장 예외를 구성하며 앞 시나리오의 상태나 실행 순서에 의존하지 않습니다."
+  },
+  "calibration_note": "엄격 게이트 기준으로 평균 3.0을 기준 삼아, 누락은 없지만 느슨한 단언과 구현 세부 노출 캡을 반영했습니다.",
+  "evaluated_at": "2026-07-13T15:52:28+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_system:v1",
+    "source_files": [
+      "57796ebc_input.json",
+      "57796ebc_iter-001_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 30115,
+      "cached_input_tokens": 2432,
+      "output_tokens": 931,
+      "reasoning_output_tokens": 516
+    }
+  }
+}

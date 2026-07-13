@@ -1,0 +1,56 @@
+{
+  "brief_hash": "57796ebc",
+  "iteration": "001",
+  "summary": "현재 draft는 주요 정책 경로와 두 quirk를 대부분 잘 고정한다. 다만 몇몇 부정 경로의 상호작용 단언이 너무 좁거나, '롤백/보상 없음'을 실제로 관찰 가능한 방식으로 고정하지 못하는 부분이 있다.",
+  "strengths": [
+    "UserNotFoundException, TicketAlreadyReservedException, PaymentFailedException, NullPointerException, save 예외 전파까지 정책의 핵심 분기를 별도 테스트로 분리했다.",
+    "Ticket과 User를 실제 객체로 사용하고 외부 경계 3개만 Mock으로 격리해 정책의 Mock 범위를 대체로 잘 지켰다.",
+    "정상 경로에서 반환값, 티켓 상태 변경, userId 설정, 실제 price로 charge 호출, save 호출을 함께 확인한다.",
+    "결제 성공 후 저장 실패 시 티켓 객체가 이미 변경된 상태라는 원자성 없음 quirk를 상태로 확인한다."
+  ],
+  "weaknesses": [
+    {
+      "issue": "저장 실패 quirk에서 '결제 취소/보상 없음' 단언이 실제 호출 검증으로 고정되지 않았다.",
+      "why_it_matters": "정책은 charge 성공 후 save가 실패하면 롤백/보상/결제취소가 일어나지 않는 현재 동작을 박제하라고 한다. 현재 테스트는 PaymentApi에 charge만 검증하지만, PaymentApi 인터페이스에 취소 메서드가 없다는 사실이나 추가 보상 호출이 없음을 명시적으로 봉인하지 않아, 이후 협력자 인터페이스가 확장되거나 다른 보상 협력자가 추가될 때 테스트 의도가 흐려질 수 있다.",
+      "suggestion": "현재 제공된 PaymentApi가 charge만 가진 인터페이스라면 테스트 이름이나 검증 주석보다 실행 단언으로는 charge 1회와 save 예외 전파, save 이후 추가 상호작용 없음까지 확인하도록 보강한다. Mockito 사용 시 해당 테스트 끝에 paymentApi와 ticketRepo의 검증된 호출 외 추가 호출이 없음을 확인하는 방식으로 의도를 고정한다.",
+      "severity": "medium"
+    },
+    {
+      "issue": "null 티켓 테스트의 save 미호출 검증이 `save(null)`에만 한정되어 있다.",
+      "why_it_matters": "정책상 ticketRepo.findById가 null이면 ticket.isReserved()에서 즉시 NPE가 나고 paymentApi.charge와 ticketRepo.save는 호출되지 않아야 한다. `never().save(null)`은 null 인자로 저장하지 않았다는 좁은 단언이라, 다른 Ticket 인스턴스를 저장하는 잘못된 구현을 직접 봉인하지 못한다.",
+      "suggestion": "null 티켓 경로에서는 `ticketRepo.save`가 어떤 인자로도 호출되지 않았음을 검증하도록 바꾼다. 동시에 paymentApi 미호출은 현재처럼 유지해 NPE 발생 위치가 결제 전임을 고정한다.",
+      "severity": "medium"
+    },
+    {
+      "issue": "이미 예약된 티켓 경로의 결제 미호출 검증이 특정 인자 조합에 묶여 있다.",
+      "why_it_matters": "정책은 이미 예약된 티켓이면 paymentApi.charge 자체가 호출되지 않는다고 요구한다. 현재 `never().charge(PAYMENT_INFO, TICKET_PRICE)`는 그 인자 조합의 호출만 막기 때문에, 다른 paymentInfo나 amount로 결제가 호출되는 잘못된 구현을 직접 잡지 못할 수 있다.",
+      "suggestion": "이미 예약된 티켓 테스트에서는 paymentApi에 어떤 상호작용도 없어야 한다는 형태로 단언하거나, charge가 어떤 인자로도 호출되지 않았음을 검증한다. save도 특정 ticket 저장 금지보다 save 전체 미호출 의도가 드러나게 정리한다.",
+      "severity": "medium"
+    }
+  ],
+  "revision_directions": [
+    "부정 경로에서는 특정 인자 미호출보다 '협력자 호출 자체가 없어야 한다'는 정책을 더 넓은 상호작용 단언으로 고정한다.",
+    "원자성 없음 테스트는 save 예외 전파, charge 선행, ticket 상태 변경 유지, 추가 보상 호출 없음이라는 관찰 가능한 신호를 분리해 명확히 만든다.",
+    "정상 경로의 강점인 실제 객체 상태 검증과 실제 price 인자 검증은 다음 초안에서도 유지한다."
+  ],
+  "reader_risks": [
+    "특정 인자에만 묶인 `never()` 검증 때문에 잘못된 인자로 호출되는 회귀가 가짜 통과할 수 있다.",
+    "원자성 없음 quirk가 테스트 이름에는 드러나지만 실행 단언에서는 일부만 봉인되어, 리팩토링 중 보상 로직 추가 여부를 테스트가 명확히 막지 못할 수 있다.",
+    "null 티켓 경로에서 save 미호출 의도가 좁게 표현되어, 독자가 정책의 핵심이 'save(null) 금지'라고 오해할 수 있다."
+  ],
+  "critiqued_at": "2026-07-13T15:34:57+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "critique_system:v1",
+    "source_files": [
+      "57796ebc_input.json",
+      "57796ebc_iter-001_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 29876,
+      "cached_input_tokens": 29056,
+      "output_tokens": 1059,
+      "reasoning_output_tokens": 0
+    }
+  }
+}

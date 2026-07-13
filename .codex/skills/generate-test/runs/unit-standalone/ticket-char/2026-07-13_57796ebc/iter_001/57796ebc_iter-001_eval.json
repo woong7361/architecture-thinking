@@ -1,0 +1,42 @@
+{
+  "brief_hash": "57796ebc",
+  "iteration": "001",
+  "rubric_name": "unit:v1",
+  "rubric_scores": {
+    "scores": {
+      "coverage": 4.0,
+      "unambiguity": 4.0,
+      "mock_discipline": 4.0,
+      "executability": 4.0
+    },
+    "weights": {
+      "coverage": 0.3,
+      "unambiguity": 0.25,
+      "mock_discipline": 0.25,
+      "executability": 0.2
+    },
+    "weighted_total": 4.0
+  },
+  "axis_rationales": {
+    "coverage": "열거 7개, 누락 0개: []; 유저 없음, 이미 예약됨, 결제 실패, 정상 성공, charge-before-save 순서, null 티켓 NPE, save 실패 후 원자성 없음 quirk가 모두 별도 테스트로 매핑되나 경계 안/밖 삼각측량은 제한적입니다.",
+    "unambiguity": "예외 타입·반환값·상태·외부 호출은 대부분 구체적으로 단언하지만 null 티켓 케이스의 save 부재 단언이 save(null)에만 묶여 있어 완전히 봉인되지는 않습니다.",
+    "mock_discipline": "Mock은 TicketRepository/UserRepository/PaymentApi 외부 경계 3개에만 쓰고 Ticket/User는 실제 객체로 상태 검증하나, 일부 외부 verify가 다소 중복됩니다.",
+    "executability": "JUnit5, Mockito, AssertJ 기반으로 대상 시그니처와 기대값이 명확하나 테스트 패키지 선언 부재와 기본 userId 0L 의존 같은 극소수 보완 지점이 있습니다."
+  },
+  "calibration_note": "평균 3.0 기준의 엄격 채점으로, 누락은 없지만 일부 단언 봉인성과 실행 환경 명시가 완전하지 않아 5점은 부여하지 않았습니다.",
+  "evaluated_at": "2026-07-13T15:35:25+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_system:v1",
+    "source_files": [
+      "57796ebc_input.json",
+      "57796ebc_iter-001_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 30841,
+      "cached_input_tokens": 2432,
+      "output_tokens": 906,
+      "reasoning_output_tokens": 516
+    }
+  }
+}

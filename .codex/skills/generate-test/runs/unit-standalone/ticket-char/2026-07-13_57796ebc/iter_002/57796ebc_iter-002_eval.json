@@ -1,0 +1,42 @@
+{
+  "brief_hash": "57796ebc",
+  "iteration": "002",
+  "rubric_name": "unit:v1",
+  "rubric_scores": {
+    "scores": {
+      "coverage": 5,
+      "unambiguity": 4.5,
+      "mock_discipline": 4.5,
+      "executability": 5
+    },
+    "weights": {
+      "coverage": 0.3,
+      "unambiguity": 0.25,
+      "mock_discipline": 0.25,
+      "executability": 0.2
+    },
+    "weighted_total": 4.725
+  },
+  "axis_rationales": {
+    "coverage": "열거 7개, 누락 0개: [] — 유저 없음, 이미 예약됨, 결제 실패, 정상 성공, 결제-before-save 순서, null 티켓 NPE, save 실패 후 원자성 없음 quirk가 각각 생성 테스트에 매핑된다.",
+    "unambiguity": "대부분 구체값·예외 타입·상태 변화·외부 호출 인자로 단언되어 틀린 구현을 잡지만, 예외 단언은 isInstanceOf라 정확 타입 봉인성은 약간 낮다.",
+    "mock_discipline": "Mock은 TicketRepository/UserRepository/PaymentApi 외부 경계 3개에 한정되고 Ticket/User는 실제 객체로 상태 검증하지만, 호출 없음과 순서 검증이 다소 촘촘해 verify 과용 여지가 있다.",
+    "executability": "JUnit5, Mockito, AssertJ 기반으로 대상 클래스·메서드·협력자 시그니처와 기대값이 명확해 즉시 구현 가능한 단위 테스트 형태다."
+  },
+  "calibration_note": "엄격 게이트 기준으로 5점은 coverage와 executability에만 부여했다. unambiguity와 mock_discipline은 결함은 없지만 정확 타입 봉인성과 verify 밀도 때문에 소폭 감점했다.",
+  "evaluated_at": "2026-07-13T15:37:07+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_system:v1",
+    "source_files": [
+      "57796ebc_input.json",
+      "57796ebc_iter-002_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 31089,
+      "cached_input_tokens": 17792,
+      "output_tokens": 893,
+      "reasoning_output_tokens": 516
+    }
+  }
+}

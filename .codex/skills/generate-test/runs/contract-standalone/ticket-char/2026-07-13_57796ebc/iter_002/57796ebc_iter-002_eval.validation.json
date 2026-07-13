@@ -1,0 +1,9 @@
+{
+  "artifact": "eval",
+  "checked_file": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\generate-test\\runs\\contract-standalone\\ticket-char\\2026-07-13_57796ebc\\iter_002\\57796ebc_iter-002_eval.json",
+  "status": "REJECT",
+  "errors": [
+    "min_total: 4.2 < 4.3",
+    "min_axis.behavioral_altitude: 2.5 < 3.5"
+  ]
+}

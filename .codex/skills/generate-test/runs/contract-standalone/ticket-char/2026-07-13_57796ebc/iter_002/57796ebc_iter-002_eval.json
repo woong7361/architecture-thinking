@@ -1,0 +1,42 @@
+{
+  "brief_hash": "57796ebc",
+  "iteration": "002",
+  "rubric_name": "contract:v1",
+  "rubric_scores": {
+    "scores": {
+      "coverage": 4.5,
+      "unambiguity": 4.5,
+      "behavioral_altitude": 2.5,
+      "independence": 5
+    },
+    "weights": {
+      "coverage": 0.3,
+      "unambiguity": 0.3,
+      "behavioral_altitude": 0.2,
+      "independence": 0.2
+    },
+    "weighted_total": 4.2
+  },
+  "axis_rationales": {
+    "coverage": "열거 7개, 누락 0개: [] — 정상, 유저 없음, 이미 예약, 결제 실패, charge-before-save 순서, null 티켓 NPE, 저장 실패 후 롤백 없음 quirk를 모두 매핑했으나 대부분 단일 대표값 중심이라 5점은 보류한다.",
+    "unambiguity": "예외 타입, 반환값, 금액, 호출 횟수, 상태 변화가 구체값으로 단언되어 결함 탐지력은 높지만 일부 '해당 티켓', '먼저 기록된다'는 step 구현에 의존한다.",
+    "behavioral_altitude": "TicketService.reserveTicket, Repository, PaymentApi.charge/save, 예외 클래스 등 구현/협력자 세부가 전면에 노출되어 있으며 이 축의 캡 조건상 높은 점수를 줄 수 없다.",
+    "independence": "각 시나리오와 Outline 예시는 자체 Given으로 사용자, 티켓, 결제 응답, 저장 실패 조건을 구성하며 앞 시나리오 상태나 실행 순서에 의존하지 않는다."
+  },
+  "calibration_note": "특성화 목적상 구현 세부 노출은 요구와 잘 맞지만, rubric의 behavioral_altitude 스케일은 구현 세부 노출을 명시적으로 감점한다.",
+  "evaluated_at": "2026-07-13T15:53:49+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_system:v1",
+    "source_files": [
+      "57796ebc_input.json",
+      "57796ebc_iter-002_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 30277,
+      "cached_input_tokens": 17792,
+      "output_tokens": 903,
+      "reasoning_output_tokens": 516
+    }
+  }
+}

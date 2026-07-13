@@ -1,0 +1,56 @@
+{
+  "brief_hash": "57796ebc",
+  "iteration": "002",
+  "summary": "현재 초안은 주요 성공/실패 경로와 두 quirk를 별도 시나리오로 고정해 특성화 테스트의 목적에 잘 맞는다. 다만 일부 Then이 구현이 틀려도 같은 결과처럼 보일 수 있고, 원자성 없음 quirk의 핵심인 보상/롤백 부재가 다소 간접적으로만 표현되어 있다.",
+  "strengths": [
+    "정상 예약, 유저 없음, 이미 예약됨, 결제 실패, null 티켓 NPE, 저장 실패 후 부분 실패를 각각 독립 시나리오로 분리해 정책의 핵심 분기를 넓게 덮고 있다.",
+    "정상 경로에서 반환값, 티켓 상태 변경, userId 설정, save 호출, charge 금액을 함께 검증해 관찰 가능한 효과를 잘 고정한다.",
+    "유저 없음과 이미 예약됨 경로에서 이후 협력자 호출 부재를 명시해 조기 종료 동작을 보존할 수 있다.",
+    "NPE와 원자성 없음 quirk를 이상적 정책으로 교정하지 않고 현재 동작으로 박제한 점은 요구사항에 부합한다."
+  ],
+  "weaknesses": [
+    {
+      "issue": "null 티켓 시나리오가 NPE 발생 위치를 충분히 고정하지 못한다.",
+      "why_it_matters": "정책은 ticketRepo.findById가 null을 반환한 뒤 ticket.isReserved()에서 NullPointerException이 나는 현재 동작을 박제하라고 한다. 현재 Then은 NPE와 이후 호출 부재만 확인하므로, ticketRepo.findById 호출 전 다른 이유로 NPE가 나도 테스트가 통과할 수 있다.",
+      "suggestion": "null 티켓 시나리오에 TicketRepository.findById가 해당 ticketId로 1번 호출되었음을 추가하고, 필요하면 UserRepository.findById 이후 TicketRepository.findById가 호출되는 흐름까지 고정한다.",
+      "severity": "medium"
+    },
+    {
+      "issue": "저장 실패 quirk에서 '롤백/보상/결제취소 없음' 단언이 간접적이다.",
+      "why_it_matters": "정책의 핵심은 charge 성공 후 save 예외가 전파되고 결제가 이미 된 채로 남는다는 원자성 없음이다. 현재는 PaymentApi에 charge 외 추가 상호작용이 없다고만 되어 있어, step 정의가 느슨하면 보상 호출 부재를 실제로 봉인하지 못할 수 있다.",
+      "suggestion": "저장 실패 시나리오의 Then을 PaymentApi.charge가 save 전에 이미 1번 성공 호출되었고, 저장 예외 이후 PaymentApi에 추가 호출이 없다는 형태로 구체화한다. 정책/원문에 결제 취소 메서드가 추가로 존재한다면 해당 취소 호출이 없음을 직접 단언한다.",
+      "severity": "medium"
+    },
+    {
+      "issue": "정상 경로와 저장 실패 경로의 호출 순서 보장이 일부 중복되거나 분산되어 있다.",
+      "why_it_matters": "정책은 결제가 저장보다 먼저 일어나는 부수효과 순서를 요구한다. 별도 정상 시나리오에서는 순서를 확인하지만 저장 실패 quirk에서는 charge가 save 전에 일어난 사실이 핵심인데 순서 단언이 명시적으로 보이지 않는다.",
+      "suggestion": "저장 실패 quirk에도 PaymentApi.charge 호출이 TicketRepository.save 호출보다 먼저 기록된다는 Then을 추가해 부분 실패의 시간적 순서를 직접 고정한다.",
+      "severity": "low"
+    }
+  ],
+  "revision_directions": [
+    "null 티켓 시나리오에서 ticketRepo.findById 호출 여부와 호출 인자를 명시해 NPE가 null ticket 역참조에서 나온다는 경로를 더 강하게 고정한다.",
+    "저장 실패 quirk는 예외 전파, 티켓 상태 변경, save 호출뿐 아니라 charge가 save 전에 완료되었고 이후 보상 상호작용이 없다는 점을 한 시나리오 안에서 직접 단언한다.",
+    "이미 있는 예제 수를 더 늘리기보다 각 Then이 틀린 구현을 red로 만들 수 있는지 점검하고, 느슨한 표현을 구체적 호출/상태 단언으로 바꾼다."
+  ],
+  "reader_risks": [
+    "NPE만 맞추는 잘못된 구현이 null ticket 역참조 경로를 따르지 않아도 통과할 수 있다.",
+    "원자성 없음 quirk가 결제 성공 후 저장 실패라는 순서 문제로 읽히지 않고 단순 예외 전파 테스트로 축소될 수 있다.",
+    "step definition이 '추가 상호작용 없음'을 엄격한 verifyNoMoreInteractions로 구현하지 않으면 결제 보상 호출이 생겨도 테스트가 놓칠 수 있다."
+  ],
+  "critiqued_at": "2026-07-13T15:53:28+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "critique_system:v1",
+    "source_files": [
+      "57796ebc_input.json",
+      "57796ebc_iter-002_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 28820,
+      "cached_input_tokens": 17792,
+      "output_tokens": 1542,
+      "reasoning_output_tokens": 516
+    }
+  }
+}

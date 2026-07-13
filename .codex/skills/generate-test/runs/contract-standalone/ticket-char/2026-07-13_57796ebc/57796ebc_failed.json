@@ -1,0 +1,132 @@
+{
+  "brief_hash": "57796ebc",
+  "run_id": "2026-07-13_57796ebc",
+  "failed_at": "2026-07-13T15:55:19+09:00",
+  "terminal_reason": "max_iteration_exceeded",
+  "last_iteration": "003",
+  "failure_counts_by_category": {
+    "quality_reject": 6
+  },
+  "last_failures": [
+    {
+      "category": "quality_reject",
+      "rule": "min_axis.behavioral_altitude",
+      "severity": "high",
+      "retryable": false,
+      "message": "min_axis.behavioral_altitude: 3 < 3.5"
+    }
+  ],
+  "lineage": {
+    "input": "57796ebc_input.json",
+    "last_draft": "iter_003/57796ebc_iter-003_draft.json",
+    "last_critique": "iter_003/57796ebc_iter-003_critique.json",
+    "last_eval": "iter_003/57796ebc_iter-003_eval.json"
+  },
+  "iteration_rejections": [
+    {
+      "iteration": "001",
+      "validation": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\generate-test\\runs\\contract-standalone\\ticket-char\\2026-07-13_57796ebc\\iter_001\\57796ebc_iter-001_eval.validation.json",
+      "errors": [
+        "min_total: 3.7 < 4.3",
+        "min_axis.unambiguity: 3 < 4.0",
+        "min_axis.behavioral_altitude: 3 < 3.5"
+      ]
+    },
+    {
+      "iteration": "002",
+      "validation": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\generate-test\\runs\\contract-standalone\\ticket-char\\2026-07-13_57796ebc\\iter_002\\57796ebc_iter-002_eval.validation.json",
+      "errors": [
+        "min_total: 4.2 < 4.3",
+        "min_axis.behavioral_altitude: 2.5 < 3.5"
+      ]
+    },
+    {
+      "iteration": "003",
+      "validation": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\generate-test\\runs\\contract-standalone\\ticket-char\\2026-07-13_57796ebc\\iter_003\\57796ebc_iter-003_eval.validation.json",
+      "errors": [
+        "min_axis.behavioral_altitude: 3 < 3.5"
+      ]
+    }
+  ],
+  "config": {
+    "mode": "contract",
+    "provider": "codex",
+    "codex_bin": "codex",
+    "agent_models": {
+      "gen": "gpt-5.5",
+      "critique": "gpt-5.5",
+      "eval": "gpt-5.5",
+      "refine": "gpt-5.5"
+    },
+    "iteration": "001",
+    "max_iterations": 3,
+    "timeout_seconds": 600,
+    "gen_prompt_path": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\generate-test\\pipeline\\prompts\\gen_contract.md",
+    "rubric_path": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\generate-test\\pipeline\\rubrics\\contract.rubric.yaml",
+    "rubric": {
+      "name": "contract:v1",
+      "scale": {
+        "min": 0,
+        "max": 5
+      },
+      "_note": "정밀 게이트. 점수는 5로 뭉치지 않게 1~5 전 구간을 쓰고, coverage는 삼각측량(안/밖 짝)된 항목만 '덮음'으로 센다. 캡 조건(실패케이스 누락·구현세부 노출 등)에 걸리면 그 상한을 넘기지 않는다.",
+      "axes": {
+        "coverage": {
+          "weight": 0.3,
+          "method": "정책(requirement/source_material/policy_rules)에서 함의되는 경계·실패/거절 케이스를 스스로 열거 → 각 항목을 생성 시나리오에 매핑 → **누락 개수**로 채점. axis_rationale에 '열거 N개, 누락 K개: [...]' 필수. 입력에 케이스 목록 없음 — 정책에서 파생. 삼각측량(경계의 안/밖 짝)은 무조건 요구하지 않는다: 단일점만 있어도 그 케이스는 '덮음'이라 누락으로 세지 않되, 4↔5를 가르는 정밀도 신호로만 쓴다.",
+          "scale": {
+            "1": "누락 2개 이상",
+            "2": "누락 1개인데 그 항목이 실패/거절 케이스거나, 누락 1개 + 다른 정밀도 결함 동반",
+            "3": "누락 1개 (열거한 경계·실패 케이스 중 하나가 빠짐)",
+            "4": "누락 0개. 모든 케이스를 검증하나 핵심 경계 일부가 안/밖 한쪽만 있어 삼각측량은 아쉬움",
+            "5": "누락 0개 + 핵심 경계가 안/밖 짝으로 검증되어 특수해(if x==7 류) 구현도 걸러냄"
+          }
+        },
+        "unambiguity": {
+          "weight": 0.3,
+          "method": "각 Then 단언이 '틀린 구현이면 반드시 실패하는가'를 본다. 항상 참이 되거나 느슨한 단언은 결함 탐지력이 없다.",
+          "scale": {
+            "1": "'should work'·빈 기대값 등 검증 불가 단언 존재",
+            "2": "느슨·정성 단언이 다수(여러 곳에서 틀린 구현이 통과)",
+            "3": "구체값 위주이나 느슨 단언이 하나라도 존재(그 단언은 결함 못 잡음) — 존재 시 최대 3",
+            "4": "모든 단언이 구체 기대값. 한두 곳이 이상적이진 않으나 결함은 잡힘",
+            "5": "모든 단언이 구체 기대값(금액·상태·예외타입) + 봉인된 단언 0"
+          }
+        },
+        "behavioral_altitude": {
+          "weight": 0.2,
+          "scale": {
+            "1": "구현 세부(클래스명·메서드명·필드) 다수 노출",
+            "2": "구현 용어가 여러 곳에 섞임",
+            "3": "대체로 도메인 언어이나 구현 세부가 한두 곳 노출 — 노출이 있으면 최대 3",
+            "4": "구현 세부 미노출, 극히 일부 표현만 다소 기술적",
+            "5": "완전히 도메인 언어로만 서술"
+          }
+        },
+        "independence": {
+          "weight": 0.2,
+          "scale": {
+            "1": "앞 시나리오의 상태·실행 순서에 의존",
+            "2": "공유 상태로 순서가 바뀌면 깨질 여지가 뚜렷 — 존재 시 최대 2",
+            "3": "대체로 독립이나 공유 픽스처의 영향 여지",
+            "4": "독립적, 아주 사소한 공유만",
+            "5": "각 시나리오가 자기 입력만으로 실행, 순서·공유상태 의존 0"
+          }
+        }
+      },
+      "thresholds": {
+        "min_total": 4.3,
+        "min_axis": {
+          "coverage": 4.0,
+          "unambiguity": 4.0,
+          "behavioral_altitude": 3.5,
+          "independence": 3.5
+        }
+      }
+    }
+  },
+  "next_actions": [
+    "원본 brief에 구체적 사례와 제약을 보강한다",
+    "반복 실패의 주된 category를 보고 rubric threshold 또는 stage prompt를 조정한다"
+  ]
+}

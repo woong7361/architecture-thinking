@@ -1,0 +1,56 @@
+{
+  "brief_hash": "57796ebc",
+  "iteration": "001",
+  "summary": "주요 정상/예외 흐름과 두 quirk를 별도 시나리오로 분리해 현재 동작 고정 의도는 잘 반영했다. 다만 일부 Then이 실행 가능한 단언으로 약하고, 저장 실패 quirk에서 실제 코드의 부분 변경 상태를 충분히 박제하지 못한다.",
+  "strengths": [
+    "정상, 유저 없음, 이미 예약됨, 결제 실패, null 티켓 NPE, 저장 실패 후 원자성 없음 흐름을 모두 별도 시나리오로 나누어 정책의 큰 분기를 빠뜨리지 않았다.",
+    "UserNotFoundException, TicketAlreadyReservedException, PaymentFailedException, NullPointerException을 도메인 예외로 교정하지 않고 현재 코드의 예외 타입 그대로 기대한다.",
+    "정상 흐름과 결제 실패 흐름에서 PaymentApi.charge가 티켓의 실제 price로 호출되는지를 명시해 금액 전달 계약을 잘 고정했다.",
+    "유저 없음, 이미 예약됨, null 티켓, 결제 실패에서 이후 협력자 호출이 없어야 한다는 부수효과 차단을 비교적 구체적으로 표현했다."
+  ],
+  "weaknesses": [
+    {
+      "issue": "저장 실패 quirk에서 save 예외 전에 티켓 객체가 이미 reserved=true, userId=userId로 변경된다는 부분 실패 상태를 단언하지 않는다.",
+      "why_it_matters": "원본 코드는 charge 성공 후 save 전에 ticket.setReserved(true)와 ticket.setUserId(userId)를 먼저 실행한다. 이 상태 변경은 리팩토링 중 트랜잭션 경계나 순서를 바꾸면 쉽게 달라지는 관찰 가능한 quirk인데, 현재 시나리오는 charge와 save 호출만 보아도 통과할 수 있다.",
+      "suggestion": "저장 예외 전파 시나리오의 Then에 예외 이후 티켓의 예약 상태가 true이고 userId가 요청 userId로 변경되어 있음을 확인하는 단언을 추가한다.",
+      "severity": "high"
+    },
+    {
+      "issue": "결제 실패 시나리오의 '티켓의 userId는 초기값 그대로이다'가 구체적인 기대값 없이 모호하다.",
+      "why_it_matters": "Ticket의 초기 userId 값이 Given에 명시되지 않으면 step 구현이 무엇을 비교해야 하는지 불분명하다. 잘못된 구현이 userId를 0으로 세팅하거나 기존 값을 덮어써도 '초기값 그대로' step이 느슨하게 구현되면 red가 되지 않을 수 있다.",
+      "suggestion": "결제 실패 Given에서 티켓의 사전 userId를 명시하고, Then에서는 그 동일한 값이 유지된다고 단언한다. 정책이나 원문에 초기 userId 기본값 근거가 없다면 테스트 내부에서 사전 값을 설정한 뒤 보존 여부를 확인한다.",
+      "severity": "medium"
+    },
+    {
+      "issue": "저장 실패 시나리오의 '결제 취소나 보상 동작은 일어나지 않는다'는 관찰 대상이 불명확하다.",
+      "why_it_matters": "제공된 PaymentApi 시그니처에는 charge만 있고 cancel/refund 같은 보상 API가 없다. 이 Then은 실행 가능한 단언 없이 문장만 남거나, 정책에 없는 가짜 협력자 동작을 step 정의에 추가하게 만들 위험이 있다.",
+      "suggestion": "해당 Then을 실행 가능한 관찰로 좁혀 PaymentApi에는 charge 외 추가 상호작용이 없다고 검증하거나, 실제 코드/협력자에 보상 메서드 근거가 없다면 이 문장을 제거하고 charge가 이미 1번 호출된 상태에서 save 예외가 전파된다는 단언으로 원자성 없음 quirk를 고정한다.",
+      "severity": "medium"
+    }
+  ],
+  "revision_directions": [
+    "저장 실패 quirk를 'charge 성공 -> ticket 상태 변경 -> save 호출 -> save 예외 전파' 순서와 예외 이후 객체 상태까지 고정하도록 보강한다.",
+    "모든 상태 보존 단언은 비교 기준이 되는 사전 상태를 Given에 명시하고 Then에서 같은 값 유지로 표현한다.",
+    "정책에 존재하는 협력자 메서드와 관찰 가능한 상호작용만 Then에 남기고, 보상/취소처럼 API 근거가 없는 문장은 실행 가능한 no-extra-interactions 단언으로 바꾼다."
+  ],
+  "reader_risks": [
+    "리팩토링이 save 실패 전에 티켓 상태를 변경하지 않도록 바뀌어도 현재 테스트가 놓쳐 원자성 없음 quirk를 충분히 봉인하지 못할 수 있다.",
+    "'초기값 그대로' 같은 느슨한 step 정의가 실제 상태 변경 버그를 숨겨 가짜 통과를 만들 수 있다.",
+    "보상 동작 없음 단언이 구현 불가능한 문장으로 남으면 핵심 quirk를 검증한다고 착각하지만 실제 자동화에서는 아무 것도 검증하지 않는 봉인된 단언이 될 수 있다."
+  ],
+  "critiqued_at": "2026-07-13T15:52:10+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "critique_system:v1",
+    "source_files": [
+      "57796ebc_input.json",
+      "57796ebc_iter-001_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 28658,
+      "cached_input_tokens": 2432,
+      "output_tokens": 1584,
+      "reasoning_output_tokens": 516
+    }
+  }
+}
