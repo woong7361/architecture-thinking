@@ -31,8 +31,7 @@ public class TicketService {
             throw new PaymentFailedException();
         }
         // 4. 티켓 상태 변경 (DB)
-        ticket.setReserved(true);
-        ticket.setUserId(userId);
+        ticket.assignTo(userId);
         ticketRepo.save(ticket);
         return true;
     }

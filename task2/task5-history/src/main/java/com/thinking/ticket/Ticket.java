@@ -21,6 +21,15 @@ public class Ticket {
         }
     }
 
+    /* 예약 상태 전이를 스스로 책임진다 — 불변식을 자기방어하며 소유자를 기록한다. */
+    public void assignTo(long userId) {
+        if (reserved) {
+            throw new TicketAlreadyReservedException();
+        }
+        this.reserved = true;
+        this.userId = userId;
+    }
+
     public long getId() {
         return id;
     }
