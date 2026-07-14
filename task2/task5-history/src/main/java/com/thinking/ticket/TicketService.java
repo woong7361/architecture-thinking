@@ -24,9 +24,7 @@ public class TicketService {
         }
         // 2. 티켓 조회 (DB)
         Ticket ticket = ticketRepo.findById(ticketId);
-        if (ticket.isReserved()) {
-            throw new TicketAlreadyReservedException();
-        }
+        ticket.ensureReservable();
         // 3. 결제 시도 (외부 API)
         boolean paymentSuccess = paymentApi.charge(paymentInfo, ticket.getPrice());
         if (!paymentSuccess) {

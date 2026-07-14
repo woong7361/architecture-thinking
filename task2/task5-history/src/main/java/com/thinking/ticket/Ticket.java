@@ -14,6 +14,13 @@ public class Ticket {
         this.reserved = false;
     }
 
+    /* 예약 가능 판단(불변식)을 스스로 책임진다 — 이미 예약된 티켓은 다시 예약될 수 없다. */
+    public void ensureReservable() {
+        if (reserved) {
+            throw new TicketAlreadyReservedException();
+        }
+    }
+
     public long getId() {
         return id;
     }
