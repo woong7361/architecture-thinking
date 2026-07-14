@@ -59,3 +59,46 @@
 | R2 판매중지 | 예약 불변식 | ✅ | 2곳 | **0곳** | **다름**(전엔 열림) |
 
 > 적용 후 이 문서에 **"## 실제 결과"** 절을 덧붙여 예측과 대조한다(어긋났으면 원인·끊는 법 한 줄).
+
+---
+
+## 실제 결과 (적용 후)
+
+예측 잠금: `88301ab` → R1: `c8ddfbe` → R2: `0042eed`. 매 커밋 GREEN(6→7→8 시나리오).
+
+### R1 — 실제로 바뀐 파일 (가격 축)
+
+| 구분 | 파일 | 예측 | 실제 |
+|---|---|:---:|:---:|
+| production 신규 | `DiscountPolicy.java` | ✅ | ✅ |
+| production 수정 | `TicketService.java`(금액 계산) | ✅ | ✅ |
+| 테스트 수정 | `TicketReservationSteps.java`(생성 1줄) | ✅ | ✅ |
+| 테스트 신규 | `new_requirements.feature` | ✅ | ✅ |
+
+- **예측과 일치. production 수정 2곳.** `Ticket`·`ChargePort`·repos·`User`·예외 불변.
+- **대조 확인**: `TicketService`의 바뀐 줄은 `charge(info, ticket.getPrice())` → `charge(info, discountPolicy.finalAmount(ticket.getPrice()))`. 이 `charge` 호출은 **리팩토링 전에도 서비스에 있던 라인**이라, 리팩토링 전이었어도 수정 위치·개수가 **동일**했다. → **리팩토링이 이 변경엔 저항력을 주지 못했다(예상대로).** 가격 축은 우리가 끊은 적이 없기 때문.
+
+### R2 — 실제로 바뀐 파일 (예약 규칙 축)
+
+| 구분 | 파일 | 예측 | 실제 |
+|---|---|:---:|:---:|
+| production 수정 | `Ticket.java`(필드+suspend()+ensureReservable 한 줄) | ✅ | ✅ |
+| production 신규 | `TicketSuspendedException.java` | ✅ | ✅ |
+| **`TicketService`** | **0곳** | ✅ | ✅ (`git status`로 미포함 확인) |
+| 테스트 수정 | `TicketReservationSteps.java`(Given/Then 추가) | ✅ | ✅ |
+| 테스트 신규 | `new_requirements.feature` | ✅ | ✅ |
+
+- **예측과 일치. production 수정 2곳, 서비스 0곳.**
+- **대조 확인**: 새 예약 조건이 `Ticket.ensureReservable()` **한 곳**에 떨어졌고, 서비스는 그 메서드를 **호출만** 하므로 자동 적용됐다(수정 0). 리팩토링 **전**이었다면 이 검사는 `reserveTicket` 절차의 `if(ticket.isReserved())` 자리에 **인라인**이라 **서비스를 열어** 넣어야 했다(후=0곳 / 전=1곳). 단위 검증도 후에는 `new Ticket(...).suspend()` 뒤 `ensureReservable()`로 **mock 0개**, 전에는 서비스+repo·결제 mock 필요.
+
+### 종합 — 예측은 어긋나지 않았고, 저항력은 축마다 달랐다
+
+| | production 수정 | `TicketService` | 리팩토링 전이었다면 | 저항력 |
+|---|:---:|:---:|:---:|:---:|
+| R1 할인 (가격 축) | 2곳 | 열림(금액 계산) | **동일** | 무관 |
+| R2 판매중지 (예약 규칙 축) | 2곳 | **0곳** | 서비스 열림 | **개선됨** |
+
+- **예측과 어긋난 곳 없음. 변경이 번지지도 않음**(둘 다 예측한 곳에만 갇힘).
+- 그러나 "2곳에 갇힘"이 곧 "리팩토링 덕"은 아니다 — **R1은 baseline도 2곳**이라 리팩토링과 무관하고, **R2만 서비스가 안 열리는 진짜 차이**를 보였다.
+- **결론**: 변화 저항력은 **끊은 축에서만** 생긴다. 우리 리팩토링은 **예약 규칙 축**을 `Ticket`으로 끊었으므로 그 축의 변경(R2)에서만 containment가 나타나고, **안 끊은 가격 축**의 변경(R1)은 baseline과 같다. "파일 몇 곳" 지표만 보면 둘 다 2곳이라 같아 보이지만, **서비스가 열리는가 / mock 없이 검증되는가**를 함께 봐야 차이가 드러난다.
+- **여전히 새는 곳(정직)**: 가격 축은 아직 안 끊겼다. 지금은 정책이 하나(v=1)라 그대로 두는 게 맞고(YAGNI), **2번째 할인 종류가 확정되면** `DiscountPolicy` 인터페이스를 뽑아 그 축도 끊는다(트리거 기록).

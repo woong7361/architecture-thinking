@@ -21,4 +21,5 @@
     - 커밋 로그 표(기법·스멜·해시·GREEN): [refactoring-log.md](https://github.com/woong7361/architecture-thinking/blob/main/task2/task5-history/refactoring-log.md) · 부분별 before/after 상세: [refactoring-report.md](https://github.com/woong7361/architecture-thinking/blob/main/task2/task5-history/refactoring-report.md) · 실행 전략: [refactoring-strategy.md](https://github.com/woong7361/architecture-thinking/blob/main/task2/task5-history/refactoring-strategy.md)
 - [x]  '리팩토링이 필요한 경우 vs 불필요한 경우' 본인 기준. (최소 300자)
     - 답안: [task5-history/refactoring-criteria.md](../task5-history/refactoring-criteria.md) — 1부 스멜 탐지 카탈로그 + 2부 결정 게이트(GO=필요 / DEFER·LEAVE=불필요·보류 / REMOVE=과구조)
-- [ ]  가정한 새 요구사항 1개, 변경 전 예측(어느 파일을 고칠지), 실제로 바뀐 파일 목록. 예측과 어긋났거나 변경이 번졌다면 그 원인.
+- [x]  가정한 새 요구사항 1개, 변경 전 예측(어느 파일을 고칠지), 실제로 바뀐 파일 목록. 예측과 어긋났거나 변경이 번졌다면 그 원인.
+    - 답안: [task5-history/change-resilience-test.md](https://github.com/woong7361/architecture-thinking/blob/main/task2/task5-history/change-resilience-test.md) — 예측 잠금(`88301ab`) 후 R1(할인/가격 축, 대조군)·R2(판매중지/예약 규칙 축, 실험군) 적용. 예측 정확히 일치. **저항력은 끊은 축에서만**: R2는 `TicketService` 0곳 수정(리팩토링 전이면 서비스 열림), R1은 baseline과 동일(가격 축 미개입).
