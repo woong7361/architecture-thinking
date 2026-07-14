@@ -9,11 +9,14 @@ public class TicketService {
     private final TicketRepository ticketRepo; // (DB 의존)
     private final UserRepository userRepo;     // (DB 의존)
     private final ChargePort chargePort;       // (외부 결제 포트 의존)
+    private final DiscountPolicy discountPolicy; // (가격 정책)
 
-    public TicketService(TicketRepository ticketRepo, UserRepository userRepo, ChargePort chargePort) {
+    public TicketService(TicketRepository ticketRepo, UserRepository userRepo, ChargePort chargePort,
+                         DiscountPolicy discountPolicy) {
         this.ticketRepo = ticketRepo;
         this.userRepo = userRepo;
         this.chargePort = chargePort;
+        this.discountPolicy = discountPolicy;
     }
 
     public boolean reserveTicket(long userId, long ticketId, String paymentInfo) {
@@ -25,7 +28,8 @@ public class TicketService {
         Ticket ticket = ticketRepo.findById(ticketId);
         ticket.ensureReservable();
 
-        boolean paymentSuccess = chargePort.charge(paymentInfo, ticket.getPrice());
+        int amount = discountPolicy.finalAmount(ticket.getPrice());
+        boolean paymentSuccess = chargePort.charge(paymentInfo, amount);
         if (!paymentSuccess) {
             throw new PaymentFailedException();
         }

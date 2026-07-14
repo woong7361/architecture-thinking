@@ -2,6 +2,7 @@ package com.thinking.ticket.steps;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.thinking.ticket.DiscountPolicy;
 import com.thinking.ticket.PaymentFailedException;
 import com.thinking.ticket.Ticket;
 import com.thinking.ticket.TicketAlreadyReservedException;
@@ -78,7 +79,7 @@ public final class TicketReservationSteps {
 
     @When("회원 {long}이 카드정보 {string}으로 티켓 {long}을 예매하면")
     public void 예매하면(long userId, String paymentInfo, long ticketId) {
-        TicketService service = new TicketService(ticketRepo, userRepo, paymentApi);
+        TicketService service = new TicketService(ticketRepo, userRepo, paymentApi, new DiscountPolicy());
         try {
             this.result = service.reserveTicket(userId, ticketId, paymentInfo);
         } catch (Throwable t) {
