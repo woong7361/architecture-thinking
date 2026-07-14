@@ -1,6 +1,7 @@
 package com.thinking.ticket;
 
-/* 빈약한 도메인 모델(Anemic): getter/setter 자루. 규칙은 하나도 스스로 지키지 않는다. */
+/* 풍부한 도메인 모델(Rich): 예약 불변식과 상태 전이를 스스로 소유한다.
+ * public setter가 없어 ensureReservable()/assignTo()를 통해서만 상태가 바뀐다. */
 public class Ticket {
 
     private long id;
