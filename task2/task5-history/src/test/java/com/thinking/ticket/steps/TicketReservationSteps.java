@@ -54,7 +54,7 @@ public final class TicketReservationSteps {
     @Given("가격 {int}원짜리 이미 예약된 티켓 {long}이 있다")
     public void 이미_예약된_티켓이_있다(int price, long ticketId) {
         Ticket ticket = new Ticket(ticketId, price);
-        ticket.setReserved(true);
+        ticket.assignTo(0L); // setter 제거 후: 도메인 행위로 '이미 예약됨' 상태를 만든다(소유자는 미단언이라 0)
         ticketRepo.seed(ticket);
     }
 

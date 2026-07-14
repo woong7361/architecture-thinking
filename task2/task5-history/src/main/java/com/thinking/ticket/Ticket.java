@@ -42,15 +42,7 @@ public class Ticket {
         return reserved;
     }
 
-    public void setReserved(boolean reserved) {
-        this.reserved = reserved;
-    }
-
     public long getUserId() {
         return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
     }
 }
