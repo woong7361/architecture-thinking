@@ -25,7 +25,7 @@ Ticket = getter/setter 자루(Anemic)             + ensureReservable() / assignT
 interface PaymentApi                            interface ChargePort (역할명)
 ```
 
-누적 변경: `6 files changed, 41 insertions(+), 35 deletions(-)` (`f97c1a7..bd73e98`).
+누적 변경: `6 files changed, 39 insertions(+), 35 deletions(-)` (`f97c1a7..b69d858`).
 
 ---
 
@@ -153,9 +153,32 @@ RecordingPaymentApi.java (test)     : import·implements PaymentApi → ChargePo
 
 ---
 
+## C6 — assignTo가 ensureReservable을 재사용(중복 제거) `b69d858`
+
+- **스멜**: Duplicated Code(#2) — 예약 불변식 검사(`if (reserved) throw`)가 `ensureReservable()`와 `assignTo()`에 복제(C2에서 방어 심층화로 도입한 중복).
+- **기법**: Remove Duplication (추출된 함수 재사용)
+
+**바꾼 곳 — `Ticket.java`: 복제된 검사를 호출로 대체**
+```java
+    public void assignTo(long userId) {
+-       if (reserved) {
+-           throw new TicketAlreadyReservedException();
+-       }
++       ensureReservable();
+        this.reserved = true;
+        this.userId = userId;
+    }
+```
+
+**왜 GREEN인가 (행위 보존)**
+- `assignTo`는 여전히 예약된 티켓이면 던지고, 아니면 전이 — 관찰 동작 동일. happy·seed 모두 진입 시 `reserved=false`라 통과.
+- 검사 규칙이 한 곳(`ensureReservable`)에 모여, 규칙이 바뀌면 한 곳만 고치면 된다. "예약하려면 예약 가능해야 한다"가 코드로 드러난다.
+
+---
+
 ## 최종 확인
 
-- **행위 보존**: C0~C5 **매 커밋 6/6 GREEN**. quirk(없는 티켓 NPE, 저장 실패 무보상) 포함해 관찰 동작 불변.
-- **구조 변화**: 예약 규칙(검사+전이)이 서비스 → `Ticket`으로 이동(Rich), setter 봉인, 포트 역할명 정렬, 서비스는 조립자로 축소.
-- **한 커밋 한 기법 / 파울러 카탈로그명 / 매 커밋 GREEN** 요건 충족(커밋 5개, 최소 4~5 만족).
+- **행위 보존**: C0~C6 **매 커밋 6/6 GREEN**. quirk(없는 티켓 NPE, 저장 실패 무보상) 포함해 관찰 동작 불변.
+- **구조 변화**: 예약 규칙(검사+전이)이 서비스 → `Ticket`으로 이동(Rich), 검사 규칙 단일화, setter 봉인, 포트 역할명 정렬, 서비스는 조립자로 축소.
+- **한 커밋 한 기법 / 파울러 카탈로그명 / 매 커밋 GREEN** 요건 충족(리팩토링 커밋 6개, 최소 4~5 초과 달성).
 - **범위 밖으로 남긴 것(정직하게)**: 원자성/보상 경계(롤백 인프라 부재로 quirk 박제 — 동작 변경이라 리팩토링 아님), 결제수단 다형성(카드 1개, v<2 → DEFER; 트리거 = 수행내용 5의 새 결제수단).

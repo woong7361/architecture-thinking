@@ -30,8 +30,9 @@ B-5는 Red→Green→Refactor 사이클이 아니라 **행위 보존 리팩토�
 | 3 | **Remove Setting Method** — `setReserved`·`setUserId` 삭제 | #6 | `refactor: Ticket의 public setter 제거 …` | `d5cceed` | 6✅ |
 | 4 | **Rename / Change Function Declaration** — `PaymentApi` → `ChargePort` | #1 | `refactor: PaymentApi를 ChargePort로 개명 …` | `00da93d` | 6✅ |
 | 5 | **Comments 정리**(#24 해소의 삭제 단계) — 단계 주석·낡은 헤더 정리 | #24 | `refactor: 재사용성 잃은 단계 주석·낡은 클래스 주석 정리 …` | `bd73e98` | 6✅ |
+| 6 | **Remove Duplication** — `assignTo`가 `ensureReservable` 재사용 | #2 | `refactor: assignTo가 ensureReservable을 재사용하도록 중복 제거 …` | `b69d858` | 6✅ |
 
-> 1~5번이 B-3(Rich Domain)+B-4(SOLID) 방향의 행위 보존 리팩토링 커밋(각 커밋 = 파울러 기법 하나, **매 커밋 6 시나리오 GREEN**).
+> 1~6번이 B-3(Rich Domain)+B-4(SOLID) 방향의 행위 보존 리팩토링 커밋(각 커밋 = 파울러 기법 하나, **매 커밋 6 시나리오 GREEN**).
 > 부분별 상세(무엇을 어떻게 바꿨나 · before/after · GREEN 보존 근거)는 **[refactoring-report.md](refactoring-report.md)** 참조.
 >
 > **재현 주의:** 이 머신은 `JAVA_HOME`이 JDK 8을 가리켜 `mvn test`가 포크 실패한다. JDK 17로 실행해야 GREEN:
