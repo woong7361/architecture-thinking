@@ -1,13 +1,13 @@
 package com.thinking.ticket.support;
 
-import com.thinking.ticket.PaymentApi;
+import com.thinking.ticket.ChargePort;
 
 /**
  * 외부 결제 API의 test double. 진짜 결제를 대신할 수 없으므로,
  * 성공/실패를 통제(configure)하고 charge 호출을 기록(record)한다.
  * net은 이 기록을 상태로 읽어 "결제가 시도됐나/안 됐나"를 단언한다(verify 대신).
  */
-public final class RecordingPaymentApi implements PaymentApi {
+public final class RecordingPaymentApi implements ChargePort {
 
     private final boolean outcome;
     private int chargeCount = 0;

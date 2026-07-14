@@ -8,12 +8,12 @@ public class TicketService {
 
     private final TicketRepository ticketRepo; // (DB 의존)
     private final UserRepository userRepo;     // (DB 의존)
-    private final PaymentApi paymentApi;       // (외부 API 의존)
+    private final ChargePort chargePort;       // (외부 결제 포트 의존)
 
-    public TicketService(TicketRepository ticketRepo, UserRepository userRepo, PaymentApi paymentApi) {
+    public TicketService(TicketRepository ticketRepo, UserRepository userRepo, ChargePort chargePort) {
         this.ticketRepo = ticketRepo;
         this.userRepo = userRepo;
-        this.paymentApi = paymentApi;
+        this.chargePort = chargePort;
     }
 
     public boolean reserveTicket(long userId, long ticketId, String paymentInfo) {
@@ -26,7 +26,7 @@ public class TicketService {
         Ticket ticket = ticketRepo.findById(ticketId);
         ticket.ensureReservable();
         // 3. 결제 시도 (외부 API)
-        boolean paymentSuccess = paymentApi.charge(paymentInfo, ticket.getPrice());
+        boolean paymentSuccess = chargePort.charge(paymentInfo, ticket.getPrice());
         if (!paymentSuccess) {
             throw new PaymentFailedException();
         }
