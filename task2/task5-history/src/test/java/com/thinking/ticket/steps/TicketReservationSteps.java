@@ -7,6 +7,7 @@ import com.thinking.ticket.PaymentFailedException;
 import com.thinking.ticket.Ticket;
 import com.thinking.ticket.TicketAlreadyReservedException;
 import com.thinking.ticket.TicketService;
+import com.thinking.ticket.TicketSuspendedException;
 import com.thinking.ticket.User;
 import com.thinking.ticket.UserNotFoundException;
 import com.thinking.ticket.support.InMemoryTicketRepository;
@@ -56,6 +57,13 @@ public final class TicketReservationSteps {
     public void 이미_예약된_티켓이_있다(int price, long ticketId) {
         Ticket ticket = new Ticket(ticketId, price);
         ticket.assignTo(0L); // setter 제거 후: 도메인 행위로 '이미 예약됨' 상태를 만든다(소유자는 미단언이라 0)
+        ticketRepo.seed(ticket);
+    }
+
+    @Given("가격 {int}원짜리 판매 중지된 티켓 {long}이 있다")
+    public void 판매_중지된_티켓이_있다(int price, long ticketId) {
+        Ticket ticket = new Ticket(ticketId, price);
+        ticket.suspend();
         ticketRepo.seed(ticket);
     }
 
@@ -121,6 +129,11 @@ public final class TicketReservationSteps {
     @Then("예매는 이미 예약됨으로 거부된다")
     public void 이미_예약됨으로_거부된다() {
         assertThat(thrown).isInstanceOf(TicketAlreadyReservedException.class);
+    }
+
+    @Then("예매는 판매 중지로 거부된다")
+    public void 판매_중지로_거부된다() {
+        assertThat(thrown).isInstanceOf(TicketSuspendedException.class);
     }
 
     @Then("예매는 결제 실패로 거부된다")

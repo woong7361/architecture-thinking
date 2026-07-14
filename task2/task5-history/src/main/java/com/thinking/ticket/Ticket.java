@@ -7,16 +7,26 @@ public class Ticket {
     private long id;
     private int price;
     private boolean reserved;
+    private boolean suspended;
     private long userId;
 
     public Ticket(long id, int price) {
         this.id = id;
         this.price = price;
         this.reserved = false;
+        this.suspended = false;
     }
 
-    /* 예약 가능 판단(불변식)을 스스로 책임진다 — 이미 예약된 티켓은 다시 예약될 수 없다. */
+    /* 판매 중지 상태로 전이한다 — 봉인된 setter가 아니라 의미 있는 도메인 상태 전이. */
+    public void suspend() {
+        this.suspended = true;
+    }
+
+    /* 예약 가능 판단(불변식)을 스스로 책임진다 — 판매 중지·이미 예약된 티켓은 예약될 수 없다. */
     public void ensureReservable() {
+        if (suspended) {
+            throw new TicketSuspendedException();
+        }
         if (reserved) {
             throw new TicketAlreadyReservedException();
         }
