@@ -21,9 +21,18 @@ B-5는 Red→Green→Refactor 사이클이 아니라 **행위 보존 리팩토�
 
 ## 커밋 히스토리 (제목 순서)
 
-| # | 적용한 수정 (파울러 기법명) | 커밋 제목 | 커밋 |
-|---|---------------------------|----------|------|
-| 0 | (안전망) 리팩토링 전 특성화 인수테스트로 현재 동작 고정 (quirk 포함) | `test: TicketService 특성화 인수테스트 — 리팩토링 전 안전망 (6 GREEN)` | `f97c1a7` |
-| 1 | *(예정)* … | … | … |
+| # | 적용한 수정 (파울러 기법명) | 스멜 | 커밋 제목 | 커밋 | 테스트 |
+|---|---------------------------|:---:|----------|------|:---:|
+| 0 | (안전망) 리팩토링 전 특성화 인수테스트로 현재 동작 고정 (quirk 포함) | — | `test: TicketService 특성화 인수테스트 — 리팩토링 전 안전망 (6 GREEN)` | `f97c1a7` | 6✅ |
+| — | (계획) 게이트 적용 + 커밋 시퀀스 | — | `docs: B-5 리팩토링 실행 전략 — 게이트 적용 + 커밋 계획(C1~C5)` | `0e1cd12` | — |
+| 1 | **Extract Function** (도메인으로 행위 이동) — 예약 가능 판단 → `Ticket.ensureReservable()` | #9 #22 | `refactor: 예약 가능 판단을 Ticket으로 추출 …` | `4cd1bca` | 6✅ |
+| 2 | **Extract Function** (도메인으로 행위 이동) — 상태 전이 → `Ticket.assignTo(userId)` (+내부 guard) | #22 #9 | `refactor: 상태 전이를 Ticket으로 추출 …` | `bc33046` | 6✅ |
+| 3 | **Remove Setting Method** — `setReserved`·`setUserId` 삭제 | #6 | `refactor: Ticket의 public setter 제거 …` | `d5cceed` | 6✅ |
+| 4 | **Rename / Change Function Declaration** — `PaymentApi` → `ChargePort` | #1 | `refactor: PaymentApi를 ChargePort로 개명 …` | `00da93d` | 6✅ |
+| 5 | **Comments 정리**(#24 해소의 삭제 단계) — 단계 주석·낡은 헤더 정리 | #24 | `refactor: 재사용성 잃은 단계 주석·낡은 클래스 주석 정리 …` | `bd73e98` | 6✅ |
 
-> 1번부터가 B-3(Rich Domain)+B-4(SOLID) 방향의 행위 보존 리팩토링 커밋(각 커밋 = 파울러 기법 하나, 매 커밋 GREEN).
+> 1~5번이 B-3(Rich Domain)+B-4(SOLID) 방향의 행위 보존 리팩토링 커밋(각 커밋 = 파울러 기법 하나, **매 커밋 6 시나리오 GREEN**).
+> 부분별 상세(무엇을 어떻게 바꿨나 · before/after · GREEN 보존 근거)는 **[refactoring-report.md](refactoring-report.md)** 참조.
+>
+> **재현 주의:** 이 머신은 `JAVA_HOME`이 JDK 8을 가리켜 `mvn test`가 포크 실패한다. JDK 17로 실행해야 GREEN:
+> `JAVA_HOME="C:/Program Files/Amazon Corretto/jdk17.0.19_10" mvn clean test`
