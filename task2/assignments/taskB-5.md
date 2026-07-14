@@ -12,8 +12,13 @@
 
 ### 제출물
 
-- [ ]  리팩토링 시작 전 특성화 테스트 GREEN 증빙(커밋 해시 + 실행 로그).
-- [ ]  리팩토링 전/후 코드 + 단계별 커밋 히스토리(기법명 커밋 메시지 + 매 단계 테스트 그린 유지)를 GitHub에.
+- [x]  리팩토링 시작 전 특성화 테스트 GREEN 증빙(커밋 해시 + 실행 로그).
+    - 안전망 커밋(리팩토링 전, quirk 포함 현재 동작 고정): [`f97c1a7`](https://github.com/woong7361/architecture-thinking/commit/f97c1a7) — 특성화 인수테스트 6 시나리오 GREEN.
+    - 실행 로그 + C0~C6 매 커밋 GREEN 재검증: [task5-history/refactoring-report.md](https://github.com/woong7361/architecture-thinking/blob/main/task2/task5-history/refactoring-report.md) (JDK17 실행법 + 각 커밋 `6 Scenarios (6 passed)`)
+- [x]  리팩토링 전/후 코드 + 단계별 커밋 히스토리(기법명 커밋 메시지 + 매 단계 테스트 그린 유지)를 GitHub에.
+    - 코드 디렉터리: [task2/task5-history](https://github.com/woong7361/architecture-thinking/tree/main/task2/task5-history)
+    - 단계별 커밋 히스토리(C0→C6, 파울러 기법명 커밋 메시지): [compare `f97c1a7…b69d858`](https://github.com/woong7361/architecture-thinking/compare/f97c1a7...b69d858)
+    - 커밋 로그 표(기법·스멜·해시·GREEN): [refactoring-log.md](https://github.com/woong7361/architecture-thinking/blob/main/task2/task5-history/refactoring-log.md) · 부분별 before/after 상세: [refactoring-report.md](https://github.com/woong7361/architecture-thinking/blob/main/task2/task5-history/refactoring-report.md) · 실행 전략: [refactoring-strategy.md](https://github.com/woong7361/architecture-thinking/blob/main/task2/task5-history/refactoring-strategy.md)
 - [x]  '리팩토링이 필요한 경우 vs 불필요한 경우' 본인 기준. (최소 300자)
     - 답안: [task5-history/refactoring-criteria.md](../task5-history/refactoring-criteria.md) — 1부 스멜 탐지 카탈로그 + 2부 결정 게이트(GO=필요 / DEFER·LEAVE=불필요·보류 / REMOVE=과구조)
 - [ ]  가정한 새 요구사항 1개, 변경 전 예측(어느 파일을 고칠지), 실제로 바뀐 파일 목록. 예측과 어긋났거나 변경이 번졌다면 그 원인.
