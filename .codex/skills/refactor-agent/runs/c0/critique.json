@@ -1,0 +1,40 @@
+{
+  "weaknesses": [
+    {
+      "severity": "high",
+      "axis": "behavior_risk",
+      "where": "com/thinking/ticket/Ticket.java:setReserved/setUserId (제안 R3)",
+      "suggestion": "public setter 2개 제거는 Ticket의 공개 계약 축소다 — 생성자는 reserved=false로만 만들 수 있으므로 B-5 특성화 테스트가 TicketAlreadyReservedException 케이스의 reserved=true 픽스처를 setReserved로 만들고 있었다면 안전망이 컴파일조차 안 된다. 제거 전에 setReserved/setUserId 호출부가 프로덕션·테스트·Repository 전체에서 0인지 확인하고, 테스트 픽스처는 reserveBy로 갈아탄 뒤 제거하라."
+    },
+    {
+      "severity": "medium",
+      "axis": "behavior_risk",
+      "where": "com/thinking/ticket/Ticket.java:reserveBy",
+      "suggestion": "reserveBy가 아무 검사 없이 reserved=true·userId를 덮어써서 이미 예약된 티켓의 소유자를 조용히 바꿀 수 있다 — 클래스 주석이 주장하는 '예약 규칙을 스스로 지키는 도메인 모델'을 코드가 이행하지 않는다(규칙 준수가 여전히 TicketService 호출 순서에 의존). reserveBy 첫 줄에서 ensureReservable()을 호출하라: 서비스가 이미 결제 전에 검사하므로 기존 경로의 예외 종류·시점은 그대로다."
+    },
+    {
+      "severity": "medium",
+      "axis": "minimality",
+      "where": "com/thinking/ticket/TicketService.java:findTicket",
+      "suggestion": "findTicket은 ticketRepo.findById(ticketId)를 그대로 반환만 하는 한 줄 래퍼(#14 Lazy Element, Type C) — findUser와 달리 널 검사도 없어 추출로 얻는 이름값이 없다. Inline Function으로 되돌려 reserveTicket 본문에서 ticketRepo.findById(ticketId)를 직접 호출하라."
+    },
+    {
+      "severity": "low",
+      "axis": "minimality",
+      "where": "com/thinking/ticket/TicketService.java:reserveTicket — `User user = findUser(userId);`",
+      "suggestion": "추출 결과 user 지역변수가 어디에서도 읽히지 않는 미사용 변수가 됐다(원본에선 널 검사에 쓰였다). findUser를 부수효과 목적임이 드러나는 requireUser(userId) 같은 void 메서드로 바꾸거나 대입 없이 호출만 남겨라 — 조회·예외는 그대로."
+    },
+    {
+      "severity": "low",
+      "axis": "missing_violation",
+      "where": "com/thinking/ticket/TicketService.java 파일 헤더 주석 (#24 Comments)",
+      "suggestion": "Diagnose가 안 짚은 #24 — 헤더 주석 '하나의 메소드에 모든 로직이 절차적으로 구현되어 있다'는 코드가 무엇을 하는지 설명하는 냄새 탈취제였고, R4 적용 후엔 사실과도 어긋난다. 리팩토링 대상 표기만 남기고 절차적 구현 서술은 삭제하라."
+    },
+    {
+      "severity": "low",
+      "axis": "missing_violation",
+      "where": "com/thinking/ticket/TicketService.java:reserveTicket 반환값 (#1 Mysterious Name)",
+      "suggestion": "Diagnose가 안 짚은 #1 — reserveTicket은 항상 true만 반환하고 실패는 전부 예외로 나가므로 boolean 반환이 의미를 전달하지 않는다. 공개 계약이라 지금 바꾸면 호출부·특성화 테스트가 깨지니 DEFER로 기록하고(여는 트리거: 호출부가 반환값을 실제로 분기에 쓰기 시작할 때), 이번 커밋에서는 손대지 마라."
+    }
+  ]
+}

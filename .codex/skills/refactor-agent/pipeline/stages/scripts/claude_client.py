@@ -47,6 +47,8 @@ class ClaudeClient:
                 f"claude CLI failed\ncommand: {command}\nstdout: {completed.stdout}\nstderr: {completed.stderr}"
             )
 
+        # 진단용 raw 저장(파싱 실패해도 남는다)
+        output_path.with_suffix(".raw.txt").write_text(completed.stdout, encoding="utf-8")
         output_data = _parse_json(completed.stdout)
         output_path.write_text(json.dumps(output_data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         return None
@@ -60,12 +62,22 @@ class ClaudeClient:
 
 def _parse_json(text: str) -> dict:
     text = text.strip()
-    # strip markdown code block wrapper if present
+    # strip markdown code block wrapper if present (```json ... ```)
     if text.startswith("```"):
         lines = text.splitlines()
-        if lines[-1].strip() == "```":
-            text = "\n".join(lines[1:-1]).strip()
+        if lines and lines[0].startswith("```"):
+            lines = lines[1:]
+        if lines and lines[-1].strip() == "```":
+            lines = lines[:-1]
+        text = "\n".join(lines).strip()
     try:
-        return json.loads(text)
-    except json.JSONDecodeError as exc:
-        raise ValueError(f"claude response is not valid JSON: {text[:300]}") from exc
+        return json.loads(text, strict=False)
+    except json.JSONDecodeError:
+        # fallback: 서문·후문을 무시하고 첫 {부터 마지막 }까지 균형 객체를 추출
+        start, end = text.find("{"), text.rfind("}")
+        if start != -1 and end > start:
+            try:
+                return json.loads(text[start:end + 1], strict=False)
+            except json.JSONDecodeError as exc:
+                raise ValueError(f"claude response is not valid JSON: {text[:300]}") from exc
+        raise ValueError(f"claude response is not valid JSON: {text[:300]}")

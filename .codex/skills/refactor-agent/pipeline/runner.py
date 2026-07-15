@@ -8,12 +8,20 @@ usage: python -B runner.py <input.json>
 from __future__ import annotations
 
 import argparse
+import concurrent.futures
 import json
 import subprocess
 import sys
 from pathlib import Path
 
 sys.dont_write_bytecode = True
+
+# Windows 콘솔이 MS949라 유니코드(—, ∥ 등) 출력이 깨진다 → UTF-8로 강제.
+for _s in (sys.stdout, sys.stderr):
+    try:
+        _s.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
 
 HERE = Path(__file__).resolve().parent          # pipeline/
 SKILL = HERE.parent                             # refactor-agent/
@@ -49,6 +57,22 @@ def call(client, system_path: Path, user: str, schema_path: Path, out_path: Path
     return json.loads(out_path.read_text(encoding="utf-8"))
 
 
+def score_eval(ev: dict, rubric: dict) -> dict | None:
+    """Eval의 축 점수를 rubric 가중치로 weighted_total·threshold 판정(결정적, LLM 아님)."""
+    scores = ev.get("scores", {})
+    weighted = 0.0
+    for axis, spec in rubric["axes"].items():
+        s = scores.get(axis)
+        if not isinstance(s, (int, float)):
+            return None  # 축 누락
+        weighted += s * spec["weight"]
+    th = rubric["thresholds"]
+    weak = [a for a, m in th.get("min_axis", {}).items()
+            if isinstance(scores.get(a), (int, float)) and scores[a] < m]
+    passed = weighted >= th["min_total"] and not weak
+    return {"weighted_total": round(weighted, 3), "passed": passed, "weak_axes": weak, "scores": scores}
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("input", type=Path)
@@ -62,6 +86,7 @@ def main() -> int:
     client = create_client(provider=cfg.get("provider", "claude"), project_dir=SKILL,
                            timeout_seconds=cfg.get("timeout", 600))
     reference = (repo_root / cfg["reference"]).read_text(encoding="utf-8")
+    rubric = json.loads((HERE / "rubrics" / "refactor.rubric.json").read_text(encoding="utf-8"))
     source = {rel: git_show(repo_root, cfg["baseline_ref"], f"{cfg['project_subdir']}/{cfg['source_root']}/{rel}")
               for rel in cfg["source_files"]}
 
@@ -98,11 +123,43 @@ def main() -> int:
         (run_dir / f"gate_{it}.json").write_text(json.dumps(verdict, ensure_ascii=False, indent=2), encoding="utf-8")
         log(f"iter {it} verdict={verdict['verdict']} :: {verdict['detail']}")
         if verdict["verdict"] == "GREEN":
-            print(json.dumps({"status": "PASS", "iteration": it, "detail": verdict["detail"]}, ensure_ascii=False))
+            # 4·5 · 행위 게이트 통과 → Critique ∥ Eval (병렬, 서로 못 봄 = 정보 차단)
+            refactored = fmt_files({f["path"]: f["content"] for f in files})
+            common = (
+                f"change_goal: {cfg['change_goal']}\n\n"
+                f"original_code:\n{fmt_files(source)}\n\n"
+                f"proposals:\n{json.dumps(diagnosis['proposals'], ensure_ascii=False, indent=2)}\n\n"
+                f"refactored_code:\n{refactored}\n\n"
+                f"SMELL_SOLID_MAP:\n{reference}\n"
+            )
+            eval_user = common + f"\nRUBRIC:\n{json.dumps(rubric, ensure_ascii=False, indent=2)}\n"
+            log("critique ∥ eval (parallel) ...")
+            with concurrent.futures.ThreadPoolExecutor(max_workers=2) as ex:
+                fut_c = ex.submit(call, client, PROMPTS / "critique_refactor.md", common,
+                                  SCHEMAS / "critique_output.schema.json", run_dir / "critique.json")
+                fut_e = ex.submit(call, client, PROMPTS / "eval_refactor.md", eval_user,
+                                  SCHEMAS / "eval_output.schema.json", run_dir / "eval.json")
+                critique = fut_c.result()
+                evaluation = fut_e.result()
+            score = score_eval(evaluation, rubric)
+            (run_dir / "eval_score.json").write_text(json.dumps(score, ensure_ascii=False, indent=2), encoding="utf-8")
+            weaknesses = critique.get("weaknesses", [])
+            log(f"critique weaknesses={len(weaknesses)}  "
+                f"eval weighted={score['weighted_total'] if score else 'n/a'} passed={score['passed'] if score else 'n/a'}")
+            final = {
+                "status": "PASS",
+                "iteration": it,
+                "behavior": verdict,
+                "quality": {"eval": score, "critique_weaknesses": weaknesses},
+            }
+            (run_dir / "final.json").write_text(json.dumps(final, ensure_ascii=False, indent=2), encoding="utf-8")
+            print(json.dumps(final, ensure_ascii=False))
             return 0
         feedback = f"{verdict['verdict']}: {verdict['detail']}"
 
-    print(json.dumps({"status": "FAILED", "last_verdict": verdict}, ensure_ascii=False))
+    final = {"status": "FAILED", "last_verdict": verdict}
+    (run_dir / "final.json").write_text(json.dumps(final, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(json.dumps(final, ensure_ascii=False))
     return 1
 
 

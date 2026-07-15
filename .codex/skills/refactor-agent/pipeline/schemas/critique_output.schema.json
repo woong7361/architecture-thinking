@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Critique Output",
+  "type": "object",
+  "required": ["weaknesses"],
+  "properties": {
+    "weaknesses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["severity", "axis", "where", "suggestion"],
+        "properties": {
+          "severity": { "enum": ["high", "medium", "low"] },
+          "axis": { "enum": ["over_engineering", "missing_violation", "behavior_risk", "minimality"] },
+          "where": { "type": "string" },
+          "suggestion": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
