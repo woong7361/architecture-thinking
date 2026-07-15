@@ -73,6 +73,52 @@ def score_eval(ev: dict, rubric: dict) -> dict | None:
     return {"weighted_total": round(weighted, 3), "passed": passed, "weak_axes": weak, "scores": scores}
 
 
+def build_diag_user(cfg, reference, source, revision):
+    u = (
+        f"change_goal: {cfg['change_goal']}\n\n"
+        f"boundary: {cfg['boundary']}\n\n"
+        f"SMELL_SOLID_MAP:\n{reference}\n\n"
+        f"code:\n{fmt_files(source)}\n"
+    )
+    if revision:  # refine 패스: Critique 약점 + 약축 이름(점수 아님) + 이전 제안
+        u += f"\nREVISION_FEEDBACK:\n{json.dumps(revision, ensure_ascii=False, indent=2)}\n"
+    return u
+
+
+def build_impl_user(cfg, diagnosis, source, impl_feedback):
+    u = (
+        f"boundary: {cfg['boundary']}\n\n"
+        f"proposals:\n{json.dumps(diagnosis['proposals'], ensure_ascii=False, indent=2)}\n\n"
+        f"code:\n{fmt_files(source)}\n"
+    )
+    if impl_feedback:
+        u += f"\nPREVIOUS_ATTEMPT_FAILED — 구현을 고쳐라(경계·제안은 그대로):\n{impl_feedback}\n"
+    return u
+
+
+def run_review(client, cfg, reference, rubric, source, diagnosis, files, run_dir, tag):
+    """Critique ∥ Eval 병렬(서로 못 봄). eval 집계는 결정적."""
+    refactored = fmt_files({f["path"]: f["content"] for f in files})
+    common = (
+        f"change_goal: {cfg['change_goal']}\n\n"
+        f"original_code:\n{fmt_files(source)}\n\n"
+        f"proposals:\n{json.dumps(diagnosis['proposals'], ensure_ascii=False, indent=2)}\n\n"
+        f"refactored_code:\n{refactored}\n\n"
+        f"SMELL_SOLID_MAP:\n{reference}\n"
+    )
+    eval_user = common + f"\nRUBRIC:\n{json.dumps(rubric, ensure_ascii=False, indent=2)}\n"
+    with concurrent.futures.ThreadPoolExecutor(max_workers=2) as ex:
+        fut_c = ex.submit(call, client, PROMPTS / "critique_refactor.md", common,
+                          SCHEMAS / "critique_output.schema.json", run_dir / f"critique_{tag}.json")
+        fut_e = ex.submit(call, client, PROMPTS / "eval_refactor.md", eval_user,
+                          SCHEMAS / "eval_output.schema.json", run_dir / f"eval_{tag}.json")
+        critique = fut_c.result()
+        evaluation = fut_e.result()
+    score = score_eval(evaluation, rubric)
+    (run_dir / f"eval_score_{tag}.json").write_text(json.dumps(score, ensure_ascii=False, indent=2), encoding="utf-8")
+    return critique, score
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("input", type=Path)
@@ -90,74 +136,66 @@ def main() -> int:
     source = {rel: git_show(repo_root, cfg["baseline_ref"], f"{cfg['project_subdir']}/{cfg['source_root']}/{rel}")
               for rel in cfg["source_files"]}
 
-    # 1 · Diagnose (설계만)
-    diag_user = (
-        f"change_goal: {cfg['change_goal']}\n\n"
-        f"boundary: {cfg['boundary']}\n\n"
-        f"SMELL_SOLID_MAP:\n{reference}\n\n"
-        f"code:\n{fmt_files(source)}\n"
-    )
-    log("diagnose ...")
-    diagnosis = call(client, PROMPTS / "diagnose_refactor.md", diag_user,
-                     SCHEMAS / "diagnose_output.schema.json", run_dir / "diagnose.json")
-    log(f"violations={len(diagnosis.get('violations', []))} proposals={len(diagnosis.get('proposals', []))}")
+    max_design = cfg.get("max_design_iters", cfg.get("max_iterations", 2))
+    max_impl = cfg.get("max_impl_iters", 2)
+    revision = None          # Diagnose refine 피드백 (첫 패스엔 None)
+    last: dict = {}
 
-    # 2·3 · Implement → Validate (RED면 refine)
-    max_iter = cfg.get("max_iterations", 2)
-    feedback = ""
-    verdict = {"verdict": "ERROR", "detail": "no iteration ran"}
-    for it in range(1, max_iter + 1):
-        impl_user = (
-            f"boundary: {cfg['boundary']}\n\n"
-            f"proposals:\n{json.dumps(diagnosis['proposals'], ensure_ascii=False, indent=2)}\n\n"
-            f"code:\n{fmt_files(source)}\n"
-            + (f"\nPREVIOUS_ATTEMPT_FAILED — 구현을 고쳐라(경계·제안은 그대로):\n{feedback}\n" if feedback else "")
-        )
-        log(f"iter {it} implement ...")
-        impl = call(client, PROMPTS / "implement_refactor.md", impl_user,
-                    SCHEMAS / "implement_output.schema.json", run_dir / f"implement_{it}.json")
-        files = impl.get("files", [])
-        log(f"iter {it} gate ({len(files)} files) ...")
-        verdict = run_gate(repo_root, cfg["baseline_ref"], cfg["project_subdir"], cfg["source_root"],
-                           files, cfg["test_cmd"], cfg.get("java_home"))
-        (run_dir / f"gate_{it}.json").write_text(json.dumps(verdict, ensure_ascii=False, indent=2), encoding="utf-8")
-        log(f"iter {it} verdict={verdict['verdict']} :: {verdict['detail']}")
-        if verdict["verdict"] == "GREEN":
-            # 4·5 · 행위 게이트 통과 → Critique ∥ Eval (병렬, 서로 못 봄 = 정보 차단)
-            refactored = fmt_files({f["path"]: f["content"] for f in files})
-            common = (
-                f"change_goal: {cfg['change_goal']}\n\n"
-                f"original_code:\n{fmt_files(source)}\n\n"
-                f"proposals:\n{json.dumps(diagnosis['proposals'], ensure_ascii=False, indent=2)}\n\n"
-                f"refactored_code:\n{refactored}\n\n"
-                f"SMELL_SOLID_MAP:\n{reference}\n"
-            )
-            eval_user = common + f"\nRUBRIC:\n{json.dumps(rubric, ensure_ascii=False, indent=2)}\n"
-            log("critique ∥ eval (parallel) ...")
-            with concurrent.futures.ThreadPoolExecutor(max_workers=2) as ex:
-                fut_c = ex.submit(call, client, PROMPTS / "critique_refactor.md", common,
-                                  SCHEMAS / "critique_output.schema.json", run_dir / "critique.json")
-                fut_e = ex.submit(call, client, PROMPTS / "eval_refactor.md", eval_user,
-                                  SCHEMAS / "eval_output.schema.json", run_dir / "eval.json")
-                critique = fut_c.result()
-                evaluation = fut_e.result()
-            score = score_eval(evaluation, rubric)
-            (run_dir / "eval_score.json").write_text(json.dumps(score, ensure_ascii=False, indent=2), encoding="utf-8")
-            weaknesses = critique.get("weaknesses", [])
-            log(f"critique weaknesses={len(weaknesses)}  "
-                f"eval weighted={score['weighted_total'] if score else 'n/a'} passed={score['passed'] if score else 'n/a'}")
-            final = {
-                "status": "PASS",
-                "iteration": it,
-                "behavior": verdict,
-                "quality": {"eval": score, "critique_weaknesses": weaknesses},
-            }
+    for d in range(1, max_design + 1):
+        # 1 · Diagnose (설계) — refine 패스면 REVISION_FEEDBACK 포함
+        log(f"design {d} diagnose{' (refine)' if revision else ''} ...")
+        diagnosis = call(client, PROMPTS / "diagnose_refactor.md",
+                         build_diag_user(cfg, reference, source, revision),
+                         SCHEMAS / "diagnose_output.schema.json", run_dir / f"diagnose_{d}.json")
+        log(f"design {d} violations={len(diagnosis.get('violations', []))} "
+            f"proposals={len(diagnosis.get('proposals', []))}")
+
+        # 2·3 · Implement → Validate (RED면 Implement refine)
+        impl_feedback = ""
+        verdict = {"verdict": "ERROR", "detail": "no impl ran"}
+        files: list = []
+        for i in range(1, max_impl + 1):
+            log(f"design {d} impl {i} implement ...")
+            impl = call(client, PROMPTS / "implement_refactor.md",
+                        build_impl_user(cfg, diagnosis, source, impl_feedback),
+                        SCHEMAS / "implement_output.schema.json", run_dir / f"implement_{d}_{i}.json")
+            files = impl.get("files", [])
+            verdict = run_gate(repo_root, cfg["baseline_ref"], cfg["project_subdir"], cfg["source_root"],
+                               files, cfg["test_cmd"], cfg.get("java_home"))
+            (run_dir / f"gate_{d}_{i}.json").write_text(json.dumps(verdict, ensure_ascii=False, indent=2), encoding="utf-8")
+            log(f"design {d} impl {i} verdict={verdict['verdict']} :: {verdict['detail']}")
+            if verdict["verdict"] == "GREEN":
+                break
+            impl_feedback = f"{verdict['verdict']}: {verdict['detail']}"
+
+        if verdict["verdict"] != "GREEN":
+            # 구현 refine 소진에도 RED → 설계로 에스컬레이트(제안 자체가 행위를 바꾼 것)
+            log(f"design {d}: RED 미해결 → 설계 refine 에스컬레이트")
+            revision = {"previous_proposals": diagnosis["proposals"], "behavior_broken": verdict["detail"]}
+            last = {"stage": "validate", "verdict": verdict}
+            continue
+
+        # 4 · GREEN → Critique ∥ Eval (병렬)
+        log(f"design {d} critique ∥ eval (parallel) ...")
+        critique, score = run_review(client, cfg, reference, rubric, source, diagnosis, files, run_dir, str(d))
+        weaknesses = critique.get("weaknesses", [])
+        log(f"design {d} critique weaknesses={len(weaknesses)}  "
+            f"eval weighted={score['weighted_total'] if score else 'n/a'} passed={score['passed'] if score else 'n/a'}")
+
+        if score and score["passed"]:
+            final = {"status": "PASS", "design_iter": d, "behavior": verdict,
+                     "quality": {"eval": score, "critique_weaknesses": weaknesses}}
             (run_dir / "final.json").write_text(json.dumps(final, ensure_ascii=False, indent=2), encoding="utf-8")
             print(json.dumps(final, ensure_ascii=False))
             return 0
-        feedback = f"{verdict['verdict']}: {verdict['detail']}"
 
-    final = {"status": "FAILED", "last_verdict": verdict}
+        # 품질 미달 → 설계 refine (Critique 약점 + 약축 이름만; Eval 숫자는 안 넣음 = 순환성 차단)
+        revision = {"previous_proposals": diagnosis["proposals"],
+                    "weaknesses": weaknesses,
+                    "weak_axes": score["weak_axes"] if score else []}
+        last = {"stage": "eval", "eval": score, "critique_weaknesses": weaknesses}
+
+    final = {"status": "FAILED", "reason": "max_design_iters", "last": last}
     (run_dir / "final.json").write_text(json.dumps(final, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps(final, ensure_ascii=False))
     return 1

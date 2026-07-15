@@ -12,8 +12,17 @@
 - `change_goal` — 이번 변경의 목표 1개(예: "Rich Domain 전환으로 테스트 용이성 개선"). **스코프의 기준**.
 - `boundary` — 바꾸면 안 되는 공개 진입점(예: `reserveTicket(userId, ticketId, paymentInfo)`).
 - `SMELL_SOLID_MAP` — 공유 참조(`references/smell-solid-map.md`). 진단·게이트·SOLID 매핑은 **이 표로만**.
+- `REVISION_FEEDBACK`(있으면 = refine 패스) — 이전 시도의 지적. `previous_proposals`(이전 제안),
+  `weaknesses`(시니어 리뷰어 약점: 과설계·빠진 위반 등), `weak_axes`(미달한 평가 축 **이름만**),
+  `behavior_broken`(있으면: 이전 구현이 깬 시나리오 — 제안 자체가 행위를 바꿨다는 신호).
+  **점수(숫자)는 주어지지 않는다** — 방향만 잡아라.
 
 ## 절차 (참조 표를 그대로 태운다)
+
+**refine 패스면(`REVISION_FEEDBACK` 있음):** 이전 제안(`previous_proposals`)의 **타당한 부분은 유지**하고,
+지적된 것만 고친다 — 빠진 위반은 추가, 과설계(Type B·v<2 GO)는 DEFER로 내리거나 제거,
+`behavior_broken`이면 그 시나리오를 깬 제안을 행위 보존형으로 교체. **처음부터 전부 다시 만들지 마라.**
+
 
 1. **스코프 필터.** `change_goal`이 만지는 코드로 한정(전체 스캔·폭주 금지).
 2. **스멜 탐지 (참조 1부).** 코드를 1부 표에 대조해 **매칭 행만** 후보로. 각 후보에 `smell #`과 **구체 위치(파일:심볼)**.

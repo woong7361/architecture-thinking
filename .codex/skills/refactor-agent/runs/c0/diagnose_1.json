@@ -1,0 +1,83 @@
+{
+  "violations": [
+    {
+      "smell": "#9 Feature Envy",
+      "principle": "SRP",
+      "where": "TicketService.reserveTicket",
+      "why": "예약 가능 판단(ticket.isReserved())과 상태 전이(setReserved/setUserId)를 서비스가 Ticket의 getter/setter로 직접 수행 — 자기 필드(ticketRepo/userRepo/paymentApi)보다 남의 데이터를 더 만진다. 정보 전문가는 Ticket",
+      "gate": "GO"
+    },
+    {
+      "smell": "#22 Data Class (Anemic)",
+      "principle": "SRP",
+      "where": "Ticket",
+      "why": "필드 4개 + getter/setter 5개, 도메인 메서드 0개. '예약된 티켓은 다시 예약 못 한다', '예약되면 userId가 함께 채워진다'는 규칙이 Ticket 밖(TicketService)에서 벌어진다 — Ticket 규칙 변경 시 TicketService가 바뀐다",
+      "gate": "GO"
+    },
+    {
+      "smell": "#6 Mutable Data",
+      "principle": "SRP",
+      "where": "Ticket.setReserved, Ticket.setUserId",
+      "why": "public setter 2개가 불변식('reserved=true면 userId가 반드시 채워짐')을 쪼개 노출 — 외부가 setReserved(true)만 호출해 userId 없는 예약 상태를 만들 수 있다. Ticket이 스스로 못 지킨다",
+      "gate": "GO"
+    },
+    {
+      "smell": "#3 Long Function",
+      "principle": "SRP",
+      "where": "TicketService.reserveTicket",
+      "why": "한 메서드가 조회(DB)→검증→결제(외부 API)→상태변경→저장 4단계를 순차 실행. 도메인 결정(예약 가능 판단·상태 전이)과 I/O 조율이 같은 추상 수준에 섞여, 결정 로직을 테스트하려면 Repository·PaymentApi를 전부 mock해야 한다",
+      "gate": "GO"
+    },
+    {
+      "smell": "#24 Comments",
+      "principle": "SRP",
+      "where": "TicketService.reserveTicket (// 1. 유저 조회 ~ // 4. 티켓 상태 변경)",
+      "why": "번호 주석 4개가 코드가 '무엇을 하는지'를 설명 — 단계가 이름 없는 절차로 인라인돼 있다는 탈취제",
+      "gate": "GO"
+    },
+    {
+      "smell": "#11 Primitive Obsession",
+      "principle": "SRP",
+      "where": "Ticket.price(int), TicketService.reserveTicket(paymentInfo: String)",
+      "why": "돈=int, 결제수단=String으로 도메인 개념이 원시타입. 다만 Money 도입은 PaymentApi.charge(String,int) 시그니처와 reserveTicket 파라미터를 밀어 경계를 건드리고, change_goal(예약 판단·상태 전이 이동, setter 제거) 밖이다",
+      "gate": "LEAVE"
+    }
+  ],
+  "proposals": [
+    {
+      "id": "R1",
+      "technique": "Move Function",
+      "type": "A",
+      "v": null,
+      "targets": [
+        "com/thinking/ticket/Ticket.java",
+        "com/thinking/ticket/TicketService.java"
+      ],
+      "addresses": "#9,#22,#3",
+      "rationale": "예약 가능 판단을 Ticket.ensureReservable()로 이동 — 현재 `if (ticket.isReserved()) throw new TicketAlreadyReservedException()`을 Ticket이 스스로 수행. 서비스는 ticket.ensureReservable() 한 줄로 호출. 예외 종류·던지는 시점(결제 이전) 동일, null 티켓이면 기존과 같이 NPE"
+    },
+    {
+      "id": "R2",
+      "technique": "Move Function",
+      "type": "A",
+      "v": null,
+      "targets": [
+        "com/thinking/ticket/Ticket.java",
+        "com/thinking/ticket/TicketService.java"
+      ],
+      "addresses": "#9,#22,#6,#3",
+      "rationale": "상태 전이를 Ticket.reserveTo(long userId)로 이동 — 현재 서비스가 하는 setReserved(true)+setUserId(userId) 2호출을 Ticket의 단일 연산으로 묶어 '예약=reserved∧userId 동시 확정' 불변식을 클래스 안에 둔다. 호출 위치(결제 성공 후, save 이전)와 결과 필드값 동일"
+    },
+    {
+      "id": "R3",
+      "technique": "Remove Setting Method",
+      "type": "A",
+      "v": null,
+      "targets": [
+        "com/thinking/ticket/Ticket.java"
+      ],
+      "addresses": "#6,#22",
+      "rationale": "R2로 유일한 호출처가 사라진 setReserved/setUserId를 제거해 상태 변경 경로를 reserveTo() 하나로 좁힌다. isReserved/getUserId getter는 특성화 테스트의 관측 지점이므로 유지. 시퀀싱상 R1·R2(행위 이동) 이후에만 적용"
+    }
+  ]
+}

@@ -53,7 +53,7 @@ generate-test 하네스(`.codex/skills/generate-test/`)의 골격을 재사용�
 | `implement_refactor.md` (승인 제안 → 리팩토링된 파일 매니페스트) | **신규** | 구현(변환) 책임 — 진단과 분리 |
 | `refactor.rubric.json` (4축: 진단정확도·변경최소성·행위보존위험·테스트용이성) | **신규** | B-6가 지정한 평가축 |
 | `critique_refactor.md`·`eval_refactor.md` (제안+코드 리뷰·채점) | **신규** | generate-test 공유 critique/eval은 테스트용 |
-| `refine_refactor.md` (설계 refine) | **신규·보류** | 구현 refine만 배선(§9). 설계 루프는 미배선 |
+| refine = **Diagnose/Implement 재사용** (별도 에이전트 없음) | **설계 결정** | 품질미달→Diagnose(Critique 되먹임), RED→Implement. §6 |
 | **`behavior_gate.py` — worktree 적용 + 경계 테스트 + GREEN/RED/폐기** | **신규(핵심)** | generate-test엔 없음. Validate를 사실 층까지 확장 |
 | 입력 스키마(정책 → **코드 스냅샷 + 테스트 명령**) | **신규** | input이 정책이 아니라 대상 코드 |
 
@@ -253,15 +253,16 @@ Validate GREEN을 통과한 코드만 리뷰한다. 둘은 **서로 못 보므�
 **구현됨(실측 관통, `runs/c0/`):**
 - Diagnose → Implement → Validate(행위 게이트) → Critique ∥ Eval 병렬. `runner.py`가 오케스트레이션.
 - 결정적 게이트(`behavior_gate.py`): worktree 적용 + mvn + GREEN/RED/COMPILE_FAIL. 테스트 코드 안 건드림.
-- Validate RED → Implement refine 루프. Eval 축 점수 → `score_eval`이 weighted_total·threshold 결정적 판정.
+- **refine 루프(재사용)**: Eval 미달 → **Diagnose 재실행**(Critique 약점+약축 되먹임, 전체 재흐름),
+  Validate RED → **Implement 재실행**, RED 미해결 → 설계로 에스컬레이트. 별도 refine 에이전트 없음.
+  중첩 루프(설계 바깥 `max_design_iters` / 구현 안 `max_impl_iters`). **실측으로 발동 확인**(강제 임계값 → design 2 refine).
+- Eval 축 점수 → `score_eval`이 weighted_total·threshold 결정적 판정. 순환성: refine에 Eval **숫자는 안 넣음**.
 - baseline = tag `refactor-agent-c0-baseline`(원본 절차 코드 + 경계-클린 글루).
-- 실측: 행위 GREEN, Eval passed=False(testability 3<3.5), Critique 약점 6건.
+- 실측: 행위 GREEN, Eval passed(4.25), Critique 약점 4건.
 
 **아직 안 됨:**
-1. **Eval 미달 → refine diagnose/implement 루프** — 현재는 판정·보고만(설계 루프 미배선).
-2. **금지패턴 텍스트 필터** — 설계엔 있으나 runner 미배선(행위 게이트만).
-3. Critique/Eval → Critique 아직 refine 신호로 안 흘림.
-4. 공유 코어 추출·slow-loop·다언어 어댑터는 보류(YAGNI).
+1. **금지패턴 텍스트 필터** — 설계엔 있으나 runner 미배선(행위 게이트만).
+2. 공유 코어 추출·slow-loop·다언어 어댑터는 보류(YAGNI).
 
 **미해결 가설:** `behavior_preservation_risk` 사다리가 Validate 실측과 얼마나 일치하나 → 로그로 캘리브레이션.
 
