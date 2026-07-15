@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Diagnose Output",
+  "type": "object",
+  "required": ["violations", "proposals"],
+  "properties": {
+    "violations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["smell", "principle", "where", "why", "gate"],
+        "properties": {
+          "smell": { "type": "string" },
+          "principle": { "type": "string" },
+          "where": { "type": "string" },
+          "why": { "type": "string" },
+          "gate": { "enum": ["GO", "DEFER", "LEAVE", "REMOVE"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "proposals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "technique", "type", "targets", "addresses", "rationale"],
+        "properties": {
+          "id": { "type": "string" },
+          "technique": { "type": "string" },
+          "type": { "enum": ["A", "B", "C"] },
+          "v": { "type": ["integer", "null"] },
+          "targets": { "type": "array", "items": { "type": "string" } },
+          "addresses": { "type": "string" },
+          "rationale": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

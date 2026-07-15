@@ -1,0 +1,12 @@
+{
+  "files": [
+    {
+      "path": "com/thinking/ticket/Ticket.java",
+      "content": "package com.thinking.ticket;\n\n/* 예약 규칙과 상태 전이를 스스로 지키는 도메인 모델. */\npublic class Ticket {\n\n    private long id;\n    private int price;\n    private boolean reserved;\n    private long userId;\n\n    public Ticket(long id, int price) {\n        this.id = id;\n        this.price = price;\n        this.reserved = false;\n    }\n\n    public long getId() {\n        return id;\n    }\n\n    public int getPrice() {\n        return price;\n    }\n\n    public boolean isReserved() {\n        return reserved;\n    }\n\n    public void ensureReservable() {\n        if (reserved) {\n            throw new TicketAlreadyReservedException();\n        }\n    }\n\n    public void reserveBy(long userId) {\n        this.reserved = true;\n        this.userId = userId;\n    }\n\n    public long getUserId() {\n        return userId;\n    }\n}\n"
+    },
+    {
+      "path": "com/thinking/ticket/TicketService.java",
+      "content": "package com.thinking.ticket;\n\n/* [리팩토링 대상: 티켓 예매 서비스 — B-2 kata 원문]\n * 하나의 메소드에 모든 로직이 절차적으로 구현되어 있다.\n * B-5의 안전망(특성화 테스트)은 이 \"현재 동작\"을 있는 그대로 고정한다(quirk 포함).\n */\npublic class TicketService {\n\n    private final TicketRepository ticketRepo; // (DB 의존)\n    private final UserRepository userRepo;     // (DB 의존)\n    private final PaymentApi paymentApi;       // (외부 API 의존)\n\n    public TicketService(TicketRepository ticketRepo, UserRepository userRepo, PaymentApi paymentApi) {\n        this.ticketRepo = ticketRepo;\n        this.userRepo = userRepo;\n        this.paymentApi = paymentApi;\n    }\n\n    public boolean reserveTicket(long userId, long ticketId, String paymentInfo) {\n        // 1. 유저 조회 (DB)\n        User user = userRepo.findById(userId);\n        if (user == null) {\n            throw new UserNotFoundException();\n        }\n        // 2. 티켓 조회 (DB)\n        Ticket ticket = ticketRepo.findById(ticketId);\n        ticket.ensureReservable();\n        // 3. 결제 시도 (외부 API)\n        boolean paymentSuccess = paymentApi.charge(paymentInfo, ticket.getPrice());\n        if (!paymentSuccess) {\n            throw new PaymentFailedException();\n        }\n        // 4. 티켓 상태 변경 (DB)\n        ticket.reserveBy(userId);\n        ticketRepo.save(ticket);\n        return true;\n    }\n}\n"
+    }
+  ]
+}

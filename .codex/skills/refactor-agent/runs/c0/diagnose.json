@@ -1,0 +1,76 @@
+{
+  "violations": [
+    {
+      "smell": "#22 Data Class (Anemic)",
+      "principle": "SRP",
+      "where": "Ticket (com/thinking/ticket/Ticket.java)",
+      "why": "필드 4개 + getter/setter만, 도메인 메서드 0개. 예약 가능 판단(isReserved 검사)과 예약 상태 전이(setReserved+setUserId 쌍) 규칙이 전부 Ticket 밖 TicketService에 있다",
+      "gate": "GO"
+    },
+    {
+      "smell": "#9 Feature Envy",
+      "principle": "SRP",
+      "where": "TicketService.reserveTicket",
+      "why": "자기 필드(ticketRepo/userRepo/paymentApi)보다 ticket의 getter/setter를 더 만진다: isReserved()로 판단, getPrice()로 청구액 결정, setReserved(true)+setUserId(userId)로 상태 변경. 정보 전문가는 Ticket",
+      "gate": "GO"
+    },
+    {
+      "smell": "#6 Mutable Data",
+      "principle": "SRP",
+      "where": "Ticket.setReserved, Ticket.setUserId",
+      "why": "public setter 2개가 외부에 열려 있어 'reserved=true와 userId 배정은 항상 함께'라는 불변식을 Ticket이 못 지킨다. setReserved(true)만 부르고 setUserId를 빠뜨린 상태가 타입상 가능",
+      "gate": "GO"
+    },
+    {
+      "smell": "#3 Long Function",
+      "principle": "SRP",
+      "where": "TicketService.reserveTicket",
+      "why": "단계 주석(// 1. ~ // 4.)이 붙은 4단계(조회→검증→외부호출→저장)가 한 메서드에 순차로 있고, 도메인 결정(예약 가능 판단·상태 전이)과 I/O 오케스트레이션(DB·결제 API)이 같은 추상수준에 섞여 있다",
+      "gate": "GO"
+    },
+    {
+      "smell": "#22 Data Class (Anemic)",
+      "principle": "SRP",
+      "where": "User (com/thinking/ticket/User.java)",
+      "why": "id/name + getter만이나, change_goal은 예약 판단·상태 전이를 Ticket으로 옮기는 것이고 User는 null 존재 검증에만 쓰인다(행위 없음) — 이번 변경이 만지는 코드가 아님",
+      "gate": "LEAVE"
+    }
+  ],
+  "proposals": [
+    {
+      "id": "R1",
+      "technique": "Move Function",
+      "type": "A",
+      "v": null,
+      "targets": [
+        "com/thinking/ticket/Ticket.java",
+        "com/thinking/ticket/TicketService.java"
+      ],
+      "addresses": "#9,#22,#3",
+      "rationale": "예약 가능 판단을 Ticket.ensureReservable()로 이동: 현재 reserveTicket이 하는 `if (ticket.isReserved()) throw new TicketAlreadyReservedException();`를 Ticket 내부로 옮기고 서비스는 ticket.ensureReservable() 호출로 대체. isReserved() getter는 판단 주체가 Ticket이 되므로 서비스에서의 호출처가 0이 된다. 던지는 예외 종류(TicketAlreadyReservedException)와 호출 순서(유저 조회 뒤·결제 앞)는 그대로 유지 → 관측 행위 고정"
+    },
+    {
+      "id": "R2",
+      "technique": "Move Function",
+      "type": "A",
+      "v": null,
+      "targets": [
+        "com/thinking/ticket/Ticket.java",
+        "com/thinking/ticket/TicketService.java"
+      ],
+      "addresses": "#9,#22,#6,#3",
+      "rationale": "예약 상태 전이를 Ticket.reserveBy(long userId)로 이동: setReserved(true)+setUserId(userId) 2줄 호출을 Ticket 내부 한 메서드로 묶어 'reserved와 userId는 항상 함께 바뀐다'는 불변식을 Ticket이 스스로 지키게 한다. 서비스는 ticket.reserveBy(userId) 후 ticketRepo.save(ticket) — 저장 시점·저장 대상 동일"
+    },
+    {
+      "id": "R3",
+      "technique": "Remove Setting Method",
+      "type": "A",
+      "v": null,
+      "targets": [
+        "com/thinking/ticket/Ticket.java"
+      ],
+      "addresses": "#6,#22",
+      "rationale": "R2로 setReserved/setUserId의 외부 호출처가 0이 된 뒤 두 setter를 제거. 남은 상태 변경 경로는 reserveBy() 하나뿐이 되어 예약 전이의 진입점이 단일화된다. 시퀀싱상 R1→R2 완료(GREEN) 후에만 실행 — 호출처가 남은 채 지우면 컴파일 실패"
+    }
+  ]
+}
