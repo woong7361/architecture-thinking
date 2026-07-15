@@ -1,0 +1,14 @@
+{
+  "scores": {
+    "diagnosis_accuracy": 4,
+    "change_minimality": 4,
+    "behavior_preservation_risk": 4,
+    "testability_improvement": 3
+  },
+  "rationales": {
+    "diagnosis_accuracy": "R1~R4가 짚은 위반(#9 Feature Envy·#22 Anemic·#6 Mutable Data·#3 Long Function)은 모두 refactored_code에서 실제 해소되어(ensureReservable/reserveBy 이동, setReserved/setUserId 제거, requireUser 추출) 허위 계상 cap은 미적용이고 각 위반에 심볼 앵커가 붙은 메커니즘 문장이 있어 사다리 4이나, addresses가 스멜 번호(#9,#22,#6,#3)로만 지시되고 SRP/DIP 등 원칙명을 한 번도 명시하지 않아 caps로 최대 4에 묶인다.",
+    "change_minimality": "diff가 진단한 4개 위반에 1:1로 대응하고 각 proposal이 파울러 기법 하나(Move Function×2, Remove Setting Method, Extract Function)로 명명·R3가 R2 선행을 명시해 단계 분리가 가능하므로 3개↑ 뭉침 cap은 미적용이나, requireUser가 User를 반환하는데 호출부 `requireUser(userId);`가 반환값을 버리는 미해소 흠이 있어 5는 아니다.",
+    "behavior_preservation_risk": "R1~R4가 예외 타입·호출 지점·필드 대입 순서·조회 순서 불변을 각 위험 지점마다 논증하고 R3가 특성화 테스트 커버(isReserved/getUserId 존치)를 지목해 사다리 4이지만, Ticket의 public setReserved/setUserId 삭제 + ensureReservable/reserveBy 추가로 공개 계약이 변경되었고 재예약 금지 불변식이 reserveBy() 내부가 아니라 '호출 전 ensureReservable()' 순서에 의존하는 opt-in 가드여서 caps 두 개가 모두 상한 4를 건다.",
+    "testability_improvement": "refactored_code가 예약 가능 판단·상태 전이를 Ticket의 순수 상태 메서드(ensureReservable/reserveBy)로 옮겨 해당 규칙을 Mock 0개로 검증할 수 있게 된 것은 diff로 증명되나, 어느 proposal도 before(Mock N)→after(Mock K) 수치를 논증하지 않아(테스트 언급은 R3의 특성화 테스트 존치뿐) caps로 최대 3이다."
+  }
+}

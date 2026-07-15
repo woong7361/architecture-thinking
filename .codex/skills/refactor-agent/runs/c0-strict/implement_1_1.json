@@ -1,0 +1,12 @@
+{
+  "files": [
+    {
+      "path": "com/thinking/ticket/Ticket.java",
+      "content": "package com.thinking.ticket;\n\n/* 예약 규칙을 스스로 지키는 도메인 모델: reserved/userId는 reserveBy()를 통해서만 바뀐다. */\npublic class Ticket {\n\n    private long id;\n    private int price;\n    private boolean reserved;\n    private long userId;\n\n    public Ticket(long id, int price) {\n        this.id = id;\n        this.price = price;\n        this.reserved = false;\n    }\n\n    public long getId() {\n        return id;\n    }\n\n    public int getPrice() {\n        return price;\n    }\n\n    public boolean isReserved() {\n        return reserved;\n    }\n\n    public long getUserId() {\n        return userId;\n    }\n\n    public void ensureReservable() {\n        if (reserved) {\n            throw new TicketAlreadyReservedException();\n        }\n    }\n\n    public void reserveBy(long userId) {\n        this.reserved = true;\n        this.userId = userId;\n    }\n}\n"
+    },
+    {
+      "path": "com/thinking/ticket/TicketService.java",
+      "content": "package com.thinking.ticket;\n\npublic class TicketService {\n\n    private final TicketRepository ticketRepo; // (DB 의존)\n    private final UserRepository userRepo;     // (DB 의존)\n    private final PaymentApi paymentApi;       // (외부 API 의존)\n\n    public TicketService(TicketRepository ticketRepo, UserRepository userRepo, PaymentApi paymentApi) {\n        this.ticketRepo = ticketRepo;\n        this.userRepo = userRepo;\n        this.paymentApi = paymentApi;\n    }\n\n    public boolean reserveTicket(long userId, long ticketId, String paymentInfo) {\n        requireUser(userId);\n\n        Ticket ticket = ticketRepo.findById(ticketId);\n        ticket.ensureReservable();\n\n        boolean paymentSuccess = paymentApi.charge(paymentInfo, ticket.getPrice());\n        if (!paymentSuccess) {\n            throw new PaymentFailedException();\n        }\n\n        ticket.reserveBy(userId);\n        ticketRepo.save(ticket);\n        return true;\n    }\n\n    private User requireUser(long userId) {\n        User user = userRepo.findById(userId);\n        if (user == null) {\n            throw new UserNotFoundException();\n        }\n        return user;\n    }\n}\n"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "weaknesses": [
+    {
+      "severity": "high",
+      "axis": "behavior_risk",
+      "where": "Ticket.java:setReserved/setUserId 제거 (제안 R3)",
+      "suggestion": "유일한 생성자 `Ticket(long id, int price)`가 `reserved=false`로 고정하는데 setter까지 없애면 TicketRepository.findById가 DB의 '이미 예약된 티켓'을 복원할 경로가 reserveBy()(도메인 전이)밖에 남지 않는다 — 재구성 전용 생성자/정적 팩토리(Ticket.of(id, price, reserved, userId))를 먼저 열고 setter를 제거하라."
+    },
+    {
+      "severity": "medium",
+      "axis": "missing_violation",
+      "where": "Ticket.java:reserveBy",
+      "suggestion": "#6 Mutable Data가 남았다 — reserveBy()는 reserved 여부를 보지 않고 무조건 덮어쓰므로 '한 번만 예약' 불변식은 여전히 TicketService의 호출 순서(ensureReservable→charge→reserveBy)에 의존한다; reserveBy() 첫 줄에 ensureReservable()을 넣으면 현재 흐름에선 절대 발화하지 않아 관측 행위는 불변이면서 규칙이 클래스 안으로 들어온다."
+    },
+    {
+      "severity": "low",
+      "axis": "missing_violation",
+      "where": "TicketService.java:reserveTicket — paymentApi.charge(paymentInfo, ticket.getPrice())",
+      "suggestion": "R1 rationale은 '서비스가 getter를 더 이상 읽지 않는다'고 했으나 결제 금액을 ticket.getPrice()로 꺼내 쓰는 #9 Feature Envy 잔재가 남아 있다 — 이번 목표(예약 판단·상태 전이)엔 범위 밖이므로 DEFER로 명시하고 rationale의 과장된 표현만 정정하라."
+    },
+    {
+      "severity": "low",
+      "axis": "minimality",
+      "where": "TicketService.java:requireUser (제안 R4)",
+      "suggestion": "requireUser는 User를 반환하지만 호출부 `requireUser(userId);`가 결과를 버린다 — 쓰지 않을 반환값은 제거해 void로 두거나(#15 성격의 미사용 훅), 이름을 검증 의도에 맞게 유지한 채 반환 계약을 없애라."
+    }
+  ]
+}

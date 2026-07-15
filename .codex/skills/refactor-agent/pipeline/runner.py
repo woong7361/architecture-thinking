@@ -126,7 +126,7 @@ def main() -> int:
 
     cfg = json.loads(args.input.read_text(encoding="utf-8"))
     repo_root = Path(cfg.get("repo_root", ".")).resolve()
-    run_dir = SKILL / "runs" / "c0"
+    run_dir = SKILL / "runs" / cfg.get("run_id", "c0")
     run_dir.mkdir(parents=True, exist_ok=True)
 
     client = create_client(provider=cfg.get("provider", "claude"), project_dir=SKILL,

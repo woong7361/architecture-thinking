@@ -1,0 +1,13 @@
+{
+  "weighted_total": 3.8,
+  "passed": false,
+  "weak_axes": [
+    "testability_improvement"
+  ],
+  "scores": {
+    "diagnosis_accuracy": 4,
+    "change_minimality": 4,
+    "behavior_preservation_risk": 4,
+    "testability_improvement": 3
+  }
+}
