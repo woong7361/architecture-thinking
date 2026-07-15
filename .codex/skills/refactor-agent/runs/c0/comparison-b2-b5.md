@@ -25,7 +25,8 @@
 | **불변식** | `reserveTo` **opt-in**(내부 검사 X, 호출 순서 의존) | `assignTo`가 `ensureReservable` **내재화**(C6) |
 | **DIP #1(개명)** | 안 짚음 — **스코프 밖이라 LEAVE가 정답**(누락 아님) | ChargePort 개명(C4) |
 
-> 앞 두 갭은 **현재 standard 루브릭에선 refine이 실제로 해소**했다(주석 제거·가드 내재화 — 아래 델타).
+> 앞 두 갭(#24·불변식)은 **현재 standard 루브릭에선 refine이 실제로 해소**한다(주석 제거·`ensureReservable` 내재화).
+> 남는 우위는 B-5의 granularity(한 커밋 한 기법)와 "과교정 안 함"이다.
 
 ## 어느 쪽이 더 나았나 — 정직한 판정
 
@@ -60,37 +61,3 @@
   확정된 결제수단이 카드 1개뿐이라 `v<2 → DEFER`(내장 과설계 프로브 통과). 참조 2부 게이트가 결정적으로 억제.
 - 결정적 술어(`Type B ∧ v<2 ∧ GO`) 위반 0건. 사람(B-5)도 동일하게 DEFER.
 - 즉 이 kata에선 양쪽 다 과설계를 피했고, 파이프라인의 억제는 **감이 아니라 게이트 규칙**으로 재현 가능하다.
-
----
-
-## 현재 standard vs 초기 run — 무엇이 바뀌었나 (`runs/c0-strict` vs `runs/c0`)
-
-위 "실제 코드 차이"는 **초기 run(c0)** — 루브릭 보정 전이라 첫 패스를 통과시켰다.
-**현재 standard 루브릭**(결함 상한 + 코드로-증명 채점)으로 **같은 입력**을 다시 돌린 게 c0-strict다.
-
-### 루프 · 점수 변화
-
-| | 초기(c0) | 현재 standard(c0-strict) |
-|---|---|---|
-| 설계 루프 | **1바퀴** (design 1 바로 PASS) | **2바퀴** (design 1 REJECT → refine → design 2 PASS) |
-| design 1 eval | 4.25 **PASS** | **3.8 REJECT** (testability 4→**3**, "Mock 수치 미논증") |
-| 최종 | design 1 | design 2 (4.0 PASS) |
-
-→ standard 루브릭이 **첫-패스 통과를 정직하게 막았다.** 같은 리팩토링이 4.25 PASS → 3.8 REJECT.
-
-### refine이 만든 변화 (design 2)
-
-- **완전성 ↑**: design 1이 놓쳤던 **#24 Comments를 GO로 잡고**, **#11·#9 추가분을 DEFER**로 계상 → **B-5 완성도에 더 근접**.
-- **그러나 과교정(over-correction)**: R3를 **`Ticket.of()` 팩토리**로 도입 —
-  Critique가 **호출처 0개 Type C(Speculative Generality = 과설계)** 로 플래그. **B-5엔 없던 흠.**
-  (이 run 뒤 Type C 판정 룰을 추가해 다음엔 최대 3으로 감점.)
-
-### 요약
-
-1. **standard 루브릭 = 통과 기준이 정직해짐** (4.25→3.8 REJECT). Critique가 잡던 갭이 이제 **점수·루프에 반영**.
-2. **refine = 완전성 밀어올림** (#24 흡수) → B-5 근접.
-3. **새 흠 노출: refine 과교정** (`of()` 과설계). Type C 룰이 이걸 겨냥.
-4. **vs B-5**: 완성도 격차는 **줄었지만**, granularity(한 커밋 한 기법)와 "과교정 안 함"은 **여전히 B-5 우위**.
-
-> **핵심:** standard 채점이 **1차 통과를 정직하게 만들고 refine를 실제로 돌려 완전성을 끌어올렸다**(B-5 근접).
-> 대신 **refine 과교정(`of()` 과설계)** 이라는 다음 결함을 노출했다 — 캘리브레이션은 이어지는 과정.
