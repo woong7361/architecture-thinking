@@ -51,6 +51,21 @@ def fmt_files(d: dict) -> str:
     return "\n\n".join(f"// ===== FILE: {k} =====\n{v}" for k, v in d.items())
 
 
+def materialize(run_dir: Path, files: list) -> list:
+    """PASS한 리팩토링 매니페스트를 <run_dir>/artifact/ 아래 실제 파일로 persist."""
+    art = run_dir / "artifact"
+    written = []
+    for f in files:
+        rel = f["path"].replace("\\", "/").lstrip("/")
+        if not rel or ".." in rel.split("/"):
+            continue
+        p = art / rel
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(f["content"], encoding="utf-8")
+        written.append(p)
+    return written
+
+
 def call(client, system_path: Path, user: str, schema_path: Path, out_path: Path):
     system = system_path.read_text(encoding="utf-8")
     client.run_prompt(system=system, user=user, output_schema=schema_path, output_path=out_path, model=None)
@@ -183,8 +198,10 @@ def main() -> int:
             f"eval weighted={score['weighted_total'] if score else 'n/a'} passed={score['passed'] if score else 'n/a'}")
 
         if score and score["passed"]:
+            artifacts = materialize(run_dir, files)   # 리팩토링된 코드를 .java로 persist
             final = {"status": "PASS", "design_iter": d, "behavior": verdict,
-                     "quality": {"eval": score, "critique_weaknesses": weaknesses}}
+                     "quality": {"eval": score, "critique_weaknesses": weaknesses},
+                     "artifact": [str(p.relative_to(run_dir)) for p in artifacts]}
             (run_dir / "final.json").write_text(json.dumps(final, ensure_ascii=False, indent=2), encoding="utf-8")
             print(json.dumps(final, ensure_ascii=False))
             return 0
