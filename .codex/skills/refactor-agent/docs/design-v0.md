@@ -235,7 +235,9 @@ Validate GREEN을 통과한 코드만 리뷰한다. 둘은 **서로 못 보므�
 
 ## 8. runs/ 로그 & 산출물 매핑 (수행내용 #2·#3)
 
-- `runs/refactor/<날짜>_<hash>/`에 iter별 `gen/critique/eval` JSON + `final|failed` 보존(재사용 구조).
+- `runs/<run_id>/iter_<NNN>/`에 설계 iter별 산출물: `diagnose.json` · `implement_<NN>.json`(구현 시도) ·
+  `gate_<NN>.json` · `critique.json` · `eval.json` · `eval_score.json`. run_id 레벨에 `final.json` + PASS 시 `artifact/`(.java).
+  `.raw.txt`는 LLM 파싱 **실패 시에만** 남긴다(generate-test iter_NNN 구조와 정합).
 - **과설계 사례 기록(수행내용 #3):** Critique가 `over_engineering` severity로 지적한 항목과
   Eval `change_minimality`/`behavior_preservation_risk` 미달 건을 `runs/`에서 뽑아
   `docs/overengineering-notes.md`로 정리.

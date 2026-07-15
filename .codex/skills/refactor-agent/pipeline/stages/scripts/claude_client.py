@@ -47,9 +47,12 @@ class ClaudeClient:
                 f"claude CLI failed\ncommand: {command}\nstdout: {completed.stdout}\nstderr: {completed.stderr}"
             )
 
-        # 진단용 raw 저장(파싱 실패해도 남는다)
-        output_path.with_suffix(".raw.txt").write_text(completed.stdout, encoding="utf-8")
-        output_data = _parse_json(completed.stdout)
+        try:
+            output_data = _parse_json(completed.stdout)
+        except ValueError:
+            # 파싱 실패 시에만 원문을 남겨 디버깅(성공 run엔 잡동사니 안 남김)
+            output_path.with_suffix(".raw.txt").write_text(completed.stdout, encoding="utf-8")
+            raise
         output_path.write_text(json.dumps(output_data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         return None
 
