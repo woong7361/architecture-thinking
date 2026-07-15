@@ -51,10 +51,10 @@ generate-test 하네스(`.codex/skills/generate-test/`)의 골격을 재사용�
 | target 골든 진단 앵커 (예: B-2 kata) | **run 입력**(스킬 밖) | 과제별 데이터 — 공용 참조에 안 넣음. Eval 회귀 기준으로 공급 |
 | `diagnose_refactor.md` (코드 → 위반+리팩토링 제안, **설계만**) | **신규** | 진단(판단) 책임 |
 | `implement_refactor.md` (승인 제안 → 리팩토링된 파일 매니페스트) | **신규** | 구현(변환) 책임 — 진단과 분리 |
-| `refactor.rubric.yaml` (4축: 진단정확도·변경최소성·행위보존위험·테스트용이성) | **신규** | B-6가 지정한 평가축 |
-| `critique_refactor.md` (시니어 리뷰어: 과설계·빠진 위반) | **신규** | generate-test의 공유 critique는 테스트용 |
-| `refine_refactor.md` (제안 수정) | **신규** | 위와 동일 |
-| **BehaviorGate — worktree 적용 + 1-1 테스트 실행 + GREEN/폐기** | **신규(핵심)** | generate-test엔 없음. Validate를 사실 층까지 확장 |
+| `refactor.rubric.json` (4축: 진단정확도·변경최소성·행위보존위험·테스트용이성) | **신규** | B-6가 지정한 평가축 |
+| `critique_refactor.md`·`eval_refactor.md` (제안+코드 리뷰·채점) | **신규** | generate-test 공유 critique/eval은 테스트용 |
+| `refine_refactor.md` (설계 refine) | **신규·보류** | 구현 refine만 배선(§9). 설계 루프는 미배선 |
+| **`behavior_gate.py` — worktree 적용 + 경계 테스트 + GREEN/RED/폐기** | **신규(핵심)** | generate-test엔 없음. Validate를 사실 층까지 확장 |
 | 입력 스키마(정책 → **코드 스냅샷 + 테스트 명령**) | **신규** | input이 정책이 아니라 대상 코드 |
 
 > **v0 재사용 방식(정직하게):** 진짜 도메인-불가지론인 조각(스키마검증·금지패턴 프레임워크·
@@ -74,16 +74,18 @@ generate-test 하네스(`.codex/skills/generate-test/`)의 골격을 재사용�
 [사용자] --코드/폴더 + 1-1 테스트 위치--> [Orchestrator]
 Orchestrator --"진단하고 제안하라"--------> [Diagnose]   → 위반 + 제안(설계, 코드 없음)
 Orchestrator --"제안을 코드로 실현하라"------> [Implement]  → 리팩토링된 파일 매니페스트
-Orchestrator --"과설계/누락 없나"----------> [Critique]   → 지적사항(제안+코드 리뷰)
-Orchestrator --"루브릭으로 채점하라"--------> [Eval]      → 축별 점수 + rationale(제안+코드 근거)
-     미달 → [Refine] (Eval이 진단/구현 중 어디가 문제인지 귀속) → 다시 Diagnose 또는 Implement
-Orchestrator --"검증가능+행위보존인가"------> [Validate]  → 금지패턴 필터 + worktree 테스트 GREEN/RED
-     PASS → final(제안+코드+증빙)   |   RED → [Refine implement] → 다시 Implement
+Orchestrator --"행위 보존인가"-------------> [Validate]   → worktree 테스트 GREEN/RED
+     RED → [Refine implement] → 다시 Implement
+     GREEN ↓ (행위 보존이 품질 리뷰의 전제)
+Orchestrator --"과설계/누락 + 채점"---------> [Critique ∥ Eval]  (병렬 — 서로 못 봄)
+     Critique → 지적사항(제안+코드)   /   Eval → 축별 점수 + rationale
+     Eval 미달 → [Refine] (Eval이 진단/구현 중 귀속) → 다시 Diagnose 또는 Implement
+     통과 → final(제안+코드+점수+증빙)
 ```
 
-**진단(설계)과 구현(코드)을 분리하되, Critique/Eval은 구현된 코드까지 보고 판단한다.** 그래야 변경 최소성·
-테스트 용이성·행위 위험을 **제안이 아니라 실제 diff로** 채점한다(4축 중 3축이 코드를 요구). 이 순서는
-generate-test 부모(Gen이 아티팩트를 내고 Critique/Eval이 그 아티팩트를 리뷰)와도 동일하다.
+**두 층으로 나뉜다:** ① 행위 게이트(Validate)가 **먼저** — 행위를 안 깨는 코드만 품질 리뷰할 값이 있다.
+② 그 뒤 Critique·Eval이 **구현된 코드까지 보고** 판단(변경 최소성·테스트 용이성·행위 위험 4축 중 3축이 실제 diff를
+요구). Critique와 Eval은 **서로 못 보므로(정보 차단) 병렬 실행**한다.
 
 메시지가 먼저다. 각 메시지를 "그 정보를 가장 잘 아는 객체"에게 할당하면 아래 책임이 태어난다.
 
@@ -95,10 +97,10 @@ generate-test 부모(Gen이 아티팩트를 내고 Critique/Eval이 그 아티�
 |---|---|---|
 | **Diagnose(진단)** | 코드에서 SOLID 위반·smell을 진단하고 리팩토링 **제안**을 낸다(설계만, 코드 없음) | "무엇이 왜 잘못됐고 어떤 기법으로 고치나"를 아는 지점 |
 | **Implement(구현)** | 제안을 **생산 코드로 실현**한다(파일 매니페스트). 테스트 코드는 안 건드림 | "제안을 행위 보존하며 코드로 옮기는 법"을 아는 지점. 진단은 안 함 |
-| **Critique** | 제안 + **구현된 코드**를 보고 과설계·빠진 위반·최소성 훼손을 지적한다 | "변경의 적정량"을 아는 시니어 리뷰어 시야. 점수는 안 냄 |
-| **Eval** | 고정된 루브릭으로 축별 **결정적 채점**을 한다(제안 + 코드 근거) | 루브릭(잣대)을 소유. "얼마나 좋은가"를 재현가능하게 판정 |
-| **Validate** | 검증불가 주장을 거르고(텍스트), worktree 적용+테스트로 **행위 보존을 사실 확인**한다 | "이 코드가 진짜 안전·검증가능한 변경인가"를 아는 유일 지점 |
-| **Orchestrator(runner)** | 루프·lineage·롤백(worktree 폐기)·수렴 종료를 조율한다 | 생성/조립 책임. **맨 마지막**에 정의(RDD ④) |
+| **Validate** | worktree 적용+테스트로 **행위 보존을 사실 확인**하고 검증불가 주장을 거른다 | "이 코드가 진짜 안전·검증가능한 변경인가"를 아는 유일 지점. 품질 리뷰의 전제 |
+| **Critique** | (GREEN 후) 제안 + **구현된 코드**를 보고 과설계·빠진 위반·최소성 훼손을 지적한다 | "변경의 적정량"을 아는 시니어 리뷰어. 점수는 안 냄. Eval과 병렬 |
+| **Eval** | (GREEN 후) 고정된 루브릭으로 축별 **결정적 채점**을 한다(제안 + 코드 근거) | 루브릭(잣대)을 소유. Critique와 병렬(서로 못 봄) |
+| **Orchestrator(runner)** | 루프·lineage·롤백(worktree 폐기)·병렬 리뷰·수렴 종료를 조율한다 | 생성/조립 책임. **맨 마지막**에 정의(RDD ④) |
 
 - private 메서드 분할이 아니라 **객체 경계**로 갈랐다. **진단(판단)≠구현(변환)** 을 다른 객체로 분리하되,
   Critique/Eval은 **구현된 코드까지** 보고 판단한다(변경 최소성·테스트 용이성은 실제 diff라야 채점됨).
@@ -120,10 +122,11 @@ generate-test 부모(Gen이 아티팩트를 내고 Critique/Eval이 그 아티�
 
 ---
 
-## 5. 5단 상세 (입출력·스키마·프롬프트 골자)
+## 5. 단계 상세 (Diagnose · Implement · Validate · Critique∥Eval)
 
-> 진단(Step1)과 구현(Step2)을 분리하되, Critique/Eval(Step3·4)은 **제안 + 구현된 코드**를 보고 판단한다
-> (변경 최소성·테스트 용이성은 실제 diff라야 채점됨). Validate(Step5)는 행위를 사실로 검증한다.
+> 순서: Diagnose(1) → Implement(2) → **Validate(3, 행위 게이트)** → **Critique ∥ Eval(4, 병렬 품질 리뷰)**.
+> 행위 게이트를 먼저 통과한 코드만 품질 리뷰한다. Critique/Eval은 제안 + 구현된 코드를 보고 판단하며
+> 서로 못 보므로 병렬 실행한다.
 
 ### Step 1 · Diagnose(진단) — `diagnose_refactor.md`
 - **입력:** 대상 코드 + `change_goal` + `boundary` + 공유 참조(`smell-solid-map`). 1-1 테스트 케이스는 안 봄.
@@ -143,33 +146,16 @@ generate-test 부모(Gen이 아티팩트를 내고 Critique/Eval이 그 아티�
 - **입력:** 원본 **생산** 코드 + Diagnose 제안(`gate="GO"`/REMOVE만) + `boundary`.
 - **책임:** 제안을 **충실히 생산 코드로 실현**한다. 진단·새 제안 금지. 행위 보존(예외 종류·순서·부수효과) 원본과 동일.
 - **테스트 코드는 안 건드린다.** 제안이 경계 suite 컴파일을 깨면 그건 suite의 경계-클린 결함(전제 조건)이지
-  글루를 고칠 일이 아니다 — 신호로 남긴다(§5 Step5 ②).
-- **출력:** `files` 매니페스트(생산 코드 전체). 이게 Critique/Eval의 리뷰 대상이자 Validate의 적용 대상.
+  글루를 고칠 일이 아니다 — 신호로 남긴다(§3 ②).
+- **출력:** `files` 매니페스트(생산 코드 전체). 이게 Validate의 적용 대상이자 Critique/Eval의 리뷰 대상.
 
-### Step 3 · Critique — `critique_refactor.md`
-- 새 세션·"시니어 리뷰어" 역할. **제안 + 구현된 코드**를 본다. **점수·판정 금지**(역할경계 금지필드 재사용).
-- 지적 축: ①과설계(YAGNI 위반, 실제 코드에서 확인) ②빠진 위반 ③행위 바꿀 위험 지점 ④변경 최소성 훼손(diff로).
-  출력 = `weaknesses:[{severity, suggestion}]`(기존 포맷 재사용).
+### Step 3 · Validate — 금지패턴(텍스트) + 행위 게이트(사실)
 
-### Step 4 · Eval — `refactor.rubric.yaml` (4축 사다리, 결정적)
-`contract.rubric.yaml` 포맷 그대로. 각 축은 "구체 조건이 모두 충족된 가장 높은 칸".
-
-| 축 | weight | 사다리 요지(1→5) |
-|---|---|---|
-| `diagnosis_accuracy` | 0.30 | 1 오진/원칙명 없음 → 3 원칙+왜, 일부 누락 → 5 누락0 + 구체 심볼 앵커 + 변경축 연결 |
-| `change_minimality` | 0.25 | 1 무관 대규모 재작성 → 3 한두 곳 과함 → 5 위반1↔파울러기법1 추적가능(B-5 커밋 규율) |
-| `behavior_preservation_risk` | 0.25 | 1 공개계약·예외타입 변경 근거없음 → 3 위험 인지·완화없음 → 5 순수 구조이동만+불변 논증 |
-| `testability_improvement` | 0.20 | 1 언급없음/악화 → 3 어떤 테스트가 쉬워지나 지목 → 5 before(Mock N)→after(K) 수치 + 새요구 격리 |
-
-- `thresholds`: `min_total: 4.0`, `min_axis`: 각 3.5, **`behavior_preservation_risk: 4.0`**(안전 최우선).
-- **주의(이중 방어):** 이 축은 **정적 위험 판단**이다. 실제 행위 보존은 Validate가 테스트로 증명.
-  Eval이 위험을 낮게 봤어도 Validate에서 RED면 폐기된다 — 판단과 사실을 겹쳐 막는다.
-
-### Step 5 · Validate — 금지패턴(텍스트) + 행위 게이트(사실)
+품질 리뷰의 **전제**. GREEN이어야 Step 4로 간다. RED면 Implement refine.
 
 1. **금지패턴 필터**(`check_forbidden_assertions` 재사용, 패턴만 교체):
    검증불가 리팩토링 주장 차단 — `"더 깨끗", "더 읽기 좋", "cleaner", "should be"`(수치 없이).
-   위반 = `contract_error`로 eval에 합류 → refine 루프(기존 배관 그대로).
+   위반 = `contract_error` → refine implement.
 
 2. **행위 게이트 — 어떻게 GREEN을 커버하나** (규칙):
    - **① 동결되는 건 `.feature`(행위 명세)뿐 — 이것이 심판.** 유스케이스 진입점(`reserveTicket`)을
@@ -192,6 +178,30 @@ generate-test 부모(Gen이 아티팩트를 내고 Critique/Eval이 그 아티�
 
 > 언어 확장: 게이트 실행은 `BoundaryOracle(project, spec) → GREEN|RED|...` 포트로 격리하고
 > 지금은 java-cucumber 어댑터 하나만 둔다. 다른 언어는 어댑터 추가로(포트는 §4, YAGNI).
+
+### Step 4 · Critique ∥ Eval (병렬 품질 리뷰 — GREEN 후)
+
+Validate GREEN을 통과한 코드만 리뷰한다. 둘은 **서로 못 보므로 병렬 실행**(runner의 ThreadPoolExecutor).
+둘 다 **제안 + 구현된 코드**를 본다.
+
+**Critique** — `critique_refactor.md`. "시니어 리뷰어" 역할. **점수·판정 금지.**
+지적 축: ①과설계(참조 2부 게이트 Type B·v<2로 결정적 판정) ②빠진 위반 ③행위 바꿀 위험 ④변경 최소성 훼손(diff로).
+출력 = `weaknesses:[{severity, axis, where, suggestion}]`.
+
+**Eval** — `eval_refactor.md` + `rubrics/refactor.rubric.json` (4축 사다리). 각 축은 "구체 조건이 모두 충족된 가장 높은 칸".
+**LLM은 축 점수만** 내고, `weighted_total`·threshold는 **runner가 결정적으로** 계산(`score_eval`).
+
+| 축 | weight | 사다리 요지(1→5) |
+|---|---|---|
+| `diagnosis_accuracy` | 0.30 | 1 오진/원칙명 없음 → 3 원칙+왜, 일부 누락 → 5 누락0 + 구체 심볼 앵커 + 변경축 연결 |
+| `change_minimality` | 0.25 | 1 무관 대규모 재작성 → 3 한두 곳 과함 → 5 위반1↔파울러기법1 추적가능(B-5 커밋 규율) |
+| `behavior_preservation_risk` | 0.25 | 1 공개계약·예외타입 변경 근거없음 → 3 위험 인지·완화없음 → 5 순수 구조이동만+불변 논증 |
+| `testability_improvement` | 0.20 | 1 언급없음/악화 → 3 어떤 테스트가 쉬워지나 지목 → 5 before(Mock N)→after(K) 수치 + 새요구 격리 |
+
+- `thresholds`: `min_total: 4.0`, `min_axis`: 각 3.5, **`behavior_preservation_risk: 4.0`**(안전 최우선).
+- **이중 방어:** Eval의 `behavior_preservation_risk`는 **정적 판단**, Validate(Step3)는 테스트로 **사실 증명**.
+  행위는 이미 GREEN이 보장하고, Eval은 "설계·구현 품질"을 본다. Eval 미달 → refine(진단/구현 귀속).
+- **실측:** 행위 GREEN이어도 Eval passed=False 가능(예: `testability_improvement=3<3.5`) — "행위 보존 ≠ 품질 충분".
 
 ---
 
@@ -238,12 +248,21 @@ generate-test 부모(Gen이 아티팩트를 내고 Critique/Eval이 그 아티�
 
 ---
 
-## 9. 미해결 가설 & 다음 단계 (BDUF 경계 — 구현이 검증)
+## 9. 구현 상태 & 미해결 (BDUF 경계 — 구현이 검증)
 
-1. Gen이 "제안 텍스트"와 "적용가능 매니페스트"를 한 번에 일관되게 내는가 → 첫 codex run이 검증.
-2. `behavior_preservation_risk` 사다리가 Validate 실측과 얼마나 일치하나 → 로그로 캘리브레이션.
-3. baseline 커밋 기준점(현재 코드 HEAD vs 안전망 커밋 `f97c1a7`) 확정 → 구현 시 결정.
-4. 공유 코어 추출(import화)은 3번째 소비자 전까지 보류.
+**구현됨(실측 관통, `runs/c0/`):**
+- Diagnose → Implement → Validate(행위 게이트) → Critique ∥ Eval 병렬. `runner.py`가 오케스트레이션.
+- 결정적 게이트(`behavior_gate.py`): worktree 적용 + mvn + GREEN/RED/COMPILE_FAIL. 테스트 코드 안 건드림.
+- Validate RED → Implement refine 루프. Eval 축 점수 → `score_eval`이 weighted_total·threshold 결정적 판정.
+- baseline = tag `refactor-agent-c0-baseline`(원본 절차 코드 + 경계-클린 글루).
+- 실측: 행위 GREEN, Eval passed=False(testability 3<3.5), Critique 약점 6건.
 
-> 이 문서는 확정 계약이 아니다. C0(가장 작은 관통: Diagnose→Implement→Validate 한 바퀴, Critique/Eval 생략)부터 세우고,
-> 그림의 오류는 구현·테스트가 잡는다.
+**아직 안 됨:**
+1. **Eval 미달 → refine diagnose/implement 루프** — 현재는 판정·보고만(설계 루프 미배선).
+2. **금지패턴 텍스트 필터** — 설계엔 있으나 runner 미배선(행위 게이트만).
+3. Critique/Eval → Critique 아직 refine 신호로 안 흘림.
+4. 공유 코어 추출·slow-loop·다언어 어댑터는 보류(YAGNI).
+
+**미해결 가설:** `behavior_preservation_risk` 사다리가 Validate 실측과 얼마나 일치하나 → 로그로 캘리브레이션.
+
+> 이 문서는 확정 계약이 아니다. 그림의 오류는 구현·테스트가 잡는다(위 "실측"이 그 예).
