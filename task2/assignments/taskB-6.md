@@ -17,6 +17,54 @@
 
 ### 제출물
 
-- [ ]  파이프라인 코드/프롬프트/루브릭을 GitHub에.
-- [ ]  파이프라인 제안 vs 본인 수작업 리팩토링 비교 정리.
-- [ ]  실행 로그 + 과설계 제안 사례 메모.
+- [x]  파이프라인 코드/프롬프트/루브릭을 GitHub에.
+    - 스킬 전체: [.codex/skills/refactor-agent](https://github.com/woong7361/architecture-thinking/tree/main/.codex/skills/refactor-agent)
+    - runner·게이트: [runner.py](https://github.com/woong7361/architecture-thinking/blob/main/.codex/skills/refactor-agent/pipeline/runner.py) · [behavior_gate.py](https://github.com/woong7361/architecture-thinking/blob/main/.codex/skills/refactor-agent/pipeline/behavior_gate.py) — Diagnose→Implement→Validate→Critique∥Eval 오케스트레이션 + worktree 행위 게이트.
+    - 프롬프트: [prompts/](https://github.com/woong7361/architecture-thinking/tree/main/.codex/skills/refactor-agent/pipeline/prompts) (diagnose·implement·critique·eval)
+    - 루브릭: [refactor.rubric.json](https://github.com/woong7361/architecture-thinking/blob/main/.codex/skills/refactor-agent/pipeline/rubrics/refactor.rubric.json) — 4축 사다리 + 결함 상한(caps).
+    - 공유 참조: [smell-solid-map.md](https://github.com/woong7361/architecture-thinking/blob/main/.codex/skills/refactor-agent/references/smell-solid-map.md) — 파울러 24 스멜 + A/B/C 게이트 + SOLID 매핑.
+    - 설계 문서(재사용 vs 신규 = 수행내용 #1 포함): [docs/design-v0.md](https://github.com/woong7361/architecture-thinking/blob/main/.codex/skills/refactor-agent/docs/design-v0.md)
+- [x]  파이프라인 제안 vs 본인 수작업 리팩토링 비교 정리.
+    - [comparison-b2-b5.md](https://github.com/woong7361/architecture-thinking/blob/main/.codex/skills/refactor-agent/runs/c0/comparison-b2-b5.md) — 정량 지표·축별 대조·행위보존 방법 차이·B-2 비평 연결·판정.
+    - 파이프라인 결과 코드: [runs/c0-strict/artifact](https://github.com/woong7361/architecture-thinking/tree/main/.codex/skills/refactor-agent/runs/c0-strict/artifact)
+- [x]  실행 로그 + 과설계 제안 사례 메모.
+    - 실행 로그(설계 iter별): [iter_001](https://github.com/woong7361/architecture-thinking/tree/main/.codex/skills/refactor-agent/runs/c0-strict/iter_001) · [iter_002](https://github.com/woong7361/architecture-thinking/tree/main/.codex/skills/refactor-agent/runs/c0-strict/iter_002) (diagnose·implement·gate·critique·eval) + final.json.
+    - 과설계 사례: 비교 정리의 "과설계 사례 기록" 절 — OCP 결제 Strategy는 억제(v<2 → DEFER), refine 과교정으로 `of()` 팩토리(Type C) 1건 발생·Critique 포착.
+
+---
+
+## 답안
+
+### 1. 어디를 재사용했고 무엇을 새로 만들었나
+
+1-1의 generate-test 하네스 골격을 형제 스킬로 가져왔다. 재사용한 것은 루프 제어 구조, 스키마 검증과 역할경계
+금지필드, 금지패턴 가드 → refine 배관, 루브릭 로더, 파일 매니페스트 승격, 정보 차단, LLM 클라이언트다.
+새로 만든 것은 diagnose·implement·critique·eval 프롬프트, 4축 루브릭, 스멜·SOLID 참조표(파울러 24 스멜
+카탈로그는 B-5의 refactoring-criteria에서 복사), 그리고 핵심인 worktree 행위 게이트(`behavior_gate.py`)다 —
+이건 generate-test엔 없다. 상세는 design-v0.md §1에 표로 있다.
+
+Gen과 Eval 분리는 지키되, "Gen"을 진단(Diagnose)과 구현(Implement)으로 쪼갰다. 진단(판단)과 구현(변환)은
+변경 이유가 다른 책임이라 나눴고, Critique/Eval이 제안이 아니라 실제 구현된 코드를 보고 판단하도록 순서를 잡아
+실제로는 5단(Diagnose → Implement → Validate → Critique∥Eval)이 됐다.
+
+### 2. 어느 쪽이 더 나았나, 왜
+
+완성도와 규율은 손 리팩토링(B-5)이 나은 것 같다. B-5는 6개 기법을 한 커밋 한 기법으로 쪼갰고, 불변식을 도메인
+객체 안에 내재화했고, 과교정을 안 했다. 파이프라인은 진단 일치(#9·#22·#6·#3·#24)·행위 보존·YAGNI에서 대등했고
+훨씬 빨랐으며(LLM 8콜, 수 분), 행위 보존을 worktree 게이트로 기계 검증한 점이 오히려 사람보다 객관적이다.
+B-2가 짚은 문제도 그대로 반영했다 — Testability 비평(순수 규칙 검증에 Mock 전체가 필요)은 결정을 Ticket으로
+옮겨 Mock 0개로 풀었고, Flexibility 비평(포인트결제 OCP)은 확정 요구가 없어 DEFER했다.
+
+다만 refine 2바퀴째가 과교정으로 호출처 0인 `of()` 팩토리(Type C 과설계)를 낸 걸 보면, 파이프라인은 "검증된
+1차 후보"까지고 완성은 사람이 하는 게 맞는 것 같다. B-2 답안이 의도한 "리팩토링 제안 에이전트"의 자리 그대로다.
+
+### 3. 실행 로그 + 과설계 사례
+
+실행 로그는 `runs/c0-strict/iter_001·iter_002`에 설계 iter별로 남겼다(diagnose·implement·gate·critique·eval + final).
+설계 루프가 2바퀴 돌았는데, 1바퀴는 Eval이 testability를 3으로 깎아 REJECT했고, 2바퀴째 refine이 #24 주석까지
+잡아 통과했다.
+
+과설계는 두 종류로 나왔다. 하나는 **억제** — B-2 답안의 결제수단 Strategy(OCP, Type B)를 확정 요구가 없어
+`v<2 → DEFER`로 안 냈다. 다른 하나는 **발생** — refine이 `of()` 팩토리를 도입했는데, 저장소 재배선이 스코프
+밖인데 통로를 미리 만든 과교정이다. Critique가 over_engineering으로 잡았고, 루브릭에 Type C 룰(호출처 0인 새
+public 메서드 → 최대 3)을 넣어 다음부터 감점되게 했다. 억제도 탐지도 게이트 규칙이라 같은 입력이면 재현된다.
