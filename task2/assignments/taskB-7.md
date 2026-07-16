@@ -11,15 +11,15 @@
 ### 제출물
 
 - [x] 두 버전의 코드(또는 링크)와 같은 변경을 가한 결과.
-  - **전체 리포트: [task7-history/report.md](../task7-history/report.md)**
+  - **전체 리포트: [task7-history/report.md](https://github.com/woong7361/architecture-thinking/blob/main/task2/task7-history/report.md)**
   - 코드 — 지시 강도 4단계 × (최초 구현 + 변경 3종):
-  [① 아무 지시 없음](../task7-history/code/A-no-rule) · [② 요약본](../task7-history/code/Bw-rule-weak) · [③ 원칙 전량](../task7-history/code/B-rule-full) · [④ 원칙+설계도](../task7-history/code/C-rule-plus-design) · [반복 실행](../task7-history/code/variance)
+  [① 아무 지시 없음](https://github.com/woong7361/architecture-thinking/tree/main/task2/task7-history/code/A-no-rule) · [② 요약본](https://github.com/woong7361/architecture-thinking/tree/main/task2/task7-history/code/Bw-rule-weak) · [③ 원칙 전량](https://github.com/woong7361/architecture-thinking/tree/main/task2/task7-history/code/B-rule-full) · [④ 원칙+설계도](https://github.com/woong7361/architecture-thinking/tree/main/task2/task7-history/code/C-rule-plus-design) · [반복 실행](https://github.com/woong7361/architecture-thinking/tree/main/task2/task7-history/code/variance)
   - 같은 변경을 가한 결과: 변경 3종 × 조건 4개 = 12셀, **22번 실행 전부 인수테스트 통과**.
-  - 모두에게 똑같이 준 것: [harness/](../task7-history/harness) — 수정 금지 인프라 + 인수테스트 4개 + `pom.xml`
-  - 지시문 원문: [원칙 전량](../task7-history/inputs/rules-full.md) · [요약본](../task7-history/inputs/rules-weak-v1.md) · [설계도](../task7-history/inputs/my-design.md) · [요구사항](../task7-history/inputs/spec.md) · [계약](../task7-history/inputs/contract.md)
-  - 실행 로그: [logs/](../task7-history/logs) — 22번 전체. 재현: [`run-experiment.sh`](../task7-history/run-experiment.sh) · [`run-v2.sh`](../task7-history/run-v2.sh) · [`variance-test.sh`](../task7-history/variance-test.sh) · [`blast-radius.sh`](../task7-history/blast-radius.sh)
+  - 모두에게 똑같이 준 것: [harness/](https://github.com/woong7361/architecture-thinking/tree/main/task2/task7-history/harness) — 수정 금지 인프라 + 인수테스트 4개 + `pom.xml`
+  - 지시문 원문: [원칙 전량](https://github.com/woong7361/architecture-thinking/blob/main/task2/task7-history/inputs/rules-full.md) · [요약본](https://github.com/woong7361/architecture-thinking/blob/main/task2/task7-history/inputs/rules-weak-v1.md) · [설계도](https://github.com/woong7361/architecture-thinking/blob/main/task2/task7-history/inputs/my-design.md) · [요구사항](https://github.com/woong7361/architecture-thinking/blob/main/task2/task7-history/inputs/spec.md) · [계약](https://github.com/woong7361/architecture-thinking/blob/main/task2/task7-history/inputs/contract.md)
+  - 실행 로그: [logs/](https://github.com/woong7361/architecture-thinking/tree/main/task2/task7-history/logs) — 22번 전체. 재현: [`run-experiment.sh`](https://github.com/woong7361/architecture-thinking/blob/main/task2/task7-history/run-experiment.sh) · [`run-v2.sh`](https://github.com/woong7361/architecture-thinking/blob/main/task2/task7-history/run-v2.sh) · [`variance-test.sh`](https://github.com/woong7361/architecture-thinking/blob/main/task2/task7-history/variance-test.sh) · [`blast-radius.sh`](https://github.com/woong7361/architecture-thinking/blob/main/task2/task7-history/blast-radius.sh)
 - [x] 변경 비용 비교(구조 + 수치) + 본인 결론. (최소 400자)
-  - 아래 답안. 상세는 [report.md](../task7-history/report.md).
+  - 아래 답안. 상세는 [report.md](https://github.com/woong7361/architecture-thinking/blob/main/task2/task7-history/report.md).
 
 ---
 
@@ -46,7 +46,7 @@ AI에게 **같은 프로그램을 4번 만들게 했다.** 요구사항도, 테�
 
 ### ③에만 들어간 "숫자로 세는 규칙"
 
-B-5 [`refactoring-criteria.md`](../task5-history/refactoring-criteria.md)에 내가 세워 둔 것이다.
+B-5 [`refactoring-criteria.md`](https://github.com/woong7361/architecture-thinking/blob/main/task2/task5-history/refactoring-criteria.md)에 내가 세워 둔 것이다.
 **인터페이스를 만들려고 할 때마다 이걸 세게 한다.**
 
 ```

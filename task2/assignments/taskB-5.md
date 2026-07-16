@@ -20,9 +20,16 @@
     - 단계별 커밋 히스토리(C0→C6, 파울러 기법명 커밋 메시지): [compare `f97c1a7…b69d858`](https://github.com/woong7361/architecture-thinking/compare/f97c1a7...b69d858)
     - 커밋 로그 표(기법·스멜·해시·GREEN): [refactoring-log.md](https://github.com/woong7361/architecture-thinking/blob/main/task2/task5-history/refactoring-log.md) · 부분별 before/after 상세: [refactoring-report.md](https://github.com/woong7361/architecture-thinking/blob/main/task2/task5-history/refactoring-report.md) · 실행 전략: [refactoring-strategy.md](https://github.com/woong7361/architecture-thinking/blob/main/task2/task5-history/refactoring-strategy.md)
 - [x]  '리팩토링이 필요한 경우 vs 불필요한 경우' 본인 기준. (최소 300자)
-    - 답안: [task5-history/refactoring-criteria.md](../task5-history/refactoring-criteria.md) — 1부 스멜 탐지 카탈로그 + 2부 결정 게이트(GO=필요 / DEFER·LEAVE=불필요·보류 / REMOVE=과구조)
+    - 답안: [task5-history/refactoring-criteria.md](https://github.com/woong7361/architecture-thinking/blob/main/task2/task5-history/refactoring-criteria.md) — 1부 스멜 탐지 카탈로그 + 2부 결정 게이트(GO=필요 / DEFER·LEAVE=불필요·보류 / REMOVE=과구조)
 - [x]  가정한 새 요구사항 1개, 변경 전 예측(어느 파일을 고칠지), 실제로 바뀐 파일 목록. 예측과 어긋났거나 변경이 번졌다면 그 원인.
     - 답안: [task5-history/change-resilience-test.md](https://github.com/woong7361/architecture-thinking/blob/main/task2/task5-history/change-resilience-test.md) — 예측 잠금(`88301ab`) 후 R1(할인/가격 축, 대조군)·R2(판매중지/예약 규칙 축, 실험군) 적용. 예측 정확히 일치. **저항력은 끊은 축에서만**: R2는 `TicketService` 0곳 수정(리팩토링 전이면 서비스 열림), R1은 baseline과 동일(가격 축 미개입).
-    - **결과**: 두 요구를 넣고 예측과 대조하니, 둘 다 예측이 정확히 맞았고 변경이 번지지 않았다(각 production 2곳). 그러나 성격은 갈렸다 — R2(판매중지, 예약 규칙 축)는 새 규칙이 `Ticket.ensureReservable()` **한 곳**에 떨어져 중심 코드인 `TicketService`를 **0곳** 고쳤고 `new Ticket(...).suspend()`로 **mock 0개** 단위 검증이 됐다. 반면 R1(할인, 가격 축)은 `TicketService`의 금액 계산 라인을 고쳐야 했고, 이건 **리팩토링 전이었어도 똑같은 위치·개수**였다.
-    - **이유**: 저항력은 **내가 실제로 끊은 축에서만** 생기기 때문이다. 리팩토링으로 예약 규칙을 `Ticket`으로 모았으니 그 축의 변경(R2)만 한 곳에 갇혔다. 가격 축은 애초에 끊은 적이 없어(결제=I/O=서비스 몫) R1은 baseline과 같았다. 그래서 "고친 파일 몇 곳"만 세면 둘 다 2곳이라 같아 보이지만, **서비스가 열리는가 / mock 없이 검증되는가**를 함께 봐야 진짜 차이가 드러난다.
-    - **결론**: 정리한 축(예약 규칙)은 변경이 한 곳에 갇혀 리팩토링이 값을 했다. 안 정리한 축(가격)은 리팩토링의 실패가 아니라 **의도한 트레이드오프**다 — "모든 결합을 끊어라"와 "미리 추상화하지 마라(YAGNI)"는 반대로 당기고, 할인이 1종류인 지금 그 축을 미리 끊는 건 과설계(YAGNI 위반)이므로 일부러 남겨뒀다. 게다가 지금은 새지도 않으며(2곳에 갇힘), "샌다"는 할인이 2종류로 늘 때의 미래 얘기다. 그때 `DiscountPolicy` 인터페이스를 뽑아 그 축도 끊는다는 트리거만 예약해뒀다.
+    - **무엇을 했나**: 코드에 새 요구 두 개를 따로 넣어 보고, "미리 예측한 자리만 고치면 되는가"를 확인했다. R1은 **할인 추가(가격을 바꾸는 요구)**, R2는 **판매중지 추가(예약 규칙을 바꾸는 요구)**다.
+    - **결과**: 둘 다 예측이 정확히 맞았고, 고친 production 파일은 각각 2곳으로 **개수는 같았다**. 하지만 고치는 방식은 전혀 달랐다.
+        - **R2(예약 규칙)**: 새 규칙이 `Ticket.ensureReservable()` **한 군데**에만 들어갔다. 중심 코드인 `TicketService`는 **한 줄도 안 고쳤고**, 검증도 `new Ticket(...).suspend()`처럼 **mock 없이** 객체 하나만 만들어 됐다.
+        - **R1(가격)**: `TicketService`의 금액 계산 줄을 직접 고쳐야 했다. 그리고 이건 **리팩토링을 안 했더라도 똑같은 자리·똑같은 개수**였다.
+    - **이유**: 리팩토링이 "변경을 한 곳에 가두는" 효과는, **내가 실제로 분리해 둔 부분을 건드릴 때만** 나타난다. 나는 리팩토링에서 예약 규칙을 `Ticket` 안으로 모아 뒀고, 그래서 예약 규칙을 바꾸는 R2만 그 한 곳에 갇혔다. 반대로 가격은 애초에 따로 분리한 적이 없다(결제는 I/O라 서비스가 맡는 게 맞다). 그래서 R1은 리팩토링 전과 똑같았다. 결국 **"고친 파일이 몇 개냐"(둘 다 2개)만 세면 차이가 안 보인다.** "중심 서비스를 열어야 했나 / mock 없이 검증되나"까지 같이 봐야 진짜 차이가 드러난다.
+    - **결론**: 정리해 둔 축(예약 규칙)에선 변경이 한 곳에 갇혀 리팩토링이 값을 했다. 정리하지 않은 축(가격)이 그대로인 건 **실패가 아니라 일부러 남겨 둔 선택**이다.
+        - "결합은 다 끊어라"와 "필요해지기 전엔 미리 추상화하지 마라(YAGNI)"는 서로 반대 방향으로 당긴다.
+        - 지금 할인은 **1종류뿐**이라, 이 시점에 가격 축까지 미리 끊으면 오히려 과설계(YAGNI 위반)다. 그래서 일부러 안 끊었다.
+        - 게다가 지금은 새지도 않는다(변경이 2곳에 갇혀 있다). "샌다"는 건 할인이 **2종류로 늘어날 때**의 미래 이야기다.
+        - 그때가 오면 `DiscountPolicy` 인터페이스를 뽑아 그 축도 끊는다 — 그 **트리거(조건)만 미리 적어 뒀다.**
