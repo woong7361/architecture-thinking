@@ -22,8 +22,13 @@ runner·validate·codex 호출·스키마 래퍼를 공유하는 파이프라인
 
 | mode | 무엇을 생성 | gen 프롬프트 | rubric | runs 그룹 |
 |---|---|---|---|---|
-| `contract` | boundary feature(Gherkin, When=Inbound Port 1:1) | `prompts/gen_contract.md` | `rubrics/contract.rubric.yaml` | `runs/feature/` |
-| `rules` | 도메인 규칙 예시표(입력→출력 표) | `prompts/gen_rules.md` | `rubrics/rules.rubric.yaml` | `runs/rules/` |
+| `contract` | boundary feature(Gherkin, When=Inbound Port 1:1) | `prompts/gen_contract.md` | `rubrics/contract.rubric.yaml` | `runs/<group>/feature/` |
+| `rules` | 도메인 규칙 예시표(입력→출력 표) | `prompts/gen_rules.md` | `rubrics/rules.rubric.yaml` | `runs/<group>/rules/` |
+
+`<group>`은 input의 `group` 필드(미지정 시 `brief_hash`). feature와 그 파생 rules가 같은 group을 공유해
+`runs/<group>/{feature,rules}/`로 한 폴더에 모인다. 실행 위치가 input에서 나오므로 각 모드는 플래그 없이
+독립 실행된다(rules 단독 실행도 제 그룹으로 들어감). rules input의 group은 intake `--group`으로 원본
+feature의 group(=feature `brief_hash`)을 물려받는다. `resolve_runs_dir`가 `runs/<group>/<mode-folder>/`를 만든다.
 
 - `contract`·`unit`은 같은 **split 실험**의 두 스트림이라 **하나의 그룹 폴더**로 묶는다:
   `runs/split/<group>/contract/` 와 `.../unit/` (group = contract run_id `<오늘>_<contract_hash>`).

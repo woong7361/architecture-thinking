@@ -125,6 +125,10 @@ def main() -> int:
     )
     parser.add_argument("--boundary-feature", help="rules 모드용. 먼저 확정된 boundary feature 원문.")
     parser.add_argument("--boundary-feature-file", help="rules 모드용. 먼저 확정된 boundary feature .feature 파일 경로.")
+    parser.add_argument(
+        "--group",
+        help="runs 그룹 폴더명. 미지정 시 이 input의 brief_hash로 폴백. rules input을 만들 때는 원본 feature의 group(=feature brief_hash)을 넘겨 한 그룹(runs/<group>/{feature,rules}/)으로 묶는다.",
+    )
     parser.add_argument("--must-include", action="append", help="Repeat or separate values with semicolons.")
     parser.add_argument("--avoid", action="append", help="Repeat or separate values with semicolons.")
     parser.add_argument("--output-dir", type=Path, required=True)
@@ -133,8 +137,11 @@ def main() -> int:
 
     source_material = read_source_material(args)
     brief = build_brief(args, source_material)
+    computed_hash = brief_hash(brief)
     payload = {
-        "brief_hash": brief_hash(brief),
+        "brief_hash": computed_hash,
+        # group은 top-level 메타(brief_hash에 미포함) — brief 해시를 바꾸지 않으면서 실행 위치만 결정한다.
+        "group": args.group or computed_hash,
         "created_at": datetime.now(KST).isoformat(timespec="seconds"),
         "brief": brief,
     }

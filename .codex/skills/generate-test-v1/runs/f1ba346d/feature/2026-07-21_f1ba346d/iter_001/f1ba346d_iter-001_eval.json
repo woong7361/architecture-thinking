@@ -1,0 +1,37 @@
+{
+  "brief_hash": "f1ba346d",
+  "iteration": "001",
+  "rubric_name": "contract:v1-spec",
+  "rubric_scores": {
+    "scores": {
+      "coverage": 4.5,
+      "boundary_fidelity": 4.5,
+      "unambiguity": 4.5,
+      "behavioral_altitude": 3
+    },
+    "weights": {
+      "coverage": 0.3,
+      "boundary_fidelity": 0.3,
+      "unambiguity": 0.2,
+      "behavioral_altitude": 0.2
+    },
+    "weighted_total": 4.2
+  },
+  "axis_rationales": {
+    "coverage": "열거 21개, 누락 0개: [MANUAL우선(7일내·8일후 2행), 7일무료 경계(0·7), 8일이후 PRORATION, 유형 전액/부분(30000↔29999·20000↔19999), 상태별 수락(PAID·PARTIALLY), 상태별 거절(REFUNDED·PENDING·FAILED), 가능금액 초과 거절(10000↔10001), MANUAL≤0 거절(0·-1), totalDays≤0 거절(1↔0), 주문전이 PAID→REFUNDED/PARTIALLY·PARTIALLY→REFUNDED/PARTIALLY, 결제취소 SUCCEEDED/FAILED/TIMED_OUT, 거절 시 가능금액 불변]. 내부 산술(일할단가·절사·경과일계산)은 범위 밖으로 열거에서 제외. 핵심 경계가 안/밖 짝으로 삼각측량돼 있으나 일부 유형 경계의 강건함이 5점만큼 완벽하진 않아 4.5.",
+    "boundary_fidelity": "모든 When이 '환불을 요청하면' 유스케이스 1:1 대응, 내부 절차·협력자 나열 없음. 모든 Then이 반환값(확정 환불금액)·도메인 상태(유형 전액/부분, 주문 전액/부분 환불 상태, 수락/거절, 가능금액 유지)로만 단언. 호출 순서·횟수·내부상태·원시기본값 단언 0. 결제취소_결과_처리의 When이 이미 수락된 상태를 전제해 약간 어색하나 경계 관찰은 유지돼 캡 미해당. 4.5.",
+    "unambiguity": "모든 Then이 구체 도메인 결과(정확한 금액값, 전액/부분 유형, 명시적 최종 상태, 수락/거절, 유지 금액)로 봉인. 'should work'·빈 기대·항상 참 단언 없음. '수락된다/거절된다'가 다소 이분적이나 도메인 관찰로 구체적이라 느슨 단언으로 보지 않음. 4.5.",
+    "behavioral_altitude": "클래스·메서드·enum 상수(PAID/REFUNDED 대신 '결제 완료/전액 환불' 도메인어)·기술용어(UTC/NPE) 노출 0. 그러나 환불금액_결정.feature의 PRORATION 시나리오가 총일수/잔여일수 입력과 절사된 산출값(10000/30×7=2331, 30×15=15000)을 Examples에 그대로 박아 rules 문서 몫인 계산 결과를 feature에 섞음 — 산식 노출 1곳으로 캡. 도입부에 '계산 과정은 규칙 문서에 둔다'고 선언하고도 절사값을 재현해 altitude 침식. 노출 시 최대 3 규칙 적용, 3.",
+    "calibration_note": "coverage/boundary_fidelity/unambiguity는 모든 유스케이스 경계를 삼각측량 짝과 봉인 단언으로 촘촘히 덮어 강함. 다만 PRORATION 시나리오가 절사 산출값(2331)을 feature에 재현해 behavioral_altitude를 3으로 캡(산식은 rules 문서 몫). weighted_total 4.2는 min_total 경계에 걸쳐 있고 behavioral_altitude 3은 min_axis 3.5 미달 — 산식을 rules로 분리하면 회복 가능한 단일 결함."
+  },
+  "calibration_note": "coverage/boundary_fidelity/unambiguity는 모든 유스케이스 경계를 삼각측량 짝과 봉인 단언으로 촘촘히 덮어 강함. 다만 PRORATION 시나리오가 절사 산출값(2331)을 feature에 재현해 behavioral_altitude를 3으로 캡(산식은 rules 문서 몫). weighted_total 4.2는 min_total 경계에 걸쳐 있고 behavioral_altitude 3은 min_axis 3.5 미달 — 산식을 rules로 분리하면 회복 가능한 단일 결함.",
+  "evaluated_at": "2026-07-21T20:26:47+09:00",
+  "model": "claude-sonnet-4-6",
+  "metadata": {
+    "prompt_version": "eval_system:v1",
+    "source_files": [
+      "f1ba346d_input.json",
+      "f1ba346d_iter-001_draft.json"
+    ]
+  }
+}

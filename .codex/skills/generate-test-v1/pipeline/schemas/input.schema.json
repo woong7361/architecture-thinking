@@ -9,6 +9,11 @@
       "pattern": "^[a-f0-9]{8,}$",
       "description": "브리프 해시. 한 건을 관통하는 유일 식별자"
     },
+    "group": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]*$",
+      "description": "runs 그룹 폴더명(선택). 미지정 시 brief_hash로 폴백. feature와 그 파생 rules를 한 그룹으로 묶는다: runs/<group>/{feature,rules}/. rules input은 원본 feature의 group을 물려받아(intake --group) 같은 폴더에 모인다. 실행 위치가 input에서 결정되므로 각 모드는 플래그 없이 독립 실행된다."
+    },
     "brief": {
       "type": "object",
       "description": "테스트 생성 요청 본문 = 도메인 정책. mode(contract/unit/bundled)에 독립적이며 판정기준(테스트 케이스)을 담지 않는다. 케이스는 Gen의 산출물이다. (설계 §0-A)",

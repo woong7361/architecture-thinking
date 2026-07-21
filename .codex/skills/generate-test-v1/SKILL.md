@@ -28,9 +28,10 @@ description: (v1 실험 복사본) spec-first — 테스트 코드가 아니라 
 2. **intake — 정책 공백만 메운다.** 케이스는 묻지 않는다(케이스는 Gen이 발굴). 미정의 경계·규칙 우선순위·외부 의존만.
 3. `pipeline/intake_to_input.py`로 input JSON(정책만)을 생성한다.
 4. **boundary feature 생성**: `run_draft.py --mode contract`.
-5. **feature를 rules에 주입**: contract가 낸 feature(`runs/feature/<run_id>/artifact/<domain>.feature`)를
-   `intake_to_input.py --boundary-feature-file ...`로 rules input에 실어 **새 input**을 만든다. feature가 미룬
-   산식을 rules가 채우게 하는 링크다(사람 검토 후 주입 권장 — feature가 확정돼야 rules가 그 산식을 채운다).
+5. **feature를 rules에 주입**: contract가 낸 feature(`runs/<group>/feature/<run_id>/artifact/<domain>.feature`)를
+   `intake_to_input.py --boundary-feature-file ... --group <feature_group>`로 rules input에 실어 **새 input**을
+   만든다. `--group`으로 feature와 같은 그룹에 묶는다. feature가 미룬 산식을 rules가 채우게 하는 링크다
+   (사람 검토 후 주입 권장 — feature가 확정돼야 rules가 그 산식을 채운다).
 6. **도메인 규칙 예시표 생성**: `run_draft.py --mode rules` (feature 주입된 input).
 7. final 문서 경로(또는 실패 아티팩트 경로)와 수렴 iteration 수를 보고한다.
 8. **사람 검토(명세를 사람이 소유).** feature의 `When=Inbound Port 1:1`·경계 관찰 단언, 규칙표의 **값 검산**을
@@ -41,8 +42,13 @@ description: (v1 실험 복사본) spec-first — 테스트 코드가 아니라 
 
 | mode | 산출 문서 | gen 프롬프트 | rubric | codex eval 스키마 | runs |
 |---|---|---|---|---|---|
-| contract | `<domain>.feature` | gen_contract.md | contract.rubric.yaml | eval_output.contract.schema.json | runs/feature/ |
-| rules | `<domain>.rules.md` | gen_rules.md | rules.rubric.yaml | eval_output.rules.schema.json | runs/rules/ |
+| contract | `<domain>.feature` | gen_contract.md | contract.rubric.yaml | eval_output.contract.schema.json | runs/`<group>`/feature/ |
+| rules | `<domain>.rules.md` | gen_rules.md | rules.rubric.yaml | eval_output.rules.schema.json | runs/`<group>`/rules/ |
+
+`<group>`은 input의 `group` 필드(미지정 시 `brief_hash`). feature와 그 파생 rules가 같은 group을 가져
+`runs/<group>/{feature,rules}/`로 한 폴더에 모인다. 실행 위치가 input에서 결정되므로 각 모드는 **플래그 없이
+독립 실행**된다(rules를 단독으로 돌려도 제 그룹으로 들어간다). rules input의 group은 intake `--group`으로
+원본 feature의 group(=feature `brief_hash`)을 물려받는다.
 
 ## Input Contract
 
@@ -63,17 +69,18 @@ python -B .codex/skills/generate-test-v1/pipeline/intake_to_input.py \
 # 1) boundary feature 생성
 python -B .codex/skills/generate-test-v1/pipeline/run_draft.py inputs/<hash>_input.json --mode contract
 
-# 2) 나온 feature를 rules input에 주입 (새 input 생성)
+# 2) 나온 feature를 rules input에 주입 (새 input 생성; --group으로 feature와 한 그룹)
 python -B .codex/skills/generate-test-v1/pipeline/intake_to_input.py \
   --requirement "..." --source-material-file /path/to/design.md \
-  --boundary-feature-file .codex/skills/generate-test-v1/runs/feature/<run_id>/artifact/<domain>.feature \
+  --boundary-feature-file .codex/skills/generate-test-v1/runs/<group>/feature/<run_id>/artifact/<domain>.feature \
+  --group <feature_group> \
   --output-dir .codex/skills/generate-test-v1/pipeline/inputs
 
 # 3) 규칙 예시표 생성 (feature 주입된 input)
 python -B .codex/skills/generate-test-v1/pipeline/run_draft.py inputs/<rules_hash>_input.json --mode rules
 ```
 
-`run_draft.py`는 `--runs-dir` 미지정 시 mode에 따라 `runs/{feature,rules}/`로 쓴다.
+`run_draft.py`는 `--runs-dir` 미지정 시 input의 `group`과 mode에 따라 `runs/<group>/{feature,rules}/`로 쓴다.
 
 ## v0와의 차이 (무엇을 뺐나)
 

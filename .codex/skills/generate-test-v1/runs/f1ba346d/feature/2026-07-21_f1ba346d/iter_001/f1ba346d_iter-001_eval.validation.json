@@ -1,0 +1,9 @@
+{
+  "artifact": "eval",
+  "checked_file": "C:\\Users\\이현웅\\AppData\\Local\\Temp\\claude\\c--Users-----Desktop-project-thinking\\47c3e5e2-58c9-4158-827d-0f22beebe01f\\scratchpad\\run-feature\\2026-07-21_f1ba346d\\iter_001\\f1ba346d_iter-001_eval.json",
+  "status": "REJECT",
+  "errors": [
+    "rubric rationale axes mismatch: expected ['behavioral_altitude', 'boundary_fidelity', 'coverage', 'unambiguity'], actual ['behavioral_altitude', 'boundary_fidelity', 'calibration_note', 'coverage', 'unambiguity']",
+    "min_axis.behavioral_altitude: 3 < 3.5"
+  ]
+}

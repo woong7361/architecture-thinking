@@ -64,7 +64,8 @@ MODE_RUBRIC = {
     MODE_CONTRACT: "contract.rubric.yaml",
     MODE_RULES: "rules.rubric.yaml",
 }
-# v1은 두 문서를 각각 별도 그룹으로 남긴다(split/동결 없음).
+# mode별 하위 폴더명. 실제 경로는 runs/<group>/<이 값>/ (group은 input이 선언, resolve_runs_dir 참조).
+# feature와 그 파생 rules가 같은 group을 공유해 runs/<group>/{feature,rules}/로 한 폴더에 모인다.
 MODE_RUN_GROUP = {
     MODE_CONTRACT: "feature",
     MODE_RULES: "rules",
@@ -99,10 +100,13 @@ def resolve_rubric_path(mode: str, override: Path | None) -> Path:
     return (RUBRICS_DIR / MODE_RUBRIC[mode]).resolve()
 
 
-def resolve_runs_dir(mode: str, override: Path | None) -> Path:
+def resolve_runs_dir(mode: str, override: Path | None, group: str) -> Path:
     if override is not None:
         return override
-    return RUNS_DIR / MODE_RUN_GROUP[mode]
+    # runs/<group>/<mode-folder>/ — group은 input이 선언(미선언 시 brief_hash).
+    # feature와 그 파생 rules가 같은 group을 가져 한 폴더에 모이되, 실행 위치가 input에서
+    # 나오므로 각 모드는 플래그 없이 독립 실행된다.
+    return RUNS_DIR / group / MODE_RUN_GROUP[mode]
 
 MODEL_CODEX_DEFAULT = None
 MODEL_GPT_5_5 = "gpt-5.5"
@@ -635,10 +639,24 @@ def next_iteration(iteration: str) -> str:
     return f"{int(iteration) + 1:03d}"
 
 
+def build_best_effort_snapshot(eval_artifact: dict, rubric: dict) -> dict:
+    """게이트 미통과 draft의 품질 요약. materialize된 아티팩트가 어디까지 왔는지 알린다."""
+    rubric_scores = eval_artifact.get("rubric_scores", {}) if isinstance(eval_artifact, dict) else {}
+    return {
+        "rubric_name": eval_artifact.get("rubric_name") if isinstance(eval_artifact, dict) else None,
+        "weighted_total": rubric_scores.get("weighted_total"),
+        "scores": rubric_scores.get("scores", {}),
+        "weak_axes": get_weak_axes(eval_artifact, rubric) if isinstance(eval_artifact, dict) else [],
+    }
+
+
 def write_max_iteration_failed(
     context: RunContext,
     eval_rejections: list[dict],
     config: dict[str, object],
+    eval_artifact: dict,
+    rubric: dict,
+    artifact_paths: list[Path],
 ) -> Path:
     last_rejection = eval_rejections[-1] if eval_rejections else {}
     last_errors = last_rejection.get("errors", [])
@@ -665,6 +683,15 @@ def write_max_iteration_failed(
             }
             for error in last_errors
         ],
+        # 게이트는 실패했지만 최종 산출물은 확인할 수 있도록 마지막 draft를 승격한다.
+        # verdict는 REJECTED — PASS(_final.json)와 혼동하지 말 것. 값·경계는 미검증이다.
+        "best_effort_artifacts": {
+            "verdict": "REJECTED",
+            "source": "last_iteration_draft",
+            "note": "게이트 미통과 draft를 그대로 승격한 것. 값·경계는 검증되지 않았다.",
+            "paths": [relative_to_run(path, context.run_dir) for path in artifact_paths],
+            "quality_snapshot": build_best_effort_snapshot(eval_artifact, rubric),
+        },
         "lineage": {
             "input": relative_to_run(context.copied_input_path, context.run_dir),
             "last_draft": relative_to_run(context.draft_path, context.run_dir),
@@ -674,6 +701,7 @@ def write_max_iteration_failed(
         "iteration_rejections": eval_rejections,
         "config": config,
         "next_actions": [
+            "best_effort_artifacts를 사람이 검토한다(값·경계는 미검증).",
             "원본 brief에 구체적 사례와 제약을 보강한다",
             "반복 실패의 주된 category를 보고 rubric threshold 또는 stage prompt를 조정한다",
         ],
@@ -709,12 +737,14 @@ def run(args: argparse.Namespace) -> dict:
 
     input_data = load_json(input_path)
     brief_hash = input_data["brief_hash"]
+    # group은 input이 선언(미선언 시 brief_hash 폴백). feature와 파생 rules를 한 폴더로 묶는다.
+    group = input_data.get("group") or brief_hash
     start_iteration = int(args.iteration)
     if args.max_iterations < start_iteration:
         raise ValueError("--max-iterations must be greater than or equal to --iteration")
 
     # mode가 gen 프롬프트·rubric·runs 그룹·codex eval 스키마를 함께 고른다.
-    args.runs_dir = resolve_runs_dir(args.mode, args.runs_dir)
+    args.runs_dir = resolve_runs_dir(args.mode, args.runs_dir, group)
     gen_prompt_path = resolve_gen_prompt_path(args.mode)
     critique_prompt_path = resolve_critique_prompt_path(args.mode)
     refine_prompt_path = resolve_refine_prompt_path(args.mode)
@@ -733,6 +763,7 @@ def run(args: argparse.Namespace) -> dict:
     agent_models = resolve_agent_models(args)
     config = {
         "mode": args.mode,
+        "group": group,
         "provider": args.provider,
         "codex_bin": args.codex_bin,
         "agent_models": agent_models,
@@ -978,11 +1009,21 @@ def run(args: argparse.Namespace) -> dict:
             if iteration_number >= args.max_iterations:
                 stage = f"iter_{iteration}_max_iteration_exceeded"
                 with progress.step(f"{iteration_label} max_iteration_exceeded"):
+                    # 게이트는 실패했지만 마지막(가장 많이 refine된) draft를 그대로 승격해
+                    # 사람이 최종 산출물을 확인할 수 있게 한다. verdict는 REJECTED로 남는다.
+                    artifact_paths = materialize_artifacts(context, draft["files"])
                     failed_path = write_max_iteration_failed(
                         context=context,
                         eval_rejections=eval_rejections,
                         config=config,
+                        eval_artifact=eval_artifact,
+                        rubric=rubric,
+                        artifact_paths=artifact_paths,
                     )
+                progress.line(
+                    f"{iteration_label} materialize (best-effort REJECTED) -> "
+                    + ", ".join(relative_to_run(p, context.run_dir) for p in artifact_paths)
+                )
                 progress.line(
                     "run FAILED terminal_reason=max_iteration_exceeded "
                     f"last_iteration={iteration} total_elapsed={format_duration(time.perf_counter() - pipeline_started_at)}"
@@ -993,6 +1034,8 @@ def run(args: argparse.Namespace) -> dict:
                     "failed": str(failed_path),
                     "terminal_reason": "max_iteration_exceeded",
                     "last_iteration": iteration,
+                    "artifacts": [str(p) for p in artifact_paths],
+                    "artifacts_verdict": "REJECTED",
                 }
 
             to_iteration = next_iteration(iteration)
