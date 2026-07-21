@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Test-Generation Harness Input",
+  "type": "object",
+  "required": ["brief_hash", "brief", "created_at"],
+  "properties": {
+    "brief_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{8,}$",
+      "description": "브리프 해시. 한 건을 관통하는 유일 식별자"
+    },
+    "brief": {
+      "type": "object",
+      "description": "테스트 생성 요청 본문 = 도메인 정책. mode(contract/unit/bundled)에 독립적이며 판정기준(테스트 케이스)을 담지 않는다. 케이스는 Gen의 산출물이다. (설계 §0-A)",
+      "required": ["requirement", "source_material"],
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "description": "요구사항 한 줄 이름 (예: 환불 금액 산출 정책)"
+        },
+        "requirement": {
+          "type": "string",
+          "minLength": 1,
+          "description": "테스트로 고정할 정책/요구사항의 자연어 서술. Gen이 여기서 벗어난 요구사항을 지어내지 않는다."
+        },
+        "source_material": {
+          "type": "string",
+          "minLength": 1,
+          "description": "설계/스펙 원문. 요약하지 말고 그대로 보존한다 — Gen과 Eval이 같은 근거를 본다."
+        },
+        "policy_rules": {
+          "type": "array",
+          "description": "정책을 규칙으로 분해한 목록(선택, intake 산출 가능). 케이스가 아니라 규칙이다. 예: 'MANUAL > 7일무료 > PRORATION'. 경계 케이스는 Gen이 각 규칙에서 파생한다.",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "external_dependencies": {
+          "type": "array",
+          "description": "scope 밖 외부 의존(선택). mock_discipline 채점의 근거. 예: PG, DB, 메시지큐.",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "constraints": {
+          "type": "object",
+          "description": "생성 방향 제약(선택)",
+          "properties": {
+            "must_include": {
+              "type": "array",
+              "description": "반드시 다뤄야 할 규칙/축",
+              "items": { "type": "string", "minLength": 1 }
+            },
+            "avoid": {
+              "type": "array",
+              "description": "피해야 할 표현·방향 (예: 구현 세부 노출)",
+              "items": { "type": "string", "minLength": 1 }
+            }
+          },
+          "additionalProperties": false
+        },
+        "boundary_feature": {
+          "type": "string",
+          "minLength": 1,
+          "description": "rules 모드 전용(선택). 먼저 확정된 boundary feature(Gherkin) 원문. rules Gen이 제약·재료로만 읽고 재서술하지 않는다 — feature가 미룬 산식·경계를 규칙표로 채운다."
+        }
+      },
+      "additionalProperties": false
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "입력 파일이 생성된 시각"
+    }
+  },
+  "additionalProperties": false
+}

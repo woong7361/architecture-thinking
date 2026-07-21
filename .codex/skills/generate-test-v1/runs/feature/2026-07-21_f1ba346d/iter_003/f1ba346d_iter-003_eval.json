@@ -1,0 +1,42 @@
+{
+  "brief_hash": "f1ba346d",
+  "iteration": "003",
+  "rubric_name": "contract:v1-spec",
+  "rubric_scores": {
+    "scores": {
+      "coverage": 4,
+      "boundary_fidelity": 4,
+      "unambiguity": 3,
+      "behavioral_altitude": 3
+    },
+    "weights": {
+      "coverage": 0.3,
+      "boundary_fidelity": 0.3,
+      "unambiguity": 0.2,
+      "behavioral_altitude": 0.2
+    },
+    "weighted_total": 3.6
+  },
+  "axis_rationales": {
+    "coverage": "열거 15개, 누락 0개: []; 매핑은 유료기간 안 전액 성공, 유료기간 직후 부분 성공, 0원 자동 산출 성공, MANUAL 우선 부분 성공, 부분 환불 후 MANUAL 전액 도달, 자동 산출액의 환불 가능 금액 초과 거절, 수동 금액 초과 거절, 수동 0원 거절, 수동 음수 거절, REFUNDED 거절, PENDING 거절, FAILED 거절, 부분 환불 후 미도달 유지, 결제 취소 명확 실패, 결제 취소 불확실 타임아웃으로 모두 존재하나 7일/8일 같은 핵심 경계가 구체 일수 대신 조건명으로 표현되어 5점은 어렵다.",
+    "boundary_fidelity": "모든 When은 대체로 '환불을 요청하면'이라는 단일 환불 요청 유스케이스에 1:1 대응하고, Then도 환불 결과·금액·유형·주문 상태·환불 상태처럼 경계 관찰 결과를 단언한다; 호출 순서·횟수 단언은 없지만 일부 Given이 '자동 환불 조건'처럼 정책 내부 선택을 압축해 표현한다.",
+    "unambiguity": "Then의 기대값은 대부분 구체적이나, 핵심 입력이 '무료 환불 기간 안', '무료 환불 기간 다음 날', '절사 금액이 발생하는 기간', '환불 가능한 미사용 기간이 없음'처럼 느슨한 조건명에 의존해 틀린 구현을 고정된 경계값으로 반드시 실패시키는 힘이 제한된다.",
+    "behavioral_altitude": "대부분 도메인 언어로 쓰였고 클래스·메서드·enum 노출은 없지만, contract feature 안에 '절사 금액이 발생하는 기간', '자동 산출된 환불 금액이 0원'처럼 rules 문서에 가까운 산술 조건 표현이 섞여 있어 최대 3 수준으로 본다."
+  },
+  "calibration_note": "엄격 게이트 기준으로 평균 3.0을 기준점으로 두고, 누락은 없지만 경계값 명시성과 contract/rules 분리의 약점 때문에 4점 이상은 coverage와 boundary_fidelity에만 제한적으로 부여했다.",
+  "evaluated_at": "2026-07-21T17:29:01+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_system:v1",
+    "source_files": [
+      "f1ba346d_input.json",
+      "f1ba346d_iter-003_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 34397,
+      "cached_input_tokens": 18816,
+      "output_tokens": 2681,
+      "reasoning_output_tokens": 2070
+    }
+  }
+}

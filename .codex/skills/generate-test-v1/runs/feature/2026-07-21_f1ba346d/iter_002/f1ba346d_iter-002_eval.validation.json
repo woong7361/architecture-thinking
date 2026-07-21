@@ -1,0 +1,10 @@
+{
+  "artifact": "eval",
+  "checked_file": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\generate-test-v1\\runs\\feature\\2026-07-21_f1ba346d\\iter_002\\f1ba346d_iter-002_eval.json",
+  "status": "REJECT",
+  "errors": [
+    "min_total: 3.5 < 4.2",
+    "min_axis.boundary_fidelity: 3 < 4.0",
+    "min_axis.behavioral_altitude: 3 < 3.5"
+  ]
+}

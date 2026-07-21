@@ -1,0 +1,25 @@
+# Original User Input
+
+portone에서 이미 제출된
+
+**서비스 URL을 변경하고싶어** 
+https://www.dodoclass.co.kr
+
+에서 https://dodoclass.co.kr로
+
+어떻게 해야할지 차장줘
+
+
+# Checked Context
+
+# 확인한 문맥
+
+- 현재 날짜: 2026-07-14
+- 사용자는 포트원에 이미 제출한 서비스 URL을 `https://www.dodoclass.co.kr`에서 `https://dodoclass.co.kr`로 정정하려 한다.
+- 포트원 공식 도움말의 "이용절차 | 서비스 추가"는 관리자콘솔의 서비스 URL 수정이 필요한 경우 우측 하단 채널톡을 통해 포트원 고객지원팀에 문의하라고 안내한다.
+  - https://help.portone.io/category/procedure/service-addition
+- 같은 문서는 새 서비스나 다른 업종·품목이면 별도 상점아이디와 추가 심사가 필요하다고 안내한다. 이번 요청은 호스트명에서 `www`만 제거하려는 것으로 보이지만, 동일 서비스로 인정되는지는 포트원 또는 해당 PG사의 확인이 필요하다.
+- 포트원 공식 "서비스 필수 구축요건"은 테스트 URL에서 실 URL로 변경할 때 재심사와 카드 결제 차단 가능성을 안내한다. 이 문구가 이번 `www` 제거에도 그대로 적용된다고 단정할 수는 없다.
+  - https://help.portone.io/content/requirements
+- 두 URL의 실제 리다이렉트와 서비스 접근 상태는 현재 실행 환경의 네트워크 제한으로 확인하지 못했다.
+- 비밀번호, API 키 등 비밀정보를 문의에 포함할 필요가 없다.

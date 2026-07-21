@@ -1,0 +1,42 @@
+{
+  "brief_hash": "f1ba346d",
+  "iteration": "001",
+  "rubric_name": "contract:v1-spec",
+  "rubric_scores": {
+    "scores": {
+      "coverage": 4,
+      "boundary_fidelity": 3,
+      "unambiguity": 4,
+      "behavioral_altitude": 3
+    },
+    "weights": {
+      "coverage": 0.3,
+      "boundary_fidelity": 0.3,
+      "unambiguity": 0.2,
+      "behavioral_altitude": 0.2
+    },
+    "weighted_total": 3.5
+  },
+  "axis_rationales": {
+    "coverage": "열거 15개, 누락 0개: [] — MANUAL 우선, MANUAL 초과/0이하 거절, 7일 이하 전액, 8일 이후 정책 적용, PAID/PARTIALLY_REFUNDED 허용, REFUNDED/PENDING/FAILED 거절, 초과 환불 거절, FULL/PARTIAL 유형, 주문 전액/부분 전이, Refund 성공/실패/타임아웃 전이를 모두 덮지만 일부는 산술 예시 중심이라 5점은 아님.",
+    "boundary_fidelity": "When은 대체로 유스케이스 1:1이나 refund_amount.feature가 일할 계산의 totalDays/remainingDays와 expected 금액을 feature에 직접 노출하고, 실패/타임아웃에서 '이미 환불된 금액은 0원' 같은 원시값 상태 단언이 있어 최대 3으로 제한한다.",
+    "unambiguity": "대부분 Then이 구체 금액, 거절 사유, 주문 상태, 환불 상태로 틀린 구현을 잡을 수 있으며 '관리자 수동 처리가 필요하다' 정도만 다소 정성적이다.",
+    "behavioral_altitude": "대체로 도메인어를 쓰지만 total_days, remaining_days, UTC 날짜 기준에서 온 날짜/일수 계산, 절사 금액 예시 등 내부 산술 규칙이 feature에 여러 곳 섞여 있어 최대 3으로 제한한다."
+  },
+  "calibration_note": "엄격 게이트 기준으로 평균 3.0을 기준점으로 보정했다. coverage는 경계 행동 누락은 없으나 contract 문서에 rules 성격의 산술 검증이 많이 섞인 점을 다른 축에서 감점했다.",
+  "evaluated_at": "2026-07-21T17:54:51+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_system:v1",
+    "source_files": [
+      "f1ba346d_input.json",
+      "f1ba346d_iter-001_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 37399,
+      "cached_input_tokens": 18816,
+      "output_tokens": 998,
+      "reasoning_output_tokens": 516
+    }
+  }
+}

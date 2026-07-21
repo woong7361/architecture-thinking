@@ -1,0 +1,317 @@
+{
+  "analysis_id": "2026-07-06_3runs",
+  "generated_at": "2026-07-06T21:59:55+09:00",
+  "total_unreviewed": 3,
+  "min_group_sample": 3,
+  "groups": {
+    "bundled:v1": {
+      "mode": "bundled",
+      "rubric_file": "pipeline/rubrics/bundled.rubric.yaml",
+      "passing_count": 0,
+      "failed_count": 1,
+      "total": 1,
+      "sufficient_sample": false,
+      "runs_included": [],
+      "failed_runs_included": [
+        "2026-07-06_8dbc7a7c"
+      ],
+      "axis_stats": {},
+      "eval_rationales": {
+        "coverage": [],
+        "unambiguity": [],
+        "behavioral_altitude": [],
+        "mock_discipline": [],
+        "independence_executability": []
+      },
+      "critique_weaknesses": [],
+      "failure_signals": {
+        "failed_count": 1,
+        "by_terminal_reason": {
+          "max_iteration_exceeded": 1
+        },
+        "by_category": {
+          "quality_reject": 4
+        },
+        "rule_run_counts": {
+          "min_axis.independence_executability": {
+            "runs": 1,
+            "ratio": 1.0
+          },
+          "min_total": {
+            "runs": 1,
+            "ratio": 1.0
+          }
+        },
+        "runs_included": [
+          "2026-07-06_8dbc7a7c"
+        ]
+      }
+    },
+    "contract:v1": {
+      "mode": "contract",
+      "rubric_file": "pipeline/rubrics/contract.rubric.yaml",
+      "passing_count": 1,
+      "failed_count": 0,
+      "total": 1,
+      "sufficient_sample": false,
+      "runs_included": [
+        "2026-07-06_f1ba346d"
+      ],
+      "failed_runs_included": [],
+      "axis_stats": {
+        "coverage": {
+          "mean": 4.0,
+          "min": 4.0,
+          "max": 4.0,
+          "min_axis": 4.0,
+          "below_min_count": 0,
+          "below_min_ratio": 0.0
+        },
+        "unambiguity": {
+          "mean": 4.0,
+          "min": 4.0,
+          "max": 4.0,
+          "min_axis": 4.0,
+          "below_min_count": 0,
+          "below_min_ratio": 0.0
+        },
+        "behavioral_altitude": {
+          "mean": 4.0,
+          "min": 4.0,
+          "max": 4.0,
+          "min_axis": 3.5,
+          "below_min_count": 0,
+          "below_min_ratio": 0.0
+        },
+        "independence": {
+          "mean": 5.0,
+          "min": 5.0,
+          "max": 5.0,
+          "min_axis": 3.5,
+          "below_min_count": 0,
+          "below_min_ratio": 0.0
+        }
+      },
+      "eval_rationales": {
+        "coverage": [
+          {
+            "run": "2026-07-06_f1ba346d",
+            "text": "열거 25개, 누락 0개: []. 매핑: MANUAL 우선, 무료 0/7/8일, UTC 날짜 절삭, PRORATION 전액/중간/마지막날/만료/절사/totalDays<=0, manual<=0, 초과환불, PAID/PARTIALLY 가능, REFUNDED/PENDING/FAILED 거절, FULL/PARTIAL 유형, 주문 상태 4전이, Refund SUCCEEDED/FAILED/TIMED_OUT 모두 포함. 다만 manual exact-full 산출과 일부 경계는 별도 안/밖 짝이 약해 5점은 아님."
+          }
+        ],
+        "unambiguity": [
+          {
+            "run": "2026-07-06_f1ba346d",
+            "text": "금액·상태·예외 타입이 대부분 구체값으로 봉인되어 있으나, '결제 취소 결과는 도메인 사건으로만 주어진다', '거절된 경우 도메인 오류는 없음' 같은 일부 표현은 실행 스텝 정의에 의존해 약간 느슨하다."
+          }
+        ],
+        "behavioral_altitude": [
+          {
+            "run": "2026-07-06_f1ba346d",
+            "text": "클래스명·메서드명·필드 같은 구현 세부는 노출하지 않고 주문, 환불, 결제 취소 결과, 도메인 오류 중심으로 서술한다. 다만 UTC 시각·REQUESTED 같은 기술/상태 표현은 정책 용어라 허용 가능한 수준이다."
+          }
+        ],
+        "independence": [
+          {
+            "run": "2026-07-06_f1ba346d",
+            "text": "각 Scenario/Outline이 주문금액, 기존 환불금액, 주문상태, 날짜, 금액을 모두 자체 Given/Examples로 제공해 실행 순서나 이전 시나리오 상태에 의존하지 않는다."
+          }
+        ]
+      },
+      "critique_weaknesses": [
+        {
+          "run": "2026-07-06_f1ba346d",
+          "issue": "일부 PRORATION 예제가 날짜 기준 정책과 잔여 일수 입력을 동시에 쓰면서 서로 맞지 않는 데이터를 허용한다.",
+          "why_it_matters": "예를 들어 PRORATION outline은 환불 요청일을 2026-07-10으로 두면서 remainingDays == totalDays인 전액 환불 예를 포함한다. 구현이 날짜, 경과일, 잔여일 관계를 잘못 계산해도 테스트가 독립 입력값만 믿고 통과할 수 있다.",
+          "suggestion": "순수 PRORATION 산출 시나리오는 날짜를 제거하거나 'PRORATION 적용이 확정된 상태'로 표현하고, 정책 우선순위 시나리오는 결제일·요청일·잔여일수가 서로 일관되도록 예제 데이터를 정렬한다.",
+          "severity": "medium"
+        },
+        {
+          "run": "2026-07-06_f1ba346d",
+          "issue": "검증 실패 시 외부 결제 취소 Mock이 호출되지 않아야 한다는 부작용 차단 단언이 빠져 있다.",
+          "why_it_matters": "정책 흐름은 주문 환불 가능 여부 검증 이후 결제 취소 요청으로 진행된다. 현재는 주문 금액과 상태 유지까지만 확인하므로, 환불 불가 주문이나 초과 금액에서도 Refund REQUESTED를 만들거나 PG 취소 Mock을 호출하는 구현이 가짜 통과할 수 있다.",
+          "suggestion": "주문 상태 불가, 환불 가능 금액 초과, manualAmount <= 0, totalDays <= 0 거절 케이스에 '환불 요청 엔티티는 생성되지 않는다'와 '결제 취소 외부 의존은 호출되지 않는다'를 추가한다.",
+          "severity": "high"
+        },
+        {
+          "run": "2026-07-06_f1ba346d",
+          "issue": "부분 환불 이력이 있는 주문에서 정책 산출 금액과 환불 가능 금액의 경계가 충분히 분리되어 있지 않다.",
+          "why_it_matters": "상태 전이 시나리오는 이미 확정된 환불금액으로 PARTIALLY_REFUNDED -> REFUNDED를 다루지만, 실제 정책 산출 단계에서 이미 환불된 금액을 고려해 FULL/PARTIAL을 결정하는 정상 경계가 약하다. 특히 7일 무료나 PRORATION 산출액이 환불 가능 금액과 같거나 조금 작은 경우를 놓치면 추가 환불 로직이 원 주문금액 기준으로만 동작해도 드러나지 않는다.",
+          "suggestion": "PARTIALLY_REFUNDED 주문에 대해 산출된 환불금액 == cancellableAmount인 정상 전액 도달 케이스와 산출된 환불금액 < cancellableAmount인 정상 부분 유지 케이스를 정책 산출 또는 요청 흐름 시나리오에 추가한다. 원문 근거상 산출액이 cancellableAmount를 넘으면 오류로 보는 해석을 유지한다면, 해당 오류 시나리오명에 그 해석을 명시한다.",
+          "severity": "medium"
+        }
+      ],
+      "failure_signals": {
+        "failed_count": 0,
+        "by_terminal_reason": {},
+        "by_category": {},
+        "rule_run_counts": {},
+        "runs_included": []
+      }
+    },
+    "unit:v1": {
+      "mode": "unit",
+      "rubric_file": "pipeline/rubrics/unit.rubric.yaml",
+      "passing_count": 1,
+      "failed_count": 0,
+      "total": 1,
+      "sufficient_sample": false,
+      "runs_included": [
+        "2026-07-06_7f1fd837"
+      ],
+      "failed_runs_included": [],
+      "axis_stats": {
+        "coverage": {
+          "mean": 5.0,
+          "min": 5.0,
+          "max": 5.0,
+          "min_axis": 4.0,
+          "below_min_count": 0,
+          "below_min_ratio": 0.0
+        },
+        "unambiguity": {
+          "mean": 4.5,
+          "min": 4.5,
+          "max": 4.5,
+          "min_axis": 4.0,
+          "below_min_count": 0,
+          "below_min_ratio": 0.0
+        },
+        "mock_discipline": {
+          "mean": 5.0,
+          "min": 5.0,
+          "max": 5.0,
+          "min_axis": 3.5,
+          "below_min_count": 0,
+          "below_min_ratio": 0.0
+        },
+        "executability": {
+          "mean": 4.0,
+          "min": 4.0,
+          "max": 4.0,
+          "min_axis": 3.5,
+          "below_min_count": 0,
+          "below_min_ratio": 0.0
+        }
+      },
+      "eval_rationales": {
+        "coverage": [
+          {
+            "run": "2026-07-06_7f1fd837",
+            "text": "열거 40개, 누락 0개: []; MANUAL 우선·0·음수·초과·동일, 무료 0/7/8일과 UTC 날짜 절단, PRORATION 전액/중간/마지막날/0원/절사/totalDays<=0, 환불유형 FULL/PARTIAL, 주문 상태별 허용·거절, 주문/환불 상태 전이, 결제취소 성공·거부·불확실 및 주문 미변경까지 생성 테스트에 매핑된다."
+          }
+        ],
+        "unambiguity": [
+          {
+            "run": "2026-07-06_7f1fd837",
+            "text": "대부분 AssertJ의 구체값·예외 코드·상태 비교라 틀린 구현을 잡지만, 일부 거절 케이스는 계산기 단위 예외만 보고 서비스 레벨 비호출까지 모두 봉인하지는 않아 5점까지는 보류한다."
+          }
+        ],
+        "mock_discipline": [
+          {
+            "run": "2026-07-06_7f1fd837",
+            "text": "Mock은 외부 의존인 PaymentCancellationGateway에만 사용되고 계산·상태 전이는 실제 도메인 객체 상태로 검증하며 verify도 외부 호출 확인에 한정된다."
+          }
+        ],
+        "executability": [
+          {
+            "run": "2026-07-06_7f1fd837",
+            "text": "입력값과 기대값은 명확하고 JUnit5+Mockito+AssertJ로 구현 가능하지만, 도메인 클래스 시그니처와 패키지/import는 초안이 가정하고 있어 극소수 보완이 필요하다."
+          }
+        ]
+      },
+      "critique_weaknesses": [
+        {
+          "run": "2026-07-06_7f1fd837",
+          "issue": "RefundApplicationServiceTest가 REFUNDED, PENDING, FAILED 주문에 대한 환불 요청을 외부 결제 취소 전에 거절하는지 검증하지 않는다.",
+          "why_it_matters": "OrderTest는 도메인 객체 단위의 환불 가능 여부를 검증하지만, 서비스가 계산 후 gateway.cancel을 먼저 호출하거나 잘못된 순서로 orchestration해도 현재 서비스 테스트만으로는 놓칠 수 있다. 정책은 PAID와 PARTIALLY_REFUNDED만 환불 가능하고 결제 취소는 scope 밖 외부 의존이라고 명시한다.",
+          "suggestion": "서비스 테스트에 REFUNDED, PENDING, FAILED 주문으로 refund를 호출했을 때 ORDER_NOT_REFUNDABLE이 발생하고, 주문 상태/누적 환불 금액이 유지되며, paymentCancellationGateway에는 상호작용이 없음을 검증하는 파라미터 케이스를 추가한다.",
+          "severity": "high"
+        },
+        {
+          "run": "2026-07-06_7f1fd837",
+          "issue": "PRORATION 입력에서 remainingDays가 totalDays를 초과하거나 음수인 경우가 검증되지 않는다.",
+          "why_it_matters": "정책은 잔여 일수 기반 산술과 totalDays <= 0 예외를 고정하지만, 잔여 일수 자체의 유효 범위는 테스트가 봉인하지 않는다. 구현이 remainingDays=-1을 음수 환불금액으로 만들거나 remainingDays>totalDays를 초과 환불로 처리해도 정책 의도와 충돌할 가능성이 있다.",
+          "suggestion": "정책/원문에 잔여 일수의 허용 범위 근거가 있다면 remainingDays < 0, remainingDays > totalDays를 도메인 오류로 고정하는 계산 테스트를 추가한다. 근거가 없다면 이 경계를 정책 보완 후보로 분리한다.",
+          "severity": "medium"
+        },
+        {
+          "run": "2026-07-06_7f1fd837",
+          "issue": "Refund 엔티티의 최종 상태 이후 재전이 가능 여부가 테스트로 고정되지 않는다.",
+          "why_it_matters": "정책의 상태 다이어그램은 REQUESTED에서 SUCCEEDED, FAILED, TIMED_OUT으로 전이되는 단방향 흐름을 보여준다. 현재 테스트는 REQUESTED에서 한 번 complete되는 happy/branch path만 확인하므로, SUCCEEDED 이후 FAILED로 바뀌는 구현 같은 상태 무결성 결함을 잡지 못할 수 있다.",
+          "suggestion": "정책이 최종 상태의 재전이를 금지한다는 의미라면 SUCCEEDED, FAILED, TIMED_OUT 상태에서 complete를 다시 호출할 때 도메인 오류가 발생하고 기존 상태가 유지되는 케이스를 추가한다. 정책이 의도적으로 재전이를 허용한다면 그 결정을 명시한다.",
+          "severity": "medium"
+        }
+      ],
+      "failure_signals": {
+        "failed_count": 0,
+        "by_terminal_reason": {},
+        "by_category": {},
+        "rule_run_counts": {},
+        "runs_included": []
+      }
+    }
+  },
+  "user_feedback": {
+    "source": "problem.md",
+    "present": true,
+    "entries": [],
+    "count": 0
+  },
+  "signals": [
+    {
+      "id": "bundled:v1/terminal/max_iteration_exceeded",
+      "kind": "failure",
+      "group": "bundled:v1",
+      "summary": "bundled:v1에서 1개 run이 수렴 못 하고 max_iteration_exceeded으로 실패"
+    },
+    {
+      "id": "bundled:v1/failure/min_axis.independence_executability",
+      "kind": "failure",
+      "group": "bundled:v1",
+      "summary": "bundled:v1 1개 run이 min_axis.independence_executability(으)로 반려"
+    },
+    {
+      "id": "bundled:v1/failure/min_total",
+      "kind": "failure",
+      "group": "bundled:v1",
+      "summary": "bundled:v1 1개 run이 min_total(으)로 반려"
+    },
+    {
+      "id": "contract:v1/weakness/0",
+      "kind": "critique",
+      "group": "contract:v1",
+      "summary": "일부 PRORATION 예제가 날짜 기준 정책과 잔여 일수 입력을 동시에 쓰면서 서로 맞지 않는 데이터를 허용한다. (severity=medium)"
+    },
+    {
+      "id": "contract:v1/weakness/1",
+      "kind": "critique",
+      "group": "contract:v1",
+      "summary": "검증 실패 시 외부 결제 취소 Mock이 호출되지 않아야 한다는 부작용 차단 단언이 빠져 있다. (severity=high)"
+    },
+    {
+      "id": "contract:v1/weakness/2",
+      "kind": "critique",
+      "group": "contract:v1",
+      "summary": "부분 환불 이력이 있는 주문에서 정책 산출 금액과 환불 가능 금액의 경계가 충분히 분리되어 있지 않다. (severity=medium)"
+    },
+    {
+      "id": "unit:v1/weakness/0",
+      "kind": "critique",
+      "group": "unit:v1",
+      "summary": "RefundApplicationServiceTest가 REFUNDED, PENDING, FAILED 주문에 대한 환불 요청을 외부 결제 취소 전에 거절하는지 검증하지 않는다. (severity=high)"
+    },
+    {
+      "id": "unit:v1/weakness/1",
+      "kind": "critique",
+      "group": "unit:v1",
+      "summary": "PRORATION 입력에서 remainingDays가 totalDays를 초과하거나 음수인 경우가 검증되지 않는다. (severity=medium)"
+    },
+    {
+      "id": "unit:v1/weakness/2",
+      "kind": "critique",
+      "group": "unit:v1",
+      "summary": "Refund 엔티티의 최종 상태 이후 재전이 가능 여부가 테스트로 고정되지 않는다. (severity=medium)"
+    }
+  ]
+}

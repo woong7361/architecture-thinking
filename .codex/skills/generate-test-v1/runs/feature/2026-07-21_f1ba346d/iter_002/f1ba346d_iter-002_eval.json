@@ -1,0 +1,42 @@
+{
+  "brief_hash": "f1ba346d",
+  "iteration": "002",
+  "rubric_name": "contract:v1-spec",
+  "rubric_scores": {
+    "scores": {
+      "coverage": 4,
+      "boundary_fidelity": 3,
+      "unambiguity": 4,
+      "behavioral_altitude": 3
+    },
+    "weights": {
+      "coverage": 0.3,
+      "boundary_fidelity": 0.3,
+      "unambiguity": 0.2,
+      "behavioral_altitude": 0.2
+    },
+    "weighted_total": 3.5
+  },
+  "axis_rationales": {
+    "coverage": "열거 14개, 누락 0개: [PAID 정상 환불 성공, PRORATION 적용 결과, 7일 이하 무료 전액 환불, MANUAL 우선 적용, 환불 가능 금액 초과 거절, MANUAL 0 이하 거절, REFUNDED 주문 거절, PENDING 주문 거절, FAILED 주문 거절, FULL 유형 결정, PARTIAL 유형 결정, 주문 PAID/PARTIALLY_REFUNDED의 전액/부분 상태 전이, 결제 취소 명확한 거부 시 환불 실패, 결제 취소 불확실 시 타임아웃]; 다만 일부 경계는 7일/8일처럼 짝이 있으나 REQUESTED 중간 상태는 최종 관찰 중심이라 5점까지는 어렵다.",
+    "boundary_fidelity": "When은 모두 '환불을 요청하면'으로 inbound port 1:1에 가깝고 Then도 대체로 반환·주문 상태·환불 상태를 본다; 다만 '이번 요청으로 고객에게 지급된 환불 금액은 0원'은 원시 기본값 단언 성격이 있어 캡 조건상 최대 3이다.",
+    "unambiguity": "환불 금액, 유형, 주문 상태, 환불 상태, 거절 사유가 구체값으로 제시되어 틀린 구현 탐지력이 있다; '환불 요청은 성공한다/거절된다'도 뒤의 구체 결과와 결합되어 의미가 봉인되지는 않는다.",
+    "behavioral_altitude": "대체로 도메인 언어지만 Feature 설명에 '환불 정책', '유형', '상태'가 명세 수준으로 섞이고 Examples가 구독기간·미사용기간·지난기간을 통해 계산 규칙을 상당히 노출한다; 산식 자체는 없으나 계산 표가 feature 본문에 깊게 들어와 최대 3으로 본다."
+  },
+  "calibration_note": "엄격 게이트 기준으로 평균 3.0을 중심에 두고, 원시 기본값 단언과 계산 규칙 노출 캡을 적용했다.",
+  "evaluated_at": "2026-07-21T17:27:15+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_system:v1",
+    "source_files": [
+      "f1ba346d_input.json",
+      "f1ba346d_iter-002_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 34217,
+      "cached_input_tokens": 18816,
+      "output_tokens": 1078,
+      "reasoning_output_tokens": 516
+    }
+  }
+}

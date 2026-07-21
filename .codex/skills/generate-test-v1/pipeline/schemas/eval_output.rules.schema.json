@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Evaluator Output (rules mode)",
+  "description": "codex --output-schema 전용. rules 4축을 named/closed로 못박아 구조화출력을 강제한다. 검증은 eval_output.schema.json(축-불가지론)+validate_eval_contract가 rubric으로 대조한다.",
+  "type": "object",
+  "required": ["brief_hash", "iteration", "rubric_name", "rubric_scores", "axis_rationales", "calibration_note"],
+  "properties": {
+    "brief_hash": { "type": "string" },
+    "iteration": { "type": "string" },
+    "rubric_name": { "type": "string" },
+    "rubric_scores": {
+      "type": "object",
+      "required": ["scores", "weights", "weighted_total"],
+      "properties": {
+        "scores": {
+          "type": "object",
+          "required": ["coverage", "value_correctness", "unambiguity", "altitude"],
+          "properties": {
+            "coverage": { "type": "number", "minimum": 0, "maximum": 5 },
+            "value_correctness": { "type": "number", "minimum": 0, "maximum": 5 },
+            "unambiguity": { "type": "number", "minimum": 0, "maximum": 5 },
+            "altitude": { "type": "number", "minimum": 0, "maximum": 5 }
+          },
+          "additionalProperties": false
+        },
+        "weights": {
+          "type": "object",
+          "required": ["coverage", "value_correctness", "unambiguity", "altitude"],
+          "properties": {
+            "coverage": { "type": "number", "minimum": 0, "maximum": 1 },
+            "value_correctness": { "type": "number", "minimum": 0, "maximum": 1 },
+            "unambiguity": { "type": "number", "minimum": 0, "maximum": 1 },
+            "altitude": { "type": "number", "minimum": 0, "maximum": 1 }
+          },
+          "additionalProperties": false
+        },
+        "weighted_total": { "type": "number", "minimum": 0, "maximum": 5 }
+      },
+      "additionalProperties": false
+    },
+    "axis_rationales": {
+      "type": "object",
+      "required": ["coverage", "value_correctness", "unambiguity", "altitude"],
+      "properties": {
+        "coverage": { "type": "string" },
+        "value_correctness": { "type": "string" },
+        "unambiguity": { "type": "string" },
+        "altitude": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "calibration_note": { "type": "string" }
+  },
+  "additionalProperties": false
+}

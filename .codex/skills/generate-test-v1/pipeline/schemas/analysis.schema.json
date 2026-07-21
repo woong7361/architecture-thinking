@@ -1,0 +1,98 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "analysis.json — slow loop 신호 집계 (analyze_runs.py 산출)",
+  "type": "object",
+  "required": ["analysis_id", "generated_at", "total_unreviewed", "min_group_sample", "groups", "user_feedback", "signals"],
+  "additionalProperties": false,
+  "properties": {
+    "analysis_id": {"type": "string", "description": "<날짜>_<N>runs"},
+    "generated_at": {"type": "string"},
+    "total_unreviewed": {"type": "integer", "description": ".reviewed 마커 없는 run 총수"},
+    "min_group_sample": {"type": "integer", "description": "그룹 제안 허용 최소 표본 (§5-B)"},
+    "groups": {
+      "type": "object",
+      "description": "(mode×rubric_name)별 신호. 키 = rubric_name(예: contract:v1). 통계를 그룹 간 섞지 않는다 (§2-1).",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["mode", "passing_count", "failed_count", "total", "sufficient_sample",
+                     "runs_included", "failed_runs_included", "axis_stats", "eval_rationales",
+                     "critique_weaknesses", "failure_signals"],
+        "additionalProperties": false,
+        "properties": {
+          "mode": {"type": "string", "enum": ["contract", "unit", "bundled", "unknown"]},
+          "rubric_file": {"type": ["string", "null"]},
+          "passing_count": {"type": "integer"},
+          "failed_count": {"type": "integer"},
+          "total": {"type": "integer"},
+          "sufficient_sample": {"type": "boolean", "description": "total >= min_group_sample. false면 proposer가 이 그룹은 제안 안 함"},
+          "runs_included": {"type": "array", "items": {"type": "string"}},
+          "failed_runs_included": {"type": "array", "items": {"type": "string"}},
+          "axis_stats": {
+            "type": "object",
+            "description": "통과 표본의 axis별 통계 (실패 run은 섞지 않음)",
+            "additionalProperties": {
+              "type": "object",
+              "required": ["mean", "min", "max", "min_axis", "below_min_count", "below_min_ratio"],
+              "properties": {
+                "mean": {"type": "number"},
+                "min": {"type": "number"},
+                "max": {"type": "number"},
+                "min_axis": {"type": "number"},
+                "below_min_count": {"type": "integer"},
+                "below_min_ratio": {"type": "number"}
+              }
+            }
+          },
+          "eval_rationales": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {"type": "object", "required": ["run", "text"], "properties": {"run": {"type": "string"}, "text": {"type": "string"}}}
+            }
+          },
+          "critique_weaknesses": {
+            "type": "array",
+            "items": {"type": "object", "required": ["run", "issue"], "additionalProperties": true}
+          },
+          "failure_signals": {
+            "type": "object",
+            "required": ["failed_count", "by_terminal_reason", "by_category", "rule_run_counts", "runs_included"],
+            "properties": {
+              "failed_count": {"type": "integer"},
+              "by_terminal_reason": {"type": "object", "additionalProperties": {"type": "integer"}},
+              "by_category": {"type": "object", "additionalProperties": {"type": "integer"}},
+              "rule_run_counts": {"type": "object", "additionalProperties": {"type": "object", "properties": {"runs": {"type": "integer"}, "ratio": {"type": "number"}}}},
+              "runs_included": {"type": "array", "items": {"type": "string"}}
+            }
+          }
+        }
+      }
+    },
+    "user_feedback": {
+      "type": "object",
+      "description": "problem.md 사용자 피드백 앵커 (유일한 사람발 신호, §5)",
+      "required": ["source", "present", "entries", "count"],
+      "properties": {
+        "source": {"type": "string"},
+        "present": {"type": "boolean"},
+        "entries": {"type": "array", "items": {"type": "string"}},
+        "count": {"type": "integer"}
+      }
+    },
+    "signals": {
+      "type": "array",
+      "description": "그룹 통계·피드백을 id로 주소화한 평평한 색인. gen이 cited_signals로 인용, validator가 실재성 검사 (§8).",
+      "items": {
+        "type": "object",
+        "required": ["id", "kind", "summary"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string", "description": "안정적 신호 주소 (예: bundled:v1/failure/min_total)"},
+          "kind": {"type": "string", "enum": ["axis", "critique", "failure", "user_feedback"]},
+          "group": {"type": ["string", "null"], "description": "rubric_name 그룹, 사람 피드백은 null"},
+          "summary": {"type": "string"}
+        }
+      }
+    }
+  }
+}
