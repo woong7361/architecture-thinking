@@ -1,0 +1,106 @@
+{
+  "brief_hash": "f1ba346d",
+  "run_id": "2026-07-21_f1ba346d",
+  "failed_at": "2026-07-21T23:08:42+09:00",
+  "stage": "iter_001_eval",
+  "error_type": "ValueError",
+  "message": "claude response is not valid JSON (len=2200): {\n  \"brief_hash\": \"f1ba346d\",\n  \"iteration\": \"001\",\n  \"rubric_name\": \"rules:v1\",\n  \"rubric_scores\": {\n    \"scores\": {\n      \"coverage\": 4.5,\n      \"value_correctness\": 5,\n      \"unambiguity\": 4.5,\n      \"altitude\": 4,\n      \"invariant_generality\": 4.5\n    },\n    \"weights\": {\n      \"coverage\": 0.25,\n      \"value_correctness\": 0.25,\n      \"unambiguity\": 0.15,\n      \"altitude\": 0.15,\n      \"invariant_generality\": 0.2\n    },\n    \"weighted_total\": 4.55\n  },\n  \"axis_rationales\": {\n    \"coverage\": \"열거 9개[PRORATION 산출, 총일수<=0 유효성, MANUAL 지정, 7일무료, 정책우선순위, 환불가능금액 상한, 환불유형(FULL/PARTIAL), 주문상태전이, 환불엔티티전이], 누락 0개. 각 규칙에 안/밖 짝 존재(유효성 0↔1/-1, MANUAL 30000↔30001·0↔1, 무료 7↔8, 상한 등호↔+1, 유형 30000↔29999, 주문전이 도달↔미달·허용상태↔불가상태). 구현 반례 시도: PRORATION 절사 순서(단가 floor 후 ×잔여 vs floor(가×잔/총))가 10000/30/7 행에서 2331로 못박혀 floor-last(2333) 구현이 표를 통과 못함 → 정책이 금지하는 반례 미성립. 캡 없음. 다만 PRORATION 절사 삼각측량이 단일 행이라 5 대신 4.5.\",\n    \"value_correctness\": \"검산한 행 ~39개, 틀린/미도출 0개. PRORATION: floor(30000/30)=1000이라 29→29000·15→15000·1→1000·0→0, floor(10000/30)=333×7=2331(정책 예시 2,331 일치). MANUAL/상한/유형/주문전이 누적합(20000+10000=30000→REFUNDED, +5000=25000<30000→PARTIALLY) 모두 산식에서 재도출. 검산 줄까지 명시(절사 단계 근거 포함) → 5.\",\n    \"unambiguity\": \"모든 입력·기대출력 셀이 구체 정수·이산 범주값(오류/계산진행/전액환불/상태명). 진술 줄의 ≤·∀·조건식은 캡 대상 아님. 경계 포함/배제(<=7 등호포함, ==a-c 허용, +1 초과오류) 명확. 모호·범위 표현 없음. 극히 일부 범주 셀만 정성적으로 읽혀 5 대신 4.5.\",\n    \"altitude\": \"클래스명·메서드명·시그니처·코드 미노출, 산식은 도메인 수량·어휘로 서술. 상태·유형 토큰(PAID/PARTIALLY_REFUNDED/REFUNDED/PENDING/FAILED/REQUESTED/SUCCEEDED/TIMED_OUT/FULL/PARTIAL)은 source_material 상태도가 부여한 도메인 상태 어휘로 인터페이스를 잠그지 않아 하드 enum-상수 노출로 캡하지 않음. 다만 대문자 상수형 표기가 다소 기술적으로 읽혀 5 대신 4.0.\",\n    \"invariant_generality\": \"불변식 열거 2개[정책우선순위 교차제약, 환불가능금액 상한], ∀진술 2개, witness검산 2개. 우선순위는 ∀(m,d,잔여)로 MANUAL 최우선을 진술하고 d=3(무료조건 만족에도 MANUAL 승)·d==7 경계 witness로 여러 규칙 가로지르는 교차성 명시. 상한은 ∀(a,c,r) 0<r≤a-c로 r==a-c 등호 tight witness(전액 30000, 부분후 재계산 20000) 검산. 둘 다 유한예시로 환원 안 되는 진짜 전칭. 시스템 전역 보존 불변식이 별도 진술로 명시되진 않아 5 대신 4.5.\",\n  },\n  \"calibration_note\": \"9개 규칙 전수 커버·값 전량 재계산 일치·2개 교차 불변식이 등호 tight witness로 검산됨. 절사 순서·상한 초과 등 정책 금지 구현 반례를 구성 못해 coverage 캡 미발동. altitude는 도메인 상태 어휘를 enum-상수 노출로 하드캡하지 않되 상수형 표기로 4.0. 엄격 게이트 기준 강한 초안이나 삼각측량·전역 불변식 여지로 다수 축을 5 대신 4.5로 하향 보정.\"\n}",
+  "config": {
+    "mode": "rules",
+    "group": "f1ba346d",
+    "provider": "claude",
+    "codex_bin": "codex",
+    "agent_models": {
+      "gen": null,
+      "critique": null,
+      "eval": null,
+      "refine": null
+    },
+    "iteration": "001",
+    "max_iterations": 3,
+    "timeout_seconds": 600,
+    "gen_prompt_path": "C:\\Users\\이현웅\\Desktop\\project\\thinking\\.codex\\skills\\generate-test-v1\\pipeline\\prompts\\gen_rules.md",
+    "rubric_path": "C:\\Users\\이현웅\\Desktop\\project\\thinking\\.codex\\skills\\generate-test-v1\\pipeline\\rubrics\\rules.rubric.yaml",
+    "rubric": {
+      "name": "rules:v1",
+      "scale": {
+        "min": 0,
+        "max": 5
+      },
+      "_note": "도메인 규칙 예시표 게이트. 각 규칙 = 진술 + 산식/판정 근거 + 입력→출력 예시표(경계 안/밖 짝). 기대 출력값은 진술한 산식에서 재계산으로 도출 가능해야 한다(환각 방지). 클래스/메서드/시그니처를 노출하면 안 된다(인터페이스 불가지). 캡 조건에 걸리면 상한을 넘기지 않는다.",
+      "axes": {
+        "coverage": {
+          "weight": 0.25,
+          "method": "정책(requirement/source_material/policy_rules)에서 함의되는 도메인 규칙(계산·상태전이·불변식)을 스스로 열거 → 각 규칙에 예시표 매핑 → **누락 개수**로 채점. axis_rationale에 '열거 N개, 누락 K개: [...]' 필수. 각 규칙 경계는 안/밖 짝 예시행을 요구한다. **불변식도 열거 대상이며 `∀(...)` 전칭 문장이 없으면(예시표로만 있으면) 누락으로 센다 — 여기서는 '진술 유무'만 본다. 전칭 강도·witness 검산은 invariant_generality 축이 별도로 채점한다. 정책이 불변식을 함의하지 않으면 공허 충족.** **구현 반례 캡(REJECT 트리거): 각 규칙에 대해 draft의 표·불변식을 전부 통과하면서도 정책이 명시적으로 금지하는 결과를 내는 구현(구현 반례)이 가능한지 스스로 시도한다. 그런 반례가 하나라도 성립하고 그 위반이 정책 원문에 명시돼 있으면(정책 근거 없는 반례는 환각이므로 금지), 경계가 덜 고정된 것이므로 coverage를 최대 3으로 캡한다(→ min_axis 미달로 REJECT되어 refine으로 감). axis_rationale에 '구현 반례: [입력/구현] → [위반한 정책 근거]' 형태로 남긴다. 정책이 금지하는 반례를 하나도 구성하지 못하면 캡 없음.**",
+          "scale": {
+            "1": "규칙 누락 2개 이상",
+            "2": "누락 1개인데 그 규칙이 예외/거절이거나, 누락 1개 + 경계 짝 다수 결여",
+            "3": "누락 1개 (열거한 규칙 중 하나가 표로 안 옴), 또는 구현 반례 캡에 걸림",
+            "4": "누락 0개. 모든 규칙에 표가 있으나 일부 경계가 안/밖 한쪽만 있어 삼각측량이 아쉬움 (단 구현 반례가 없을 때만)",
+            "5": "누락 0개 + 모든 핵심 경계가 안/밖 짝 예시행으로 검증됨 + 정책이 금지하는 구현 반례가 하나도 성립하지 않음"
+          }
+        },
+        "value_correctness": {
+          "weight": 0.25,
+          "method": "각 예시 행의 기대 출력이 그 규칙의 산식/판정에서 **재계산으로 도출되는가**를 직접 검산한다. 근거 없는·틀린 값은 규칙을 잘못 잠근다. axis_rationale에 '검산한 행 N개, 틀린/미도출 K개: [...]' 필수.",
+          "scale": {
+            "1": "틀린 기대값이 다수 (규칙과 표가 모순)",
+            "2": "틀린 기대값 1개 — 존재 시 최대 2",
+            "3": "값은 맞으나 산식 근거·검산이 없어 도출 여부를 확인 못 함",
+            "4": "모든 값이 도출 가능, 극소수만 검산 근거가 빈약",
+            "5": "모든 값이 명시된 산식에서 재계산으로 검증됨(검산 과정 제시)"
+          }
+        },
+        "unambiguity": {
+          "weight": 0.15,
+          "method": "입력·기대출력이 구체 값인가. 범위·정성 표현('대략','적절히')은 규칙을 결정적으로 못 만든다. **단 `규칙:`/`산식:`/`불변식:` 진술 줄의 관계식(≤·≥·∀·조건식)은 모호값이 아니다 — 구체 점값은 표의 기대출력 셀에만 요구한다. 불변식의 witness 행 셀은 여전히 구체 값이어야 한다.**",
+          "scale": {
+            "1": "빈/범위 기대값 등 결정 불가 셀 존재",
+            "2": "정성·범위 표현이 다수",
+            "3": "구체값 위주이나 모호 셀이 하나라도 존재 — 존재 시 최대 3",
+            "4": "모든 셀이 구체값. 한두 곳만 아쉬움",
+            "5": "모든 입력·기대출력이 구체 값 + 경계 정의(포함/배제)까지 명확"
+          }
+        },
+        "altitude": {
+          "weight": 0.15,
+          "method": "규칙을 도메인 수량·어휘로 서술했는가. 클래스명·메서드명·시그니처·코드·enum 상수 노출 시 캡(규칙은 인터페이스 불가지여야 한다).",
+          "scale": {
+            "1": "시그니처·코드·클래스명 다수 노출",
+            "2": "구현/코드 용어가 여러 곳",
+            "3": "대체로 도메인어이나 코드·enum 상수가 한두 곳 — 노출 시 최대 3",
+            "4": "구현 세부 미노출, 극히 일부만 다소 기술적",
+            "5": "완전히 도메인 수량·어휘로만 서술 (어떤 시그니처에도 안 묶임)"
+          }
+        },
+        "invariant_generality": {
+          "weight": 0.2,
+          "method": "정책이 함의하는 **불변식**(특정 입력이 아니라 입력 공간 전체·여러 규칙에 걸친 관계·제약)을 스스로 열거하고, 각 불변식이 (a) `∀(...)` 전칭 문장으로 진술됐는지, (b) 유한한 예시로 환원되지 않는 진짜 전칭인지(사소하게 참이거나 특정 입력에만 걸린 게 아님), (c) 관계가 등호로 팽팽해지는 tight witness 행으로 검산 가능한지, (d) 여러 규칙을 가로지르는 교차 제약을 담는지를 본다. 유한한 예시표는 if-분기 특수해로 통과되므로 전칭 진술만이 일반화를 강제한다. axis_rationale에 '불변식 열거 N개, ∀진술 M개, witness검산 K개: [...]' 필수. **정책이 불변식을 함의하지 않으면 공허하게 충족된 것으로 보아 5.**",
+          "scale": {
+            "1": "정책이 불변식을 함의하는데 ∀ 전칭 진술이 하나도 없음(전부 예시표로 강등) 또는 진술이 사소·거짓",
+            "2": "일부만 ∀ 진술, 다수 불변식 누락이거나 witness가 전무",
+            "3": "주요 불변식은 ∀로 진술되나 하나 누락 또는 witness 검산 근거가 빈약",
+            "4": "정책 함의 불변식 모두 ∀ 진술 + witness, 극소수만 tight 경계(등호)나 교차성 명시가 아쉬움",
+            "5": "모두 ∀ 전칭 진술 + 등호 tight witness 검산 + 교차 제약 명시 (또는 정책이 불변식을 함의하지 않아 공허 충족)"
+          }
+        }
+      },
+      "thresholds": {
+        "min_total": 4.2,
+        "min_axis": {
+          "coverage": 3.5,
+          "value_correctness": 4.0,
+          "unambiguity": 3.5,
+          "altitude": 3.5,
+          "invariant_generality": 3.5
+        }
+      }
+    }
+  },
+  "lineage": {
+    "input": "C:\\Users\\이현웅\\Desktop\\project\\thinking\\.codex\\skills\\generate-test-v1\\runs\\eval-cap\\2026-07-21_f1ba346d\\f1ba346d_input.json",
+    "draft": "C:\\Users\\이현웅\\Desktop\\project\\thinking\\.codex\\skills\\generate-test-v1\\runs\\eval-cap\\2026-07-21_f1ba346d\\iter_001\\f1ba346d_iter-001_draft.json",
+    "critique": "C:\\Users\\이현웅\\Desktop\\project\\thinking\\.codex\\skills\\generate-test-v1\\runs\\eval-cap\\2026-07-21_f1ba346d\\iter_001\\f1ba346d_iter-001_critique.json",
+    "eval": "C:\\Users\\이현웅\\Desktop\\project\\thinking\\.codex\\skills\\generate-test-v1\\runs\\eval-cap\\2026-07-21_f1ba346d\\iter_001\\f1ba346d_iter-001_eval.json"
+  }
+}

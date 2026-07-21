@@ -1,0 +1,39 @@
+{
+  "brief_hash": "f1ba346d",
+  "iteration": "001",
+  "rubric_name": "rules:v1",
+  "rubric_scores": {
+    "scores": {
+      "coverage": 4,
+      "value_correctness": 5,
+      "unambiguity": 4.5,
+      "altitude": 4.5,
+      "invariant_generality": 5
+    },
+    "weights": {
+      "coverage": 0.25,
+      "value_correctness": 0.25,
+      "unambiguity": 0.15,
+      "altitude": 0.15,
+      "invariant_generality": 0.2
+    },
+    "weighted_total": 4.6
+  },
+  "axis_rationales": {
+    "coverage": "열거 11개(일할계산·MANUAL유효성·7일무료·정책우선순위·전액/부분유형·환불가능검증·주문상태전이·환불상태전이·상한불변식·누적보존불변식·일할유계불변식), 누락 0개 규칙: 모두 표 있음. 다만 source 6-1의 'totalDays<=0 → 예외 발생' 예외 경계가 A-1 표에 없어 핵심 경계 짝 하나가 결여 — 규칙 누락은 아니나 삼각측량 완성도가 5에 못 미쳐 4. 나머지 경계는 29↔30, 0↔1, 7↔8, 9999↔10000, 하한0/상한30 등 안/밖 짝으로 충실.",
+    "value_correctness": "검산한 행 ~20(수치), 틀린/미도출 0개: floor(10000/30)=333→×29=9657·×7=2331 ✓, 특례 잔여=총구독일수→전액(산식 9990 아님 명시) ✓, floor(30000/30)=1000→×22=22000·×1=1000·×15=15000 ✓, D-1 10000−3000=7000·7000≤7000 등호 ✓, D-2 4000+6000=10000→전액/4000+5999=9999→부분 ✓, D-3 잔여0→0·잔여30→30000 특례 ✓, MANUAL 0/1/10000/10001 경계 판정 ✓. 각 표에 검산 줄 명시로 산식→값 재도출 전부 가능.",
+    "unambiguity": "기대출력 셀은 전부 구체 점값(금액 정수·유형·도메인 상태), 경계 포함/배제(등호 허용·하한 밖·상한 밖)까지 명시. C-2/C-3 사건(입력) 열의 '추가 환불로 잔여 전액 도달'·'네트워크 오류 등' 정성 서술은 기대출력 셀이 아니라 상태전이 사건 범주이므로 감점 대상 아님. 규칙/산식/불변식 진술 줄의 ≤·≥·∀는 모호값 아님. 기대출력 완전 구체성으로 4.5.",
+    "altitude": "상태 enum을 결제완료/부분환불/전액환불/요청됨/성공/실패/타임아웃으로 한글 도메인어화해 시그니처·enum 상수 노출 회피. 클래스명·메서드명·코드 없음, floor는 산술 표기이며 코드 아님. PRORATION/MANUAL은 정책 원문 개념명으로 도메인 어휘 범위이나 대문자 식별자라 극경미한 기술 뉘앙스가 있어 5 대신 4.5.",
+    "invariant_generality": "불변식 열거 3개, ∀진술 3개, witness검산 3개: D-1 '∀ 환불요청. 0<이번환불금액≤환불가능금액=주문금액−이미환불금액'—7000=7000 등호 tight witness, 7001 초과 대비. D-2 '∀ 환불이력. 합≤주문금액 그리고 합==주문금액 ⟺ 전액환불'—10000 등호 witness+9999 직전, 누적금액↔상태전이 교차 제약 명시. D-3 '∀ 잔여일수∈[0,총구독일수]. 0≤환불금액≤결제금액'—하한0·상한30000 두 극단 등호 witness. 모두 진짜 전칭+등호 tight+교차성으로 5."
+  },
+  "calibration_note": "강한 draft. value_correctness는 전 행이 명시 산식에서 재계산으로 검증되어 5, invariant_generality는 3개 불변식 모두 ∀ 전칭+등호 tight witness+D-2 교차 제약으로 5. coverage는 source 6-1의 totalDays<=0 예외 경계가 A-1 표에서 빠져 삼각측량 완성도가 5에 못 미쳐 4로 캡. unambiguity/altitude는 정성 사건열·정책 대문자명 같은 경미한 요소로 4.5. weighted_total 4.6은 min_total 4.2 및 전 축 min_axis를 상회.",
+  "evaluated_at": "2026-07-21T22:36:35+09:00",
+  "model": "claude-sonnet-4-6",
+  "metadata": {
+    "prompt_version": "eval_system:v1",
+    "source_files": [
+      "f1ba346d_input.json",
+      "f1ba346d_iter-001_draft.json"
+    ]
+  }
+}

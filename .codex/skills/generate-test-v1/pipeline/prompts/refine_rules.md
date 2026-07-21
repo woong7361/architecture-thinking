@@ -15,15 +15,16 @@
 
 ## passing axis 보호
 
-rules 4축은 `coverage · value_correctness · unambiguity · altitude`다. `weak_axes`에 없는 축은 이미 통과한 축이니
+rules 5축은 `coverage · value_correctness · unambiguity · altitude · invariant_generality`다. `weak_axes`에 없는 축은 이미 통과한 축이니
 깨지 마라. 특히 coverage를 올리려고 **시그니처·코드를 노출(altitude 붕괴)하거나, 검산 안 된 값을 추가(value_correctness 붕괴)하지 마라.**
 
 ## 수정 기준 (weak_axes별)
 
-- `coverage`: 정책이 함의하는 규칙(계산·상태전이·불변식) 중 누락된 것을 예시표로 추가. 각 규칙 경계는 안/밖 짝.
+- `coverage`: 정책이 함의하는 규칙(계산·상태전이·불변식) 중 누락된 것을 예시표로 추가. 각 규칙 경계는 안/밖 짝. **불변식은 예시표 강등이 아니라 `불변식: ∀(입력). <관계/조건>` 전칭 문장 + 등호 tight witness 행으로 올린다.**
 - `value_correctness`: 산식에서 도출되지 않는 기대값을 **재계산해 바로잡고**, 각 표에 산식·검산 근거를 남긴다.
 - `unambiguity`: 범위·정성 셀을 구체 입력/출력 값으로 교체. 경계 포함/배제를 명확히.
 - `altitude`: 클래스명·메서드명·시그니처·코드·enum 상수를 도메인 수량·어휘로 바꾼다.
+- `invariant_generality`: 정책이 함의하는 불변식을 예시표 강등이 아니라 `불변식: ∀(입력). <관계/조건>` 전칭 문장으로 진술하고, 관계가 등호로 팽팽해지는 tight witness 행을 붙인다. 사소하게 참이거나 특정 입력에만 걸린 진술은 진짜 전칭·교차 제약(여러 규칙에 걸침)으로 강화한다.
 
 ## 출력 규칙
 

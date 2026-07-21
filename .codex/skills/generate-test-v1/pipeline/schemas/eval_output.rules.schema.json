@@ -14,23 +14,25 @@
       "properties": {
         "scores": {
           "type": "object",
-          "required": ["coverage", "value_correctness", "unambiguity", "altitude"],
+          "required": ["coverage", "value_correctness", "unambiguity", "altitude", "invariant_generality"],
           "properties": {
             "coverage": { "type": "number", "minimum": 0, "maximum": 5 },
             "value_correctness": { "type": "number", "minimum": 0, "maximum": 5 },
             "unambiguity": { "type": "number", "minimum": 0, "maximum": 5 },
-            "altitude": { "type": "number", "minimum": 0, "maximum": 5 }
+            "altitude": { "type": "number", "minimum": 0, "maximum": 5 },
+            "invariant_generality": { "type": "number", "minimum": 0, "maximum": 5 }
           },
           "additionalProperties": false
         },
         "weights": {
           "type": "object",
-          "required": ["coverage", "value_correctness", "unambiguity", "altitude"],
+          "required": ["coverage", "value_correctness", "unambiguity", "altitude", "invariant_generality"],
           "properties": {
             "coverage": { "type": "number", "minimum": 0, "maximum": 1 },
             "value_correctness": { "type": "number", "minimum": 0, "maximum": 1 },
             "unambiguity": { "type": "number", "minimum": 0, "maximum": 1 },
-            "altitude": { "type": "number", "minimum": 0, "maximum": 1 }
+            "altitude": { "type": "number", "minimum": 0, "maximum": 1 },
+            "invariant_generality": { "type": "number", "minimum": 0, "maximum": 1 }
           },
           "additionalProperties": false
         },
@@ -40,12 +42,13 @@
     },
     "axis_rationales": {
       "type": "object",
-      "required": ["coverage", "value_correctness", "unambiguity", "altitude"],
+      "required": ["coverage", "value_correctness", "unambiguity", "altitude", "invariant_generality"],
       "properties": {
         "coverage": { "type": "string" },
         "value_correctness": { "type": "string" },
         "unambiguity": { "type": "string" },
-        "altitude": { "type": "string" }
+        "altitude": { "type": "string" },
+        "invariant_generality": { "type": "string" }
       },
       "additionalProperties": false
     },

@@ -1,0 +1,39 @@
+{
+  "brief_hash": "f1ba346d",
+  "iteration": "001",
+  "rubric_name": "rules:v1",
+  "rubric_scores": {
+    "scores": {
+      "coverage": 5,
+      "value_correctness": 5,
+      "unambiguity": 4,
+      "altitude": 4,
+      "invariant_generality": 4
+    },
+    "weights": {
+      "coverage": 0.25,
+      "value_correctness": 0.25,
+      "unambiguity": 0.15,
+      "altitude": 0.15,
+      "invariant_generality": 0.2
+    },
+    "weighted_total": 4.5
+  },
+  "axis_rationales": {
+    "coverage": "열거 10개(일할계산·총일수전제·7일무료·수동지정·정책우선순위·환불유형·환불가능금액상한 불변식·환불가능상태전제·주문상태전이·환불엔티티전이), 누락 0개. 핵심 경계 모두 안/밖 짝 존재(총일수 1/0, 경과일 7/8, 지정금액 10000·1 vs 10001·0, 유형 10000/9999, 우선순위 수동 유/무 및 경과일 5/10, 잔여일 30/29/1/0). 불변식도 ∀ 진술로 열거되어 누락 아님 → 5.",
+    "value_correctness": "검산한 행 26개, 틀린/미도출 0개. 재계산 확인: floor(10000/30)=333→333×7=2331, 333×8=2664, 1000×29=29000, 잔여=총→전액, 잔여=0→0, MANUAL 등호10000허용/10001오류/0오류, 유형 등호→전부·미만→부분, 상태전이 누적==주문금액→환불완료. 단가 선절사(333) 방식이 표 값과 일관되며 검산 과정이 각 절에 명시됨 → 5.",
+    "unambiguity": "입력·기대출력 대부분 구체값이고 경계 포함/배제(7 안/8 밖, 등호 허용/초과 오류)까지 명확. 다만 7일무료 표의 '일할 계산에 위임'과 우선순위 표의 규칙명 셀은 구체 점값이 아닌 규칙 위임 결과라 최상위엔 미달 → 4.",
+    "altitude": "클래스명·메서드명·시그니처·코드 노출 없음. 상태를 결제완료/부분환불/요청됨/성공/실패/미확정 등 순수 도메인 어휘로 표기. 다만 절 제목의 PRORATION·MANUAL 대문자 정책명이 다소 기술적(enum 상수 인상)이라 극소수만 아쉬움 → 4.",
+    "invariant_generality": "불변식 열거 1개(환불가능금액 상한), ∀진술 1개(∀(a,r,x) 0<=x<=a-r), witness검산 2개(x=a-r=10000 상한 등호 tight, x=0 하한 등호). '어느 산출 규칙이 발동해도 성립'으로 교차성 명시하고 유한예시로 환원되지 않는 진짜 전칭. 정책이 함의하는 유일 핵심 불변식을 tight 등호 witness와 교차 제약까지 갖췄으나 추가 불변식 여지(누적 보존 등)는 미탐색 → 4."
+  },
+  "calibration_note": "평균 3.0 기준 엄격 채점. 두 축(coverage·value_correctness)은 열거-매핑 누락 0 및 전행 재계산·검산 제시로 명확히 5를 획득. unambiguity는 위임/규칙명 셀, altitude는 대문자 정책명, invariant_generality는 단일 불변식·추가 미탐색으로 각 4. 캡 조건(구현세부 노출·모호 셀·불일치)은 어느 축에서도 발동하지 않음. weighted_total 4.5로 min_total(4.2) 및 모든 min_axis 상회.",
+  "evaluated_at": "2026-07-21T22:02:58+09:00",
+  "model": "claude-sonnet-4-6",
+  "metadata": {
+    "prompt_version": "eval_system:v1",
+    "source_files": [
+      "f1ba346d_input.json",
+      "f1ba346d_iter-001_draft.json"
+    ]
+  }
+}
