@@ -27,7 +27,9 @@ description: (v1 실험 복사본) spec-first — 테스트 코드가 아니라 
 1. 정책/요구사항 재료를 대화나 UTF-8 파일에서 읽는다.
 2. **intake — 정책 공백만 메운다.** 케이스는 묻지 않는다(케이스는 Gen이 발굴). 미정의 경계·규칙 우선순위·외부 의존만.
 3. `pipeline/intake_to_input.py`로 input JSON(정책만)을 생성한다.
-4. **boundary feature 생성**: `run_draft.py --mode contract`.
+4. **boundary feature 생성**: `run_draft.py --mode contract`. 런은 여러 iter를 도느라 오래 걸린다 —
+   **긴 런을 시작하기 전에 사용자에게 "런 도중 떠오른 제약·요청을 추가할 수 있다"고 안내하고**, 원하면
+   `--inbox <경로>`를 붙여 실행한다(→ [§제약 인박스](#제약-인박스--런-도중-요청제약-추가-선택)).
 5. **feature를 rules에 주입**: contract가 낸 feature(`runs/<group>/feature/<run_id>/artifact/<domain>.feature`)를
    `intake_to_input.py --boundary-feature-file ... --group <feature_group>`로 rules input에 실어 **새 input**을
    만든다. `--group`으로 feature와 같은 그룹에 묶는다. feature가 미룬 산식을 rules가 채우게 하는 링크다
@@ -81,6 +83,28 @@ python -B .codex/skills/generate-test-v1/pipeline/run_draft.py inputs/<rules_has
 ```
 
 `run_draft.py`는 `--runs-dir` 미지정 시 input의 `group`과 mode에 따라 `runs/<group>/{feature,rules}/`로 쓴다.
+
+## 제약 인박스 — 런 도중 요청/제약 추가 (선택)
+
+한 런은 gen→critique→eval→refine를 여러 iter 반복해 **오래 걸린다.** 그동안 사람이 새 요구·제약이 떠오르면,
+런을 멈추거나 재시작하지 않고 **인박스 파일에 한 줄씩 append**해서 다음 iter부터 반영할 수 있다. 이 스킬을
+운영할 때는 **긴 런을 시작하며 사용자에게 이 사용법을 먼저 안내**해, 도중에 떠오른 요청을 흘리지 않게 한다.
+
+- **사용**: `run_draft.py <input> --mode contract --inbox <경로>` — 인박스 파일 경로를 지정한다(미지정 시 비활성).
+  파일은 미리 없어도 되며, 필요할 때 만든다.
+- **추가**: 런이 도는 동안 그 파일에 제약을 한 줄씩 적는다. 예:
+  `echo "환불이 거절되면 그 사유를 관찰 가능한 도메인 결과로 남긴다" >> <경로>`
+- **반영**: runner가 **각 iter 맨 위에서 한 번 drain**해 `input.brief.constraints.must_include`로 **멱등 병합**한다
+  (중복 줄 무시). 스테이지(critique/eval/refine)는 인박스를 **직접 읽지 않고** 이 확정본만 본다.
+
+**배리어 규칙(왜 안전한가):** iter **도중** 도착한 제약은 **그 iter를 못 보고 다음 iter 맨 위에서만** 반영된다.
+그래서 한 iter 안에서 critique·eval·refine이 서로 다른 제약 집합을 보는 일이 없다(iter별 제약 집합 불변).
+인박스가 비어 있으면 무비용 통과 — **"생각나면 넣고, 없으면 그냥 흐른다."** 실측: iter2 도중 넣은 제약은
+iter1·2 드레인엔 `active=0`, iter3 드레인에서 처음 `added`로 잡혀 흡수된 뒤 PASS.
+
+**무엇을 넣나 = "무엇을 지켜야 하나"(제약·요구)까지.** Gherkin 시나리오 문장을 직접 써 넣지 마라 — 그건
+정답 주입이라 순환성(정보 차단, `CLAUDE.md` §4)을 깬다. 제약은 coverage 축이 열거·채점하고 critique가
+사냥하고 refine이 고친다. 새 제약이 늦게 들어오면 `--max-iterations`를 넉넉히 줘 충족할 iter를 남긴다.
 
 ## v0와의 차이 (무엇을 뺐나)
 
