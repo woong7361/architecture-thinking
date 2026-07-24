@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "run_id": "aggregate-domain-event-20260724",
+  "source_eval_path": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\thinking-review-gate\\runs\\aggregate-domain-event-20260724\\attempts\\1\\eval.json",
+  "schema_valid": true,
+  "schema_errors": [],
+  "min_score": 3.6,
+  "scores": {
+    "evidence_count": 5,
+    "evidence_quality": 5,
+    "claim_coverage": 4,
+    "uncertainty_boundary": 4,
+    "consistency": 4,
+    "alternatives_tradeoff": 5
+  },
+  "score_reasons": {
+    "evidence_count": "공식 문서와 사용자 제공 맥락을 포함해 연결된 근거가 3개 이상 제시된다.",
+    "evidence_quality": "Eric Evans DDD Reference와 Microsoft Learn 같은 1차·공식 자료에 직접 연결되어 근거 추적성이 높다.",
+    "claim_coverage": "핵심 설명과 사용법은 대부분 근거나 제약과 연결되지만, 일부 실무 판단과 지양 기준은 명시적 근거 연결이 덜하다.",
+    "uncertainty_boundary": "구현 시점 선택과 일관성 정책 의존성은 표시했지만, 일부 실무 권고는 적용 범위 한계가 더 분명하면 좋다.",
+    "consistency": "내부 모순은 없지만, 이벤트 처리 시점과 실무 권고의 적용 조건을 더 세밀하게 나누면 경계가 더 선명해진다.",
+    "alternatives_tradeoff": "Aggregate 크기와 호출 방식 대안을 2개 이상 비교하고 각 trade-off와 추천 기준을 함께 제시한다."
+  },
+  "weak_axes": [],
+  "weighted_score": 4.45,
+  "gate_result": "pass",
+  "summary": "gate_result=pass, weighted_score=4.45, weak_axes=none"
+}

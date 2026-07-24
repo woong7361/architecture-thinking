@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "run_id": "taskc2-alignment-fix-20260724",
+  "source_eval_path": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\thinking-review-gate\\runs\\taskc2-alignment-fix-20260724\\attempts\\2\\eval.json",
+  "schema_valid": true,
+  "schema_errors": [],
+  "min_score": 3.6,
+  "scores": {
+    "evidence_count": 5,
+    "evidence_quality": 4,
+    "claim_coverage": 4,
+    "uncertainty_boundary": 4,
+    "consistency": 4,
+    "alternatives_tradeoff": 5
+  },
+  "score_reasons": {
+    "evidence_count": "Jakarta Persistence 명세, Spring PetClinic, Buckpal, Netflix, Shopify, Microsoft, Allegro 등 3개 이상의 근거 링크와 사용자 제공 문맥이 연결되어 있다.",
+    "evidence_quality": "공식 문서와 프로젝트 코드 링크, 사용자 제공 과제 문맥을 사용해 근거 품질이 높다. 다만 일부 공개 사례 해석은 정확한 라인 단위 검증 없이 보조 사례로만 연결되어 5점은 주지 않는다.",
+    "claim_coverage": "현장·사이즈 기준, D/P 기준, 통합/분리 구조, Load/Save 흐름, Port와 Adapter 의존 방향, Mapper 비용 등 주요 claim 대부분이 근거 또는 조건 설명과 연결되어 있다. 일부 JPA 제약 설명은 근거 연결이 상대적으로 약하다.",
+    "uncertainty_boundary": "규모와 현장 조건을 보조 문맥으로 낮추고, 공개 사례가 입증하는 범위를 명확히 제한하며, D/P 가능성과 확정 조건을 구분한다. 다만 외부 링크의 현재 코드 상태나 사례 해석의 한계는 더 명시할 여지가 있다.",
+    "consistency": "초안은 D AND P 기준과 현장·사이즈 표를 일관되게 맞추고, Legacy Schema나 여러 팀 조건만으로 분리를 확정하지 않는다. Core Port가 Domain 타입을 쓰고 Adapter가 Mapper를 책임지는 흐름도 성공 기준과 맞다. 큰 내부 모순은 보이지 않지만 일부 예시 해석은 전제 검증이 필요하다.",
+    "alternatives_tradeoff": "통합, Rich JPA Entity 유지, Domain/JPA 분리, 조회 Projection, Aggregate 범위 축소 등 여러 선택지를 제시하고 각 비용과 추천 기준을 D/P 및 Mapper 비용으로 비교한다."
+  },
+  "weak_axes": [],
+  "weighted_score": 4.25,
+  "gate_result": "pass",
+  "summary": "gate_result=pass, weighted_score=4.25, weak_axes=none"
+}

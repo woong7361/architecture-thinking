@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "run_id": "taskc2-alignment-fix-20260724",
+  "source_eval_path": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\thinking-review-gate\\runs\\taskc2-alignment-fix-20260724\\attempts\\1\\eval.json",
+  "schema_valid": true,
+  "schema_errors": [],
+  "min_score": 3.6,
+  "scores": {
+    "evidence_count": 4,
+    "evidence_quality": 4,
+    "claim_coverage": 4,
+    "uncertainty_boundary": 4,
+    "consistency": 4,
+    "alternatives_tradeoff": 5
+  },
+  "score_reasons": {
+    "evidence_count": "사용자 지적, 기존 답안의 현장 표, 과제 요구, 직전 D/P 합의, 분리 구조 누락 등 여러 근거에 연결되어 있으나 파일/라인 anchor를 초안 안에 직접 반복하지는 않는다.",
+    "evidence_quality": "주요 근거는 사용자가 제공한 run input과 프로젝트 맥락에 기반해 신뢰 가능하다. 다만 PetClinic, Buckpal, Netflix, Shopify 사례는 범위를 제한했지만 초안 안에서 별도 출처가 연결되지는 않는다.",
+    "claim_coverage": "현장·사이즈 표 교정, D/P 기준, Port와 Adapter 의존 방향, Load/Save 흐름, Mapper 비용 등 핵심 claim 대부분이 근거 또는 조건과 연결된다. 공개 사례 관련 보조 claim은 근거 연결이 상대적으로 약하다.",
+    "uncertainty_boundary": "Legacy Schema, 여러 팀, 읽기 비중 같은 조건을 단독 결론이 아니라 가능성이나 별도 문제로 경계 지어 표현한다. 일부 사례 설명은 확인 범위가 더 명시될 여지가 있다.",
+    "consistency": "초안은 현장 조건을 D/P의 보조 문맥으로 내리고, 최종 판단을 Aggregate별 D/P와 Mapper 비용으로 연결해 입력 제약과 대체로 일관된다. 의존 방향 다이어그램은 설명과 함께 보면 이해 가능하지만 화살표 표기는 약간 모호할 수 있다.",
+    "alternatives_tradeoff": "통합, Rich JPA Entity, Domain/JPA Entity 분리, 조회 Projection, Context 경계 분리 등 여러 선택지를 비교하고 각 조건과 비용을 함께 제시해 trade-off가 잘 드러난다."
+  },
+  "weak_axes": [],
+  "weighted_score": 4.1,
+  "gate_result": "pass",
+  "summary": "gate_result=pass, weighted_score=4.1, weak_axes=none"
+}
