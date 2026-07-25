@@ -726,6 +726,30 @@ def failure_rule(error: str) -> str:
     return error
 
 
+def drain_inbox(inbox_path, input_json_path):
+    """iter 배리어: inbox의 새 제약을 input.brief.constraints.must_include로 멱등 dedup 머지한다.
+
+    스테이지(critique/eval/refine)는 inbox를 직접 읽지 않는다 — 각 iter 맨 위에서 한 번 drain해
+    input 파일에 확정하고, 스테이지는 늘 그 확정본만 읽는다. 그래서 iter 도중 도착한 제약은
+    현재 iter를 못 보고 다음 iter 배리어에서만 반영된다(iter 내 제약 집합 불변 보장).
+    반환: (현재 활성 제약 목록, 이번에 새로 추가된 목록).
+    """
+    data = load_json(input_json_path)
+    brief = data.setdefault("brief", {})
+    constraints = brief.setdefault("constraints", {})
+    must = constraints.setdefault("must_include", [])
+    added = []
+    if inbox_path is not None and Path(inbox_path).exists():
+        for line in Path(inbox_path).read_text(encoding="utf-8").splitlines():
+            s = line.strip()
+            if s and s not in must:
+                must.append(s)
+                added.append(s)
+        if added:
+            write_json(input_json_path, data, overwrite=True)
+    return list(must), added
+
+
 def run(args: argparse.Namespace) -> dict:
     progress = ProgressReporter()
     pipeline_started_at = time.perf_counter()
@@ -795,6 +819,10 @@ def run(args: argparse.Namespace) -> dict:
             iteration = f"{iteration_number:03d}"
             iteration_label = f"iter {iteration}/{args.max_iterations:03d}"
             progress.line(f"{iteration_label} start")
+            # iter 배리어: 인박스의 새 제약을 input에 확정(멱등). 스테이지는 이 확정본만 본다.
+            active_constraints, newly_added = drain_inbox(args.inbox, root_context.copied_input_path)
+            if newly_added:
+                progress.line(f"{iteration_label} inbox drained: +{len(newly_added)} constraint(s), active={len(active_constraints)}")
             context = RunContext.create(brief_hash=brief_hash, iteration=iteration, runs_dir=args.runs_dir)
             context.iter_dir.mkdir(parents=True, exist_ok=True)
             lineage.update(
@@ -1144,6 +1172,10 @@ def main() -> int:
         default=None,
         help="미지정 시 mode에 따라 rubrics/<mode>.rubric.yaml 로 자동 결정.",
     )
+    parser.add_argument("--inbox", type=Path, default=None,
+                        help="제약 인박스 파일(append-only, 선택). iter 맨 위에서 drain하여 "
+                             "input.brief.constraints.must_include로 멱등 dedup 머지한다. 사람이 런 도중 "
+                             "제약을 이 파일에 append하면 다음 iter 배리어에서만 반영된다(스테이지는 inbox 직접 안 읽음).")
     parser.add_argument("--iteration", default="001")
     parser.add_argument("--max-iterations", type=int, default=3)
     parser.add_argument("--timeout-seconds", type=int, default=600)

@@ -72,7 +72,12 @@ split은 두 run이다. Run 1(contract)이 통과하면 **skill이 멈추고 `y/
 - **eval 축-불가지론화**: `eval_output.schema.json`·`eval.schema.json`은 축을 열거하지 않고, 축 정확성은
   `validate_eval_contract`가 rubric으로 대조. codex `--output-schema`만 mode별 named/closed
   (`eval_output.<mode>.schema.json`)로 강제. → 검증 1벌, 생성 제약만 mode별.
-- `rubrics/contract.rubric.yaml`(4축, coverage는 Eval 열거→매핑→카운트) + `eval_output.contract.schema.json`.
+- `rubrics/contract.rubric.yaml`(5축, coverage는 Eval 열거→매핑→카운트) + `eval_output.contract.schema.json`.
+  - **`interaction_hazard_coverage` 축**(신설): 값 경계와 별개로, outbound 협력의 **비멱등-재시도·동시요청 hazard**
+    시나리오 완전성을 게이트한다. 값 삼각측량이 못 보는 "호출 이력에 따라 갈리는 결함"(이중처리·관측≠실제 재시도)을 잡는다.
+  - **`boundary_fidelity` 카브아웃**: outbound의 **누적/net 결과 상태** 단언은 A(도메인 상태)로 인정 — 캡 아님.
+    순서·횟수·verify·내부기본값만 캡한다. hazard를 net 상태로 단언하는 것과 이 축의 충돌을 없앤 correctness 수정
+    (실측: 카브아웃 전 hazard 시나리오가 bf 3에 캡돼 게이트 미통과 → 카브아웃 후 bf 5로 PASS).
 
 - `prompts/gen_contract.md` — 정책 → gherkin 계약 생성. TDD 개념을 생성 절차로 심음(삼각측량·단언 우선·
   out-in·빨강 가능성·순차 리팩터링). **contract 한 줄이 실제 codex run에서 end-to-end PASS 확인됨(4.59/5).**
@@ -112,6 +117,8 @@ split은 두 run이다. Run 1(contract)이 통과하면 **skill이 멈추고 `y/
 - **Gen이 요구사항을 지어내지 않게 할 것.** input에는 **정책만** 담는다(케이스 목록 없음) — 경계·실패
   케이스는 Gen이 정책에서 발굴한다. coverage 결정성은 Eval의 열거→매핑→누락 카운트에서 온다(설계 §0-A).
 - **feature는 경계, 산식은 rules.** boundary feature에 계산 산식을 박지 않는다(고도 침식). 산식·구체 값은
-  `rules` 문서로 분리한다. When은 Inbound Port 1:1, Then은 경계 관찰 결과만(호출 순서·횟수·내부상태·원시기본값 금지).
+  `rules` 문서로 분리한다. When은 Inbound Port 1:1, Then은 경계 관찰 결과만. **금지**: 호출 순서·횟수·verify·
+  내부상태·내부 표현 기본값. **허용**: outbound의 누적/net 결과 상태(반영 총량·누계) — 이는 상호작용이 아니라
+  도메인 상태 관찰이라 hazard 시나리오의 정당한 단언 형태다(bf 카브아웃).
 - **정보 차단(순환성 끊기)을 유지할 것.** Gen은 eval/critique를 못 본다, Critique는 eval 점수·validator
   판정을 못 본다, Eval은 critique를 못 본다, Refine은 eval 원문·weighted_total을 못 본다. 설계 §4 표 준수.

@@ -26,6 +26,12 @@ def main() -> int:
         default=None,
         help="미지정 시 runner가 mode에 따라 runs/{feature,rules}/ 로 결정.",
     )
+    parser.add_argument(
+        "--inbox",
+        type=Path,
+        default=None,
+        help="제약 인박스 파일(선택). 런 도중 사람이 제약을 한 줄씩 append하면 다음 iter 배리어에서 반영된다.",
+    )
     parser.add_argument("--overwrite", action="store_true")
     args = parser.parse_args()
 
@@ -46,6 +52,8 @@ def main() -> int:
     ]
     if args.runs_dir is not None:
         command.extend(["--runs-dir", str(args.runs_dir)])
+    if args.inbox is not None:
+        command.extend(["--inbox", str(args.inbox)])
     if args.overwrite:
         command.append("--overwrite")
 
