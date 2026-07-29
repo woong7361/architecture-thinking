@@ -1,0 +1,15 @@
+{
+  "priority": 1,
+  "request": {
+    "method": "POST",
+    "urlPath": "/charge",
+    "bodyPatterns": [
+      { "matchesJsonPath": { "expression": "$.paymentInfo", "equalTo": "declined-card" } }
+    ]
+  },
+  "response": {
+    "status": 200,
+    "headers": { "Content-Type": "application/json" },
+    "jsonBody": { "approved": false }
+  }
+}
