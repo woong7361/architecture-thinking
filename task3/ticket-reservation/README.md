@@ -2,7 +2,7 @@
 
 task2 B-5의 티켓 예매 도메인을 **헥사고날(포트/어댑터)** 로 재배치하고, **Docker 재현 환경**(app + MySQL + Mock PG) 위에 올린 walking skeleton.
 
-- 설계 배경/의사결정: [`STATELESS.md`](./STATELESS.md)
+- Stateless 설계 메모 + 기동 로그: `task3/assignments/taskC-4.md`
 - 헥사고날 설계 원본: `task3/assignments/taskC-3.md`
 
 ## 구조 (의존성은 항상 안쪽 = Core 를 향한다)
@@ -68,7 +68,7 @@ docker compose -f docker-compose.yml -f docker-compose.scale.yml up -d --build -
 docker compose ps          # app-1/2/3 이 모두 같은 db/mock-pg 를 보고 healthy
 ```
 
-무상태 앱이라 3개가 동일하게 뜨고, 동시 예약은 DB 원자 UPDATE(`reserveIfFree`)가 이중 예약을 막는다. 자세한 근거는 [`STATELESS.md`](./STATELESS.md).
+무상태 앱이라 3개가 동일하게 뜨고, 동시 예약은 DB 원자 UPDATE(`reserveIfFree`)가 이중 예약을 막는다.
 
 ## 테스트 (인수테스트 안전망)
 

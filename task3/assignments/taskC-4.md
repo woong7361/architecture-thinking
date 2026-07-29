@@ -20,7 +20,7 @@
 
 - 프로젝트: [`../ticket-reservation/`](../ticket-reservation/) — task2 B-5 티켓 예매 도메인을 헥사고날(포트/어댑터)로 재배치하고 Spring Boot(web/jpa/actuator)로 감싼 walking skeleton.
 - [`Dockerfile`](../ticket-reservation/Dockerfile) · [`docker-compose.yml`](../ticket-reservation/docker-compose.yml) · [`docker-compose.scale.yml`](../ticket-reservation/docker-compose.scale.yml) · [`.env`](../ticket-reservation/.env)
-- [`STATELESS.md`](../ticket-reservation/STATELESS.md) (설계 메모 전문) · [`README.md`](../ticket-reservation/README.md) (실행/검증 안내)
+- [`README.md`](../ticket-reservation/README.md) (실행/검증 안내)
 
 ## 1-command 기동 커맨드 & 로그
 
@@ -56,11 +56,11 @@ $ curl http://localhost:8080/actuator/health
 
 REST end-to-end 실증: 성공 `200` / 이중예약·판매중지·이미예약 `409` / 결제거절 `402`(mock-pg HTTP 호출) / 없는회원 `404`.
 
-## Stateless 설계 메모 (요약 · 전문은 STATELESS.md)
+## Stateless 설계 메모 (무엇을 왜 외부화했나)
 
-**"상태 외부화"는 서버를 여러 개 띄우는 게 아니라, 앱 프로세스가 요청 사이에 상태를 들고 있지 않게 만드는 것**이다. 컨테이너가 갈라지는 이유는 서로 다른 두 축이다.
+이 앱은 티켓 예매 서버다. 핵심은 **앱이 데이터를 자기 안에 들고 있지 않게 만드는 것**이다.
 
-- **축 A — 상태 외부화(→ MySQL):** 티켓 예약 여부·소유자·회원 데이터는 원래 앱 메모리(in-memory Map)에 있었다. 앱이 상태를 들면 인스턴스마다 데이터가 갈라져 수평 확장 자체가 성립하지 않으므로, 앱 밖의 **단일 진실원(MySQL)** 으로 뺐다. 설정·비밀은 `.env`(12-factor), HTTP 세션은 애초에 만들지 않아 sticky/Redis가 불필요하다.
-- **축 B — 외부 의존 격리(→ Mock PG):** `mock-pg`(WireMock)는 상태 외부화가 아니라, 통제 불가한 외부 결제사를 재현 환경에서 대체한 스텁이다. 앱의 `PaymentHttpAdapter`가 `ChargePort`를 구현해 HTTP로 호출한다.
-
-**수평 확장(scale-out):** 축 A 덕에 앱은 로컬 상태 0 → 동일 이미지를 `docker compose ... --scale app=3`으로 복제해도 모두 같은 MySQL을 본다(3인스턴스 healthy 확인). 무상태만으로 부족한 **동시 이중예약**은 DB의 단일 원자 UPDATE(`... WHERE reserved=false`)로 막아, 여러 인스턴스가 동시에 시도해도 실제로 행을 바꾸는 건 하나뿐이고 나머지는 `409 Conflict`로 거부된다.
+- **무엇을 뺐나 — 예약/티켓/회원 데이터를 MySQL로.** 원래 이 데이터는 앱 메모리에 있었다. 그러면 앱을 2대 띄웠을 때 각 앱이 서로 다른 데이터를 갖게 되어 확장이 불가능하다. 그래서 데이터를 앱 밖의 MySQL 한 곳으로 옮겼다. DB 접속 정보 같은 설정도 코드에 박지 않고 `.env`(환경변수)로 뺐다.
+- **왜 — 앱을 "무상태(stateless)"로 만들려고.** 앱이 아무 데이터도 안 들고 있으면, 같은 앱을 여러 개 띄워도 전부 똑같이 동작한다. 어떤 앱이 어떤 요청을 받든 결과가 같다.
+- **수평 확장.** 그래서 `docker compose ... --scale app=3`으로 앱을 3개로 늘려도 모두 같은 MySQL을 본다(3개 모두 정상 기동 확인). 단, 여러 앱이 같은 티켓을 동시에 예약하는 걸 막으려고, 예약은 DB에서 "아직 예약 안 된 경우에만 예약"하는 단일 쿼리로 처리한다 → 딱 하나만 성공하고 나머지는 `409`로 거절된다.
+- **참고 — 결제 Mock 서버(`mock-pg`)는 상태 외부화가 아니다.** 실제 결제사(PG)를 로컬에서 부를 수 없어 가짜 서버로 대신 띄운 것뿐이다. 앱은 이걸 HTTP로 호출한다.
