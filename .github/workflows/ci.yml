@@ -1,0 +1,36 @@
+name: CI (task3 ticket-reservation)
+
+# 인수테스트를 CI Runner에서 실행한다. ubuntu-latest 러너에는 Docker가 있어
+# Testcontainers가 실제 MySQL 컨테이너를 띄운다 — 별도 배포 서버 불필요.
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'task3/ticket-reservation/**'
+      - '.github/workflows/ci.yml'
+  pull_request:
+    paths:
+      - 'task3/ticket-reservation/**'
+      - '.github/workflows/ci.yml'
+  workflow_dispatch:
+
+jobs:
+  acceptance-tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: task3/ticket-reservation
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      # 두 조합을 함께 실행: 조합 A(in-memory) + 조합 B(JPA + 실제 MySQL Testcontainers).
+      # 같은 Feature가 어댑터 교체(in-memory <-> 실제 DB)에도 GREEN이면 Core 독립성이 증명된다.
+      - name: Run acceptance tests
+        run: mvn -B test

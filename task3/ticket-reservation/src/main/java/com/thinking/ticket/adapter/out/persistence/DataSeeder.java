@@ -2,6 +2,7 @@ package com.thinking.ticket.adapter.out.persistence;
 
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 
@@ -9,8 +10,10 @@ import org.springframework.stereotype.Component;
  * (실서비스 데이터 마이그레이션이 아니다).
  *
  * <p>멱등 + 경합 안전: 각 행을 id 존재 여부로 건너뛰고, 그래도 동시 기동(--scale) 중
- * 다른 인스턴스가 먼저 넣어 중복키가 나면 무시한다 — 진 인스턴스가 기동 실패하지 않도록. */
+ * 다른 인스턴스가 먼저 넣어 중복키가 나면 무시한다 — 진 인스턴스가 기동 실패하지 않도록.
+ * (test 프로파일에선 로드하지 않는다 — 인수테스트는 데이터를 시나리오가 직접 만든다.) */
 @Component
+@Profile("!test")
 public class DataSeeder implements ApplicationRunner {
 
     private final TicketJpaRepository ticketRepo;
