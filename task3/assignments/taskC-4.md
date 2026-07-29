@@ -28,17 +28,7 @@
 docker compose up --build      # db(mysql:8.4) + app + mock-pg 를 한 번에 기동
 ```
 
-빌드 스테이지(`mvn package`)가 인수테스트를 실행하므로, GREEN이 아니면 이미지가 만들어지지 않는다(빌드=검증 게이트):
-
-```
-#20 15.24 8 Scenarios (8 passed)
-#20 15.24 53 Steps (53 passed)
-#20 15.30 [INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0
-#20 17.59 [INFO] BUILD SUCCESS
-#22 naming to docker.io/library/ticket-reservation-app:latest done
-```
-
-기동 결과 — DB가 healthy 된 뒤 app 기동, 3개 컨테이너 모두 healthy:
+DB가 healthy 된 뒤 app 이 기동한다(compose `depends_on: service_healthy`). 3개 컨테이너 모두 healthy:
 
 ```
 NAME                           STATUS                    PORTS
@@ -47,14 +37,18 @@ ticket-reservation-db-1        Up (healthy)              0.0.0.0:3306->3306/tcp
 ticket-reservation-mock-pg-1   Up (healthy)              8080/tcp, 8443/tcp
 ```
 
-헬스 체크(정상 기동 확인) — `db` 인디케이터가 DB 연결까지 검사:
+## 정상 기동 확인 (헬스 체크)
+
+`/actuator/health` 의 `db` 인디케이터가 DB 연결까지 검사한다 → `UP` 이면 정상 기동:
 
 ```bash
 $ curl http://localhost:8080/actuator/health
 {"status":"UP","components":{"db":{"status":"UP","details":{"database":"MySQL"}}, ...}}
 ```
 
-REST end-to-end 실증: 성공 `200` / 이중예약·판매중지·이미예약 `409` / 결제거절 `402`(mock-pg HTTP 호출) / 없는회원 `404`.
+기동 후 스모크: `POST /api/reservations` 로 예약 성공 시 `200 {"reserved":true}`.
+
+> 인수테스트(Cucumber 8시나리오 + Testcontainers)와 CI(GitHub Actions)는 [Task C-5](./taskC-5.md)에서 다룬다.
 
 ## Stateless 설계 메모 (무엇을 왜 외부화했나)
 

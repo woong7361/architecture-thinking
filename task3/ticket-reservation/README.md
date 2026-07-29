@@ -70,12 +70,13 @@ docker compose ps          # app-1/2/3 이 모두 같은 db/mock-pg 를 보고 h
 
 무상태 앱이라 3개가 동일하게 뜨고, 동시 예약은 DB 원자 UPDATE(`reserveIfFree`)가 이중 예약을 막는다.
 
-## 테스트 (인수테스트 안전망)
+## 테스트
 
-Core 유스케이스 경계의 Cucumber 인수테스트(8 시나리오)는 in-memory 아웃바운드 어댑터로 돈다 — Spring/DB 불필요. **빌드 스테이지(`mvn package`)에서 실행되어 GREEN 이 아니면 이미지가 만들어지지 않는다.**
+Cucumber 인수테스트(8 시나리오)와 Testcontainers 통합 테스트, CI(GitHub Actions)는 **Task C-5**에서 다룬다 → `task3/assignments/taskC-5.md`.
+
+로컬에서 바로 돌려보려면(로컬 JDK/Maven 불필요, 컨테이너 안에서 실행):
 
 ```bash
-# 컨테이너 안에서 테스트만 실행하고 싶을 때 (로컬 JDK/Maven 불필요)
 docker run --rm -v "$(pwd)":/app -w /app maven:3.9-eclipse-temurin-17 mvn -B test
 ```
 

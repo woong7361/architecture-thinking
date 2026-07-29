@@ -2,8 +2,8 @@
 
 # ── 1) 빌드 스테이지 ──────────────────────────────────────────────────────────
 # JDK/Maven 버전을 이미지로 고정한다 → 로컬 JAVA_HOME/Maven 차이를 제거(재현성의 핵심).
-# 이 스테이지에서 mvn package가 Cucumber 인수테스트(안전망)까지 실행하므로,
-# 테스트가 GREEN이 아니면 이미지 자체가 만들어지지 않는다(빌드=검증 게이트).
+# 이미지 빌드는 '실행 가능한 앱을 패키징'만 한다. 테스트 실행(인수테스트 + Testcontainers)은
+# CI(GitHub Actions)에서 다룬다 — Task C-5.
 FROM maven:3.9-eclipse-temurin-17 AS build
 WORKDIR /build
 
@@ -12,7 +12,7 @@ COPY pom.xml .
 RUN mvn -B -q dependency:go-offline || true
 
 COPY src ./src
-RUN mvn -B clean package
+RUN mvn -B clean package -DskipTests
 
 # ── 2) 런타임 스테이지 ────────────────────────────────────────────────────────
 # JRE만 담은 슬림 이미지. curl은 compose 헬스체크(/actuator/health)용.
