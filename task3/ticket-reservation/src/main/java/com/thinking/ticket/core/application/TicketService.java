@@ -3,6 +3,7 @@ package com.thinking.ticket.core.application;
 import com.thinking.ticket.core.domain.DiscountPolicy;
 import com.thinking.ticket.core.domain.PaymentFailedException;
 import com.thinking.ticket.core.domain.Ticket;
+import com.thinking.ticket.core.domain.TicketNotFoundException;
 import com.thinking.ticket.core.domain.User;
 import com.thinking.ticket.core.domain.UserNotFoundException;
 import com.thinking.ticket.core.port.in.ReservationResult;
@@ -16,8 +17,10 @@ import com.thinking.ticket.core.port.out.UserRepository;
  * 예약 불변식·상태 전이는 Ticket이, 결제/저장 I/O는 포트가 책임진다 —
  * 서비스는 협력의 순서만 조정한다. Spring/JPA 타입을 전혀 import하지 않는다(Core 순수성).
  *
- * <p>알려진 quirk(현재 동작으로 박제): 없는 티켓 findById는 null -> NPE, 결제 후 저장 실패 시
- * 보상(취소) 없음. 이 원자성/보상 경계는 C-5에서 다룬다(여기선 안전망대로 보존). */
+ * <p>없는 티켓은 TicketNotFoundException(도메인 예외)로 거부한다.
+ * <p>결제 후 저장 실패 시의 결제-예약 정합성은 즉시 인라인 보상(결제 취소)이 아니라 별도 대사(reconciliation)
+ * /배치 보정으로 다룬다(이 walking skeleton 범위 밖). @Transactional은 DB만 롤백할 뿐 외부 PG로 나간
+ * 결제는 되돌리지 못하고, 보상 호출 자체도 실패할 수 있어 보정의 진실원은 대사이기 때문이다. */
 public class TicketService implements ReserveTicketUseCase {
 
     private final TicketRepository ticketRepo;
@@ -49,6 +52,9 @@ public class TicketService implements ReserveTicketUseCase {
         }
 
         Ticket ticket = ticketRepo.findById(ticketId);
+        if (ticket == null) {
+            throw new TicketNotFoundException();
+        }
         ticket.ensureReservable();
 
         int amount = discountPolicy.finalAmount(ticket.getPrice());

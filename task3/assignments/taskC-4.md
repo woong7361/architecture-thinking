@@ -48,7 +48,7 @@ $ curl http://localhost:8080/actuator/health
 
 기동 후 스모크: `POST /api/reservations` 로 예약 성공 시 `200 {"reserved":true}`.
 
-> 인수테스트(Cucumber 8시나리오 + Testcontainers)와 CI(GitHub Actions)는 [Task C-5](./taskC-5.md)에서 다룬다.
+> 인수테스트(Cucumber 7시나리오 + Testcontainers)와 CI(GitHub Actions)는 [Task C-5](./taskC-5.md)에서 다룬다.
 
 ## Stateless 설계 메모 (무엇을 왜 외부화했나)
 

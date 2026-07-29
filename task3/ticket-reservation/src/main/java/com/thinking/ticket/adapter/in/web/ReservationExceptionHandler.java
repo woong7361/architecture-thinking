@@ -2,6 +2,7 @@ package com.thinking.ticket.adapter.in.web;
 
 import com.thinking.ticket.core.domain.PaymentFailedException;
 import com.thinking.ticket.core.domain.TicketAlreadyReservedException;
+import com.thinking.ticket.core.domain.TicketNotFoundException;
 import com.thinking.ticket.core.domain.TicketSuspendedException;
 import com.thinking.ticket.core.domain.UserNotFoundException;
 
@@ -19,6 +20,11 @@ public class ReservationExceptionHandler {
     @ExceptionHandler(UserNotFoundException.class)
     public ProblemDetail handleUserNotFound(UserNotFoundException e) {
         return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, "등록되지 않은 회원");
+    }
+
+    @ExceptionHandler(TicketNotFoundException.class)
+    public ProblemDetail handleTicketNotFound(TicketNotFoundException e) {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, "존재하지 않는 티켓");
     }
 
     @ExceptionHandler({TicketSuspendedException.class, TicketAlreadyReservedException.class})

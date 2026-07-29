@@ -7,6 +7,7 @@ import com.thinking.ticket.core.domain.DiscountPolicy;
 import com.thinking.ticket.core.domain.PaymentFailedException;
 import com.thinking.ticket.core.domain.Ticket;
 import com.thinking.ticket.core.domain.TicketAlreadyReservedException;
+import com.thinking.ticket.core.domain.TicketNotFoundException;
 import com.thinking.ticket.core.domain.TicketSuspendedException;
 import com.thinking.ticket.core.domain.User;
 import com.thinking.ticket.core.domain.UserNotFoundException;
@@ -33,7 +34,6 @@ public final class TicketReservationSteps {
     private final InMemoryTicketRepository ticketRepo = new InMemoryTicketRepository();
     private RecordingPaymentApi paymentApi = RecordingPaymentApi.succeeding();
 
-    private RuntimeException injectedSaveFailure;
     private Boolean result;
     private Throwable thrown;
 
@@ -83,13 +83,7 @@ public final class TicketReservationSteps {
 
     @Given("티켓 {long}은 저장소에 없다")
     public void 티켓이_저장소에_없다(long ticketId) {
-        // 일부러 seed하지 않는다 — findById가 null을 반환해 원본 코드의 null 미검사 경로를 태운다.
-    }
-
-    @Given("티켓 저장이 실패하는 상황이다")
-    public void 티켓_저장이_실패한다() {
-        this.injectedSaveFailure = new RuntimeException("storage failure");
-        ticketRepo.failSaveWith(injectedSaveFailure);
+        // 일부러 seed하지 않는다 — findById가 null을 반환해 도메인이 TicketNotFoundException을 던지는 경로를 태운다.
     }
 
     // --- When ---
@@ -162,27 +156,8 @@ public final class TicketReservationSteps {
         assertThat(paymentApi.lastAmount()).isEqualTo(amount);
     }
 
-    @Then("예매는 널 참조로 비정상 종료된다")
-    public void 널_참조로_비정상_종료된다() {
-        // quirk 박제: 없는 티켓에 도메인 예외가 아니라 NPE가 나는 것이 현재 동작.
-        assertThat(thrown).isInstanceOf(NullPointerException.class);
-    }
-
-    @Then("예매는 저장 실패로 비정상 종료된다")
-    public void 저장_실패로_비정상_종료된다() {
-        // quirk 박제: 저장 실패 예외가 도메인 예외로 감싸이거나 보상되지 않고 그대로 전파된다.
-        assertThat(thrown).isSameAs(injectedSaveFailure);
-    }
-
-    @Then("{int}원이 청구된 채로 남는다")
-    public void 청구된_채로_남는다(int amount) {
-        assertThat(paymentApi.wasCharged()).isTrue();
-        assertThat(paymentApi.lastAmount()).isEqualTo(amount);
-    }
-
-    @Then("되돌리는 보상 결제 호출은 없다")
-    public void 보상_호출은_없다() {
-        // charge는 최초 1회뿐 — 저장 실패 후 결제를 되돌리는(취소/보상) 추가 호출이 없다.
-        assertThat(paymentApi.chargeCount()).isEqualTo(1);
+    @Then("예매는 티켓 없음으로 거부된다")
+    public void 티켓_없음으로_거부된다() {
+        assertThat(thrown).isInstanceOf(TicketNotFoundException.class);
     }
 }
