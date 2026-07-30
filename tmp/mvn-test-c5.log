@@ -1,0 +1,861 @@
+﻿[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------< com.thinking:ticket-reservation >-------------------
+[INFO] Building ticket-reservation 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/io/cucumber/cucumber-picocontainer/7.18.1/cucumber-picocontainer-7.18.1.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/io/cucumber/cucumber-picocontainer/7.18.1/cucumber-picocontainer-7.18.1.pom (3.8 kB at 5.4 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/picocontainer/picocontainer/2.15/picocontainer-2.15.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/picocontainer/picocontainer/2.15/picocontainer-2.15.pom (4.0 kB at 120 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/picocontainer/picocontainer-parent/2.15/picocontainer-parent-2.15.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/picocontainer/picocontainer-parent/2.15/picocontainer-parent-2.15.pom (14 kB at 371 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/codehaus-parent/3/codehaus-parent-3.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/codehaus-parent/3/codehaus-parent-3.pom (4.1 kB at 77 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/io/cucumber/cucumber-spring/7.18.1/cucumber-spring-7.18.1.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/io/cucumber/cucumber-spring/7.18.1/cucumber-spring-7.18.1.pom (3.6 kB at 97 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-starter-test/3.3.4/spring-boot-starter-test-3.3.4.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-starter-test/3.3.4/spring-boot-starter-test-3.3.4.pom (5.1 kB at 92 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-test/3.3.4/spring-boot-test-3.3.4.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-test/3.3.4/spring-boot-test-3.3.4.pom (2.2 kB at 76 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/springframework/spring-test/6.1.13/spring-test-6.1.13.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/springframework/spring-test/6.1.13/spring-test-6.1.13.pom (2.1 kB at 59 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-test-autoconfigure/3.3.4/spring-boot-test-autoconfigure-3.3.4.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-test-autoconfigure/3.3.4/spring-boot-test-autoconfigure-3.3.4.pom (2.5 kB at 57 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/com/jayway/jsonpath/json-path/2.9.0/json-path-2.9.0.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/com/jayway/jsonpath/json-path/2.9.0/json-path-2.9.0.pom (1.9 kB at 55 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/net/minidev/json-smart/2.5.1/json-smart-2.5.1.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/net/minidev/json-smart/2.5.1/json-smart-2.5.1.pom (9.3 kB at 343 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/net/minidev/accessors-smart/2.5.1/accessors-smart-2.5.1.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/net/minidev/accessors-smart/2.5.1/accessors-smart-2.5.1.pom (11 kB at 436 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/awaitility/awaitility/4.2.2/awaitility-4.2.2.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/awaitility/awaitility/4.2.2/awaitility-4.2.2.pom (3.5 kB at 118 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/awaitility/awaitility-parent/4.2.2/awaitility-parent-4.2.2.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/awaitility/awaitility-parent/4.2.2/awaitility-parent-4.2.2.pom (11 kB at 418 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/hamcrest/hamcrest/2.2/hamcrest-2.2.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/hamcrest/hamcrest/2.2/hamcrest-2.2.pom (1.1 kB at 38 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/junit/jupiter/junit-jupiter/5.10.3/junit-jupiter-5.10.3.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/junit/jupiter/junit-jupiter/5.10.3/junit-jupiter-5.10.3.pom (3.2 kB at 52 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/junit/jupiter/junit-jupiter-api/5.10.3/junit-jupiter-api-5.10.3.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/junit/jupiter/junit-jupiter-api/5.10.3/junit-jupiter-api-5.10.3.pom (3.2 kB at 74 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/junit/jupiter/junit-jupiter-params/5.10.3/junit-jupiter-params-5.10.3.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/junit/jupiter/junit-jupiter-params/5.10.3/junit-jupiter-params-5.10.3.pom (3.0 kB at 104 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/junit/jupiter/junit-jupiter-engine/5.10.3/junit-jupiter-engine-5.10.3.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/junit/jupiter/junit-jupiter-engine/5.10.3/junit-jupiter-engine-5.10.3.pom (3.2 kB at 133 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/mockito/mockito-core/5.11.0/mockito-core-5.11.0.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/mockito/mockito-core/5.11.0/mockito-core-5.11.0.pom (2.5 kB at 88 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/net/bytebuddy/byte-buddy-agent/1.14.19/byte-buddy-agent-1.14.19.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/net/bytebuddy/byte-buddy-agent/1.14.19/byte-buddy-agent-1.14.19.pom (10 kB at 291 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/objenesis/objenesis/3.3/objenesis-3.3.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/objenesis/objenesis/3.3/objenesis-3.3.pom (3.0 kB at 97 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/objenesis/objenesis-parent/3.3/objenesis-parent-3.3.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/objenesis/objenesis-parent/3.3/objenesis-parent-3.3.pom (19 kB at 737 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/mockito/mockito-junit-jupiter/5.11.0/mockito-junit-jupiter-5.11.0.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/mockito/mockito-junit-jupiter/5.11.0/mockito-junit-jupiter-5.11.0.pom (2.3 kB at 91 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/skyscreamer/jsonassert/1.5.3/jsonassert-1.5.3.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/skyscreamer/jsonassert/1.5.3/jsonassert-1.5.3.pom (7.0 kB at 259 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.pom (2.8 kB at 65 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/xmlunit/xmlunit-core/2.9.1/xmlunit-core-2.9.1.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/xmlunit/xmlunit-core/2.9.1/xmlunit-core-2.9.1.pom (2.4 kB at 94 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/xmlunit/xmlunit-parent/2.9.1/xmlunit-parent-2.9.1.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/xmlunit/xmlunit-parent/2.9.1/xmlunit-parent-2.9.1.pom (21 kB at 408 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/testcontainers/mysql/1.19.8/mysql-1.19.8.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/testcontainers/mysql/1.19.8/mysql-1.19.8.pom (1.5 kB at 49 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/testcontainers/jdbc/1.19.8/jdbc-1.19.8.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/testcontainers/jdbc/1.19.8/jdbc-1.19.8.pom (1.5 kB at 60 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/testcontainers/database-commons/1.19.8/database-commons-1.19.8.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/testcontainers/database-commons/1.19.8/database-commons-1.19.8.pom (1.5 kB at 51 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/testcontainers/testcontainers/1.19.8/testcontainers-1.19.8.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/testcontainers/testcontainers/1.19.8/testcontainers-1.19.8.pom (2.6 kB at 77 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/junit/junit/4.13.2/junit-4.13.2.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/junit/junit/4.13.2/junit-4.13.2.pom (27 kB at 844 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/hamcrest/hamcrest-core/2.2/hamcrest-core-2.2.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/hamcrest/hamcrest-core/2.2/hamcrest-core-2.2.pom (1.4 kB at 56 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/commons/commons-compress/1.24.0/commons-compress-1.24.0.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/commons/commons-compress/1.24.0/commons-compress-1.24.0.pom (22 kB at 872 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/commons/commons-parent/61/commons-parent-61.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/commons/commons-parent/61/commons-parent-61.pom (81 kB at 1.6 MB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/apache/30/apache-30.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/apache/30/apache-30.pom (23 kB at 775 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/rnorth/duct-tape/duct-tape/1.0.8/duct-tape-1.0.8.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/rnorth/duct-tape/duct-tape/1.0.8/duct-tape-1.0.8.pom (6.2 kB at 249 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/jetbrains/annotations/17.0.0/annotations-17.0.0.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/jetbrains/annotations/17.0.0/annotations-17.0.0.pom (1.4 kB at 59 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/com/github/docker-java/docker-java-api/3.3.6/docker-java-api-3.3.6.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/com/github/docker-java/docker-java-api/3.3.6/docker-java-api-3.3.6.pom (2.4 kB at 100 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/com/github/docker-java/docker-java-parent/3.3.6/docker-java-parent-3.3.6.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/com/github/docker-java/docker-java-parent/3.3.6/docker-java-parent-3.3.6.pom (12 kB at 510 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/com/github/docker-java/docker-java-transport-zerodep/3.3.6/docker-java-transport-zerodep-3.3.6.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/com/github/docker-java/docker-java-transport-zerodep/3.3.6/docker-java-transport-zerodep-3.3.6.pom (4.1 kB at 157 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/com/github/docker-java/docker-java-transport/3.3.6/docker-java-transport-3.3.6.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/com/github/docker-java/docker-java-transport/3.3.6/docker-java-transport-3.3.6.pom (1.6 kB at 63 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/net/java/dev/jna/jna/5.13.0/jna-5.13.0.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/net/java/dev/jna/jna/5.13.0/jna-5.13.0.pom (2.0 kB at 85 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/io/cucumber/cucumber-picocontainer/7.18.1/cucumber-picocontainer-7.18.1.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/io/cucumber/cucumber-picocontainer/7.18.1/cucumber-picocontainer-7.18.1.jar (5.3 kB at 69 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/picocontainer/picocontainer/2.15/picocontainer-2.15.jar
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/io/cucumber/cucumber-spring/7.18.1/cucumber-spring-7.18.1.jar
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-starter-test/3.3.4/spring-boot-starter-test-3.3.4.jar
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-test/3.3.4/spring-boot-test-3.3.4.jar
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-test-autoconfigure/3.3.4/spring-boot-test-autoconfigure-3.3.4.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-starter-test/3.3.4/spring-boot-starter-test-3.3.4.jar (4.8 kB at 26 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/com/jayway/jsonpath/json-path/2.9.0/json-path-2.9.0.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/picocontainer/picocontainer/2.15/picocontainer-2.15.jar (326 kB at 1.5 MB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/net/minidev/json-smart/2.5.1/json-smart-2.5.1.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/net/minidev/json-smart/2.5.1/json-smart-2.5.1.jar (122 kB at 474 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/net/minidev/accessors-smart/2.5.1/accessors-smart-2.5.1.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/com/jayway/jsonpath/json-path/2.9.0/json-path-2.9.0.jar (277 kB at 1.1 MB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/awaitility/awaitility/4.2.2/awaitility-4.2.2.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/io/cucumber/cucumber-spring/7.18.1/cucumber-spring-7.18.1.jar (17 kB at 56 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/hamcrest/hamcrest/2.2/hamcrest-2.2.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/net/minidev/accessors-smart/2.5.1/accessors-smart-2.5.1.jar (30 kB at 95 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/junit/jupiter/junit-jupiter/5.10.3/junit-jupiter-5.10.3.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/junit/jupiter/junit-jupiter/5.10.3/junit-jupiter-5.10.3.jar (6.4 kB at 18 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/junit/jupiter/junit-jupiter-api/5.10.3/junit-jupiter-api-5.10.3.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-test-autoconfigure/3.3.4/spring-boot-test-autoconfigure-3.3.4.jar (219 kB at 585 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/junit/jupiter/junit-jupiter-params/5.10.3/junit-jupiter-params-5.10.3.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/awaitility/awaitility/4.2.2/awaitility-4.2.2.jar (97 kB at 215 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/junit/jupiter/junit-jupiter-engine/5.10.3/junit-jupiter-engine-5.10.3.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-test/3.3.4/spring-boot-test-3.3.4.jar (249 kB at 542 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/mockito/mockito-core/5.11.0/mockito-core-5.11.0.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/hamcrest/hamcrest/2.2/hamcrest-2.2.jar (123 kB at 268 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/net/bytebuddy/byte-buddy-agent/1.14.19/byte-buddy-agent-1.14.19.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/junit/jupiter/junit-jupiter-api/5.10.3/junit-jupiter-api-5.10.3.jar (211 kB at 358 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/objenesis/objenesis/3.3/objenesis-3.3.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/objenesis/objenesis/3.3/objenesis-3.3.jar (49 kB at 70 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/mockito/mockito-junit-jupiter/5.11.0/mockito-junit-jupiter-5.11.0.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/mockito/mockito-junit-jupiter/5.11.0/mockito-junit-jupiter-5.11.0.jar (8.9 kB at 11 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/skyscreamer/jsonassert/1.5.3/jsonassert-1.5.3.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/net/bytebuddy/byte-buddy-agent/1.14.19/byte-buddy-agent-1.14.19.jar (263 kB at 315 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/junit/jupiter/junit-jupiter-engine/5.10.3/junit-jupiter-engine-5.10.3.jar (245 kB at 292 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/springframework/spring-test/6.1.13/spring-test-6.1.13.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/skyscreamer/jsonassert/1.5.3/jsonassert-1.5.3.jar (31 kB at 36 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/xmlunit/xmlunit-core/2.9.1/xmlunit-core-2.9.1.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar (18 kB at 16 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/testcontainers/mysql/1.19.8/mysql-1.19.8.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/junit/jupiter/junit-jupiter-params/5.10.3/junit-jupiter-params-5.10.3.jar (586 kB at 511 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/testcontainers/jdbc/1.19.8/jdbc-1.19.8.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/xmlunit/xmlunit-core/2.9.1/xmlunit-core-2.9.1.jar (175 kB at 146 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/testcontainers/database-commons/1.19.8/database-commons-1.19.8.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/testcontainers/mysql/1.19.8/mysql-1.19.8.jar (9.1 kB at 7.6 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/testcontainers/testcontainers/1.19.8/testcontainers-1.19.8.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/testcontainers/jdbc/1.19.8/jdbc-1.19.8.jar (29 kB at 24 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/junit/junit/4.13.2/junit-4.13.2.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/testcontainers/database-commons/1.19.8/database-commons-1.19.8.jar (15 kB at 12 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/hamcrest/hamcrest-core/2.2/hamcrest-core-2.2.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/hamcrest/hamcrest-core/2.2/hamcrest-core-2.2.jar (1.5 kB at 1.1 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/commons/commons-compress/1.24.0/commons-compress-1.24.0.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/mockito/mockito-core/5.11.0/mockito-core-5.11.0.jar (704 kB at 516 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/rnorth/duct-tape/duct-tape/1.0.8/duct-tape-1.0.8.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/rnorth/duct-tape/duct-tape/1.0.8/duct-tape-1.0.8.jar (25 kB at 18 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/jetbrains/annotations/17.0.0/annotations-17.0.0.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/jetbrains/annotations/17.0.0/annotations-17.0.0.jar (19 kB at 12 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/com/github/docker-java/docker-java-api/3.3.6/docker-java-api-3.3.6.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/junit/junit/4.13.2/junit-4.13.2.jar (385 kB at 242 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/com/github/docker-java/docker-java-transport-zerodep/3.3.6/docker-java-transport-zerodep-3.3.6.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/springframework/spring-test/6.1.13/spring-test-6.1.13.jar (857 kB at 527 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/com/github/docker-java/docker-java-transport/3.3.6/docker-java-transport-3.3.6.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/com/github/docker-java/docker-java-api/3.3.6/docker-java-api-3.3.6.jar (473 kB at 258 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/net/java/dev/jna/jna/5.13.0/jna-5.13.0.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/com/github/docker-java/docker-java-transport/3.3.6/docker-java-transport-3.3.6.jar (38 kB at 19 kB/s)
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/commons/commons-compress/1.24.0/commons-compress-1.24.0.jar (1.1 MB at 530 kB/s)
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/com/github/docker-java/docker-java-transport-zerodep/3.3.6/docker-java-transport-zerodep-3.3.6.jar (2.3 MB at 914 kB/s)
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/net/java/dev/jna/jna/5.13.0/jna-5.13.0.jar (1.9 MB at 742 kB/s)
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/testcontainers/testcontainers/1.19.8/testcontainers-1.19.8.jar (18 MB at 3.1 MB/s)
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ ticket-reservation ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] Copying 0 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ ticket-reservation ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 27 source files with javac [debug parameters release 17] to target/classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ ticket-reservation ---
+[INFO] Copying 2 resources from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ ticket-reservation ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 9 source files with javac [debug parameters release 17] to target/test-classes
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ ticket-reservation ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.thinking.ticket.CucumberAcceptanceTest
+
+Scenario: 5만원 이상 티켓은 10% 할인된 금액이 청구된다        # features/new_requirements.feature:9
+  Given 회원 저장소와 티켓 저장소가 비어 있다                # com.thinking.ticket.steps.TicketReservationSteps.저장소가_비어_있다()
+  Given 회원 1이 등록되어 있다                        # com.thinking.ticket.steps.TicketReservationSteps.회원이_등록되어_있다(long)
+  And 가격 50000원짜리 미예약 티켓 20이 있다              # com.thinking.ticket.steps.TicketReservationSteps.미예약_티켓이_있다(int,long)
+  When 회원 1이 카드정보 "card-token"으로 티켓 20을 예매하면 # com.thinking.ticket.steps.TicketReservationSteps.예매하면(long,java.lang.String,long)
+  Then 예매는 성공한다                              # com.thinking.ticket.steps.TicketReservationSteps.예매는_성공한다()
+  And 티켓 20은 회원 1에게 예약된다                     # com.thinking.ticket.steps.TicketReservationSteps.티켓이_회원에게_예약된다(long,long)
+  And 45000원이 청구된다                           # com.thinking.ticket.steps.TicketReservationSteps.금액이_청구된다(int)
+
+Scenario: 판매 중지된 티켓은 예매할 수 없고 결제도 일어나지 않는다   # features/new_requirements.feature:18
+  Given 회원 저장소와 티켓 저장소가 비어 있다                # com.thinking.ticket.steps.TicketReservationSteps.저장소가_비어_있다()
+  Given 회원 1이 등록되어 있다                        # com.thinking.ticket.steps.TicketReservationSteps.회원이_등록되어_있다(long)
+  And 가격 30000원짜리 판매 중지된 티켓 20이 있다           # com.thinking.ticket.steps.TicketReservationSteps.판매_중지된_티켓이_있다(int,long)
+  When 회원 1이 카드정보 "card-token"으로 티켓 20을 예매하면 # com.thinking.ticket.steps.TicketReservationSteps.예매하면(long,java.lang.String,long)
+  Then 예매는 판매 중지로 거부된다                       # com.thinking.ticket.steps.TicketReservationSteps.판매_중지로_거부된다()
+  And 결제는 청구되지 않는다                           # com.thinking.ticket.steps.TicketReservationSteps.결제는_청구되지_않는다()
+
+Scenario: 유효한 회원이 미예약 티켓을 예매하면 예약이 확정되고 결제가 청구된다 # features/ticket_reservation.feature:12
+  Given 회원 저장소와 티켓 저장소가 비어 있다                    # com.thinking.ticket.steps.TicketReservationSteps.저장소가_비어_있다()
+  Given 회원 1이 등록되어 있다                            # com.thinking.ticket.steps.TicketReservationSteps.회원이_등록되어_있다(long)
+  And 가격 30000원짜리 미예약 티켓 20이 있다                  # com.thinking.ticket.steps.TicketReservationSteps.미예약_티켓이_있다(int,long)
+  When 회원 1이 카드정보 "card-token"으로 티켓 20을 예매하면     # com.thinking.ticket.steps.TicketReservationSteps.예매하면(long,java.lang.String,long)
+  Then 예매는 성공한다                                  # com.thinking.ticket.steps.TicketReservationSteps.예매는_성공한다()
+  And 티켓 20은 회원 1에게 예약된다                         # com.thinking.ticket.steps.TicketReservationSteps.티켓이_회원에게_예약된다(long,long)
+  And 30000원이 청구된다                               # com.thinking.ticket.steps.TicketReservationSteps.금액이_청구된다(int)
+
+Scenario: 등록되지 않은 회원은 예매할 수 없고 결제도 일어나지 않는다  # features/ticket_reservation.feature:20
+  Given 회원 저장소와 티켓 저장소가 비어 있다                # com.thinking.ticket.steps.TicketReservationSteps.저장소가_비어_있다()
+  Given 가격 30000원짜리 미예약 티켓 20이 있다            # com.thinking.ticket.steps.TicketReservationSteps.미예약_티켓이_있다(int,long)
+  When 회원 1이 카드정보 "card-token"으로 티켓 20을 예매하면 # com.thinking.ticket.steps.TicketReservationSteps.예매하면(long,java.lang.String,long)
+  Then 예매는 회원 없음으로 거부된다                      # com.thinking.ticket.steps.TicketReservationSteps.회원_없음으로_거부된다()
+  And 결제는 청구되지 않는다                           # com.thinking.ticket.steps.TicketReservationSteps.결제는_청구되지_않는다()
+
+Scenario: 이미 예약된 티켓은 예매할 수 없고 결제도 일어나지 않는다   # features/ticket_reservation.feature:26
+  Given 회원 저장소와 티켓 저장소가 비어 있다                # com.thinking.ticket.steps.TicketReservationSteps.저장소가_비어_있다()
+  Given 회원 1이 등록되어 있다                        # com.thinking.ticket.steps.TicketReservationSteps.회원이_등록되어_있다(long)
+  And 가격 30000원짜리 이미 예약된 티켓 20이 있다           # com.thinking.ticket.steps.TicketReservationSteps.이미_예약된_티켓이_있다(int,long)
+  When 회원 1이 카드정보 "card-token"으로 티켓 20을 예매하면 # com.thinking.ticket.steps.TicketReservationSteps.예매하면(long,java.lang.String,long)
+  Then 예매는 이미 예약됨으로 거부된다                     # com.thinking.ticket.steps.TicketReservationSteps.이미_예약됨으로_거부된다()
+  And 결제는 청구되지 않는다                           # com.thinking.ticket.steps.TicketReservationSteps.결제는_청구되지_않는다()
+
+Scenario: 결제가 거절되면 예매는 실패하고 티켓은 예약되지 않는다     # features/ticket_reservation.feature:33
+  Given 회원 저장소와 티켓 저장소가 비어 있다                # com.thinking.ticket.steps.TicketReservationSteps.저장소가_비어_있다()
+  Given 회원 1이 등록되어 있다                        # com.thinking.ticket.steps.TicketReservationSteps.회원이_등록되어_있다(long)
+  And 가격 30000원짜리 미예약 티켓 20이 있다              # com.thinking.ticket.steps.TicketReservationSteps.미예약_티켓이_있다(int,long)
+  And 결제는 거절되는 상황이다                          # com.thinking.ticket.steps.TicketReservationSteps.결제는_거절된다()
+  When 회원 1이 카드정보 "card-token"으로 티켓 20을 예매하면 # com.thinking.ticket.steps.TicketReservationSteps.예매하면(long,java.lang.String,long)
+  Then 예매는 결제 실패로 거부된다                       # com.thinking.ticket.steps.TicketReservationSteps.결제_실패로_거부된다()
+  And 티켓 20은 예약되지 않는다                        # com.thinking.ticket.steps.TicketReservationSteps.티켓은_예약되지_않는다(long)
+  And 30000원 청구가 시도된다                        # com.thinking.ticket.steps.TicketReservationSteps.청구가_시도된다(int)
+
+Scenario: 존재하지 않는 티켓은 예매할 수 없고 결제도 일어나지 않는다  # features/ticket_reservation.feature:42
+  Given 회원 저장소와 티켓 저장소가 비어 있다                # com.thinking.ticket.steps.TicketReservationSteps.저장소가_비어_있다()
+  Given 회원 1이 등록되어 있다                        # com.thinking.ticket.steps.TicketReservationSteps.회원이_등록되어_있다(long)
+  And 티켓 20은 저장소에 없다                         # com.thinking.ticket.steps.TicketReservationSteps.티켓이_저장소에_없다(long)
+  When 회원 1이 카드정보 "card-token"으로 티켓 20을 예매하면 # com.thinking.ticket.steps.TicketReservationSteps.예매하면(long,java.lang.String,long)
+  Then 예매는 티켓 없음으로 거부된다                      # com.thinking.ticket.steps.TicketReservationSteps.티켓_없음으로_거부된다()
+  And 결제는 청구되지 않는다                           # com.thinking.ticket.steps.TicketReservationSteps.결제는_청구되지_않는다()
+
+7 Scenarios (7 passed)
+45 Steps (45 passed)
+0m2.830s
+
+
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.154 s -- in com.thinking.ticket.CucumberAcceptanceTest
+[INFO] Running com.thinking.ticket.jpa.JpaCucumberAcceptanceTest
+09:35:56.223 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.thinking.ticket.jpa.CucumberSpringConfiguration]: CucumberSpringConfiguration does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+09:35:57.135 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.thinking.ticket.TicketReservationApplication for test class com.thinking.ticket.jpa.CucumberSpringConfiguration
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.4)
+
+2026-07-29T09:36:00.601Z  INFO 109 --- [ticket-reservation] [           main] org.testcontainers.images.PullPolicy     : Image pull policy will be performed by: DefaultPullPolicy()
+2026-07-29T09:36:00.624Z  INFO 109 --- [ticket-reservation] [           main] o.t.utility.ImageNameSubstitutor         : Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2026-07-29T09:36:04.316Z  INFO 109 --- [ticket-reservation] [           main] .t.d.DockerMachineClientProviderStrategy : docker-machine executable was not found on PATH ([/opt/java/openjdk/bin, /usr/local/sbin, /usr/local/bin, /usr/sbin, /usr/bin, /sbin, /bin])
+2026-07-29T09:36:04.318Z ERROR 109 --- [ticket-reservation] [           main] o.t.d.DockerClientProviderStrategy       : Could not find a valid Docker environment. Please check configuration. Attempted configurations were:
+	UnixSocketClientProviderStrategy: failed with exception BadRequestException (Status 400: {"ID":"","Containers":0,"ContainersRunning":0,"ContainersPaused":0,"ContainersStopped":0,"Images":0,"Driver":"","DriverStatus":null,"Plugins":{"Volume":null,"Network":null,"Authorization":null,"Log":null},"MemoryLimit":false,"SwapLimit":false,"CpuCfsPeriod":false,"CpuCfsQuota":false,"CPUShares":false,"CPUSet":false,"PidsLimit":false,"IPv4Forwarding":false,"Debug":false,"NFd":0,"OomKillDisable":false,"NGoroutines":0,"SystemTime":"","LoggingDriver":"","CgroupDriver":"","NEventsListener":0,"KernelVersion":"","OperatingSystem":"","OSVersion":"","OSType":"","Architecture":"","IndexServerAddress":"","RegistryConfig":null,"NCPU":0,"MemTotal":0,"GenericResources":null,"DockerRootDir":"","HttpProxy":"","HttpsProxy":"","NoProxy":"","Name":"","Labels":["com.docker.desktop.address=npipe://\\\\.\\pipe\\docker_cli"],"ExperimentalBuild":false,"ServerVersion":"","Runtimes":null,"DefaultRuntime":"","Swarm":{"NodeID":"","NodeAddr":"","LocalNodeState":"","ControlAvailable":false,"Error":"","RemoteManagers":null},"LiveRestoreEnabled":false,"Isolation":"","InitBinary":"","ContainerdCommit":{"ID":""},"RuncCommit":{"ID":""},"InitCommit":{"ID":""},"SecurityOptions":null,"CDISpecDirs":null,"Warnings":null})
+	DockerDesktopClientProviderStrategy: failed with exception NullPointerException (Cannot invoke "java.nio.file.Path.toString()" because the return value of "org.testcontainers.dockerclient.DockerDesktopClientProviderStrategy.getSocketPath()" is null)As no valid configuration was found, execution cannot continue.
+See https://java.testcontainers.org/on_failure.html for more details.
+2026-07-29T09:36:04.524Z ERROR 109 --- [ticket-reservation] [           main] o.s.boot.SpringApplication               : Application run failed
+
+java.lang.ExceptionInInitializerError: null
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:281) ~[spring-core-6.1.13.jar:6.1.13]
+	at org.springframework.test.context.support.DynamicPropertiesContextCustomizer.lambda$buildDynamicPropertiesMap$3(DynamicPropertiesContextCustomizer.java:82) ~[spring-test-6.1.13.jar:6.1.13]
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75) ~[na:na]
+	at org.springframework.test.context.support.DynamicPropertiesContextCustomizer.buildDynamicPropertiesMap(DynamicPropertiesContextCustomizer.java:80) ~[spring-test-6.1.13.jar:6.1.13]
+	at org.springframework.test.context.support.DynamicPropertiesContextCustomizer.customizeContext(DynamicPropertiesContextCustomizer.java:70) ~[spring-test-6.1.13.jar:6.1.13]
+	at org.springframework.boot.test.context.SpringBootContextLoader$ContextCustomizerAdapter.initialize(SpringBootContextLoader.java:443) ~[spring-boot-test-3.3.4.jar:3.3.4]
+	at org.springframework.boot.SpringApplication.applyInitializers(SpringApplication.java:627) ~[spring-boot-3.3.4.jar:3.3.4]
+	at org.springframework.boot.SpringApplication.prepareContext(SpringApplication.java:401) ~[spring-boot-3.3.4.jar:3.3.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:334) ~[spring-boot-3.3.4.jar:3.3.4]
+	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$3(SpringBootContextLoader.java:137) ~[spring-boot-test-3.3.4.jar:3.3.4]
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:58) ~[spring-core-6.1.13.jar:6.1.13]
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:46) ~[spring-core-6.1.13.jar:6.1.13]
+	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1463) ~[spring-boot-3.3.4.jar:3.3.4]
+	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:553) ~[spring-boot-test-3.3.4.jar:3.3.4]
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:137) ~[spring-boot-test-3.3.4.jar:3.3.4]
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:108) ~[spring-boot-test-3.3.4.jar:3.3.4]
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:225) ~[spring-test-6.1.13.jar:6.1.13]
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:152) ~[spring-test-6.1.13.jar:6.1.13]
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130) ~[spring-test-6.1.13.jar:6.1.13]
+	at io.cucumber.spring.TestContextAdaptor.create(TestContextAdaptor.java:42) ~[cucumber-spring-7.18.1.jar:7.18.1]
+	at io.cucumber.spring.SpringFactory.start(SpringFactory.java:121) ~[cucumber-spring-7.18.1.jar:7.18.1]
+	at io.cucumber.core.runner.Runner.buildBackendWorlds(Runner.java:134) ~[cucumber-core-7.18.1.jar:7.18.1]
+	at io.cucumber.core.runner.Runner.runPickle(Runner.java:70) ~[cucumber-core-7.18.1.jar:7.18.1]
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:112) ~[cucumber-junit-platform-engine-7.18.1.jar:na]
+	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136) ~[cucumber-core-7.18.1.jar:7.18.1]
+	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23) ~[cucumber-core-7.18.1.jar:7.18.1]
+	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136) ~[cucumber-core-7.18.1.jar:7.18.1]
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:109) ~[cucumber-junit-platform-engine-7.18.1.jar:na]
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168) ~[cucumber-junit-platform-engine-7.18.1.jar:na]
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90) ~[cucumber-junit-platform-engine-7.18.1.jar:na]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:151) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:198) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:169) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:93) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:76) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.suite.engine.SuiteLauncher.execute(SuiteLauncher.java:63) ~[junit-platform-suite-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.suite.engine.SuiteTestDescriptor.execute(SuiteTestDescriptor.java:129) ~[junit-platform-suite-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.suite.engine.SuiteTestEngine.lambda$execute$0(SuiteTestEngine.java:73) ~[junit-platform-suite-engine-1.10.3.jar:1.10.3]
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:183) ~[na:na]
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197) ~[na:na]
+	at java.base/java.util.Iterator.forEachRemaining(Iterator.java:133) ~[na:na]
+	at java.base/java.util.Spliterators$IteratorSpliterator.forEachRemaining(Spliterators.java:1845) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499) ~[na:na]
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:150) ~[na:na]
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:173) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234) ~[na:na]
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:596) ~[na:na]
+	at org.junit.platform.suite.engine.SuiteTestEngine.execute(SuiteTestEngine.java:73) ~[junit-platform-suite-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:198) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:169) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:93) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:58) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:141) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:57) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:56) ~[surefire-junit-platform-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:184) ~[surefire-junit-platform-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:148) ~[surefire-junit-platform-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:122) ~[surefire-junit-platform-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385) ~[surefire-booter-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162) ~[surefire-booter-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507) ~[surefire-booter-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495) ~[surefire-booter-3.2.5.jar:3.2.5]
+Caused by: java.lang.IllegalStateException: Could not find a valid Docker environment. Please see logs and check configuration
+	at org.testcontainers.dockerclient.DockerClientProviderStrategy.lambda$getFirstValidStrategy$7(DockerClientProviderStrategy.java:277) ~[testcontainers-1.19.8.jar:1.19.8]
+	at java.base/java.util.Optional.orElseThrow(Optional.java:403) ~[na:na]
+	at org.testcontainers.dockerclient.DockerClientProviderStrategy.getFirstValidStrategy(DockerClientProviderStrategy.java:268) ~[testcontainers-1.19.8.jar:1.19.8]
+	at org.testcontainers.DockerClientFactory.getOrInitializeStrategy(DockerClientFactory.java:152) ~[testcontainers-1.19.8.jar:1.19.8]
+	at org.testcontainers.DockerClientFactory.client(DockerClientFactory.java:194) ~[testcontainers-1.19.8.jar:1.19.8]
+	at org.testcontainers.DockerClientFactory$1.getDockerClient(DockerClientFactory.java:106) ~[testcontainers-1.19.8.jar:1.19.8]
+	at com.github.dockerjava.api.DockerClientDelegate.authConfig(DockerClientDelegate.java:109) ~[docker-java-api-3.3.6.jar:na]
+	at org.testcontainers.containers.GenericContainer.start(GenericContainer.java:329) ~[testcontainers-1.19.8.jar:na]
+	at com.thinking.ticket.jpa.CucumberSpringConfiguration.<clinit>(CucumberSpringConfiguration.java:26) ~[test-classes/:na]
+	... 100 common frames omitted
+
+docker.exe : 
+At line:3 char:1
++ & $d run --rm `
++ ~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+
+============================
+CONDITIONS EVALUATION REPORT
+============================
+
+
+Positive matches:
+-----------------
+
+    None
+
+
+Negative matches:
+-----------------
+
+    None
+
+
+Exclusions:
+-----------
+
+    None
+
+
+Unconditional classes:
+----------------------
+
+    None
+
+
+
+2026-07-29T09:36:04.618Z  INFO 109 --- [ticket-reservation] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.thinking.ticket.jpa.CucumberSpringConfiguration]: CucumberSpringConfiguration does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-07-29T09:36:04.625Z  INFO 109 --- [ticket-reservation] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.thinking.ticket.TicketReservationApplication for test class com.thinking.ticket.jpa.CucumberSpringConfiguration
+2026-07-29T09:36:04.652Z  INFO 109 --- [ticket-reservation] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.thinking.ticket.jpa.CucumberSpringConfiguration]: CucumberSpringConfiguration does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-07-29T09:36:04.656Z  INFO 109 --- [ticket-reservation] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.thinking.ticket.TicketReservationApplication for test class com.thinking.ticket.jpa.CucumberSpringConfiguration
+2026-07-29T09:36:04.690Z  INFO 109 --- [ticket-reservation] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.thinking.ticket.jpa.CucumberSpringConfiguration]: CucumberSpringConfiguration does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-07-29T09:36:04.697Z  INFO 109 --- [ticket-reservation] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.thinking.ticket.TicketReservationApplication for test class com.thinking.ticket.jpa.CucumberSpringConfiguration
+2026-07-29T09:36:04.728Z  INFO 109 --- [ticket-reservation] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.thinking.ticket.jpa.CucumberSpringConfiguration]: CucumberSpringConfiguration does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-07-29T09:36:04.734Z  INFO 109 --- [ticket-reservation] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.thinking.ticket.TicketReservationApplication for test class com.thinking.ticket.jpa.CucumberSpringConfiguration
+2026-07-29T09:36:04.770Z  INFO 109 --- [ticket-reservation] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.thinking.ticket.jpa.CucumberSpringConfiguration]: CucumberSpringConfiguration does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-07-29T09:36:04.777Z  INFO 109 --- [ticket-reservation] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.thinking.ticket.TicketReservationApplication for test class com.thinking.ticket.jpa.CucumberSpringConfiguration
+2026-07-29T09:36:04.812Z  INFO 109 --- [ticket-reservation] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.thinking.ticket.jpa.CucumberSpringConfiguration]: CucumberSpringConfiguration does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-07-29T09:36:04.820Z  INFO 109 --- [ticket-reservation] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.thinking.ticket.TicketReservationApplication for test class com.thinking.ticket.jpa.CucumberSpringConfiguration
+      io.cucumber.core.exception.CompositeCucumberException: There were 7 exceptions. The details are in the stacktrace below.
+	at io.cucumber.core.runtime.RethrowingThrowableCollector.getThrowable(RethrowingThrowableCollector.java:57)
+	at io.cucumber.core.runtime.CucumberExecutionContext.getThrowable(CucumberExecutionContext.java:108)
+	at io.cucumber.core.runtime.CucumberExecutionContext.finishTestRun(CucumberExecutionContext.java:103)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.finishTestRun(CucumberEngineExecutionContext.java:126)
+	at io.cucumber.junit.platform.engine.CucumberEngineDescriptor.ifChildren(CucumberEngineDescriptor.java:63)
+	at io.cucumber.junit.platform.engine.CucumberEngineDescriptor.cleanUp(CucumberEngineDescriptor.java:48)
+	at io.cucumber.junit.platform.engine.CucumberEngineDescriptor.cleanUp(CucumberEngineDescriptor.java:12)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$cleanUp$10(NodeTestTask.java:167)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.cleanUp(NodeTestTask.java:167)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:98)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:198)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:169)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:93)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:76)
+	at org.junit.platform.suite.engine.SuiteLauncher.execute(SuiteLauncher.java:63)
+	at org.junit.platform.suite.engine.SuiteTestDescriptor.execute(SuiteTestDescriptor.java:129)
+	at org.junit.platform.suite.engine.SuiteTestEngine.lambda$execute$0(SuiteTestEngine.java:73)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:183)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.Iterator.forEachRemaining(Iterator.java:133)
+	at java.base/java.util.Spliterators$IteratorSpliterator.forEachRemaining(Spliterators.java:1845)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:150)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:173)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:596)
+	at org.junit.platform.suite.engine.SuiteTestEngine.execute(SuiteTestEngine.java:73)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:198)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:169)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:93)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:58)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:141)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:57)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47)
+	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:56)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:184)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:148)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:122)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+	Suppressed: java.lang.IllegalStateException: Failed to load ApplicationContext for [WebMergedContextConfiguration@76e3b45b testClass = com.thinking.ticket.jpa.CucumberSpringConfiguration, locations = [], classes = [com.thinking.ticket.TicketReservationApplication], contextInitializerClasses = [], activeProfiles = ["test"], propertySourceDescriptors = [], propertySourceProperties = ["org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true"], contextCustomizers = [[ImportsContextCustomizer@10b4e7f8 key = [com.thinking.ticket.jpa.TestPaymentConfig]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@64bc21ac, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2f162cc0, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@b672aa8, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@611f8234, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@56e07a08, org.springframework.test.context.support.DynamicPropertiesContextCustomizer@fb328fda, org.springframework.boot.test.context.SpringBootTestAnnotation@6dae3205], resourceBasePath = "src/main/webapp", contextLoader = org.springframework.boot.test.context.SpringBootContextLoader, parent = null]
+		at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:180)
+		at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+		at io.cucumber.spring.TestContextAdaptor.create(TestContextAdaptor.java:42)
+		at io.cucumber.spring.SpringFactory.start(SpringFactory.java:121)
+		at io.cucumber.core.runner.Runner.buildBackendWorlds(Runner.java:134)
+		at io.cucumber.core.runner.Runner.runPickle(Runner.java:70)
+		at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:112)
+		at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
+		at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
+		at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
+		at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:109)
+		at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
+		at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
+		at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+		at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	Caused by: java.lang.IllegalStateException: java.lang.ExceptionInInitializerError
+		at org.springframework.boot.SpringApplication.handleRunFailure(SpringApplication.java:825)
+		at org.springframework.boot.SpringApplication.run(SpringApplication.java:345)
+		at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$3(SpringBootContextLoader.java:137)
+		at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:58)
+		at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:46)
+		at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1463)
+		at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:553)
+		at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:137)
+		at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:108)
+		at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:225)
+		at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:152)
+		... 14 more
+	Caused by: java.lang.ExceptionInInitializerError
+		at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+		at org.springframework.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:281)
+		at org.springframework.test.context.support.DynamicPropertiesContextCustomizer.lambda$buildDynamicPropertiesMap$3(DynamicPropertiesContextCustomizer.java:82)
+		at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+		at org.springframework.test.context.support.DynamicPropertiesContextCustomizer.buildDynamicPropertiesMap(DynamicPropertiesContextCustomizer.java:80)
+		at org.springframework.test.context.support.DynamicPropertiesContextCustomizer.customizeContext(DynamicPropertiesContextCustomizer.java:70)
+		at org.springframework.boot.test.context.SpringBootContextLoader$ContextCustomizerAdapter.initialize(SpringBootContextLoader.java:443)
+		at org.springframework.boot.SpringApplication.applyInitializers(SpringApplication.java:627)
+		at org.springframework.boot.SpringApplication.prepareContext(SpringApplication.java:401)
+		at org.springframework.boot.SpringApplication.run(SpringApplication.java:334)
+		... 23 more
+	Caused by: java.lang.IllegalStateException: Could not find a valid Docker environment. Please see logs and check configuration
+		at org.testcontainers.dockerclient.DockerClientProviderStrategy.lambda$getFirstValidStrategy$7(DockerClientProviderStrategy.java:277)
+		at java.base/java.util.Optional.orElseThrow(Optional.java:403)
+		at org.testcontainers.dockerclient.DockerClientProviderStrategy.getFirstValidStrategy(DockerClientProviderStrategy.java:268)
+		at org.testcontainers.DockerClientFactory.getOrInitializeStrategy(DockerClientFactory.java:152)
+		at org.testcontainers.DockerClientFactory.client(DockerClientFactory.java:194)
+		at org.testcontainers.DockerClientFactory$1.getDockerClient(DockerClientFactory.java:106)
+		at com.github.dockerjava.api.DockerClientDelegate.authConfig(DockerClientDelegate.java:109)
+		at org.testcontainers.containers.GenericContainer.start(GenericContainer.java:329)
+		at com.thinking.ticket.jpa.CucumberSpringConfiguration.<clinit>(CucumberSpringConfiguration.java:26)
+		... 33 more
+	Suppressed: java.lang.IllegalStateException: ApplicationContext failure threshold (1) exceeded: skipping repeated attempt to load context for [WebMergedContextConfiguration@78ec89a6 testClass = com.thinking.ticket.jpa.CucumberSpringConfiguration, locations = [], classes = [com.thinking.ticket.TicketReservationApplication], contextInitializerClasses = [], activeProfiles = ["test"], propertySourceDescriptors = [], propertySourceProperties = ["org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true"], contextCustomizers = [[ImportsContextCustomizer@3596b249 key = [com.thinking.ticket.jpa.TestPaymentConfig]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@64bc21ac, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2f162cc0, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@b672aa8, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@611f8234, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@56e07a08, org.springframework.test.context.support.DynamicPropertiesContextCustomizer@fb328fda, org.springframework.boot.test.context.SpringBootTestAnnotation@6dae3205], resourceBasePath = "src/main/webapp", contextLoader = org.springframework.boot.test.context.SpringBootContextLoader, parent = null]
+		at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:145)
+		at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+		at io.cucumber.spring.TestContextAdaptor.create(TestContextAdaptor.java:42)
+		at io.cucumber.spring.SpringFactory.start(SpringFactory.java:121)
+		at io.cucumber.core.runner.Runner.buildBackendWorlds(Runner.java:134)
+		at io.cucumber.core.runner.Runner.runPickle(Runner.java:70)
+		at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:112)
+		at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
+		at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
+		at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
+		at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:109)
+		at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
+		at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
+		at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+		at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	Suppressed: java.lang.IllegalStateException: ApplicationContext failure threshold (1) exceeded: skipping repeated attempt to load context for [WebMergedContextConfiguration@781711b7 testClass = com.thinking.ticket.jpa.CucumberSpringConfiguration, locations = [], classes = [com.thinking.ticket.TicketReservationApplication], contextInitializerClasses = [], activeProfiles = ["test"], propertySourceDescriptors = [], propertySourceProperties = ["org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true"], contextCustomizers = [[ImportsContextCustomizer@642a16aa key = [com.thinking.ticket.jpa.TestPaymentConfig]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@64bc21ac, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2f162cc0, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@b672aa8, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@611f8234, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@56e07a08, org.springframework.test.context.support.DynamicPropertiesContextCustomizer@fb328fda, org.springframework.boot.test.context.SpringBootTestAnnotation@6dae3205], resourceBasePath = "src/main/webapp", contextLoader = org.springframework.boot.test.context.SpringBootContextLoader, parent = null]
+		at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:145)
+		at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+		at io.cucumber.spring.TestContextAdaptor.create(TestContextAdaptor.java:42)
+		at io.cucumber.spring.SpringFactory.start(SpringFactory.java:121)
+		at io.cucumber.core.runner.Runner.buildBackendWorlds(Runner.java:134)
+		at io.cucumber.core.runner.Runner.runPickle(Runner.java:70)
+		at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:112)
+		at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
+		at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
+		at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
+		at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:109)
+		at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
+		at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
+		at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+		at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	Suppressed: java.lang.IllegalStateException: ApplicationContext failure threshold (1) exceeded: skipping repeated attempt to load context for [WebMergedContextConfiguration@294aba23 testClass = com.thinking.ticket.jpa.CucumberSpringConfiguration, locations = [], classes = [com.thinking.ticket.TicketReservationApplication], contextInitializerClasses = [], activeProfiles = ["test"], propertySourceDescriptors = [], propertySourceProperties = ["org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true"], contextCustomizers = [[ImportsContextCustomizer@69909c14 key = [com.thinking.ticket.jpa.TestPaymentConfig]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@64bc21ac, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2f162cc0, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@b672aa8, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@611f8234, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@56e07a08, org.springframework.test.context.support.DynamicPropertiesContextCustomizer@fb328fda, org.springframework.boot.test.context.SpringBootTestAnnotation@6dae3205], resourceBasePath = "src/main/webapp", contextLoader = org.springframework.boot.test.context.SpringBootContextLoader, parent = null]
+		at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:145)
+		at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+		at io.cucumber.spring.TestContextAdaptor.create(TestContextAdaptor.java:42)
+		at io.cucumber.spring.SpringFactory.start(SpringFactory.java:121)
+		at io.cucumber.core.runner.Runner.buildBackendWorlds(Runner.java:134)
+		at io.cucumber.core.runner.Runner.runPickle(Runner.java:70)
+		at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:112)
+		at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
+		at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
+		at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
+		at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:109)
+		at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
+		at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
+		at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+		at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	Suppressed: java.lang.IllegalStateException: ApplicationContext failure threshold (1) exceeded: skipping repeated attempt to load context for [WebMergedContextConfiguration@4e224df5 testClass = com.thinking.ticket.jpa.CucumberSpringConfiguration, locations = [], classes = [com.thinking.ticket.TicketReservationApplication], contextInitializerClasses = [], activeProfiles = ["test"], propertySourceDescriptors = [], propertySourceProperties = ["org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true"], contextCustomizers = [[ImportsContextCustomizer@32456db0 key = [com.thinking.ticket.jpa.TestPaymentConfig]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@64bc21ac, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2f162cc0, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@b672aa8, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@611f8234, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@56e07a08, org.springframework.test.context.support.DynamicPropertiesContextCustomizer@fb328fda, org.springframework.boot.test.context.SpringBootTestAnnotation@6dae3205], resourceBasePath = "src/main/webapp", contextLoader = org.springframework.boot.test.context.SpringBootContextLoader, parent = null]
+		at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:145)
+		at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+		at io.cucumber.spring.TestContextAdaptor.create(TestContextAdaptor.java:42)
+		at io.cucumber.spring.SpringFactory.start(SpringFactory.java:121)
+		at io.cucumber.core.runner.Runner.buildBackendWorlds(Runner.java:134)
+		at io.cucumber.core.runner.Runner.runPickle(Runner.java:70)
+		at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:112)
+		at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
+		at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
+		at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
+		at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:109)
+		at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
+		at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
+		at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+		at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	Suppressed: java.lang.IllegalStateException: ApplicationContext failure threshold (1) exceeded: skipping repeated attempt to load context for [WebMergedContextConfiguration@58a2d9f9 testClass = com.thinking.ticket.jpa.CucumberSpringConfiguration, locations = [], classes = [com.thinking.ticket.TicketReservationApplication], contextInitializerClasses = [], activeProfiles = ["test"], propertySourceDescriptors = [], propertySourceProperties = ["org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true"], contextCustomizers = [[ImportsContextCustomizer@4337afd key = [com.thinking.ticket.jpa.TestPaymentConfig]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@64bc21ac, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2f162cc0, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@b672aa8, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@611f8234, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@56e07a08, org.springframework.test.context.support.DynamicPropertiesContextCustomizer@fb328fda, org.springframework.boot.test.context.SpringBootTestAnnotation@6dae3205], resourceBasePath = "src/main/webapp", contextLoader = org.springframework.boot.test.context.SpringBootContextLoader, parent = null]
+		at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:145)
+		at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+		at io.cucumber.spring.TestContextAdaptor.create(TestContextAdaptor.java:42)
+		at io.cucumber.spring.SpringFactory.start(SpringFactory.java:121)
+		at io.cucumber.core.runner.Runner.buildBackendWorlds(Runner.java:134)
+		at io.cucumber.core.runner.Runner.runPickle(Runner.java:70)
+		at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:112)
+		at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
+		at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
+		at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
+		at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:109)
+		at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
+		at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
+		at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+		at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	Suppressed: java.lang.IllegalStateException: ApplicationContext failure threshold (1) exceeded: skipping repeated attempt to load context for [WebMergedContextConfiguration@3fa7df1 testClass = com.thinking.ticket.jpa.CucumberSpringConfiguration, locations = [], classes = [com.thinking.ticket.TicketReservationApplication], contextInitializerClasses = [], activeProfiles = ["test"], propertySourceDescriptors = [], propertySourceProperties = ["org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true"], contextCustomizers = [[ImportsContextCustomizer@4dd90166 key = [com.thinking.ticket.jpa.TestPaymentConfig]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@64bc21ac, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2f162cc0, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@b672aa8, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@611f8234, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@56e07a08, org.springframework.test.context.support.DynamicPropertiesContextCustomizer@fb328fda, org.springframework.boot.test.context.SpringBootTestAnnotation@6dae3205], resourceBasePath = "src/main/webapp", contextLoader = org.springframework.boot.test.context.SpringBootContextLoader, parent = null]
+		at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:145)
+		at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+		at io.cucumber.spring.TestContextAdaptor.create(TestContextAdaptor.java:42)
+		at io.cucumber.spring.SpringFactory.start(SpringFactory.java:121)
+		at io.cucumber.core.runner.Runner.buildBackendWorlds(Runner.java:134)
+		at io.cucumber.core.runner.Runner.runPickle(Runner.java:70)
+		at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:112)
+		at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
+		at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
+		at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
+		at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:109)
+		at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
+		at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
+		at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+		at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+
+0 Scenarios
+0 Steps
+0m10.778s
+
+
+[ERROR] Tests run: 7, Failures: 0, Errors: 7, Skipped: 0, Time elapsed: 10.81 s <<< FAILURE! -- in com.thinking.ticket.jpa.JpaCucumberAcceptanceTest
+[ERROR] 새 요구사항 — 제출물 4 변화 저항력 시험.5만원 이상 티켓은 10% 할인된 금액이 청구된다 -- Time elapsed: 8.952 s <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext for [WebMergedContextConfiguration@76e3b45b testClass = com.thinking.ticket.jpa.CucumberSpringConfiguration, locations = [], classes = [com.thinking.ticket.TicketReservationApplication], contextInitializerClasses = [], activeProfiles = ["test"], propertySourceDescriptors = [], propertySourceProperties = ["org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true"], contextCustomizers = [[ImportsContextCustomizer@10b4e7f8 key = [com.thinking.ticket.jpa.TestPaymentConfig]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@64bc21ac, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2f162cc0, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@b672aa8, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@611f8234, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@56e07a08, org.springframework.test.context.support.DynamicPropertiesContextCustomizer@fb328fda, org.springframework.boot.test.context.SpringBootTestAnnotation@6dae3205], resourceBasePath = "src/main/webapp", contextLoader = org.springframework.boot.test.context.SpringBootContextLoader, parent = null]
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:180)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+	at io.cucumber.spring.TestContextAdaptor.create(TestContextAdaptor.java:42)
+	at io.cucumber.spring.SpringFactory.start(SpringFactory.java:121)
+	at io.cucumber.core.runner.Runner.buildBackendWorlds(Runner.java:134)
+	at io.cucumber.core.runner.Runner.runPickle(Runner.java:70)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:112)
+	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
+	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
+	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:109)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+Caused by: java.lang.IllegalStateException: java.lang.ExceptionInInitializerError
+	at org.springframework.boot.SpringApplication.handleRunFailure(SpringApplication.java:825)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:345)
+	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$3(SpringBootContextLoader.java:137)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:58)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:46)
+	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1463)
+	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:553)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:137)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:108)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:225)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:152)
+	... 14 more
+Caused by: java.lang.ExceptionInInitializerError
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.springframework.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:281)
+	at org.springframework.test.context.support.DynamicPropertiesContextCustomizer.lambda$buildDynamicPropertiesMap$3(DynamicPropertiesContextCustomizer.java:82)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.test.context.support.DynamicPropertiesContextCustomizer.buildDynamicPropertiesMap(DynamicPropertiesContextCustomizer.java:80)
+	at org.springframework.test.context.support.DynamicPropertiesContextCustomizer.customizeContext(DynamicPropertiesContextCustomizer.java:70)
+	at org.springframework.boot.test.context.SpringBootContextLoader$ContextCustomizerAdapter.initialize(SpringBootContextLoader.java:443)
+	at org.springframework.boot.SpringApplication.applyInitializers(SpringApplication.java:627)
+	at org.springframework.boot.SpringApplication.prepareContext(SpringApplication.java:401)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:334)
+	... 23 more
+Caused by: java.lang.IllegalStateException: Could not find a valid Docker environment. Please see logs and check configuration
+	at org.testcontainers.dockerclient.DockerClientProviderStrategy.lambda$getFirstValidStrategy$7(DockerClientProviderStrategy.java:277)
+	at java.base/java.util.Optional.orElseThrow(Optional.java:403)
+	at org.testcontainers.dockerclient.DockerClientProviderStrategy.getFirstValidStrategy(DockerClientProviderStrategy.java:268)
+	at org.testcontainers.DockerClientFactory.getOrInitializeStrategy(DockerClientFactory.java:152)
+	at org.testcontainers.DockerClientFactory.client(DockerClientFactory.java:194)
+	at org.testcontainers.DockerClientFactory$1.getDockerClient(DockerClientFactory.java:106)
+	at com.github.dockerjava.api.DockerClientDelegate.authConfig(DockerClientDelegate.java:109)
+	at org.testcontainers.containers.GenericContainer.start(GenericContainer.java:329)
+	at com.thinking.ticket.jpa.CucumberSpringConfiguration.<clinit>(CucumberSpringConfiguration.java:26)
+	... 33 more
+
+[ERROR] 새 요구사항 — 제출물 4 변화 저항력 시험.판매 중지된 티켓은 예매할 수 없고 결제도 일어나지 않는다 -- Time elapsed: 0.033 s <<< ERROR!
+java.lang.IllegalStateException: ApplicationContext failure threshold (1) exceeded: skipping repeated attempt to load context for [WebMergedContextConfiguration@78ec89a6 testClass = com.thinking.ticket.jpa.CucumberSpringConfiguration, locations = [], classes = [com.thinking.ticket.TicketReservationApplication], contextInitializerClasses = [], activeProfiles = ["test"], propertySourceDescriptors = [], propertySourceProperties = ["org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true"], contextCustomizers = [[ImportsContextCustomizer@3596b249 key = [com.thinking.ticket.jpa.TestPaymentConfig]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@64bc21ac, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2f162cc0, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@b672aa8, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@611f8234, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@56e07a08, org.springframework.test.context.support.DynamicPropertiesContextCustomizer@fb328fda, org.springframework.boot.test.context.SpringBootTestAnnotation@6dae3205], resourceBasePath = "src/main/webapp", contextLoader = org.springframework.boot.test.context.SpringBootContextLoader, parent = null]
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:145)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+	at io.cucumber.spring.TestContextAdaptor.create(TestContextAdaptor.java:42)
+	at io.cucumber.spring.SpringFactory.start(SpringFactory.java:121)
+	at io.cucumber.core.runner.Runner.buildBackendWorlds(Runner.java:134)
+	at io.cucumber.core.runner.Runner.runPickle(Runner.java:70)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:112)
+	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
+	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
+	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:109)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+[ERROR] 티켓 예매 (인수테스트 안전망).유효한 회원이 미예약 티켓을 예매하면 예약이 확정되고 결제가 청구된다 -- Time elapsed: 0.028 s <<< ERROR!
+java.lang.IllegalStateException: ApplicationContext failure threshold (1) exceeded: skipping repeated attempt to load context for [WebMergedContextConfiguration@781711b7 testClass = com.thinking.ticket.jpa.CucumberSpringConfiguration, locations = [], classes = [com.thinking.ticket.TicketReservationApplication], contextInitializerClasses = [], activeProfiles = ["test"], propertySourceDescriptors = [], propertySourceProperties = ["org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true"], contextCustomizers = [[ImportsContextCustomizer@642a16aa key = [com.thinking.ticket.jpa.TestPaymentConfig]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@64bc21ac, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2f162cc0, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@b672aa8, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@611f8234, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@56e07a08, org.springframework.test.context.support.DynamicPropertiesContextCustomizer@fb328fda, org.springframework.boot.test.context.SpringBootTestAnnotation@6dae3205], resourceBasePath = "src/main/webapp", contextLoader = org.springframework.boot.test.context.SpringBootContextLoader, parent = null]
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:145)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+	at io.cucumber.spring.TestContextAdaptor.create(TestContextAdaptor.java:42)
+	at io.cucumber.spring.SpringFactory.start(SpringFactory.java:121)
+	at io.cucumber.core.runner.Runner.buildBackendWorlds(Runner.java:134)
+	at io.cucumber.core.runner.Runner.runPickle(Runner.java:70)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:112)
+	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
+	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
+	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:109)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+[ERROR] 티켓 예매 (인수테스트 안전망).등록되지 않은 회원은 예매할 수 없고 결제도 일어나지 않는다 -- Time elapsed: 0.037 s <<< ERROR!
+java.lang.IllegalStateException: ApplicationContext failure threshold (1) exceeded: skipping repeated attempt to load context for [WebMergedContextConfiguration@294aba23 testClass = com.thinking.ticket.jpa.CucumberSpringConfiguration, locations = [], classes = [com.thinking.ticket.TicketReservationApplication], contextInitializerClasses = [], activeProfiles = ["test"], propertySourceDescriptors = [], propertySourceProperties = ["org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true"], contextCustomizers = [[ImportsContextCustomizer@69909c14 key = [com.thinking.ticket.jpa.TestPaymentConfig]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@64bc21ac, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2f162cc0, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@b672aa8, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@611f8234, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@56e07a08, org.springframework.test.context.support.DynamicPropertiesContextCustomizer@fb328fda, org.springframework.boot.test.context.SpringBootTestAnnotation@6dae3205], resourceBasePath = "src/main/webapp", contextLoader = org.springframework.boot.test.context.SpringBootContextLoader, parent = null]
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:145)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+	at io.cucumber.spring.TestContextAdaptor.create(TestContextAdaptor.java:42)
+	at io.cucumber.spring.SpringFactory.start(SpringFactory.java:121)
+	at io.cucumber.core.runner.Runner.buildBackendWorlds(Runner.java:134)
+	at io.cucumber.core.runner.Runner.runPickle(Runner.java:70)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:112)
+	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
+	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
+	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:109)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+[ERROR] 티켓 예매 (인수테스트 안전망).이미 예약된 티켓은 예매할 수 없고 결제도 일어나지 않는다 -- Time elapsed: 0.034 s <<< ERROR!
+java.lang.IllegalStateException: ApplicationContext failure threshold (1) exceeded: skipping repeated attempt to load context for [WebMergedContextConfiguration@4e224df5 testClass = com.thinking.ticket.jpa.CucumberSpringConfiguration, locations = [], classes = [com.thinking.ticket.TicketReservationApplication], contextInitializerClasses = [], activeProfiles = ["test"], propertySourceDescriptors = [], propertySourceProperties = ["org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true"], contextCustomizers = [[ImportsContextCustomizer@32456db0 key = [com.thinking.ticket.jpa.TestPaymentConfig]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@64bc21ac, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2f162cc0, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@b672aa8, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@611f8234, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@56e07a08, org.springframework.test.context.support.DynamicPropertiesContextCustomizer@fb328fda, org.springframework.boot.test.context.SpringBootTestAnnotation@6dae3205], resourceBasePath = "src/main/webapp", contextLoader = org.springframework.boot.test.context.SpringBootContextLoader, parent = null]
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:145)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+	at io.cucumber.spring.TestContextAdaptor.create(TestContextAdaptor.java:42)
+	at io.cucumber.spring.SpringFactory.start(SpringFactory.java:121)
+	at io.cucumber.core.runner.Runner.buildBackendWorlds(Runner.java:134)
+	at io.cucumber.core.runner.Runner.runPickle(Runner.java:70)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:112)
+	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
+	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
+	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:109)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+[ERROR] 티켓 예매 (인수테스트 안전망).결제가 거절되면 예매는 실패하고 티켓은 예약되지 않는다 -- Time elapsed: 0.039 s <<< ERROR!
+java.lang.IllegalStateException: ApplicationContext failure threshold (1) exceeded: skipping repeated attempt to load context for [WebMergedContextConfiguration@58a2d9f9 testClass = com.thinking.ticket.jpa.CucumberSpringConfiguration, locations = [], classes = [com.thinking.ticket.TicketReservationApplication], contextInitializerClasses = [], activeProfiles = ["test"], propertySourceDescriptors = [], propertySourceProperties = ["org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true"], contextCustomizers = [[ImportsContextCustomizer@4337afd key = [com.thinking.ticket.jpa.TestPaymentConfig]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@64bc21ac, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2f162cc0, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@b672aa8, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@611f8234, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@56e07a08, org.springframework.test.context.support.DynamicPropertiesContextCustomizer@fb328fda, org.springframework.boot.test.context.SpringBootTestAnnotation@6dae3205], resourceBasePath = "src/main/webapp", contextLoader = org.springframework.boot.test.context.SpringBootContextLoader, parent = null]
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:145)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+	at io.cucumber.spring.TestContextAdaptor.create(TestContextAdaptor.java:42)
+	at io.cucumber.spring.SpringFactory.start(SpringFactory.java:121)
+	at io.cucumber.core.runner.Runner.buildBackendWorlds(Runner.java:134)
+	at io.cucumber.core.runner.Runner.runPickle(Runner.java:70)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:112)
+	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
+	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
+	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:109)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+[ERROR] 티켓 예매 (인수테스트 안전망).존재하지 않는 티켓은 예매할 수 없고 결제도 일어나지 않는다 -- Time elapsed: 0.040 s <<< ERROR!
+java.lang.IllegalStateException: ApplicationContext failure threshold (1) exceeded: skipping repeated attempt to load context for [WebMergedContextConfiguration@3fa7df1 testClass = com.thinking.ticket.jpa.CucumberSpringConfiguration, locations = [], classes = [com.thinking.ticket.TicketReservationApplication], contextInitializerClasses = [], activeProfiles = ["test"], propertySourceDescriptors = [], propertySourceProperties = ["org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true"], contextCustomizers = [[ImportsContextCustomizer@4dd90166 key = [com.thinking.ticket.jpa.TestPaymentConfig]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@64bc21ac, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2f162cc0, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@b672aa8, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@611f8234, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@56e07a08, org.springframework.test.context.support.DynamicPropertiesContextCustomizer@fb328fda, org.springframework.boot.test.context.SpringBootTestAnnotation@6dae3205], resourceBasePath = "src/main/webapp", contextLoader = org.springframework.boot.test.context.SpringBootContextLoader, parent = null]
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:145)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+	at io.cucumber.spring.TestContextAdaptor.create(TestContextAdaptor.java:42)
+	at io.cucumber.spring.SpringFactory.start(SpringFactory.java:121)
+	at io.cucumber.core.runner.Runner.buildBackendWorlds(Runner.java:134)
+	at io.cucumber.core.runner.Runner.runPickle(Runner.java:70)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:112)
+	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
+	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
+	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:109)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+[INFO] 
+[INFO] Results:
+[INFO] 
+[ERROR] Errors: 
+[ERROR] 새 요구사항 — 제출물 4 변화 저항력 시험.5만원 이상 티켓은 10% 할인된 금액이 청구된다
+[INFO]   Run 1: PASS
+[ERROR]   Run 2: Failed to load ApplicationContext for [WebMergedContextConfiguration@76e3b45b testClass = com.thinking.ticket.jpa.CucumberSpringConfiguration, locations = [], classes = [com.thinking.ticket.TicketReservationApplication], contextInitializerClasses = [], activeProfiles = ["test"], propertySourceDescriptors = [], propertySourceProperties = ["org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true"], contextCustomizers = [[ImportsContextCustomizer@10b4e7f8 key = [com.thinking.ticket.jpa.TestPaymentConfig]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@64bc21ac, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2f162cc0, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@b672aa8, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@611f8234, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@56e07a08, org.springframework.test.context.support.DynamicPropertiesContextCustomizer@fb328fda, org.springframework.boot.test.context.SpringBootTestAnnotation@6dae3205], resourceBasePath = "src/main/webapp", contextLoader = org.springframework.boot.test.context.SpringBootContextLoader, parent = null]
+[INFO] 
+[ERROR] 새 요구사항 — 제출물 4 변화 저항력 시험.판매 중지된 티켓은 예매할 수 없고 결제도 일어나지 않는다
+[INFO]   Run 1: PASS
+[ERROR]   Run 2: ApplicationContext failure threshold (1) exceeded: skipping repeated attempt to load context for [WebMergedContextConfiguration@78ec89a6 testClass = com.thinking.ticket.jpa.CucumberSpringConfiguration, locations = [], classes = [com.thinking.ticket.TicketReservationApplication], contextInitializerClasses = [], activeProfiles = ["test"], propertySourceDescriptors = [], propertySourceProperties = ["org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true"], contextCustomizers = [[ImportsContextCustomizer@3596b249 key = [com.thinking.ticket.jpa.TestPaymentConfig]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@64bc21ac, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2f162cc0, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@b672aa8, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@611f8234, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@56e07a08, org.springframework.test.context.support.DynamicPropertiesContextCustomizer@fb328fda, org.springframework.boot.test.context.SpringBootTestAnnotation@6dae3205], resourceBasePath = "src/main/webapp", contextLoader = org.springframework.boot.test.context.SpringBootContextLoader, parent = null]
+[INFO] 
+[ERROR] 티켓 예매 (인수테스트 안전망).결제가 거절되면 예매는 실패하고 티켓은 예약되지 않는다
+[INFO]   Run 1: PASS
+[ERROR]   Run 2: ApplicationContext failure threshold (1) exceeded: skipping repeated attempt to load context for [WebMergedContextConfiguration@58a2d9f9 testClass = com.thinking.ticket.jpa.CucumberSpringConfiguration, locations = [], classes = [com.thinking.ticket.TicketReservationApplication], contextInitializerClasses = [], activeProfiles = ["test"], propertySourceDescriptors = [], propertySourceProperties = ["org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true"], contextCustomizers = [[ImportsContextCustomizer@4337afd key = [com.thinking.ticket.jpa.TestPaymentConfig]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@64bc21ac, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2f162cc0, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@b672aa8, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@611f8234, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@56e07a08, org.springframework.test.context.support.DynamicPropertiesContextCustomizer@fb328fda, org.springframework.boot.test.context.SpringBootTestAnnotation@6dae3205], resourceBasePath = "src/main/webapp", contextLoader = org.springframework.boot.test.context.SpringBootContextLoader, parent = null]
+[INFO] 
+[ERROR] 티켓 예매 (인수테스트 안전망).등록되지 않은 회원은 예매할 수 없고 결제도 일어나지 않는다
+[INFO]   Run 1: PASS
+[ERROR]   Run 2: ApplicationContext failure threshold (1) exceeded: skipping repeated attempt to load context for [WebMergedContextConfiguration@294aba23 testClass = com.thinking.ticket.jpa.CucumberSpringConfiguration, locations = [], classes = [com.thinking.ticket.TicketReservationApplication], contextInitializerClasses = [], activeProfiles = ["test"], propertySourceDescriptors = [], propertySourceProperties = ["org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true"], contextCustomizers = [[ImportsContextCustomizer@69909c14 key = [com.thinking.ticket.jpa.TestPaymentConfig]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@64bc21ac, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2f162cc0, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@b672aa8, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@611f8234, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@56e07a08, org.springframework.test.context.support.DynamicPropertiesContextCustomizer@fb328fda, org.springframework.boot.test.context.SpringBootTestAnnotation@6dae3205], resourceBasePath = "src/main/webapp", contextLoader = org.springframework.boot.test.context.SpringBootContextLoader, parent = null]
+[INFO] 
+[ERROR] 티켓 예매 (인수테스트 안전망).유효한 회원이 미예약 티켓을 예매하면 예약이 확정되고 결제가 청구된다
+[INFO]   Run 1: PASS
+[ERROR]   Run 2: ApplicationContext failure threshold (1) exceeded: skipping repeated attempt to load context for [WebMergedContextConfiguration@781711b7 testClass = com.thinking.ticket.jpa.CucumberSpringConfiguration, locations = [], classes = [com.thinking.ticket.TicketReservationApplication], contextInitializerClasses = [], activeProfiles = ["test"], propertySourceDescriptors = [], propertySourceProperties = ["org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true"], contextCustomizers = [[ImportsContextCustomizer@642a16aa key = [com.thinking.ticket.jpa.TestPaymentConfig]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@64bc21ac, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2f162cc0, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@b672aa8, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@611f8234, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@56e07a08, org.springframework.test.context.support.DynamicPropertiesContextCustomizer@fb328fda, org.springframework.boot.test.context.SpringBootTestAnnotation@6dae3205], resourceBasePath = "src/main/webapp", contextLoader = org.springframework.boot.test.context.SpringBootContextLoader, parent = null]
+[INFO] 
+[ERROR] 티켓 예매 (인수테스트 안전망).이미 예약된 티켓은 예매할 수 없고 결제도 일어나지 않는다
+[INFO]   Run 1: PASS
+[ERROR]   Run 2: ApplicationContext failure threshold (1) exceeded: skipping repeated attempt to load context for [WebMergedContextConfiguration@4e224df5 testClass = com.thinking.ticket.jpa.CucumberSpringConfiguration, locations = [], classes = [com.thinking.ticket.TicketReservationApplication], contextInitializerClasses = [], activeProfiles = ["test"], propertySourceDescriptors = [], propertySourceProperties = ["org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true"], contextCustomizers = [[ImportsContextCustomizer@32456db0 key = [com.thinking.ticket.jpa.TestPaymentConfig]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@64bc21ac, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2f162cc0, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@b672aa8, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@611f8234, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@56e07a08, org.springframework.test.context.support.DynamicPropertiesContextCustomizer@fb328fda, org.springframework.boot.test.context.SpringBootTestAnnotation@6dae3205], resourceBasePath = "src/main/webapp", contextLoader = org.springframework.boot.test.context.SpringBootContextLoader, parent = null]
+[INFO] 
+[ERROR] 티켓 예매 (인수테스트 안전망).존재하지 않는 티켓은 예매할 수 없고 결제도 일어나지 않는다
+[INFO]   Run 1: PASS
+[ERROR]   Run 2: ApplicationContext failure threshold (1) exceeded: skipping repeated attempt to load context for [WebMergedContextConfiguration@3fa7df1 testClass = com.thinking.ticket.jpa.CucumberSpringConfiguration, locations = [], classes = [com.thinking.ticket.TicketReservationApplication], contextInitializerClasses = [], activeProfiles = ["test"], propertySourceDescriptors = [], propertySourceProperties = ["org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true"], contextCustomizers = [[ImportsContextCustomizer@4dd90166 key = [com.thinking.ticket.jpa.TestPaymentConfig]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@64bc21ac, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2f162cc0, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@b672aa8, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@611f8234, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@56e07a08, org.springframework.test.context.support.DynamicPropertiesContextCustomizer@fb328fda, org.springframework.boot.test.context.SpringBootTestAnnotation@6dae3205], resourceBasePath = "src/main/webapp", contextLoader = org.springframework.boot.test.context.SpringBootContextLoader, parent = null]
+[INFO] 
+[INFO] 
+[ERROR] Tests run: 7, Failures: 0, Errors: 7, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  56.223 s
+[INFO] Finished at: 2026-07-29T09:36:05Z
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.2.5:test (default-test) on project ticket-reservation: 
+[ERROR] 
+[ERROR] Please refer to /app/target/surefire-reports for the individual test results.
+[ERROR] Please refer to dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

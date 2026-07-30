@@ -1,0 +1,353 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------< com.thinking:ticket-reservation >-------------------
+[INFO] Building ticket-reservation 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ ticket-reservation ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] Copying 0 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ ticket-reservation ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ ticket-reservation ---
+[INFO] Copying 2 resources from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ ticket-reservation ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 15 source files with javac [debug parameters release 17] to target/test-classes
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ ticket-reservation ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.thinking.ticket.CucumberAcceptanceTest
+
+Scenario: 5만원 이상 티켓은 10% 할인된 금액이 청구된다        # features/new_requirements.feature:9
+  Given 회원 저장소와 티켓 저장소가 비어 있다                # com.thinking.ticket.steps.TicketReservationSteps.저장소가_비어_있다()
+  Given 회원 1이 등록되어 있다                        # com.thinking.ticket.steps.TicketReservationSteps.회원이_등록되어_있다(long)
+  And 가격 50000원짜리 미예약 티켓 20이 있다              # com.thinking.ticket.steps.TicketReservationSteps.미예약_티켓이_있다(int,long)
+  When 회원 1이 카드정보 "card-token"으로 티켓 20을 예매하면 # com.thinking.ticket.steps.TicketReservationSteps.예매하면(long,java.lang.String,long)
+  Then 예매는 성공한다                              # com.thinking.ticket.steps.TicketReservationSteps.예매는_성공한다()
+  And 티켓 20은 회원 1에게 예약된다                     # com.thinking.ticket.steps.TicketReservationSteps.티켓이_회원에게_예약된다(long,long)
+  And 45000원이 청구된다                           # com.thinking.ticket.steps.TicketReservationSteps.금액이_청구된다(int)
+
+Scenario: 판매 중지된 티켓은 예매할 수 없고 결제도 일어나지 않는다   # features/new_requirements.feature:18
+  Given 회원 저장소와 티켓 저장소가 비어 있다                # com.thinking.ticket.steps.TicketReservationSteps.저장소가_비어_있다()
+  Given 회원 1이 등록되어 있다                        # com.thinking.ticket.steps.TicketReservationSteps.회원이_등록되어_있다(long)
+  And 가격 30000원짜리 판매 중지된 티켓 20이 있다           # com.thinking.ticket.steps.TicketReservationSteps.판매_중지된_티켓이_있다(int,long)
+  When 회원 1이 카드정보 "card-token"으로 티켓 20을 예매하면 # com.thinking.ticket.steps.TicketReservationSteps.예매하면(long,java.lang.String,long)
+  Then 예매는 판매 중지로 거부된다                       # com.thinking.ticket.steps.TicketReservationSteps.판매_중지로_거부된다()
+  And 결제는 청구되지 않는다                           # com.thinking.ticket.steps.TicketReservationSteps.결제는_청구되지_않는다()
+
+Scenario: 유효한 회원이 미예약 티켓을 예매하면 예약이 확정되고 결제가 청구된다 # features/ticket_reservation.feature:12
+  Given 회원 저장소와 티켓 저장소가 비어 있다                    # com.thinking.ticket.steps.TicketReservationSteps.저장소가_비어_있다()
+  Given 회원 1이 등록되어 있다                            # com.thinking.ticket.steps.TicketReservationSteps.회원이_등록되어_있다(long)
+  And 가격 30000원짜리 미예약 티켓 20이 있다                  # com.thinking.ticket.steps.TicketReservationSteps.미예약_티켓이_있다(int,long)
+  When 회원 1이 카드정보 "card-token"으로 티켓 20을 예매하면     # com.thinking.ticket.steps.TicketReservationSteps.예매하면(long,java.lang.String,long)
+  Then 예매는 성공한다                                  # com.thinking.ticket.steps.TicketReservationSteps.예매는_성공한다()
+  And 티켓 20은 회원 1에게 예약된다                         # com.thinking.ticket.steps.TicketReservationSteps.티켓이_회원에게_예약된다(long,long)
+  And 30000원이 청구된다                               # com.thinking.ticket.steps.TicketReservationSteps.금액이_청구된다(int)
+
+Scenario: 등록되지 않은 회원은 예매할 수 없고 결제도 일어나지 않는다  # features/ticket_reservation.feature:20
+  Given 회원 저장소와 티켓 저장소가 비어 있다                # com.thinking.ticket.steps.TicketReservationSteps.저장소가_비어_있다()
+  Given 가격 30000원짜리 미예약 티켓 20이 있다            # com.thinking.ticket.steps.TicketReservationSteps.미예약_티켓이_있다(int,long)
+  When 회원 1이 카드정보 "card-token"으로 티켓 20을 예매하면 # com.thinking.ticket.steps.TicketReservationSteps.예매하면(long,java.lang.String,long)
+  Then 예매는 회원 없음으로 거부된다                      # com.thinking.ticket.steps.TicketReservationSteps.회원_없음으로_거부된다()
+  And 결제는 청구되지 않는다                           # com.thinking.ticket.steps.TicketReservationSteps.결제는_청구되지_않는다()
+
+Scenario: 이미 예약된 티켓은 예매할 수 없고 결제도 일어나지 않는다   # features/ticket_reservation.feature:26
+  Given 회원 저장소와 티켓 저장소가 비어 있다                # com.thinking.ticket.steps.TicketReservationSteps.저장소가_비어_있다()
+  Given 회원 1이 등록되어 있다                        # com.thinking.ticket.steps.TicketReservationSteps.회원이_등록되어_있다(long)
+  And 가격 30000원짜리 이미 예약된 티켓 20이 있다           # com.thinking.ticket.steps.TicketReservationSteps.이미_예약된_티켓이_있다(int,long)
+  When 회원 1이 카드정보 "card-token"으로 티켓 20을 예매하면 # com.thinking.ticket.steps.TicketReservationSteps.예매하면(long,java.lang.String,long)
+  Then 예매는 이미 예약됨으로 거부된다                     # com.thinking.ticket.steps.TicketReservationSteps.이미_예약됨으로_거부된다()
+  And 결제는 청구되지 않는다                           # com.thinking.ticket.steps.TicketReservationSteps.결제는_청구되지_않는다()
+
+Scenario: 결제가 거절되면 예매는 실패하고 티켓은 예약되지 않는다     # features/ticket_reservation.feature:33
+  Given 회원 저장소와 티켓 저장소가 비어 있다                # com.thinking.ticket.steps.TicketReservationSteps.저장소가_비어_있다()
+  Given 회원 1이 등록되어 있다                        # com.thinking.ticket.steps.TicketReservationSteps.회원이_등록되어_있다(long)
+  And 가격 30000원짜리 미예약 티켓 20이 있다              # com.thinking.ticket.steps.TicketReservationSteps.미예약_티켓이_있다(int,long)
+  And 결제는 거절되는 상황이다                          # com.thinking.ticket.steps.TicketReservationSteps.결제는_거절된다()
+  When 회원 1이 카드정보 "card-token"으로 티켓 20을 예매하면 # com.thinking.ticket.steps.TicketReservationSteps.예매하면(long,java.lang.String,long)
+  Then 예매는 결제 실패로 거부된다                       # com.thinking.ticket.steps.TicketReservationSteps.결제_실패로_거부된다()
+  And 티켓 20은 예약되지 않는다                        # com.thinking.ticket.steps.TicketReservationSteps.티켓은_예약되지_않는다(long)
+  And 30000원 청구가 시도된다                        # com.thinking.ticket.steps.TicketReservationSteps.청구가_시도된다(int)
+
+Scenario: 존재하지 않는 티켓은 예매할 수 없고 결제도 일어나지 않는다  # features/ticket_reservation.feature:42
+  Given 회원 저장소와 티켓 저장소가 비어 있다                # com.thinking.ticket.steps.TicketReservationSteps.저장소가_비어_있다()
+  Given 회원 1이 등록되어 있다                        # com.thinking.ticket.steps.TicketReservationSteps.회원이_등록되어_있다(long)
+  And 티켓 20은 저장소에 없다                         # com.thinking.ticket.steps.TicketReservationSteps.티켓이_저장소에_없다(long)
+  When 회원 1이 카드정보 "card-token"으로 티켓 20을 예매하면 # com.thinking.ticket.steps.TicketReservationSteps.예매하면(long,java.lang.String,long)
+  Then 예매는 티켓 없음으로 거부된다                      # com.thinking.ticket.steps.TicketReservationSteps.티켓_없음으로_거부된다()
+  And 결제는 청구되지 않는다                           # com.thinking.ticket.steps.TicketReservationSteps.결제는_청구되지_않는다()
+
+7 Scenarios (7 passed)
+45 Steps (45 passed)
+0m1.515s
+
+
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.743 s -- in com.thinking.ticket.CucumberAcceptanceTest
+[INFO] Running com.thinking.ticket.e2e.E2eCucumberAcceptanceTest
+08:04:16.551 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.thinking.ticket.e2e.E2eCucumberSpringConfiguration]: E2eCucumberSpringConfiguration does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+08:04:17.232 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.thinking.ticket.TicketReservationApplication for test class com.thinking.ticket.e2e.E2eCucumberSpringConfiguration
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.4)
+
+2026-07-30T08:04:20.323Z  INFO 92 --- [ticket-reservation] [           main] org.testcontainers.images.PullPolicy     : Image pull policy will be performed by: DefaultPullPolicy()
+2026-07-30T08:04:20.344Z  INFO 92 --- [ticket-reservation] [           main] o.t.utility.ImageNameSubstitutor         : Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2026-07-30T08:04:23.972Z  INFO 92 --- [ticket-reservation] [           main] o.t.d.DockerClientProviderStrategy       : Found Docker environment with local Unix socket (unix:///var/run/docker.sock)
+2026-07-30T08:04:23.977Z  INFO 92 --- [ticket-reservation] [           main] org.testcontainers.DockerClientFactory   : Docker host IP address is host.docker.internal
+2026-07-30T08:04:24.036Z  INFO 92 --- [ticket-reservation] [           main] org.testcontainers.DockerClientFactory   : Connected to docker: 
+  Server Version: 29.6.2
+  API Version: 1.55
+  Operating System: Docker Desktop
+  Total Memory: 15947 MB
+2026-07-30T08:04:24.242Z  INFO 92 --- [ticket-reservation] [           main] tc.testcontainers/ryuk:0.7.0             : Creating container for image: testcontainers/ryuk:0.7.0
+2026-07-30T08:04:24.271Z  INFO 92 --- [ticket-reservation] [           main] o.t.utility.RegistryAuthLocator          : Failure when attempting to lookup auth config. Please ignore if you don't have images in an authenticated registry. Details: (dockerImageName: testcontainers/ryuk:0.7.0, configFile: /root/.docker/config.json, configEnv: DOCKER_AUTH_CONFIG). Falling back to docker-java default behaviour. Exception message: Status 404: No config supplied. Checked in order: /root/.docker/config.json (file not found), DOCKER_AUTH_CONFIG (not set)
+2026-07-30T08:04:24.931Z  INFO 92 --- [ticket-reservation] [           main] tc.testcontainers/ryuk:0.7.0             : Container testcontainers/ryuk:0.7.0 is starting: e63c318d30fb065018ba6a2a9657afd4aca80ffdfbf64b242c19f744021564af
+2026-07-30T08:04:25.819Z  INFO 92 --- [ticket-reservation] [           main] tc.testcontainers/ryuk:0.7.0             : Container testcontainers/ryuk:0.7.0 started in PT1.576891378S
+2026-07-30T08:04:25.835Z  INFO 92 --- [ticket-reservation] [           main] o.t.utility.RyukResourceReaper           : Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2026-07-30T08:04:25.836Z  INFO 92 --- [ticket-reservation] [           main] org.testcontainers.DockerClientFactory   : Checking the system...
+2026-07-30T08:04:25.839Z  INFO 92 --- [ticket-reservation] [           main] org.testcontainers.DockerClientFactory   : ✔︎ Docker server version should be at least 1.6.0
+2026-07-30T08:04:25.849Z  INFO 92 --- [ticket-reservation] [           main] tc.mysql:8.4                             : Creating container for image: mysql:8.4
+2026-07-30T08:04:26.118Z  INFO 92 --- [ticket-reservation] [           main] tc.mysql:8.4                             : Container mysql:8.4 is starting: b8d4f4424b88e696dde709a1612101fc28c10e2a617a78cabe17bc6daaf85601
+2026-07-30T08:04:26.530Z  INFO 92 --- [ticket-reservation] [           main] tc.mysql:8.4                             : Waiting for database connection to become available at jdbc:mysql://host.docker.internal:2461/test using query 'SELECT 1'
+2026-07-30T08:04:41.519Z  INFO 92 --- [ticket-reservation] [           main] tc.mysql:8.4                             : Container mysql:8.4 started in PT15.669491015S
+2026-07-30T08:04:41.520Z  INFO 92 --- [ticket-reservation] [           main] tc.mysql:8.4                             : Container is started (JDBC URL: jdbc:mysql://host.docker.internal:2461/test)
+2026-07-30T08:04:41.551Z  INFO 92 --- [ticket-reservation] [           main] c.t.t.e.E2eCucumberSpringConfiguration   : Starting E2eCucumberSpringConfiguration using Java 17.0.19 with PID 92 (started by root in /app)
+2026-07-30T08:04:41.552Z  INFO 92 --- [ticket-reservation] [           main] c.t.t.e.E2eCucumberSpringConfiguration   : The following 1 profile is active: "test"
+2026-07-30T08:04:46.476Z  INFO 92 --- [ticket-reservation] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-30T08:04:47.139Z  INFO 92 --- [ticket-reservation] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 627 ms. Found 2 JPA repository interfaces.
+2026-07-30T08:04:50.535Z  INFO 92 --- [ticket-reservation] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 0 (http)
+2026-07-30T08:04:50.597Z  INFO 92 --- [ticket-reservation] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-07-30T08:04:50.598Z  INFO 92 --- [ticket-reservation] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
+2026-07-30T08:04:50.760Z  INFO 92 --- [ticket-reservation] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-07-30T08:04:50.760Z  INFO 92 --- [ticket-reservation] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 9129 ms
+2026-07-30T08:04:52.238Z  INFO 92 --- [ticket-reservation] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-07-30T08:04:52.649Z  INFO 92 --- [ticket-reservation] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2026-07-30T08:04:52.852Z  INFO 92 --- [ticket-reservation] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-07-30T08:04:54.785Z  INFO 92 --- [ticket-reservation] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-30T08:04:55.041Z  INFO 92 --- [ticket-reservation] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-07-30T08:04:55.322Z  INFO 92 --- [ticket-reservation] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5dabe7c8
+2026-07-30T08:04:55.338Z  INFO 92 --- [ticket-reservation] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-07-30T08:04:55.533Z  WARN 92 --- [ticket-reservation] [           main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-30T08:05:02.061Z  INFO 92 --- [ticket-reservation] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-30T08:05:02.410Z  INFO 92 --- [ticket-reservation] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-30T08:05:03.746Z  INFO 92 --- [ticket-reservation] [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-07-30T08:05:09.329Z  INFO 92 --- [ticket-reservation] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
+2026-07-30T08:05:09.640Z  INFO 92 --- [ticket-reservation] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 37673 (http) with context path '/'
+2026-07-30T08:05:09.657Z  INFO 92 --- [ticket-reservation] [           main] c.t.t.e.E2eCucumberSpringConfiguration   : Started E2eCucumberSpringConfiguration in 51.53 seconds (process running for 57.976)
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+
+Scenario: 5만원 이상 티켓은 10% 할인된 금액이 청구된다        # features/new_requirements.feature:9
+  Given 회원 저장소와 티켓 저장소가 비어 있다                # com.thinking.ticket.e2e.HttpTicketReservationSteps.저장소가_비어_있다()
+  Given 회원 1이 등록되어 있다                        # com.thinking.ticket.e2e.HttpTicketReservationSteps.회원이_등록되어_있다(long)
+  And 가격 50000원짜리 미예약 티켓 20이 있다              # com.thinking.ticket.e2e.HttpTicketReservationSteps.미예약_티켓이_있다(int,long)
+2026-07-30T08:05:11.744Z  INFO 92 --- [ticket-reservation] [o-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-30T08:05:11.744Z  INFO 92 --- [ticket-reservation] [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-07-30T08:05:11.746Z  INFO 92 --- [ticket-reservation] [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+  When 회원 1이 카드정보 "card-token"으로 티켓 20을 예매하면 # com.thinking.ticket.e2e.HttpTicketReservationSteps.예매하면(long,java.lang.String,long)
+  Then 예매는 성공한다                              # com.thinking.ticket.e2e.HttpTicketReservationSteps.예매는_성공한다()
+  And 티켓 20은 회원 1에게 예약된다                     # com.thinking.ticket.e2e.HttpTicketReservationSteps.티켓이_회원에게_예약된다(long,long)
+  And 45000원이 청구된다                           # com.thinking.ticket.e2e.HttpTicketReservationSteps.금액이_청구된다(int)
+2026-07-30T08:05:13.001Z  INFO 92 --- [ticket-reservation] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.thinking.ticket.e2e.E2eCucumberSpringConfiguration]: E2eCucumberSpringConfiguration does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-07-30T08:05:13.008Z  INFO 92 --- [ticket-reservation] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.thinking.ticket.TicketReservationApplication for test class com.thinking.ticket.e2e.E2eCucumberSpringConfiguration
+
+Scenario: 판매 중지된 티켓은 예매할 수 없고 결제도 일어나지 않는다   # features/new_requirements.feature:18
+  Given 회원 저장소와 티켓 저장소가 비어 있다                # com.thinking.ticket.e2e.HttpTicketReservationSteps.저장소가_비어_있다()
+  Given 회원 1이 등록되어 있다                        # com.thinking.ticket.e2e.HttpTicketReservationSteps.회원이_등록되어_있다(long)
+  And 가격 30000원짜리 판매 중지된 티켓 20이 있다           # com.thinking.ticket.e2e.HttpTicketReservationSteps.판매_중지된_티켓이_있다(int,long)
+  When 회원 1이 카드정보 "card-token"으로 티켓 20을 예매하면 # com.thinking.ticket.e2e.HttpTicketReservationSteps.예매하면(long,java.lang.String,long)
+  Then 예매는 판매 중지로 거부된다                       # com.thinking.ticket.e2e.HttpTicketReservationSteps.판매_중지로_거부된다()
+  And 결제는 청구되지 않는다                           # com.thinking.ticket.e2e.HttpTicketReservationSteps.결제는_청구되지_않는다()
+2026-07-30T08:05:13.166Z  INFO 92 --- [ticket-reservation] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.thinking.ticket.e2e.E2eCucumberSpringConfiguration]: E2eCucumberSpringConfiguration does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-07-30T08:05:13.170Z  INFO 92 --- [ticket-reservation] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.thinking.ticket.TicketReservationApplication for test class com.thinking.ticket.e2e.E2eCucumberSpringConfiguration
+
+Scenario: 유효한 회원이 미예약 티켓을 예매하면 예약이 확정되고 결제가 청구된다 # features/ticket_reservation.feature:12
+  Given 회원 저장소와 티켓 저장소가 비어 있다                    # com.thinking.ticket.e2e.HttpTicketReservationSteps.저장소가_비어_있다()
+  Given 회원 1이 등록되어 있다                            # com.thinking.ticket.e2e.HttpTicketReservationSteps.회원이_등록되어_있다(long)
+  And 가격 30000원짜리 미예약 티켓 20이 있다                  # com.thinking.ticket.e2e.HttpTicketReservationSteps.미예약_티켓이_있다(int,long)
+  When 회원 1이 카드정보 "card-token"으로 티켓 20을 예매하면     # com.thinking.ticket.e2e.HttpTicketReservationSteps.예매하면(long,java.lang.String,long)
+  Then 예매는 성공한다                                  # com.thinking.ticket.e2e.HttpTicketReservationSteps.예매는_성공한다()
+  And 티켓 20은 회원 1에게 예약된다                         # com.thinking.ticket.e2e.HttpTicketReservationSteps.티켓이_회원에게_예약된다(long,long)
+  And 30000원이 청구된다                               # com.thinking.ticket.e2e.HttpTicketReservationSteps.금액이_청구된다(int)
+2026-07-30T08:05:13.301Z  INFO 92 --- [ticket-reservation] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.thinking.ticket.e2e.E2eCucumberSpringConfiguration]: E2eCucumberSpringConfiguration does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-07-30T08:05:13.305Z  INFO 92 --- [ticket-reservation] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.thinking.ticket.TicketReservationApplication for test class com.thinking.ticket.e2e.E2eCucumberSpringConfiguration
+
+Scenario: 등록되지 않은 회원은 예매할 수 없고 결제도 일어나지 않는다  # features/ticket_reservation.feature:20
+  Given 회원 저장소와 티켓 저장소가 비어 있다                # com.thinking.ticket.e2e.HttpTicketReservationSteps.저장소가_비어_있다()
+  Given 가격 30000원짜리 미예약 티켓 20이 있다            # com.thinking.ticket.e2e.HttpTicketReservationSteps.미예약_티켓이_있다(int,long)
+  When 회원 1이 카드정보 "card-token"으로 티켓 20을 예매하면 # com.thinking.ticket.e2e.HttpTicketReservationSteps.예매하면(long,java.lang.String,long)
+  Then 예매는 회원 없음으로 거부된다                      # com.thinking.ticket.e2e.HttpTicketReservationSteps.회원_없음으로_거부된다()
+  And 결제는 청구되지 않는다                           # com.thinking.ticket.e2e.HttpTicketReservationSteps.결제는_청구되지_않는다()
+2026-07-30T08:05:13.383Z  INFO 92 --- [ticket-reservation] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.thinking.ticket.e2e.E2eCucumberSpringConfiguration]: E2eCucumberSpringConfiguration does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-07-30T08:05:13.387Z  INFO 92 --- [ticket-reservation] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.thinking.ticket.TicketReservationApplication for test class com.thinking.ticket.e2e.E2eCucumberSpringConfiguration
+
+Scenario: 이미 예약된 티켓은 예매할 수 없고 결제도 일어나지 않는다   # features/ticket_reservation.feature:26
+  Given 회원 저장소와 티켓 저장소가 비어 있다                # com.thinking.ticket.e2e.HttpTicketReservationSteps.저장소가_비어_있다()
+  Given 회원 1이 등록되어 있다                        # com.thinking.ticket.e2e.HttpTicketReservationSteps.회원이_등록되어_있다(long)
+  And 가격 30000원짜리 이미 예약된 티켓 20이 있다           # com.thinking.ticket.e2e.HttpTicketReservationSteps.이미_예약된_티켓이_있다(int,long)
+  When 회원 1이 카드정보 "card-token"으로 티켓 20을 예매하면 # com.thinking.ticket.e2e.HttpTicketReservationSteps.예매하면(long,java.lang.String,long)
+  Then 예매는 이미 예약됨으로 거부된다                     # com.thinking.ticket.e2e.HttpTicketReservationSteps.이미_예약됨으로_거부된다()
+  And 결제는 청구되지 않는다                           # com.thinking.ticket.e2e.HttpTicketReservationSteps.결제는_청구되지_않는다()
+2026-07-30T08:05:13.481Z  INFO 92 --- [ticket-reservation] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.thinking.ticket.e2e.E2eCucumberSpringConfiguration]: E2eCucumberSpringConfiguration does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-07-30T08:05:13.486Z  INFO 92 --- [ticket-reservation] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.thinking.ticket.TicketReservationApplication for test class com.thinking.ticket.e2e.E2eCucumberSpringConfiguration
+
+Scenario: 결제가 거절되면 예매는 실패하고 티켓은 예약되지 않는다     # features/ticket_reservation.feature:33
+  Given 회원 저장소와 티켓 저장소가 비어 있다                # com.thinking.ticket.e2e.HttpTicketReservationSteps.저장소가_비어_있다()
+  Given 회원 1이 등록되어 있다                        # com.thinking.ticket.e2e.HttpTicketReservationSteps.회원이_등록되어_있다(long)
+  And 가격 30000원짜리 미예약 티켓 20이 있다              # com.thinking.ticket.e2e.HttpTicketReservationSteps.미예약_티켓이_있다(int,long)
+  And 결제는 거절되는 상황이다                          # com.thinking.ticket.e2e.HttpTicketReservationSteps.결제는_거절된다()
+  When 회원 1이 카드정보 "card-token"으로 티켓 20을 예매하면 # com.thinking.ticket.e2e.HttpTicketReservationSteps.예매하면(long,java.lang.String,long)
+  Then 예매는 결제 실패로 거부된다                       # com.thinking.ticket.e2e.HttpTicketReservationSteps.결제_실패로_거부된다()
+  And 티켓 20은 예약되지 않는다                        # com.thinking.ticket.e2e.HttpTicketReservationSteps.티켓은_예약되지_않는다(long)
+  And 30000원 청구가 시도된다                        # com.thinking.ticket.e2e.HttpTicketReservationSteps.청구가_시도된다(int)
+2026-07-30T08:05:13.605Z  INFO 92 --- [ticket-reservation] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.thinking.ticket.e2e.E2eCucumberSpringConfiguration]: E2eCucumberSpringConfiguration does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-07-30T08:05:13.609Z  INFO 92 --- [ticket-reservation] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.thinking.ticket.TicketReservationApplication for test class com.thinking.ticket.e2e.E2eCucumberSpringConfiguration
+
+Scenario: 존재하지 않는 티켓은 예매할 수 없고 결제도 일어나지 않는다  # features/ticket_reservation.feature:42
+  Given 회원 저장소와 티켓 저장소가 비어 있다                # com.thinking.ticket.e2e.HttpTicketReservationSteps.저장소가_비어_있다()
+  Given 회원 1이 등록되어 있다                        # com.thinking.ticket.e2e.HttpTicketReservationSteps.회원이_등록되어_있다(long)
+  And 티켓 20은 저장소에 없다                         # com.thinking.ticket.e2e.HttpTicketReservationSteps.티켓이_저장소에_없다(long)
+  When 회원 1이 카드정보 "card-token"으로 티켓 20을 예매하면 # com.thinking.ticket.e2e.HttpTicketReservationSteps.예매하면(long,java.lang.String,long)
+  Then 예매는 티켓 없음으로 거부된다                      # com.thinking.ticket.e2e.HttpTicketReservationSteps.티켓_없음으로_거부된다()
+  And 결제는 청구되지 않는다                           # com.thinking.ticket.e2e.HttpTicketReservationSteps.결제는_청구되지_않는다()
+
+7 Scenarios (7 passed)
+45 Steps (45 passed)
+0m58.002s
+
+
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 58.01 s -- in com.thinking.ticket.e2e.E2eCucumberAcceptanceTest
+[INFO] Running com.thinking.ticket.jpa.JpaCucumberAcceptanceTest
+2026-07-30T08:05:13.798Z  INFO 92 --- [ticket-reservation] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.thinking.ticket.jpa.CucumberSpringConfiguration]: CucumberSpringConfiguration does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-07-30T08:05:14.008Z  INFO 92 --- [ticket-reservation] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.thinking.ticket.TicketReservationApplication for test class com.thinking.ticket.jpa.CucumberSpringConfiguration
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.4)
+
+2026-07-30T08:05:14.181Z  INFO 92 --- [ticket-reservation] [           main] c.t.t.jpa.CucumberSpringConfiguration    : Starting CucumberSpringConfiguration using Java 17.0.19 with PID 92 (started by root in /app)
+2026-07-30T08:05:14.182Z  INFO 92 --- [ticket-reservation] [           main] c.t.t.jpa.CucumberSpringConfiguration    : The following 1 profile is active: "test"
+2026-07-30T08:05:16.352Z  INFO 92 --- [ticket-reservation] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-30T08:05:16.907Z  INFO 92 --- [ticket-reservation] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 554 ms. Found 2 JPA repository interfaces.
+2026-07-30T08:05:17.291Z  INFO 92 --- [ticket-reservation] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-07-30T08:05:17.355Z  INFO 92 --- [ticket-reservation] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-07-30T08:05:17.491Z  INFO 92 --- [ticket-reservation] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-30T08:05:17.507Z  INFO 92 --- [ticket-reservation] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2026-07-30T08:05:17.563Z  INFO 92 --- [ticket-reservation] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@47dfbba3
+2026-07-30T08:05:17.563Z  INFO 92 --- [ticket-reservation] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2026-07-30T08:05:17.567Z  WARN 92 --- [ticket-reservation] [           main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-30T08:05:17.954Z  INFO 92 --- [ticket-reservation] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-30T08:05:17.994Z  INFO 92 --- [ticket-reservation] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-30T08:05:20.319Z  INFO 92 --- [ticket-reservation] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
+2026-07-30T08:05:20.383Z  INFO 92 --- [ticket-reservation] [           main] c.t.t.jpa.CucumberSpringConfiguration    : Started CucumberSpringConfiguration in 6.344 seconds (process running for 68.706)
+
+Scenario: 5만원 이상 티켓은 10% 할인된 금액이 청구된다        # features/new_requirements.feature:9
+  Given 회원 저장소와 티켓 저장소가 비어 있다                # com.thinking.ticket.jpa.JpaTicketReservationSteps.저장소가_비어_있다()
+  Given 회원 1이 등록되어 있다                        # com.thinking.ticket.jpa.JpaTicketReservationSteps.회원이_등록되어_있다(long)
+  And 가격 50000원짜리 미예약 티켓 20이 있다              # com.thinking.ticket.jpa.JpaTicketReservationSteps.미예약_티켓이_있다(int,long)
+  When 회원 1이 카드정보 "card-token"으로 티켓 20을 예매하면 # com.thinking.ticket.jpa.JpaTicketReservationSteps.예매하면(long,java.lang.String,long)
+  Then 예매는 성공한다                              # com.thinking.ticket.jpa.JpaTicketReservationSteps.예매는_성공한다()
+  And 티켓 20은 회원 1에게 예약된다                     # com.thinking.ticket.jpa.JpaTicketReservationSteps.티켓이_회원에게_예약된다(long,long)
+  And 45000원이 청구된다                           # com.thinking.ticket.jpa.JpaTicketReservationSteps.금액이_청구된다(int)
+2026-07-30T08:05:20.579Z  INFO 92 --- [ticket-reservation] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.thinking.ticket.jpa.CucumberSpringConfiguration]: CucumberSpringConfiguration does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-07-30T08:05:20.584Z  INFO 92 --- [ticket-reservation] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.thinking.ticket.TicketReservationApplication for test class com.thinking.ticket.jpa.CucumberSpringConfiguration
+
+Scenario: 판매 중지된 티켓은 예매할 수 없고 결제도 일어나지 않는다   # features/new_requirements.feature:18
+  Given 회원 저장소와 티켓 저장소가 비어 있다                # com.thinking.ticket.jpa.JpaTicketReservationSteps.저장소가_비어_있다()
+  Given 회원 1이 등록되어 있다                        # com.thinking.ticket.jpa.JpaTicketReservationSteps.회원이_등록되어_있다(long)
+  And 가격 30000원짜리 판매 중지된 티켓 20이 있다           # com.thinking.ticket.jpa.JpaTicketReservationSteps.판매_중지된_티켓이_있다(int,long)
+  When 회원 1이 카드정보 "card-token"으로 티켓 20을 예매하면 # com.thinking.ticket.jpa.JpaTicketReservationSteps.예매하면(long,java.lang.String,long)
+  Then 예매는 판매 중지로 거부된다                       # com.thinking.ticket.jpa.JpaTicketReservationSteps.판매_중지로_거부된다()
+  And 결제는 청구되지 않는다                           # com.thinking.ticket.jpa.JpaTicketReservationSteps.결제는_청구되지_않는다()
+2026-07-30T08:05:20.716Z  INFO 92 --- [ticket-reservation] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.thinking.ticket.jpa.CucumberSpringConfiguration]: CucumberSpringConfiguration does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-07-30T08:05:20.722Z  INFO 92 --- [ticket-reservation] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.thinking.ticket.TicketReservationApplication for test class com.thinking.ticket.jpa.CucumberSpringConfiguration
+
+Scenario: 유효한 회원이 미예약 티켓을 예매하면 예약이 확정되고 결제가 청구된다 # features/ticket_reservation.feature:12
+  Given 회원 저장소와 티켓 저장소가 비어 있다                    # com.thinking.ticket.jpa.JpaTicketReservationSteps.저장소가_비어_있다()
+  Given 회원 1이 등록되어 있다                            # com.thinking.ticket.jpa.JpaTicketReservationSteps.회원이_등록되어_있다(long)
+  And 가격 30000원짜리 미예약 티켓 20이 있다                  # com.thinking.ticket.jpa.JpaTicketReservationSteps.미예약_티켓이_있다(int,long)
+  When 회원 1이 카드정보 "card-token"으로 티켓 20을 예매하면     # com.thinking.ticket.jpa.JpaTicketReservationSteps.예매하면(long,java.lang.String,long)
+  Then 예매는 성공한다                                  # com.thinking.ticket.jpa.JpaTicketReservationSteps.예매는_성공한다()
+  And 티켓 20은 회원 1에게 예약된다                         # com.thinking.ticket.jpa.JpaTicketReservationSteps.티켓이_회원에게_예약된다(long,long)
+  And 30000원이 청구된다                               # com.thinking.ticket.jpa.JpaTicketReservationSteps.금액이_청구된다(int)
+2026-07-30T08:05:20.930Z  INFO 92 --- [ticket-reservation] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.thinking.ticket.jpa.CucumberSpringConfiguration]: CucumberSpringConfiguration does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-07-30T08:05:20.935Z  INFO 92 --- [ticket-reservation] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.thinking.ticket.TicketReservationApplication for test class com.thinking.ticket.jpa.CucumberSpringConfiguration
+
+Scenario: 등록되지 않은 회원은 예매할 수 없고 결제도 일어나지 않는다  # features/ticket_reservation.feature:20
+  Given 회원 저장소와 티켓 저장소가 비어 있다                # com.thinking.ticket.jpa.JpaTicketReservationSteps.저장소가_비어_있다()
+  Given 가격 30000원짜리 미예약 티켓 20이 있다            # com.thinking.ticket.jpa.JpaTicketReservationSteps.미예약_티켓이_있다(int,long)
+  When 회원 1이 카드정보 "card-token"으로 티켓 20을 예매하면 # com.thinking.ticket.jpa.JpaTicketReservationSteps.예매하면(long,java.lang.String,long)
+  Then 예매는 회원 없음으로 거부된다                      # com.thinking.ticket.jpa.JpaTicketReservationSteps.회원_없음으로_거부된다()
+  And 결제는 청구되지 않는다                           # com.thinking.ticket.jpa.JpaTicketReservationSteps.결제는_청구되지_않는다()
+2026-07-30T08:05:21.006Z  INFO 92 --- [ticket-reservation] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.thinking.ticket.jpa.CucumberSpringConfiguration]: CucumberSpringConfiguration does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-07-30T08:05:21.010Z  INFO 92 --- [ticket-reservation] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.thinking.ticket.TicketReservationApplication for test class com.thinking.ticket.jpa.CucumberSpringConfiguration
+
+Scenario: 이미 예약된 티켓은 예매할 수 없고 결제도 일어나지 않는다   # features/ticket_reservation.feature:26
+  Given 회원 저장소와 티켓 저장소가 비어 있다                # com.thinking.ticket.jpa.JpaTicketReservationSteps.저장소가_비어_있다()
+  Given 회원 1이 등록되어 있다                        # com.thinking.ticket.jpa.JpaTicketReservationSteps.회원이_등록되어_있다(long)
+  And 가격 30000원짜리 이미 예약된 티켓 20이 있다           # com.thinking.ticket.jpa.JpaTicketReservationSteps.이미_예약된_티켓이_있다(int,long)
+  When 회원 1이 카드정보 "card-token"으로 티켓 20을 예매하면 # com.thinking.ticket.jpa.JpaTicketReservationSteps.예매하면(long,java.lang.String,long)
+  Then 예매는 이미 예약됨으로 거부된다                     # com.thinking.ticket.jpa.JpaTicketReservationSteps.이미_예약됨으로_거부된다()
+  And 결제는 청구되지 않는다                           # com.thinking.ticket.jpa.JpaTicketReservationSteps.결제는_청구되지_않는다()
+2026-07-30T08:05:21.106Z  INFO 92 --- [ticket-reservation] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.thinking.ticket.jpa.CucumberSpringConfiguration]: CucumberSpringConfiguration does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-07-30T08:05:21.109Z  INFO 92 --- [ticket-reservation] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.thinking.ticket.TicketReservationApplication for test class com.thinking.ticket.jpa.CucumberSpringConfiguration
+
+Scenario: 결제가 거절되면 예매는 실패하고 티켓은 예약되지 않는다     # features/ticket_reservation.feature:33
+  Given 회원 저장소와 티켓 저장소가 비어 있다                # com.thinking.ticket.jpa.JpaTicketReservationSteps.저장소가_비어_있다()
+  Given 회원 1이 등록되어 있다                        # com.thinking.ticket.jpa.JpaTicketReservationSteps.회원이_등록되어_있다(long)
+  And 가격 30000원짜리 미예약 티켓 20이 있다              # com.thinking.ticket.jpa.JpaTicketReservationSteps.미예약_티켓이_있다(int,long)
+  And 결제는 거절되는 상황이다                          # com.thinking.ticket.jpa.JpaTicketReservationSteps.결제는_거절된다()
+  When 회원 1이 카드정보 "card-token"으로 티켓 20을 예매하면 # com.thinking.ticket.jpa.JpaTicketReservationSteps.예매하면(long,java.lang.String,long)
+  Then 예매는 결제 실패로 거부된다                       # com.thinking.ticket.jpa.JpaTicketReservationSteps.결제_실패로_거부된다()
+  And 티켓 20은 예약되지 않는다                        # com.thinking.ticket.jpa.JpaTicketReservationSteps.티켓은_예약되지_않는다(long)
+  And 30000원 청구가 시도된다                        # com.thinking.ticket.jpa.JpaTicketReservationSteps.청구가_시도된다(int)
+2026-07-30T08:05:21.202Z  INFO 92 --- [ticket-reservation] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.thinking.ticket.jpa.CucumberSpringConfiguration]: CucumberSpringConfiguration does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-07-30T08:05:21.205Z  INFO 92 --- [ticket-reservation] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.thinking.ticket.TicketReservationApplication for test class com.thinking.ticket.jpa.CucumberSpringConfiguration
+
+Scenario: 존재하지 않는 티켓은 예매할 수 없고 결제도 일어나지 않는다  # features/ticket_reservation.feature:42
+  Given 회원 저장소와 티켓 저장소가 비어 있다                # com.thinking.ticket.jpa.JpaTicketReservationSteps.저장소가_비어_있다()
+  Given 회원 1이 등록되어 있다                        # com.thinking.ticket.jpa.JpaTicketReservationSteps.회원이_등록되어_있다(long)
+  And 티켓 20은 저장소에 없다                         # com.thinking.ticket.jpa.JpaTicketReservationSteps.티켓이_저장소에_없다(long)
+  When 회원 1이 카드정보 "card-token"으로 티켓 20을 예매하면 # com.thinking.ticket.jpa.JpaTicketReservationSteps.예매하면(long,java.lang.String,long)
+  Then 예매는 티켓 없음으로 거부된다                      # com.thinking.ticket.jpa.JpaTicketReservationSteps.티켓_없음으로_거부된다()
+  And 결제는 청구되지 않는다                           # com.thinking.ticket.jpa.JpaTicketReservationSteps.결제는_청구되지_않는다()
+
+7 Scenarios (7 passed)
+45 Steps (45 passed)
+0m7.589s
+
+
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.591 s -- in com.thinking.ticket.jpa.JpaCucumberAcceptanceTest
+[INFO] Running com.thinking.ticket.HexagonalBoundaryTest
+2026-07-30T08:05:21.695Z  INFO 92 --- [ticket-reservation] [           main] com.tngtech.archunit.core.PluginLoader   : Detected Java version 17.0.19
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.033 s -- in com.thinking.ticket.HexagonalBoundaryTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 26, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  01:25 min
+[INFO] Finished at: 2026-07-30T08:05:27Z
+[INFO] ------------------------------------------------------------------------

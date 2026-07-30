@@ -1,0 +1,43 @@
+{
+  "brief_hash": "9885d9d1",
+  "iteration": "003",
+  "rubric_name": "contract:v1-spec",
+  "rubric_scores": {
+    "scores": {
+      "coverage": 4,
+      "boundary_fidelity": 4,
+      "unambiguity": 3,
+      "behavioral_altitude": 4
+    },
+    "weights": {
+      "coverage": 0.3,
+      "boundary_fidelity": 0.3,
+      "unambiguity": 0.2,
+      "behavioral_altitude": 0.2
+    },
+    "weighted_total": 3.8
+  },
+  "axis_rationales": {
+    "coverage": "열거 17개, 누락 0개: [상방 4조건 모두 참 발화, 하방 4조건 모두 참 발화, 상방 마감/방향 거절, 상방 몸통절반 거절, 상방 첫전이 거절, 상방 스퀴즈 거절, 상방 반대방향 거절, 하방 마감/방향 거절, 하방 몸통절반 거절, 하방 첫전이 거절, 하방 스퀴즈 거절, 하방 반대방향 거절, 상방 리스크0 거절, 하방 리스크0 거절, 발화 결과의 진입/손절/목표/시한, 방향별 독립 및 반대방향 결과 없음, 닫힌 캔들 기준 평가]; 누락은 없지만 닫힌 캔들 무시는 열린 캔들이 입력에 섞인 안/밖 짝이 아니라 약해 5점은 아님.",
+    "boundary_fidelity": "모든 When은 '닫힌 캔들열로 볼린저밴드 레그 트리거 발화 평가'라는 inbound port 하나에 대응하고 Then도 발화 결과·방향·가격·시한 같은 경계 관찰 결과 중심이다; 호출 순서·횟수·내부 상태 단언은 없으나 '발화 결과는 1개/없다'가 결과 컬렉션 형태에 약간 묶인다.",
+    "unambiguity": "상당수 Then은 구체적인 도메인 결과지만 '기본 R 목표의 상방 목표가/하방 목표가', '스퀴즈 구간의 포함 경계', '상방 네 조건을 모두 만족하지 않는다'처럼 봉인되거나 느슨한 표현이 있어 틀린 구현을 반드시 깨뜨리는 수준은 아니다.",
+    "behavioral_altitude": "클래스·메서드·enum 같은 구현 세부는 없고 도메인 언어로 서술되어 있다; 다만 '기본 R 목표', '스퀴즈 포함 경계', '발화 결과는 1개' 같은 일부 표현은 기술적/구조적이라 완전한 도메인 서술은 아니다."
+  },
+  "calibration_note": "평균 3.0 기준의 엄격 게이트로 보정했다. contract 모드라 내부 산술 산식 자체는 coverage 누락으로 세지 않았고, feature에 산식이 직접 박힌 수준은 아니므로 behavioral_altitude 캡은 적용하지 않았다.",
+  "evaluated_at": "2026-07-24T00:07:26+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_system:v1",
+    "source_files": [
+      "9885d9d1_input.json",
+      "9885d9d1_iter-003_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 30273,
+      "cached_input_tokens": 1408,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1169,
+      "reasoning_output_tokens": 516
+    }
+  }
+}

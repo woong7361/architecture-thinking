@@ -1,0 +1,46 @@
+{
+  "brief_hash": "d1309fc2",
+  "iteration": "001",
+  "rubric_name": "rules:v1",
+  "rubric_scores": {
+    "scores": {
+      "coverage": 3,
+      "value_correctness": 5,
+      "unambiguity": 3,
+      "altitude": 4,
+      "invariant_generality": 2
+    },
+    "weights": {
+      "coverage": 0.25,
+      "value_correctness": 0.25,
+      "unambiguity": 0.15,
+      "altitude": 0.15,
+      "invariant_generality": 0.2
+    },
+    "weighted_total": 3.55
+  },
+  "axis_rationales": {
+    "coverage": "열거 8개, 누락 0개: [볼린저밴드 산출, 몸통 중점 이탈과 등호 미이탈, 첫 레그 전이, 밴드폭, 스퀴즈 임계, 진입/손절/리스크/목표, 리스크 0 미발화, 방향 배타성 불변식] 모두 표 또는 ∀ 진술로 매핑됨; 구현 반례: [중심선 0, 상단선 1, 하단선 -1]에서 밴드폭 계산이 정의불능인데 draft 표와 불변식은 통과 가능하여 밴드폭=(상단-하단)/중심 정책의 정의역을 고정하지 못하므로 coverage 최대 3 캡.",
+    "value_correctness": "재계산 36행, 불일치 0행: BB 3행의 SMA/모집단 σ/상하단, 몸통 6행, 첫 전이 6행, 밴드폭 3행, 스퀴즈 4행, 진입·손절·리스크·목표 6행, 결합 게이트 6행, 방향 배타성 witness 3행이 모두 명시 산식과 일치한다.",
+    "unambiguity": "구체값 중심이지만 일부 기대 출력이 '산출하지 않음', '발화 가능', '상방 후보만 가능'처럼 직접 산출값이나 불리언 판정으로 완전히 봉인되지 않아 최대 3으로 본다.",
+    "altitude": "대체로 중심선, 상단선, 기준봉, 리스크 같은 도메인 수량으로 서술했고 클래스·메서드·시그니처 노출은 없으나 boolean식 형태의 'and', 'abs', 'sqrt' 표기가 다소 기술적이다.",
+    "invariant_generality": "불변식 열거 4개, ∀진술 1개, witness검산 3개: [방향 배타성은 ∀ 진술과 witness가 있으나, 상단/하단의 중심선 대칭, 리스크 비음수 및 0일 때 미발화, 목표가와 진입·손절의 2R 관계 같은 교차 제약은 표 예시로만 있고 전칭 불변식으로 고정되지 않았다]."
+  },
+  "calibration_note": "평균 3.0 기준으로 엄격 채점했으며, coverage는 구현 반례 캡 때문에 3을 넘기지 않았다.",
+  "evaluated_at": "2026-07-24T00:16:44+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_system:v1",
+    "source_files": [
+      "d1309fc2_input.json",
+      "d1309fc2_iter-001_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 34217,
+      "cached_input_tokens": 1408,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1180,
+      "reasoning_output_tokens": 516
+    }
+  }
+}

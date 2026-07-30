@@ -1,0 +1,181 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------< com.thinking:ticket-reservation >-------------------
+[INFO] Building ticket-reservation 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ ticket-reservation ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] Copying 0 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ ticket-reservation ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ ticket-reservation ---
+[INFO] Copying 2 resources from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ ticket-reservation ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ ticket-reservation ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.thinking.ticket.jpa.JpaCucumberAcceptanceTest
+07:45:28.749 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.thinking.ticket.jpa.CucumberSpringConfiguration]: CucumberSpringConfiguration does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+07:45:29.575 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.thinking.ticket.TicketReservationApplication for test class com.thinking.ticket.jpa.CucumberSpringConfiguration
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.4)
+
+2026-07-30T07:45:32.439Z  INFO 85 --- [ticket-reservation] [           main] org.testcontainers.images.PullPolicy     : Image pull policy will be performed by: DefaultPullPolicy()
+2026-07-30T07:45:32.463Z  INFO 85 --- [ticket-reservation] [           main] o.t.utility.ImageNameSubstitutor         : Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2026-07-30T07:45:32.494Z  INFO 85 --- [ticket-reservation] [           main] org.testcontainers.DockerClientFactory   : Testcontainers version: 1.20.6
+2026-07-30T07:45:36.370Z  INFO 85 --- [ticket-reservation] [           main] o.t.d.DockerClientProviderStrategy       : Found Docker environment with local Unix socket (unix:///var/run/docker.sock)
+2026-07-30T07:45:36.375Z  INFO 85 --- [ticket-reservation] [           main] org.testcontainers.DockerClientFactory   : Docker host IP address is host.docker.internal
+2026-07-30T07:45:36.441Z  INFO 85 --- [ticket-reservation] [           main] org.testcontainers.DockerClientFactory   : Connected to docker: 
+  Server Version: 29.6.2
+  API Version: 1.55
+  Operating System: Docker Desktop
+  Total Memory: 15947 MB
+  Labels: 
+    com.docker.desktop.address=npipe://\\.\pipe\docker_cli
+2026-07-30T07:45:36.784Z  INFO 85 --- [ticket-reservation] [           main] tc.testcontainers/ryuk:0.11.0            : Pulling docker image: testcontainers/ryuk:0.11.0. Please be patient; this may take some time but only needs to be done once.
+2026-07-30T07:45:36.822Z  INFO 85 --- [ticket-reservation] [           main] o.t.utility.RegistryAuthLocator          : Failure when attempting to lookup auth config. Please ignore if you don't have images in an authenticated registry. Details: (dockerImageName: testcontainers/ryuk:latest, configFile: /root/.docker/config.json, configEnv: DOCKER_AUTH_CONFIG). Falling back to docker-java default behaviour. Exception message: Status 404: No config supplied. Checked in order: /root/.docker/config.json (file not found), DOCKER_AUTH_CONFIG (not set)
+2026-07-30T07:45:39.635Z  INFO 85 --- [ticket-reservation] [ream-1223335261] tc.testcontainers/ryuk:0.11.0            : Starting to pull image
+2026-07-30T07:45:39.728Z  INFO 85 --- [ticket-reservation] [ream-1223335261] tc.testcontainers/ryuk:0.11.0            : Pulling image layers:  0 pending,  0 downloaded,  0 extracted, (0 bytes/0 bytes)
+2026-07-30T07:45:40.618Z  INFO 85 --- [ticket-reservation] [ream-1223335261] tc.testcontainers/ryuk:0.11.0            : Pulling image layers:  2 pending,  1 downloaded,  0 extracted, (0 bytes/? MB)
+2026-07-30T07:45:41.616Z  INFO 85 --- [ticket-reservation] [ream-1223335261] tc.testcontainers/ryuk:0.11.0            : Pulling image layers:  1 pending,  2 downloaded,  0 extracted, (7 MB/? MB)
+2026-07-30T07:45:41.819Z  INFO 85 --- [ticket-reservation] [ream-1223335261] tc.testcontainers/ryuk:0.11.0            : Pulling image layers:  0 pending,  3 downloaded,  0 extracted, (9 MB/10 MB)
+2026-07-30T07:45:42.118Z  INFO 85 --- [ticket-reservation] [ream-1223335261] tc.testcontainers/ryuk:0.11.0            : Pulling image layers:  0 pending,  3 downloaded,  1 extracted, (9 MB/10 MB)
+2026-07-30T07:45:42.312Z  INFO 85 --- [ticket-reservation] [ream-1223335261] tc.testcontainers/ryuk:0.11.0            : Pulling image layers:  0 pending,  3 downloaded,  2 extracted, (9 MB/10 MB)
+2026-07-30T07:45:42.316Z  INFO 85 --- [ticket-reservation] [ream-1223335261] tc.testcontainers/ryuk:0.11.0            : Pulling image layers:  0 pending,  3 downloaded,  3 extracted, (9 MB/10 MB)
+2026-07-30T07:45:42.372Z  INFO 85 --- [ticket-reservation] [ream-1223335261] tc.testcontainers/ryuk:0.11.0            : Pull complete. 3 layers, pulled in 2s (downloaded 9 MB at 4 MB/s)
+2026-07-30T07:45:42.373Z  INFO 85 --- [ticket-reservation] [           main] tc.testcontainers/ryuk:0.11.0            : Image testcontainers/ryuk:0.11.0 pull took PT5.588570382S
+2026-07-30T07:45:42.723Z  INFO 85 --- [ticket-reservation] [           main] tc.testcontainers/ryuk:0.11.0            : Creating container for image: testcontainers/ryuk:0.11.0
+2026-07-30T07:45:43.430Z  INFO 85 --- [ticket-reservation] [           main] tc.testcontainers/ryuk:0.11.0            : Container testcontainers/ryuk:0.11.0 is starting: 6b07605c430217d1b9d958086ef7385f6096f53536efee94e8ff43f63ff54e01
+2026-07-30T07:45:44.427Z  INFO 85 --- [ticket-reservation] [           main] tc.testcontainers/ryuk:0.11.0            : Container testcontainers/ryuk:0.11.0 started in PT1.703594423S
+2026-07-30T07:45:44.447Z  INFO 85 --- [ticket-reservation] [           main] o.t.utility.RyukResourceReaper           : Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2026-07-30T07:45:44.448Z  INFO 85 --- [ticket-reservation] [           main] org.testcontainers.DockerClientFactory   : Checking the system...
+2026-07-30T07:45:44.452Z  INFO 85 --- [ticket-reservation] [           main] org.testcontainers.DockerClientFactory   : ✔︎ Docker server version should be at least 1.6.0
+2026-07-30T07:45:44.467Z  INFO 85 --- [ticket-reservation] [           main] tc.mysql:8.4                             : Creating container for image: mysql:8.4
+2026-07-30T07:45:45.122Z  INFO 85 --- [ticket-reservation] [           main] tc.mysql:8.4                             : Container mysql:8.4 is starting: c4ebb27c5647a6af5395c1d5a4be5f3dfd5a868ffc2039482bcf090beb050180
+2026-07-30T07:45:45.493Z  INFO 85 --- [ticket-reservation] [           main] tc.mysql:8.4                             : Waiting for database connection to become available at jdbc:mysql://host.docker.internal:1361/test using query 'SELECT 1'
+2026-07-30T07:46:05.104Z  INFO 85 --- [ticket-reservation] [           main] tc.mysql:8.4                             : Container mysql:8.4 started in PT20.636834152S
+2026-07-30T07:46:05.104Z  INFO 85 --- [ticket-reservation] [           main] tc.mysql:8.4                             : Container is started (JDBC URL: jdbc:mysql://host.docker.internal:1361/test)
+2026-07-30T07:46:05.144Z  INFO 85 --- [ticket-reservation] [           main] c.t.t.jpa.CucumberSpringConfiguration    : Starting CucumberSpringConfiguration using Java 17.0.19 with PID 85 (started by root in /app)
+2026-07-30T07:46:05.146Z  INFO 85 --- [ticket-reservation] [           main] c.t.t.jpa.CucumberSpringConfiguration    : The following 1 profile is active: "test"
+2026-07-30T07:46:13.052Z  INFO 85 --- [ticket-reservation] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-30T07:46:14.129Z  INFO 85 --- [ticket-reservation] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1007 ms. Found 2 JPA repository interfaces.
+2026-07-30T07:46:19.533Z  INFO 85 --- [ticket-reservation] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-07-30T07:46:20.246Z  INFO 85 --- [ticket-reservation] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2026-07-30T07:46:20.650Z  INFO 85 --- [ticket-reservation] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-07-30T07:46:23.595Z  INFO 85 --- [ticket-reservation] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-30T07:46:23.877Z  INFO 85 --- [ticket-reservation] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-07-30T07:46:24.179Z  INFO 85 --- [ticket-reservation] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@183a84f4
+2026-07-30T07:46:24.194Z  INFO 85 --- [ticket-reservation] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-07-30T07:46:24.432Z  WARN 85 --- [ticket-reservation] [           main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-30T07:46:30.866Z  INFO 85 --- [ticket-reservation] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-30T07:46:31.216Z  INFO 85 --- [ticket-reservation] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-30T07:46:32.663Z  INFO 85 --- [ticket-reservation] [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-07-30T07:46:39.359Z  INFO 85 --- [ticket-reservation] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
+2026-07-30T07:46:39.562Z  INFO 85 --- [ticket-reservation] [           main] c.t.t.jpa.CucumberSpringConfiguration    : Started CucumberSpringConfiguration in 68.924 seconds (process running for 75.518)
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+
+Scenario: 5만원 이상 티켓은 10% 할인된 금액이 청구된다        # features/new_requirements.feature:9
+  Given 회원 저장소와 티켓 저장소가 비어 있다                # com.thinking.ticket.jpa.JpaTicketReservationSteps.저장소가_비어_있다()
+  Given 회원 1이 등록되어 있다                        # com.thinking.ticket.jpa.JpaTicketReservationSteps.회원이_등록되어_있다(long)
+  And 가격 50000원짜리 미예약 티켓 20이 있다              # com.thinking.ticket.jpa.JpaTicketReservationSteps.미예약_티켓이_있다(int,long)
+  When 회원 1이 카드정보 "card-token"으로 티켓 20을 예매하면 # com.thinking.ticket.jpa.JpaTicketReservationSteps.예매하면(long,java.lang.String,long)
+  Then 예매는 성공한다                              # com.thinking.ticket.jpa.JpaTicketReservationSteps.예매는_성공한다()
+  And 티켓 20은 회원 1에게 예약된다                     # com.thinking.ticket.jpa.JpaTicketReservationSteps.티켓이_회원에게_예약된다(long,long)
+  And 45000원이 청구된다                           # com.thinking.ticket.jpa.JpaTicketReservationSteps.금액이_청구된다(int)
+2026-07-30T07:46:42.740Z  INFO 85 --- [ticket-reservation] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.thinking.ticket.jpa.CucumberSpringConfiguration]: CucumberSpringConfiguration does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-07-30T07:46:42.745Z  INFO 85 --- [ticket-reservation] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.thinking.ticket.TicketReservationApplication for test class com.thinking.ticket.jpa.CucumberSpringConfiguration
+
+Scenario: 판매 중지된 티켓은 예매할 수 없고 결제도 일어나지 않는다   # features/new_requirements.feature:18
+  Given 회원 저장소와 티켓 저장소가 비어 있다                # com.thinking.ticket.jpa.JpaTicketReservationSteps.저장소가_비어_있다()
+  Given 회원 1이 등록되어 있다                        # com.thinking.ticket.jpa.JpaTicketReservationSteps.회원이_등록되어_있다(long)
+  And 가격 30000원짜리 판매 중지된 티켓 20이 있다           # com.thinking.ticket.jpa.JpaTicketReservationSteps.판매_중지된_티켓이_있다(int,long)
+  When 회원 1이 카드정보 "card-token"으로 티켓 20을 예매하면 # com.thinking.ticket.jpa.JpaTicketReservationSteps.예매하면(long,java.lang.String,long)
+  Then 예매는 판매 중지로 거부된다                       # com.thinking.ticket.jpa.JpaTicketReservationSteps.판매_중지로_거부된다()
+  And 결제는 청구되지 않는다                           # com.thinking.ticket.jpa.JpaTicketReservationSteps.결제는_청구되지_않는다()
+2026-07-30T07:46:42.953Z  INFO 85 --- [ticket-reservation] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.thinking.ticket.jpa.CucumberSpringConfiguration]: CucumberSpringConfiguration does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-07-30T07:46:42.958Z  INFO 85 --- [ticket-reservation] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.thinking.ticket.TicketReservationApplication for test class com.thinking.ticket.jpa.CucumberSpringConfiguration
+
+Scenario: 유효한 회원이 미예약 티켓을 예매하면 예약이 확정되고 결제가 청구된다 # features/ticket_reservation.feature:12
+  Given 회원 저장소와 티켓 저장소가 비어 있다                    # com.thinking.ticket.jpa.JpaTicketReservationSteps.저장소가_비어_있다()
+  Given 회원 1이 등록되어 있다                            # com.thinking.ticket.jpa.JpaTicketReservationSteps.회원이_등록되어_있다(long)
+  And 가격 30000원짜리 미예약 티켓 20이 있다                  # com.thinking.ticket.jpa.JpaTicketReservationSteps.미예약_티켓이_있다(int,long)
+  When 회원 1이 카드정보 "card-token"으로 티켓 20을 예매하면     # com.thinking.ticket.jpa.JpaTicketReservationSteps.예매하면(long,java.lang.String,long)
+  Then 예매는 성공한다                                  # com.thinking.ticket.jpa.JpaTicketReservationSteps.예매는_성공한다()
+  And 티켓 20은 회원 1에게 예약된다                         # com.thinking.ticket.jpa.JpaTicketReservationSteps.티켓이_회원에게_예약된다(long,long)
+  And 30000원이 청구된다                               # com.thinking.ticket.jpa.JpaTicketReservationSteps.금액이_청구된다(int)
+2026-07-30T07:46:43.158Z  INFO 85 --- [ticket-reservation] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.thinking.ticket.jpa.CucumberSpringConfiguration]: CucumberSpringConfiguration does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-07-30T07:46:43.164Z  INFO 85 --- [ticket-reservation] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.thinking.ticket.TicketReservationApplication for test class com.thinking.ticket.jpa.CucumberSpringConfiguration
+
+Scenario: 등록되지 않은 회원은 예매할 수 없고 결제도 일어나지 않는다  # features/ticket_reservation.feature:20
+  Given 회원 저장소와 티켓 저장소가 비어 있다                # com.thinking.ticket.jpa.JpaTicketReservationSteps.저장소가_비어_있다()
+  Given 가격 30000원짜리 미예약 티켓 20이 있다            # com.thinking.ticket.jpa.JpaTicketReservationSteps.미예약_티켓이_있다(int,long)
+  When 회원 1이 카드정보 "card-token"으로 티켓 20을 예매하면 # com.thinking.ticket.jpa.JpaTicketReservationSteps.예매하면(long,java.lang.String,long)
+  Then 예매는 회원 없음으로 거부된다                      # com.thinking.ticket.jpa.JpaTicketReservationSteps.회원_없음으로_거부된다()
+  And 결제는 청구되지 않는다                           # com.thinking.ticket.jpa.JpaTicketReservationSteps.결제는_청구되지_않는다()
+2026-07-30T07:46:43.290Z  INFO 85 --- [ticket-reservation] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.thinking.ticket.jpa.CucumberSpringConfiguration]: CucumberSpringConfiguration does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-07-30T07:46:43.294Z  INFO 85 --- [ticket-reservation] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.thinking.ticket.TicketReservationApplication for test class com.thinking.ticket.jpa.CucumberSpringConfiguration
+
+Scenario: 이미 예약된 티켓은 예매할 수 없고 결제도 일어나지 않는다   # features/ticket_reservation.feature:26
+  Given 회원 저장소와 티켓 저장소가 비어 있다                # com.thinking.ticket.jpa.JpaTicketReservationSteps.저장소가_비어_있다()
+  Given 회원 1이 등록되어 있다                        # com.thinking.ticket.jpa.JpaTicketReservationSteps.회원이_등록되어_있다(long)
+  And 가격 30000원짜리 이미 예약된 티켓 20이 있다           # com.thinking.ticket.jpa.JpaTicketReservationSteps.이미_예약된_티켓이_있다(int,long)
+  When 회원 1이 카드정보 "card-token"으로 티켓 20을 예매하면 # com.thinking.ticket.jpa.JpaTicketReservationSteps.예매하면(long,java.lang.String,long)
+  Then 예매는 이미 예약됨으로 거부된다                     # com.thinking.ticket.jpa.JpaTicketReservationSteps.이미_예약됨으로_거부된다()
+  And 결제는 청구되지 않는다                           # com.thinking.ticket.jpa.JpaTicketReservationSteps.결제는_청구되지_않는다()
+2026-07-30T07:46:43.440Z  INFO 85 --- [ticket-reservation] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.thinking.ticket.jpa.CucumberSpringConfiguration]: CucumberSpringConfiguration does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-07-30T07:46:43.444Z  INFO 85 --- [ticket-reservation] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.thinking.ticket.TicketReservationApplication for test class com.thinking.ticket.jpa.CucumberSpringConfiguration
+
+Scenario: 결제가 거절되면 예매는 실패하고 티켓은 예약되지 않는다     # features/ticket_reservation.feature:33
+  Given 회원 저장소와 티켓 저장소가 비어 있다                # com.thinking.ticket.jpa.JpaTicketReservationSteps.저장소가_비어_있다()
+  Given 회원 1이 등록되어 있다                        # com.thinking.ticket.jpa.JpaTicketReservationSteps.회원이_등록되어_있다(long)
+  And 가격 30000원짜리 미예약 티켓 20이 있다              # com.thinking.ticket.jpa.JpaTicketReservationSteps.미예약_티켓이_있다(int,long)
+  And 결제는 거절되는 상황이다                          # com.thinking.ticket.jpa.JpaTicketReservationSteps.결제는_거절된다()
+  When 회원 1이 카드정보 "card-token"으로 티켓 20을 예매하면 # com.thinking.ticket.jpa.JpaTicketReservationSteps.예매하면(long,java.lang.String,long)
+  Then 예매는 결제 실패로 거부된다                       # com.thinking.ticket.jpa.JpaTicketReservationSteps.결제_실패로_거부된다()
+  And 티켓 20은 예약되지 않는다                        # com.thinking.ticket.jpa.JpaTicketReservationSteps.티켓은_예약되지_않는다(long)
+  And 30000원 청구가 시도된다                        # com.thinking.ticket.jpa.JpaTicketReservationSteps.청구가_시도된다(int)
+2026-07-30T07:46:43.615Z  INFO 85 --- [ticket-reservation] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.thinking.ticket.jpa.CucumberSpringConfiguration]: CucumberSpringConfiguration does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-07-30T07:46:43.619Z  INFO 85 --- [ticket-reservation] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.thinking.ticket.TicketReservationApplication for test class com.thinking.ticket.jpa.CucumberSpringConfiguration
+
+Scenario: 존재하지 않는 티켓은 예매할 수 없고 결제도 일어나지 않는다  # features/ticket_reservation.feature:42
+  Given 회원 저장소와 티켓 저장소가 비어 있다                # com.thinking.ticket.jpa.JpaTicketReservationSteps.저장소가_비어_있다()
+  Given 회원 1이 등록되어 있다                        # com.thinking.ticket.jpa.JpaTicketReservationSteps.회원이_등록되어_있다(long)
+  And 티켓 20은 저장소에 없다                         # com.thinking.ticket.jpa.JpaTicketReservationSteps.티켓이_저장소에_없다(long)
+  When 회원 1이 카드정보 "card-token"으로 티켓 20을 예매하면 # com.thinking.ticket.jpa.JpaTicketReservationSteps.예매하면(long,java.lang.String,long)
+  Then 예매는 티켓 없음으로 거부된다                      # com.thinking.ticket.jpa.JpaTicketReservationSteps.티켓_없음으로_거부된다()
+  And 결제는 청구되지 않는다                           # com.thinking.ticket.jpa.JpaTicketReservationSteps.결제는_청구되지_않는다()
+
+7 Scenarios (7 passed)
+45 Steps (45 passed)
+1m16.985s
+
+
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 77.42 s -- in com.thinking.ticket.jpa.JpaCucumberAcceptanceTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  01:25 min
+[INFO] Finished at: 2026-07-30T07:46:44Z
+[INFO] ------------------------------------------------------------------------

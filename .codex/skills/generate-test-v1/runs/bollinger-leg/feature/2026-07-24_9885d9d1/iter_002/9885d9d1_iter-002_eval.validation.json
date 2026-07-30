@@ -1,0 +1,9 @@
+{
+  "artifact": "eval",
+  "checked_file": "C:\\Users\\이현웅\\Desktop\\project\\thinking\\.codex\\skills\\generate-test-v1\\runs\\bollinger-leg\\feature\\2026-07-24_9885d9d1\\iter_002\\9885d9d1_iter-002_eval.json",
+  "status": "REJECT",
+  "errors": [
+    "min_total: 3.9 < 4.2",
+    "min_axis.behavioral_altitude: 3 < 3.5"
+  ]
+}
