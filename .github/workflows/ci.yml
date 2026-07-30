@@ -7,19 +7,32 @@ on:
     branches: [ main ]
     paths:
       - 'task3/ticket-reservation/**'
+      - 'task3/ticket-reservation-c6/**'
       - '.github/workflows/ci.yml'
   pull_request:
     paths:
       - 'task3/ticket-reservation/**'
+      - 'task3/ticket-reservation-c6/**'
       - '.github/workflows/ci.yml'
   workflow_dispatch:
 
 jobs:
   acceptance-tests:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # 손으로 세운 골격(C-4·C-5).
+          - project: task3/ticket-reservation
+            label: hand-written
+          # 파이프라인이 층 단위로 만든 골격(C-6). 심판과 계약은 동일하고 src/main 만 다르다.
+          - project: task3/ticket-reservation-c6
+            label: pipeline-built
+    name: acceptance (${{ matrix.label }})
     defaults:
       run:
-        working-directory: task3/ticket-reservation
+        working-directory: ${{ matrix.project }}
     steps:
       - uses: actions/checkout@v4
 
@@ -30,7 +43,10 @@ jobs:
           java-version: '17'
           cache: maven
 
-      # 두 조합을 함께 실행: 조합 A(in-memory) + 조합 B(JPA + 실제 MySQL Testcontainers).
-      # 같은 Feature가 어댑터 교체(in-memory <-> 실제 DB)에도 GREEN이면 Core 독립성이 증명된다.
+      # 네 가지를 함께 실행한다:
+      #   in-memory 구성 / 실제 MySQL 구성 / HTTP 관통 구성 / 경계 규칙(ArchUnit).
+      # 같은 Feature가 대역을 실물로 갈아끼워도 GREEN이면 Core 독립성이 증명된다.
+      # 두 프로젝트가 같은 심판을 공유하므로, 둘 다 초록불이면 손으로 만든 골격과
+      # 파이프라인이 만든 골격이 같은 요구사항을 만족한다는 뜻이다.
       - name: Run acceptance tests
         run: mvn -B test
