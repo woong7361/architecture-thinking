@@ -11,6 +11,8 @@ import com.thinking.ticket.core.domain.TicketNotFoundException;
 import com.thinking.ticket.core.domain.TicketSuspendedException;
 import com.thinking.ticket.core.domain.User;
 import com.thinking.ticket.core.domain.UserNotFoundException;
+import com.thinking.ticket.core.port.in.ReserveTicketCommand;
+import com.thinking.ticket.core.port.in.ReserveTicketUseCase;
 import com.thinking.ticket.support.InMemoryTicketRepository;
 import com.thinking.ticket.support.InMemoryUserRepository;
 import com.thinking.ticket.support.RecordingPaymentApi;
@@ -64,9 +66,9 @@ public final class TicketReservationSteps {
         ticketRepo.seed(new Ticket(ticketId, price));
         long setupUserId = -1L;
         userRepo.save(new User(setupUserId, "setup"));
-        TicketService setup =
+        ReserveTicketUseCase setup =
                 new TicketService(ticketRepo, userRepo, RecordingPaymentApi.succeeding(), new DiscountPolicy());
-        setup.reserveTicket(setupUserId, ticketId, "setup-token");
+        setup.reserve(new ReserveTicketCommand(setupUserId, ticketId, "setup-token"));
     }
 
     @Given("가격 {int}원짜리 판매 중지된 티켓 {long}이 있다")
@@ -90,9 +92,10 @@ public final class TicketReservationSteps {
 
     @When("회원 {long}이 카드정보 {string}으로 티켓 {long}을 예매하면")
     public void 예매하면(long userId, String paymentInfo, long ticketId) {
-        TicketService service = new TicketService(ticketRepo, userRepo, paymentApi, new DiscountPolicy());
+        // 심판은 구현 클래스의 메서드가 아니라 Inbound Port 계약으로 호출한다.
+        ReserveTicketUseCase service = new TicketService(ticketRepo, userRepo, paymentApi, new DiscountPolicy());
         try {
-            this.result = service.reserveTicket(userId, ticketId, paymentInfo);
+            this.result = service.reserve(new ReserveTicketCommand(userId, ticketId, paymentInfo)).reserved();
         } catch (Throwable t) {
             this.thrown = t;
         }

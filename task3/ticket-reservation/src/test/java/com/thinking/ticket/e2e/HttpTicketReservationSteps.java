@@ -1,15 +1,7 @@
-package com.thinking.ticket.jpa;
+package com.thinking.ticket.e2e;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.thinking.ticket.core.domain.PaymentFailedException;
-import com.thinking.ticket.core.domain.TicketAlreadyReservedException;
-import com.thinking.ticket.core.domain.TicketNotFoundException;
-import com.thinking.ticket.core.domain.TicketSuspendedException;
-import com.thinking.ticket.core.domain.UserNotFoundException;
-import com.thinking.ticket.core.port.in.ReservationResult;
-import com.thinking.ticket.core.port.in.ReserveTicketCommand;
-import com.thinking.ticket.core.port.in.ReserveTicketUseCase;
 import com.thinking.ticket.jpa.TestPaymentConfig.TestChargePort;
 
 import io.cucumber.java.en.Given;
@@ -17,27 +9,37 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 /**
- * 실제 MySQL 구성의 스텝 정의. in-memory 구성과 같은 Feature 문장을 쓰지만, 아웃바운드가 fake가
- * 아니라 Inbound Port(Spring 빈) + 실제 MySQL이다. When은 Inbound Port를 호출하고,
- * 상태 단언은 실제 DB에서 읽는다.
+ * HTTP 관통 구성의 스텝 정의. 같은 Feature 문장을 쓰지만 When이 Inbound Port를 직접 부르지 않고
+ * <b>실제 HTTP 요청</b>을 보낸다 — 인바운드 진입 슬롯이 대역에서 실물로 바뀐 유일한 차이다.
  *
- * <p>상태 준비·확인은 <b>저장 스키마</b>로 직접 한다. 영속 어댑터의 자바 타입을 쓰지 않는 이유는 둘이다.
+ * <p>거부 사유는 도메인 예외 타입이 아니라 <b>HTTP 상태 코드</b>로 판정한다. 이 구성에서 심판은
+ * 프로토콜 바깥에 있으므로 예외 타입을 볼 수 없고, 봐서도 안 된다. 상태 코드 대응은 이 구성의 계약이다.
  * <ul>
- *   <li>포트의 쓰기 계약은 "아직 예약되지 않은 것만 예약"이라는 도메인 동작이라, "이미 예약된 상태"
- *       같은 임의 상태를 심판이 만들 수 없다. 포트만으로는 Given을 세울 수 없다.
- *   <li>심판이 어댑터 구현 타입에 결합하면, 그 어댑터가 아직 없는 상태에서 이 파일이 컴파일되지 않아
- *       멀쩡한 다른 심판까지 못 돌게 된다. 심판은 구성이 확정한 것(스키마)에만 결합한다.
+ *   <li>없는 회원 · 없는 티켓 → 404
+ *   <li>이미 예약됨 · 판매 중지 → 409
+ *   <li>결제 거절 → 402
  * </ul>
- * 따라서 테이블·컬럼 이름 {@code tickets(id, price, reserved, suspended, user_id)} ·
- * {@code users(id, name)} 이 이 구성의 계약이다.
+ * 두 거부 사유가 같은 상태를 공유하지만, 시나리오는 Given과 결제 청구 여부 단언으로 구분된다.
+ *
+ * <p>거부 응답은 모두 RFC 7807 {@code application/problem+json} 이어야 한다 — 이것도 이 구성의 계약이다.
+ *
+ * <p>상태 준비·확인은 저장 스키마로 직접 한다. 이유는 실제 저장소 구성의 스텝과 같다 —
+ * 심판은 파이프라인이 생성할 타입에 결합하지 않는다.
  */
-public class JpaTicketReservationSteps {
+public class HttpTicketReservationSteps {
 
     @Autowired
-    private ReserveTicketUseCase reserveTicket;
+    private TestRestTemplate http;
 
     @Autowired
     private JdbcTemplate jdbc;
@@ -45,19 +47,16 @@ public class JpaTicketReservationSteps {
     @Autowired
     private TestChargePort payment;
 
-    private ReservationResult result;
-    private Throwable thrown;
+    private ResponseEntity<String> response;
 
     // --- Given ---
 
     @Given("회원 저장소와 티켓 저장소가 비어 있다")
     public void 저장소가_비어_있다() {
-        // 싱글턴 컨텍스트라 시나리오 간 상태가 남으므로 매 시나리오마다 실제 DB와 결제 더블을 초기화한다.
         jdbc.update("delete from tickets");
         jdbc.update("delete from users");
         payment.reset();
-        this.result = null;
-        this.thrown = null;
+        this.response = null;
     }
 
     @Given("회원 {long}이 등록되어 있다")
@@ -72,7 +71,6 @@ public class JpaTicketReservationSteps {
 
     @Given("가격 {int}원짜리 이미 예약된 티켓 {long}이 있다")
     public void 이미_예약된_티켓이_있다(int price, long ticketId) {
-        // DB에는 예약 완료 상태를 직접 적재한다(소유자 값은 이 시나리오 단언과 무관).
         티켓을_적재한다(ticketId, price, true, false, 0);
     }
 
@@ -88,27 +86,26 @@ public class JpaTicketReservationSteps {
 
     @Given("티켓 {long}은 저장소에 없다")
     public void 티켓이_저장소에_없다(long ticketId) {
-        // 일부러 적재하지 않는다 — 조회가 비어 도메인이 TicketNotFoundException을 던지는 경로를 태운다.
+        // 일부러 적재하지 않는다.
     }
 
     // --- When ---
 
     @When("회원 {long}이 카드정보 {string}으로 티켓 {long}을 예매하면")
     public void 예매하면(long userId, String paymentInfo, long ticketId) {
-        try {
-            this.result = reserveTicket.reserve(new ReserveTicketCommand(userId, ticketId, paymentInfo));
-        } catch (Throwable t) {
-            this.thrown = t;
-        }
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("userId", userId);
+        body.put("ticketId", ticketId);
+        body.put("paymentInfo", paymentInfo);
+        this.response = http.postForEntity("/api/reservations", body, String.class);
     }
 
     // --- Then ---
 
     @Then("예매는 성공한다")
     public void 예매는_성공한다() {
-        assertThat(thrown).isNull();
-        assertThat(result).isNotNull();
-        assertThat(result.reserved()).isTrue();
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).contains("\"reserved\":true");
     }
 
     @Then("티켓 {long}은 회원 {long}에게 예약된다")
@@ -125,7 +122,7 @@ public class JpaTicketReservationSteps {
 
     @Then("예매는 회원 없음으로 거부된다")
     public void 회원_없음으로_거부된다() {
-        assertThat(thrown).isInstanceOf(UserNotFoundException.class);
+        거부_응답이다(HttpStatus.NOT_FOUND);
     }
 
     @Then("결제는 청구되지 않는다")
@@ -135,17 +132,17 @@ public class JpaTicketReservationSteps {
 
     @Then("예매는 이미 예약됨으로 거부된다")
     public void 이미_예약됨으로_거부된다() {
-        assertThat(thrown).isInstanceOf(TicketAlreadyReservedException.class);
+        거부_응답이다(HttpStatus.CONFLICT);
     }
 
     @Then("예매는 판매 중지로 거부된다")
     public void 판매_중지로_거부된다() {
-        assertThat(thrown).isInstanceOf(TicketSuspendedException.class);
+        거부_응답이다(HttpStatus.CONFLICT);
     }
 
     @Then("예매는 결제 실패로 거부된다")
     public void 결제_실패로_거부된다() {
-        assertThat(thrown).isInstanceOf(PaymentFailedException.class);
+        거부_응답이다(HttpStatus.PAYMENT_REQUIRED);
     }
 
     @Then("티켓 {long}은 예약되지 않는다")
@@ -161,7 +158,18 @@ public class JpaTicketReservationSteps {
 
     @Then("예매는 티켓 없음으로 거부된다")
     public void 티켓_없음으로_거부된다() {
-        assertThat(thrown).isInstanceOf(TicketNotFoundException.class);
+        거부_응답이다(HttpStatus.NOT_FOUND);
+    }
+
+    /* 거부 응답 판정. 상태 코드만 보면 "도메인이 거부한 404"와 "엔드포인트가 아예 없어서 난 404"를
+     * 구분하지 못한다 — 인바운드 어댑터가 없어도 그 시나리오가 통과해 버린다(공허한 초록불).
+     * 그래서 응답이 problem+json 인지 함께 본다: 우리 어댑터가 번역한 거부만 이 타입으로 답한다. */
+    private void 거부_응답이다(HttpStatus expected) {
+        assertThat(response.getStatusCode()).isEqualTo(expected);
+        assertThat(response.getHeaders().getContentType())
+                .as("거부 응답은 RFC 7807 problem+json 이어야 한다")
+                .isNotNull()
+                .satisfies(type -> assertThat(type.toString()).startsWith(MediaType.APPLICATION_PROBLEM_JSON_VALUE));
     }
 
     // --- 저장 스키마 접근 (이 구성이 확정한 계약) ---
