@@ -99,6 +99,23 @@ DB 상태도 확인했다. 티켓 20은 `reserved=1, user_id=1`, **결제가 거
 
 테스트는 `mvn -B test` 하나로 네 구성이 함께 돈다 — in-memory 7 · 실제 MySQL 7 · HTTP 관통 7 · 경계 5 = **26개**.
 
+### CI 초록불
+
+✅ https://github.com/woong7361/architecture-thinking/actions/runs/30542152183
+
+CI는 **두 골격을 매트릭스로 함께 돌린다.**
+
+```
+acceptance (hand-written)     task3/ticket-reservation        success
+acceptance (pipeline-built)   task3/ticket-reservation-c6     success
+```
+
+두 프로젝트는 **같은 심판·같은 계약을 쓰고 `src/main` 만 다르다.** 둘 다 초록불이라는 것은
+손으로 만든 골격과 파이프라인이 만든 골격이 **같은 요구사항을 같은 기준으로 만족한다**는 뜻이다.
+러너에는 Docker가 있어 Testcontainers가 실제 MySQL 컨테이너를 띄운다 — 별도 배포 서버가 필요 없다.
+
+출발선은 `skeleton-baseline-v1` 태그로 남겼다. 이 태그에서 파이프라인을 다시 돌리면 같은 절차를 재현할 수 있다.
+
 ---
 
 ## 제출물 2 — AI 파이프라인과 Layer 단위 검수 로그
