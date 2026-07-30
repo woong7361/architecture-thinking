@@ -1,0 +1,148 @@
+{
+  "provider": "claude",
+  "run_id": "c6",
+  "repo_root": "C:/Users/이현웅/Desktop/project/thinking",
+  "baseline_ref": "skeleton-baseline-v1",
+  "project_subdir": "task3/ticket-reservation",
+  "source_root": "src/main/java",
+  "worktree_parent": "C:/Users/이현웅/Desktop/project",
+  "timeout": 900,
+
+  "context_files": ["task3/ticket-reservation/CLAUDE.md"],
+
+  "frozen_paths": [
+    "com/thinking/ticket/core/domain",
+    "com/thinking/ticket/core/port",
+    "com/thinking/ticket/TicketReservationApplication.java"
+  ],
+
+  "compile_cmd": [
+    "docker", "run", "--rm", "-v", "{project}:/app", "-w", "/app",
+    "-v", "maven-repo:/root/.m2",
+    "maven:3.9-eclipse-temurin-17", "mvn", "-B", "test-compile"
+  ],
+  "boundary_cmd": [
+    "docker", "run", "--rm", "-v", "{project}:/app", "-w", "/app",
+    "-v", "maven-repo:/root/.m2",
+    "maven:3.9-eclipse-temurin-17", "mvn", "-B", "test", "-Dtest=HexagonalBoundaryTest"
+  ],
+
+  "configurations": {
+    "inmemory": {
+      "desc": "저장·결제를 인메모리 대역으로 두고 Inbound Port를 직접 호출하는 구성. 컨테이너 불필요.",
+      "cmd": [
+        "docker", "run", "--rm", "-v", "{project}:/app", "-w", "/app",
+        "-v", "maven-repo:/root/.m2",
+        "maven:3.9-eclipse-temurin-17", "mvn", "-B", "test", "-Dtest=CucumberAcceptanceTest"
+      ]
+    },
+    "storage": {
+      "desc": "저장을 실제 MySQL로 바꾼 구성. 조립은 아직 대역(StubCompositionRoot)이 담당한다.",
+      "cmd": [
+        "docker", "run", "--rm", "-v", "{project}:/app", "-w", "/app",
+        "-v", "maven-repo:/root/.m2", "-v", "//var/run/docker.sock:/var/run/docker.sock",
+        "-e", "TESTCONTAINERS_HOST_OVERRIDE=host.docker.internal",
+        "maven:3.9-eclipse-temurin-17", "mvn", "-B", "test", "-Dtest=JpaCucumberAcceptanceTest",
+        "-DargLine=-Dapi.version=1.44 -Dskeleton.composition-root=stub"
+      ]
+    },
+    "wired": {
+      "desc": "조립 대역을 끈 구성. 실제 조립부가 스스로 런타임을 세워야 통과한다.",
+      "cmd": [
+        "docker", "run", "--rm", "-v", "{project}:/app", "-w", "/app",
+        "-v", "maven-repo:/root/.m2", "-v", "//var/run/docker.sock:/var/run/docker.sock",
+        "-e", "TESTCONTAINERS_HOST_OVERRIDE=host.docker.internal",
+        "maven:3.9-eclipse-temurin-17", "mvn", "-B", "test", "-Dtest=JpaCucumberAcceptanceTest",
+        "-DargLine=-Dapi.version=1.44"
+      ]
+    },
+    "protocol": {
+      "desc": "실제 HTTP로 들어가 실제 MySQL까지 관통하는 구성. 대역은 결제 하나만 남는다.",
+      "cmd": [
+        "docker", "run", "--rm", "-v", "{project}:/app", "-w", "/app",
+        "-v", "maven-repo:/root/.m2", "-v", "//var/run/docker.sock:/var/run/docker.sock",
+        "-e", "TESTCONTAINERS_HOST_OVERRIDE=host.docker.internal",
+        "maven:3.9-eclipse-temurin-17", "mvn", "-B", "test", "-Dtest=E2eCucumberAcceptanceTest",
+        "-DargLine=-Dapi.version=1.44"
+      ]
+    }
+  },
+  "final_configuration": "protocol",
+
+  "layers": [
+    {
+      "id": "L0",
+      "promotes": "유스케이스",
+      "verdict": "transition",
+      "gate": "inmemory",
+      "allowed_paths": ["com/thinking/ticket/core/application"],
+      "contracts": [
+        "com/thinking/ticket/core/port/in/ReserveTicketUseCase.java",
+        "com/thinking/ticket/core/port/in/ReserveTicketCommand.java",
+        "com/thinking/ticket/core/port/in/ReservationResult.java",
+        "com/thinking/ticket/core/port/out/TicketRepository.java",
+        "com/thinking/ticket/core/port/out/UserRepository.java",
+        "com/thinking/ticket/core/port/out/ChargePort.java",
+        "com/thinking/ticket/core/domain/Ticket.java",
+        "com/thinking/ticket/core/domain/User.java",
+        "com/thinking/ticket/core/domain/DiscountPolicy.java",
+        "com/thinking/ticket/core/domain/TicketNotFoundException.java",
+        "com/thinking/ticket/core/domain/UserNotFoundException.java",
+        "com/thinking/ticket/core/domain/PaymentFailedException.java",
+        "com/thinking/ticket/core/domain/TicketSuspendedException.java",
+        "com/thinking/ticket/core/domain/TicketAlreadyReservedException.java",
+        "com/thinking/ticket/core/application/TicketService.java"
+      ],
+      "requirements": "티켓 예매 유스케이스를 구현한다. Inbound Port를 구현하고, 아웃바운드 포트들로 협력 순서를 조정한다. 규칙 판단은 도메인에 위임하고 절차만 소유한다. 클래스 이름 TicketService와 생성자 시그니처 (TicketRepository, UserRepository, ChargePort, DiscountPolicy)는 심판이 참조하는 계약이므로 그대로 유지한다. 관찰 가능한 동작: 없는 회원이면 UserNotFoundException, 없는 티켓이면 TicketNotFoundException, 예약 불가 티켓이면 도메인이 정한 예외, 결제 거절이면 PaymentFailedException을 던지고 예약을 확정하지 않는다. 결제 금액은 할인 정책을 적용한 값이다. 결제가 성공해야 예약을 확정하고 저장한다. 회원 조회가 티켓 조회보다 앞선다."
+    },
+    {
+      "id": "L1",
+      "promotes": "저장",
+      "verdict": "swap",
+      "gate": "storage",
+      "allowed_paths": ["com/thinking/ticket/adapter/out"],
+      "contracts": [
+        "com/thinking/ticket/core/port/out/TicketRepository.java",
+        "com/thinking/ticket/core/port/out/UserRepository.java",
+        "com/thinking/ticket/core/port/out/ChargePort.java",
+        "com/thinking/ticket/core/domain/Ticket.java",
+        "com/thinking/ticket/core/domain/User.java"
+      ],
+      "requirements": "아웃바운드 포트들을 실제 기술로 구현한다. 저장은 JPA + MySQL, 결제는 외부 결제사 HTTP 호출이다. 도메인 모델과 영속 모델은 분리하고 변환은 이 층 안에서 한다. 저장 스키마 이름은 심판이 참조하는 계약이므로 정확히 따른다: 테이블 tickets(id, price, reserved, suspended, user_id), users(id, name). 스키마는 ddl-auto=update로 영속 모델에서 생성되므로 컬럼 이름이 어긋나면 심판이 깨진다. 예약 저장은 이미 예약된 행을 덮어쓰지 않아야 한다(동시에 여러 인스턴스가 같은 티켓을 예약할 수 있다). 조회 대상이 없으면 null을 반환한다 — 없음 판정은 유스케이스가 한다. 결제 어댑터의 기반 URL은 설정값 pg.base-url에서 주입받는다. 이 층의 산출물은 스프링 빈으로 등록되어야 조립 대역이 포트 자리에 꽂을 수 있다."
+    },
+    {
+      "id": "L2",
+      "promotes": "조립",
+      "verdict": "swap",
+      "gate": "wired",
+      "allowed_paths": ["com/thinking/ticket/config"],
+      "contracts": [
+        "com/thinking/ticket/core/port/in/ReserveTicketUseCase.java",
+        "com/thinking/ticket/core/port/out/TicketRepository.java",
+        "com/thinking/ticket/core/port/out/UserRepository.java",
+        "com/thinking/ticket/core/port/out/ChargePort.java",
+        "com/thinking/ticket/core/domain/DiscountPolicy.java",
+        "com/thinking/ticket/TicketReservationApplication.java"
+      ],
+      "requirements": "조립 지점을 만든다. 앞 층이 만든 아웃바운드 어댑터를 포트 자리에 주입해 유스케이스를 만들고, Inbound Port 타입으로 주입받을 수 있게 등록한다. Core는 스스로를 프레임워크 빈으로 등록하지 않는다 — 그래서 이 조립 지점이 필요하다. 조립 외의 로직을 넣지 않는다."
+    },
+    {
+      "id": "L3",
+      "promotes": "인바운드 진입",
+      "verdict": "swap",
+      "gate": "protocol",
+      "allowed_paths": ["com/thinking/ticket/adapter/in"],
+      "contracts": [
+        "com/thinking/ticket/core/port/in/ReserveTicketUseCase.java",
+        "com/thinking/ticket/core/port/in/ReserveTicketCommand.java",
+        "com/thinking/ticket/core/port/in/ReservationResult.java",
+        "com/thinking/ticket/core/domain/TicketNotFoundException.java",
+        "com/thinking/ticket/core/domain/UserNotFoundException.java",
+        "com/thinking/ticket/core/domain/PaymentFailedException.java",
+        "com/thinking/ticket/core/domain/TicketSuspendedException.java",
+        "com/thinking/ticket/core/domain/TicketAlreadyReservedException.java"
+      ],
+      "requirements": "HTTP 진입 어댑터를 만든다. POST /api/reservations 가 JSON 본문 {userId, ticketId, paymentInfo}를 받아 Command로 바꾸고 Inbound Port를 호출한다. 성공하면 200과 유스케이스 결과 DTO를 그대로 직렬화해 답한다(필드 reserved, ticketId, userId). 도메인 거부는 상태 코드로 번역한다: 없는 회원·없는 티켓 404, 예약 불가(이미 예약됨·판매 중지) 409, 결제 거절 402. 거부 응답은 모두 RFC 7807 application/problem+json 이어야 한다 — 심판이 이 미디어 타입으로 '엔드포인트 없음'과 '도메인 거부'를 구분한다. 수평 확장 시 다른 인스턴스가 먼저 예약해 발생하는 낙관적 잠금 충돌도 409로 번역한다. 이 층은 도메인 규칙을 판단하지 않고 번역만 한다."
+    }
+  ]
+}

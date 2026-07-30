@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Implement Layer Output",
+  "type": "object",
+  "required": ["files"],
+  "properties": {
+    "files": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["path", "content"],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "description": "source_root 기준 상대경로. 절대경로·.. 금지. 층의 allowed_paths 안이어야 한다."
+          },
+          "content": { "type": "string", "minLength": 1 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "notes": {
+      "type": "string",
+      "description": "계약이 불편했던 지점·막힌 지점·판단이 갈린 지점. 사람의 검수 자료. 자기 점수·판정 금지."
+    }
+  },
+  "additionalProperties": false
+}
