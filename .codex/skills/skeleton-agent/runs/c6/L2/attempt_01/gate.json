@@ -1,0 +1,11 @@
+{
+  "stage": "acceptance",
+  "verdict": "GREEN",
+  "detail": "Tests run: 7, Failures: 0, Errors: 0",
+  "configuration": "wired",
+  "progress": {
+    "configuration": "protocol",
+    "verdict": "RED",
+    "detail": "[ERROR] Tests run: 7, Failures: 7, Errors: 0, Skipped: 0, Time elapsed: 56.86 s <<< FAILURE! -- in com.thinking.ticket.e2e.E2eCucumberAcceptanceTest\n[ERROR] 새 요구사항 — 제출물 4 변화 저항력 시험.5만원 이상 티켓은 10% 할인된 금액이 청구된다 -- Time elapsed: 54.90 s <<< FAILURE!\n[ERROR] 새 요구사항 — 제출물 4 변화 저항력 시험.판매 중지된 티켓은 예매할 수 없고 결제도 일어나지 않는다 -- Time elapsed: 0.114 s <<< FAILURE!\n[ERROR] 티켓 예매 (인수테스트 안전망).유효한 회원이 미예약 티켓을 예매하면 예약이 확정되고 결제가 청구된다 -- Time elapsed: 0.114 s <<< FAILURE!\n[ERROR] 티켓 예매 (인수테스트 안전망).등록되지 않은 회원은 예매할 수 없고 결제도 일어나지 않는다 -- Time elapsed: 0.156 s <<< FAILURE!\n[ERROR] 티켓 예매 (인수테스트 안전망).이미 예약된 티켓은 예매할 수 없고 결제도 일어나지 않는다 -- Time elapsed: 0.150 s <<< FAILURE!\n[ERROR] 티켓 예매 (인수테스트 안전망).결제가 거절되면 예매는 실패하고 티켓은 예약되지 않는다 -- Time elapsed: 0.180 s <<< FAILURE!\n[ERROR] 티켓 예매 (인수테스트 안전망).존재하지 않는 티켓은 예매할 수 없고 결제도 일어나지 않는다 -- Time elapsed: 0.095 s <<< FAILURE!\n[ERROR] Tests run: 7, Failures: 7, Errors: 0, Skipped: 0"
+  }
+}
