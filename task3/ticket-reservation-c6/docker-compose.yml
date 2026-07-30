@@ -1,0 +1,58 @@
+name: ticket-reservation
+
+# `docker compose up` 한 줄로 app + DB + mock-pg 를 함께 기동한다.
+# 모든 환경 값은 .env 에서 주입한다(12-factor). 이미지 1개를 환경만 바꿔 재사용.
+services:
+  # ── 외부화된 '우리 상태'의 목적지 (stateful, 단일 진실원, scale-out 대상 아님) ──
+  db:
+    image: mysql:8.4
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "${DB_PORT}:3306"   # 호스트에서 DB 직접 접속용(앱-DB 내부 통신은 항상 컨테이너 3306)
+    volumes:
+      - db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u root -p$$MYSQL_ROOT_PASSWORD --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  # ── '외부 의존(결제사)'의 스텁. 상태 외부화가 아니라 재현 환경용 mock 서버 ──
+  mock-pg:
+    image: wiremock/wiremock:3.9.1
+    # 기본 진입점이 /home/wiremock/mappings 의 스텁을 로드해 8080 에서 서빙한다.
+    volumes:
+      - ./docker/mock-pg/mappings:/home/wiremock/mappings:ro
+
+  # ── 무상태 앱(우리 헥사곤). 외부화 덕에 로컬 상태 0 → --scale 로 복제 가능 ──
+  app:
+    build: .
+    environment:
+      DB_HOST: db
+      DB_PORT: "3306"
+      DB_NAME: ${DB_NAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      PG_BASE_URL: http://mock-pg:8080
+      SQL_INIT_MODE: "always"   # 데모 시드(data.sql)는 기동 환경에서만 넣는다. 테스트 구성은 주지 않는다.
+    ports:
+      - "${APP_PORT}:8080"
+    depends_on:
+      db:
+        condition: service_healthy      # DB가 healthy 된 뒤에만 앱 기동
+      mock-pg:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 40s
+
+volumes:
+  db-data:
