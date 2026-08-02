@@ -1,13 +1,13 @@
 package com.thinking.ticket.adapter.out.persistence;
 
 import com.thinking.ticket.core.domain.User;
-import com.thinking.ticket.core.port.out.UserRepository;
+import com.thinking.ticket.core.port.out.LoadUserPort;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-/* 아웃바운드 포트 UserRepository의 JPA 구현. */
+/* 아웃바운드 포트 LoadUserPort의 JPA 구현. */
 @Repository
-public class UserPersistenceAdapter implements UserRepository {
+public class UserPersistenceAdapter implements LoadUserPort {
 
     private final UserJpaRepository userJpaRepository;
 

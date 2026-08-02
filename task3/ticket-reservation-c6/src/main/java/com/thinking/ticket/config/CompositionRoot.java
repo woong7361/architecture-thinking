@@ -4,8 +4,9 @@ import com.thinking.ticket.core.application.TicketService;
 import com.thinking.ticket.core.domain.DiscountPolicy;
 import com.thinking.ticket.core.port.in.ReserveTicketUseCase;
 import com.thinking.ticket.core.port.out.ChargePort;
-import com.thinking.ticket.core.port.out.TicketRepository;
-import com.thinking.ticket.core.port.out.UserRepository;
+import com.thinking.ticket.core.port.out.LoadTicketPort;
+import com.thinking.ticket.core.port.out.LoadUserPort;
+import com.thinking.ticket.core.port.out.SaveTicketPort;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -31,10 +32,11 @@ public class CompositionRoot {
      * 파라미터도 포트 타입으로만 받는다. 어떤 어댑터가 꽂히는지는 구성이 정하므로,
      * 저장이 인메모리에서 JPA로 바뀌어도 이 메서드는 그대로다. */
     @Bean
-    public ReserveTicketUseCase reserveTicketUseCase(TicketRepository ticketRepository,
-                                                     UserRepository userRepository,
+    public ReserveTicketUseCase reserveTicketUseCase(LoadTicketPort loadTicketPort,
+                                                     SaveTicketPort saveTicketPort,
+                                                     LoadUserPort loadUserPort,
                                                      ChargePort chargePort,
                                                      DiscountPolicy discountPolicy) {
-        return new TicketService(ticketRepository, userRepository, chargePort, discountPolicy);
+        return new TicketService(loadTicketPort, saveTicketPort, loadUserPort, chargePort, discountPolicy);
     }
 }

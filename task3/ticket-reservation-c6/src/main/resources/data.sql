@@ -1,5 +1,5 @@
 -- 컨테이너 기동 데모용 시드. 인수테스트는 시나리오가 데이터를 직접 만들므로 여기에 의존하지 않는다.
--- 시드를 어댑터 코드가 아니라 인프라 설정으로 두는 이유: 저장 계약(UserRepository)에 쓰기가 없고,
+-- 시드를 어댑터 코드가 아니라 인프라 설정으로 두는 이유: 회원 조회 포트(LoadUserPort)에 등록 쓰기가 없고,
 -- 적재는 유스케이스가 아니라 환경 준비의 일이기 때문이다.
 -- SQL_INIT_MODE=always 인 환경에서만 실행된다(테스트 구성에서는 실행되지 않는다).
 insert into users(id, name) values (1, 'user-1') on duplicate key update name = values(name);

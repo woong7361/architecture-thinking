@@ -10,8 +10,9 @@ import com.thinking.ticket.core.port.in.ReservationResult;
 import com.thinking.ticket.core.port.in.ReserveTicketCommand;
 import com.thinking.ticket.core.port.in.ReserveTicketUseCase;
 import com.thinking.ticket.core.port.out.ChargePort;
-import com.thinking.ticket.core.port.out.TicketRepository;
-import com.thinking.ticket.core.port.out.UserRepository;
+import com.thinking.ticket.core.port.out.LoadTicketPort;
+import com.thinking.ticket.core.port.out.LoadUserPort;
+import com.thinking.ticket.core.port.out.SaveTicketPort;
 
 /* 예매 유스케이스. Inbound Port를 구현하고 Outbound Port들의 협력 '순서'만 소유한다.
  * 예약 가능 판단과 상태 전이는 Ticket이, 금액 계산은 DiscountPolicy가 가진다 —
@@ -21,15 +22,18 @@ import com.thinking.ticket.core.port.out.UserRepository;
  * 인수테스트에선 인메모리 대역을 직접 넣는 쪽이 담당한다(Core는 컨테이너 없이 실행된다). */
 public class TicketService implements ReserveTicketUseCase {
 
-    private final TicketRepository ticketRepo;
-    private final UserRepository userRepo;
+    private final LoadTicketPort loadTicketPort;
+    private final SaveTicketPort saveTicketPort;
+    private final LoadUserPort loadUserPort;
     private final ChargePort chargePort;
     private final DiscountPolicy discountPolicy;
 
-    public TicketService(TicketRepository ticketRepo, UserRepository userRepo, ChargePort chargePort,
+    public TicketService(LoadTicketPort loadTicketPort, SaveTicketPort saveTicketPort,
+                         LoadUserPort loadUserPort, ChargePort chargePort,
                          DiscountPolicy discountPolicy) {
-        this.ticketRepo = ticketRepo;
-        this.userRepo = userRepo;
+        this.loadTicketPort = loadTicketPort;
+        this.saveTicketPort = saveTicketPort;
+        this.loadUserPort = loadUserPort;
         this.chargePort = chargePort;
         this.discountPolicy = discountPolicy;
     }
@@ -37,12 +41,12 @@ public class TicketService implements ReserveTicketUseCase {
     @Override
     public ReservationResult reserve(ReserveTicketCommand command) {
         /* 회원 확인이 먼저다 — 자격 없는 요청은 티켓을 조회하기 전에 거절한다. */
-        User user = userRepo.findById(command.userId());
+        User user = loadUserPort.findById(command.userId());
         if (user == null) {
             throw new UserNotFoundException();
         }
 
-        Ticket ticket = ticketRepo.findById(command.ticketId());
+        Ticket ticket = loadTicketPort.findById(command.ticketId());
         if (ticket == null) {
             throw new TicketNotFoundException();
         }
@@ -58,7 +62,7 @@ public class TicketService implements ReserveTicketUseCase {
 
         /* 결제가 성공한 뒤에만 확정한다 — 확정과 저장 사이에 다른 판단을 끼우지 않는다. */
         ticket.assignTo(user.getId());
-        ticketRepo.save(ticket);
+        saveTicketPort.save(ticket);
 
         return new ReservationResult(true, ticket.getId(), user.getId());
     }

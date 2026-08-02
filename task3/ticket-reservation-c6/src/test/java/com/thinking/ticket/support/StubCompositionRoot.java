@@ -3,8 +3,9 @@ package com.thinking.ticket.support;
 import com.thinking.ticket.core.application.TicketService;
 import com.thinking.ticket.core.domain.DiscountPolicy;
 import com.thinking.ticket.core.port.out.ChargePort;
-import com.thinking.ticket.core.port.out.TicketRepository;
-import com.thinking.ticket.core.port.out.UserRepository;
+import com.thinking.ticket.core.port.out.LoadTicketPort;
+import com.thinking.ticket.core.port.out.LoadUserPort;
+import com.thinking.ticket.core.port.out.SaveTicketPort;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -29,10 +30,11 @@ public class StubCompositionRoot {
     }
 
     @Bean
-    public TicketService ticketService(TicketRepository ticketRepository,
-                                       UserRepository userRepository,
+    public TicketService ticketService(LoadTicketPort loadTicketPort,
+                                       SaveTicketPort saveTicketPort,
+                                       LoadUserPort loadUserPort,
                                        ChargePort chargePort,
                                        DiscountPolicy discountPolicy) {
-        return new TicketService(ticketRepository, userRepository, chargePort, discountPolicy);
+        return new TicketService(loadTicketPort, saveTicketPort, loadUserPort, chargePort, discountPolicy);
     }
 }

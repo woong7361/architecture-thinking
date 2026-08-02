@@ -214,7 +214,7 @@ AI에게 "앱 만들어줘"라고 통째로 시키지 않는다. **아키텍처�
 |---|---|---|
 | `allowed_paths` | 이 층이 **쓸 수 있는** 경로 화이트리스트 | 아무 데나 파일이 생기고, 경계 위반이 결과물에 섞인다 |
 | `frozen_contracts` | 이 층이 **읽기만 하는** 계약 | 계약을 편한 대로 바꿔 하위 호환을 깬다 |
-| `requirements` | 이 층이 **만족시켜야 할 것** | 무엇을 만들지 모른다 |
+| `prompt_file` | 이 층이 **만족시켜야 할 일반 레이어 규칙**을 담은 외부 프롬프트 파일 | JSON 안에 긴 지시가 박혀 재사용·검수가 어려워진다 |
 | `promotes` | 이 층이 **실물로 승격시키는 슬롯** | 층이 무엇을 채우는 일인지 불명확해진다 |
 | `verdict` | `transition` 인가 `swap` 인가 | 초록불의 **의미**를 모른다. 원래 초록이던 걸 초록이라 우길 수 있다 |
 | `gate` | 판정에 쓸 **구성** | "됐다"의 기준이 사람 기분이 된다 |
@@ -503,11 +503,16 @@ L2가 특히 명확하다. L1과 **심판도 같고 시나리오도 같고, 조�
 
 ```
 runs/<run_id>/
-  input.json                 레이어 계획 스냅샷
+  input.json                 레이어 계획과 target_context 스냅샷
+  prompt-sources.md          공통 컨텍스트, input context field, 공용 레이어 프롬프트 위치
   L0/
     attempt_01/
       implement.json         AI가 낸 매니페스트
       gate.json              4단 판정 결과 + 실패 사유
+      context/
+        system.md            실제 system prompt
+        user.md              실제 user context
+        prompt-sources.json  이 시도에 사용한 프롬프트와 input context field
       progress.json          최종 구성 심판의 실패 지점(판정 아님, 관측)
       files/                 적용된 파일 실물
     attempt_02/ ...

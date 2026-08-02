@@ -10,13 +10,13 @@
 
 ### 제출물
 
-- [x]  walking skeleton 코드(1 인수테스트 초록불, 1-command 기동)를 GitHub에.
-- [x]  AI 파이프라인(프롬프트/컨텍스트/agent.md)과 Layer 단위 검수 로그.
-- [x]  AI 제안 중 헥사고날 경계 위반을 잡아낸 사례 + 본인 판단. (위반이 없었다면, 검수 시 적용한 경계 점검과 AI 출력이 경계를 지킨 이유를 적으세요.) (최소 300자)
+- [x] walking skeleton 코드(1 인수테스트 초록불, 1-command 기동)를 GitHub에.
+- [x] AI 파이프라인(프롬프트/컨텍스트/agent.md)과 Layer 단위 검수 로그.
+- [x] AI 제안 중 헥사고날 경계 위반을 잡아낸 사례 + 본인 판단. (위반이 없었다면, 검수 시 적용한 경계 점검과 AI 출력이 경계를 지킨 이유를 적으세요.) (최소 300자)
 
 ---
 
-## 한눈에
+## 개요
 
 **골격의 `src/main` 을 전부 AI에게 층 단위로 만들게 하고, 층마다 인수테스트로 판정했다.**
 
@@ -27,249 +27,92 @@ L0 유스케이스 → L1 아웃바운드 어댑터 → L2 조립 → L3 인바�
    각 층마다: 경로 규약 → 컴파일 → 경계 규칙 → 인수테스트
 ```
 
-네 층 모두 통과했고, 합친 결과가 **인수 21개 + 경계 5개 = 26개 초록불**이다.
-`docker compose up` 후 실제 HTTP 요청이 실제 MySQL까지 닿는 것도 확인했다.
-
 ## 산출물 위치
 
-| | 위치 |
-|---|---|
-| walking skeleton 코드 | [`../ticket-reservation-c6/`](../ticket-reservation-c6/) |
-| 파이프라인 | [`../../.codex/skills/skeleton-agent/pipeline/`](../../.codex/skills/skeleton-agent/pipeline/) |
-| 설계 문서 | [`skeleton-agent/docs/design-v0.md`](../../.codex/skills/skeleton-agent/docs/design-v0.md) |
-| 헥사고날 컨벤션(AI 컨텍스트) | [`ticket-reservation-c6/CLAUDE.md`](../ticket-reservation-c6/CLAUDE.md) |
-| 층별 검수 로그 | [`skeleton-agent/runs/c6/`](../../.codex/skills/skeleton-agent/runs/c6/) |
-| 손코딩 골격과의 대조 | [`runs/c6/diff-vs-handwritten.md`](../../.codex/skills/skeleton-agent/runs/c6/diff-vs-handwritten.md) |
 
-기존 [`../ticket-reservation/`](../ticket-reservation/) 은 C-4·C-5 답안이 참조하므로 손대지 않고,
-파이프라인 산출물을 별도 폴더에 두었다. **두 폴더는 같은 심판·같은 계약을 쓰고 `src/main` 만 다르다.**
+|                     | 위치                                                                                                                                                                                            |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| walking skeleton 코드 | [`../ticket-reservation-c6/`](https://github.com/woong7361/architecture-thinking/tree/main/task3/ticket-reservation-c6)                                                                       |
+| 파이프라인               | [`../../.codex/skills/skeleton-agent/pipeline/`](https://github.com/woong7361/architecture-thinking/tree/main/.codex/skills/skeleton-agent/pipeline)                                          |
+| 공통 AI 컨벤션           | [`skeleton-agent/CLAUDE.md`](https://github.com/woong7361/architecture-thinking/blob/main/.codex/skills/skeleton-agent/CLAUDE.md)                                                             |
+| C-6 run 입력·구체 컨텍스트  | [`skeleton-agent/pipeline/inputs/c6-ticket-skeleton.json`](https://github.com/woong7361/architecture-thinking/blob/main/.codex/skills/skeleton-agent/pipeline/inputs/c6-ticket-skeleton.json) |
+| 공용 레이어 지시 프롬프트      | [`skeleton-agent/pipeline/prompts/layers/`](https://github.com/woong7361/architecture-thinking/tree/main/.codex/skills/skeleton-agent/pipeline/prompts/layers)                                |
+| 설계 문서               | [`skeleton-agent/docs/design-v0.md`](https://github.com/woong7361/architecture-thinking/blob/main/.codex/skills/skeleton-agent/docs/design-v0.md)                                             |
+| 헥사고날 컨벤션(AI 컨텍스트)   | [`ticket-reservation-c6/CLAUDE.md`](https://github.com/woong7361/architecture-thinking/blob/main/task3/ticket-reservation-c6/CLAUDE.md)                                                       |
+| 층별 검수 로그            | [`skeleton-agent/runs/c6/`](https://github.com/woong7361/architecture-thinking/tree/main/.codex/skills/skeleton-agent/runs/c6)                                                                |
+| 자동 검사 비교            | [`runs/c6/diff-vs-handwritten.md`](https://github.com/woong7361/architecture-thinking/blob/main/.codex/skills/skeleton-agent/runs/c6/diff-vs-handwritten.md)                                  |
 
----
-
-## 제출물 1 — walking skeleton
-
-### 무엇이 "얇지만 실제로 도는" 상태인가
-
-walking skeleton은 빈 인터페이스를 넓게 깔아 둔 껍데기가 아니다. **기능 수는 최소지만 각 조각이 진짜로
-동작해서, 요청 하나가 바깥에서 들어가 끝까지 닿는 상태**다. 판정 기준은 하나다 — 요청을 넣었을 때 진짜 DB에
-값이 남는가.
-
-```
-POST /api/reservations
-  → ReservationController          (Inbound Adapter)
-  → ReserveTicketUseCase           (Inbound Port)
-  → TicketService                  (Core)
-  → TicketRepository / ChargePort  (Outbound Port)
-  → JPA 어댑터 / PG 어댑터          (Outbound Adapter)
-  → 실제 MySQL / mock-pg
-```
-
-### 인수테스트가 이 줄기를 태운다
-
-C-5까지의 인수테스트는 컨트롤러를 건너뛰고 Inbound Port를 직접 호출했다. C-6에서 **HTTP를 실제로 태우는
-구성**을 추가했다. 같은 Feature 문장을 쓰고 `When` 만 달라진다.
-
-```java
-// HTTP 관통 구성의 When — 포트가 아니라 실제 요청
-this.response = http.postForEntity("/api/reservations", body, String.class);
-```
-
-거부 사유는 예외 타입이 아니라 **상태 코드 + `application/problem+json`** 으로 판정한다.
-심판이 프로토콜 바깥에 있으므로 예외 타입을 볼 수 없고, 봐서도 안 되기 때문이다.
-
-미디어 타입까지 보는 이유가 있다. 상태 코드만 보면 **"엔드포인트가 없어서 난 404"와 "도메인이 거부한 404"를
-구분하지 못한다.** 실제로 처음 작성한 심판은 컨트롤러가 아예 없는 상태에서도 7개 중 2개가 통과했다.
-어댑터가 번역한 거부만 problem+json 으로 답한다는 점을 함께 단언해 그 구멍을 막았다.
-
-### 1-command 기동 + 실측
-
-```bash
-docker compose up --build
-```
-
-```
-성공        POST {userId:1, ticketId:20, "card-token"}      → 200 {"reserved":true,"ticketId":20,"userId":1}
-결제 거절    POST {userId:1, ticketId:23, "declined-card"}   → 402 application/problem+json
-판매 중지    POST {userId:1, ticketId:21, ...}               → 409 application/problem+json
-이미 예약    POST {userId:1, ticketId:22, ...}               → 409 application/problem+json
-없는 회원    POST {userId:99, ...}                           → 404 application/problem+json
-```
-
-DB 상태도 확인했다. 티켓 20은 `reserved=1, user_id=1`, **결제가 거절된 23은 예약되지 않았다.**
-
-테스트는 `mvn -B test` 하나로 네 구성이 함께 돈다 — in-memory 7 · 실제 MySQL 7 · HTTP 관통 7 · 경계 5 = **26개**.
-
-### CI 초록불
-
-✅ https://github.com/woong7361/architecture-thinking/actions/runs/30542152183
-
-CI는 **두 골격을 매트릭스로 함께 돌린다.**
-
-```
-acceptance (hand-written)     task3/ticket-reservation        success
-acceptance (pipeline-built)   task3/ticket-reservation-c6     success
-```
-
-두 프로젝트는 **같은 심판·같은 계약을 쓰고 `src/main` 만 다르다.** 둘 다 초록불이라는 것은
-손으로 만든 골격과 파이프라인이 만든 골격이 **같은 요구사항을 같은 기준으로 만족한다**는 뜻이다.
-러너에는 Docker가 있어 Testcontainers가 실제 MySQL 컨테이너를 띄운다 — 별도 배포 서버가 필요 없다.
-
-출발선은 `skeleton-baseline-v1` 태그로 남겼다. 이 태그에서 파이프라인을 다시 돌리면 같은 절차를 재현할 수 있다.
-
----
-
-## 제출물 2 — AI 파이프라인과 Layer 단위 검수 로그
-
-### 1-1 / 1-2 하네스에서 무엇을 가져왔나
-
-| 구성요소 | 처리 |
-|---|---|
-| LLM 클라이언트 포트 (codex/claude 교체 축) | **import 재사용** |
-| worktree 격리 적용 + 파일 매니페스트 | **복사 후 개조** — 판정 의미가 "회귀 없음"에서 "새 GREEN"으로 바뀜 |
-| `runs/` 로그 레이아웃, refine 루프 | **재사용** |
-| 구성·레이어 입력 스키마, 게이트 4단, 층 프롬프트 | **신규** |
-
-1-2의 `refactor-agent` 가 "기존 코드를 옮겨도 행위가 안 깨지는가"를 물었다면, 이 파이프라인은
-**"경계를 안 넘고 걷게 만들었는가"** 를 묻는다. 그래서 형제 스킬로 분리했다.
-
-### 핵심 난점과 해결 — 판정의 단위를 층이 아니라 "구성"으로
-
-**인수테스트는 완전한 시스템을 요구하는데, 층별 생성은 필연적으로 불완전한 중간 상태를 만든다.**
-이 모순을 풀지 않으면 "매 단계 인수테스트로 판정"이 성립하지 않는다.
-
-불완전한 상태를 억지로 돌리는 대신 방향을 뒤집었다.
-
-> **아직 만들지 않은 자리는 대역으로 채워 시스템을 항상 완전하게 유지한다.**
-> **층 하나가 완성될 때마다 그 자리의 대역을 실물로 승격시킨다.**
-
-시나리오는 처음부터 끝까지 한 글자도 바뀌지 않고, 단계마다 바뀌는 것은 각 자리에 무엇이 꽂혔는가뿐이다.
-
-| 구성 | 인바운드 | 유스케이스 | 저장 | 결제 | 조립 | 판정 |
-|---|---|---|---|---|---|---|
-| 출발선 | 대역 | **없음** | 대역 | 대역 | 대역 | RED (정상) |
-| L0 후 | 대역 | **실물** | 대역 | 대역 | 대역 | **전환** RED→GREEN |
-| L1 후 | 대역 | 실물 | **실물** | 대역 | 대역 | **교체** GREEN 유지 |
-| L2 후 | 대역 | 실물 | 실물 | 대역 | **실물** | **교체** GREEN 유지 |
-| L3 후 | **실물** | 실물 | 실물 | 대역 | 실물 | **교체** GREEN 유지 |
-
-판정에 두 종류가 있다는 것이 중요하다. **행위를 소유한 층은 대역으로 대체할 수 없으므로 RED→GREEN 전환**으로
-판정하고, **기술 세부를 담당한 층은 대역을 실물로 바꿔도 GREEN이 유지되는지**로 판정한다.
-후자가 곧 헥사고날의 증명이다 — 바꿨는데 같은 시나리오가 통과한다면 안쪽이 그 기술을 모른다는 뜻이다.
-
-대역은 대부분 이미 있던 것이다. in-memory 저장소·결제 더블은 C-5의 자산이고, "심판이 포트를 직접 호출"하는
-방식 자체가 인바운드 자리의 대역이다. 새로 만든 대역은 스프링 구성용 조립 하나뿐이다.
-
-### 게이트 4단 — 싼 검출기부터
-
-| 단 | 검사 | 잡는 것 | 비용 |
-|---|---|---|---|
-| ① 경로 규약 | 매니페스트가 허용 경로 안인가, 동결 경로를 안 건드렸나 | **계약 변경·심판 수정 시도** | 밀리초 |
-| ② 컴파일 | 빌드되나 | 계약 오해 | 초 |
-| ③ 경계 규칙 | 의존 방향 정적 검사(ArchUnit) | 경로는 지켰지만 안쪽이 바깥을 import | 초 |
-| ④ 인수테스트 | 그 층 구성으로 판정 | 경계는 지켰지만 동작이 틀림 | 분 |
-
-여기에 더해 **최종 구성 심판을 매 층 함께 돌려 진행도로 기록**한다. 판정에는 쓰지 않는다.
-대역이 하나도 없는 구성이라 속지 않고, 층이 진행될수록 실패 지점이 뒤로 밀리는 것이 관측된다.
-실제로 L0~L2 내내 RED였다가 L3에서 GREEN이 됐다.
-
-### 파이프라인을 붙이기 전에 게이트를 먼저 리허설했다
-
-**손으로 쓴 정답 코드로 각 층의 음성·양성을 모두 확인**한 뒤에 AI를 붙였다.
-음성(그 층이 없을 때 RED)이 안 나오면 게이트가 공허하고, 양성(정답을 넣으면 GREEN)이 안 나오면
-거짓 빨간불이다. 이 구분이 안 되면 나중에 빨간불이 났을 때 **"생성물이 틀렸다"와 "게이트가 틀렸다"를
-구분할 수 없고**, 검수 로그 전체의 신빙성이 무너진다.
-
-리허설이 실제로 게이트 결함 두 개를 잡았다.
-
-- **거짓 빨간불** — ArchUnit은 검사 대상이 0개면 규칙 자체를 실패시킨다. 층을 하나씩 세우는 동안
-  아직 없는 층을 겨냥한 규칙은 대상이 없다. 그대로 뒀으면 L0·L1에서 AI 잘못이 아닌 빨간불이 났을 것이다.
-- **공허한 초록불** — 앞서 말한 404 구분 문제. 컨트롤러 없이도 2개 시나리오가 통과했다.
-
-### 정보 차단 — 커닝 방지
-
-정답 코드가 이미 저장소에 있으므로, 보여주면 생성이 아니라 복사가 된다.
-
-- 계약은 **출발선 커밋에서 `git show` 로 읽어** 넘긴다. 작업 브랜치의 정답이 섞일 수 없다.
-- **테스트 본문을 주지 않는다.** 주면 "테스트를 만족시키는 최소 코드"를 역산해 골격이 아니라 통과 트릭이 나온다.
-  심판이 요구하는 표면(타입 이름·스키마 이름·프로토콜 계약)만 계약으로 공개한다.
-- 앞 층이 통과시킨 코드는 준다. 그 위에 쌓아야 하므로 타입을 알아야 한다. 수정은 금지다.
-
-### 층별 실행 결과
-
-| 층 | 시도 | 게이트 | 사람 판단 |
-|---|---|---|---|
-| **L0** 유스케이스 | 1회 | GREEN 7/7 (전환) | 수용 |
-| **L1** 아웃바운드 | 1차 + 재생성 | GREEN 7/7 (교체) | **부분 기각 → 지시 수정 → 수용** |
-| **L2** 조립 | 1회 | GREEN 7/7 (교체, 대역 끔) | 수용 |
-| **L3** 인바운드 | 1회 | GREEN 7/7 (교체) | 수용 |
-
-검수 로그는 층별 `review.md` 에 있다. 각 로그는 게이트 4단 결과, 경계 위반 여부,
-AI가 남긴 지적에 대한 판단, 손코딩과의 차이를 담는다.
-
-### `notes` 채널 — 게이트가 못 보는 것을 받는 통로
-
-층 출력 스키마에 `files` 와 함께 `notes` 를 두고, 프롬프트에서 이렇게 지시했다.
-
-> 계약이 불편하더라도 고치지 말고 **왜 불편한지를 `notes` 에 적어라.**
-> 막히면 우회로를 만들지 말고 **막힌 지점을 `notes` 에 적어라.** 잘못된 초록불보다 정직한 빨간불이 낫다.
-
-"계약 고치지 마라"·"지름길 타지 마라"만 있으면 막혔을 때 합법적인 수가 없어서 결국 뭔가를 몰래 하게 된다.
-`notes` 는 **따르되 보고한다**는 세 번째 선택지다.
-
-**게이트는 `notes` 를 읽지 않는다.** 읽으면 게이트를 달래는 `notes` 를 쓰게 되고, 자기보고가 통과 수단이 된다.
-읽는 것은 사람뿐이고, 판정이 아니라 **단서**로 쓴다.
 
 ---
 
 ## 제출물 3 — 경계 위반 사례와 본인 판단
 
-### 결론부터: 4개 층에서 경계 위반은 0건이었다
+### DB 의존 코드
 
-`core` 가 `adapter` 를 참조한다든가, 도메인에 영속 애노테이션이 붙는다든가 하는 위반은 나오지 않았다.
-그래서 과제가 허용한 대로 **적용한 경계 점검과, 왜 지켜졌는지**를 적는다. 다만 위반이 없었다고 해서
-검수가 무의미했던 것은 아니다 — 게이트가 통과시킨 틀린 코드를 사람이 잡아낸 사례가 나왔고,
-그쪽이 이번 실행에서 더 값진 기록이라 함께 적는다.
-
-### 적용한 경계 점검
-
-경계 점검을 **사람의 리뷰가 아니라 테스트**로 두었다. 이유는 셋이다. 재현 가능하고("위반 같다"는 의견이지만
-빨간불은 사실이다), 실패 메시지를 그대로 되먹여 재작업을 지시할 수 있고, 어떤 점검을 실제로 적용했는지가
-코드로 남는다.
+먼저 핵심 유스케이스인 `TicketService` 는 괜찮았다. 이 클래스는 실제 저장소가 JPA인지, 요청이 HTTP로 들어왔는지 모른다. 필요한 기능을 포트로만 요청한다.
 
 ```java
-noClasses().that().resideInAPackage("..core..")
-        .should().dependOnClassesThat().resideInAPackage("..adapter..")
+public class TicketService implements ReserveTicketUseCase {
+
+    private final LoadTicketPort loadTicketPort;
+    private final SaveTicketPort saveTicketPort;
+    private final LoadUserPort loadUserPort;
+    private final ChargePort chargePort;
+    private final DiscountPolicy discountPolicy;
+}
 ```
 
-규칙은 넷이다 — Core → Adapter 금지, Core → Spring 금지, Core → JPA/Hibernate 금지,
-Inbound Adapter → Outbound Adapter 금지.
+웹 컨트롤러도 괜찮았다. `TicketService` 를 직접 부르지 않고, `ReserveTicketUseCase` 라는 포트를 통해 호출한다.
 
-**규칙이 실제로 위반을 잡는지 먼저 시험했다.** Core의 `TicketService` 에 `@Service` 를 일부러 붙여 돌리니
-5개 중 해당 규칙 하나만 정확히 빨간불이 났다. 규칙이 살아 있음을 확인한 뒤 원복했다.
+```java
+public class ReservationController {
 
-여기에 **공허성 가드**를 하나 더 넣었다. ArchUnit은 검사 대상이 하나도 없으면 규칙이 조용히 통과하거나
-반대로 실패한다. 층을 하나씩 세우는 중에는 아직 없는 패키지가 당연히 있으므로, **항상 존재해야 하는 Core는
-비어 있지 않음을 명시적으로 단언**하고, 아직 없을 수 있는 층을 겨냥한 규칙만 빈 경우를 통과로 뒀다.
+    private final ReserveTicketUseCase reserveTicketUseCase;
 
-### 왜 위반이 나오지 않았는가
+    public ReservationController(ReserveTicketUseCase reserveTicketUseCase) {
+        this.reserveTicketUseCase = reserveTicketUseCase;
+    }
+}
+```
 
-**사후에 걸러낸 것이 아니라 사전에 좁혀서 나오지 않은 쪽에 가깝다.** 세 가지가 겹쳤다.
+문제 후보는 예외 처리 코드에서 나왔다.
 
-**첫째, 경로 화이트리스트가 1차 방어로 작동했다.** 각 층은 자기 경로에만 파일을 만들 수 있고, 계약과 심판은
-동결 경로다. 그래서 전형적인 지름길이 경계 규칙까지 도달하지 못한다. 예를 들어 도메인 객체에 `@Entity` 를
-붙이는 지름길은 `core/domain` 을 수정해야 가능한데, 그건 ArchUnit이 아니라 **그 앞의 경로 규약에서 밀리초 만에
-걸린다.** 두 방어선이 겹치는 자리에서 싼 쪽이 먼저 반응하도록 순서를 잡은 결과다.
+```java
+import org.springframework.dao.OptimisticLockingFailureException;
 
-**둘째, 계약을 실제 소스로 넘겼다.** 포트와 도메인의 원문을 출발선 커밋에서 읽어 그대로 줬으므로,
-시그니처를 지어낼 이유가 없었다. 경계 위반의 상당수는 "필요한 계약이 없어서 스스로 만든 것"에서 출발하는데
-그 동기가 제거됐다.
+@ExceptionHandler(OptimisticLockingFailureException.class)
+public ResponseEntity<ProblemDetail> handleLockingFailure(OptimisticLockingFailureException e) {
+    return problem(HttpStatus.CONFLICT, "다른 요청이 먼저 예약을 확정했습니다.");
+}
+```
 
-**셋째, 막혔을 때의 합법적 출구를 만들어 뒀다.** 계약이 불편하면 고치지 말고 `notes` 에 적으라고 지시했고,
-실제로 그렇게 했다. L0는 "조회 포트가 `Optional` 이 아니라 없음의 신호가 `null` 뿐이고 그 약속이 시그니처에
-드러나지 않는다"고 보고했고, 포트를 고치지 않았다. 만약 고쳤다면 경로 규약에 걸려 기각됐을 것이다.
-**출구가 없으면 막힌 생성기는 결국 계약을 건드린다.**
+`OptimisticLockingFailureException` 은 예매 업무의 말이 아니다. Spring 저장소 기술에서 나오는 예외다. 쉽게 말하면 웹 계층이 "DB 저장 중 어떤 기술 예외가 났는지"까지 알고 있는 상태다.
 
-### 그럼에도 검수가 잡아낸 것 — 게이트를 통과한 틀린 코드
+더 나은 구조는 저장 어댑터 안에서 이 예외를 예매 도메인의 예외로 바꿔서 올리는 것이다.
+
+```java
+try {
+    int updated = ticketJpaRepository.reserveIfNotReserved(ticket.getId(), ticket.getUserId());
+    if (updated == 0) {
+        throw new TicketAlreadyReservedException();
+    }
+} catch (OptimisticLockingFailureException e) {
+    throw new TicketAlreadyReservedException();
+}
+```
+
+그러면 웹 어댑터는 Spring 저장소 예외를 몰라도 된다. 이미 있는 예매 도메인 예외만 HTTP 응답으로 바꾸면 된다.
+
+```java
+@ExceptionHandler(TicketAlreadyReservedException.class)
+public ResponseEntity<ProblemDetail> handleAlreadyReserved(TicketAlreadyReservedException e) {
+    return problem(HttpStatus.CONFLICT, "이미 예약된 티켓입니다.");
+}
+```
+
+이 문제는 현재 테스트를 깨뜨리지는 않는다. 하지만 나중에 저장 기술을 바꾸면 웹 코드까지 함께 고쳐야 할 수 있다. 그래서 이 지점은 **테스트는 통과했지만 사람이 코드 리뷰로 발견한 작은 경계 누수**로 기록한다.
+
+### 게이트를 통과한 틀린 코드
 
 L1 1차 산출물은 **게이트 4단을 전부 통과했고 인수테스트 21개가 초록불이었는데 틀렸다.**
 
@@ -278,55 +121,16 @@ this.chargeUri = URI.create(baseUrl + "/payments");        // 실제 스텁은 /
 return response.getStatusCode().is2xxSuccessful();         // 스텁은 거절도 200 + {"approved":false}
 ```
 
-**거절된 결제가 승인으로 처리되는 코드**였다. 게이트가 못 잡은 이유는 명확하다 —
-결제 슬롯은 모든 판정 구성에서 대역이라 **이 코드가 실행조차 되지 않는다.**
-인수테스트가 몇 개든 통과 여부와 무관하다. "다 초록불이니 다 됐다"가 왜 틀린지의 실물 사례다.
+**거절된 결제가 승인으로 처리되는 코드**였다. 게이트가 못 잡은 이유는 명확하다 — 결제 슬롯은 모든 판정 구성에서 대역이라 **이 코드가 실행조차 되지 않는다.** 인수테스트가 몇 개든 통과 여부와 무관하다. "다 초록불이니 다 됐다"가 왜 틀린지의 실물 사례다.
 
 잡은 것은 게이트가 아니라 `notes` 였다.
 
-> 결제사의 엔드포인트와 스키마가 이 층 입력에 없다. `/payments`, 2xx=승인으로 가정했다.
-> 심판 구성에서는 결제가 계속 대역으로 남아 **이 가정이 검증되지 않으므로**, 실제 계약을 아는 사람이 확인해야 한다.
+> 결제사의 엔드포인트와 스키마가 이 층 입력에 없다. `/payments`, 2xx=승인으로 가정했다. 심판 구성에서는 결제가 계속 대역으로 남아 **이 가정이 검증되지 않으므로**, 실제 계약을 아는 사람이 확인해야 한다.
 
-이 문장을 보고 스텁 매핑 파일을 열었고, 거기서 "거절도 200"이라는 AI가 예상조차 못한 부분이 드러났다.
-**`notes` 는 단서였지 판정이 아니었다.**
+이 문장을 보고 스텁 매핑 파일을 열었고, 거기서 "거절도 200"이라는 AI가 예상조차 못한 부분이 드러났다. `notes` 는 단서였지 판정이 아니었다.
 
-그리고 **원인은 AI가 아니라 내 입력이었다.** L1 지시에 결제사 계약을 빼놓고 "없는 것을 지어내지 마라"고 한 것은
-지어낼 수밖에 없는 상태로 준 것이다. 그래서 **산출물을 손보지 않고 지시를 고쳐 재생성**했다.
-결과물을 사람이 고치면 그 층의 판정이 무의미해지고 같은 실수가 다음 실행에서 되풀이된다.
-수정한 지시에는 계약을 명시하고 "이 자리는 인수테스트가 검증하지 않으니 추측하지 말라"는 경고를 함께 넣었다.
+이 실패에는 원인이 둘 있었다. **틀린 코드가 생성된 원인**은 L1 입력에서 결제사 계약을 빠뜨린 것이다. 엔드포인트와 승인 판정 기준이 없었기 때문에 생성기는 그 빈자리를 `/payments` 와 2xx 승인이라는 가정으로 채웠다. 그러나 **틀린 코드가 게이트를 통과한 원인**은 테스트 커버리지 공백이다. L1은 저장 어댑터와 결제 어댑터를 함께 생성하지만, L1의 `storage` 구성과 최종 `protocol` 구성 모두 `ChargePort` 를 테스트 더블로 교체한다. 따라서 `PgChargeAdapter` 는 어느 자동 판정에서도 실행되지 않았다. 입력 누락은 오답을 만들었고, 게이트 공백은 그 오답에 GREEN을 줬다.
 
-2차 산출물은 `/charge` 로 보내고 본문 `approved` 를 읽는다. 그리고 이번에는 코드를 읽는 데 그치지 않고
-`docker compose up` 후 `declined-card` 를 실제로 보내 **402 + problem+json** 을 확인했다.
+이번에는 생성된 구현을 손으로 고치지 않고 L1 입력에 `/charge`, 요청 본문, 응답 본문의 `approved`, 거절도 HTTP 200이라는 계약을 명시해 재생성했다. 2차 산출물은 `/charge` 로 보내고 본문 `approved` 를 읽는다. `docker compose up` 후 `declined-card` 를 실제로 보내 mock PG가 `200 + approved:false` 를 반환하고 애플리케이션이 이를 **402 + problem+json** 으로 변환하는 것도 확인했다. 다만 이것은 이번 결과를 확인한 **수동 스모크**이지, 같은 실수를 다음 실행에서 자동으로 막는 게이트는 아니다.
 
-### AI가 지름길을 스스로 거절한 사례
-
-L2에서 조립부와 조립 대역이 같은 타입의 빈을 등록하면 충돌 가능성이 있다. `@Primary` 한 줄이면 피할 수 있고
-통과에는 그 편이 안전하다. 붙이지 않고 이렇게 보고했다.
-
-> 통과를 위해 `@ConditionalOnMissingBean` 이나 `@Primary` 를 붙이는 쪽은 택하지 않았다 —
-> 조립부가 '조건에 따라 자기를 비활성화하는' 코드를 갖는 것은 조립 외의 로직이고,
-> **실제 런타임에서 조립이 조용히 사라지는 경로**를 만드는 일이다.
-
-판단이 옳다. L2 게이트는 대역을 끄고 돌리므로 충돌이 애초에 없고, 방어를 붙였다면 운영 환경에서
-조립부가 침묵으로 비활성화될 여지를 남겼을 것이다. L3에서는 자기가 추가한 예외 핸들러가 앞 층 구현상
-**죽은 분기일 수 있다**고 스스로 신고하기도 했다.
-
-### 손코딩 골격과의 대조에서 나온 판단
-
-같은 계약·같은 심판으로 사람과 파이프라인이 각각 만든 결과를 비교했다. 동작은 동일하다.
-
-가장 눈에 띈 차이는 **손코딩 `TicketService` 에는 포트에 없는 공개 메서드가 남아 있었는데 파이프라인은
-만들지 않았다**는 점이다. 계약에 없기 때문이다. 리팩터링 과정에서 남은 잔재였고 사람인 나는 그것을 문제로
-인식하지 못한 채 지나갔다. 포트에 없는 공개 메서드는 유스케이스의 진입점을 둘로 만든다.
-
-단, 이것이 가능했던 전제가 있다. 준비 단계에서 **심판이 그 메서드를 호출하던 것을 포트 호출로 고쳤기 때문**이다.
-심판이 계속 그 메서드를 부르고 있었다면 계약에 넣어야 했고, 파이프라인도 그대로 재생산했을 것이다.
-심판을 정비한 일이 산출물 품질로 이어졌다.
-
-반대로 파이프라인 쪽에만 없는 것도 있었다. 데모용 시드 클래스인데, 층 지시에 넣지 않았고 인수테스트는
-시나리오가 데이터를 직접 만들므로 게이트에 걸리지 않았다. 이 자리 역시 L1이 `notes` 에서
-"회원 데이터를 넣는 경로는 이 층 밖(초기화 스크립트 등)에 있어야 한다"고 지적했고, 그 지적이 맞아서
-어댑터 코드가 아니라 인프라 설정(`resources/data.sql` + 환경변수 게이트)으로 채웠다.
-
-**세 종류의 차이가 모두 산출물의 품질 문제라기보다 입력의 정밀도 문제였다.**
-경계를 지키게 만든 것도, 틀린 코드가 나오게 만든 것도, 빠진 파일이 생기게 만든 것도 전부 지시의 몫이었다.
+다음 개선에서는 **L1 게이트에 `PgChargeAdapter` 전용 HTTP 계약 테스트를 추가해야 한다.** 로컬 mock PG를 실제 HTTP로 호출해 요청이 `POST /charge` 로 전송되는지, 본문에 `paymentInfo` 와 `amount` 가 들어가는지, HTTP 200의 `approved:true` 와 `approved:false` 를 각각 승인과 거절로 해석하는지를 자동 판정한다. 그러면 `/payments` 추측은 요청 매핑 불일치로 실패하고, 2xx를 곧 승인으로 보는 구현은 거절 시나리오에서 실패한다. 더 크게 바꾸려면 저장과 결제를 서로 다른 레이어로 분리해 각 슬롯을 별도 게이트로 승격할 수도 있다. 하지만 현재 구조에서는 전용 계약 테스트를 L1 게이트에 추가하는 편이 변경이 작고 실패 원인도 명확하다.

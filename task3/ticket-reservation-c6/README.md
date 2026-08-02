@@ -21,7 +21,7 @@ com.thinking.ticket
 ├─ core                        사람이 고정한 계약 — 파이프라인이 수정할 수 없다
 │  ├─ domain      Ticket · User · DiscountPolicy · *Exception   (순수 자바)
 │  ├─ port.in     ReserveTicketUseCase · Command · Result
-│  └─ port.out    TicketRepository · UserRepository · ChargePort
+│  └─ port.out    LoadTicketPort · SaveTicketPort · LoadUserPort · ChargePort
 ├─ core.application            L0 생성 — TicketService
 ├─ adapter.out                 L1 생성 — JPA 어댑터 · Mapper · PgChargeAdapter
 ├─ config                      L2 생성 — CompositionRoot

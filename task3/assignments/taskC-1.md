@@ -1,4 +1,4 @@
-# Task C-1: 왜 포트 & 어댑터인가 (N-Tiered 비평 → DDD → DIP)
+# Task C-1: 왜 포트 &amp; 어댑터인가 (N-Tiered 비평 → DDD → DIP)
 
 (Grit's Why): 헥사고날은 외우는 패턴이 아니라, 'N-Tiered가 왜 테스트하기 어렵고 변화에 약한가'에 대한 해법입니다.
 
@@ -10,8 +10,8 @@
 
 ### 제출물
 
-- [x]  N-Tiered 한계 비평(JPA 누수·결합 중심). (최소 400자)
-- [x]  DDD가 지키려는 것 + 헥사고날의 DIP 활용 원리. (최소 400자)
+- [x] N-Tiered 한계 비평(JPA 누수·결합 중심). (최소 400자)
+- [x] DDD가 지키려는 것 + 헥사고날의 DIP 활용 원리. (최소 400자)
 
 ---
 
@@ -45,12 +45,6 @@ JPA와 DB가 전혀 없어도 비슷한 결합이 생길 수 있다. `OrderContr
 
 그러나 이것을 JPA만의 문제나 모든 N-Tiered의 필연적 실패로 보지는 않는다. 계층을 나누더라도 웹 요청 객체나 외부 시스템의 응답 모델 같은 기술 타입을 Service가 직접 사용하면 경계는 다시 흐려진다. 또한 N-Tiered는 기술 역할을 수평으로 나누기 때문에 하나의 기능 변경이 여러 계층을 차례로 관통하고, 업무 규칙이 여러 계층에 흩어지기 쉽다. 결국 내가 보는 핵심 한계는 계층의 개수가 아니라 **도메인 정책이 외부 기술과 그 모델을 향해 의존한다는 것**이다. 이 방향을 그대로 둔 채 파일과 패키지만 나누면 겉으로는 분리되어도 테스트 비용과 변경 전파 범위는 줄어들지 않는다.
 
-### 참고
-
-- [Microsoft, N-tier Architecture Style](https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/n-tier)
-- [Jakarta Persistence 3.2 Specification](https://jakarta.ee/specifications/persistence/3.2/jakarta-persistence-spec-3.2)
-- [Hibernate ORM User Guide, Persistence Context](https://docs.hibernate.org/orm/6.6/userguide/html_single/)
-
 ---
 
 ## 답안 2: DDD가 원하는 것과 방향성
@@ -78,14 +72,7 @@ public void reserveBy(UserId userId) {
 
 방향성은 분명하다. 먼저 AI와 반복해서 대화하며 도메인 규칙과 용어의 후보를 빠르게 발견한다. AI가 제안한 내용은 정책 문서, 실제 업무 사례, 운영 데이터로 검증한다. 검증된 언어와 규칙을 클래스와 메서드, 테스트에 반영하고, 의미가 달라지는 지점에는 명시적인 Context 경계를 세운다. Entity, Value Object, Aggregate 같은 전술 패턴은 이 모델과 불변식을 표현할 때 필요한 만큼만 사용한다. 단순 CRUD까지 모두 복잡한 도메인 모델로 만들지 않고, 변화가 잦고 사업적으로 중요한 영역에 집중한다.
 
-도메인을 외부 의존성으로부터 보호하는 것도 이 방향의 연장선이다. 다만 "외부 의존성 0" 자체가 DDD의 정의는 아니다. DDD가 먼저 정하는 것은 **무엇을 보호할 것인가**이며, 그 대상은 업무 언어와 규칙을 담은 도메인 모델이다. 다음에 다룰 헥사고날과 DIP는 DB, HTTP, 외부 API 같은 기술 세부가 이 모델의 형태와 테스트를 좌우하지 못하게 만드는 **보호 방법**이다.
-
-### 참고
-
-- Eric Evans, 《Domain-Driven Design: Tackling Complexity in the Heart of Software》
-- [Eric Evans, DDD Reference](https://www.domainlanguage.com/ddd/reference/)
-- [Martin Fowler, Domain-Driven Design](https://martinfowler.com/bliki/DomainDrivenDesign.html)
-- [Martin Fowler, Bounded Context](https://martinfowler.com/bliki/BoundedContext.html)
+도메인을 외부 의존성으로부터 보호하는 것도 이 방향의 연장선이다. 다만 "외부 의존성 0" 자체가 DDD의 정의는 아니다. DDD가 먼저 정하는 것은 **무엇을 보호할 것인가**이며, 그 대상은 업무 언어와 규칙을 담은 도메인 모델이다.
 
 ---
 
@@ -113,19 +100,6 @@ TicketJpaAdapter =================> LoadTicketPort, SaveTicketPort, Domain Ticke
 
 `ReservationApplicationService`는 `TicketJpaAdapter`를 직접 import하지 않는다. 반대로 `TicketJpaAdapter`가 안쪽의 `SaveTicketPort`를 구현하고 Domain `Ticket`을 사용한다. 이것이 `의존성은 안쪽을 향한다`는 뜻이다. 런타임에는 Application Service가 주입된 JPA Adapter를 호출하지만, 실행 순서와 소스 코드 의존 방향은 서로 다른 개념이다.
 
-### 티켓 예약 예시
-
-다음은 앞서 사용한 판매 중지 티켓 규칙에 헥사고날을 적용한 설명용 흐름이다. HTTP로 티켓 예약 요청이 들어오면 런타임에는 다음 순서로 진행된다.
-
-1. `TicketReservationHttpAdapter`가 URL과 사용자 식별자를 `ReserveTicketCommand`로 변환한다.
-2. Inbound Port인 `ReserveTicketUseCase`를 통해 `ReservationApplicationService`를 호출한다.
-3. Application Service가 `LoadTicketPort`로 `Ticket`을 조회한다.
-4. Domain `Ticket`의 `reserveBy(UserId)`가 판매 중지 여부를 검사한다.
-5. 규칙을 통과한 `Ticket`을 `SaveTicketPort`에 전달한다.
-6. 주입된 `TicketJpaAdapter`가 Domain `Ticket`을 JPA Entity로 변환하고 DB에 저장한다.
-
-여기서 `SaveTicketPort`와 `TicketJpaAdapter`는 같은 역할이 아니다. `SaveTicketPort`는 안쪽이 선언한 `save(Ticket)` 저장 계약이다. 저장 기술을 모르며, 왜 저장이 필요한지만 드러낸다. `TicketJpaAdapter`는 JPA로 그 계약을 수행하는 바깥쪽 구현체다. JPA Entity 변환, Spring Data Repository 호출, 영속성 생명주기처럼 외부 기술에 따라 바뀌는 책임을 가지기 때문에 Infrastructure에 속한다.
-
 ### 앞선 비평이 어떻게 해결되는가
 
 이 과제에서 지적한 기술 누수를 막기 위해 HTTP Adapter가 `HttpServletRequest`를 업무 값으로 변환하도록 배치할 수 있다. 그러면 Domain과 Application Service는 Servlet API를 모른다. JPA Adapter가 Domain Model과 JPA Entity 사이를 변환하게 하면 Domain의 상태와 행위가 영속성 생명주기나 지연 로딩을 직접 전제로 하지 않게 만들 수 있다.
@@ -144,3 +118,4 @@ TicketJpaAdapter =================> LoadTicketPort, SaveTicketPort, Domain Ticke
 
 - [Alistair Cockburn, Hexagonal Architecture](https://alistair.cockburn.us/hexagonal-architecture)
 - [Robert C. Martin, The Dependency Inversion Principle](https://objectmentor.com/resources/articles/dip.pdf)
+

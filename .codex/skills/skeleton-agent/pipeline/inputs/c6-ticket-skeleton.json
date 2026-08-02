@@ -8,7 +8,112 @@
   "worktree_parent": "C:/Users/이현웅/Desktop/project",
   "timeout": 900,
 
-  "context_files": ["task3/ticket-reservation/CLAUDE.md"],
+  "skill_context_files": ["CLAUDE.md"],
+  "context_files": [],
+  "target_context": {
+    "purpose": "C-6 ticket reservation walking skeleton run only. This is target input data, not a reusable skill prompt.",
+    "architecture_conventions": {
+      "dependency_direction": [
+        "Dependencies point from outer mechanisms to inner contracts and domain code.",
+        "Core code must not import adapter, Spring, HTTP, JPA, Hibernate, or external SDK types.",
+        "Adapters call or implement core ports.",
+        "Inbound adapters must not directly reference outbound adapters.",
+        "Outbound adapters must not directly reference inbound adapters.",
+        "Only the composition layer may assemble concrete implementations."
+      ],
+      "domain_and_application": [
+        "Domain owns state, invariants, business decisions, and state transitions.",
+        "Application owns use-case sequencing.",
+        "Application must not duplicate domain rules as condition checks.",
+        "Application performs external I/O only through outbound ports.",
+        "Domain objects must not expose public setters.",
+        "State changes use method names that express business meaning."
+      ],
+      "ports": [
+        "Core outbound contracts are LoadTicketPort, SaveTicketPort, LoadUserPort, and ChargePort.",
+        "Spring Data repositories, JPA entities, and HTTP clients stay inside adapters.",
+        "Port signatures must not expose HTTP requests, JPA entities, Spring Data repositories, or SDK responses.",
+        "Ports are owned by core. Adapters must not change ports for adapter convenience."
+      ],
+      "mapping": [
+        "Domain models and JPA entities are separate.",
+        "Mapping is completed inside the outbound persistence adapter.",
+        "Core must not import or return JPA entities.",
+        "Stored state is restored through restoration APIs.",
+        "Do not call state transition methods only to reconstruct already stored state."
+      ],
+      "web_adapter": [
+        "Inbound adapter converts HTTP requests into commands and invokes the inbound port.",
+        "Inbound adapter does not decide domain rules.",
+        "Inbound adapter translates domain exceptions into HTTP responses.",
+        "HTTP request DTO and core command are separate types.",
+        "If instructed to reuse the core result as the success response, follow it and report the coupling risk in notes."
+      ],
+      "persistence_adapter": [
+        "Persistence adapter implements outbound ports.",
+        "JPA entities, Spring Data repositories, and transaction annotations stay inside the persistence adapter.",
+        "Absence follows the exact representation defined by the port contract.",
+        "Concurrent reservation must not be implemented as a simple full-row overwrite.",
+        "Storage technology exceptions must not leak into core unchanged."
+      ],
+      "composition": [
+        "Composition layer only assembles objects.",
+        "Composition layer must not contain business branching, value calculation, or external calls.",
+        "Core objects must not receive Spring annotations.",
+        "Inbound adapter receives the inbound port type, not the concrete implementation class."
+      ]
+    },
+    "concrete_contract": {
+      "L0": [
+        "The generated use-case implementation class is TicketService.",
+        "TicketService implements ReserveTicketUseCase.",
+        "TicketService constructor receives LoadTicketPort, SaveTicketPort, LoadUserPort, ChargePort, and DiscountPolicy.",
+        "reserve(ReserveTicketCommand command) throws UserNotFoundException when the user does not exist.",
+        "reserve(ReserveTicketCommand command) throws TicketNotFoundException when the ticket does not exist.",
+        "The domain decides unavailable ticket errors.",
+        "Declined payment throws PaymentFailedException.",
+        "Declined payment must not confirm reservation.",
+        "Payment amount uses DiscountPolicy.",
+        "Reservation is confirmed and saved only after successful payment.",
+        "User lookup happens before ticket lookup."
+      ],
+      "L1": [
+        "Storage is implemented with JPA and MySQL.",
+        "Payment is implemented with an external HTTP API call.",
+        "Domain model and persistence model are separate.",
+        "Storage schema is tickets(id, price, reserved, suspended, user_id) and users(id, name).",
+        "Schema is generated from JPA entities.",
+        "Reservation save must not overwrite an already reserved row.",
+        "Lookup absence returns null.",
+        "Payment configuration key is pg.base-url.",
+        "Payment request is POST {pg.base-url}/charge with body {paymentInfo, amount}.",
+        "Payment response body is {\"approved\": true|false}.",
+        "Approved and declined payment can both return HTTP 200.",
+        "Approval is decided by response body field approved, not by HTTP status.",
+        "Communication failure is treated as not approved."
+      ],
+      "L2": [
+        "Composition layer is written as Spring configuration.",
+        "DiscountPolicy is registered as a bean.",
+        "TicketService is created and registered as a ReserveTicketUseCase bean.",
+        "Composition method parameters use port types when possible.",
+        "Core objects must not receive Spring annotations."
+      ],
+      "L3": [
+        "HTTP endpoint is POST /api/reservations.",
+        "Request JSON fields are userId, ticketId, and paymentInfo.",
+        "Success response status is 200.",
+        "Success response body fields are reserved, ticketId, and userId.",
+        "UserNotFoundException maps to 404.",
+        "TicketNotFoundException maps to 404.",
+        "TicketAlreadyReservedException maps to 409.",
+        "TicketSuspendedException maps to 409.",
+        "PaymentFailedException maps to 402.",
+        "Storage conflict that prevents reserving the same ticket maps to 409.",
+        "Error response media type is application/problem+json."
+      ]
+    }
+  },
 
   "frozen_paths": [
     "com/thinking/ticket/core/domain",
@@ -80,8 +185,9 @@
         "com/thinking/ticket/core/port/in/ReserveTicketUseCase.java",
         "com/thinking/ticket/core/port/in/ReserveTicketCommand.java",
         "com/thinking/ticket/core/port/in/ReservationResult.java",
-        "com/thinking/ticket/core/port/out/TicketRepository.java",
-        "com/thinking/ticket/core/port/out/UserRepository.java",
+        "com/thinking/ticket/core/port/out/LoadTicketPort.java",
+        "com/thinking/ticket/core/port/out/SaveTicketPort.java",
+        "com/thinking/ticket/core/port/out/LoadUserPort.java",
         "com/thinking/ticket/core/port/out/ChargePort.java",
         "com/thinking/ticket/core/domain/Ticket.java",
         "com/thinking/ticket/core/domain/User.java",
@@ -93,7 +199,7 @@
         "com/thinking/ticket/core/domain/TicketAlreadyReservedException.java",
         "com/thinking/ticket/core/application/TicketService.java"
       ],
-      "requirements": "티켓 예매 유스케이스를 구현한다. Inbound Port를 구현하고, 아웃바운드 포트들로 협력 순서를 조정한다. 규칙 판단은 도메인에 위임하고 절차만 소유한다. 클래스 이름 TicketService와 생성자 시그니처 (TicketRepository, UserRepository, ChargePort, DiscountPolicy)는 심판이 참조하는 계약이므로 그대로 유지한다. 관찰 가능한 동작: 없는 회원이면 UserNotFoundException, 없는 티켓이면 TicketNotFoundException, 예약 불가 티켓이면 도메인이 정한 예외, 결제 거절이면 PaymentFailedException을 던지고 예약을 확정하지 않는다. 결제 금액은 할인 정책을 적용한 값이다. 결제가 성공해야 예약을 확정하고 저장한다. 회원 조회가 티켓 조회보다 앞선다."
+      "prompt_file": "layers/L0-usecase.md"
     },
     {
       "id": "L1",
@@ -102,13 +208,14 @@
       "gate": "storage",
       "allowed_paths": ["com/thinking/ticket/adapter/out"],
       "contracts": [
-        "com/thinking/ticket/core/port/out/TicketRepository.java",
-        "com/thinking/ticket/core/port/out/UserRepository.java",
+        "com/thinking/ticket/core/port/out/LoadTicketPort.java",
+        "com/thinking/ticket/core/port/out/SaveTicketPort.java",
+        "com/thinking/ticket/core/port/out/LoadUserPort.java",
         "com/thinking/ticket/core/port/out/ChargePort.java",
         "com/thinking/ticket/core/domain/Ticket.java",
         "com/thinking/ticket/core/domain/User.java"
       ],
-      "requirements": "아웃바운드 포트들을 실제 기술로 구현한다. 저장은 JPA + MySQL, 결제는 외부 결제사 HTTP 호출이다. 도메인 모델과 영속 모델은 분리하고 변환은 이 층 안에서 한다. 저장 스키마 이름은 심판이 참조하는 계약이므로 정확히 따른다: 테이블 tickets(id, price, reserved, suspended, user_id), users(id, name). 스키마는 ddl-auto=update로 영속 모델에서 생성되므로 컬럼 이름이 어긋나면 심판이 깨진다. 예약 저장은 이미 예약된 행을 덮어쓰지 않아야 한다(동시에 여러 인스턴스가 같은 티켓을 예약할 수 있다). 조회 대상이 없으면 null을 반환한다 — 없음 판정은 유스케이스가 한다. 결제사 계약은 다음과 같다: 기반 URL은 설정값 pg.base-url에서 주입받고, POST {pg.base-url}/charge 로 본문 {paymentInfo, amount}를 보낸다. 응답은 승인·거절 모두 200이며 본문 {\"approved\": true|false}로 구분한다 — 상태 코드로 승인 여부를 판단하면 거절이 승인으로 처리된다. 통신 실패는 승인되지 않은 것으로 다룬다. 이 계약은 인수테스트가 검증하지 않는 자리다(결제는 모든 판정 구성에서 대역이다). 따라서 추측하지 말고 위 계약을 그대로 따른다. 이 층의 산출물은 스프링 빈으로 등록되어야 조립 대역이 포트 자리에 꽂을 수 있다."
+      "prompt_file": "layers/L1-outbound.md"
     },
     {
       "id": "L2",
@@ -118,13 +225,14 @@
       "allowed_paths": ["com/thinking/ticket/config"],
       "contracts": [
         "com/thinking/ticket/core/port/in/ReserveTicketUseCase.java",
-        "com/thinking/ticket/core/port/out/TicketRepository.java",
-        "com/thinking/ticket/core/port/out/UserRepository.java",
+        "com/thinking/ticket/core/port/out/LoadTicketPort.java",
+        "com/thinking/ticket/core/port/out/SaveTicketPort.java",
+        "com/thinking/ticket/core/port/out/LoadUserPort.java",
         "com/thinking/ticket/core/port/out/ChargePort.java",
         "com/thinking/ticket/core/domain/DiscountPolicy.java",
         "com/thinking/ticket/TicketReservationApplication.java"
       ],
-      "requirements": "조립 지점을 만든다. 앞 층이 만든 아웃바운드 어댑터를 포트 자리에 주입해 유스케이스를 만들고, Inbound Port 타입으로 주입받을 수 있게 등록한다. Core는 스스로를 프레임워크 빈으로 등록하지 않는다 — 그래서 이 조립 지점이 필요하다. 조립 외의 로직을 넣지 않는다."
+      "prompt_file": "layers/L2-composition.md"
     },
     {
       "id": "L3",
@@ -142,7 +250,7 @@
         "com/thinking/ticket/core/domain/TicketSuspendedException.java",
         "com/thinking/ticket/core/domain/TicketAlreadyReservedException.java"
       ],
-      "requirements": "HTTP 진입 어댑터를 만든다. POST /api/reservations 가 JSON 본문 {userId, ticketId, paymentInfo}를 받아 Command로 바꾸고 Inbound Port를 호출한다. 성공하면 200과 유스케이스 결과 DTO를 그대로 직렬화해 답한다(필드 reserved, ticketId, userId). 도메인 거부는 상태 코드로 번역한다: 없는 회원·없는 티켓 404, 예약 불가(이미 예약됨·판매 중지) 409, 결제 거절 402. 거부 응답은 모두 RFC 7807 application/problem+json 이어야 한다 — 심판이 이 미디어 타입으로 '엔드포인트 없음'과 '도메인 거부'를 구분한다. 수평 확장 시 다른 인스턴스가 먼저 예약해 발생하는 낙관적 잠금 충돌도 409로 번역한다. 이 층은 도메인 규칙을 판단하지 않고 번역만 한다."
+      "prompt_file": "layers/L3-inbound.md"
     }
   ]
 }

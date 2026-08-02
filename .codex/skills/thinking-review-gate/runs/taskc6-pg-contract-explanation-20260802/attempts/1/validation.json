@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "run_id": "taskc6-pg-contract-explanation-20260802",
+  "source_eval_path": "C:\\Users\\이현웅\\Desktop\\project\\thinking\\.codex\\skills\\thinking-review-gate\\runs\\taskc6-pg-contract-explanation-20260802\\attempts\\1\\eval.json",
+  "schema_valid": true,
+  "schema_errors": [],
+  "min_score": 3.6,
+  "scores": {
+    "evidence_count": 5,
+    "evidence_quality": 5,
+    "claim_coverage": 4,
+    "uncertainty_boundary": 5,
+    "consistency": 4,
+    "alternatives_tradeoff": 5
+  },
+  "score_reasons": {
+    "evidence_count": "테스트 구성, 결제 더블, 파이프라인 입력, 과제 원문, 스텁 매핑 등 3개 이상의 근거가 주요 판단에 연결되어 있다.",
+    "evidence_quality": "사용자가 직접 확인할 수 있는 프로젝트 파일과 실행 맥락을 근거로 사용한다.",
+    "claim_coverage": "핵심 결론 대부분이 파일 근거나 명시적 한계와 연결되지만, Cucumber가 검증한다는 세부 결과 일부는 제공된 문맥에서 직접 확인되지 않는다.",
+    "uncertainty_boundary": "과제 최소 요구 충족 여부를 가능성으로 한정하고 로컬 스텁이 실제 제공자 계약의 진실성까지 보장하지 않는다는 경계를 명확히 밝혔다.",
+    "consistency": "현재 인수테스트, 어댑터 계약 테스트, 실제 제공자 계약의 범위는 일관되게 구분했지만 Cucumber의 구체적인 검증 항목에는 직접 제시되지 않은 전제가 일부 남는다.",
+    "alternatives_tradeoff": "어댑터 통합 테스트, Cucumber 전체 왕복, 수동 스모크의 세 대안을 비교하고 비용과 검증 범위 및 추천 이유를 함께 제시한다."
+  },
+  "weak_axes": [],
+  "weighted_score": 4.6,
+  "gate_result": "pass",
+  "summary": "gate_result=pass, weighted_score=4.6, weak_axes=none"
+}

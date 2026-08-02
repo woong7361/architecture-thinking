@@ -13,8 +13,8 @@ import com.thinking.ticket.core.domain.User;
 import com.thinking.ticket.core.domain.UserNotFoundException;
 import com.thinking.ticket.core.port.in.ReserveTicketCommand;
 import com.thinking.ticket.core.port.in.ReserveTicketUseCase;
-import com.thinking.ticket.support.InMemoryTicketRepository;
-import com.thinking.ticket.support.InMemoryUserRepository;
+import com.thinking.ticket.support.InMemoryTicketAdapter;
+import com.thinking.ticket.support.InMemoryUserAdapter;
 import com.thinking.ticket.support.RecordingPaymentApi;
 
 import io.cucumber.java.en.Given;
@@ -32,8 +32,8 @@ import io.cucumber.java.en.When;
  */
 public final class TicketReservationSteps {
 
-    private final InMemoryUserRepository userRepo = new InMemoryUserRepository();
-    private final InMemoryTicketRepository ticketRepo = new InMemoryTicketRepository();
+    private final InMemoryUserAdapter userAdapter = new InMemoryUserAdapter();
+    private final InMemoryTicketAdapter ticketAdapter = new InMemoryTicketAdapter();
     private RecordingPaymentApi paymentApi = RecordingPaymentApi.succeeding();
 
     private Boolean result;
@@ -50,12 +50,12 @@ public final class TicketReservationSteps {
 
     @Given("회원 {long}이 등록되어 있다")
     public void 회원이_등록되어_있다(long userId) {
-        userRepo.save(new User(userId, "user-" + userId));
+        userAdapter.save(new User(userId, "user-" + userId));
     }
 
     @Given("가격 {int}원짜리 미예약 티켓 {long}이 있다")
     public void 미예약_티켓이_있다(int price, long ticketId) {
-        ticketRepo.seed(new Ticket(ticketId, price));
+        ticketAdapter.seed(new Ticket(ticketId, price));
     }
 
     @Given("가격 {int}원짜리 이미 예약된 티켓 {long}이 있다")
@@ -63,11 +63,12 @@ public final class TicketReservationSteps {
         // 경계-클린 셋업: 내부 접근자(setter)나 도메인 메서드(assignTo)에 손대지 않고
         // 유스케이스(reserveTicket)로 '이미 예약됨' 상태를 만든다 — 내부 리팩토링에 안 깨진다.
         // 셋업 전용 회원·결제 double을 써서 When 단계의 결제 기록(paymentApi)을 오염시키지 않는다.
-        ticketRepo.seed(new Ticket(ticketId, price));
+        ticketAdapter.seed(new Ticket(ticketId, price));
         long setupUserId = -1L;
-        userRepo.save(new User(setupUserId, "setup"));
+        userAdapter.save(new User(setupUserId, "setup"));
         ReserveTicketUseCase setup =
-                new TicketService(ticketRepo, userRepo, RecordingPaymentApi.succeeding(), new DiscountPolicy());
+                new TicketService(ticketAdapter, ticketAdapter, userAdapter, RecordingPaymentApi.succeeding(),
+                        new DiscountPolicy());
         setup.reserve(new ReserveTicketCommand(setupUserId, ticketId, "setup-token"));
     }
 
@@ -75,7 +76,7 @@ public final class TicketReservationSteps {
     public void 판매_중지된_티켓이_있다(int price, long ticketId) {
         Ticket ticket = new Ticket(ticketId, price);
         ticket.suspend();
-        ticketRepo.seed(ticket);
+        ticketAdapter.seed(ticket);
     }
 
     @Given("결제는 거절되는 상황이다")
@@ -93,7 +94,8 @@ public final class TicketReservationSteps {
     @When("회원 {long}이 카드정보 {string}으로 티켓 {long}을 예매하면")
     public void 예매하면(long userId, String paymentInfo, long ticketId) {
         // 심판은 구현 클래스의 메서드가 아니라 Inbound Port 계약으로 호출한다.
-        ReserveTicketUseCase service = new TicketService(ticketRepo, userRepo, paymentApi, new DiscountPolicy());
+        ReserveTicketUseCase service = new TicketService(ticketAdapter, ticketAdapter, userAdapter, paymentApi,
+                new DiscountPolicy());
         try {
             this.result = service.reserve(new ReserveTicketCommand(userId, ticketId, paymentInfo)).reserved();
         } catch (Throwable t) {
@@ -111,7 +113,7 @@ public final class TicketReservationSteps {
 
     @Then("티켓 {long}은 회원 {long}에게 예약된다")
     public void 티켓이_회원에게_예약된다(long ticketId, long userId) {
-        Ticket stored = ticketRepo.findById(ticketId);
+        Ticket stored = ticketAdapter.findById(ticketId);
         assertThat(stored.isReserved()).isTrue();
         assertThat(stored.getUserId()).isEqualTo(userId);
     }
@@ -149,7 +151,7 @@ public final class TicketReservationSteps {
 
     @Then("티켓 {long}은 예약되지 않는다")
     public void 티켓은_예약되지_않는다(long ticketId) {
-        Ticket stored = ticketRepo.findById(ticketId);
+        Ticket stored = ticketAdapter.findById(ticketId);
         assertThat(stored.isReserved()).isFalse();
     }
 

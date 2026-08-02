@@ -2,15 +2,16 @@ package com.thinking.ticket.adapter.out.persistence;
 
 import com.thinking.ticket.core.domain.Ticket;
 import com.thinking.ticket.core.domain.TicketAlreadyReservedException;
-import com.thinking.ticket.core.port.out.TicketRepository;
+import com.thinking.ticket.core.port.out.LoadTicketPort;
+import com.thinking.ticket.core.port.out.SaveTicketPort;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-/* 아웃바운드 포트 TicketRepository를 JPA + MySQL로 구현한다.
+/* 아웃바운드 포트 LoadTicketPort / SaveTicketPort를 JPA + MySQL로 구현한다.
  * 포트는 Core가 소유한 계약이고, 이 클래스는 그 계약을 특정 기술로 갚는 쪽이다.
  * 스프링 빈으로 등록해 두어야 조립 지점이 포트 자리에 꽂을 수 있다. */
 @Repository
-public class TicketPersistenceAdapter implements TicketRepository {
+public class TicketPersistenceAdapter implements LoadTicketPort, SaveTicketPort {
 
     private final TicketJpaRepository ticketJpaRepository;
 

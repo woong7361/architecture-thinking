@@ -47,7 +47,7 @@
         </dependency>
 
         <!-- 인수테스트: Core 유스케이스 경계를 도메인 언어로 고정하는 Cucumber 안전망.
-             repos는 in-memory fake, 결제는 in-process test double(네트워크 없음) -> 빠르고 결정론적. -->
+             storage ports는 in-memory adapter, 결제는 in-process test double(네트워크 없음) -> 빠르고 결정론적. -->
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>

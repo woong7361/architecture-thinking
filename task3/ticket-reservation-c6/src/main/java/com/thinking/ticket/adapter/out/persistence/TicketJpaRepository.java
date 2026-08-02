@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 /* Spring Data가 구현을 만들어 주는 기술 세부. Core는 이 타입을 모르고
- * TicketRepository(아웃바운드 포트)만 안다. */
+ * LoadTicketPort / SaveTicketPort(아웃바운드 포트)만 안다. */
 public interface TicketJpaRepository extends JpaRepository<TicketJpaEntity, Long> {
 
     /* 예약 확정을 '아직 예약되지 않은 행'에만 적용한다.

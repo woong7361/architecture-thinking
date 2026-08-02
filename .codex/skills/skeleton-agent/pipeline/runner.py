@@ -55,6 +55,27 @@ def fmt_files(d: dict) -> str:
     return "\n\n".join(f"// ===== FILE: {k} =====\n{v}" for k, v in d.items())
 
 
+def read_skill_files(paths: list[str]) -> str:
+    """스킬 내부 공통 컨텍스트. 대상 프로젝트 문서를 참조하지 않고 자급자족하는 규칙이다."""
+    return "\n\n".join((SKILL / p).read_text(encoding="utf-8") for p in paths)
+
+
+def read_repo_files(repo_root: Path, paths: list[str]) -> str:
+    """대상별 추가 컨텍스트. 없으면 쓰지 않는다."""
+    return "\n\n".join((repo_root / p).read_text(encoding="utf-8") for p in paths)
+
+
+def read_prompt_context_files(paths: list[str]) -> str:
+    """pipeline/prompts 아래 공용 보조 컨텍스트. 대상별 사실은 input JSON에 둔다."""
+    return "\n\n".join((PROMPTS / p).read_text(encoding="utf-8") for p in paths)
+
+
+def format_input_context(value: object) -> str:
+    if isinstance(value, str):
+        return value
+    return json.dumps(value, ensure_ascii=False, indent=2)
+
+
 def load_contracts(repo_root: Path, cfg: dict, layer: dict) -> str:
     """이 층이 읽기만 하는 계약의 실제 소스. 출발선에서 읽으므로 정답 구현은 섞이지 않는다."""
     base = f"{cfg['project_subdir']}/{cfg['source_root']}"
@@ -62,11 +83,18 @@ def load_contracts(repo_root: Path, cfg: dict, layer: dict) -> str:
                       for rel in layer.get("contracts", [])})
 
 
-def build_user(cfg: dict, layer: dict, conventions: str, rules: str,
-               contracts: str, accepted: list[dict], feedback: str) -> str:
+def load_layer_prompt(layer: dict) -> tuple[str, str]:
+    prompt_file = layer["prompt_file"]
+    prompt_path = PROMPTS / prompt_file
+    return prompt_file, prompt_path.read_text(encoding="utf-8")
+
+
+def build_user(cfg: dict, layer: dict, ai_context: str, rules: str,
+               contracts: str, accepted: list[dict], layer_prompt_file: str,
+               layer_prompt: str, feedback: str) -> str:
     conf = cfg["configurations"][layer["gate"]]
     u = (
-        f"CONVENTIONS:\n{conventions}\n\n"
+        f"AI_CONTEXT:\n{ai_context}\n\n"
         f"BOUNDARY_RULES:\n{rules}\n\n"
         f"CONTRACTS (읽기 전용 — 시그니처를 그대로 따른다):\n{contracts}\n\n"
     )
@@ -76,10 +104,11 @@ def build_user(cfg: dict, layer: dict, conventions: str, rules: str,
               + fmt_files({f["path"]: f["content"] for f in accepted}) + "\n\n")
     u += (
         f"LAYER:\n"
-        f"- 책임: {layer['requirements']}\n"
+        f"- 지시 파일: pipeline/prompts/{layer_prompt_file}\n"
         f"- 쓸 수 있는 경로: {', '.join(layer['allowed_paths'])}\n"
         f"- 이 층이 채우는 자리: {layer['promotes']}\n"
         f"- 판정: {conf['desc']}\n"
+        f"\nLAYER_INSTRUCTIONS:\n{layer_prompt}\n"
     )
     if feedback:
         u += f"\nFEEDBACK — 직전 시도가 실패했다. 사유를 고쳐라(계약·경로는 그대로):\n{feedback}\n"
@@ -101,7 +130,18 @@ def main() -> int:
 
     client = create_client(provider=cfg.get("provider", "claude"), project_dir=SKILL,
                            timeout_seconds=cfg.get("timeout", 900))
-    conventions = "\n\n".join((repo_root / p).read_text(encoding="utf-8") for p in cfg["context_files"])
+    skill_context_files = cfg.get("skill_context_files", ["CLAUDE.md"])
+    context_parts = [read_skill_files(skill_context_files)]
+    input_context_fields: list[str] = []
+    if "target_context" in cfg:
+        input_context_fields.append("target_context")
+        context_parts.append("TARGET_CONTEXT (input JSON):\n" + format_input_context(cfg["target_context"]))
+    prompt_context_files = cfg.get("prompt_context_files", [])
+    if prompt_context_files:
+        context_parts.append(read_prompt_context_files(prompt_context_files))
+    if cfg.get("context_files"):
+        context_parts.append(read_repo_files(repo_root, cfg["context_files"]))
+    ai_context = "\n\n".join(context_parts)
     rules = (SKILL / "references" / "boundary-shortcuts.md").read_text(encoding="utf-8")
 
     layers = cfg["layers"]
@@ -128,6 +168,7 @@ def main() -> int:
         layer_dir = run_dir / layer["id"]
         layer_dir.mkdir(parents=True, exist_ok=True)
         contracts = load_contracts(repo_root, cfg, layer)
+        layer_prompt_file, layer_prompt = load_layer_prompt(layer)
         feedback = ""
         verdict: dict = {"verdict": "ERROR", "detail": "no attempt ran"}
 
@@ -137,7 +178,23 @@ def main() -> int:
             log(f"{layer['id']} attempt {attempt} implement ...")
 
             system = (PROMPTS / "implement_layer.md").read_text(encoding="utf-8")
-            user = build_user(cfg, layer, conventions, rules, contracts, accepted, feedback)
+            user = build_user(cfg, layer, ai_context, rules, contracts, accepted,
+                              layer_prompt_file, layer_prompt, feedback)
+            ctx_dir = att_dir / "context"
+            ctx_dir.mkdir(parents=True, exist_ok=True)
+            (ctx_dir / "system.md").write_text(system, encoding="utf-8")
+            (ctx_dir / "user.md").write_text(user, encoding="utf-8")
+            (ctx_dir / "prompt-sources.json").write_text(
+                json.dumps({
+                    "system_prompt": "pipeline/prompts/implement_layer.md",
+                    "layer_prompt": f"pipeline/prompts/{layer_prompt_file}",
+                    "skill_context_files": skill_context_files,
+                    "input_context_fields": input_context_fields,
+                    "prompt_context_files": [f"pipeline/prompts/{p}" for p in prompt_context_files],
+                    "repo_context_files": cfg.get("context_files", []),
+                    "boundary_rules": "references/boundary-shortcuts.md"
+                }, ensure_ascii=False, indent=2),
+                encoding="utf-8")
             client.run_prompt(system=system, user=user,
                               output_schema=SCHEMAS / "implement_output.schema.json",
                               output_path=att_dir / "implement.json", model=None)
