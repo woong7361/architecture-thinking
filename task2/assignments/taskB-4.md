@@ -151,19 +151,16 @@ Client → TicketService.reserve(userId, ticketId, payInfo)   ┐ 원자성/보�
  └──────────────────┘ └──────────────────┘ └──────────────────┘
 ```
 
-<!-- notion-feedback:begin -->
-
 ---
 
 ## 리뷰 피드백 (Notion 원본)
 
-<!--
-  출처 페이지 : [Phase 1] 1-2(객체지향) 제출 - 현웅님
-  URL        : https://sponge-girdle-ad1.notion.site/Phase-1-1-2-38a6276f9e0081c8900dc7d1e58c8ad3
-  수집 방법   : 프로젝트 루트 notion_mcp.md 참조
-  원문 보존   : 댓글 본문은 Notion comment 레코드의 텍스트를 그대로 옮긴 것이며 일절 수정하지 않았다.
-  라인 기준   : 이 섹션 위쪽 본문의 라인 번호. 본문을 편집하면 다시 수집해야 한다.
--->
+> **피드백 메타데이터**
+> - 출처 페이지: [Phase 1] 1-2(객체지향) 제출 - 현웅님
+> - URL: [Notion 원본 페이지](https://sponge-girdle-ad1.notion.site/Phase-1-1-2-38a6276f9e0081c8900dc7d1e58c8ad3)
+> - 수집 방법: 프로젝트 루트 `notion_mcp.md` 참조
+> - 원문 보존: 댓글 본문은 Notion comment 레코드의 텍스트를 그대로 옮긴 것이며 일절 수정하지 않았다.
+> - 라인 기준: 이 섹션 위쪽 본문의 라인 번호. 본문을 편집하면 다시 수집해야 한다.
 
 리뷰어가 이 문서의 **어느 라인, 어떤 부분**에 **어떤 피드백**을 남겼는지 정리한 것이다.
 총 6건 (댓글 6건, 리액션만 0건).

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Task Feedback Analysis"
+  short_description: "Analyze substantive feedback on task submissions"
+  default_prompt: "Use $analyze-task-feedback to analyze the substantive feedback on this task."

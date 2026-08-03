@@ -104,19 +104,16 @@ public boolean reserveTicket(long userId, long ticketId, String paymentInfo) {
 
 즉 Anemic은 "게을러서"가 아니라 지킬 불변식도 담을 행위·계산도 없다는 사실을 정직하게 반영한 선택일 때 합리적이다. 단 값 운반이던 객체에 규칙이나 계산이 붙기 시작하면 그때 Rich로 옮기면 된다. 판정은 "지금 이 객체가 무엇을 담고 있나"로 한다.
 
-<!-- notion-feedback:begin -->
-
 ---
 
 ## 리뷰 피드백 (Notion 원본)
 
-<!--
-  출처 페이지 : [Phase 1] 1-2(객체지향) 제출 - 현웅님
-  URL        : https://sponge-girdle-ad1.notion.site/Phase-1-1-2-38a6276f9e0081c8900dc7d1e58c8ad3
-  수집 방법   : 프로젝트 루트 notion_mcp.md 참조
-  원문 보존   : 댓글 본문은 Notion comment 레코드의 텍스트를 그대로 옮긴 것이며 일절 수정하지 않았다.
-  라인 기준   : 이 섹션 위쪽 본문의 라인 번호. 본문을 편집하면 다시 수집해야 한다.
--->
+> **피드백 메타데이터**
+> - 출처 페이지: [Phase 1] 1-2(객체지향) 제출 - 현웅님
+> - URL: [Notion 원본 페이지](https://sponge-girdle-ad1.notion.site/Phase-1-1-2-38a6276f9e0081c8900dc7d1e58c8ad3)
+> - 수집 방법: 프로젝트 루트 `notion_mcp.md` 참조
+> - 원문 보존: 댓글 본문은 Notion comment 레코드의 텍스트를 그대로 옮긴 것이며 일절 수정하지 않았다.
+> - 라인 기준: 이 섹션 위쪽 본문의 라인 번호. 본문을 편집하면 다시 수집해야 한다.
 
 리뷰어가 이 문서의 **어느 라인, 어떤 부분**에 **어떤 피드백**을 남겼는지 정리한 것이다.
 총 8건 (댓글 7건, 리액션만 1건).

@@ -1,0 +1,15 @@
+# Original User Input
+
+그러면 결국 결론은 예시의 경계의 변경 여파에 따라 경계를 나누어 잡아야한다는거네 경계를  paymentMethod로 잡을지 아니면 reservation flow로 잡을지?
+
+
+# Checked Context
+
+# 검토 문맥
+
+- 대상: `task2/assignments/taskB-2.md`의 FB-B2-04 후속 논의.
+- 원래 답안은 결제수단을 하나의 역할로 추출하는 방향을 제안했다.
+- 피드백은 내부 포인트 차감이 외부 카드 결제와 다른 transaction 범위를 가질 때 얇은 인터페이스가 충분한지 묻는다.
+- 직전 논의에서는 결제 방식의 차이가 결제 단계 안에 머물면 `PaymentMethod`, 실행 순서·완료 상태·복구 정책까지 달라지면 `ReservationFlow`로 경계를 높인다고 정리했다.
+- 실제 DB, transaction manager, 결제 취소 계약은 제공되지 않았다.
+- 성공 기준: 사용자의 요약이 맞는지 직접 답하고, `변경 여파`만으로는 부족한 보완 기준을 간결하게 제시한다.
