@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "run_id": "taskc6-contract-authority-20260803",
+  "source_eval_path": "C:\\Users\\이현웅\\Desktop\\project\\thinking\\.codex\\skills\\thinking-review-gate\\runs\\taskc6-contract-authority-20260803\\attempts\\1\\eval.json",
+  "schema_valid": true,
+  "schema_errors": [],
+  "min_score": 3.6,
+  "scores": {
+    "evidence_count": 5,
+    "evidence_quality": 4,
+    "claim_coverage": 4,
+    "uncertainty_boundary": 3,
+    "consistency": 2,
+    "alternatives_tradeoff": 5
+  },
+  "score_reasons": {
+    "evidence_count": "초기 input의 계약 누락, PgChargeAdapter를 실행하지 않은 테스트 범위, mock PG mapping, 현재 input의 계약 명세 등 세 개 이상의 근거가 주요 판단에 연결되어 있다.",
+    "evidence_quality": "프로젝트 input, fixture, 테스트 범위, review 기록처럼 신뢰도 높은 프로젝트 자료를 사용하지만 초안에서 파일 경로를 직접 제시하지 않고 사람의 계약 승인 여부도 확인된 근거로 연결하지 않았다.",
+    "claim_coverage": "input 보완과 계약 테스트의 역할 구분, 자동 게이트와 사람 수용 절차의 구분, 운영 선택지는 근거나 조건과 연결되어 있으나 사람이 mapping을 계약으로 수용했다는 시간 순서의 주장은 충분히 뒷받침되지 않는다.",
+    "uncertainty_boundary": "mock PG mapping의 권위가 사람의 승인에 달렸다는 조건을 후반부에 표시했지만, 앞에서는 사람이 이미 수용한 사실처럼 서술해 핵심 불확실성의 경계가 일관되게 유지되지 않았다.",
+    "consistency": "사람의 계약 승인이 확인되지 않았다는 입력의 한계와 달리 초안의 시간 순서는 승인이 완료된 것으로 단정하고, 후반부에서는 다시 승인 전제로 표현해 동일 사실의 확정 상태가 어긋난다.",
+    "alternatives_tradeoff": "세 가지 운영안을 비교하고 속도, 잠재 위험, 사람 판단 비용, AI 추측의 계약화 위험을 각각 제시했으며 추천안과 추천 이유도 명확하다."
+  },
+  "weak_axes": [
+    "uncertainty_boundary",
+    "consistency"
+  ],
+  "weighted_score": 3.7,
+  "gate_result": "pass",
+  "summary": "gate_result=pass, weighted_score=3.7, weak_axes=uncertainty_boundary,consistency"
+}
