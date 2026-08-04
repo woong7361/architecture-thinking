@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "run_id": "hexagonal-error-responsibility-20260804-review",
+  "created_at": "2026-08-04T07:57:00.487029+00:00",
+  "model": "inherit",
+  "paths": {
+    "run_dir": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\thinking-review-gate\\runs\\hexagonal-error-responsibility-20260804-review",
+    "input": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\thinking-review-gate\\runs\\hexagonal-error-responsibility-20260804-review\\input.md",
+    "attempts_dir": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\thinking-review-gate\\runs\\hexagonal-error-responsibility-20260804-review\\attempts",
+    "latest_attempt": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\thinking-review-gate\\runs\\hexagonal-error-responsibility-20260804-review\\attempts\\1"
+  },
+  "prompt_templates": {
+    "critique": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\thinking-review-gate\\prompts\\level2-critique.system.md",
+    "eval": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\thinking-review-gate\\prompts\\level2-eval.system.md"
+  }
+}

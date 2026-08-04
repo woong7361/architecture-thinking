@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "run_id": "contract-naming-migration-20260804",
+  "source_eval_path": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\thinking-review-gate\\runs\\contract-naming-migration-20260804\\attempts\\1\\eval.json",
+  "schema_valid": true,
+  "schema_errors": [],
+  "min_score": 3.6,
+  "scores": {
+    "evidence_count": 3,
+    "evidence_quality": 4,
+    "claim_coverage": 4,
+    "uncertainty_boundary": 4,
+    "consistency": 4,
+    "alternatives_tradeoff": 5
+  },
+  "score_reasons": {
+    "evidence_count": "프로젝트 문맥의 두 파일 앵커와 현재 Ticket 예제를 바탕으로 주장을 전개하지만, 답변 본문에서 각 claim마다 파일 근거를 직접 다시 연결하지는 않는다.",
+    "evidence_quality": "근거의 출처는 사용자가 제공한 프로젝트 파일과 확인된 문맥이라 신뢰 가능하지만, 일부 일반화된 리팩터링 비용 판단은 직접 확인된 호출자 수나 팀 관례 없이 제시된다.",
+    "claim_coverage": "핵심 주장 대부분이 입력 문맥이나 명시된 제약과 연결되어 있고, naming 규칙 부정, 좁은 Port 추가, 점진 도입 전략이 각각 근거 또는 조건과 함께 설명된다.",
+    "uncertainty_boundary": "호출자 수, 팀 네이밍 관례, 결제 거절 의미 미확정 같은 경계를 여러 곳에서 드러내지만, 약한 계약 확산 후 리팩터링 비용 증가 같은 일반론은 조건 표시가 더 있었으면 좋다.",
+    "consistency": "답변 내부 논지는 일관되고 입력 제약과도 충돌하지 않는다. 다만 이름, 반환 타입, 문서, 테스트를 함께 쓰라는 원칙이 예시 전반에 균일하게 검증되지는 않는다.",
+    "alternatives_tradeoff": "추천안 포함 3가지 도입 전략을 구분하고 각 전략의 이점, 비용, 적용 조건을 함께 제시해 선택의 trade-off가 분명하다."
+  },
+  "weak_axes": [
+    "evidence_count"
+  ],
+  "weighted_score": 3.95,
+  "gate_result": "pass",
+  "summary": "gate_result=pass, weighted_score=3.95, weak_axes=evidence_count"
+}

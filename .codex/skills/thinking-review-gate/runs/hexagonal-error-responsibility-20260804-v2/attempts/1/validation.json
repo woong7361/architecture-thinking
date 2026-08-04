@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "run_id": "hexagonal-error-responsibility-20260804-v2",
+  "source_eval_path": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\thinking-review-gate\\runs\\hexagonal-error-responsibility-20260804-v2\\attempts\\1\\eval.json",
+  "schema_valid": true,
+  "schema_errors": [],
+  "min_score": 3.6,
+  "scores": {
+    "evidence_count": 5,
+    "evidence_quality": 5,
+    "claim_coverage": 4,
+    "uncertainty_boundary": 4,
+    "consistency": 4,
+    "alternatives_tradeoff": 5
+  },
+  "score_reasons": {
+    "evidence_count": "Cockburn, AWS, Spring Data, Microsoft, Fowler, Spring Framework까지 6개 근거가 주요 권장안과 연결되어 있다.",
+    "evidence_quality": "원문 아키텍처 글과 공식 문서, 사용자 제공 문맥을 근거로 사용해 추적 가능성과 신뢰도가 높다.",
+    "claim_coverage": "핵심 권장안 대부분이 출처나 설계 판단 표시와 연결되지만, 일부 세부 구현 조언은 직접 근거 연결이 약하다.",
+    "uncertainty_boundary": "헥사고날 자체가 예외 정책을 규정하지 않는 점과 결제 거절 의미가 문맥 의존이라는 점을 표시했지만, 일부 추천 구현은 추론 비중이 남아 있다.",
+    "consistency": "내부 모순은 없고 책임 분리 논리도 일관되지만, 일부 세부 권장안은 적용 조건을 더 좁혀 적을 여지가 있다.",
+    "alternatives_tradeoff": "예외 중심, 혼합형, 결과 중심의 3개 선택지를 나누고 각 비용과 적합 조건, 최종 추천 이유를 함께 제시한다."
+  },
+  "weak_axes": [],
+  "weighted_score": 4.45,
+  "gate_result": "pass",
+  "summary": "gate_result=pass, weighted_score=4.45, weak_axes=none"
+}
