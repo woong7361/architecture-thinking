@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "run_id": "discount-new-boundary-20260810-165528",
+  "created_at": "2026-08-10T07:56:05.165010+00:00",
+  "model": "gpt-5.5",
+  "paths": {
+    "run_dir": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\thinking-review-gate\\runs\\discount-new-boundary-20260810-165528",
+    "input": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\thinking-review-gate\\runs\\discount-new-boundary-20260810-165528\\input.md",
+    "attempts_dir": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\thinking-review-gate\\runs\\discount-new-boundary-20260810-165528\\attempts",
+    "latest_attempt": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\thinking-review-gate\\runs\\discount-new-boundary-20260810-165528\\attempts\\1"
+  },
+  "prompt_templates": {
+    "critique": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\thinking-review-gate\\prompts\\level2-critique.system.md",
+    "eval": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\thinking-review-gate\\prompts\\level2-eval.system.md"
+  }
+}

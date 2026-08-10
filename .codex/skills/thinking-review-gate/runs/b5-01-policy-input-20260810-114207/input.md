@@ -1,0 +1,36 @@
+# Original User Input
+
+# Original User Input
+
+차례로 살펴보자
+
+ ## FB-B5-01 에서 복잡한게 들어오면 도메인 로직 입력이 많아지는거 아니야? 그러면 비율할인은 다형성으로 한다면 더 많은 불필요한 데이터를 가지고 가게 되는거 아닌가?
+
+# Confirmed Context
+
+- `task2/task5-history/src/main/java/com/thinking/ticket/DiscountPolicy.java:11`의 현재 계약은 `finalAmount(int basePrice)`로 기준 가격만 받는다.
+- `task2/task5-history/src/main/java/com/thinking/ticket/TicketService.java:31`은 `discountPolicy.finalAmount(ticket.getPrice())`를 호출한다.
+- `task2/task5-history/refactoring-criteria.md:74-75`는 구체 변형 수와 확정 예정 변형 수의 합이 2 이상일 때 Type B 추상화를 수행하도록 정했다.
+- FB-B5-01은 VIP 등급과 외부 쿠폰 서버 응답이 계산에 필요할 수 있다는 가정을 질문 형태로 제시했다. 실제 확정 요구사항은 아니다.
+
+# Constraints
+
+- 현재 구현을 변경하지 않고 설계 판단만 설명한다.
+- 다형성과 비대한 공통 입력 객체를 동일시하지 않는다.
+- 가능한 접근 2~3개와 trade-off를 제시한다.
+- 확인되지 않은 미래 요구는 가정으로 표시한다.
+
+
+# Checked Context
+
+# Project Context
+
+현재 코드는 단일 금액 기준 비율 할인을 구체 `DiscountPolicy` 클래스로 분리했다. 과제 답안은 할인 종류가 두 개가 될 때 인터페이스를 도출한다는 트리거를 사용한다.
+
+사용자는 FB-B5-01의 복잡한 할인 예시를 하나의 공통 다형성 계약으로 묶을 경우, 단순 비율 할인 구현까지 VIP 등급이나 쿠폰 응답처럼 사용하지 않는 데이터를 받아야 하는지 묻고 있다.
+
+판단해야 할 핵심은 다음과 같다.
+
+1. 서로 다른 할인 구현에 필요한 입력이 크게 다른데도 하나의 공통 `PricingContext`로 묶는 것이 적절한가.
+2. 다형성이 구현별 불필요한 입력을 필연적으로 요구하는가.
+3. 현재 과제의 `v >= 2` 트리거를 어떻게 해석해야 하는가.
