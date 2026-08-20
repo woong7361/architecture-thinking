@@ -2,7 +2,16 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Pipeline Eval",
   "type": "object",
-  "required": ["brief_hash", "iteration", "rubric_name", "rubric_scores", "axis_rationales", "evaluated_at", "model", "metadata"],
+  "required": [
+    "brief_hash",
+    "iteration",
+    "rubric_name",
+    "rubric_scores",
+    "axis_rationales",
+    "evaluated_at",
+    "model",
+    "metadata"
+  ],
   "properties": {
     "brief_hash": {
       "type": "string",
@@ -18,29 +27,121 @@
     },
     "rubric_scores": {
       "type": "object",
-      "required": ["scores", "weights", "weighted_total"],
+      "required": [
+        "scores",
+        "weights",
+        "weighted_total"
+      ],
       "properties": {
         "scores": {
           "type": "object",
-          "required": ["structure", "evidence", "sentence", "originality", "purpose_fit"],
+          "required": [
+            "judgment",
+            "evidence",
+            "reader_fit",
+            "grounding",
+            "structure",
+            "sentence",
+            "originality",
+            "purpose_fit"
+          ],
           "properties": {
-            "structure": { "type": "number", "minimum": 0, "maximum": 5 },
-            "evidence": { "type": "number", "minimum": 0, "maximum": 5 },
-            "sentence": { "type": "number", "minimum": 0, "maximum": 5 },
-            "originality": { "type": "number", "minimum": 0, "maximum": 5 },
-            "purpose_fit": { "type": "number", "minimum": 0, "maximum": 5 }
+            "judgment": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 5
+            },
+            "evidence": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 5
+            },
+            "reader_fit": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 5
+            },
+            "grounding": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 5
+            },
+            "structure": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 5
+            },
+            "sentence": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 5
+            },
+            "originality": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 5
+            },
+            "purpose_fit": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 5
+            }
           },
           "additionalProperties": false
         },
         "weights": {
           "type": "object",
-          "required": ["structure", "evidence", "sentence", "originality", "purpose_fit"],
+          "required": [
+            "judgment",
+            "evidence",
+            "reader_fit",
+            "grounding",
+            "structure",
+            "sentence",
+            "originality",
+            "purpose_fit"
+          ],
           "properties": {
-            "structure": { "type": "number", "minimum": 0, "maximum": 1 },
-            "evidence": { "type": "number", "minimum": 0, "maximum": 1 },
-            "sentence": { "type": "number", "minimum": 0, "maximum": 1 },
-            "originality": { "type": "number", "minimum": 0, "maximum": 1 },
-            "purpose_fit": { "type": "number", "minimum": 0, "maximum": 1 }
+            "judgment": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "evidence": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "reader_fit": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "grounding": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "structure": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "sentence": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "originality": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "purpose_fit": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
           },
           "additionalProperties": false
         },
@@ -54,13 +155,49 @@
     },
     "axis_rationales": {
       "type": "object",
-      "required": ["structure", "evidence", "sentence", "originality", "purpose_fit"],
+      "required": [
+        "judgment",
+        "evidence",
+        "reader_fit",
+        "grounding",
+        "structure",
+        "sentence",
+        "originality",
+        "purpose_fit"
+      ],
       "properties": {
-        "structure": { "type": "string", "minLength": 1 },
-        "evidence": { "type": "string", "minLength": 1 },
-        "sentence": { "type": "string", "minLength": 1 },
-        "originality": { "type": "string", "minLength": 1 },
-        "purpose_fit": { "type": "string", "minLength": 1 }
+        "judgment": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reader_fit": {
+          "type": "string",
+          "minLength": 1
+        },
+        "grounding": {
+          "type": "string",
+          "minLength": 1
+        },
+        "structure": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sentence": {
+          "type": "string",
+          "minLength": 1
+        },
+        "originality": {
+          "type": "string",
+          "minLength": 1
+        },
+        "purpose_fit": {
+          "type": "string",
+          "minLength": 1
+        }
       },
       "additionalProperties": false
     },
