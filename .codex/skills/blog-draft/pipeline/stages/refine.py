@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from stages.scripts.context import load_persona_context
+from stages.scripts.context import load_craft_context, load_persona_context
 from stages.scripts.llm_client import LLMClient
 
 
@@ -41,9 +41,10 @@ def refine(
 
 def build_prompt(input_data: dict, draft: dict, critique: dict, refine_request: dict) -> tuple[str, str]:
     system = REFINE_SYSTEM_PROMPT.read_text(encoding="utf-8")
-    persona = load_persona_context()
-    if persona:
-        system = f"{system}\n\n{persona}"
+    piece_type = input_data.get("brief", {}).get("piece_type")
+    for block in (load_persona_context(), load_craft_context(piece_type)):
+        if block:
+            system = f"{system}\n\n{block}"
     input_json = json.dumps(input_data, ensure_ascii=False, indent=2)
     draft_json = json.dumps(draft, ensure_ascii=False, indent=2)
     critique_json = json.dumps(critique, ensure_ascii=False, indent=2)

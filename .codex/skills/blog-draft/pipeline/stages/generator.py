@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from stages.scripts.context import load_persona_context
+from stages.scripts.context import load_craft_context, load_persona_context
 from stages.scripts.llm_client import LLMClient
 
 
@@ -31,9 +31,10 @@ def generate(
 
 def build_prompt(brief: dict) -> tuple[str, str]:
     system = GEN_SYSTEM_PROMPT.read_text(encoding="utf-8")
-    persona = load_persona_context()
-    if persona:
-        system = f"{system}\n\n{persona}"
+    piece_type = brief.get("brief", {}).get("piece_type")
+    for block in (load_persona_context(), load_craft_context(piece_type)):
+        if block:
+            system = f"{system}\n\n{block}"
     brief_json = json.dumps(brief, ensure_ascii=False, indent=2)
     user = f"INPUT_JSON:\n{brief_json}\n"
     return system, user
