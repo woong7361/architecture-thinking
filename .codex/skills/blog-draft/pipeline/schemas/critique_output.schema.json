@@ -9,7 +9,9 @@
     "strengths",
     "weaknesses",
     "revision_directions",
-    "reader_risks"
+    "reader_risks",
+    "unsupported_claims",
+    "suggestions"
   ],
   "properties": {
     "brief_hash": {
@@ -85,6 +87,72 @@
       "items": {
         "type": "string",
         "minLength": 1
+      }
+    },
+    "unsupported_claims": {
+      "type": "array",
+      "description": "Statements the draft presents as fact but that cannot be traced to the brief. Empty when everything is grounded.",
+      "items": {
+        "type": "object",
+        "required": [
+          "claim",
+          "why_unsupported"
+        ],
+        "properties": {
+          "claim": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The sentence or phrase as it appears in the draft."
+          },
+          "why_unsupported": {
+            "type": "string",
+            "minLength": 1,
+            "description": "What was looked for in the brief and not found."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "suggestions": {
+      "type": "array",
+      "description": "저자가 쓴 메시지에 없거나 반대되는 것 중 저자가 채택 여부를 정해야 하는 것. 본문에 넣지 않는다.",
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "required": [
+          "kind",
+          "target",
+          "proposal",
+          "needs_author"
+        ],
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "counterpoint",
+              "angle",
+              "extension",
+              "reference",
+              "material"
+            ],
+            "description": "counterpoint 반대 논리 / angle 다루지 않은 관점 / extension 더 밀고 갈 지점 / reference 외부 근거 후보 / material 저자만 댈 수 있는 재료"
+          },
+          "target": {
+            "type": "string",
+            "minLength": 1,
+            "description": "제안이 겨냥하는 초안의 대목. 해당 문장을 그대로 옮긴다"
+          },
+          "proposal": {
+            "type": "string",
+            "minLength": 1,
+            "description": "제안 내용. material과 reference는 무엇이 필요한지까지만 쓰고 지어내지 않는다"
+          },
+          "needs_author": {
+            "type": "boolean",
+            "description": "저자만 댈 수 있는 것(겪은 일, 수치, 실제 출처)이면 true. AI가 만들어 낸 주장이나 관점이면 false"
+          }
+        },
+        "additionalProperties": false
       }
     }
   },

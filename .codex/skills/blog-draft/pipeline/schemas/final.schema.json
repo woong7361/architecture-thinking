@@ -2,7 +2,15 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Pipeline Final",
   "type": "object",
-  "required": ["brief_hash", "final_iteration", "content", "accepted_at", "quality_snapshot", "contract_result", "lineage"],
+  "required": [
+    "brief_hash",
+    "final_iteration",
+    "content",
+    "accepted_at",
+    "quality_snapshot",
+    "contract_result",
+    "lineage"
+  ],
   "properties": {
     "brief_hash": {
       "type": "string",
@@ -22,7 +30,12 @@
     },
     "quality_snapshot": {
       "type": "object",
-      "required": ["rubric_name", "weighted_total", "scores", "weak_axes"],
+      "required": [
+        "rubric_name",
+        "weighted_total",
+        "scores",
+        "weak_axes"
+      ],
       "properties": {
         "rubric_name": {
           "type": "string",
@@ -52,11 +65,17 @@
     },
     "contract_result": {
       "type": "object",
-      "required": ["verdict", "contract_errors", "checked_rules"],
+      "required": [
+        "verdict",
+        "contract_errors",
+        "checked_rules"
+      ],
       "properties": {
         "verdict": {
           "type": "string",
-          "enum": ["PASS"]
+          "enum": [
+            "PASS"
+          ]
         },
         "contract_errors": {
           "type": "array",
@@ -76,7 +95,13 @@
     },
     "lineage": {
       "type": "object",
-      "required": ["run_id", "input", "draft", "critique", "eval"],
+      "required": [
+        "run_id",
+        "input",
+        "draft",
+        "critique",
+        "eval"
+      ],
       "properties": {
         "run_id": {
           "type": "string",
@@ -104,6 +129,48 @@
         }
       },
       "additionalProperties": false
+    },
+    "suggestions": {
+      "type": "array",
+      "description": "저자가 쓴 메시지에 없거나 반대되는 것 중 저자가 채택 여부를 정해야 하는 것. 본문에 넣지 않는다.",
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "required": [
+          "kind",
+          "target",
+          "proposal",
+          "needs_author"
+        ],
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "counterpoint",
+              "angle",
+              "extension",
+              "reference",
+              "material"
+            ],
+            "description": "counterpoint 반대 논리 / angle 다루지 않은 관점 / extension 더 밀고 갈 지점 / reference 외부 근거 후보 / material 저자만 댈 수 있는 재료"
+          },
+          "target": {
+            "type": "string",
+            "minLength": 1,
+            "description": "제안이 겨냥하는 초안의 대목. 해당 문장을 그대로 옮긴다"
+          },
+          "proposal": {
+            "type": "string",
+            "minLength": 1,
+            "description": "제안 내용. material과 reference는 무엇이 필요한지까지만 쓰고 지어내지 않는다"
+          },
+          "needs_author": {
+            "type": "boolean",
+            "description": "저자만 댈 수 있는 것(겪은 일, 수치, 실제 출처)이면 true. AI가 만들어 낸 주장이나 관점이면 false"
+          }
+        },
+        "additionalProperties": false
+      }
     }
   },
   "additionalProperties": false

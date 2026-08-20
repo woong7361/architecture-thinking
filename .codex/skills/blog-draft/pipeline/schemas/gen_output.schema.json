@@ -2,7 +2,9 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Generator Direct Output",
   "type": "object",
-  "required": ["content"],
+  "required": [
+    "content"
+  ],
   "properties": {
     "content": {
       "type": "string",

@@ -2,7 +2,14 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Pipeline Draft",
   "type": "object",
-  "required": ["brief_hash", "iteration", "stage", "content", "generated_at", "model"],
+  "required": [
+    "brief_hash",
+    "iteration",
+    "stage",
+    "content",
+    "generated_at",
+    "model"
+  ],
   "properties": {
     "brief_hash": {
       "type": "string",
@@ -16,7 +23,10 @@
     },
     "stage": {
       "type": "string",
-      "enum": ["gen", "refine"],
+      "enum": [
+        "gen",
+        "refine"
+      ],
       "description": "생성 주체. 최초 생성은 gen, 퇴고 생성은 refine"
     },
     "content": {
