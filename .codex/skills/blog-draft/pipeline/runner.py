@@ -18,8 +18,9 @@ from stages.critique import critique
 from stages.evaluator import evaluate
 from stages.generator import generate
 from stages.refine import refine
+from stages.scripts.context import load_banned_terms
 from stages.scripts.llm_client import create_client
-from validate import validate_file, write_result
+from validate import content_contract_errors, validate_file, write_result
 
 
 PROJECT_DIR = Path(__file__).resolve().parent
@@ -260,6 +261,10 @@ class RunContext:
         return self.run_dir / f"{self.brief_hash}_final.json"
 
     @property
+    def final_markdown_path(self) -> Path:
+        return self.run_dir / f"{self.brief_hash}_final.md"
+
+    @property
     def failed_path(self) -> Path:
         return self.run_dir / f"{self.brief_hash}_failed.json"
 
@@ -346,6 +351,7 @@ def build_draft(
     model_name: str,
     token_usage: dict | None = None,
     source_stage: str = "gen",
+    retried: bool = False,
 ) -> dict:
     metadata = {
         "prompt_version": f"{source_stage}_system:v1",
@@ -353,6 +359,8 @@ def build_draft(
     }
     if token_usage:
         metadata["token_usage"] = token_usage
+    if retried:
+        metadata["envelope_retry"] = True
 
     return {
         "brief_hash": input_data["brief_hash"],
@@ -411,6 +419,167 @@ def build_eval(
         "model": model_name,
         "metadata": metadata,
     }
+
+
+ENVELOPE_MARK = "content is a JSON envelope"
+
+
+def is_envelope_only(result: dict) -> bool:
+    errors = result.get("errors") or []
+    return bool(errors) and all(ENVELOPE_MARK in str(error) for error in errors)
+
+
+def call_stage_with_envelope_retry(call, output_path: Path, artifact: str, progress, label: str):
+    """Run a generation stage, retrying once when the model double-wrapped its output.
+
+    A JSON envelope is a formatting slip, not a quality verdict. The contract
+    still refuses it, but ending a whole run over one malformed response throws
+    away every stage that already succeeded. A second slip is treated as real.
+    """
+    token_usage = call()
+    result = validate_file(output_path, artifact=artifact)
+    retried = False
+    if is_envelope_only(result):
+        retried = True
+        progress.line(f"{label} envelope detected, retrying once")
+        token_usage = call()
+        result = validate_file(output_path, artifact=artifact)
+    progress.validation(label, result)
+    ensure_pass(result)
+    return token_usage, retried
+
+
+def unsupported_claim_errors(critique_artifact: dict) -> list[str]:
+    """Turn the critique's grounding findings into contract errors.
+
+    The rubric alone does not catch invented material: a draft that fabricated
+    pipeline internals scored higher on grounding than the same draft without
+    them, because specific falsehood reads as better evidence than vague truth.
+    Detection therefore belongs to the critique, which compares draft against
+    brief and does not score, and the result blocks the run the way any other
+    contract failure does.
+    """
+    claims = critique_artifact.get("unsupported_claims")
+    if not isinstance(claims, list):
+        return []
+    errors = []
+    for claim in claims:
+        if not isinstance(claim, dict):
+            continue
+        text = str(claim.get("claim", "")).strip()
+        if text:
+            errors.append(f"unsupported_claim: {text[:80]}")
+    return errors
+
+
+TITLE_MAX_CHARS = 80
+SENTENCE_ENDINGS = (".", "!", "?")
+
+
+def build_final_markdown(final_artifact: dict, eval_artifact: dict, rubric: dict) -> str:
+    """Render the accepted draft as Markdown for a person to read.
+
+    The JSON artifacts are the contract between stages; a person reviewing the
+    piece should not have to read escaped newlines to do it. The prose comes
+    first and the scorecard sits below a rule, so the file still reads as the
+    piece it is.
+    """
+    content = final_artifact.get("content", "")
+    lines = render_body(content)
+    lines.extend(render_scorecard(final_artifact, eval_artifact, rubric))
+    lines.extend(render_suggestions(final_artifact))
+    return "\n".join(lines) + "\n"
+
+
+def render_body(content: str) -> list[str]:
+    """Pass Markdown through untouched; give plain prose the structure it lacks.
+
+    Drafts are written as Markdown now, and reformatting one would break its
+    code blocks and lists. Older plain-text drafts still need their paragraphs
+    separated and their opening line promoted to a title.
+    """
+    if any(line.startswith("#") for line in content.splitlines()):
+        return [content.rstrip(), ""]
+
+    paragraphs = [line.strip() for line in content.split("\n") if line.strip()]
+    lines: list[str] = []
+    if paragraphs and len(paragraphs[0]) <= TITLE_MAX_CHARS and not paragraphs[0].endswith(SENTENCE_ENDINGS):
+        lines.append(f"# {paragraphs.pop(0)}")
+        lines.append("")
+    for paragraph in paragraphs:
+        lines.append(paragraph)
+        lines.append("")
+    return lines
+
+
+KIND_LABELS = {
+    "scene": "장면",
+    "evidence": "근거",
+    "reference": "출처",
+    "analogy": "비유",
+    "diagram": "그림",
+    "structure": "배치",
+}
+
+
+def render_suggestions(final_artifact: dict) -> list[str]:
+    """Render proposals the author has to decide on, kept out of the piece.
+
+    A stage that finds a claim needing material it does not have has three
+    options: omit it, invent it, or ask. Only the third is honest, so the
+    proposals live here rather than in the body, where an invented scene would
+    read as something that happened.
+    """
+    suggestions = final_artifact.get("suggestions") or []
+    if not suggestions:
+        return []
+    lines = [
+        "---",
+        "",
+        "## 추가 제안",
+        "",
+        "본문에 넣지 않은 제안이다. 채택 여부는 저자가 정한다. "
+        "[저자 필요]는 저자만 댈 수 있는 재료라 파이프라인이 채우지 않았다.",
+        "",
+    ]
+    for item in suggestions:
+        tag = "저자 필요" if item.get("needs_author") else "바로 사용"
+        kind = KIND_LABELS.get(item.get("kind", ""), item.get("kind", ""))
+        lines.append(f"- **[{tag}] {kind}** — {item.get('target', '')}")
+        lines.append(f"  - {item.get('proposal', '')}")
+    lines.append("")
+    return lines
+
+
+def render_scorecard(final_artifact: dict, eval_artifact: dict, rubric: dict) -> list[str]:
+    snapshot = final_artifact.get("quality_snapshot", {})
+    scores = snapshot.get("scores", {})
+    thresholds = rubric.get("thresholds", {})
+    min_axis = thresholds.get("min_axis", {})
+    axes = rubric.get("axes", {})
+    rationales = eval_artifact.get("axis_rationales", {})
+    lineage = final_artifact.get("lineage", {})
+
+    lines = [
+        "---",
+        "",
+        "## 판정",
+        "",
+        f"- run `{lineage.get('run_id', '')}` · iteration {final_artifact.get('final_iteration', '')}"
+        f" · {final_artifact.get('accepted_at', '')}",
+        f"- rubric `{snapshot.get('rubric_name', '')}` · 총점 **{snapshot.get('weighted_total', '')}**"
+        f" / 임계 {thresholds.get('min_total', '')}",
+        f"- 분량 {len(final_artifact.get('content', ''))}자",
+        "",
+        "| 축 | 점수 | 임계 | 가중치 | 근거 |",
+        "| --- | --- | --- | --- | --- |",
+    ]
+    for axis, score in scores.items():
+        weight = axes.get(axis, {}).get("weight", "")
+        rationale = str(rationales.get(axis, "")).replace("|", "/")
+        lines.append(f"| `{axis}` | {score} | {min_axis.get(axis, '')} | {weight} | {rationale} |")
+    lines.append("")
+    return lines
 
 
 def get_weak_axes(eval_data: dict, rubric: dict) -> list[str]:
@@ -472,6 +641,7 @@ def build_final(
     context: RunContext,
     input_data: dict,
     draft: dict,
+    critique_artifact: dict,
     eval_artifact: dict,
     eval_result: dict,
     rubric: dict,
@@ -492,6 +662,7 @@ def build_final(
         "brief_hash": input_data["brief_hash"],
         "final_iteration": context.iteration,
         "content": draft["content"],
+        "suggestions": critique_artifact.get("suggestions") or [],
         "accepted_at": now_iso(),
         "quality_snapshot": {
             "rubric_name": eval_artifact["rubric_name"],
@@ -519,6 +690,22 @@ def next_iteration(iteration: str) -> str:
     return f"{int(iteration) + 1:03d}"
 
 
+def summarize_block(errors: list) -> str:
+    """Name what actually stopped the last iteration.
+
+    Running out of iterations says when the loop ended, not why. A draft that
+    fell short on score and a draft that scored well but stated something the
+    brief never contained are different failures, and reading them as one makes
+    a pile of failed runs useless for deciding what to fix.
+    """
+    categories = {categorize_failure(str(error)) for error in errors}
+    if not categories:
+        return "none"
+    if len(categories) == 1:
+        return categories.pop()
+    return "mixed"
+
+
 def write_max_iteration_failed(
     context: RunContext,
     eval_rejections: list[dict],
@@ -537,6 +724,7 @@ def write_max_iteration_failed(
         "run_id": context.run_id,
         "failed_at": now_iso(),
         "terminal_reason": "max_iteration_exceeded",
+        "last_blocked_by": summarize_block(last_errors),
         "last_iteration": context.iteration,
         "failure_counts_by_category": failure_counts,
         "last_failures": [
@@ -559,7 +747,7 @@ def write_max_iteration_failed(
         "config": config,
         "next_actions": [
             "원본 brief에 구체적 사례와 제약을 보강한다",
-            "반복 실패의 주된 category를 보고 rubric threshold 또는 stage prompt를 조정한다",
+            "last_blocked_by가 quality_reject이면 threshold나 생성 프롬프트를, contract_error이면 재료와 계약 검사를 본다",
         ],
     }
     write_json(context.failed_path, payload, overwrite=True)
@@ -620,7 +808,6 @@ def run(args: argparse.Namespace) -> dict:
     }
     client = create_client(
         provider=args.provider,
-        project_dir=PROJECT_DIR,
         timeout_seconds=args.timeout_seconds,
         codex_bin=args.codex_bin,
     )
@@ -634,6 +821,8 @@ def run(args: argparse.Namespace) -> dict:
     try:
         stage = "prepare"
         copy_input(input_path, root_context.copied_input_path, overwrite=args.overwrite)
+
+        banned_terms = load_banned_terms()
 
         for iteration_number in range(start_iteration, args.max_iterations + 1):
             iteration = f"{iteration_number:03d}"
@@ -654,21 +843,27 @@ def run(args: argparse.Namespace) -> dict:
                     temp_gen_output_path = Path(temp_dir) / "gen-output.json"
 
                     stage = f"iter_{iteration}_gen"
-                    with progress.step(
-                        f"{iteration_label} gen model={display_model(config['agent_models'][AGENT_GEN], args.provider)}",
-                        live=True,
-                    ):
-                        token_usage = generate(
-                            input_path=root_context.copied_input_path,
-                            output_path=temp_gen_output_path,
-                            client=client,
-                            model=config["agent_models"][AGENT_GEN],
-                        )
+
+                    def run_gen():
+                        with progress.step(
+                            f"{iteration_label} gen model={display_model(config['agent_models'][AGENT_GEN], args.provider)}",
+                            live=True,
+                        ):
+                            return generate(
+                                input_path=root_context.copied_input_path,
+                                output_path=temp_gen_output_path,
+                                client=client,
+                                model=config["agent_models"][AGENT_GEN],
+                            )
 
                     stage = f"iter_{iteration}_gen_validate"
-                    gen_result = validate_file(temp_gen_output_path, artifact="gen_output")
-                    progress.validation(f"{iteration_label} gen_output_validate", gen_result)
-                    ensure_pass(gen_result)
+                    token_usage, gen_retried = call_stage_with_envelope_retry(
+                        run_gen,
+                        temp_gen_output_path,
+                        "gen_output",
+                        progress,
+                        f"{iteration_label} gen_output_validate",
+                    )
                     gen_output = load_json(temp_gen_output_path)
 
                 stage = f"iter_{iteration}_draft_write"
@@ -679,6 +874,7 @@ def run(args: argparse.Namespace) -> dict:
                     model_name=display_model(config["agent_models"][AGENT_GEN], args.provider),
                     token_usage=token_usage,
                     source_stage=AGENT_GEN,
+                    retried=gen_retried,
                 )
                 write_json(context.draft_path, draft, overwrite=args.overwrite)
             elif not context.draft_path.exists():
@@ -776,6 +972,16 @@ def run(args: argparse.Namespace) -> dict:
                 expected_iteration=iteration,
                 rubric=rubric,
             )
+            content_errors = content_contract_errors(
+                draft.get("content"),
+                input_data.get("brief"),
+                banned_terms,
+            )
+            content_errors += unsupported_claim_errors(critique_artifact)
+            if content_errors:
+                eval_result["errors"] = list(eval_result.get("errors", [])) + content_errors
+                eval_result["status"] = "REJECT"
+
             eval_summary = format_eval_scores(eval_artifact, rubric)
             if eval_result["status"] == "PASS":
                 progress.line(f"{iteration_label} eval PASS {eval_summary}")
@@ -789,6 +995,7 @@ def run(args: argparse.Namespace) -> dict:
                     context=context,
                     input_data=input_data,
                     draft=draft,
+                    critique_artifact=critique_artifact,
                     eval_artifact=eval_artifact,
                     eval_result=eval_result,
                     rubric=rubric,
@@ -804,6 +1011,12 @@ def run(args: argparse.Namespace) -> dict:
                 )
                 progress.validation(f"{iteration_label} final_validate", final_result)
                 ensure_pass(final_result)
+
+                stage = f"iter_{iteration}_final_markdown"
+                context.final_markdown_path.write_text(
+                    build_final_markdown(final_artifact, eval_artifact, rubric),
+                    encoding="utf-8",
+                )
                 progress.line(
                     f"run PASS iteration={iteration} total_elapsed={format_duration(time.perf_counter() - pipeline_started_at)}"
                 )
@@ -815,6 +1028,7 @@ def run(args: argparse.Namespace) -> dict:
                     "critique": str(context.critique_path),
                     "eval": str(context.eval_path),
                     "final": str(context.final_path),
+                    "final_markdown": str(context.final_markdown_path),
                     "iteration": iteration,
                 }
 
@@ -837,6 +1051,7 @@ def run(args: argparse.Namespace) -> dict:
                     )
                 progress.line(
                     "run FAILED terminal_reason=max_iteration_exceeded "
+                    f"blocked_by={summarize_block(eval_rejections[-1].get('errors', []) if eval_rejections else [])} "
                     f"last_iteration={iteration} total_elapsed={format_duration(time.perf_counter() - pipeline_started_at)}"
                 )
                 return {
@@ -866,24 +1081,30 @@ def run(args: argparse.Namespace) -> dict:
                 temp_refine_output_path = Path(temp_dir) / "refine-output.json"
 
                 stage = f"iter_{iteration}_refine_to_{to_iteration}"
-                with progress.step(
-                    f"iter {iteration}->{to_iteration} refine model={display_model(config['agent_models'][AGENT_REFINE], args.provider)}",
-                    live=True,
-                ):
-                    token_usage = refine(
-                        input_path=root_context.copied_input_path,
-                        draft_path=context.draft_path,
-                        critique_path=context.critique_path,
-                        refine_request=refine_request,
-                        output_path=temp_refine_output_path,
-                        client=client,
-                        model=config["agent_models"][AGENT_REFINE],
-                    )
+
+                def run_refine():
+                    with progress.step(
+                        f"iter {iteration}->{to_iteration} refine model={display_model(config['agent_models'][AGENT_REFINE], args.provider)}",
+                        live=True,
+                    ):
+                        return refine(
+                            input_path=root_context.copied_input_path,
+                            draft_path=context.draft_path,
+                            critique_path=context.critique_path,
+                            refine_request=refine_request,
+                            output_path=temp_refine_output_path,
+                            client=client,
+                            model=config["agent_models"][AGENT_REFINE],
+                        )
 
                 stage = f"iter_{iteration}_refine_output_validate"
-                refine_result = validate_file(temp_refine_output_path, artifact="refine_output")
-                progress.validation(f"iter {iteration}->{to_iteration} refine_output_validate", refine_result)
-                ensure_pass(refine_result)
+                token_usage, refine_retried = call_stage_with_envelope_retry(
+                    run_refine,
+                    temp_refine_output_path,
+                    "refine_output",
+                    progress,
+                    f"iter {iteration}->{to_iteration} refine_output_validate",
+                )
                 refine_output = load_json(temp_refine_output_path)
 
             stage = f"iter_{to_iteration}_draft_write"
@@ -894,6 +1115,7 @@ def run(args: argparse.Namespace) -> dict:
                 model_name=display_model(config["agent_models"][AGENT_REFINE], args.provider),
                 token_usage=token_usage,
                 source_stage=AGENT_REFINE,
+                retried=refine_retried,
             )
             write_json(next_context.draft_path, refined_draft, overwrite=args.overwrite)
     except Exception as exc:

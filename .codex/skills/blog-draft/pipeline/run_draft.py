@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -50,7 +51,7 @@ def maybe_run_slow_loop(runs_dir: Path, provider: str, timeout_seconds: int) -> 
         "--min-runs",
         str(SLOW_LOOP_MIN_RUNS),
     ]
-    analyze_result = subprocess.run(analyze_cmd, text=True, capture_output=True, encoding="utf-8")
+    analyze_result = subprocess.run(analyze_cmd, text=True, capture_output=True, encoding="utf-8", env=child_env())
     if analyze_result.stderr:
         print(analyze_result.stderr, file=sys.stderr, end="")
 
@@ -86,12 +87,27 @@ def maybe_run_slow_loop(runs_dir: Path, provider: str, timeout_seconds: int) -> 
         "--timeout-seconds",
         str(timeout_seconds),
     ]
-    propose_result = subprocess.run(propose_cmd, text=True, capture_output=True, encoding="utf-8")
+    propose_result = subprocess.run(propose_cmd, text=True, capture_output=True, encoding="utf-8", env=child_env())
     if propose_result.stderr:
         print(propose_result.stderr, file=sys.stderr, end="")
     if propose_result.stdout:
         print(propose_result.stdout, end="")
 
+
+
+def child_env() -> dict:
+    """Force UTF-8 on child processes.
+
+    The runner writes progress and validation errors to stderr, and those
+    errors carry Korean text. On a console whose default encoding is not
+    UTF-8 the child encodes them in the console codepage, the parent decodes
+    as UTF-8, and the reader thread dies mid-run: the result JSON survives on
+    stdout while the entire progress log is lost.
+    """
+    env = dict(os.environ)
+    env["PYTHONIOENCODING"] = "utf-8"
+    env["PYTHONUTF8"] = "1"
+    return env
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Run the bundled writing-harness pipeline for a blog-draft input.")
@@ -131,6 +147,7 @@ def main() -> int:
         text=True,
         capture_output=True,
         encoding="utf-8",
+        env=child_env(),
     )
     if completed.stderr:
         print(completed.stderr, file=sys.stderr, end="")
