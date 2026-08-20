@@ -11,6 +11,11 @@ from pathlib import Path
 PIPELINE_DIR = Path(__file__).resolve().parent
 KST = timezone(timedelta(hours=9))
 
+# Blocks the author fills in. The model never invents these, so they arrive as a
+# file instead of CLI flags: the values are multi-sentence prose and shell
+# quoting mangles them.
+CONTEXT_BLOCKS = ("reader", "guide", "judgment")
+
 
 def read_raw_text(args: argparse.Namespace) -> str:
     chunks: list[str] = []
@@ -22,6 +27,24 @@ def read_raw_text(args: argparse.Namespace) -> str:
     if not raw_text:
         raise ValueError("raw text is required via --raw-text or --raw-text-file")
     return raw_text
+
+
+def read_context(path: str | None) -> dict:
+    """Load the author-supplied reader/guide/judgment blocks.
+
+    Shape is enforced by input.schema.json, not here. This only rejects
+    unknown top-level keys so a typo fails with a readable message instead of
+    silently dropping material.
+    """
+    if not path:
+        return {}
+    data = json.loads(Path(path).read_text(encoding="utf-8"))
+    if not isinstance(data, dict):
+        raise ValueError("context file must contain a JSON object")
+    unknown = sorted(set(data) - set(CONTEXT_BLOCKS))
+    if unknown:
+        raise ValueError(f"unknown context blocks: {', '.join(unknown)} (allowed: {', '.join(CONTEXT_BLOCKS)})")
+    return data
 
 
 def split_values(values: list[str] | None) -> list[str]:
@@ -36,7 +59,7 @@ def split_values(values: list[str] | None) -> list[str]:
     return items
 
 
-def build_brief(args: argparse.Namespace, raw_text: str) -> dict:
+def build_brief(args: argparse.Namespace, raw_text: str, context: dict) -> dict:
     constraints: dict[str, object] = {}
     if args.target_length:
         constraints["target_length"] = args.target_length
@@ -58,6 +81,8 @@ def build_brief(args: argparse.Namespace, raw_text: str) -> dict:
         "intent": args.intent,
         "audience": args.audience,
     }
+    for block in CONTEXT_BLOCKS:
+        brief[block] = context.get(block)
     if constraints:
         brief["constraints"] = constraints
     return {key: value for key, value in brief.items() if value}
@@ -94,6 +119,10 @@ def main() -> int:
     parser.add_argument("--piece-type", default="retrospective")
     parser.add_argument("--intent", required=True)
     parser.add_argument("--audience", required=True)
+    parser.add_argument(
+        "--context-file",
+        help="UTF-8 JSON file holding the author-supplied reader / guide / judgment blocks.",
+    )
     parser.add_argument("--tone")
     parser.add_argument("--target-length")
     parser.add_argument("--emphasis", action="append", help="Repeat or separate values with semicolons.")
@@ -104,7 +133,8 @@ def main() -> int:
     args = parser.parse_args()
 
     raw_text = read_raw_text(args)
-    brief = build_brief(args, raw_text)
+    context = read_context(args.context_file)
+    brief = build_brief(args, raw_text, context)
     payload = {
         "brief_hash": brief_hash(brief),
         "created_at": datetime.now(KST).isoformat(timespec="seconds"),

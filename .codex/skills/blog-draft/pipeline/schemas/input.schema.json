@@ -2,7 +2,11 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Pipeline Input",
   "type": "object",
-  "required": ["brief_hash", "brief", "created_at"],
+  "required": [
+    "brief_hash",
+    "brief",
+    "created_at"
+  ],
   "properties": {
     "brief_hash": {
       "type": "string",
@@ -12,7 +16,12 @@
     "brief": {
       "type": "object",
       "description": "글쓰기 요청 본문. 내부 확장 허용",
-      "required": ["topic", "raw_text", "intent", "audience"],
+      "required": [
+        "topic",
+        "raw_text",
+        "intent",
+        "audience"
+      ],
       "properties": {
         "topic": {
           "type": "string",
@@ -26,7 +35,11 @@
         },
         "piece_type": {
           "type": "string",
-          "enum": ["retrospective", "essay", "technical_note"],
+          "enum": [
+            "retrospective",
+            "essay",
+            "technical_note"
+          ],
           "description": "글 유형"
         },
         "intent": {
@@ -38,6 +51,91 @@
           "type": "string",
           "minLength": 1,
           "description": "예상 독자"
+        },
+        "reader": {
+          "type": "object",
+          "description": "독자가 놓인 상황. 저자가 대는 영역이며 비어 있으면 모델은 이 층을 쓰지 않는다. 지어내지 않는다",
+          "required": [
+            "desire",
+            "external",
+            "internal"
+          ],
+          "properties": {
+            "desire": {
+              "type": "string",
+              "minLength": 1,
+              "description": "독자가 원하는 것. 문제가 아니라 욕망이며 이것을 먼저 세워야 문제가 제자리를 찾는다"
+            },
+            "villain": {
+              "type": "string",
+              "minLength": 1,
+              "description": "욕망을 막는 하나의 근원. 한 덩어리로 부를 수 있는 짧은 이름"
+            },
+            "external": {
+              "type": "string",
+              "minLength": 1,
+              "description": "겉으로 드러난 사실로서의 문제"
+            },
+            "internal": {
+              "type": "string",
+              "minLength": 1,
+              "description": "그 사실이 독자에게 만드는 감정. 사실을 감정어로 바꿔 쓴 문장은 이 층이 아니다"
+            },
+            "philosophical": {
+              "type": "string",
+              "minLength": 1,
+              "description": "이런 일을 겪는 것이 왜 부당한가. 개인이 아니라 부류 전체를 두고 '~해야 한다' 형태로 쓴다"
+            },
+            "stakes": {
+              "type": "string",
+              "minLength": 1,
+              "description": "문제가 풀리지 않으면 독자가 잃는 것"
+            }
+          },
+          "additionalProperties": false
+        },
+        "guide": {
+          "type": "object",
+          "description": "저자가 독자를 도울 자격. 공감과 권위 둘로만 증명한다",
+          "properties": {
+            "empathy": {
+              "type": "string",
+              "minLength": 1,
+              "description": "저자가 같은 자리에 있었던 실제 장면. 예의로 하는 공감이 아니라 진술"
+            },
+            "authority": {
+              "type": "array",
+              "description": "독자가 직접 확인할 수 있는 것. 성공담보다 실패담을 앞에 둔다",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "judgment": {
+          "type": "object",
+          "description": "판단 과정. 결과물에서 가장 먼저 지워지는 부분이라 입력에서 먼저 받는다",
+          "properties": {
+            "discarded": {
+              "type": "array",
+              "description": "검토했다가 버린 가설과 버린 이유",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "breaking_conditions": {
+              "type": "array",
+              "description": "이 판단이 깨지는 조건. 조건이 바뀌어도 저자가 판단할 수 있는지를 보여주는 자리",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "additionalProperties": false
         },
         "constraints": {
           "type": "object",
@@ -72,6 +170,14 @@
             "avoid": {
               "type": "array",
               "description": "피해야 할 주장, 표현, 방향",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "forbidden_phrases": {
+              "type": "array",
+              "description": "본문에 그대로 나타나면 안 되는 리터럴 표현. 계약 검사로 잡는다. 의미 수준의 회피 지침은 avoid에 쓴다",
               "items": {
                 "type": "string",
                 "minLength": 1
