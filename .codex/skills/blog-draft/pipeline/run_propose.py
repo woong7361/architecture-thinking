@@ -17,6 +17,7 @@ sys.dont_write_bytecode = True
 PIPELINE_DIR = Path(__file__).resolve().parent
 
 
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Run the slow-loop proposer pipeline.")
     parser.add_argument("analysis", type=Path, help="analysis.json 경로")
@@ -37,7 +38,6 @@ def main() -> int:
 
     client = create_client(
         provider=args.provider,
-        project_dir=PIPELINE_DIR,
         timeout_seconds=args.timeout_seconds,
     )
 

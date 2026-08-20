@@ -18,12 +18,13 @@ class LLMClient(ABC):
 
 def create_client(
     provider: str,
-    project_dir: Path,
     timeout_seconds: int,
     codex_bin: str = "codex",
 ) -> LLMClient:
+    """Build a stage client. Stages get no working directory of their own:
+    each call runs in a throwaway empty one so the prompt is the only input."""
     if provider == "claude":
         from stages.scripts.claude_client import ClaudeClient
-        return ClaudeClient(project_dir=project_dir, timeout_seconds=timeout_seconds)
+        return ClaudeClient(timeout_seconds=timeout_seconds)
     from stages.scripts.codex_client import CodexClient
-    return CodexClient(codex_bin=codex_bin, project_dir=project_dir, timeout_seconds=timeout_seconds)
+    return CodexClient(codex_bin=codex_bin, timeout_seconds=timeout_seconds)

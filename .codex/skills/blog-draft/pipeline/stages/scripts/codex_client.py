@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import subprocess
+import tempfile
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -9,9 +10,8 @@ from pathlib import Path
 @dataclass(frozen=True)
 class CodexClient:
     codex_bin: str
-    project_dir: Path
     timeout_seconds: int = 600
-    bypass_approvals_and_sandbox: bool = True
+    sandbox_mode: str = "read-only"
 
     def run_prompt(
         self,
@@ -22,41 +22,52 @@ class CodexClient:
         model: str | None = None,
     ) -> dict | None:
         prompt = f"{system}\n\n{user}"
-        command = self.build_command(
-            output_schema=output_schema,
-            output_path=output_path,
-            model=model,
-        )
-
         output_path.parent.mkdir(parents=True, exist_ok=True)
-        try:
-            completed = subprocess.run(
-                command,
-                input=prompt,
-                text=True,
-                capture_output=True,
-                encoding="utf-8",
-                timeout=self.timeout_seconds,
-            )
-        except subprocess.TimeoutExpired as exc:
-            raise TimeoutError(
-                "Codex CLI timed out in non-interactive mode.\n"
-                f"command: {command}\n"
-                f"timeout_seconds: {self.timeout_seconds}"
-            ) from exc
 
-        if completed.returncode != 0:
-            raise RuntimeError(
-                "Codex CLI failed\n"
-                f"command: {command}\n"
-                f"stdout: {completed.stdout}\n"
-                f"stderr: {completed.stderr}"
+        # Every stage runs in an empty directory. The pipeline's own source is
+        # not material for the piece, and a stage that can read it will use it:
+        # a draft has already described this pipeline's stages and validator in
+        # first person from files rather than from the brief. Keeping the
+        # working directory empty is what makes brief-only actually mean
+        # brief-only, and it also keeps the evaluator from reading the rubric
+        # thresholds it is being judged against.
+        with tempfile.TemporaryDirectory(prefix="writing-harness-workspace-") as workspace:
+            command = self.build_command(
+                workspace=Path(workspace),
+                output_schema=output_schema,
+                output_path=output_path,
+                model=model,
             )
+            try:
+                completed = subprocess.run(
+                    command,
+                    input=prompt,
+                    text=True,
+                    capture_output=True,
+                    encoding="utf-8",
+                    timeout=self.timeout_seconds,
+                    cwd=workspace,
+                )
+            except subprocess.TimeoutExpired as exc:
+                raise TimeoutError(
+                    "Codex CLI timed out in non-interactive mode.\n"
+                    f"command: {command}\n"
+                    f"timeout_seconds: {self.timeout_seconds}"
+                ) from exc
 
-        return extract_token_usage(completed.stdout)
+            if completed.returncode != 0:
+                raise RuntimeError(
+                    "Codex CLI failed\n"
+                    f"command: {command}\n"
+                    f"stdout: {completed.stdout}\n"
+                    f"stderr: {completed.stderr}"
+                )
+
+            return extract_token_usage(completed.stdout)
 
     def build_command(
         self,
+        workspace: Path,
         output_schema: Path,
         output_path: Path,
         model: str | None = None,
@@ -72,15 +83,11 @@ class CodexClient:
             [
                 "--ephemeral",
                 "--json",
-            ]
-        )
-        if self.bypass_approvals_and_sandbox:
-            command.append("--dangerously-bypass-approvals-and-sandbox")
-
-        command.extend(
-            [
+                "--sandbox",
+                self.sandbox_mode,
+                "--skip-git-repo-check",
                 "-C",
-                str(self.project_dir),
+                str(workspace),
                 "--output-schema",
                 str(output_schema),
                 "--output-last-message",
