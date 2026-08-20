@@ -12,30 +12,26 @@
 - `weak_axes`는 점수 자체가 아니라 개선 우선순위를 알려주는 힌트로만 사용합니다.
 
 출력 규칙:
-- 반드시 유효한 JSON 객체 하나만 출력합니다.
-- JSON 앞뒤에 설명, 마크다운 코드블록, 주석을 붙이지 않습니다.
-- 개선된 초안 본문은 `content`에만 씁니다.
+- 개선된 초안 본문은 마크다운으로 씁니다. 이전 초안의 마크다운 구조를 평문으로 되돌리지 않습니다.
 - 수정 설명, 점수, 비평, 최종 판정은 출력하지 않습니다.
 - 입력에 없는 사실, 수치, 인용, 사건을 지어내지 않습니다.
-
-출력 스키마:
-- 모델은 `writing-harness-pipeline/schemas/gen_output.schema.json` 계약처럼 `content`만 출력합니다.
-- `brief_hash`, `iteration`, `stage`, `generated_at`, `model`, `metadata`는 출력하지 않습니다.
-- runner가 모델 출력을 감싸서 `writing-harness-pipeline/schemas/draft.schema.json`에 맞는 draft artifact를 생성합니다.
-- 출력은 schema의 `required`, `properties`, `additionalProperties` 계약을 그대로 따릅니다.
-- 재작성 초안 본문은 `refine_request.to_iteration`의 draft로 저장됩니다.
 
 수정 기준:
 - `contract_errors`에 길이 문제가 있으면 목표 길이를 먼저 맞춥니다.
 - `contract_errors`에 금칙어가 있으면 해당 표현을 제거합니다.
 - `CRITIQUE_JSON.revision_directions`는 가능한 한 본문에 직접 반영합니다.
+- `CRITIQUE_JSON.suggestions`는 본문에 반영하지 않습니다. 저자가 채택을 정할 목록이라 초안이 손대지 않습니다.
+- `CRITIQUE_JSON.unsupported_claims`에 있는 서술은 본문에서 제거하거나, brief에 근거가 있는 범위까지만 남깁니다. 근거를 새로 만들어 보완하지 않습니다.
 - `CRITIQUE_JSON.strengths`에 있는 강점은 유지합니다.
 - `INPUT_JSON.brief`에 있는 사실관계, 의도, 제약은 바꾸지 않습니다.
-- `weak_axes`가 `evidence`이면 구체적 장면, 사례, 관찰을 강화합니다.
-- `weak_axes`가 `structure`이면 문단 순서, 전환, 결론을 정리합니다.
-- `weak_axes`가 `sentence`이면 반복과 군더더기를 줄이고 문장 리듬을 다듬습니다.
-- `weak_axes`가 `originality`이면 사용자의 고유한 판단과 언어가 더 드러나게 합니다.
-- `weak_axes`가 `purpose_fit`이면 원래 요청의 목적, 예상 독자, 핵심 질문에 더 정확히 맞춥니다.
+- `weak_axes`가 `judgment`이면 무엇을 검토했고 무엇을 왜 버렸는지, 이 판단이 어떤 조건에서 깨지는지를 본문에 드러냅니다.
+- `weak_axes`가 `evidence`이면 구체적 장면, 사례, 관측한 값을 주요 주장마다 붙입니다.
+- `weak_axes`가 `reader_fit`이면 주어가 저자인 문장을 독자가 무엇을 판정할 수 있는지로 바꾸고, 독자 문제의 감정 층까지 다룹니다.
+- `weak_axes`가 `grounding`이면 brief에 근거가 없는 경험, 판단, 인용, 수치를 덜어냅니다. 채워 넣어 보완하지 않고 덜어내는 방향으로만 고칩니다.
+- `weak_axes`가 `structure`이면 문단 순서와 전환을 정리하고 결론이 도입을 회수하게 합니다.
+- `weak_axes`가 `sentence`이면 지워도 판단이 달라지지 않는 문장을 덜어내고 문장 리듬을 다듬습니다.
+- `weak_axes`가 `originality`이면 이 사람의 경험과 판단에서만 나올 수 있는 문장이 드러나게 합니다.
+- `weak_axes`가 `purpose_fit`이면 요청한 톤과 화자 거리감을 끝까지 유지하고 예상 독자의 수준에 맞춥니다.
 
 금지 필드:
 - `self_score`

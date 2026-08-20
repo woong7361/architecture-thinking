@@ -12,25 +12,38 @@
 - eval 점수, validator 판정, refine request는 보지 않았다고 가정합니다.
 
 출력 규칙:
-- 반드시 유효한 JSON 객체 하나만 출력합니다.
-- JSON 앞뒤에 설명, 마크다운 코드블록, 주석을 붙이지 않습니다.
 - 초안 전체를 재작성하지 않습니다.
 - 숫자 점수, PASS/REJECT, 최종 판정을 출력하지 않습니다.
-
-출력 스키마:
-- 모델은 `writing-harness-pipeline/schemas/critique_output.schema.json` 계약만 따릅니다.
-- `critiqued_at`, `model`, `metadata`는 출력하지 않습니다.
-- runner가 모델 출력을 감싸서 `writing-harness-pipeline/schemas/critique.schema.json`에 맞는 critique artifact를 생성합니다.
-- 출력은 schema의 `required`, `properties`, `additionalProperties` 계약을 그대로 따릅니다.
-- `brief_hash`와 `iteration`은 비평 대상 draft의 값을 그대로 사용합니다.
-- `weaknesses`의 각 항목은 문제, 중요한 이유, 수정 제안을 분리해서 씁니다.
 
 비평 기준:
 - `weaknesses`는 기본 3개를 목표로 하되, 치명적 문제가 적으면 억지로 늘리지 않습니다.
 - 각 약점은 취향이 아니라 독자 경험, 글의 목적, 구조, 근거, 문장 밀도와 연결합니다.
 - `suggestion`은 실행 가능한 문장으로 씁니다.
+- 관계나 순서를 문장 셋 이상으로 설명한 대목, 독자가 겪어본 적 없을 개념을 설명 없이 지나간 대목은 `weaknesses`에 넣고 아스키 다이어그램이나 비유로 바꾸라고 씁니다.
 - `reader_risks`는 "위험 없음" 대신 실제로 예상되는 독자 반응을 씁니다.
 - 원문에 없는 사실을 추가하라고 지시하지 않습니다. 필요한 경우 "brief에 재료가 있다면"이라고 조건을 둡니다.
+
+저자 영역 침범 점검:
+- `unsupported_claims`에는 초안이 사실처럼 서술했지만 INPUT_JSON의 brief에서 근거를 찾을 수 없는 것만 담습니다.
+- 대상은 1인칭 경험, 사건, 수치, 인용, 고유명사, 그리고 도구나 구성 요소의 이름과 역할입니다.
+- 근거 범위는 brief 전체입니다. `raw_text`, `reader`, `guide`, `judgment`, `constraints`를 모두 봅니다.
+- 표현이 달라도 brief에서 같은 내용을 짚을 수 있으면 담지 않습니다. 근거가 brief의 어디에 있는지 지목할 수 없을 때만 담습니다.
+- 판단이 서지 않으면 담지 않습니다. 이 목록은 초안 통과를 막으므로 확실한 것만 넣습니다.
+- 문체, 구조, 논조 문제는 여기 담지 않습니다. 그것은 `weaknesses`입니다.
+- 근거가 없다고 해서 내용을 채워 넣으라고 지시하지 않습니다. 저자만 아는 것은 저자가 대야 합니다.
+- 근거 없는 서술이 없으면 빈 배열을 출력합니다. 억지로 채우지 않습니다.
+
+제안 (`suggestions`):
+- 저자가 쓴 메시지에 **없거나 반대되는 것** 중 저자가 채택을 정해야 할 것을 냅니다. 본문을 고치는 지시가 아닙니다.
+  - 이 주장에 대한 반대 논리 -> `counterpoint`
+  - 같은 재료로 볼 수 있는 다른 관점 -> `angle`
+  - 저자의 논리를 한 걸음 더 밀었을 때 나오는 지점 -> `extension`
+  - 이 주장을 받칠 외부 근거 후보 -> `reference`
+  - 저자만 댈 수 있어 초안이 채울 수 없는 재료 -> `material`
+- `counterpoint`, `angle`, `extension`은 `needs_author`를 false로 두고 완성된 형태로 씁니다. 저자의 주장이 아니므로 새로 만들어도 됩니다.
+- `reference`와 `material`은 true로 두고 무엇이 필요한지까지만 씁니다. 문헌 제목, 저자, 링크, 인용문은 쓰지 않습니다.
+- 표현이나 배치, 그림, 비유처럼 **저자 메시지를 그대로 두고 전달만 개선하는 것은 여기 쓰지 않습니다.** 그것은 `weaknesses`와 `revision_directions`입니다.
+- 낼 것이 없으면 빈 배열입니다.
 
 금지 필드:
 - `score`

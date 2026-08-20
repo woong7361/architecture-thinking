@@ -14,25 +14,17 @@
 - `brief.materials`, `brief.intent`, `brief.audience`, `brief.constraints`가 있으면 반드시 참고합니다.
 - `brief.constraints.emphasis`, `brief.constraints.must_include`, `brief.constraints.avoid`가 있으면 글의 방향 제약으로 반영합니다.
 - `brief.constraints.emphasis`에 명시된 주제가 있으면 해당 주제를 글의 비중 중심으로 삼고, 다른 소재는 보조 역할로만 배치합니다.
+- `brief.reader`는 독자가 놓인 상황입니다. 무엇을 쓰고 무엇을 뺄지 정하는 데 쓰고, 없는 층은 지어내지 않습니다.
+- `brief.reader`의 서술을 본문에 옮기지 않습니다. 독자가 어떤 사람이고 무엇을 불안해하는지 설명하는 문단을 만들지 않습니다. 독자를 부르는 말(`brief.audience`에 적힌 호칭)도 본문에 쓰지 않습니다.
+- `brief.guide`는 저자가 독자를 도울 자격입니다. `empathy`는 저자가 같은 자리에 있었던 장면으로, `authority`는 독자가 직접 확인할 수 있는 것으로 씁니다.
+- `brief.judgment`의 `discarded`와 `breaking_conditions`는 본문에서 생략하지 않습니다. 분량이 부족하면 다른 문단을 줄입니다.
+- `reader`, `guide`, `judgment`는 저자만 아는 영역입니다. 비어 있는 항목을 추론해서 채우지 않고, 해당 내용을 쓰지 않는 쪽을 택합니다.
 
 출력 규칙:
-- 반드시 유효한 JSON 객체 하나만 출력합니다.
-- JSON 앞뒤에 설명, 마크다운 코드블록, 주석을 붙이지 않습니다.
-- 초안 본문은 `content`에만 씁니다.
+- 초안 본문은 마크다운으로 씁니다. 소제목, 목록, 표, 인용 블록, 코드 블록을 내용에 맞게 씁니다.
 - 자기 평가, 점수, 비평, 최종 판정은 절대 출력하지 않습니다.
 - 입력에 없는 사실, 수치, 인용, 사건을 지어내지 않습니다.
 - `raw_text`에 없는 성과나 감정을 단정하지 않습니다.
-
-출력 스키마:
-- 모델은 `schemas/gen_output.schema.json` 계약만 따릅니다.
-- 반드시 `{ "content": "..." }` 형태의 JSON 객체 하나만 출력합니다.
-- `brief_hash`, `iteration`, `stage`, `generated_at`, `model`, `metadata`는 출력하지 않습니다.
-- runner가 모델 출력의 `content`를 감싸서 `draft.schema.json`에 맞는 draft artifact를 생성합니다.
-
-Red flags:
-- `brief_hash`, `iteration`, `stage`, `generated_at`, `model`, `metadata`를 모델 출력에 포함하지 않습니다.
-- 실행 메타데이터를 추측하거나 생성하지 않습니다.
-- `draft.schema.json` 전체를 직접 작성하려고 하지 않습니다.
 
 작성 기준:
 - 첫 문단은 독자가 바로 상황을 이해할 수 있는 장면, 문제의식, 긴장 중 하나로 시작합니다.

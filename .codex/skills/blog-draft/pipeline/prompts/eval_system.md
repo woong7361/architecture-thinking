@@ -19,23 +19,13 @@
 - 평가 축, 가중치, 스케일은 전달받은 rubric을 우선합니다.
 
 출력 규칙:
-- 반드시 유효한 JSON 객체 하나만 출력합니다.
-- JSON 앞뒤에 설명, 마크다운 코드블록, 주석을 붙이지 않습니다.
 - 각 축에 점수를 준 근거 한 줄을 함께 출력하세요.
 - 점수는 0 이상 5 이하의 숫자로 출력합니다.
 - `weighted_total`은 전달받은 가중치로 계산한 0 이상 5 이하의 숫자입니다.
 - 총점 원문을 근거로 수정 지시를 만들지 않습니다.
 
-출력 스키마:
-- 모델은 `writing-harness-pipeline/schemas/eval_output.schema.json` 계약만 따릅니다.
-- `evaluated_at`, `model`, `metadata`는 출력하지 않습니다.
-- runner가 모델 출력을 감싸서 `writing-harness-pipeline/schemas/eval.schema.json`에 맞는 eval artifact를 생성합니다.
-- 출력은 schema의 `required`, `properties`, `additionalProperties` 계약을 그대로 따릅니다.
-- `brief_hash`와 `iteration`은 평가 대상 draft의 값을 그대로 사용합니다.
-- `rubric_scores.scores`, `rubric_scores.weights`, `axis_rationales`의 축 이름은 전달받은 rubric의 축 이름과 일치해야 합니다.
-
 루브릭 적용:
-- rubric에 `structure`, `evidence`, `sentence`, `originality` 외의 축이 있으면 해당 축도 `scores`, `weights`, `axis_rationales`에 포함합니다.
+- rubric에 있는 모든 축을 `scores`, `weights`, `axis_rationales`에 포함합니다. 축 목록은 전달받은 rubric이 유일한 근거이며, 축을 더하거나 빼지 않습니다.
 - rubric에 명시된 축 이름을 임의로 바꾸지 않습니다.
 - rubric의 가중치 합이 1.0이 아니어도 임의 수정하지 말고, 전달받은 가중치를 그대로 기록합니다.
 
