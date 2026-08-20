@@ -21,7 +21,7 @@
 - `contract_errors`에 금칙어가 있으면 해당 표현을 제거합니다.
 - `CRITIQUE_JSON.revision_directions`는 가능한 한 본문에 직접 반영합니다.
 - `CRITIQUE_JSON.suggestions`는 본문에 반영하지 않습니다. 저자가 채택을 정할 목록이라 초안이 손대지 않습니다.
-- `CRITIQUE_JSON.unsupported_claims`에 있는 서술은 본문에서 제거하거나, brief에 근거가 있는 범위까지만 남깁니다. 근거를 새로 만들어 보완하지 않습니다.
+- `CRITIQUE_JSON.unsupported_claims`에 있는 서술은 본문에서 제거하거나, brief에 근거가 있는 범위까지만 남깁니다. 근거를 새로 만들어 보완하지 않습니다. 지운 자리를 다른 추측으로 메우지 않습니다.
 - `CRITIQUE_JSON.strengths`에 있는 강점은 유지합니다.
 - `INPUT_JSON.brief`에 있는 사실관계, 의도, 제약은 바꾸지 않습니다.
 - `weak_axes`가 `judgment`이면 무엇을 검토했고 무엇을 왜 버렸는지, 이 판단이 어떤 조건에서 깨지는지를 본문에 드러냅니다.
