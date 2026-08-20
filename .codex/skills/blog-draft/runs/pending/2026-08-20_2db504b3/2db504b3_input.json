@@ -1,0 +1,50 @@
+{
+  "brief_hash": "2db504b3",
+  "created_at": "2026-08-20T09:59:16+09:00",
+  "brief": {
+    "topic": "AI가 짠 것을 무엇으로 통과시키는가: 판정 장치를 만들고 그 장치를 못 믿게 된 지점",
+    "raw_text": "## PROBLEM.md — 2026-07-06 열린 문제 (원문)\n\n## 2026-07-06: generate-test slow-loop의 rubric 변경 효과 검증 (v2 열린 문제)\n\n상태: open (v2로 미룸)\n\n관련 설계: [.codex/skills/generate-test/docs/v1-slow-loop-design.md](.codex/skills/generate-test/docs/v1-slow-loop-design.md) §4·§6.\n\n### 문제\n\ngenerate-test v1 slow-loop은 실행/결함 주입 신호를 뺐다(SUT가 없어 생성 테스트를 못 돌림). 남은\n자동 신호는 rubric axis 점수(LLM 채점)와 critique 반복뿐이다. 두 가지가 걸린다.\n\n1. **순환성**: rubric 점수만 보고 고치면 채점자(rubric)가 곧 최적화 목표가 된다(Goodhart).\n2. **잣대 이동**: rubric을 바꾸면 그 axis의 before/after 비교가 정의상 무효 — 변경이 나아졌는지 잴 잣대가 사라진다.\n\n### 현재 임시 결정 (v1)\n\n- 제안을 대상별로 가른다: **생성기/프롬프트/intake 제안**은 rubric 고정이라 axis before/after가 유효 → 자유롭게.\n  **rubric 제안**은 위험=\"높음 + 효과 검증 장치 없음(v2까지 보류 권장)\" 라벨 + proposer가 생성기 대상을 우선.\n- \"점수가 낮다\"는 rubric을 고칠 근거가 못 된다. \"rubric이 사람 판정과 어긋난다\"만 근거가 된다.\n- 적용은 사람. 사람이 라벨 보고 rubric 변경은 신중히.\n\n### 해결 조건 (v2)\n\n- [ ] **동결 캘리브레이션 셋**: 사람 verdict가 붙은 과거 아티팩트 소수를 얼려둠(출처: problem.md verdict).\n- [ ] **rubric 변경 검증**: rubric v→v'를 동결 셋에 재채점 → 어느 쪽이 사람 판정과 더 일치하는가로 판정(ground truth가 안 움직이므로 before/after 성립).\n- [ ] **적중률 측정**: CHANGELOG 겨냥 axis 기준 적용 후 분포 before/after 비교(`version_deltas`).\n\n### 나중에 결정할 것\n\n- rubric 제안을 허용하기 전 problem.md verdict를 최소 몇 건 요구할지(캘리브레이션 셋 최소 크기).\n- 정직한 제약: rubric을 신뢰성 있게 바꿀 수 있는 속도는 사람 verdict가 쌓이는 속도에 묶인다.\n\n## 2026-06-28: thinking-review-gate의 verifier 출력과 hand-off 문제\n\n---\n\n## blog-draft rubric.yaml (현행)\n\n{\n  \"name\": \"writing:v1\",\n  \"scale\": {\n    \"min\": 0,\n    \"max\": 5\n  },\n  \"axes\": {\n    \"structure\": {\n      \"weight\": 0.25,\n      \"scale\": {\n        \"1\": \"흐름이 끊기고 주장, 근거, 결론의 연결을 따라가기 어렵다\",\n        \"3\": \"기본 흐름은 있으나 전환, 근거 배열, 결론 중 일부가 약하다\",\n        \"5\": \"문제의식, 근거, 전환, 결론이 자연스럽게 이어지고 핵심이 선명하다\"\n      }\n    },\n    \"evidence\": {\n      \"weight\": 0.25,\n      \"scale\": {\n        \"1\": \"주장이 일반론에 머물고 경험, 사례, 관찰이 거의 없다\",\n        \"3\": \"일부 구체 사례가 있으나 핵심 주장 전체를 충분히 받치지는 못한다\",\n        \"5\": \"경험, 장면, 관찰, 인용, 수치 중 적절한 근거가 글의 주요 주장을 단단히 받친다\"\n      }\n    },\n    \"sentence\": {\n      \"weight\": 0.2,\n      \"scale\": {\n        \"1\": \"문장이 장황하거나 반복이 많아 읽는 흐름이 자주 막힌다\",\n        \"3\": \"대체로 읽히지만 일부 문단에서 밀도, 리듬, 군더더기 문제가 보인다\",\n        \"5\": \"문장 밀도와 리듬이 안정적이고 군더더기가 적어 끝까지 읽히는 힘이 있다\"\n      }\n    },\n    \"originality\": {\n      \"weight\": 0.15,\n      \"scale\": {\n        \"1\": \"누구나 할 수 있는 일반론에 가깝고 고유한 판단이나 언어가 거의 없다\",\n        \"3\": \"개인적 관점은 드러나지만 표현이나 발견이 아직 익숙한 범위에 머문다\",\n        \"5\": \"이 사람만의 관점, 판단, 언어가 여러 문단에서 뚜렷하게 드러난다\"\n      }\n    },\n    \"purpose_fit\": {\n      \"weight\": 0.15,\n      \"scale\": {\n        \"1\": \"요청의 핵심 목적이나 예상 독자를 거의 반영하지 못하고 글이 다른 방향으로 흐른다\",\n        \"3\": \"대체로 요청에 맞지만 독자 수준, 글의 목적, 핵심 질문 중 일부가 흐릿하다\",\n        \"5\": \"요청의 목적, 예상 독자, 핵심 질문을 정확히 겨냥하며 글 전체의 선택이 그 목적에 맞게 정렬되어 있다\"\n      }\n    }\n  },\n  \"thresholds\": {\n    \"min_total\": 4.1,\n    \"min_axis\": {\n      \"structure\": 3.0,\n      \"evidence\": 3.0,\n      \"sentence\": 3.0,\n      \"originality\": 3.0,\n      \"purpose_fit\": 3.0\n    }\n  }\n}\n\n---\n\n## blog-draft CHANGELOG.md (느린 루프가 실제로 고친 이력)\n\n# Changelog\n\n파이프라인 component 변경 이력. slow loop proposal을 사람이 수락·적용할 때 여기에 한 줄을 추가한다.\n\n형식:\n```\n## {component}:{vN} ({날짜})\n- 변경: {무엇을}\n- 근거: {왜 — 분석 신호 요약}\n- 분석 run: {pending run hash들}\n- 위험: 낮음 | 중 | 높음\n- commit: {적용 커밋 해시}\n```\n\n과거 버전은 git이 관리한다. 별도 스냅샷을 만들지 않는다.\n\n---\n\n## gen_system:v2 (2026-06-30)\n- 변경: emphasis 주제를 비중 중심으로 삼고 다른 소재는 보조 역할로만 배치하는 지시 추가 (P1)\n- 겨냥 axis: originality\n- 근거: critique 반복 지적 — 1·2절이 emphasis 주제(multi-provider 확장)보다 비중이 큼; 분석 run 3930539b\n- 분석 run: 2026-06-29_3930539b\n- 위험: 중\n- commit: ca6f266\n\n## gen_system:v3 (2026-06-30)\n- 변경: raw_text의 핵심 기술 결정·선택 이유·설계 판단을 본문에서 생략 금지하는 지시 추가 (P2)\n- 겨냥 axis: evidence\n- 근거: critique 반복 지적 — build_prompt의 system/user 분리 결정이 draft에서 완전히 사라짐; 분석 run 3930539b\n- 분석 run: 2026-06-29_3930539b\n- 위험: 중\n- commit: ca6f266\n\n## gen_system:v4 (2026-06-30)\n- 변경: 결론 지시를 \"한계 나열 금지, 독자가 가져갈 판단·관점·실험 단서로 마무리\" 로 교체 (P3)\n- 겨냥 axis: originality\n- 근거: critique 반복 지적 — 마지막 단락이 한계를 나열하지만 독자가 가져갈 단서가 없음; 분석 run 3930539b\n- 분석 run: 2026-06-29_3930539b\n- 위험: 중\n- commit: ca6f266\n\n---\n\n## personalization-design.md — 주입 규칙 (원문)\n\n## 주입 규칙: gen/refine만, eval은 깨끗하게\n\n`stages/scripts/context.py`의 `load_persona_context()`가 `soul.md` + `memory.md`를 읽어 `AUTHOR_CONTEXT` 블록으로 gen/refine의 system prompt 앞에 붙인다. 파일이 없으면 빈 문자열이라 동작이 바뀌지 않는다.\n\n**Critique / Eval에는 주입하지 않는다.** fast loop의 핵심 자산은 \"생성(흔들림)과 판정(안정)의 분리\"인데, eval에 개인 취향을 주입하면 판정자가 rubric이 아니라 취향에 anchor되어 \"좋은 글\"이 아니라 \"취향에 맞춘 글\"로 드리프트한다(Goodhart). 취향이 하드한 품질 기준이 되어야 한다면 느린 루프를 거쳐 `rubric.yaml`로 승격한다(사람 승인).\n\n주입은 stage의 `build_prompt`에서 이뤄지므로 provider(codex / claude)와 무관하게 동일하다. 클라이언트별로 읽게 하지 않는 이유: 두 곳을 동기화해야 하고 stage별 선택 주입(eval 제외)이 불가능해지기 때문이다.\n\n---\n\n## 실제 run 아티팩트에서 관측한 값 (2026-06-29, blog-draft/runs/)\n\n- run 3930539b iter_001: weighted_total=3.43, scores={\"structure\": 3.5, \"evidence\": 3.5, \"sentence\": 3.5, \"originality\": 3.0, \"purpose_fit\": 3.5}\n- run 3930539b iter_002: weighted_total=3.43, scores={\"structure\": 3.5, \"evidence\": 3.5, \"sentence\": 3.5, \"originality\": 3.0, \"purpose_fit\": 3.5}\n- run 3930539b iter_003: weighted_total=3.725, scores={\"structure\": 4.0, \"evidence\": 3.5, \"sentence\": 4.0, \"originality\": 3.0, \"purpose_fit\": 4.0}\n- run 4ef5692d iter_001: weighted_total=2.83, scores={\"structure\": 3.5, \"evidence\": 2.0, \"sentence\": 3.5, \"originality\": 2.5, \"purpose_fit\": 2.5}\n\n종료 사유:\n- 3930539b_failed.json: terminal_reason=max_iteration_exceeded\n- 4ef5692d_failed.json: terminal_reason=max_iteration_exceeded\n\n임계: min_total=4.1, min_axis 전 축 3.0. 두 run 모두 통과하지 못했다.",
+    "piece_type": "essay",
+    "intent": "판단 과정과 그 판단이 깨지는 조건을 드러내, 읽는 사람이 나를 직접 판정할 수 있게 한다",
+    "audience": "백엔드 개발자를 뽑는 면접관",
+    "reader": {
+      "desire": "우리 팀에서 잘할 사람을 뽑는 것. 혼자 결정하지 않기 때문에 실제로 손에 쥐고 싶은 것은 확신이 아니라 남에게 그대로 옮길 수 있는 근거다.",
+      "villain": "결과물에서 지워진 판단 과정",
+      "external": "지원자가 실제로 잘할 사람인지 확인할 수단이 없다. 이력서, 포트폴리오, 블로그, 과제 결과물이 서로 구분되지 않는다. 결과 수치는 다 좋고 문장은 다 매끄럽다. 확인하려면 직접 캐물어야 하는데 면접관에게 있는 것은 두 시간이다.",
+      "internal": "이 사람이 들어와서 팀에서 잘할지 오히려 짐이 될지 알 수 없다는 불안. 잘못 뽑은 비용은 보이고 놓친 비용은 안 보이기 때문에, 확신이 안 서면 떨어뜨리는 쪽으로 판단이 기운다.",
+      "philosophical": "확인은 쓴 사람이 할 일이지 읽는 사람이 캐낼 일이 아니다.",
+      "stakes": "확인 몫이 읽는 쪽에 떠넘겨지면 면접관은 두 시간 안에 그 일을 다 못 하고, 확신이 안 서는 쪽으로 결론을 낸다."
+    },
+    "guide": {
+      "empathy": "회사에서 Go로 결제를 붙이면서 절차지향에 가깝게 갔다. 1000줄, 2000줄로 가니 로직이 여기저기로 드리프트하고 god object가 생겼다. 하나 바꾸려면 건드릴 것이 너무 많고 테스트도 못 했다. 그때 없던 것은 지식이 아니라 판정 장치였다. 이 코드가 괜찮은지 판단할 근거가 내 인상밖에 없었는데, 내 인상은 2000줄에서 이미 신뢰를 잃은 상태였다. AI에게 코드를 맡기면서 같은 문제가 커졌다. 잘 짰냐고 물으면 같은 코드에 다른 답이 나왔다.",
+      "authority": [
+        "판정 장치를 만들고 나서 그 장치를 내가 못 믿게 된 지점을 스스로 찾아 PROBLEM.md에 열린 문제로 적고 임시 결정까지 못 박았다.",
+        "초안 생성과 평가를 분리한 파이프라인을 만들고, 루브릭과 계약 게이트로 통과 기준을 코드 밖에 못 박았다.",
+        "느린 루프가 프롬프트를 고친 이력을 CHANGELOG에 겨냥 axis와 근거 run까지 남겼다.",
+        "구현을 AI에게 통째로 맡긴 뒤 내가 쓴 Gherkin Feature로만 판정하고, 같은 코드를 AI에게 잘 짰냐고도 물어 비결정적 판정과 결정적 판정의 차이를 실험으로 남겼다."
+      ]
+    },
+    "judgment": {
+      "discarded": [
+        "점수가 낮으면 루브릭을 고치는 방식. 채점자가 곧 최적화 목표가 되므로 기각했다. 점수가 낮다는 것은 루브릭을 고칠 근거가 못 되고, 루브릭이 사람 판정과 어긋난다는 것만 근거가 된다.",
+        "루브릭 변경 제안을 생성기 제안과 똑같이 자유롭게 허용하는 방식. 루브릭을 바꾸면 그 축의 before/after 비교가 정의상 무효가 되어 변경이 나아졌는지 잴 잣대가 사라지므로 기각했다.",
+        "개인 취향을 eval에도 주입해 판정을 저자에게 맞추는 방식. 판정자가 루브릭이 아니라 취향에 anchor되어 좋은 글이 아니라 취향에 맞춘 글로 드리프트하므로 기각하고, 취향이 하드한 품질 기준이 되어야 하면 사람 승인을 거쳐 루브릭으로 승격하기로 했다."
+      ],
+      "breaking_conditions": [
+        "사람 verdict가 붙은 동결 캘리브레이션 셋이 없으면 이 판정 장치는 자기 참조에 갇힌다. LLM이 만든 것을 LLM 루브릭으로 채점하는 구조라서, 사람 판정이 붙은 과거 아티팩트를 얼려두지 않으면 루브릭이 사람 판정과 어긋나는지 확인할 방법이 없다.",
+        "루브릭을 신뢰성 있게 바꿀 수 있는 속도는 사람 verdict가 쌓이는 속도에 묶인다. 이 제약을 인정하지 않으면 판정 장치는 빠르게 개선되는 것처럼 보이면서 실제로는 자기 점수만 올린다."
+      ]
+    },
+    "constraints": {
+      "target_length": "3000-4000 Korean characters",
+      "tone": "차분하고 구체적인 개발자 회고",
+      "emphasis": [
+        "판정 장치를 만든 것보다 그 장치를 못 믿게 된 지점을 찾아낸 과정"
+      ],
+      "avoid": [
+        "AI가 모든 것을 자동으로 해결한다는 과장",
+        "근거 없는 일반론"
+      ]
+    }
+  }
+}

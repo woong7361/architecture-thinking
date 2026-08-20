@@ -1,0 +1,8 @@
+{
+  "artifact": "eval",
+  "checked_file": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\blog-draft\\runs\\pending\\2026-08-20_2db504b3\\iter_001\\2db504b3_iter-001_eval.json",
+  "status": "REJECT",
+  "errors": [
+    "min_total: 3.825 < 4.1"
+  ]
+}
