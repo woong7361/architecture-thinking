@@ -1,0 +1,54 @@
+{
+  "brief_hash": "325f4859",
+  "iteration": "001",
+  "rubric_name": "writing:v2",
+  "rubric_scores": {
+    "scores": {
+      "judgment": 4.5,
+      "evidence": 4.4,
+      "reader_fit": 3.8,
+      "grounding": 4.8,
+      "structure": 4.3,
+      "sentence": 4,
+      "originality": 4.2,
+      "purpose_fit": 4.1
+    },
+    "weights": {
+      "judgment": 0.18,
+      "evidence": 0.15,
+      "reader_fit": 0.15,
+      "grounding": 0.12,
+      "structure": 0.1,
+      "sentence": 0.1,
+      "originality": 0.1,
+      "purpose_fit": 0.1
+    },
+    "weighted_total": 4.277
+  },
+  "axis_rationales": {
+    "judgment": "검토한 대안, 기각 이유, 채택 기준, 남은 파괴 조건이 본문에 함께 있어 판단 과정이 잘 드러난다.",
+    "evidence": "리네임 사이클, 6/6 통과, glue 컴파일 실패, 18개 시나리오와 AI 자기 평가 등 주요 주장마다 확인 가능한 사례가 붙어 있다.",
+    "reader_fit": "처음 읽는 개발자도 흐름은 따라갈 수 있으나 Gen/Critique/Eval, glue, frozen_contract 같은 내부 용어가 빠르게 등장해 일부 전제가 남는다.",
+    "grounding": "수치, 사례, 판단이 거의 모두 brief에 근거하며, 새로 덧붙인 해석도 원자료에서 무리 없이 나오는 수준이다.",
+    "structure": "비결정적 판정 문제에서 명세와 배관 분리, 검증, 한계로 이어지는 배열이 자연스럽고 결론이 도입을 회수한다.",
+    "sentence": "문장은 대체로 단단하고 읽히지만 명세·배관·심판 비유가 반복되어 일부 문장은 압축 가능하다.",
+    "originality": "수명으로 명세와 배관을 가른 판단, 고도와 커버리지의 비대칭, 동결 명세 검증은 개인 경험에서 나온 발견으로 선명하다.",
+    "purpose_fit": "차분하고 구체적인 개발자 회고 톤을 유지하고 핵심 강조점을 다루지만, 목표 분량 대비 다소 길고 면접관 독자의 불안을 직접 겨냥하는 힘은 약간 부족하다."
+  },
+  "calibration_note": "평균 3.0을 기준으로 보정했으며, 4점 이상은 구체 사례와 판단 조건이 본문에서 실제로 확인되는 축에만 부여했다.",
+  "evaluated_at": "2026-08-21T09:41:23+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_system:v1",
+    "source_files": [
+      "325f4859_input.json",
+      "325f4859_iter-001_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 33323,
+      "cached_input_tokens": 2432,
+      "output_tokens": 1055,
+      "reasoning_output_tokens": 516
+    }
+  }
+}
