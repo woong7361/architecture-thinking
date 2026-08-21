@@ -1,0 +1,54 @@
+{
+  "brief_hash": "eb9088b6",
+  "iteration": "001",
+  "rubric_name": "writing:v2",
+  "rubric_scores": {
+    "scores": {
+      "judgment": 4.5,
+      "evidence": 4.4,
+      "reader_fit": 3.8,
+      "grounding": 4.5,
+      "structure": 4.2,
+      "sentence": 4,
+      "originality": 4.3,
+      "purpose_fit": 4.4
+    },
+    "weights": {
+      "judgment": 0.18,
+      "evidence": 0.15,
+      "reader_fit": 0.15,
+      "grounding": 0.12,
+      "structure": 0.1,
+      "sentence": 0.1,
+      "originality": 0.1,
+      "purpose_fit": 0.1
+    },
+    "weighted_total": 4.26
+  },
+  "axis_rationales": {
+    "judgment": "검토한 선택지, 기각 이유, 채택 기준, 깨지는 조건이 모두 본문에 있으며 판단 과정이 결과보다 앞에 놓인다.",
+    "evidence": "13사이클 리네임, 6/6 통과, feature/glue 파손, 18개 시나리오 중 16개 통과 같은 확인 가능한 사례가 핵심 주장에 붙어 있다.",
+    "reader_fit": "백엔드 면접관이 판단 근거로 옮길 만한 사례는 충분하지만, 하네스와 평가 루프 설명이 초반에 길어 처음 읽는 독자의 진입 부담은 남는다.",
+    "grounding": "수치, 사례, 판단 대부분이 brief에 근거하며 확신도도 대체로 일치하지만, ‘어떤 경우에 적합한가’의 예시는 brief 바깥으로 약간 확장된 추론에 가깝다.",
+    "structure": "현재 구조 설명에서 문제 정의, 관찰, 선택지, 검증, 한계로 이어지는 배열이 자연스럽고 결론도 앞의 논의를 회수한다.",
+    "sentence": "문장은 차분하고 선명하지만 같은 판단을 재확인하는 문장과 ‘깨졌다/통과했다’ 식 반복이 일부 남아 밀도는 최상급까지는 아니다.",
+    "originality": "명세와 배관을 ‘수명’으로 가른 관점이 개인 경험과 관찰에서 나온 판단으로 뚜렷하게 드러난다.",
+    "purpose_fit": "차분하고 구체적인 개발자 회고 톤을 유지하고 자동화 과장을 피하며, 못 닫은 지점까지 다뤄 brief의 핵심 요구에 잘 맞는다."
+  },
+  "calibration_note": "평균 3.0 기준으로 보정했을 때, 이 초안은 판단 과정과 검증 사례가 모두 살아 있어 4점대가 타당하나 독자 진입성·문장 압축 면에서 만점권은 아니다.",
+  "evaluated_at": "2026-08-21T09:11:33+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_system:v1",
+    "source_files": [
+      "eb9088b6_input.json",
+      "eb9088b6_iter-001_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 33487,
+      "cached_input_tokens": 2432,
+      "output_tokens": 1098,
+      "reasoning_output_tokens": 516
+    }
+  }
+}
