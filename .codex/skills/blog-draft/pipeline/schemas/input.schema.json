@@ -188,7 +188,15 @@
         },
         "summary": false,
         "intake_answers": false,
-        "source_summary": false
+        "source_summary": false,
+        "spine": {
+          "type": "array",
+          "description": "논지가 밟아야 할 순서. 저자가 정하는 글의 뼈대이며, 초안은 이 순서대로 배치한다. 재료(raw_text)와 다르다",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
       },
       "additionalProperties": true
     },

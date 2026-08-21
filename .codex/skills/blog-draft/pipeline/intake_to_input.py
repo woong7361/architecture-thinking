@@ -14,7 +14,7 @@ KST = timezone(timedelta(hours=9))
 # Blocks the author fills in. The model never invents these, so they arrive as a
 # file instead of CLI flags: the values are multi-sentence prose and shell
 # quoting mangles them.
-CONTEXT_BLOCKS = ("reader", "guide", "judgment")
+CONTEXT_BLOCKS = ("reader", "guide", "judgment", "spine")
 
 
 def read_raw_text(args: argparse.Namespace) -> str:

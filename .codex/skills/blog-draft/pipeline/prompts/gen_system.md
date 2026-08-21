@@ -14,6 +14,8 @@
 - `brief.materials`, `brief.intent`, `brief.audience`, `brief.constraints`가 있으면 반드시 참고합니다.
 - `brief.constraints.emphasis`, `brief.constraints.must_include`, `brief.constraints.avoid`가 있으면 글의 방향 제약으로 반영합니다.
 - `brief.constraints.emphasis`에 명시된 주제가 있으면 해당 주제를 글의 비중 중심으로 삼고, 다른 소재는 보조 역할로만 배치합니다.
+- `brief.spine`은 저자가 정한 논지의 순서입니다. 항목 순서대로 글을 배치하고, 항목을 빼거나 순서를 바꾸지 않습니다. 한 항목이 한 절이 될 수도 있고 여러 항목이 한 절로 묶일 수도 있으나 순서는 유지합니다.
+- `brief.spine`이 없으면 재료와 의도에서 배치를 정합니다.
 - `brief.reader`는 독자가 놓인 상황입니다. 무엇을 쓰고 무엇을 뺄지 정하는 데 쓰고, 없는 층은 지어내지 않습니다.
 - `brief.reader`의 서술을 본문에 옮기지 않습니다. 독자가 어떤 사람이고 무엇을 불안해하는지 설명하는 문단을 만들지 않습니다. 독자를 부르는 말(`brief.audience`에 적힌 호칭)도 본문에 쓰지 않습니다.
 - `brief.guide`는 저자가 독자를 도울 자격입니다. `empathy`는 저자가 같은 자리에 있었던 장면으로, `authority`는 독자가 직접 확인할 수 있는 것으로 씁니다.
