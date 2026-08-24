@@ -1,0 +1,54 @@
+{
+  "brief_hash": "76ee7a16",
+  "iteration": "002",
+  "rubric_name": "writing:v2",
+  "rubric_scores": {
+    "scores": {
+      "judgment": 4.4,
+      "evidence": 4.3,
+      "reader_fit": 4.1,
+      "grounding": 4.2,
+      "structure": 4.0,
+      "sentence": 3.8,
+      "originality": 4.0,
+      "purpose_fit": 3.8
+    },
+    "weights": {
+      "judgment": 0.18,
+      "evidence": 0.15,
+      "reader_fit": 0.15,
+      "grounding": 0.12,
+      "structure": 0.1,
+      "sentence": 0.1,
+      "originality": 0.1,
+      "purpose_fit": 0.1
+    },
+    "weighted_total": 4.11
+  },
+  "axis_rationales": {
+    "judgment": "검토한 선택, 버린 경로, 깨지는 조건이 모두 본문에 들어가며 마지막 유보도 분명하지만 일부 판단은 요약적으로 회수된다.",
+    "evidence": "18개 시나리오, 16/2 실패, 4.8/4.5, 4.2, 아홉 편 등 관측값이 핵심 주장마다 붙어 있다.",
+    "reader_fit": "처음 읽는 사람도 따라오게 용어를 대체로 풀어 쓰지만, 산출물·장치·느린 흐름 같은 내부 작업어가 누적된다.",
+    "grounding": "대부분 brief의 수치와 판단에 근거하지만 성장의 대가처럼 일부 정서적 해석은 brief보다 약간 확장되어 있다.",
+    "structure": "한 칸씩 넘기고 남은 것을 쌓아 결론으로 회수하는 흐름이 안정적이나 중반 일부 절은 사례와 검사가 함께 들어가 밀도가 높다.",
+    "sentence": "문장은 차분하고 명료하지만 ‘남은 것은’, ‘넘어갔다’ 식의 반복 문장이 여러 곳에 남아 있다.",
+    "originality": "AI 대체 범위를 실제 루프와 잣대 문제로 좁혀 보는 개인적 판단이 뚜렷하나 표현 자체는 일부 익숙한 회고 문법에 기대고 있다.",
+    "purpose_fit": "필수 내용은 거의 모두 다루고 과장도 피하지만 목표 분량을 넘겼을 가능성이 크고 한 절에 사례가 둘 들어간 대목이 있다."
+  },
+  "calibration_note": "평균 3.0을 기준으로 보정했다. 이 초안은 요구된 논지와 근거를 상당히 충족하지만, 분량과 반복, 절별 사례 제한 위반 가능성 때문에 4점대 초반으로 제한했다.",
+  "evaluated_at": "2026-08-24T15:24:36+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_system:v1",
+    "source_files": [
+      "76ee7a16_input.json",
+      "76ee7a16_iter-002_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 33680,
+      "cached_input_tokens": 18816,
+      "output_tokens": 1072,
+      "reasoning_output_tokens": 516
+    }
+  }
+}

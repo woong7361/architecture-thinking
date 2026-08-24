@@ -1,0 +1,10 @@
+{
+  "artifact": "eval",
+  "checked_file": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\blog-draft\\runs\\pending\\2026-08-24_76ee7a16\\iter_002\\76ee7a16_iter-002_eval.json",
+  "status": "REJECT",
+  "errors": [
+    "min_total: 4.116 < 4.2",
+    "unsupported_claim: 전에는 내가 더 잘해야 한다는 말이 내가 더 많이 붙잡아야 한다는 뜻처럼 들렸다.",
+    "unsupported_claim: 손이 바빠서 성장하는 느낌은 줄어든다."
+  ]
+}

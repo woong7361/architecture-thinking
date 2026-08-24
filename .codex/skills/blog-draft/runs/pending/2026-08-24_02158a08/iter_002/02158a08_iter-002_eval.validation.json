@@ -1,0 +1,8 @@
+{
+  "artifact": "eval",
+  "checked_file": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\blog-draft\\runs\\pending\\2026-08-24_02158a08\\iter_002\\02158a08_iter-002_eval.json",
+  "status": "REJECT",
+  "errors": [
+    "target_length: 9868 chars outside 7000-9000"
+  ]
+}

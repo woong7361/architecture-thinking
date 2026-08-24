@@ -1,0 +1,54 @@
+{
+  "brief_hash": "d264193d",
+  "iteration": "001",
+  "rubric_name": "writing:v2",
+  "rubric_scores": {
+    "scores": {
+      "judgment": 4.5,
+      "evidence": 4.4,
+      "reader_fit": 3.8,
+      "grounding": 4.7,
+      "structure": 4.1,
+      "sentence": 3.8,
+      "originality": 4.2,
+      "purpose_fit": 3.8
+    },
+    "weights": {
+      "judgment": 0.18,
+      "evidence": 0.15,
+      "reader_fit": 0.15,
+      "grounding": 0.12,
+      "structure": 0.1,
+      "sentence": 0.1,
+      "originality": 0.1,
+      "purpose_fit": 0.1
+    },
+    "weighted_total": 4.182
+  },
+  "axis_rationales": {
+    "judgment": "무엇을 버렸는지와 판단이 깨지는 조건을 여러 대목에서 직접 밝히며, 네 겹의 전환도 관측과 연결되어 있다.",
+    "evidence": "18개 시나리오, 16/18, 277줄 대 132줄, 21개 인수테스트 같은 수치와 장면이 주요 주장에 붙어 있다.",
+    "reader_fit": "하네스·루브릭·인수테스트 같은 개념을 설명해 따라가게 하지만, 후반은 내부 실험 구조가 길어 채용 독자의 판단 문제와 직접 맞물리는 힘이 조금 약해진다.",
+    "grounding": "수치, 사례, 판단 유보가 대부분 brief 안의 재료와 일치하며, 새 경험이나 없는 일반화를 사실처럼 크게 보탠 대목은 거의 없다.",
+    "structure": "도입의 문제의식에서 네 겹의 전환, 사람의 자리, 성장 정의로 이어지는 배열은 분명하지만 중반 이후 항목이 많아 밀도가 다소 풀린다.",
+    "sentence": "문장은 차분하고 선명하지만 ‘버렸다’, ‘자리’, ‘잣대’ 계열의 반복과 조건부 설명이 누적되어 지워도 되는 문장이 일부 남아 있다.",
+    "originality": "‘판정석이 아니라 증인석’, ‘판정을 왼쪽으로 옮긴다’처럼 개인 실험에서 나온 판단 문장이 뚜렷하다.",
+    "purpose_fit": "차분한 개발자 회고, 네 겹의 전환, 성장 정의, 한계와 다음 작업을 모두 다루지만 목표 분량보다 길어 보이고 일부 내용은 요구보다 넓게 펼쳐진다."
+  },
+  "calibration_note": "평균 3.0을 기준으로 보정했을 때, 이 초안은 근거와 판단 경로가 뚜렷해 4점대 축이 많지만 분량과 후반 밀도 때문에 총점은 4.2선 바로 아래로 보았다.",
+  "evaluated_at": "2026-08-24T10:48:30+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_system:v1",
+    "source_files": [
+      "d264193d_input.json",
+      "d264193d_iter-001_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 50392,
+      "cached_input_tokens": 2432,
+      "output_tokens": 1109,
+      "reasoning_output_tokens": 516
+    }
+  }
+}

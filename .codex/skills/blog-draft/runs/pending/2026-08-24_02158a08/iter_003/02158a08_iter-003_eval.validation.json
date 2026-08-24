@@ -1,0 +1,11 @@
+{
+  "artifact": "eval",
+  "checked_file": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\blog-draft\\runs\\pending\\2026-08-24_02158a08\\iter_003\\02158a08_iter-003_eval.json",
+  "status": "REJECT",
+  "errors": [
+    "target_length: 10147 chars outside 7000-9000"
+  ],
+  "notes": [
+    "weighted_total mismatch: reported 4.265, computed 4.228"
+  ]
+}

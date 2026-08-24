@@ -1,0 +1,10 @@
+{
+  "artifact": "eval",
+  "checked_file": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\blog-draft\\runs\\pending\\2026-08-24_310164c7\\iter_001\\310164c7_iter-001_eval.json",
+  "status": "REJECT",
+  "errors": [
+    "target_length: 6351 chars outside 4500-6000",
+    "unsupported_claim: 에이전트는 여기서 한 일을 이어 맡고, 결과를 보고 다음 행동을 고르는 실행 단위다.",
+    "unsupported_claim: 흔들리지만 후보를 넓게 낼 수 있기 때문이다."
+  ]
+}

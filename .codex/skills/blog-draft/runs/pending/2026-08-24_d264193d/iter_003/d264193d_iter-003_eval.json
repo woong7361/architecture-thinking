@@ -1,0 +1,54 @@
+{
+  "brief_hash": "d264193d",
+  "iteration": "003",
+  "rubric_name": "writing:v2",
+  "rubric_scores": {
+    "scores": {
+      "judgment": 4.1,
+      "evidence": 4.4,
+      "reader_fit": 4,
+      "grounding": 4.7,
+      "structure": 4.4,
+      "sentence": 4,
+      "originality": 4.2,
+      "purpose_fit": 3.8
+    },
+    "weights": {
+      "judgment": 0.18,
+      "evidence": 0.15,
+      "reader_fit": 0.15,
+      "grounding": 0.12,
+      "structure": 0.1,
+      "sentence": 0.1,
+      "originality": 0.1,
+      "purpose_fit": 0.1
+    },
+    "weighted_total": 4.244
+  },
+  "axis_rationales": {
+    "judgment": "무엇을 보고 판단을 바꿨는지와 일부 버린 선택지, 깨지는 조건이 드러나지만 깨지는 조건은 일부 축에만 명시된다.",
+    "evidence": "18개 시나리오, 16/18, 277줄/117줄, 145줄/4줄, 결제 어댑터 코드처럼 주요 주장마다 확인 가능한 관측이 붙어 있다.",
+    "reader_fit": "인수테스트·게이트·루브릭 등 필요한 개념을 대체로 글 안에서 설명해 처음 읽는 백엔드 평가자가 따라갈 수 있으나, 일부 하네스 내부 구조는 저자 맥락에 기대어 빠르게 지나간다.",
+    "grounding": "수치, 사례, 판단이 거의 모두 brief의 원자료와 일치하고 새 경험을 꾸며내지 않으며, 유보된 한계도 대체로 그대로 유지한다.",
+    "structure": "네 겹의 사고 전환에서 사람의 자리와 성장 정의로 이어지는 배열이 명확하고 결론이 도입의 질문을 회수한다.",
+    "sentence": "문장은 차분하고 밀도가 있으나 같은 판정·잣대 표현이 반복되고, 몇몇 정리 문장은 지워도 논지 손실이 크지 않다.",
+    "originality": "‘판정석이 아니라 증인석’, ‘판정을 한 칸씩 옮긴다’처럼 개인 실험에서 나온 판단 문장이 뚜렷하다.",
+    "purpose_fit": "차분한 개발자 회고, 네 겹의 전환, 성장 정의, 한계와 다음 단계는 모두 다루지만 목표 분량 대비 길어 보이고 일부 필수 내용은 원자료 요약에 가까워 압축 여지가 있다."
+  },
+  "calibration_note": "평균 3.0을 기준으로 보되, 이 초안은 주요 주장 대부분에 관측값과 한계가 붙어 있어 여러 축에서 4점대를 준다. 다만 5점은 깨지는 조건의 전면성, 독자 맞춤 압축, 분량 준수까지 더 뚜렷해야 한다.",
+  "evaluated_at": "2026-08-24T10:54:03+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_system:v1",
+    "source_files": [
+      "d264193d_input.json",
+      "d264193d_iter-003_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 49289,
+      "cached_input_tokens": 21888,
+      "output_tokens": 1126,
+      "reasoning_output_tokens": 516
+    }
+  }
+}

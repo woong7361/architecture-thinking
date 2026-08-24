@@ -1,0 +1,54 @@
+{
+  "brief_hash": "310164c7",
+  "iteration": "002",
+  "rubric_name": "writing:v2",
+  "rubric_scores": {
+    "scores": {
+      "judgment": 4.2,
+      "evidence": 4.4,
+      "reader_fit": 4.0,
+      "grounding": 4.6,
+      "structure": 4.1,
+      "sentence": 3.8,
+      "originality": 4.0,
+      "purpose_fit": 3.8
+    },
+    "weights": {
+      "judgment": 0.18,
+      "evidence": 0.15,
+      "reader_fit": 0.15,
+      "grounding": 0.12,
+      "structure": 0.1,
+      "sentence": 0.1,
+      "originality": 0.1,
+      "purpose_fit": 0.1
+    },
+    "weighted_total": 4.129999999999999
+  },
+  "axis_rationales": {
+    "judgment": "무엇을 넘기고 무엇을 남겼는지, 버린 경로와 깨질 조건까지 제시하지만 마지막의 성장 정의는 판단의 대가에 비해 약간 정리된 결론처럼 닫힌다.",
+    "evidence": "환불 시나리오 18개, 16/2 실패, 점수 흔들림, 날조 4건, 검사 5회, 적용 3건, 빈 판정란 9편 등 주요 주장마다 실측 근거가 붙어 있다.",
+    "reader_fit": "처음 읽는 사람도 흐름을 따라갈 수 있게 용어를 풀고 사례를 설명하지만, 하네스·채점표·느린 반복 같은 저자 내부 장치를 오래 따라가야 하는 부담은 남아 있다.",
+    "grounding": "수치와 1인칭 판단은 거의 모두 입력 자료에 근거하고 유보도 반영하지만, '넘긴 뒤가 더 나았다'와 마지막 확신은 일부 압축되어 확신도가 조금 높다.",
+    "structure": "도구에서 판단, 검토, 유지보수, 다른 도메인, 남은 자리로 이어지는 배열이 선명하고 결론도 도입을 회수하지만 중반의 분량이 다소 길다.",
+    "sentence": "대체로 차분하고 명료하지만 같은 구조의 문장과 '남았다/넘어갔다/갈랐다' 반복이 많아 일부 문장은 압축 가능하다.",
+    "originality": "AI 대체론을 추상 전망이 아니라 실제 판정 장치의 실패와 이동으로 설명해 개인적 판단이 뚜렷하지만 표현 자체는 비교적 기능적이다.",
+    "purpose_fit": "필수 요소 대부분을 다루고 과장도 피하지만 목표 분량을 넘길 가능성이 있고, 한 절에 사례가 둘 이상 섞인 대목이 있어 제약 준수는 완전하지 않다."
+  },
+  "calibration_note": "평균 3.0을 기준으로 보정했다. 이 초안은 근거와 구조가 강하지만, 분량과 절별 사례 제약 때문에 5점권으로 보지는 않았다.",
+  "evaluated_at": "2026-08-24T15:28:23+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_system:v1",
+    "source_files": [
+      "310164c7_input.json",
+      "310164c7_iter-002_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 34600,
+      "cached_input_tokens": 2432,
+      "output_tokens": 1137,
+      "reasoning_output_tokens": 516
+    }
+  }
+}

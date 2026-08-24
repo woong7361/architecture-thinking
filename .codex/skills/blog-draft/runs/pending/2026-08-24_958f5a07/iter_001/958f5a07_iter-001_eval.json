@@ -1,0 +1,54 @@
+{
+  "brief_hash": "958f5a07",
+  "iteration": "001",
+  "rubric_name": "writing:v2",
+  "rubric_scores": {
+    "scores": {
+      "judgment": 4.4,
+      "evidence": 4.35,
+      "reader_fit": 3.9,
+      "grounding": 4.7,
+      "structure": 4.35,
+      "sentence": 4.1,
+      "originality": 4.25,
+      "purpose_fit": 4.45
+    },
+    "weights": {
+      "judgment": 0.18,
+      "evidence": 0.15,
+      "reader_fit": 0.15,
+      "grounding": 0.12,
+      "structure": 0.1,
+      "sentence": 0.1,
+      "originality": 0.1,
+      "purpose_fit": 0.1
+    },
+    "weighted_total": 4.308
+  },
+  "axis_rationales": {
+    "judgment": "각 절이 하나의 선택으로 서고 버린 안과 이유가 반복적으로 붙으며, 깨지는 조건도 후반에 회수되지만 일부 선택의 파기 조건은 묶어서 처리된다.",
+    "evidence": "4.31→4.06, 14개 중 8개, gherkin 110→141→162줄처럼 관측값이 풍부하고 핵심 주장 대부분을 받친다.",
+    "reader_fit": "자동화를 만드는 개발자에게 필요한 문제의식은 잘 맞지만 `gherkin`, `대역`, `coverage` 같은 내부어가 일부 빠르게 지나간다.",
+    "grounding": "1인칭 경험, 수치, 판단이 거의 모두 brief의 재료와 일치하며 재료 밖 감정이나 사건을 사실처럼 덧붙인 대목은 뚜렷하지 않다.",
+    "structure": "도입에서 제기한 ‘사람이 설 자리’를 일곱 선택과 미완 장치로 차례로 회수해 흐름이 선명하다.",
+    "sentence": "문장은 차분하고 밀도가 높으며 반복도 기능적이지만 몇몇 정리 문장은 앞 문단의 판단을 다시 설명하는 수준에 머문다.",
+    "originality": "눈먼 계측기, 점수가 내려간 성공 신호, 계약을 사람이 잠그는 비용 같은 판단이 저자의 실제 시행착오에서 나온다.",
+    "purpose_fit": "요청한 개발자 회고 톤과 선택 중심 구성을 유지하고 대가와 미완 장치를 다루며, ‘결국 사람이 다 해야 한다’로 흐르지 않는다."
+  },
+  "calibration_note": "강한 초안이지만 5점은 거의 결함 없는 축에만 가까운 점수이므로, 내부 용어 설명 부족과 일부 후반 압축을 반영해 4점대 초중반으로 보정했다.",
+  "evaluated_at": "2026-08-24T11:34:52+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_system:v1",
+    "source_files": [
+      "958f5a07_input.json",
+      "958f5a07_iter-001_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 44113,
+      "cached_input_tokens": 21888,
+      "output_tokens": 1073,
+      "reasoning_output_tokens": 516
+    }
+  }
+}

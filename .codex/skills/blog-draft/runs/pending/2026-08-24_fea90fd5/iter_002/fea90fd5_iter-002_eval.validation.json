@@ -1,0 +1,8 @@
+{
+  "artifact": "eval",
+  "checked_file": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\blog-draft\\runs\\pending\\2026-08-24_fea90fd5\\iter_002\\fea90fd5_iter-002_eval.json",
+  "status": "REJECT",
+  "errors": [
+    "unsupported_claim: 하나를 바꾸려면 건드릴 곳이 너무 많았고 테스트도 없었다."
+  ]
+}

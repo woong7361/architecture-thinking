@@ -1,0 +1,54 @@
+{
+  "brief_hash": "310164c7",
+  "iteration": "004",
+  "rubric_name": "writing:v2",
+  "rubric_scores": {
+    "scores": {
+      "judgment": 4.4,
+      "evidence": 4.5,
+      "reader_fit": 4.1,
+      "grounding": 4.6,
+      "structure": 4.3,
+      "sentence": 3.8,
+      "originality": 4.1,
+      "purpose_fit": 4.0
+    },
+    "weights": {
+      "judgment": 0.18,
+      "evidence": 0.15,
+      "reader_fit": 0.15,
+      "grounding": 0.12,
+      "structure": 0.1,
+      "sentence": 0.1,
+      "originality": 0.1,
+      "purpose_fit": 0.1
+    },
+    "weighted_total": 4.25
+  },
+  "axis_rationales": {
+    "judgment": "무엇을 넘겼고 무엇을 남겼는지, 버린 경로와 판단이 깨질 조건까지 본문 후반에 함께 제시된다.",
+    "evidence": "18개 시나리오, 16/2 실패, 4점과 2.5점, 4.8/4.5, 세 건 적용, 아홉 편 미판정 등 핵심 주장마다 관측값이 붙어 있다.",
+    "reader_fit": "처음 읽는 개발자도 따라올 수 있게 용어를 대체로 풀지만, 표와 반복 구조가 일부 독자에게는 설명 장치보다 내부 분류처럼 보일 수 있다.",
+    "grounding": "수치와 1인칭 경험 대부분이 입력 자료에 근거하며, 확신을 크게 부풀리지 않고 미완료와 전제의 약함도 남긴다.",
+    "structure": "도입의 문제의식에서 각 단계의 이전과 잔여물을 거쳐 결론의 성장 정의까지 자연스럽게 회수된다.",
+    "sentence": "대체로 차분하고 명료하지만 '넘어갔다/남았다' 반복과 지워도 되는 연결 문장이 몇 군데 남아 밀도가 아주 높지는 않다.",
+    "originality": "AI 대체 가능성을 추상 전망이 아니라 직접 밀어본 단계와 실패한 측정 장치로 말해 개인적 판단이 뚜렷하다.",
+    "purpose_fit": "필수 내용은 거의 다 다루고 과장도 피하지만, 한 절에 사례가 둘 이상 겹치는 대목과 분량 초과 가능성이 있어 완전 충족으로 보긴 어렵다."
+  },
+  "calibration_note": "평균 3.0 기준으로 보정했으며, 4점 이상은 관측값과 판단의 연결이 분명한 축에만 부여했다.",
+  "evaluated_at": "2026-08-24T15:33:58+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_system:v1",
+    "source_files": [
+      "310164c7_input.json",
+      "310164c7_iter-004_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 34476,
+      "cached_input_tokens": 18816,
+      "output_tokens": 2101,
+      "reasoning_output_tokens": 1552
+    }
+  }
+}

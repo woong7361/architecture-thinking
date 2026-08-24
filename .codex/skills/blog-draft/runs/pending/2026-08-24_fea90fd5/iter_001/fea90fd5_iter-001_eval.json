@@ -1,0 +1,54 @@
+{
+  "brief_hash": "fea90fd5",
+  "iteration": "001",
+  "rubric_name": "writing:v2",
+  "rubric_scores": {
+    "scores": {
+      "judgment": 4.3,
+      "evidence": 4.2,
+      "reader_fit": 3.7,
+      "grounding": 4.3,
+      "structure": 4.1,
+      "sentence": 3.8,
+      "originality": 4,
+      "purpose_fit": 4.2
+    },
+    "weights": {
+      "judgment": 0.18,
+      "evidence": 0.15,
+      "reader_fit": 0.15,
+      "grounding": 0.12,
+      "structure": 0.1,
+      "sentence": 0.1,
+      "originality": 0.1,
+      "purpose_fit": 0.1
+    },
+    "weighted_total": 4.096
+  },
+  "axis_rationales": {
+    "judgment": "넘긴 선택, 버린 대안, 멈춘 이유, 깨지는 조건이 본문에 함께 있어 판단 과정이 뚜렷하지만 일부는 brief의 판단 목록을 거의 그대로 배열한다.",
+    "evidence": "16/18 테스트, 4.31→4.06, 4.8/4.5, 초안 아홉 편 등 관측값이 주요 주장에 붙지만 일부 일반화는 선언적으로 마무리된다.",
+    "reader_fit": "AI 구현 이후 불안한 개발자가 따라올 수 있게 흐름을 잡았지만 루브릭, 계약 트랙, 대역, 프로토콜 경계 같은 내부 용어가 충분히 풀리지 않은 대목이 있다.",
+    "grounding": "수치와 1인칭 판단은 대체로 brief에 근거하며 확신도도 맞지만, '로그 몇 개면 되는 일' 같은 표현은 원자료보다 약간 단정적으로 압축된다.",
+    "structure": "구현에서 검토, 게이트, 느린 루프, 사람 판정으로 한 칸씩 밀리는 순서가 선명하고 결론도 회수하지만 중반 설명량이 다소 길다.",
+    "sentence": "짧고 단정한 문장이 톤을 안정시키지만 같은 판단을 반복 확인하는 문장과 목록식 문단이 몇 군데 남아 밀도가 완전히 높지는 않다.",
+    "originality": "'자리를 자동화하고 한 칸 물러난다'는 저자 고유의 경험 기반 관점이 살아 있으나 몇몇 발견은 재료의 문장을 정리해 옮긴 인상이 강하다.",
+    "purpose_fit": "요청한 차분한 개발자 회고 톤과 필수 항목은 대부분 충족하고 과장도 피하지만 하네스 구조 설명이 선택보다 앞서는 구간이 일부 있다."
+  },
+  "calibration_note": "평균 3.0을 기준으로 보정했으며, 4점대는 구체 관측값과 판단 과정이 모두 본문에 드러난 축에 한정했다.",
+  "evaluated_at": "2026-08-24T12:05:33+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_system:v1",
+    "source_files": [
+      "fea90fd5_input.json",
+      "fea90fd5_iter-001_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 38992,
+      "cached_input_tokens": 21888,
+      "output_tokens": 1711,
+      "reasoning_output_tokens": 516
+    }
+  }
+}

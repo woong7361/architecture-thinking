@@ -1,0 +1,54 @@
+{
+  "brief_hash": "81ed33b8",
+  "iteration": "001",
+  "rubric_name": "writing:v2",
+  "rubric_scores": {
+    "scores": {
+      "judgment": 4.5,
+      "evidence": 4.4,
+      "reader_fit": 3.9,
+      "grounding": 4.4,
+      "structure": 4.3,
+      "sentence": 4.0,
+      "originality": 4.1,
+      "purpose_fit": 4.2
+    },
+    "weights": {
+      "judgment": 0.18,
+      "evidence": 0.15,
+      "reader_fit": 0.15,
+      "grounding": 0.12,
+      "structure": 0.1,
+      "sentence": 0.1,
+      "originality": 0.1,
+      "purpose_fit": 0.1
+    },
+    "weighted_total": 4.234
+  },
+  "axis_rationales": {
+    "judgment": "단마다 넘긴 것과 남은 것, 버린 선택지, 깨지는 조건을 본문에 함께 두어 판단 과정이 뚜렷하다.",
+    "evidence": "18개 시나리오, 16/18 결과, 4.165점, 4.8/4.5, 변경일 등 주요 주장마다 확인 가능한 기록이 붙어 있다.",
+    "reader_fit": "처음 읽는 독자도 큰 흐름은 따라갈 수 있으나 rubric, slow loop, 계약 트랙 같은 내부 용어가 많아 일부 구간은 하네스 경험자를 더 강하게 전제한다.",
+    "grounding": "대부분 brief 자료의 수치와 판단을 충실히 옮기지만, '사람 둘이 마주 앉아 하는 인터뷰'처럼 brief보다 장면성을 조금 더 확정한 표현이 있다.",
+    "structure": "1단부터 4단, 세로 차단, 가로 확장, 남은 것의 회수로 배열이 명확하고 결론이 도입의 질문을 잘 회수한다.",
+    "sentence": "문장은 차분하고 밀도가 있으나 표와 코드블록까지 포함해 설명량이 많아 일부 문장은 판단을 새로 더하기보다 재료를 반복한다.",
+    "originality": "AI 대체를 '한 칸씩 넘기고 남은 것을 이름 붙이는 일'로 정의하는 관점이 개인 경험에서 나오며, 흔한 자동화 낙관론과 거리를 둔다.",
+    "purpose_fit": "필수 포함 요소는 모두 다루고 과장도 피하지만, 목표 분량 대비 다소 길고 하네스 내부 구조 설명이 일부 길어져 요청의 회고 밀도를 약간 흐린다."
+  },
+  "calibration_note": "평균 3.0을 기준으로 보정했을 때, 이 초안은 구체 기록과 판단 회수가 뚜렷해 여러 축에서 4점대가 가능하지만 내부 설명의 밀도와 일부 확정 표현 때문에 만점권은 아니다.",
+  "evaluated_at": "2026-08-24T14:41:30+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_system:v1",
+    "source_files": [
+      "81ed33b8_input.json",
+      "81ed33b8_iter-001_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 35382,
+      "cached_input_tokens": 2432,
+      "output_tokens": 1108,
+      "reasoning_output_tokens": 516
+    }
+  }
+}

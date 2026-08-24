@@ -1,0 +1,13 @@
+{
+  "artifact": "eval",
+  "checked_file": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\blog-draft\\runs\\pending\\2026-08-24_d264193d\\iter_001\\d264193d_iter-001_eval.json",
+  "status": "REJECT",
+  "errors": [
+    "min_total: 4.194 < 4.2",
+    "target_length: 8996 chars outside 5500-7000",
+    "unsourced_quote: 나중에 종류가 여러 개로 늘어난다는 걸 지금 아는 경우에만 인터페이스를 "
+  ],
+  "notes": [
+    "weighted_total mismatch: reported 4.182, computed 4.194"
+  ]
+}

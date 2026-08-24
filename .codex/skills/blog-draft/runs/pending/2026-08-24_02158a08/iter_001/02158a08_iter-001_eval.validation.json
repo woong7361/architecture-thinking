@@ -1,0 +1,9 @@
+{
+  "artifact": "eval",
+  "checked_file": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\blog-draft\\runs\\pending\\2026-08-24_02158a08\\iter_001\\02158a08_iter-001_eval.json",
+  "status": "REJECT",
+  "errors": [
+    "target_length: 10902 chars outside 7000-9000",
+    "unsupported_claim: 단위 테스트를 생성해 명세로 쓰는 안도 버렸다. 클래스 이름 하나를 바꿨을 뿐인데 파일, 클래스, 테스트 호출이 전부 바뀌었고 단언 값만 그대로"
+  ]
+}

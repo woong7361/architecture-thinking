@@ -1,0 +1,8 @@
+{
+  "artifact": "eval",
+  "checked_file": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\blog-draft\\runs\\pending\\2026-08-24_76ee7a16\\iter_003\\76ee7a16_iter-003_eval.json",
+  "status": "REJECT",
+  "errors": [
+    "unsupported_claim: AI는 일을 빠르게 밀어줬지만 다음에 무엇을 해야 하는지는 정하지 않았다."
+  ]
+}

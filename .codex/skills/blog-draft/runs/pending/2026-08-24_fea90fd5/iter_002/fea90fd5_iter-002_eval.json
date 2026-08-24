@@ -1,0 +1,54 @@
+{
+  "brief_hash": "fea90fd5",
+  "iteration": "002",
+  "rubric_name": "writing:v2",
+  "rubric_scores": {
+    "scores": {
+      "judgment": 4.5,
+      "evidence": 4.4,
+      "reader_fit": 4,
+      "grounding": 4.3,
+      "structure": 4.4,
+      "sentence": 4.1,
+      "originality": 4.2,
+      "purpose_fit": 4.5
+    },
+    "weights": {
+      "judgment": 0.18,
+      "evidence": 0.15,
+      "reader_fit": 0.15,
+      "grounding": 0.12,
+      "structure": 0.1,
+      "sentence": 0.1,
+      "originality": 0.1,
+      "purpose_fit": 0.1
+    },
+    "weighted_total": 4.31
+  },
+  "axis_rationales": {
+    "judgment": "넘긴 것과 버린 선택지, 멈춘 이유, 깨지는 조건이 대부분 함께 제시되어 판단 과정이 뚜렷하다.",
+    "evidence": "16/18, 4.31→4.06, 4.8/4.5, 초안 아홉 편 등 관측값이 주요 주장에 붙어 있으나 일부 전환부는 선언으로 정리된다.",
+    "reader_fit": "구현을 AI에게 넘기기 시작한 개발자가 따라올 문제의식은 분명하지만, 게이트·대역·느린 루프 같은 내부어가 일부 설명보다 빠르게 지나간다.",
+    "grounding": "대부분 brief의 수치와 판단에 근거하지만, ‘내 자리를 지키려고 시작한 자동화’처럼 동기를 약간 단정해 확신도가 소폭 부푼 대목이 있다.",
+    "structure": "구현→검토→장치→장치 개선→잣대 변경의 밀려나는 순서가 안정적이고 결론이 도입을 잘 회수한다.",
+    "sentence": "문장은 차분하고 밀도가 있으나 깨지는 조건을 나열하는 후반부에는 비슷한 문장 기능이 반복된다.",
+    "originality": "‘자리를 자동화하고 한 칸 물러난다’는 정의와 구체 사례가 저자 고유의 판단으로 읽히지만 표현 자체는 일부 원문 재배열에 머문다.",
+    "purpose_fit": "요청한 톤과 핵심 포함 조건을 거의 모두 충족하고, 과장이나 ‘결국 사람이 다 해야 한다’는 결론도 피한다."
+  },
+  "calibration_note": "평균 3.0을 기준으로 보정했으며, 4점대는 축별로 구체적 관측·판단·구조적 완성도가 확인되는 경우에만 부여했다.",
+  "evaluated_at": "2026-08-24T12:08:42+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_system:v1",
+    "source_files": [
+      "fea90fd5_input.json",
+      "fea90fd5_iter-002_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 39088,
+      "cached_input_tokens": 2432,
+      "output_tokens": 1073,
+      "reasoning_output_tokens": 516
+    }
+  }
+}

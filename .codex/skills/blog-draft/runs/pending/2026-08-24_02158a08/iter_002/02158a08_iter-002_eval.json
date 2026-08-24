@@ -1,0 +1,54 @@
+{
+  "brief_hash": "02158a08",
+  "iteration": "002",
+  "rubric_name": "writing:v2",
+  "rubric_scores": {
+    "scores": {
+      "judgment": 4.4,
+      "evidence": 4.5,
+      "reader_fit": 4,
+      "grounding": 4.3,
+      "structure": 4.1,
+      "sentence": 4,
+      "originality": 4.3,
+      "purpose_fit": 4.1
+    },
+    "weights": {
+      "judgment": 0.18,
+      "evidence": 0.15,
+      "reader_fit": 0.15,
+      "grounding": 0.12,
+      "structure": 0.1,
+      "sentence": 0.1,
+      "originality": 0.1,
+      "purpose_fit": 0.1
+    },
+    "weighted_total": 4.23
+  },
+  "axis_rationales": {
+    "judgment": "검토한 선택지, 버린 판단, 깨지는 조건이 본문 곳곳에 드러나지만 일부 조건은 마지막 질문 묶음에 모여 있어 각 판단마다 완전히 붙지는 않는다.",
+    "evidence": "18개 시나리오, 16/18, 2건 실패, 277줄/132줄/117줄, 21개 초록불 같은 관측값이 주요 주장마다 붙어 있다.",
+    "reader_fit": "하네스·게이트·AI 점수 신호를 처음 읽는 개발자도 따라오게 설명하지만, 중후반에는 독자가 쥐고 갈 채용 판단 맥락보다 저자의 시스템 설명이 더 앞선다.",
+    "grounding": "수치와 사례는 거의 모두 brief 안의 재료에 근거하며 유보도 대체로 유지하지만, 판정 칸의 좌우 이동 표현은 draft 내부 도식과 방향이 어긋난다.",
+    "structure": "네 겹의 전환에서 사람 자리와 성장 정의로 이어지는 흐름이 선명하고 결론도 도입을 회수하지만, 하네스 설명 이후 일부 반복과 압축된 전환이 있다.",
+    "sentence": "문장은 차분하고 밀도가 높으며 읽히지만, ‘버렸다/남긴 것은’ 패턴과 같은 요약 문장이 여러 번 반복된다.",
+    "originality": "‘판정석이 아니라 증인석’, ‘잣대를 넘기면 틀린 속도만 빨라진다’처럼 경험에서 나온 판단 문장이 뚜렷하다.",
+    "purpose_fit": "네 겹의 사고 전환, 성장 정의, 한 일과 못 한 일과 다음 일이 모두 다뤄지고 과장도 피하지만 목표 분량 대비 다소 길고 일부 하네스 설명이 상세하다."
+  },
+  "calibration_note": "평균 3.0을 기준으로 보정했을 때, 이 초안은 수치와 관측에 의해 판단 경로가 분명히 드러나는 편이라 다수 축에서 4점대를 부여했다.",
+  "evaluated_at": "2026-08-24T10:23:33+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_system:v1",
+    "source_files": [
+      "02158a08_input.json",
+      "02158a08_iter-002_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 53205,
+      "cached_input_tokens": 2432,
+      "output_tokens": 1111,
+      "reasoning_output_tokens": 516
+    }
+  }
+}

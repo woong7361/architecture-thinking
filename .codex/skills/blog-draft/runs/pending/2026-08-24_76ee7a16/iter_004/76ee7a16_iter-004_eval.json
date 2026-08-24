@@ -1,0 +1,54 @@
+{
+  "brief_hash": "76ee7a16",
+  "iteration": "004",
+  "rubric_name": "writing:v2",
+  "rubric_scores": {
+    "scores": {
+      "judgment": 4.5,
+      "evidence": 4.4,
+      "reader_fit": 4.1,
+      "grounding": 4.4,
+      "structure": 4.2,
+      "sentence": 4,
+      "originality": 4.1,
+      "purpose_fit": 4
+    },
+    "weights": {
+      "judgment": 0.18,
+      "evidence": 0.15,
+      "reader_fit": 0.15,
+      "grounding": 0.12,
+      "structure": 0.1,
+      "sentence": 0.1,
+      "originality": 0.1,
+      "purpose_fit": 0.1
+    },
+    "weighted_total": 4.24
+  },
+  "axis_rationales": {
+    "judgment": "검토한 선택지, 버린 경로, 판단이 깨지는 조건이 본문 후반에 함께 정리되어 판단의 책임 소재가 뚜렷하다.",
+    "evidence": "18개 시나리오, 16/2 실패, 4.8/4.5, 5회 차단, 9편 미판정 등 핵심 주장마다 관측값이 붙는다.",
+    "reader_fit": "처음 읽는 독자가 따라가도록 용어를 대체로 풀어 쓰지만, 후반의 자기 참조·새 채점표 구조는 약간 압축되어 있다.",
+    "grounding": "수치와 1인칭 판단이 대부분 입력 자료에 기대고 있으며, 유보된 대목도 추정이라고 표시한다.",
+    "structure": "한 칸씩 넘긴 일과 남은 일을 반복하는 구조가 선명하고 결론이 도입을 회수하지만, 중반 검토 절은 사례가 다소 겹친다.",
+    "sentence": "문장은 차분하고 명료하나 '넘어갔다/남았다' 반복이 의도된 구조를 넘어 일부 문장 밀도를 낮춘다.",
+    "originality": "AI 대체론을 추상 전망이 아니라 실제로 밀어본 단계와 남은 판단의 위치로 잡아 개인적 발견이 뚜렷하다.",
+    "purpose_fit": "필수 내용은 대부분 다루고 금지 주장도 피하지만, 목표 분량 초과 가능성과 한 절에 사례가 둘 들어간 대목이 약한 흠이다."
+  },
+  "calibration_note": "4점대는 구체 수치와 판단의 깨지는 조건이 모두 들어간 축에만 부여했으며, 반복과 일부 구조 압축 때문에 5점은 주지 않았다.",
+  "evaluated_at": "2026-08-24T15:30:04+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_system:v1",
+    "source_files": [
+      "76ee7a16_input.json",
+      "76ee7a16_iter-004_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 33753,
+      "cached_input_tokens": 21888,
+      "output_tokens": 1049,
+      "reasoning_output_tokens": 516
+    }
+  }
+}

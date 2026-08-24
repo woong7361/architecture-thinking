@@ -1,0 +1,54 @@
+{
+  "brief_hash": "02158a08",
+  "iteration": "005",
+  "rubric_name": "writing:v2",
+  "rubric_scores": {
+    "scores": {
+      "judgment": 4.3,
+      "evidence": 4.4,
+      "reader_fit": 4.1,
+      "grounding": 4.8,
+      "structure": 4.2,
+      "sentence": 4.0,
+      "originality": 4.3,
+      "purpose_fit": 4.1
+    },
+    "weights": {
+      "judgment": 0.18,
+      "evidence": 0.15,
+      "reader_fit": 0.15,
+      "grounding": 0.12,
+      "structure": 0.1,
+      "sentence": 0.1,
+      "originality": 0.1,
+      "purpose_fit": 0.1
+    },
+    "weighted_total": 4.31
+  },
+  "axis_rationales": {
+    "judgment": "검토한 판정 방식, 버린 선택지, 깨지는 조건이 본문에 반복적으로 붙어 있으나 일부 폐기 판단은 원자료보다 축약되어 있다.",
+    "evidence": "18개 시나리오, 16/18 실패, 277/132/117줄, 21개 테스트 통과 후 결제 오류 등 주요 주장마다 관측값이 붙어 있다.",
+    "reader_fit": "하네스와 게이트 같은 개념을 글 안에서 풀어주고 채용 독자가 원하는 판단 과정도 반영하지만 분량과 정보량이 다소 높다.",
+    "grounding": "수치, 사례, 유보 표현이 대부분 brief와 일치하며 새 경험을 사실처럼 보탠 대목은 거의 보이지 않는다.",
+    "structure": "네 겹의 전환에서 사람의 자리와 성장 정의로 이어지는 흐름이 선명하지만 중반의 장치 설명이 길어 밀도가 잠시 느슨해진다.",
+    "sentence": "문장은 차분하고 구체적이나 같은 결론을 재확인하는 문장이 몇 군데 반복되어 압축 여지가 있다.",
+    "originality": "잣대, 판정석과 증인석, 왼쪽으로 옮기는 자동화 같은 판단 언어가 개인 경험에서 나온 고유성이 뚜렷하다.",
+    "purpose_fit": "네 겹의 전환, 성장 정의, 한 일과 못 한 일과 다음 일이 모두 들어가며 과장도 피하지만 목표 분량 대비 길어 보인다."
+  },
+  "calibration_note": "평균 3.0을 기준으로 보정했다. 이 초안은 근거와 구조가 뚜렷해 4점대가 타당하지만, 5점은 축약성·독자 부담·일부 판단 축약 때문에 주지 않았다.",
+  "evaluated_at": "2026-08-24T10:31:03+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_system:v1",
+    "source_files": [
+      "02158a08_input.json",
+      "02158a08_iter-005_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 53336,
+      "cached_input_tokens": 2432,
+      "output_tokens": 1063,
+      "reasoning_output_tokens": 516
+    }
+  }
+}

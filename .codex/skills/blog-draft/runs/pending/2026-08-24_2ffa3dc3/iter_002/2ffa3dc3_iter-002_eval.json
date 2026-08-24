@@ -1,0 +1,54 @@
+{
+  "brief_hash": "2ffa3dc3",
+  "iteration": "002",
+  "rubric_name": "writing:v2",
+  "rubric_scores": {
+    "scores": {
+      "judgment": 4.4,
+      "evidence": 4.2,
+      "reader_fit": 4.1,
+      "grounding": 4.4,
+      "structure": 4.5,
+      "sentence": 4.1,
+      "originality": 4.0,
+      "purpose_fit": 4.3
+    },
+    "weights": {
+      "judgment": 0.18,
+      "evidence": 0.15,
+      "reader_fit": 0.15,
+      "grounding": 0.12,
+      "structure": 0.1,
+      "sentence": 0.1,
+      "originality": 0.1,
+      "purpose_fit": 0.1
+    },
+    "weighted_total": 4.262
+  },
+  "axis_rationales": {
+    "judgment": "단마다 무엇을 넘기고 무엇을 버렸는지, 마지막에 판단이 깨질 조건까지 제시해 축 요구를 거의 충족한다.",
+    "evidence": "18개 시나리오, 16개 통과와 2개 실패, 4.8/4.5, 다섯 번 차단, 세 건 적용 등 핵심 주장에 관측값이 붙어 있다.",
+    "reader_fit": "처음 읽는 독자도 흐름을 따라갈 수 있게 용어를 풀지만, ‘산출물’, ‘빠른 루프’ 같은 내부 표현은 여전히 약간 남아 있다.",
+    "grounding": "수치와 1인칭 판단은 대체로 brief에 근거하며, 확신도도 마지막에서 유보하지만 ‘넘긴 뒤가 더 나았다’는 판단은 약간 강하게 들린다.",
+    "structure": "도구에서 판단, 검토, 유지보수, 가로 확장, 한계와 다음 실험으로 이어지는 배열이 선명하고 결론이 도입을 회수한다.",
+    "sentence": "문장은 차분하고 안정적이나 ‘남은 것은’, ‘넘어갔다’ 구조가 의도적으로 반복되어 일부 문단은 밀도가 조금 낮다.",
+    "originality": "사다리, 자, 판정란 같은 경험 기반의 발견이 뚜렷하지만 표현의 상당 부분은 제공된 얼개를 성실히 정리한 쪽에 가깝다.",
+    "purpose_fit": "요청한 회고 톤과 필수 포함 요소를 대부분 충족하고 과장된 자동화 결론을 피하지만, 한 절에 사례가 둘 이상 겹치는 대목이 있다."
+  },
+  "calibration_note": "평균 3.0을 기준으로 보정했을 때, 이 초안은 구조와 판단 근거가 뚜렷해 4점대가 가능하나 일부 내부어와 사례 밀도 문제 때문에 5점권은 아니다.",
+  "evaluated_at": "2026-08-24T15:15:08+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_system:v1",
+    "source_files": [
+      "2ffa3dc3_input.json",
+      "2ffa3dc3_iter-002_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 33604,
+      "cached_input_tokens": 21888,
+      "output_tokens": 1099,
+      "reasoning_output_tokens": 516
+    }
+  }
+}

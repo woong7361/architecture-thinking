@@ -1,0 +1,54 @@
+{
+  "brief_hash": "16922d4b",
+  "iteration": "002",
+  "rubric_name": "writing:v2",
+  "rubric_scores": {
+    "scores": {
+      "judgment": 4.1,
+      "evidence": 4.3,
+      "reader_fit": 3.9,
+      "grounding": 4.6,
+      "structure": 4.2,
+      "sentence": 4,
+      "originality": 4.1,
+      "purpose_fit": 3.8
+    },
+    "weights": {
+      "judgment": 0.18,
+      "evidence": 0.15,
+      "reader_fit": 0.15,
+      "grounding": 0.12,
+      "structure": 0.1,
+      "sentence": 0.1,
+      "originality": 0.1,
+      "purpose_fit": 0.1
+    },
+    "weighted_total": 4.12
+  },
+  "axis_rationales": {
+    "judgment": "네 겹의 판단 변화와 버린 선택지, 일부 깨지는 조건을 제시하지만 판단이 깨지는 조건은 후반 일부 질문에 집중되어 5점 수준의 전면성은 아니다.",
+    "evidence": "18개 시나리오, 16/18 실패, 2:2와 4:0, 132/277/117줄, 결제 어댑터 사례처럼 주요 주장마다 관측값이 붙어 있다.",
+    "reader_fit": "처음 읽는 백엔드 평가자가 따라갈 만큼 배경을 설명하지만 하네스와 판정 칸 비유가 압축되어 일부 구간은 저자 경험에 익숙한 독자에게 더 잘 맞는다.",
+    "grounding": "수치와 사례, 유보 표현이 대부분 brief에 근거하며 새 경험을 만들지 않지만 일부 표현은 원문보다 단정적으로 압축된다.",
+    "structure": "도입의 문제 제기에서 네 겹, 사람 자리, 성장 정의와 다음 행동까지 회수되는 흐름이 안정적이다.",
+    "sentence": "문장은 차분하고 밀도 있으나 같은 결론을 반복해 다지는 문장이 몇 곳 남아 있어 더 줄일 여지는 있다.",
+    "originality": "잣대, 증인석, 판정을 왼쪽으로 옮긴다는 판단이 개인 실험에서 나온 고유한 발견으로 살아 있다.",
+    "purpose_fit": "필수 포함 요소는 모두 다루고 과장도 피하지만 목표 분량보다 길어 보이며 ‘3주 사고 변화’보다 시스템 설명 비중이 다소 커진다."
+  },
+  "calibration_note": "평균 3.0을 기준으로 보정했다. 초안은 근거와 구조가 강하지만, 5점은 거의 결함 없이 독자·분량·판단 조건까지 완전히 맞을 때로 남겼다.",
+  "evaluated_at": "2026-08-24T10:00:48+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_system:v1",
+    "source_files": [
+      "16922d4b_input.json",
+      "16922d4b_iter-002_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 51928,
+      "cached_input_tokens": 2432,
+      "output_tokens": 1069,
+      "reasoning_output_tokens": 516
+    }
+  }
+}
