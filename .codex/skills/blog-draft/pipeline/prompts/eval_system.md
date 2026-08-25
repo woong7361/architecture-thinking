@@ -28,6 +28,9 @@
 - rubric에 있는 모든 축을 `scores`, `weights`, `axis_rationales`에 포함합니다. 축 목록은 전달받은 rubric이 유일한 근거이며, 축을 더하거나 빼지 않습니다.
 - rubric에 명시된 축 이름을 임의로 바꾸지 않습니다.
 - rubric의 가중치 합이 1.0이 아니어도 임의 수정하지 말고, 전달받은 가중치를 그대로 기록합니다.
+- `structure`를 평가할 때 `brief.section_plan`이 있으면 각 H2가 `heading_promise`와 `purpose`의 범위를 지키는지, 지정된 `materials`가 해당 절에서 올바른 `role`로 쓰였는지 먼저 봅니다.
+- `connection_to_next`가 선언된 절에서만 다음 절이 그 연결을 이어받는지 평가합니다. 필드가 없는 것 자체는 감점 근거가 아닙니다.
+- section plan의 연결 선언이 없더라도 글 전체의 배열이 의도를 해치는지는 `structure`의 기존 기준으로 따로 판단합니다.
 
 금지 필드:
 - `verdict`

@@ -12,7 +12,7 @@ Create a blog draft from raw material through a short intake conversation and th
 ## Workflow
 
 1. Read the user's material from the conversation or referenced UTF-8 text files.
-2. Infer draft defaults from the material before asking questions.
+2. Infer draft defaults from the material before asking questions. For self-PR or portfolio writing, also read `blog-profile.md` and use it only as a proposed reader-strategy default.
 3. Ask only for missing or high-impact choices:
    - provider (codex / claude) — which LLM backend to run the pipeline with
    - tone
@@ -22,8 +22,8 @@ Create a blog draft from raw material through a short intake conversation and th
    - intent
    - avoid list
    - reader / guide / judgment blocks (author-only material; see "저자 영역 블록" below)
-4. Show the inferred defaults and ask for confirmation in one compact message.
-5. Generate an input JSON with `pipeline/intake_to_input.py`.
+4. Build a `section_plan` from the preserved material and approved author-only blocks. Show the plan with the other inferred defaults and ask for confirmation in one compact message.
+5. Generate an input JSON with `pipeline/intake_to_input.py` only after the user approves or corrects the section plan.
 6. Validate and run the pipeline with `pipeline/run_draft.py`.
 7. Report the final draft path, or the failed artifact path if the harness does not pass.
 8. Capture user feedback on the draft (see "사용자 개인화" below).
@@ -31,6 +31,10 @@ Create a blog draft from raw material through a short intake conversation and th
 ## Intake Rules
 
 Use inference first. If the material strongly implies a value, propose it as the default instead of asking an open-ended question.
+
+For self-PR or portfolio writing, `blog-profile.md` supplies the persistent audience strategy. Do not inject its prose into the draft or treat it as confirmed run input. Map only the relevant defaults through `references/intake-guide.md`, show them to the user, and store only approved or corrected values in the input JSON. The profile never supplies actual first-person experience, discarded alternatives, or breaking conditions.
+
+New intake runs use `brief.section_plan`. One plan item maps to one H2 and fixes that section's promise, purpose, and source material. `connection_to_next` is optional: propose it only where the next section depends on the current one. Do not invent a transition question for an independent section. Existing inputs that use `brief.spine` remain valid, but a new input must not contain both `spine` and `section_plan`.
 
 Good intake message:
 
@@ -62,7 +66,7 @@ If the user says to proceed, use the proposed defaults. If the user gives change
 
 `raw_text`에서 추론해서 채우지 않는다. 비어 있으면 초안은 그 내용을 쓰지 않고, 그게 맞는 동작이다. 추론으로 채우면 초안의 결함이 아니라 거짓이 된다.
 
-`piece_type`이 `essay` 또는 `retrospective`면 `reader`를 반드시 확인받는다. 기본 프로필 제안값과 각 항목의 뜻은 `references/intake-guide.md`에 있다.
+`piece_type`이 `essay` 또는 `retrospective`면 `reader`를 반드시 확인받는다. 자기 PR 또는 포트폴리오 글의 기본 전략은 `blog-profile.md`에 있고, 실제 필드 매핑과 확인 규칙은 `references/intake-guide.md`에 있다.
 
 ## Input Contract
 
@@ -79,6 +83,8 @@ Important contract points:
 - Put tone, length, emphasis, required points, and avoid rules under `brief.constraints`.
 - Do not include `summary` or `intake_answers` in the MVP input.
 - Put author-only material under `brief.reader`, `brief.guide`, and `brief.judgment`. Never infer these from `raw_text`.
+- Put the user-approved section contract under `brief.section_plan`. Each item requires `id`, `heading_promise`, `purpose`, and at least one source-anchored material. `connection_to_next` is optional.
+- Do not put `brief.spine` and `brief.section_plan` in the same input. `spine` remains only for compatibility with existing inputs.
 - Validate every generated input through `pipeline/intake_to_input.py` or `pipeline/validate.py --artifact input` before running the harness.
 
 ## 피드백 캡처 (step 8)
@@ -105,7 +111,18 @@ python -B .codex/skills/blog-draft/pipeline/intake_to_input.py \
   --output-dir .codex/skills/blog-draft/pipeline/inputs
 ```
 
-`--context-file` takes the author-only blocks as one JSON object. Shape and asking rules live in `references/intake-guide.md`.
+`--context-file` takes the approved author-only blocks and `section_plan` as one JSON object. Shape and asking rules live in `references/intake-guide.md`.
+
+When a user wants to rerun the same approved material with a revised intake contract, preserve the existing brief with `--base-input` and pass only the approved replacement blocks through `--context-file`:
+
+```bash
+python -B .codex/skills/blog-draft/pipeline/intake_to_input.py \
+  --base-input .codex/skills/blog-draft/pipeline/inputs/a1b2c3d4_input.json \
+  --context-file /tmp/approved-section-plan.json \
+  --output-dir .codex/skills/blog-draft/pipeline/inputs
+```
+
+Explicit CLI values override the base brief. Context blocks override blocks with the same name. Supplying `section_plan` removes a legacy `spine`, and supplying `spine` removes `section_plan`. All other raw material, author-only blocks, constraints, and forbidden phrases remain unchanged.
 
 Use `pipeline/run_draft.py` to run the bundled harness:
 

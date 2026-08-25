@@ -1,0 +1,54 @@
+{
+  "brief_hash": "aaf25bc5",
+  "iteration": "001",
+  "rubric_name": "writing:v3",
+  "rubric_scores": {
+    "scores": {
+      "judgment": 4.7,
+      "evidence": 4.5,
+      "reader_fit": 4.2,
+      "grounding": 4.4,
+      "structure": 4.3,
+      "sentence": 4.1,
+      "originality": 4.2,
+      "purpose_fit": 4.1
+    },
+    "weights": {
+      "judgment": 0.18,
+      "evidence": 0.15,
+      "reader_fit": 0.15,
+      "grounding": 0.12,
+      "structure": 0.1,
+      "sentence": 0.1,
+      "originality": 0.1,
+      "purpose_fit": 0.1
+    },
+    "weighted_total": 4.331
+  },
+  "axis_rationales": {
+    "judgment": "버린 선택지와 이유, 깨지는 조건이 모두 명시되어 있고 결론이 실험 결과에서 좁혀지지만, 마지막 절에 조건들이 다소 목록처럼 몰린다.",
+    "evidence": "환불 정책 18개 시나리오, 16/2 실패, 4점/2.5점, 4.8/4.5, 3건 적용, 초안 9편 등 핵심 주장마다 확인 가능한 값이 붙어 있다.",
+    "reader_fit": "처음 읽는 사람도 단계별 위임 흐름을 따라갈 수 있게 용어를 풀어 쓰지만, 후반의 채점표·느린 흐름·자기 참조 설명은 약간 내부 장치 중심으로 간다.",
+    "grounding": "대부분 brief의 수치와 판단에 정확히 기대고 있으며 확신도도 유보를 유지하나, '네 단에서 넘긴 것들은 실제로 넘기는 편이 나았다'는 압축은 brief의 복합 판단을 조금 강하게 단정한다.",
+    "structure": "section_plan의 9개 흐름과 H2 약속을 대체로 지키고 선언된 연결도 이어받지만, s4는 같은 절 안에 점수 흔들림과 문자열 검사로 내린 사례가 함께 있어 한 절 한 사례 조건과 약간 충돌한다.",
+    "sentence": "문장은 차분하고 명료하며 반복 구조가 읽기 쉽게 작동하지만, 마지막 절의 버린 길·깨지는 조건 나열은 압축보다 열거가 앞선다.",
+    "originality": "숫자 자체보다 '흔들리는 일을 재현 가능한 일로 내린다'는 판단이 개인 경험에서 나오며, AI 대체 논의를 실제 운영 경계로 바꾼 관점이 뚜렷하다.",
+    "purpose_fit": "요청한 개발자 회고 톤과 필수 내용 대부분을 충족하고 과장도 피하지만, 목표 분량을 넘길 가능성이 크고 일부 절은 사례가 둘 이상으로 읽힌다."
+  },
+  "calibration_note": "평균 3.0 기준에서 보정했을 때, 핵심 축은 구체성과 판단 구조가 뚜렷해 4점대가 타당하다. 다만 5점에 가까운 완결성보다는 분량과 일부 구조적 압축 문제가 남아 있어 총점은 중상위권으로 제한했다.",
+  "evaluated_at": "2026-08-25T16:24:22+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_system:v2",
+    "source_files": [
+      "aaf25bc5_input.json",
+      "aaf25bc5_iter-001_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 35832,
+      "cached_input_tokens": 21888,
+      "output_tokens": 1195,
+      "reasoning_output_tokens": 516
+    }
+  }
+}

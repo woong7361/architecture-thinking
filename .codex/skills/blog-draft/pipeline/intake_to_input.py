@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+from copy import deepcopy
 import hashlib
 import json
 import sys
@@ -11,26 +12,40 @@ from pathlib import Path
 PIPELINE_DIR = Path(__file__).resolve().parent
 KST = timezone(timedelta(hours=9))
 
-# Blocks the author fills in. The model never invents these, so they arrive as a
-# file instead of CLI flags: the values are multi-sentence prose and shell
-# quoting mangles them.
-CONTEXT_BLOCKS = ("reader", "guide", "judgment", "spine")
+# Structured brief values arrive as a file instead of CLI flags. The author-only
+# blocks contain multi-sentence prose, and section_plan contains nested objects;
+# shell quoting makes both forms unnecessarily fragile.
+BRIEF_CONTEXT_KEYS = ("reader", "guide", "judgment", "spine", "section_plan")
 
 
-def read_raw_text(args: argparse.Namespace) -> str:
+def read_base_brief(path: str | None) -> dict:
+    """Load a prior validated brief when intake is refining an existing run."""
+    if not path:
+        return {}
+    data = json.loads(Path(path).read_text(encoding="utf-8"))
+    brief = data.get("brief") if isinstance(data, dict) else None
+    if not isinstance(brief, dict):
+        raise ValueError("base input must contain a brief object")
+    return brief
+
+
+def read_raw_text(args: argparse.Namespace, base_brief: dict) -> str:
     chunks: list[str] = []
     for path in args.raw_text_file or []:
         chunks.append(Path(path).read_text(encoding="utf-8"))
     if args.raw_text:
         chunks.append(args.raw_text)
-    raw_text = "\n\n".join(chunk.strip() for chunk in chunks if chunk.strip()).strip()
+    if chunks:
+        raw_text = "\n\n".join(chunk.strip() for chunk in chunks if chunk.strip()).strip()
+    else:
+        raw_text = base_brief.get("raw_text", "")
     if not raw_text:
-        raise ValueError("raw text is required via --raw-text or --raw-text-file")
+        raise ValueError("raw text is required via --raw-text, --raw-text-file, or --base-input")
     return raw_text
 
 
 def read_context(path: str | None) -> dict:
-    """Load the author-supplied reader/guide/judgment blocks.
+    """Load structured brief values supplied or approved during intake.
 
     Shape is enforced by input.schema.json, not here. This only rejects
     unknown top-level keys so a typo fails with a readable message instead of
@@ -41,9 +56,10 @@ def read_context(path: str | None) -> dict:
     data = json.loads(Path(path).read_text(encoding="utf-8"))
     if not isinstance(data, dict):
         raise ValueError("context file must contain a JSON object")
-    unknown = sorted(set(data) - set(CONTEXT_BLOCKS))
+    unknown = sorted(set(data) - set(BRIEF_CONTEXT_KEYS))
     if unknown:
-        raise ValueError(f"unknown context blocks: {', '.join(unknown)} (allowed: {', '.join(CONTEXT_BLOCKS)})")
+        allowed = ", ".join(BRIEF_CONTEXT_KEYS)
+        raise ValueError(f"unknown context blocks: {', '.join(unknown)} (allowed: {allowed})")
     return data
 
 
@@ -59,8 +75,9 @@ def split_values(values: list[str] | None) -> list[str]:
     return items
 
 
-def build_brief(args: argparse.Namespace, raw_text: str, context: dict) -> dict:
-    constraints: dict[str, object] = {}
+def build_brief(args: argparse.Namespace, raw_text: str, context: dict, base_brief: dict) -> dict:
+    brief = deepcopy(base_brief)
+    constraints: dict[str, object] = deepcopy(brief.get("constraints", {}))
     if args.target_length:
         constraints["target_length"] = args.target_length
     if args.tone:
@@ -74,18 +91,25 @@ def build_brief(args: argparse.Namespace, raw_text: str, context: dict) -> dict:
         if values:
             constraints[key] = values
 
-    brief = {
-        "topic": args.topic,
-        "raw_text": raw_text,
-        "piece_type": args.piece_type,
-        "intent": args.intent,
-        "audience": args.audience,
-    }
-    for block in CONTEXT_BLOCKS:
-        brief[block] = context.get(block)
+    brief["raw_text"] = raw_text
+    for key in ("topic", "piece_type", "intent", "audience"):
+        value = getattr(args, key)
+        if value:
+            brief[key] = value
+    brief.setdefault("piece_type", "retrospective")
+
+    for block, value in context.items():
+        brief[block] = value
+    if "section_plan" in context:
+        brief.pop("spine", None)
+    if "spine" in context:
+        brief.pop("section_plan", None)
     if constraints:
         brief["constraints"] = constraints
-    return {key: value for key, value in brief.items() if value}
+    missing = [key for key in ("topic", "intent", "audience") if not brief.get(key)]
+    if missing:
+        raise ValueError(f"missing required intake values: {', '.join(missing)}")
+    return brief
 
 
 def brief_hash(brief: dict) -> str:
@@ -113,15 +137,19 @@ def validate_input(path: Path) -> dict:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Build writing-harness input JSON from blog-draft intake values.")
+    parser.add_argument(
+        "--base-input",
+        help="Existing input JSON whose brief is preserved unless an intake value overrides it.",
+    )
     parser.add_argument("--raw-text", help="Raw source material to preserve in brief.raw_text.")
     parser.add_argument("--raw-text-file", action="append", help="UTF-8 file containing raw source material.")
-    parser.add_argument("--topic", required=True)
-    parser.add_argument("--piece-type", default="retrospective")
-    parser.add_argument("--intent", required=True)
-    parser.add_argument("--audience", required=True)
+    parser.add_argument("--topic")
+    parser.add_argument("--piece-type")
+    parser.add_argument("--intent")
+    parser.add_argument("--audience")
     parser.add_argument(
         "--context-file",
-        help="UTF-8 JSON file holding the author-supplied reader / guide / judgment blocks.",
+        help="UTF-8 JSON file holding structured brief values such as reader, judgment, and section_plan.",
     )
     parser.add_argument("--tone")
     parser.add_argument("--target-length")
@@ -132,9 +160,10 @@ def main() -> int:
     parser.add_argument("--overwrite", action="store_true")
     args = parser.parse_args()
 
-    raw_text = read_raw_text(args)
+    base_brief = read_base_brief(args.base_input)
+    raw_text = read_raw_text(args, base_brief)
     context = read_context(args.context_file)
-    brief = build_brief(args, raw_text, context)
+    brief = build_brief(args, raw_text, context, base_brief)
     payload = {
         "brief_hash": brief_hash(brief),
         "created_at": datetime.now(KST).isoformat(timespec="seconds"),

@@ -24,13 +24,15 @@
 - `CRITIQUE_JSON.unsupported_claims`에 있는 서술은 본문에서 제거하거나, brief에 근거가 있는 범위까지만 남깁니다. 근거를 새로 만들어 보완하지 않습니다. 지운 자리를 다른 추측으로 메우지 않습니다.
 - `CRITIQUE_JSON.strengths`에 있는 강점은 유지합니다.
 - `INPUT_JSON.brief`에 있는 사실관계, 의도, 제약은 바꾸지 않습니다.
+- `INPUT_JSON.brief.section_plan`이 있으면 항목과 H2의 1:1 대응, 순서, `heading_promise`, `purpose`, `materials`의 범위를 유지합니다. 절 사이로 문단을 옮길 때는 옮겨진 절의 계약에 맞는지 먼저 확인합니다.
+- `connection_to_next`가 선언된 절에서만 그 연결을 복구하고, 필드가 없는 절에 새 연결 질문을 만들지 않습니다.
 - `INPUT_JSON.brief.spine`의 순서를 바꾸지 않습니다.
 - 이름을 정의할 재료가 없으면 그 이름을 쓰지 않고 하는 일로 풀어 씁니다.
 - `weak_axes`가 `judgment`이면 무엇을 검토했고 무엇을 왜 버렸는지, 이 판단이 어떤 조건에서 깨지는지를 본문에 드러냅니다.
 - `weak_axes`가 `evidence`이면 구체적 장면, 사례, 관측한 값을 주요 주장마다 붙입니다.
 - `weak_axes`가 `reader_fit`이면 주어가 저자인 문장을 독자가 무엇을 판정할 수 있는지로 바꾸고, 독자 문제의 감정 층까지 다룹니다.
 - `weak_axes`가 `grounding`이면 brief에 근거가 없는 경험, 판단, 인용, 수치를 덜어냅니다. 채워 넣어 보완하지 않고 덜어내는 방향으로만 고칩니다.
-- `weak_axes`가 `structure`이면 문단 순서와 전환을 정리하고 결론이 도입을 회수하게 합니다.
+- `weak_axes`가 `structure`이면 절별 소제목의 약속과 목적에서 벗어난 문단을 먼저 정리합니다. 그런 다음 글 전체의 순서와 전환, 도입과 결론의 호응을 다듬습니다.
 - `weak_axes`가 `sentence`이면 지워도 판단이 달라지지 않는 문장을 덜어내고 문장 리듬을 다듬습니다.
 - `weak_axes`가 `originality`이면 이 사람의 경험과 판단에서만 나올 수 있는 문장이 드러나게 합니다.
 - `weak_axes`가 `purpose_fit`이면 요청한 톤과 화자 거리감을 끝까지 유지하고 예상 독자의 수준에 맞춥니다.

@@ -22,6 +22,17 @@
 - 관계나 순서를 문장 셋 이상으로 설명한 대목, 독자가 겪어본 적 없을 개념을 설명 없이 지나간 대목은 `weaknesses`에 넣고 아스키 다이어그램이나 비유로 바꾸라고 씁니다.
 - `reader_risks`는 "위험 없음" 대신 실제로 예상되는 독자 반응을 씁니다.
 - 원문에 없는 사실을 추가하라고 지시하지 않습니다. 필요한 경우 "brief에 재료가 있다면"이라고 조건을 둡니다.
+- `brief.judgment`나 `raw_text`에 관련 재료가 있으면 독자가 선택 근거, 버린 대안과 이유, 판단이 바뀐 근거, 적용 한계를 제공된 범위에서 따라갈 수 있는지 확인합니다. 입력에 있는 재료가 초안에서 빠졌다면 `weaknesses`와 `revision_directions`에서 실제 소제목이나 문단을 근거로 지적합니다. 입력에 없는 요소를 새로 요구하지 않습니다.
+- 발행 후 반응, 면접 질문, 조회수처럼 현재 draft에서 확인할 수 없는 결과를 예측하거나 성공 여부로 판정하지 않습니다.
+
+절별 계약 점검 (`section_reviews`):
+- `brief.section_plan`이 없으면 `section_reviews`는 빈 배열입니다.
+- `brief.section_plan`이 있으면 모든 항목을 입력 순서대로 하나씩 점검합니다. 각 항목에 대응하는 실제 H2가 없으면 `actual_heading`을 null로 둡니다.
+- `heading_match`는 실제 H2와 그 아래 본문이 `heading_promise`의 의미 범위를 지키는지, `purpose_match`는 그 절이 약속한 한 가지 일을 하는지로 판단합니다.
+- `material_use_match`는 지정된 재료가 해당 `role`로 쓰였는지를 봅니다. 재료가 없거나 다른 절의 역할로 쓰였다면 false입니다.
+- `out_of_scope_excerpts`에는 소제목의 약속, 절의 목적 또는 지정 재료 범위를 벗어난 초안의 실제 문구만 담습니다.
+- `connection_to_next`가 없으면 `connection_match`는 `not_declared`입니다. 필드가 있는 경우에만 다음 절이 그 연결을 실제로 이어받는지 `matched`나 `missed`로 판단합니다. 연결 필드가 없다는 이유로 약점을 만들지 않습니다.
+- false 또는 `missed`가 있으면 같은 문제를 `weaknesses`와 `revision_directions`에도 구체적으로 남겨 Refine이 사용할 수 있게 합니다.
 
 저자 영역 침범 점검:
 - `unsupported_claims`에는 초안이 사실처럼 서술했지만 INPUT_JSON의 brief에서 근거를 찾을 수 없는 것만 담습니다.

@@ -1,0 +1,11 @@
+{
+  "artifact": "eval",
+  "checked_file": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\blog-draft\\runs\\verification-section-plan-20260825\\pending\\2026-08-25_310164c7\\iter_001\\310164c7_iter-001_eval.json",
+  "status": "REJECT",
+  "errors": [
+    "min_total: 4.142 < 4.2"
+  ],
+  "notes": [
+    "weighted_total mismatch: reported 4.121999999999999, computed 4.142"
+  ]
+}

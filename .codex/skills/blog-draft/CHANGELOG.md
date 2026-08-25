@@ -18,6 +18,31 @@
 
 ---
 
+## intake-to-input:base-input (2026-08-25)
+- 변경: 기존 input의 brief를 보존하고 승인된 context 블록만 교체하는 `--base-input` 경로 추가. `section_plan`이 들어오면 기존 `spine`은 제거하고 반대 경우도 동일하게 처리
+- 겨냥: 같은 원문·독자 블록·제약·금지어를 유지한 채 이전 `spine` run과 신규 `section_plan` run을 비교하는 intake 재생성 경로
+- 근거: 사용자가 이전 input으로 section plan을 적용해 비교 실행하도록 요청. 기존 CLI 인자만으로는 `forbidden_phrases`를 포함한 비교 조건을 손실 없이 재현할 수 없었음
+- 검사: section plan 전체 테스트 9개 통과. 기존 raw text·constraints 보존과 `spine` → `section_plan` 교체 테스트 추가
+- 위험: 낮음. 명시적 `--base-input`에서만 작동하며 생성 input은 기존 schema validator를 동일하게 통과함
+- commit: 미커밋
+
+## section-plan:v1 (2026-08-25)
+- 변경: 승인된 절별 작성 계약 `brief.section_plan`을 추가. 절별 `id`, `heading_promise`, `purpose`, source·anchor·role 재료를 필수로 두고 `connection_to_next`는 선택으로 둠
+- 겨냥: 소제목과 본문 범위가 어긋나고 절 사이가 나열처럼 느껴지는 문제
+- 호환: 기존 `brief.spine`은 유지. 새 intake는 `section_plan`을 생성하고 두 필드의 동시 사용은 거부
+- 검사: schema는 선택 연결이 있을 때만 형식을 검사. deterministic validator는 절 id 중복과 source anchor 존재만 검사하고 연결의 존재와 의미는 검사하지 않음
+- 평가: Critique에 `section_reviews`를 추가하고 기존 `structure` 축을 절 적합성과 선언된 연결 준수 기준으로 구체화. 가중치와 통과선은 유지
+- 근거: 사용자 승인. 모든 절에 이어받는 질문을 강제하지 않고 필요한 연결만 계약으로 남김
+- 위험: 중간. section plan을 사용하는 신규 input의 절 범위가 강해지므로 기존 run과 함께 회귀 검증
+- commit: 미커밋
+
+## blog-profile:intake-eval-responsibility (2026-08-25)
+- 변경: `blog-profile.md`에서 intake 필드 매핑과 발행 후 성공 신호를 제거. profile 적용 절차는 `SKILL.md`와 `references/intake-guide.md`로 이동하고, 초안에서 관찰 가능한 판단 과정은 기존 judgment·evidence·reader_fit 축과 critique 기준에 연결
+- 겨냥: 독자 전략, intake 실행, 초안 품질 판정, 발행 후 성과의 책임 분리
+- 근거: 사용자 승인. profile에 실행 규칙과 사후 성과가 함께 있어 eval·critique 책임과 겹친다는 검토
+- 위험: 낮음. rubric 축, 가중치와 threshold는 변경하지 않음
+- commit: 미커밋
+
 ## gen_system:v2 (2026-06-30)
 - 변경: emphasis 주제를 비중 중심으로 삼고 다른 소재는 보조 역할로만 배치하는 지시 추가 (P1)
 - 겨냥 axis: originality

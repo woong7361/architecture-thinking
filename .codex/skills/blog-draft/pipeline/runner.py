@@ -46,6 +46,13 @@ AGENT_CRITIQUE = "critique"
 AGENT_EVAL = "eval"
 AGENT_REFINE = "refine"
 
+PROMPT_VERSIONS = {
+    AGENT_GEN: "gen_system:v3",
+    AGENT_CRITIQUE: "critique_system:v2",
+    AGENT_EVAL: "eval_system:v2",
+    AGENT_REFINE: "refine_system:v2",
+}
+
 CODEX_DEFAULT_MODELS = {
     AGENT_GEN: MODEL_GPT_5_5,
     AGENT_CRITIQUE: MODEL_GPT_5_5,
@@ -354,7 +361,7 @@ def build_draft(
     retried: bool = False,
 ) -> dict:
     metadata = {
-        "prompt_version": f"{source_stage}_system:v1",
+        "prompt_version": PROMPT_VERSIONS[source_stage],
         "source_files": [f'{input_data["brief_hash"]}_input.json'],
     }
     if token_usage:
@@ -380,7 +387,7 @@ def build_critique(
     token_usage: dict | None = None,
 ) -> dict:
     metadata = {
-        "prompt_version": "critique_system:v1",
+        "prompt_version": PROMPT_VERSIONS[AGENT_CRITIQUE],
         "source_files": [
             f'{critique_output["brief_hash"]}_input.json',
             f'{critique_output["brief_hash"]}_iter-{iteration}_draft.json',
@@ -404,7 +411,7 @@ def build_eval(
     token_usage: dict | None = None,
 ) -> dict:
     metadata = {
-        "prompt_version": "eval_system:v1",
+        "prompt_version": PROMPT_VERSIONS[AGENT_EVAL],
         "source_files": [
             f'{eval_output["brief_hash"]}_input.json',
             f'{eval_output["brief_hash"]}_iter-{iteration}_draft.json',

@@ -24,6 +24,9 @@
   caps 상한과 사다리 판정 중 **낮은 쪽**이 점수다.
 - **실제 refactored_code를 근거로** 채점한다 — 특히 `change_minimality`·`testability_improvement`는
   제안 주장이 아니라 코드의 실제 diff로 판정한다.
+- `testability_improvement`의 조건 A를 인정할 때는 대상 객체를 만드는 코드부터 검증 호출까지 최소 호출 순서와
+  필요한 외부 test double 수를 rationale에 적는다. 조건 B를 인정할 때는 규칙 이름, 테스트 케이스, 다른 실패
+  원인이 섞이지 않는 이유를 적는다. assert 개수는 세지 않는다.
 - `behavior_preservation_risk`는 **낮은 위험 = 높은 점수**(정적 판단). 사다리 그대로.
 - 각 축에 **1문장 rationale**을 남긴다 — 왜 그 칸인지 코드/제안의 구체 근거로.
 - weighted_total·PASS/REJECT는 출력하지 마라 — runner가 가중치로 결정적으로 계산한다.
@@ -49,5 +52,5 @@
 }
 ```
 
-- `scores`의 키는 RUBRIC의 축 집합과 **정확히 일치**해야 한다. 각 값은 0~5 정수.
+- `scores`의 키는 RUBRIC의 축 집합과 **정확히 일치**해야 한다. 각 값은 해당 축의 `scale`에 정의된 점수만 쓴다.
 - `rationales`도 같은 축 집합. weighted_total·verdict 등 다른 필드 금지.

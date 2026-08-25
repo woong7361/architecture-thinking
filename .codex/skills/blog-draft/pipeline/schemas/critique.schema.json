@@ -10,6 +10,7 @@
     "weaknesses",
     "revision_directions",
     "reader_risks",
+    "section_reviews",
     "critiqued_at",
     "model",
     "metadata",
@@ -90,6 +91,63 @@
       "items": {
         "type": "string",
         "minLength": 1
+      }
+    },
+    "section_reviews": {
+      "type": "array",
+      "description": "section_plan이 있을 때 절별 계약 준수 결과. section_plan이 없으면 빈 배열",
+      "items": {
+        "type": "object",
+        "required": [
+          "section_id",
+          "actual_heading",
+          "heading_match",
+          "purpose_match",
+          "material_use_match",
+          "out_of_scope_excerpts",
+          "connection_match"
+        ],
+        "properties": {
+          "section_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "actual_heading": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1,
+            "description": "대응하는 실제 H2. 절이 없으면 null"
+          },
+          "heading_match": {
+            "type": "boolean"
+          },
+          "purpose_match": {
+            "type": "boolean"
+          },
+          "material_use_match": {
+            "type": "boolean"
+          },
+          "out_of_scope_excerpts": {
+            "type": "array",
+            "description": "소제목의 약속, 절의 목적 또는 지정 재료 범위를 벗어난 초안의 실제 문구",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "connection_match": {
+            "type": "string",
+            "enum": [
+              "not_declared",
+              "matched",
+              "missed"
+            ],
+            "description": "connection_to_next가 없으면 not_declared. 있는 경우에만 준수 여부를 판단"
+          }
+        },
+        "additionalProperties": false
       }
     },
     "critiqued_at": {

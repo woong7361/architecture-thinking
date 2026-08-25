@@ -80,6 +80,9 @@ def score_eval(ev: dict, rubric: dict) -> dict | None:
         s = scores.get(axis)
         if not isinstance(s, (int, float)):
             return None  # 축 누락
+        allowed_scores = {float(value) for value in spec["scale"]}
+        if float(s) not in allowed_scores:
+            return None  # rubric 사다리에 없는 점수
         weighted += s * spec["weight"]
     th = rubric["thresholds"]
     weak = [a for a, m in th.get("min_axis", {}).items()

@@ -196,7 +196,7 @@ Validate GREEN을 통과한 코드만 리뷰한다. 둘은 **서로 못 보므�
 | `diagnosis_accuracy` | 0.30 | 1 오진/원칙명 없음 → 3 원칙+왜, 일부 누락 → 5 누락0 + 구체 심볼 앵커 + 변경축 연결 |
 | `change_minimality` | 0.25 | 1 무관 대규모 재작성 → 3 한두 곳 과함 → 5 위반1↔파울러기법1 추적가능(B-5 커밋 규율) |
 | `behavior_preservation_risk` | 0.25 | 1 공개계약·예외타입 변경 근거없음 → 3 위험 인지·완화없음 → 5 순수 구조이동만+불변 논증 |
-| `testability_improvement` | 0.20 | 1 언급없음/악화 → 3 어떤 테스트가 쉬워지나 지목 → 5 before(Mock N)→after(K) 수치 + 새요구 격리 |
+| `testability_improvement` | 0.20 | v2: 대상 규칙의 테스트가 외부 test double 0개인지, 규칙 하나만 검증하는지 세어 0개 충족=1점·1개=3점·2개=5점. v1은 `rubrics/refactor.v1.rubric.json`에 보존 |
 
 - `thresholds`: `min_total: 4.0`, `min_axis`: 각 3.5, **`behavior_preservation_risk: 4.0`**(안전 최우선).
 - **이중 방어:** Eval의 `behavior_preservation_risk`는 **정적 판단**, Validate(Step3)는 테스트로 **사실 증명**.

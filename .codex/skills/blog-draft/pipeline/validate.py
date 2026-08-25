@@ -77,6 +77,8 @@ def validate_file(
     schema = load_json(ARTIFACT_SCHEMAS[artifact])
     errors = validate_schema(data, schema)
 
+    if artifact == "input" and isinstance(data, dict):
+        errors += validate_input_contract(data)
     if artifact in {"gen_output", "refine_output"} and isinstance(data, dict):
         errors += validate_content_contract(data.get("content"), artifact)
     if artifact == "draft" and isinstance(data, dict):
@@ -121,6 +123,68 @@ def format_schema_error(error: Any) -> str:
     if error.path:
         path += "".join(f"[{part}]" if isinstance(part, int) else f".{part}" for part in error.path)
     return f"schema {path}: {error.message}"
+
+
+def validate_input_contract(data: dict[str, Any]) -> list[str]:
+    """Check only deterministic section-plan invariants beyond JSON Schema.
+
+    A declared connection is editorial intent, so its presence and semantic
+    quality stay outside this validator. IDs and literal source anchors can be
+    checked without interpreting the writing.
+    """
+    brief = data.get("brief")
+    if not isinstance(brief, dict):
+        return []
+    section_plan = brief.get("section_plan")
+    if not isinstance(section_plan, list):
+        return []
+
+    errors: list[str] = []
+    seen_ids: set[str] = set()
+    for section_index, section in enumerate(section_plan):
+        if not isinstance(section, dict):
+            continue
+        section_id = section.get("id")
+        if isinstance(section_id, str):
+            if section_id in seen_ids:
+                errors.append(f"section_plan duplicate id: {section_id}")
+            seen_ids.add(section_id)
+
+        materials = section.get("materials")
+        if not isinstance(materials, list):
+            continue
+        for material_index, material in enumerate(materials):
+            if not isinstance(material, dict):
+                continue
+            source = material.get("source")
+            anchor = material.get("anchor")
+            if not isinstance(source, str) or not isinstance(anchor, str) or not anchor.strip():
+                continue
+            source_value = brief.get(source)
+            source_texts = list(iter_string_values(source_value))
+            if not source_texts:
+                errors.append(
+                    f"section_plan[{section_index}].materials[{material_index}] source missing: {source}"
+                )
+                continue
+            if not any(anchor in text for text in source_texts):
+                errors.append(
+                    f"section_plan[{section_index}].materials[{material_index}] "
+                    f"anchor not found in {source}: {anchor[:40]}"
+                )
+    return errors
+
+
+def iter_string_values(value: Any):
+    """Yield textual leaves without flattening keys into source material."""
+    if isinstance(value, str):
+        yield value
+    elif isinstance(value, dict):
+        for nested in value.values():
+            yield from iter_string_values(nested)
+    elif isinstance(value, list):
+        for nested in value:
+            yield from iter_string_values(nested)
 
 
 QUOTE_PAIRS = (("“", "”"), ("「", "」"), ('"', '"'))
