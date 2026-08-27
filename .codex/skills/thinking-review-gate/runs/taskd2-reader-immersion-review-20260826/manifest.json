@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "run_id": "taskd2-reader-immersion-review-20260826",
+  "created_at": "2026-08-26T00:21:30.076223+00:00",
+  "model": "gpt-5.5",
+  "paths": {
+    "run_dir": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\thinking-review-gate\\runs\\taskd2-reader-immersion-review-20260826",
+    "input": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\thinking-review-gate\\runs\\taskd2-reader-immersion-review-20260826\\input.md",
+    "attempts_dir": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\thinking-review-gate\\runs\\taskd2-reader-immersion-review-20260826\\attempts",
+    "latest_attempt": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\thinking-review-gate\\runs\\taskd2-reader-immersion-review-20260826\\attempts\\3"
+  },
+  "prompt_templates": {
+    "critique": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\thinking-review-gate\\prompts\\level2-critique.system.md",
+    "eval": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\thinking-review-gate\\prompts\\level2-eval.system.md"
+  }
+}

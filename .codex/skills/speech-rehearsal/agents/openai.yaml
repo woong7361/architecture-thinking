@@ -1,0 +1,4 @@
+interface:
+  display_name: "Speech Rehearsal"
+  short_description: "Diagnose delivery and logic from speech transcripts"
+  default_prompt: "Use $speech-rehearsal to transcribe this recording and diagnose my delivery and logic."

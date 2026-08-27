@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "review-context.schema.json",
+  "title": "Immutable speech review context",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "context_id", "transcript", "metrics", "presentation_plan", "resources"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "context_id": {"type": "string", "pattern": "^[a-f0-9]{12}$"},
+    "transcript": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text", "tokens", "segments", "source"],
+      "properties": {
+        "text": {"type": "string", "minLength": 1},
+        "tokens": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "text", "char_start", "char_end"],
+            "properties": {
+              "id": {"type": "string", "pattern": "^t[0-9]{4,}$"},
+              "text": {"type": "string", "minLength": 1},
+              "char_start": {"type": "integer", "minimum": 0},
+              "char_end": {"type": "integer", "minimum": 1}
+            }
+          }
+        },
+        "segments": {"type": "array", "items": {"type": "object"}},
+        "source": {"type": "object"}
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["whitespace_token_count", "duration_seconds", "tokens_per_minute", "segment_pace"],
+      "properties": {
+        "whitespace_token_count": {"type": "integer", "minimum": 1},
+        "duration_seconds": {"type": ["number", "null"], "exclusiveMinimum": 0},
+        "tokens_per_minute": {"type": ["number", "null"], "minimum": 0},
+        "segment_pace": {"type": "array", "items": {"type": "object"}}
+      }
+    },
+    "presentation_plan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["available", "text", "source"],
+      "properties": {
+        "available": {"type": "boolean"},
+        "text": {"type": ["string", "null"]},
+        "source": {"type": ["object", "null"]}
+      }
+    },
+    "resources": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["delivery", "logic"],
+      "properties": {
+        "delivery": {"$ref": "#/$defs/reviewerResources"},
+        "logic": {"$ref": "#/$defs/reviewerResources"}
+      }
+    }
+  },
+  "$defs": {
+    "resource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+      }
+    },
+    "reviewerResources": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["role", "rubric", "output_schema"],
+      "properties": {
+        "role": {"$ref": "#/$defs/resource"},
+        "rubric": {"$ref": "#/$defs/resource"},
+        "output_schema": {"$ref": "#/$defs/resource"}
+      }
+    }
+  }
+}

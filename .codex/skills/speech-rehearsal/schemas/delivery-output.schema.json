@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "delivery-output.schema.json",
+  "title": "Delivery reviewer output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "reviewer", "overall_summary", "filler_annotations", "findings", "top_actions", "limitations"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "reviewer": {"const": "delivery_reviewer"},
+    "overall_summary": {"type": "string", "minLength": 1},
+    "filler_annotations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["annotation_id", "token_ids", "surface", "label", "confidence", "evidence_quote", "reason"],
+        "properties": {
+          "annotation_id": {"type": "string", "pattern": "^f[0-9]{3,}$"},
+          "token_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^t[0-9]{4,}$"}},
+          "surface": {"type": "string", "minLength": 1},
+          "label": {"enum": ["filler", "lexical", "uncertain"]},
+          "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+          "evidence_quote": {"type": "string", "minLength": 1},
+          "reason": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "findings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/finding"}
+    },
+    "top_actions": {"type": "array", "maxItems": 3, "items": {"type": "string", "minLength": 1}},
+    "limitations": {"type": "array", "items": {"type": "string", "minLength": 1}}
+  },
+  "$defs": {
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["token_ids", "quote"],
+      "properties": {
+        "token_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^t[0-9]{4,}$"}},
+        "quote": {"type": "string"}
+      }
+    },
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["criterion", "status", "evidence", "diagnosis", "impact", "action"],
+      "properties": {
+        "criterion": {"type": "string", "minLength": 1},
+        "status": {"enum": ["good", "caution", "problem", "not_evaluable"]},
+        "evidence": {"type": "array", "items": {"$ref": "#/$defs/evidence"}},
+        "diagnosis": {"type": "string", "minLength": 1},
+        "impact": {"type": "string", "minLength": 1},
+        "action": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

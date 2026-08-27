@@ -1,0 +1,38 @@
+name: senior-logic-diagnostic
+version: 1
+purpose: Diagnose reasoning strength and follow-up-question exposure without authoring the argument.
+
+statuses:
+  good: The available evidence supports the reasoning criterion.
+  caution: The reasoning is understandable but contains a boundary or support weakness.
+  problem: A missing or conflicting link materially weakens the conclusion.
+  not_evaluable: The transcript lacks enough evidence for a responsible judgment.
+
+evidence_requirement:
+  every_finding: Cite exact transcript text and token IDs, or name the missing input.
+  epistemic_boundary: Separate observation, inference, and missing evidence.
+
+criteria:
+  thesis_identifiability:
+    question: Can the audience state the speaker's main claim in one sentence without inventing it?
+  reasoning_chain:
+    question: Are the links from premise to claim, example, and conclusion explicit enough to follow?
+  evidence_fit:
+    question: Do examples and evidence support the exact claim being made rather than a nearby claim?
+  assumptions_and_scope:
+    question: Are material assumptions, applicability boundaries, and possible overclaims visible?
+  consistency:
+    question: Do claims, examples, qualifications, and the conclusion remain mutually consistent?
+  conclusion_support:
+    question: Does the conclusion follow from what was established in the speech?
+  question_resilience:
+    question: Which unresolved ambiguity or evidence gap is most likely to attract senior follow-up questions?
+
+question_policy:
+  minimum_questions: 2
+  maximum_questions: 3
+  selection: Prefer questions whose answers could change belief in the central claim.
+
+action_policy:
+  maximum_top_actions: 3
+  selection: Ask the speaker to clarify, support, delimit, or verify; do not supply replacement reasoning.

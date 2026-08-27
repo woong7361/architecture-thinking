@@ -1,0 +1,35 @@
+name: delivery-diagnostic
+version: 1
+purpose: Diagnose transcript-visible delivery without replacing the speaker's message.
+
+statuses:
+  good: The available evidence shows the criterion is working.
+  caution: The criterion partly works but may reduce clarity or listener retention.
+  problem: The evidence shows a material delivery obstacle.
+  not_evaluable: The provided transcript, timing, or plan cannot support a responsible judgment.
+
+evidence_requirement:
+  every_finding: Cite exact transcript text and token IDs, or name the missing input.
+  measured_vs_inferred: Keep calculated pace values separate from interpretive conclusions.
+
+criteria:
+  filler_and_disfluency:
+    question: Which contextually classified hesitations recur, where do they cluster, and how do they affect delivery?
+    completion: Return occurrence annotations as well as one criterion finding.
+  pace_and_pause:
+    question: Do the available overall or segment pace measurements reveal rushing, dragging, or ineffective pauses?
+    limitation: Use not_evaluable when duration or timestamps are insufficient.
+  verbal_style:
+    question: Do wording habits, repetition, hedging, vague transitions, or sentence shape make the spoken explanation harder to follow?
+  opening:
+    question: Does the opening establish why the audience should listen and what territory the speech will cover?
+  core_message:
+    question: Can a listener identify the central message and distinguish it from supporting material?
+  development_and_transitions:
+    question: Can a listener follow movement between claims, explanations, and examples without reconstructing missing transitions?
+  closing:
+    question: Does the close retrieve the central message and leave a clear final takeaway or next action?
+
+action_policy:
+  maximum_top_actions: 3
+  selection: Choose the few changes most likely to improve the next rehearsal.
