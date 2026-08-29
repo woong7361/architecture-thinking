@@ -1,0 +1,561 @@
+{
+  "schema_version": 1,
+  "text": "안녕하세요. AI 시대 테스트에 대해서 설명을 해보려고 합니다.\n여러분들 전부 다 AI시면서 코드를 짜시고 계시죠?\n그리고 테스트도 AI로 짜고 계시고요.\n근데 테스트가 있다고 정말 안전한 걸까요?\n여러분들의 테스트는 어떤 걸 하고 있나요?\n여러분들의 테스트가 정말 동작을 보장하나요?\nAI가 3분 만에 500줄을 내고 1000줄을 내는데\n그 줄을 테스트가 전부 보장을 하는 건가요?\n그것들을 한번 알아보려고 합니다.\n만약 테스트라는 판정이 없다면 어떻게 판단을 하나요?\n사람의 인상으로 이 코드 좀 괜찮은데\n혹은 이 코드 좀 나쁜 것 같은데\n혹은 AI의 판단으로 AI한테 이 코드 분석해 주라고 했을 때\n그 결과들은 항상 달라집니다.\n항상 흔들리게 되죠.\n그렇다면 판정 테스트 코드가 있다면 그것은 괜찮은 건가요?\n테스트 코드가 있다는 것은 그 코드가 안전하다는 건가요?\n그거는 맞을 수도 있고 아닐 수도 있습니다.\n테스트의 초록 빨강은\n그 테스트가 주어진 입력에 대해서 동작을 보장한다는 것이지\n모든 케이스에 대해서 그것이 안정하다는 것은 아닙니다.\n그렇다면 이를 어떻게 나올 수 있을까요?\n사각지된 언제든 나올 수 있습니다.\n중간에 내가 작업을 하다는 생각이 날 수도 있고\n빠진 케이스가\n혹은 다른 서드파티나 라이브러리 업데이트에서\n갑자기 에러가 생길 수도 있고\n혹은 코드를 수정하다가 갑자기 어느 부분에서\n이게 막힐 수도 있고\n되게 다양한 곳에서 예상치 못한 곳에서\n그런 것들이 나올 수 있습니다.\n이들을 테스트가 전부 다 막을 수 있을까요?\n예를 들어 보죠.\n함불 도메인은서 제가 AI에게 테스트 코드를 짜들려고\n평가를 맡겨봤습니다.\n두 가지로 맡겨봤는데요.\nAI에게 테스트 이 코드를 막 평가를 맡긴 것 같아요.\n제가 인수 테스트 18권을 짜서\n이 코드를 평가해 달라고 했습니다.\nAI에게 맡겼을 때는\n어떨 때는 로우두권\n어떨 때는 하이색권\n이렇게 어떨 때는 이게 괜찮습니다.\n어쩔 때는 이거 치명적인 이로우가 있습니다.\n이런 것들이 내가 생각하지도 못한\n좋은 지점을 지적할 때도 있지만\n지적하면 안 되는 것들을 지적할 때도 있고\n지적을 못할 때도 있습니다.\n되게 흔들리고 결과가 흔들리고 있는 거죠.\n하지만 내가 만든 인수 테스트 18쪽으로 검증했을 때는\n18개 중에 16개를 통과했고\n예를 들어서\n두 개는 틀림 명확한 응답을 얻었다고\n응답을 얻었습니다.\n항상 동일한 결과와 피드백이 온 것이죠.\n하지만 초록이 항상 오랬냐?\n그건 아닙니다.\n이 테스트가\n예를 들어서 제 1알 계산 부분이\n테스트 케이스로 커버리지가 되어있었지만\n단올린 부분에서\n올린 부분과 커버리지가 되어있고\n버린 부분은 사실 입력이 되지 않아서\n그쪽이 비어있어서 문제가 있는 부분이 있었습니다.\n저는 이 부분을 결함줄을 통해 막아 보려고 했고요.\n일부러 결함이 있는 입력이나\n혹은 결함이 있는 것\n테스트를 바꿔서\n코드를 약간 바꿔 테스트가 정상적으로 보는 것을\n정상적으로 도는 것을 보고\n혹은 문제가 있는 것을 보고\n그것들을 막으려고 했습니다.\n결론적으로 테스트라는 것은\n먼저 인상으로 결정한 것이 아니\n흔들리지 않는 저의 대전 게이트라는 것이\n되게 중요합니다.\n위처럼 이제 계속 바뀌지 않고\n이것이 내가 딱 이걸 봤을 때\n아 이거는 그래도 이거에 대해서는\n되게 정확히 동작한다\n동작을 보장한다\n하지만 아까 말했듯이\n그것이 항상 안전하다는 것은\n그것을 보장한다는 것은 아닙니다.\n그래서 테스트 코드가 그냥 단순히 있는 게 아니라\n가장 중요한 것은\n이것을 통과하는 입력이 어떤 것인지\n이것이 정말 어떤 것을 보장하는 것인지\n이 테스트가 그냥 잘못된 것은 아닌지\n그런 것이 더 중요하다고 생각합니다.\n그렇기 때문에\n여기서 당신이 한번 해볼 수 있는 것은\n테스트 코드가 있다면\n초록인 테스트 코드를 하나를 골라서\n부동 하나를 씹어보는 겁니다.\n혹은 입력을 바꿔보던가\n코드를 조금 바꿔보는 겁니다.\n그렇다면 그 코드가 계속 초록이라면\n당신은 있고\n정말 쓸모없는 테스트 코드를\n하나 버려낼 수 있고\n그 테스트가 빨강으로 된다면\n이 테스트가 정말\n어떤 걸 검색하고 있거나\n중요한 걸 검증하고 있구나\n라는 것을 알 수 있습니다.\n1분을 또 자여\n단순히 진정한 게이트를 얻을 수 있는 것입니다.\n감사합니다.",
+  "duration_seconds": 327.488,
+  "language": "ko",
+  "language_probability": 1,
+  "segments": [
+    {
+      "start_seconds": 0.98,
+      "end_seconds": 6.08,
+      "text": "안녕하세요. AI 시대 테스트에 대해서 설명을 해보려고 합니다."
+    },
+    {
+      "start_seconds": 6.08,
+      "end_seconds": 10.68,
+      "text": "여러분들 전부 다 AI시면서 코드를 짜시고 계시죠?"
+    },
+    {
+      "start_seconds": 10.68,
+      "end_seconds": 14.78,
+      "text": "그리고 테스트도 AI로 짜고 계시고요."
+    },
+    {
+      "start_seconds": 14.78,
+      "end_seconds": 19.58,
+      "text": "근데 테스트가 있다고 정말 안전한 걸까요?"
+    },
+    {
+      "start_seconds": 19.58,
+      "end_seconds": 22.28,
+      "text": "여러분들의 테스트는 어떤 걸 하고 있나요?"
+    },
+    {
+      "start_seconds": 22.28,
+      "end_seconds": 28.65,
+      "text": "여러분들의 테스트가 정말 동작을 보장하나요?"
+    },
+    {
+      "start_seconds": 28.75,
+      "end_seconds": 33.45,
+      "text": "AI가 3분 만에 500줄을 내고 1000줄을 내는데"
+    },
+    {
+      "start_seconds": 33.45,
+      "end_seconds": 38.85,
+      "text": "그 줄을 테스트가 전부 보장을 하는 건가요?"
+    },
+    {
+      "start_seconds": 38.85,
+      "end_seconds": 42.45,
+      "text": "그것들을 한번 알아보려고 합니다."
+    },
+    {
+      "start_seconds": 42.45,
+      "end_seconds": 48.35,
+      "text": "만약 테스트라는 판정이 없다면 어떻게 판단을 하나요?"
+    },
+    {
+      "start_seconds": 48.35,
+      "end_seconds": 52.55,
+      "text": "사람의 인상으로 이 코드 좀 괜찮은데"
+    },
+    {
+      "start_seconds": 52.55,
+      "end_seconds": 54.85,
+      "text": "혹은 이 코드 좀 나쁜 것 같은데"
+    },
+    {
+      "start_seconds": 54.85,
+      "end_seconds": 59.95,
+      "text": "혹은 AI의 판단으로 AI한테 이 코드 분석해 주라고 했을 때"
+    },
+    {
+      "start_seconds": 59.95,
+      "end_seconds": 64.95,
+      "text": "그 결과들은 항상 달라집니다."
+    },
+    {
+      "start_seconds": 64.95,
+      "end_seconds": 66.45,
+      "text": "항상 흔들리게 되죠."
+    },
+    {
+      "start_seconds": 66.45,
+      "end_seconds": 70.65,
+      "text": "그렇다면 판정 테스트 코드가 있다면 그것은 괜찮은 건가요?"
+    },
+    {
+      "start_seconds": 70.65,
+      "end_seconds": 75.05,
+      "text": "테스트 코드가 있다는 것은 그 코드가 안전하다는 건가요?"
+    },
+    {
+      "start_seconds": 75.05,
+      "end_seconds": 78.35,
+      "text": "그거는 맞을 수도 있고 아닐 수도 있습니다."
+    },
+    {
+      "start_seconds": 78.35,
+      "end_seconds": 80.25,
+      "text": "테스트의 초록 빨강은"
+    },
+    {
+      "start_seconds": 80.25,
+      "end_seconds": 85.35,
+      "text": "그 테스트가 주어진 입력에 대해서 동작을 보장한다는 것이지"
+    },
+    {
+      "start_seconds": 85.35,
+      "end_seconds": 89.75,
+      "text": "모든 케이스에 대해서 그것이 안정하다는 것은 아닙니다."
+    },
+    {
+      "start_seconds": 89.75,
+      "end_seconds": 93.45,
+      "text": "그렇다면 이를 어떻게 나올 수 있을까요?"
+    },
+    {
+      "start_seconds": 93.45,
+      "end_seconds": 96.15,
+      "text": "사각지된 언제든 나올 수 있습니다."
+    },
+    {
+      "start_seconds": 96.15,
+      "end_seconds": 98.95,
+      "text": "중간에 내가 작업을 하다는 생각이 날 수도 있고"
+    },
+    {
+      "start_seconds": 98.95,
+      "end_seconds": 100.55,
+      "text": "빠진 케이스가"
+    },
+    {
+      "start_seconds": 100.55,
+      "end_seconds": 105.35,
+      "text": "혹은 다른 서드파티나 라이브러리 업데이트에서"
+    },
+    {
+      "start_seconds": 105.35,
+      "end_seconds": 108.45,
+      "text": "갑자기 에러가 생길 수도 있고"
+    },
+    {
+      "start_seconds": 108.45,
+      "end_seconds": 111.85,
+      "text": "혹은 코드를 수정하다가 갑자기 어느 부분에서"
+    },
+    {
+      "start_seconds": 111.85,
+      "end_seconds": 113.45,
+      "text": "이게 막힐 수도 있고"
+    },
+    {
+      "start_seconds": 113.45,
+      "end_seconds": 116.25,
+      "text": "되게 다양한 곳에서 예상치 못한 곳에서"
+    },
+    {
+      "start_seconds": 116.25,
+      "end_seconds": 119.05,
+      "text": "그런 것들이 나올 수 있습니다."
+    },
+    {
+      "start_seconds": 119.05,
+      "end_seconds": 122.55,
+      "text": "이들을 테스트가 전부 다 막을 수 있을까요?"
+    },
+    {
+      "start_seconds": 122.55,
+      "end_seconds": 125.15,
+      "text": "예를 들어 보죠."
+    },
+    {
+      "start_seconds": 125.15,
+      "end_seconds": 129.75,
+      "text": "함불 도메인은서 제가 AI에게 테스트 코드를 짜들려고"
+    },
+    {
+      "start_seconds": 129.75,
+      "end_seconds": 131.55,
+      "text": "평가를 맡겨봤습니다."
+    },
+    {
+      "start_seconds": 131.55,
+      "end_seconds": 133.25,
+      "text": "두 가지로 맡겨봤는데요."
+    },
+    {
+      "start_seconds": 133.25,
+      "end_seconds": 139.7,
+      "text": "AI에게 테스트 이 코드를 막 평가를 맡긴 것 같아요."
+    },
+    {
+      "start_seconds": 139.7,
+      "end_seconds": 142.7,
+      "text": "제가 인수 테스트 18권을 짜서"
+    },
+    {
+      "start_seconds": 142.7,
+      "end_seconds": 146.2,
+      "text": "이 코드를 평가해 달라고 했습니다."
+    },
+    {
+      "start_seconds": 146.2,
+      "end_seconds": 147.9,
+      "text": "AI에게 맡겼을 때는"
+    },
+    {
+      "start_seconds": 147.9,
+      "end_seconds": 149.7,
+      "text": "어떨 때는 로우두권"
+    },
+    {
+      "start_seconds": 149.7,
+      "end_seconds": 151.3,
+      "text": "어떨 때는 하이색권"
+    },
+    {
+      "start_seconds": 151.3,
+      "end_seconds": 154.8,
+      "text": "이렇게 어떨 때는 이게 괜찮습니다."
+    },
+    {
+      "start_seconds": 154.8,
+      "end_seconds": 158.3,
+      "text": "어쩔 때는 이거 치명적인 이로우가 있습니다."
+    },
+    {
+      "start_seconds": 158.3,
+      "end_seconds": 161.0,
+      "text": "이런 것들이 내가 생각하지도 못한"
+    },
+    {
+      "start_seconds": 161.0,
+      "end_seconds": 163.1,
+      "text": "좋은 지점을 지적할 때도 있지만"
+    },
+    {
+      "start_seconds": 163.1,
+      "end_seconds": 165.9,
+      "text": "지적하면 안 되는 것들을 지적할 때도 있고"
+    },
+    {
+      "start_seconds": 165.9,
+      "end_seconds": 168.9,
+      "text": "지적을 못할 때도 있습니다."
+    },
+    {
+      "start_seconds": 168.9,
+      "end_seconds": 172.2,
+      "text": "되게 흔들리고 결과가 흔들리고 있는 거죠."
+    },
+    {
+      "start_seconds": 172.2,
+      "end_seconds": 175.9,
+      "text": "하지만 내가 만든 인수 테스트 18쪽으로 검증했을 때는"
+    },
+    {
+      "start_seconds": 175.9,
+      "end_seconds": 178.8,
+      "text": "18개 중에 16개를 통과했고"
+    },
+    {
+      "start_seconds": 178.8,
+      "end_seconds": 180.1,
+      "text": "예를 들어서"
+    },
+    {
+      "start_seconds": 180.1,
+      "end_seconds": 184.3,
+      "text": "두 개는 틀림 명확한 응답을 얻었다고"
+    },
+    {
+      "start_seconds": 184.3,
+      "end_seconds": 186.1,
+      "text": "응답을 얻었습니다."
+    },
+    {
+      "start_seconds": 186.1,
+      "end_seconds": 190.4,
+      "text": "항상 동일한 결과와 피드백이 온 것이죠."
+    },
+    {
+      "start_seconds": 190.4,
+      "end_seconds": 193.1,
+      "text": "하지만 초록이 항상 오랬냐?"
+    },
+    {
+      "start_seconds": 193.1,
+      "end_seconds": 194.5,
+      "text": "그건 아닙니다."
+    },
+    {
+      "start_seconds": 194.5,
+      "end_seconds": 196.1,
+      "text": "이 테스트가"
+    },
+    {
+      "start_seconds": 196.1,
+      "end_seconds": 199.8,
+      "text": "예를 들어서 제 1알 계산 부분이"
+    },
+    {
+      "start_seconds": 199.8,
+      "end_seconds": 203.1,
+      "text": "테스트 케이스로 커버리지가 되어있었지만"
+    },
+    {
+      "start_seconds": 203.1,
+      "end_seconds": 204.9,
+      "text": "단올린 부분에서"
+    },
+    {
+      "start_seconds": 204.9,
+      "end_seconds": 207.7,
+      "text": "올린 부분과 커버리지가 되어있고"
+    },
+    {
+      "start_seconds": 207.7,
+      "end_seconds": 213.0,
+      "text": "버린 부분은 사실 입력이 되지 않아서"
+    },
+    {
+      "start_seconds": 213.0,
+      "end_seconds": 217.1,
+      "text": "그쪽이 비어있어서 문제가 있는 부분이 있었습니다."
+    },
+    {
+      "start_seconds": 217.1,
+      "end_seconds": 220.1,
+      "text": "저는 이 부분을 결함줄을 통해 막아 보려고 했고요."
+    },
+    {
+      "start_seconds": 220.1,
+      "end_seconds": 222.8,
+      "text": "일부러 결함이 있는 입력이나"
+    },
+    {
+      "start_seconds": 222.8,
+      "end_seconds": 225.0,
+      "text": "혹은 결함이 있는 것"
+    },
+    {
+      "start_seconds": 225.0,
+      "end_seconds": 226.9,
+      "text": "테스트를 바꿔서"
+    },
+    {
+      "start_seconds": 226.9,
+      "end_seconds": 231.5,
+      "text": "코드를 약간 바꿔 테스트가 정상적으로 보는 것을"
+    },
+    {
+      "start_seconds": 231.5,
+      "end_seconds": 234.0,
+      "text": "정상적으로 도는 것을 보고"
+    },
+    {
+      "start_seconds": 234.0,
+      "end_seconds": 236.1,
+      "text": "혹은 문제가 있는 것을 보고"
+    },
+    {
+      "start_seconds": 236.1,
+      "end_seconds": 238.9,
+      "text": "그것들을 막으려고 했습니다."
+    },
+    {
+      "start_seconds": 238.9,
+      "end_seconds": 240.8,
+      "text": "결론적으로 테스트라는 것은"
+    },
+    {
+      "start_seconds": 240.8,
+      "end_seconds": 243.2,
+      "text": "먼저 인상으로 결정한 것이 아니"
+    },
+    {
+      "start_seconds": 243.2,
+      "end_seconds": 246.4,
+      "text": "흔들리지 않는 저의 대전 게이트라는 것이"
+    },
+    {
+      "start_seconds": 246.4,
+      "end_seconds": 248.9,
+      "text": "되게 중요합니다."
+    },
+    {
+      "start_seconds": 248.9,
+      "end_seconds": 251.6,
+      "text": "위처럼 이제 계속 바뀌지 않고"
+    },
+    {
+      "start_seconds": 251.6,
+      "end_seconds": 254.3,
+      "text": "이것이 내가 딱 이걸 봤을 때"
+    },
+    {
+      "start_seconds": 254.3,
+      "end_seconds": 256.2,
+      "text": "아 이거는 그래도 이거에 대해서는"
+    },
+    {
+      "start_seconds": 256.2,
+      "end_seconds": 258.1,
+      "text": "되게 정확히 동작한다"
+    },
+    {
+      "start_seconds": 258.1,
+      "end_seconds": 260.2,
+      "text": "동작을 보장한다"
+    },
+    {
+      "start_seconds": 260.2,
+      "end_seconds": 261.4,
+      "text": "하지만 아까 말했듯이"
+    },
+    {
+      "start_seconds": 261.4,
+      "end_seconds": 263.7,
+      "text": "그것이 항상 안전하다는 것은"
+    },
+    {
+      "start_seconds": 263.7,
+      "end_seconds": 267.0,
+      "text": "그것을 보장한다는 것은 아닙니다."
+    },
+    {
+      "start_seconds": 267.0,
+      "end_seconds": 270.2,
+      "text": "그래서 테스트 코드가 그냥 단순히 있는 게 아니라"
+    },
+    {
+      "start_seconds": 270.2,
+      "end_seconds": 271.8,
+      "text": "가장 중요한 것은"
+    },
+    {
+      "start_seconds": 271.8,
+      "end_seconds": 274.5,
+      "text": "이것을 통과하는 입력이 어떤 것인지"
+    },
+    {
+      "start_seconds": 274.5,
+      "end_seconds": 277.1,
+      "text": "이것이 정말 어떤 것을 보장하는 것인지"
+    },
+    {
+      "start_seconds": 277.1,
+      "end_seconds": 280.8,
+      "text": "이 테스트가 그냥 잘못된 것은 아닌지"
+    },
+    {
+      "start_seconds": 280.8,
+      "end_seconds": 283.5,
+      "text": "그런 것이 더 중요하다고 생각합니다."
+    },
+    {
+      "start_seconds": 283.5,
+      "end_seconds": 285.1,
+      "text": "그렇기 때문에"
+    },
+    {
+      "start_seconds": 285.1,
+      "end_seconds": 288.7,
+      "text": "여기서 당신이 한번 해볼 수 있는 것은"
+    },
+    {
+      "start_seconds": 288.7,
+      "end_seconds": 290.2,
+      "text": "테스트 코드가 있다면"
+    },
+    {
+      "start_seconds": 290.2,
+      "end_seconds": 292.0,
+      "text": "초록인 테스트 코드를 하나를 골라서"
+    },
+    {
+      "start_seconds": 292.0,
+      "end_seconds": 293.8,
+      "text": "부동 하나를 씹어보는 겁니다."
+    },
+    {
+      "start_seconds": 293.8,
+      "end_seconds": 296.2,
+      "text": "혹은 입력을 바꿔보던가"
+    },
+    {
+      "start_seconds": 296.2,
+      "end_seconds": 299.4,
+      "text": "코드를 조금 바꿔보는 겁니다."
+    },
+    {
+      "start_seconds": 299.4,
+      "end_seconds": 302.8,
+      "text": "그렇다면 그 코드가 계속 초록이라면"
+    },
+    {
+      "start_seconds": 302.8,
+      "end_seconds": 304.6,
+      "text": "당신은 있고"
+    },
+    {
+      "start_seconds": 304.6,
+      "end_seconds": 306.9,
+      "text": "정말 쓸모없는 테스트 코드를"
+    },
+    {
+      "start_seconds": 306.9,
+      "end_seconds": 309.1,
+      "text": "하나 버려낼 수 있고"
+    },
+    {
+      "start_seconds": 309.1,
+      "end_seconds": 312.2,
+      "text": "그 테스트가 빨강으로 된다면"
+    },
+    {
+      "start_seconds": 312.2,
+      "end_seconds": 314.3,
+      "text": "이 테스트가 정말"
+    },
+    {
+      "start_seconds": 314.3,
+      "end_seconds": 315.9,
+      "text": "어떤 걸 검색하고 있거나"
+    },
+    {
+      "start_seconds": 315.9,
+      "end_seconds": 317.4,
+      "text": "중요한 걸 검증하고 있구나"
+    },
+    {
+      "start_seconds": 317.4,
+      "end_seconds": 319.4,
+      "text": "라는 것을 알 수 있습니다."
+    },
+    {
+      "start_seconds": 319.4,
+      "end_seconds": 320.3,
+      "text": "1분을 또 자여"
+    },
+    {
+      "start_seconds": 320.3,
+      "end_seconds": 324.73,
+      "text": "단순히 진정한 게이트를 얻을 수 있는 것입니다."
+    },
+    {
+      "start_seconds": 324.73,
+      "end_seconds": 325.53,
+      "text": "감사합니다."
+    }
+  ],
+  "source": {
+    "path": "/home/woong/workspace/project/architecture-thinking/task4/assignments/test-explantion.m4a",
+    "sha256": "8b96d671cf7b43daad74e3168d3a91798a14cd7f5dd18f3bfaeecab7564053fd"
+  },
+  "provider": "local-faster-whisper",
+  "model": "small",
+  "elapsed_seconds": 357.075
+}

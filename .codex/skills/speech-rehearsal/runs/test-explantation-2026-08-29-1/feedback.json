@@ -1,0 +1,1008 @@
+{
+  "schema_version": 1,
+  "context_id": "7efb8b51809f",
+  "metrics": {
+    "whitespace_token_count": 525,
+    "duration_seconds": 325.0,
+    "tokens_per_minute": 96.92,
+    "segment_pace": []
+  },
+  "filler_summary": {
+    "confirmed_filler_count": 3,
+    "lexical_count": 1,
+    "uncertain_count": 0,
+    "confirmed_fillers_per_minute": 0.55,
+    "confirmed_filler_surfaces": {
+      "아니": 1,
+      "이제": 2
+    }
+  },
+  "delivery_review": {
+    "schema_version": 1,
+    "reviewer": "delivery_reviewer",
+    "overall_summary": "The speech has a clear delivery target: AI-era tests should function as a stable gate, not as vague reassurance. The opening and closing are relatively strong because they speak to the audience directly and end with a concrete action. The main delivery risk is the middle: generic transitions, repeated pronouns, and visible sentence repair make listeners reconstruct how each example supports the central point.",
+    "filler_annotations": [
+      {
+        "annotation_id": "f001",
+        "token_ids": [
+          "t0080"
+        ],
+        "surface": "이제",
+        "label": "filler",
+        "confidence": 0.78,
+        "evidence_quote": "그렇다면 이제 판정, 테스트 코드가 있다면",
+        "reason": "Here \"이제\" does not add time meaning; it works as a planning bridge before the next concept."
+      },
+      {
+        "annotation_id": "f002",
+        "token_ids": [
+          "t0113"
+        ],
+        "surface": "이제",
+        "label": "filler",
+        "confidence": 0.82,
+        "evidence_quote": "주어진 입력에 대해서 이제 동작을 보장한다는",
+        "reason": "The word interrupts the definition and functions as a non-semantic verbal pause."
+      },
+      {
+        "annotation_id": "f003",
+        "token_ids": [
+          "t0224"
+        ],
+        "surface": "아니",
+        "label": "filler",
+        "confidence": 0.86,
+        "evidence_quote": "Ai에게 테스트, 아니 이 코드를 평가를",
+        "reason": "This is a repair marker replacing the previous phrase, not a semantic negation."
+      },
+      {
+        "annotation_id": "f004",
+        "token_ids": [
+          "t0374"
+        ],
+        "surface": "아",
+        "label": "lexical",
+        "confidence": 0.62,
+        "evidence_quote": "내가 딱 이걸 봤을 때 아 이거는 그래도",
+        "reason": "This appears to represent an internal realization being quoted, so it is not clearly a hesitation filler."
+      }
+    ],
+    "findings": [
+      {
+        "criterion": "filler_and_disfluency",
+        "status": "caution",
+        "evidence": [
+          {
+            "token_ids": [
+              "t0080",
+              "t0081",
+              "t0082",
+              "t0083"
+            ],
+            "quote": "이제 판정, 테스트 코드가"
+          },
+          {
+            "token_ids": [
+              "t0110",
+              "t0111",
+              "t0112",
+              "t0113",
+              "t0114",
+              "t0115"
+            ],
+            "quote": "주어진 입력에 대해서 이제 동작을 보장한다는"
+          },
+          {
+            "token_ids": [
+              "t0222",
+              "t0223",
+              "t0224",
+              "t0225",
+              "t0226",
+              "t0227"
+            ],
+            "quote": "Ai에게 테스트, 아니 이 코드를 평가를"
+          }
+        ],
+        "diagnosis": "Fillers are not constant across the whole transcript, but they appear at important definition and example-entry moments. The repair at the refund example makes the setup sound improvised.",
+        "impact": "Listeners may hear the speaker searching for the next route exactly when they need clean signposts.",
+        "action": "Rehearse the pivot sentences around \"판정\", \"초록의 의미\", and \"예시\" with a silent pause before each pivot instead of filling the gap."
+      },
+      {
+        "criterion": "pace_and_pause",
+        "status": "not_evaluable",
+        "evidence": [
+          {
+            "token_ids": [
+              "t0006",
+              "t0007"
+            ],
+            "quote": "总时长:           5分钟25秒"
+          }
+        ],
+        "diagnosis": "The context provides overall duration and an overall metric of 96.92 whitespace tokens per minute, but segment_pace is empty and the transcript does not preserve pause lengths.",
+        "impact": "I cannot responsibly judge rushing, dragging, or ineffective pauses from the available evidence.",
+        "action": "For the next review, provide segment-level pace or audio-derived pause timestamps so pace can be diagnosed separately from wording."
+      },
+      {
+        "criterion": "verbal_style",
+        "status": "problem",
+        "evidence": [
+          {
+            "token_ids": [
+              "t0130",
+              "t0131",
+              "t0132",
+              "t0133",
+              "t0134",
+              "t0135",
+              "t0136",
+              "t0137",
+              "t0138",
+              "t0139",
+              "t0140",
+              "t0141",
+              "t0142",
+              "t0143",
+              "t0144",
+              "t0145",
+              "t0146",
+              "t0147",
+              "t0148",
+              "t0149",
+              "t0150",
+              "t0151",
+              "t0152",
+              "t0153",
+              "t0154",
+              "t0155"
+            ],
+            "quote": "사각지대는 언제든 나올 수 있습니다. 중간에 내가 작업을 하다 생각날 수도 있고 맞은 케이스가 혹은 다른 서드 파티 나 라이브러리 업데이트에서 갑자기 에러가 생길 수도 있고"
+          },
+          {
+            "token_ids": [
+              "t0364",
+              "t0365",
+              "t0366",
+              "t0367",
+              "t0368",
+              "t0369",
+              "t0370",
+              "t0371",
+              "t0372",
+              "t0373",
+              "t0374",
+              "t0375",
+              "t0376",
+              "t0377",
+              "t0378",
+              "t0379",
+              "t0380",
+              "t0381",
+              "t0382",
+              "t0383"
+            ],
+            "quote": "이처럼 계속 바뀌지 않고 이것이 내가 딱 이걸 봤을 때 아 이거는 그래도 이거에 대해서는 되게 정확히 동작한다 동작을 보장한다"
+          }
+        ],
+        "diagnosis": "The delivery relies heavily on broad referents like \"이것\", \"그것\", and \"그런 것들\", plus stacked clauses ending in repeated \"수도 있고\" patterns.",
+        "impact": "The listener has to infer which object is being discussed: test code, test input, AI evaluation, coverage, or the gate itself.",
+        "action": "Replace vague referents at key points with the noun you mean, especially \"테스트 입력\", \"초록 결과\", \"판정 기준\", and \"사각지대\"."
+      },
+      {
+        "criterion": "opening",
+        "status": "good",
+        "evidence": [
+          {
+            "token_ids": [
+              "t0017",
+              "t0018",
+              "t0019",
+              "t0020",
+              "t0021",
+              "t0022",
+              "t0023",
+              "t0024"
+            ],
+            "quote": "안녕하세요. AI 시대의 테스트에 대해서 설명을 해보려고 합니다."
+          },
+          {
+            "token_ids": [
+              "t0038",
+              "t0039",
+              "t0040",
+              "t0041",
+              "t0042",
+              "t0043",
+              "t0044",
+              "t0045",
+              "t0046",
+              "t0047",
+              "t0048",
+              "t0049"
+            ],
+            "quote": "근데 테스트가 있다고 정말 안전한 걸까요? 여러분들의 테스트는 어떤 걸 하고 있나요?"
+          },
+          {
+            "token_ids": [
+              "t0057",
+              "t0058",
+              "t0059",
+              "t0060",
+              "t0061",
+              "t0062",
+              "t0063",
+              "t0064",
+              "t0065",
+              "t0066",
+              "t0067",
+              "t0068",
+              "t0069"
+            ],
+            "quote": "Ai가 3분만에 500줄을 내고 1000줄을 냈는데 그 줄들을 테스트가 전부 보장을 하는 건가요?"
+          }
+        ],
+        "diagnosis": "The opening quickly names the topic and frames a real audience concern: AI-generated code and whether tests actually guarantee behavior.",
+        "impact": "The listener gets a practical reason to listen before the speaker enters definitions or examples.",
+        "action": "Keep the audience-question opening, but end it with the central gate sentence so the following sections have a stronger anchor."
+      },
+      {
+        "criterion": "core_message",
+        "status": "caution",
+        "evidence": [
+          {
+            "token_ids": [
+              "t0350",
+              "t0351",
+              "t0352",
+              "t0353",
+              "t0354",
+              "t0355",
+              "t0356",
+              "t0357",
+              "t0358",
+              "t0359",
+              "t0360",
+              "t0361",
+              "t0362",
+              "t0363"
+            ],
+            "quote": "결론적으로 테스트란 것은 먼저 인상으로 결정한 것이 아니라 흔들리지 않는 절대적 게이트라는 것이 중요합니다."
+          },
+          {
+            "token_ids": [
+              "t0413",
+              "t0414",
+              "t0415",
+              "t0416",
+              "t0417",
+              "t0418",
+              "t0419",
+              "t0420",
+              "t0421",
+              "t0422",
+              "t0423",
+              "t0424",
+              "t0425",
+              "t0426",
+              "t0427",
+              "t0428",
+              "t0429",
+              "t0430",
+              "t0431",
+              "t0432",
+              "t0433",
+              "t0434",
+              "t0435",
+              "t0436",
+              "t0437",
+              "t0438",
+              "t0439",
+              "t0440",
+              "t0441",
+              "t0442",
+              "t0443",
+              "t0444",
+              "t0445"
+            ],
+            "quote": "그래서 테스트 코드가 그냥 단순히 있는 게 아니라 가장 중요한 것은 이것을 통과하는 입력이 어떤 것인지 이것이 정말 어떤 것을 보장하는 것인지 이 테스트가 그냥 잘못된 것은 아닌지 그런 것이 더 중요하다고 생각합니다."
+          }
+        ],
+        "diagnosis": "The central message is identifiable, especially in the latter half, but it arrives after several question chains and example fragments.",
+        "impact": "A listener may understand the thesis only retrospectively rather than using it to organize the whole speech from the beginning.",
+        "action": "Move the \"흔들리지 않는 게이트\" message into the first minute, then use each example as proof of that one sentence."
+      },
+      {
+        "criterion": "development_and_transitions",
+        "status": "problem",
+        "evidence": [
+          {
+            "token_ids": [
+              "t0076",
+              "t0077",
+              "t0078",
+              "t0079",
+              "t0080",
+              "t0081",
+              "t0082",
+              "t0083",
+              "t0084",
+              "t0085",
+              "t0086",
+              "t0087"
+            ],
+            "quote": "항상 흔들리게 되죠. 그렇다면 이제 판정, 테스트 코드가 있다면 그것은 괜찮은 건가요?"
+          },
+          {
+            "token_ids": [
+              "t0199",
+              "t0200",
+              "t0201",
+              "t0202",
+              "t0203",
+              "t0204",
+              "t0205",
+              "t0206",
+              "t0207",
+              "t0208",
+              "t0209",
+              "t0210",
+              "t0211",
+              "t0212",
+              "t0213",
+              "t0214",
+              "t0215",
+              "t0216",
+              "t0217",
+              "t0218"
+            ],
+            "quote": "이들을 테스트가 전부 다 막을 수 있을까요? 예를 들어보죠. 환불 도메인에서 제가 Ai에게 테스트 코드를 짜달라고 하고 그 평가를 맡겨보았습니다."
+          },
+          {
+            "token_ids": [
+              "t0273",
+              "t0274",
+              "t0275",
+              "t0276",
+              "t0277",
+              "t0278",
+              "t0279",
+              "t0280",
+              "t0281",
+              "t0282",
+              "t0283",
+              "t0284",
+              "t0285",
+              "t0286",
+              "t0287",
+              "t0288",
+              "t0289",
+              "t0290"
+            ],
+            "quote": "하지만 초록이 항상 옳았냐? 그건 아닙니다. 이 테스트가. 예를 들어서 제 일할계산 부분이 테스트 케이스로 커버리지가 되어 있었지만"
+          }
+        ],
+        "diagnosis": "Transitions use broad words like \"그렇다면\", \"이들을\", and \"하지만\" without always stating the relationship between the previous claim and the next example.",
+        "impact": "The audience has to reconstruct why AI evaluation, 18 acceptance tests, coverage, rounding, and defect injection belong to the same argument.",
+        "action": "Before each example, say which claim it proves: instability of impression, limited meaning of green, or remaining blind spots."
+      },
+      {
+        "criterion": "closing",
+        "status": "good",
+        "evidence": [
+          {
+            "token_ids": [
+              "t0457",
+              "t0458",
+              "t0459",
+              "t0460",
+              "t0461",
+              "t0462",
+              "t0463",
+              "t0464",
+              "t0465",
+              "t0466",
+              "t0467",
+              "t0468"
+            ],
+            "quote": "테스트 코드가 있다면 초록인 테스트 코드를 하나 골라서 부등호 하나를 집어보는 겁니다."
+          },
+          {
+            "token_ids": [
+              "t0476",
+              "t0477",
+              "t0478",
+              "t0479",
+              "t0480",
+              "t0481",
+              "t0482",
+              "t0483",
+              "t0484",
+              "t0485",
+              "t0486",
+              "t0487",
+              "t0488",
+              "t0489",
+              "t0490",
+              "t0491",
+              "t0492",
+              "t0493"
+            ],
+            "quote": "그렇다면 그 코드가 계속 초록이라면 당신은 정말 쓸모없는 테스트 코드를 하나 버려낼 수 있고 그 테스트가 빨강으로 변했다면"
+          },
+          {
+            "token_ids": [
+              "t0512",
+              "t0513",
+              "t0514",
+              "t0515",
+              "t0516",
+              "t0517",
+              "t0518"
+            ],
+            "quote": "당신은 진정한 게이트를 얻을 수 있는 것입니다."
+          }
+        ],
+        "diagnosis": "The close gives a concrete next action and retrieves the gate idea from the core message.",
+        "impact": "The listener leaves with a practical rehearsal-friendly behavior, not just a general belief that tests matter.",
+        "action": "Keep the closing action, but cleanly articulate the final sentence before \"감사합니다\" so the last takeaway is not blurred by the garbled phrase at t0510-t0511."
+      }
+    ],
+    "top_actions": [
+      "Move the central gate sentence into the opening so listeners have one anchor before the examples begin.",
+      "Add explicit signposts before each example: which claim the example proves and what the listener should notice.",
+      "Replace vague referents like \"이것\", \"그것\", and \"그런 것들\" with concrete nouns at definition and transition points."
+    ],
+    "limitations": [
+      "No audio was provided, so pitch, volume, emphasis, confidence, emotion, and audience reaction were not evaluated.",
+      "segment_pace is empty, so pace and pause quality could not be responsibly diagnosed.",
+      "The transcript appears machine-generated and contains possible recognition errors such as \"인스테스트\" and \"일부는 투자여\"."
+    ]
+  },
+  "logic_review": {
+    "schema_version": 1,
+    "reviewer": "senior_logic_reviewer",
+    "overall_summary": "중심 주장은 대체로 식별된다. 테스트는 코드 전체의 안전을 보장하는 것이 아니라, 주어진 입력과 기대값에 대해 흔들리지 않는 판정 기준이어야 한다는 주장이다. 다만 사례가 그 주장의 어느 부분을 증명하는지, AI 평가가 어떻게 흔들렸는지, 결함 주입 결과를 어떻게 해석해야 하는지의 근거가 부족해 시니어 질문에는 아직 취약하다.",
+    "findings": [
+      {
+        "criterion": "thesis_identifiability",
+        "status": "caution",
+        "evidence": [
+          {
+            "token_ids": [
+              "t0038",
+              "t0039",
+              "t0040",
+              "t0041",
+              "t0042",
+              "t0043"
+            ],
+            "quote": "근데 테스트가 있다고 정말 안전한 걸까요?"
+          },
+          {
+            "token_ids": [
+              "t0350",
+              "t0351",
+              "t0352",
+              "t0353",
+              "t0354",
+              "t0355",
+              "t0356",
+              "t0357",
+              "t0358",
+              "t0359",
+              "t0360",
+              "t0361",
+              "t0362",
+              "t0363"
+            ],
+            "quote": "결론적으로 테스트란 것은 먼저 인상으로 결정한 것이 아니라 흔들리지 않는 절대적 게이트라는 것이 중요합니다."
+          }
+        ],
+        "observation": "발표자는 테스트가 있다고 안전한지 묻고, 결론에서 테스트를 인상이 아니라 흔들리지 않는 게이트라고 규정한다.",
+        "inference": "청중은 중심 주장을 '테스트는 안전 그 자체가 아니라 반복 가능한 판정 기준이어야 한다'로 이해할 가능성이 높다.",
+        "missing_evidence": "도입부에서 '판정'과 '안전'의 차이를 한 문장으로 먼저 고정하지 않아, 초반에는 테스트 일반론처럼 들릴 여지가 있다.",
+        "diagnosis": "주장은 보이지만 늦게 선명해진다. 특히 '절대적 게이트'라는 표현이 뒤의 한정된 보장 주장과 함께 들리며 범위가 모호해진다.",
+        "action": "초반에 테스트가 보장하는 것은 전체 안전이 아니라 특정 입력과 기대값에 대한 반복 가능한 판정이라는 한정된 thesis를 명시하라."
+      },
+      {
+        "criterion": "reasoning_chain",
+        "status": "caution",
+        "evidence": [
+          {
+            "token_ids": [
+              "t0105",
+              "t0106",
+              "t0107",
+              "t0108",
+              "t0109",
+              "t0110",
+              "t0111",
+              "t0112",
+              "t0113",
+              "t0114",
+              "t0115",
+              "t0116",
+              "t0117",
+              "t0118",
+              "t0119",
+              "t0120",
+              "t0121",
+              "t0122",
+              "t0123"
+            ],
+            "quote": "테스트의 초록 빨강은 그 테스트가 주어진 입력에 대해서 이제 동작을 보장한다는 것이지 모든 케이스에 대해서 그것이 안전하다는 것은 아닙니다."
+          },
+          {
+            "token_ids": [
+              "t0413",
+              "t0414",
+              "t0415",
+              "t0416",
+              "t0417",
+              "t0418",
+              "t0419",
+              "t0420",
+              "t0421",
+              "t0422",
+              "t0423",
+              "t0424",
+              "t0425",
+              "t0426",
+              "t0427",
+              "t0428",
+              "t0429",
+              "t0430",
+              "t0431",
+              "t0432",
+              "t0433",
+              "t0434",
+              "t0435",
+              "t0436",
+              "t0437",
+              "t0438",
+              "t0439",
+              "t0440",
+              "t0441",
+              "t0442",
+              "t0443",
+              "t0444",
+              "t0445"
+            ],
+            "quote": "그래서 테스트 코드가 그냥 단순히 있는 게 아니라 가장 중요한 것은 이것을 통과하는 입력이 어떤 것인지 이것이 정말 어떤 것을 보장하는 것인지 이 테스트가 그냥 잘못된 것은 아닌지 그런 것이 더 중요하다고 생각합니다."
+          }
+        ],
+        "observation": "초록의 의미를 주어진 입력에 대한 보장으로 제한하고, 이후 통과 입력과 보장 내용을 확인해야 한다고 연결한다.",
+        "inference": "논리 흐름은 '테스트 존재 여부 → 초록의 제한된 의미 → 입력과 결함 주입 확인 → 게이트로서의 테스트'로 이어진다.",
+        "missing_evidence": "각 단계 사이의 인과가 압축되어 있다. 왜 결함 주입이 테스트의 판정 능력을 검증하는지, 어떤 경우에는 결함 주입 해석이 부적절한지 설명이 부족하다.",
+        "diagnosis": "큰 흐름은 따라갈 수 있지만 중간 연결고리가 충분히 명시되지 않는다. 청중이 이미 테스트 설계와 mutation testing의 의미를 알고 있어야 빈칸을 메울 수 있다.",
+        "action": "결함 주입이 '테스트가 실패해야 할 변경에서 실제로 실패하는지 확인하는 절차'라는 연결을 명시하고, 그 결과가 무엇을 말해주는지 분리해서 설명하라."
+      },
+      {
+        "criterion": "evidence_fit",
+        "status": "caution",
+        "evidence": [
+          {
+            "token_ids": [
+              "t0243",
+              "t0244",
+              "t0245",
+              "t0246",
+              "t0247",
+              "t0248",
+              "t0249",
+              "t0250",
+              "t0251",
+              "t0252",
+              "t0253",
+              "t0254",
+              "t0255",
+              "t0256",
+              "t0257",
+              "t0258",
+              "t0259",
+              "t0260",
+              "t0261",
+              "t0262",
+              "t0263",
+              "t0264",
+              "t0265",
+              "t0266",
+              "t0267",
+              "t0268",
+              "t0269",
+              "t0270"
+            ],
+            "quote": "결과가 흔들리고 있는 거죠. 하지만 내가 만든 인스테스트 18종을 검증했을 때는 18개 중에 16개를 통과했고 예를 들어서 2개는 틀림 명확한 응답을 얻었다고 항상 동일한 결과와 피드백이 온 것이죠."
+          },
+          {
+            "token_ids": [
+              "t0273",
+              "t0274",
+              "t0275",
+              "t0276",
+              "t0277",
+              "t0278",
+              "t0281",
+              "t0282",
+              "t0283",
+              "t0284",
+              "t0285",
+              "t0286",
+              "t0287",
+              "t0288",
+              "t0289",
+              "t0290",
+              "t0291",
+              "t0292",
+              "t0293",
+              "t0294",
+              "t0295",
+              "t0296",
+              "t0297",
+              "t0298",
+              "t0299",
+              "t0300",
+              "t0301",
+              "t0302",
+              "t0303"
+            ],
+            "quote": "하지만 초록이 항상 옳았냐? 그건 아닙니다. 이 테스트가. 예를 들어서 제 일할계산 부분이 테스트 케이스로 커버리지가 되어 있었지만 반올림 부분에서 올림 부분만 커버리지가 되어 있고 버림 부분은 사실 입력이 되지 않아서"
+          }
+        ],
+        "observation": "환불 도메인 18개 인수 테스트 사례와 일할계산 커버리지 사례를 증거로 제시한다.",
+        "inference": "첫 사례는 테스트가 AI 평가보다 반복 가능한 판정을 줄 수 있다는 점을, 둘째 사례는 초록과 커버리지가 완전한 안전을 뜻하지 않는다는 점을 지지한다.",
+        "missing_evidence": "AI 평가가 몇 번 어떻게 달라졌는지, 18개 중 실패한 2개가 어떤 요구사항을 검증했는지, 일할계산에서 실제 기대값과 실패 조건이 무엇인지가 없다.",
+        "diagnosis": "사례 방향은 주장과 맞지만 증거의 해상도가 낮다. 숫자는 나오지만 그 숫자가 정확히 어떤 claim을 지지하는지 확인하기 어렵다.",
+        "action": "각 사례마다 '무엇을 비교했는지', '무엇이 실패했는지', '그 실패가 어떤 결론을 지지하는지'를 한 줄씩 붙여라."
+      },
+      {
+        "criterion": "assumptions_and_scope",
+        "status": "problem",
+        "evidence": [
+          {
+            "token_ids": [
+              "t0130",
+              "t0131",
+              "t0132",
+              "t0133",
+              "t0134"
+            ],
+            "quote": "사각지대는 언제든 나올 수 있습니다."
+          },
+          {
+            "token_ids": [
+              "t0358",
+              "t0359",
+              "t0360",
+              "t0361",
+              "t0362",
+              "t0363"
+            ],
+            "quote": "흔들리지 않는 절대적 게이트라는 것이 중요합니다."
+          }
+        ],
+        "observation": "발표자는 사각지대가 언제든 나올 수 있다고 말하면서도 테스트를 절대적 게이트라고 부른다.",
+        "inference": "의도는 '정해진 범위 안에서는 반복 가능한 게이트'일 가능성이 높지만, 실제 발화만 보면 게이트의 범위가 불명확하다.",
+        "missing_evidence": "테스트 게이트가 유효한 전제, 예를 들어 입력 선택, 기대값의 정확성, 외부 의존성 대역, 라이브러리 업데이트 같은 범위 밖 위험의 처리 기준이 제시되지 않았다.",
+        "diagnosis": "범위 설정이 가장 큰 약점이다. '절대적'이라는 단어가 테스트의 한정된 보장이라는 앞선 주장보다 강하게 들려 과대 주장으로 공격받기 쉽다.",
+        "action": "게이트의 범위를 '명세화된 입력과 기대값 안에서'로 제한하고, 그 밖의 사각지대는 별도의 확인이나 계약 테스트가 필요하다고 경계를 세워라."
+      },
+      {
+        "criterion": "consistency",
+        "status": "caution",
+        "evidence": [
+          {
+            "token_ids": [
+              "t0117",
+              "t0118",
+              "t0119",
+              "t0120",
+              "t0121",
+              "t0122",
+              "t0123"
+            ],
+            "quote": "모든 케이스에 대해서 그것이 안전하다는 것은 아닙니다."
+          },
+          {
+            "token_ids": [
+              "t0384",
+              "t0385",
+              "t0386",
+              "t0387",
+              "t0388",
+              "t0389",
+              "t0390",
+              "t0391"
+            ],
+            "quote": "하지만 아까 말했듯이 그것이 항상 안전하다는 것은 아닙니다."
+          }
+        ],
+        "observation": "발표자는 초록이 모든 안전을 뜻하지 않는다는 한정을 앞과 뒤에서 반복한다.",
+        "inference": "핵심 입장은 일관되게 '테스트는 제한된 보장만 한다'에 가깝다.",
+        "missing_evidence": "그 한정과 '절대적 게이트'라는 표현이 어떻게 동시에 성립하는지 명시적으로 정리되지 않았다.",
+        "diagnosis": "발표 내부에 직접 모순은 크지 않지만, 강한 표현과 한정 표현이 충돌해 들릴 수 있다.",
+        "action": "'절대적'을 '반복 가능한' 또는 '정해진 범위 안에서 흔들리지 않는'으로 바꾸거나, 발표 안에서 같은 의미로 정의하라."
+      },
+      {
+        "criterion": "conclusion_support",
+        "status": "caution",
+        "evidence": [
+          {
+            "token_ids": [
+              "t0457",
+              "t0458",
+              "t0459",
+              "t0460",
+              "t0461",
+              "t0462",
+              "t0463",
+              "t0464",
+              "t0465",
+              "t0466",
+              "t0467",
+              "t0468",
+              "t0469",
+              "t0470",
+              "t0471",
+              "t0472",
+              "t0473",
+              "t0474",
+              "t0475"
+            ],
+            "quote": "테스트 코드가 있다면 초록인 테스트 코드를 하나 골라서 부등호 하나를 집어보는 겁니다. 혹은 입력을 바꿔보던가 코드를 조금 바꿔보는 겁니다."
+          },
+          {
+            "token_ids": [
+              "t0476",
+              "t0477",
+              "t0478",
+              "t0479",
+              "t0480",
+              "t0481",
+              "t0482",
+              "t0483",
+              "t0484",
+              "t0485",
+              "t0486",
+              "t0487",
+              "t0488",
+              "t0489",
+              "t0490",
+              "t0491",
+              "t0492",
+              "t0493",
+              "t0494",
+              "t0495",
+              "t0496",
+              "t0497",
+              "t0498",
+              "t0499",
+              "t0500",
+              "t0501",
+              "t0502",
+              "t0503",
+              "t0504",
+              "t0505",
+              "t0506",
+              "t0507",
+              "t0508",
+              "t0509"
+            ],
+            "quote": "그렇다면 그 코드가 계속 초록이라면 당신은 정말 쓸모없는 테스트 코드를 하나 버려낼 수 있고 그 테스트가 빨강으로 변했다면 이 테스트가 정말 어떤 걸 검증하고 있구나 중요한 걸 검증하고 있구나 라는 것을 알 수 있습니다."
+          }
+        ],
+        "observation": "마무리는 초록인 테스트에 작은 변경을 넣어보고, 계속 초록이면 쓸모없는 테스트를 버리고 빨강이면 검증 대상을 알 수 있다고 권한다.",
+        "inference": "이 결론은 테스트가 실제로 결함을 잡는지 확인하자는 발표의 중심 주장과 연결된다.",
+        "missing_evidence": "부등호 변경이나 입력 변경이 항상 유효한 결함 주입인지, 계속 초록인 테스트가 언제 '쓸모없다'고 판단 가능한지의 조건이 없다.",
+        "diagnosis": "실천 제안은 강하지만 해석 조건이 빠져 있다. 그대로 말하면 유효한 테스트를 잘못 버리거나, 범위 밖 변경을 테스트 실패 기준으로 삼는 위험을 설명하지 못한다.",
+        "action": "결론에서 '의도한 동작을 깨뜨리는 변경을 넣었는데도 초록이면'처럼 판단 조건을 붙여라."
+      },
+      {
+        "criterion": "question_resilience",
+        "status": "problem",
+        "evidence": [
+          {
+            "token_ids": [
+              "t0208",
+              "t0209",
+              "t0210",
+              "t0211",
+              "t0212",
+              "t0213",
+              "t0214",
+              "t0215",
+              "t0216",
+              "t0217",
+              "t0218",
+              "t0219",
+              "t0220",
+              "t0221"
+            ],
+            "quote": "환불 도메인에서 제가 Ai에게 테스트 코드를 짜달라고 하고 그 평가를 맡겨보았습니다. 두 가지로 맡겨보았는데요."
+          },
+          {
+            "token_ids": [
+              "t0313",
+              "t0314",
+              "t0315",
+              "t0316",
+              "t0317",
+              "t0318",
+              "t0319",
+              "t0320",
+              "t0321",
+              "t0322",
+              "t0323",
+              "t0324",
+              "t0325",
+              "t0326",
+              "t0327",
+              "t0328",
+              "t0329",
+              "t0330",
+              "t0331",
+              "t0332",
+              "t0333",
+              "t0334",
+              "t0335",
+              "t0336",
+              "t0337",
+              "t0338",
+              "t0339",
+              "t0340",
+              "t0341",
+              "t0342",
+              "t0343",
+              "t0344",
+              "t0345",
+              "t0346",
+              "t0347"
+            ],
+            "quote": "저는 이 부분을 결함주입을 통해 막아보려고 했고요. 일부러 결함이 있는 입력이나 혹은 결함이 있는 테스트를 바꿔서 코드를 약간 바꿔 테스트가 정상적으로 보는 것을 정상적으로 도는 것을 보고 혹은 문제가 있는 것을 보고 그것들을 막으려고 했습니다."
+          }
+        ],
+        "observation": "발표자는 AI 평가와 인수 테스트 평가를 비교하고, 결함 주입으로 빈 부분을 막으려 했다고 말한다.",
+        "inference": "시니어 청중은 이 두 방법의 절차와 판정 기준을 물을 가능성이 높다.",
+        "missing_evidence": "AI 평가의 반복 횟수와 프롬프트, 인수 테스트의 oracle, 결함 주입의 구체 변경, 실패 여부가 충분히 제시되지 않았다.",
+        "diagnosis": "핵심 증거가 검증 가능한 절차로 닫혀 있지 않아 후속 질문 압력이 크다.",
+        "action": "후속 질문을 받을 핵심 사례 하나만 골라 절차, 입력, 기대값, 결과, 결론을 검증 가능한 순서로 말하라."
+      }
+    ],
+    "senior_questions": [
+      {
+        "question": "AI 평가가 '흔들렸다'는 것은 정확히 무엇이 어떻게 달라졌다는 뜻인가요? 같은 코드와 같은 질문을 여러 번 넣었을 때 결과가 달라졌다는 말인지, 테스트와 AI 평가가 서로 다른 결과를 냈다는 말인지 구분해 설명할 수 있나요?",
+        "why": "발표의 핵심 대비가 인상 또는 AI 평가와 테스트 판정의 차이인데, 흔들림의 측정 방식이 없으면 테스트가 더 나은 게이트라는 결론이 약해진다.",
+        "evidence": {
+          "token_ids": [
+            "t0243",
+            "t0244",
+            "t0245",
+            "t0246",
+            "t0247",
+            "t0248",
+            "t0249",
+            "t0250",
+            "t0251",
+            "t0252",
+            "t0253",
+            "t0254",
+            "t0255",
+            "t0256",
+            "t0257",
+            "t0258",
+            "t0259",
+            "t0260",
+            "t0261",
+            "t0262",
+            "t0263",
+            "t0264",
+            "t0265",
+            "t0266",
+            "t0267",
+            "t0268",
+            "t0269",
+            "t0270"
+          ],
+          "quote": "결과가 흔들리고 있는 거죠. 하지만 내가 만든 인스테스트 18종을 검증했을 때는 18개 중에 16개를 통과했고 예를 들어서 2개는 틀림 명확한 응답을 얻었다고 항상 동일한 결과와 피드백이 온 것이죠."
+        }
+      },
+      {
+        "question": "초록 테스트에 부등호나 입력을 바꿨는데 계속 초록이면 언제 그 테스트를 '쓸모없다'고 판단할 수 있나요? 변경이 실제 요구사항을 깨뜨린 유효한 결함이라는 기준은 무엇인가요?",
+        "why": "마무리의 실천 제안은 강하지만, 결함 주입의 유효성 기준이 없으면 잘못된 변경으로 테스트 가치를 판단할 수 있다.",
+        "evidence": {
+          "token_ids": [
+            "t0457",
+            "t0458",
+            "t0459",
+            "t0460",
+            "t0461",
+            "t0462",
+            "t0463",
+            "t0464",
+            "t0465",
+            "t0466",
+            "t0467",
+            "t0468",
+            "t0469",
+            "t0470",
+            "t0471",
+            "t0472",
+            "t0473",
+            "t0474",
+            "t0475",
+            "t0476",
+            "t0477",
+            "t0478",
+            "t0479",
+            "t0480",
+            "t0481",
+            "t0482",
+            "t0483",
+            "t0484",
+            "t0485",
+            "t0486",
+            "t0487",
+            "t0488",
+            "t0489"
+          ],
+          "quote": "테스트 코드가 있다면 초록인 테스트 코드를 하나 골라서 부등호 하나를 집어보는 겁니다. 혹은 입력을 바꿔보던가 코드를 조금 바꿔보는 겁니다. 그렇다면 그 코드가 계속 초록이라면 당신은 정말 쓸모없는 테스트 코드를 하나 버려낼 수 있고"
+        }
+      },
+      {
+        "question": "'흔들리지 않는 절대적 게이트'라고 할 때 절대적인 범위는 어디까지인가요? 주어진 입력 안에서만 절대적인 것인지, 외부 라이브러리 업데이트나 서드파티 변경까지 포함하는 것인지 선을 그을 수 있나요?",
+        "why": "발표자는 테스트를 절대적 게이트라고 부르면서도 항상 안전한 것은 아니라고 한정하기 때문에, 범위를 묻는 질문이 바로 들어올 수 있다.",
+        "evidence": {
+          "token_ids": [
+            "t0358",
+            "t0359",
+            "t0360",
+            "t0361",
+            "t0362",
+            "t0363",
+            "t0364",
+            "t0365",
+            "t0366",
+            "t0367",
+            "t0368",
+            "t0369",
+            "t0370",
+            "t0371",
+            "t0372",
+            "t0373",
+            "t0374",
+            "t0375",
+            "t0376",
+            "t0377",
+            "t0378",
+            "t0379",
+            "t0380",
+            "t0381",
+            "t0382",
+            "t0383",
+            "t0384",
+            "t0385",
+            "t0386",
+            "t0387",
+            "t0388",
+            "t0389",
+            "t0390",
+            "t0391"
+          ],
+          "quote": "결론적으로 테스트란 것은 먼저 인상으로 결정한 것이 아니라 흔들리지 않는 절대적 게이트라는 것이 중요합니다. 이처럼 계속 바뀌지 않고 이것이 내가 딱 이걸 봤을 때 아 이거는 그래도 이거에 대해서는 되게 정확히 동작한다 동작을 보장한다 하지만 아까 말했듯이 그것이 항상 안전하다는 것은 아닙니다."
+        }
+      }
+    ],
+    "top_actions": [
+      "중심 주장을 '정해진 입력과 기대값 안에서 반복 가능한 판정 기준'으로 한정해서 다시 말하라.",
+      "환불 도메인 사례는 AI 평가 절차, 18개 테스트의 판정 기준, 실패 2개의 의미를 분리해 증거로 제시하라.",
+      "결함 주입 제안에는 유효한 결함 변경의 조건과 초록 결과를 해석하는 기준을 붙여라."
+    ],
+    "limitations": [
+      "이 평가는 제공된 review-context.json의 transcript만 발화 증거로 사용했다.",
+      "presentation_plan은 의도 파악에는 참고될 수 있지만 실제 발화의 증거로 사용하지 않았다.",
+      "원본 코드, 테스트 파일, AI 평가 로그가 없어 사례의 사실 여부와 재현성은 검증하지 못했다.",
+      "전사 오류 가능성이 있어 일부 어색한 표현은 발화 의도와 다를 수 있다."
+    ]
+  }
+}

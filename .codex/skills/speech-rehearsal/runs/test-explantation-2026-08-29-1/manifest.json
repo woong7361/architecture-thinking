@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "context_id": "7efb8b51809f",
+  "created_at": "2026-08-29T02:23:15.320978+00:00",
+  "context_path": "/home/woong/workspace/project/architecture-thinking/.codex/skills/speech-rehearsal/runs/test-explantation-2026-08-29-1/review-context.json",
+  "context_sha256": "c4e50dad8ebd37819b5474c8374e00dcf166303ef021c4bd9624151bc3c3d970",
+  "reviewers": [
+    "delivery_reviewer",
+    "senior_logic_reviewer"
+  ],
+  "execution": "parallel-independent",
+  "resources": {
+    "delivery": {
+      "role": {
+        "path": "references/roles/delivery-reviewer.md",
+        "sha256": "f6ab7fb5a6a42bac0a64baf2b73882260635b5635a7afdd77ec89a3bba03951c"
+      },
+      "rubric": {
+        "path": "references/rubrics/delivery.yaml",
+        "sha256": "f496e2761b8d45754d40ea0c91d59814ffd6fb5f948edcfa2f8cff76cda8ee60"
+      },
+      "output_schema": {
+        "path": "schemas/delivery-output.schema.json",
+        "sha256": "7661870641771a46881deb96ab73b803d671537bbde15607c8b8651f7cb6a44b"
+      }
+    },
+    "logic": {
+      "role": {
+        "path": "references/roles/senior-logic-reviewer.md",
+        "sha256": "befd13540bba701d92b7738e7c7cdbe631ceda9456cf11699c07e2695e840e57"
+      },
+      "rubric": {
+        "path": "references/rubrics/logic.yaml",
+        "sha256": "d04ee46849f6cb460e3bad9273fbbcc5c13b143100afdbc6d5b7a0f5aa7504be"
+      },
+      "output_schema": {
+        "path": "schemas/logic-output.schema.json",
+        "sha256": "a4caf9191915fa0d1cb532217c926d21a8439dc0d64ade71fddeeb456f4332f7"
+      }
+    }
+  }
+}
