@@ -1,0 +1,875 @@
+{
+  "schema_version": 1,
+  "context_id": "78e3bff0737e",
+  "transcript": {
+    "text": "저는 또가 붙는 일을 해결하는 개발자입니다.\n단순히 반복되는 일은 아닌 그것을 줄여서 어떻게 가치를 전달할 수 있을지를 생각하면 안됩니다.\n예를 들어 회사 독스는 지금 너무 파파되어서 정리가 잘 안되고,\n불필요한 의사수통의 시간이 많습니다.\n그래서 팀끼리 공유할 수 있는 로컬 브레인을 만들어 불필요한 회사수통 시간을 줄이는 일을 하고 있습니다.\n또 회사에서 HTML로 콘텐츠를 만드는 프로젝트를 하고 있는데,\n해당 전 과정을 AI 파이프로 만들어 자동화하고,\n팀원들에게 공유하고 같이 발전시켜 나가면서 생산성의 교형을 받고 있습니다.\n지금 따로 해보고 있는 일은 테니스코트를 예약하려고 제가 사이트를 3개씩 열고 있길래,\n한 곳에서 모아 사람들의 예약 경험을 높이려는 일을 한번 해보려고 하고 있습니다.\n저는 단순히 반복을 줄이는 게 아닌,\n그 반복에서 가치를 찾아 해결하는 개발자로 가고 있습니다.",
+    "tokens": [
+      {
+        "id": "t0001",
+        "text": "저는",
+        "char_start": 0,
+        "char_end": 2
+      },
+      {
+        "id": "t0002",
+        "text": "또가",
+        "char_start": 3,
+        "char_end": 5
+      },
+      {
+        "id": "t0003",
+        "text": "붙는",
+        "char_start": 6,
+        "char_end": 8
+      },
+      {
+        "id": "t0004",
+        "text": "일을",
+        "char_start": 9,
+        "char_end": 11
+      },
+      {
+        "id": "t0005",
+        "text": "해결하는",
+        "char_start": 12,
+        "char_end": 16
+      },
+      {
+        "id": "t0006",
+        "text": "개발자입니다.",
+        "char_start": 17,
+        "char_end": 24
+      },
+      {
+        "id": "t0007",
+        "text": "단순히",
+        "char_start": 25,
+        "char_end": 28
+      },
+      {
+        "id": "t0008",
+        "text": "반복되는",
+        "char_start": 29,
+        "char_end": 33
+      },
+      {
+        "id": "t0009",
+        "text": "일은",
+        "char_start": 34,
+        "char_end": 36
+      },
+      {
+        "id": "t0010",
+        "text": "아닌",
+        "char_start": 37,
+        "char_end": 39
+      },
+      {
+        "id": "t0011",
+        "text": "그것을",
+        "char_start": 40,
+        "char_end": 43
+      },
+      {
+        "id": "t0012",
+        "text": "줄여서",
+        "char_start": 44,
+        "char_end": 47
+      },
+      {
+        "id": "t0013",
+        "text": "어떻게",
+        "char_start": 48,
+        "char_end": 51
+      },
+      {
+        "id": "t0014",
+        "text": "가치를",
+        "char_start": 52,
+        "char_end": 55
+      },
+      {
+        "id": "t0015",
+        "text": "전달할",
+        "char_start": 56,
+        "char_end": 59
+      },
+      {
+        "id": "t0016",
+        "text": "수",
+        "char_start": 60,
+        "char_end": 61
+      },
+      {
+        "id": "t0017",
+        "text": "있을지를",
+        "char_start": 62,
+        "char_end": 66
+      },
+      {
+        "id": "t0018",
+        "text": "생각하면",
+        "char_start": 67,
+        "char_end": 71
+      },
+      {
+        "id": "t0019",
+        "text": "안됩니다.",
+        "char_start": 72,
+        "char_end": 77
+      },
+      {
+        "id": "t0020",
+        "text": "예를",
+        "char_start": 78,
+        "char_end": 80
+      },
+      {
+        "id": "t0021",
+        "text": "들어",
+        "char_start": 81,
+        "char_end": 83
+      },
+      {
+        "id": "t0022",
+        "text": "회사",
+        "char_start": 84,
+        "char_end": 86
+      },
+      {
+        "id": "t0023",
+        "text": "독스는",
+        "char_start": 87,
+        "char_end": 90
+      },
+      {
+        "id": "t0024",
+        "text": "지금",
+        "char_start": 91,
+        "char_end": 93
+      },
+      {
+        "id": "t0025",
+        "text": "너무",
+        "char_start": 94,
+        "char_end": 96
+      },
+      {
+        "id": "t0026",
+        "text": "파파되어서",
+        "char_start": 97,
+        "char_end": 102
+      },
+      {
+        "id": "t0027",
+        "text": "정리가",
+        "char_start": 103,
+        "char_end": 106
+      },
+      {
+        "id": "t0028",
+        "text": "잘",
+        "char_start": 107,
+        "char_end": 108
+      },
+      {
+        "id": "t0029",
+        "text": "안되고,",
+        "char_start": 109,
+        "char_end": 113
+      },
+      {
+        "id": "t0030",
+        "text": "불필요한",
+        "char_start": 114,
+        "char_end": 118
+      },
+      {
+        "id": "t0031",
+        "text": "의사수통의",
+        "char_start": 119,
+        "char_end": 124
+      },
+      {
+        "id": "t0032",
+        "text": "시간이",
+        "char_start": 125,
+        "char_end": 128
+      },
+      {
+        "id": "t0033",
+        "text": "많습니다.",
+        "char_start": 129,
+        "char_end": 134
+      },
+      {
+        "id": "t0034",
+        "text": "그래서",
+        "char_start": 135,
+        "char_end": 138
+      },
+      {
+        "id": "t0035",
+        "text": "팀끼리",
+        "char_start": 139,
+        "char_end": 142
+      },
+      {
+        "id": "t0036",
+        "text": "공유할",
+        "char_start": 143,
+        "char_end": 146
+      },
+      {
+        "id": "t0037",
+        "text": "수",
+        "char_start": 147,
+        "char_end": 148
+      },
+      {
+        "id": "t0038",
+        "text": "있는",
+        "char_start": 149,
+        "char_end": 151
+      },
+      {
+        "id": "t0039",
+        "text": "로컬",
+        "char_start": 152,
+        "char_end": 154
+      },
+      {
+        "id": "t0040",
+        "text": "브레인을",
+        "char_start": 155,
+        "char_end": 159
+      },
+      {
+        "id": "t0041",
+        "text": "만들어",
+        "char_start": 160,
+        "char_end": 163
+      },
+      {
+        "id": "t0042",
+        "text": "불필요한",
+        "char_start": 164,
+        "char_end": 168
+      },
+      {
+        "id": "t0043",
+        "text": "회사수통",
+        "char_start": 169,
+        "char_end": 173
+      },
+      {
+        "id": "t0044",
+        "text": "시간을",
+        "char_start": 174,
+        "char_end": 177
+      },
+      {
+        "id": "t0045",
+        "text": "줄이는",
+        "char_start": 178,
+        "char_end": 181
+      },
+      {
+        "id": "t0046",
+        "text": "일을",
+        "char_start": 182,
+        "char_end": 184
+      },
+      {
+        "id": "t0047",
+        "text": "하고",
+        "char_start": 185,
+        "char_end": 187
+      },
+      {
+        "id": "t0048",
+        "text": "있습니다.",
+        "char_start": 188,
+        "char_end": 193
+      },
+      {
+        "id": "t0049",
+        "text": "또",
+        "char_start": 194,
+        "char_end": 195
+      },
+      {
+        "id": "t0050",
+        "text": "회사에서",
+        "char_start": 196,
+        "char_end": 200
+      },
+      {
+        "id": "t0051",
+        "text": "HTML로",
+        "char_start": 201,
+        "char_end": 206
+      },
+      {
+        "id": "t0052",
+        "text": "콘텐츠를",
+        "char_start": 207,
+        "char_end": 211
+      },
+      {
+        "id": "t0053",
+        "text": "만드는",
+        "char_start": 212,
+        "char_end": 215
+      },
+      {
+        "id": "t0054",
+        "text": "프로젝트를",
+        "char_start": 216,
+        "char_end": 221
+      },
+      {
+        "id": "t0055",
+        "text": "하고",
+        "char_start": 222,
+        "char_end": 224
+      },
+      {
+        "id": "t0056",
+        "text": "있는데,",
+        "char_start": 225,
+        "char_end": 229
+      },
+      {
+        "id": "t0057",
+        "text": "해당",
+        "char_start": 230,
+        "char_end": 232
+      },
+      {
+        "id": "t0058",
+        "text": "전",
+        "char_start": 233,
+        "char_end": 234
+      },
+      {
+        "id": "t0059",
+        "text": "과정을",
+        "char_start": 235,
+        "char_end": 238
+      },
+      {
+        "id": "t0060",
+        "text": "AI",
+        "char_start": 239,
+        "char_end": 241
+      },
+      {
+        "id": "t0061",
+        "text": "파이프로",
+        "char_start": 242,
+        "char_end": 246
+      },
+      {
+        "id": "t0062",
+        "text": "만들어",
+        "char_start": 247,
+        "char_end": 250
+      },
+      {
+        "id": "t0063",
+        "text": "자동화하고,",
+        "char_start": 251,
+        "char_end": 257
+      },
+      {
+        "id": "t0064",
+        "text": "팀원들에게",
+        "char_start": 258,
+        "char_end": 263
+      },
+      {
+        "id": "t0065",
+        "text": "공유하고",
+        "char_start": 264,
+        "char_end": 268
+      },
+      {
+        "id": "t0066",
+        "text": "같이",
+        "char_start": 269,
+        "char_end": 271
+      },
+      {
+        "id": "t0067",
+        "text": "발전시켜",
+        "char_start": 272,
+        "char_end": 276
+      },
+      {
+        "id": "t0068",
+        "text": "나가면서",
+        "char_start": 277,
+        "char_end": 281
+      },
+      {
+        "id": "t0069",
+        "text": "생산성의",
+        "char_start": 282,
+        "char_end": 286
+      },
+      {
+        "id": "t0070",
+        "text": "교형을",
+        "char_start": 287,
+        "char_end": 290
+      },
+      {
+        "id": "t0071",
+        "text": "받고",
+        "char_start": 291,
+        "char_end": 293
+      },
+      {
+        "id": "t0072",
+        "text": "있습니다.",
+        "char_start": 294,
+        "char_end": 299
+      },
+      {
+        "id": "t0073",
+        "text": "지금",
+        "char_start": 300,
+        "char_end": 302
+      },
+      {
+        "id": "t0074",
+        "text": "따로",
+        "char_start": 303,
+        "char_end": 305
+      },
+      {
+        "id": "t0075",
+        "text": "해보고",
+        "char_start": 306,
+        "char_end": 309
+      },
+      {
+        "id": "t0076",
+        "text": "있는",
+        "char_start": 310,
+        "char_end": 312
+      },
+      {
+        "id": "t0077",
+        "text": "일은",
+        "char_start": 313,
+        "char_end": 315
+      },
+      {
+        "id": "t0078",
+        "text": "테니스코트를",
+        "char_start": 316,
+        "char_end": 322
+      },
+      {
+        "id": "t0079",
+        "text": "예약하려고",
+        "char_start": 323,
+        "char_end": 328
+      },
+      {
+        "id": "t0080",
+        "text": "제가",
+        "char_start": 329,
+        "char_end": 331
+      },
+      {
+        "id": "t0081",
+        "text": "사이트를",
+        "char_start": 332,
+        "char_end": 336
+      },
+      {
+        "id": "t0082",
+        "text": "3개씩",
+        "char_start": 337,
+        "char_end": 340
+      },
+      {
+        "id": "t0083",
+        "text": "열고",
+        "char_start": 341,
+        "char_end": 343
+      },
+      {
+        "id": "t0084",
+        "text": "있길래,",
+        "char_start": 344,
+        "char_end": 348
+      },
+      {
+        "id": "t0085",
+        "text": "한",
+        "char_start": 349,
+        "char_end": 350
+      },
+      {
+        "id": "t0086",
+        "text": "곳에서",
+        "char_start": 351,
+        "char_end": 354
+      },
+      {
+        "id": "t0087",
+        "text": "모아",
+        "char_start": 355,
+        "char_end": 357
+      },
+      {
+        "id": "t0088",
+        "text": "사람들의",
+        "char_start": 358,
+        "char_end": 362
+      },
+      {
+        "id": "t0089",
+        "text": "예약",
+        "char_start": 363,
+        "char_end": 365
+      },
+      {
+        "id": "t0090",
+        "text": "경험을",
+        "char_start": 366,
+        "char_end": 369
+      },
+      {
+        "id": "t0091",
+        "text": "높이려는",
+        "char_start": 370,
+        "char_end": 374
+      },
+      {
+        "id": "t0092",
+        "text": "일을",
+        "char_start": 375,
+        "char_end": 377
+      },
+      {
+        "id": "t0093",
+        "text": "한번",
+        "char_start": 378,
+        "char_end": 380
+      },
+      {
+        "id": "t0094",
+        "text": "해보려고",
+        "char_start": 381,
+        "char_end": 385
+      },
+      {
+        "id": "t0095",
+        "text": "하고",
+        "char_start": 386,
+        "char_end": 388
+      },
+      {
+        "id": "t0096",
+        "text": "있습니다.",
+        "char_start": 389,
+        "char_end": 394
+      },
+      {
+        "id": "t0097",
+        "text": "저는",
+        "char_start": 395,
+        "char_end": 397
+      },
+      {
+        "id": "t0098",
+        "text": "단순히",
+        "char_start": 398,
+        "char_end": 401
+      },
+      {
+        "id": "t0099",
+        "text": "반복을",
+        "char_start": 402,
+        "char_end": 405
+      },
+      {
+        "id": "t0100",
+        "text": "줄이는",
+        "char_start": 406,
+        "char_end": 409
+      },
+      {
+        "id": "t0101",
+        "text": "게",
+        "char_start": 410,
+        "char_end": 411
+      },
+      {
+        "id": "t0102",
+        "text": "아닌,",
+        "char_start": 412,
+        "char_end": 415
+      },
+      {
+        "id": "t0103",
+        "text": "그",
+        "char_start": 416,
+        "char_end": 417
+      },
+      {
+        "id": "t0104",
+        "text": "반복에서",
+        "char_start": 418,
+        "char_end": 422
+      },
+      {
+        "id": "t0105",
+        "text": "가치를",
+        "char_start": 423,
+        "char_end": 426
+      },
+      {
+        "id": "t0106",
+        "text": "찾아",
+        "char_start": 427,
+        "char_end": 429
+      },
+      {
+        "id": "t0107",
+        "text": "해결하는",
+        "char_start": 430,
+        "char_end": 434
+      },
+      {
+        "id": "t0108",
+        "text": "개발자로",
+        "char_start": 435,
+        "char_end": 439
+      },
+      {
+        "id": "t0109",
+        "text": "가고",
+        "char_start": 440,
+        "char_end": 442
+      },
+      {
+        "id": "t0110",
+        "text": "있습니다.",
+        "char_start": 443,
+        "char_end": 448
+      }
+    ],
+    "segments": [
+      {
+        "id": "s0001",
+        "text": "저는 또가 붙는 일을 해결하는 개발자입니다.",
+        "start_seconds": 0.0,
+        "end_seconds": 5.0
+      },
+      {
+        "id": "s0002",
+        "text": "단순히 반복되는 일은 아닌 그것을 줄여서 어떻게 가치를 전달할 수 있을지를 생각하면 안됩니다.",
+        "start_seconds": 5.0,
+        "end_seconds": 12.0
+      },
+      {
+        "id": "s0003",
+        "text": "예를 들어 회사 독스는 지금 너무 파파되어서 정리가 잘 안되고,",
+        "start_seconds": 12.0,
+        "end_seconds": 18.0
+      },
+      {
+        "id": "s0004",
+        "text": "불필요한 의사수통의 시간이 많습니다.",
+        "start_seconds": 18.0,
+        "end_seconds": 22.0
+      },
+      {
+        "id": "s0005",
+        "text": "그래서 팀끼리 공유할 수 있는 로컬 브레인을 만들어 불필요한 회사수통 시간을 줄이는 일을 하고 있습니다.",
+        "start_seconds": 22.0,
+        "end_seconds": 30.0
+      },
+      {
+        "id": "s0006",
+        "text": "또 회사에서 HTML로 콘텐츠를 만드는 프로젝트를 하고 있는데,",
+        "start_seconds": 30.0,
+        "end_seconds": 35.0
+      },
+      {
+        "id": "s0007",
+        "text": "해당 전 과정을 AI 파이프로 만들어 자동화하고,",
+        "start_seconds": 35.0,
+        "end_seconds": 39.0
+      },
+      {
+        "id": "s0008",
+        "text": "팀원들에게 공유하고 같이 발전시켜 나가면서 생산성의 교형을 받고 있습니다.",
+        "start_seconds": 39.0,
+        "end_seconds": 45.0
+      },
+      {
+        "id": "s0009",
+        "text": "지금 따로 해보고 있는 일은 테니스코트를 예약하려고 제가 사이트를 3개씩 열고 있길래,",
+        "start_seconds": 45.0,
+        "end_seconds": 51.0
+      },
+      {
+        "id": "s0010",
+        "text": "한 곳에서 모아 사람들의 예약 경험을 높이려는 일을 한번 해보려고 하고 있습니다.",
+        "start_seconds": 51.0,
+        "end_seconds": 57.0
+      },
+      {
+        "id": "s0011",
+        "text": "저는 단순히 반복을 줄이는 게 아닌,",
+        "start_seconds": 57.0,
+        "end_seconds": 60.0
+      },
+      {
+        "id": "s0012",
+        "text": "그 반복에서 가치를 찾아 해결하는 개발자로 가고 있습니다.",
+        "start_seconds": 60.0,
+        "end_seconds": 66.0
+      }
+    ],
+    "source": {
+      "path": "C:\\Users\\이현웅\\Desktop\\project\\thinking\\task4\\assignments\\elevator-speech.m4a",
+      "sha256": "bfd68ad55b7562ccc6ec6ce3042767433b830eccc730dc10364151fd68acb953",
+      "transcript_path": "C:\\Users\\이현웅\\Desktop\\project\\thinking\\task4\\assignments\\elevator-speech.transcript.json",
+      "transcript_sha256": "6f98e0aadc221c3ba47d6687f806f9b32e96b32f025532e07aa6257dfbbfff33"
+    }
+  },
+  "metrics": {
+    "whitespace_token_count": 110,
+    "duration_seconds": 66.731,
+    "tokens_per_minute": 98.9,
+    "segment_pace": [
+      {
+        "segment_id": "s0001",
+        "start_seconds": 0.0,
+        "end_seconds": 5.0,
+        "whitespace_token_count": 6,
+        "tokens_per_minute": 72.0
+      },
+      {
+        "segment_id": "s0002",
+        "start_seconds": 5.0,
+        "end_seconds": 12.0,
+        "whitespace_token_count": 13,
+        "tokens_per_minute": 111.43
+      },
+      {
+        "segment_id": "s0003",
+        "start_seconds": 12.0,
+        "end_seconds": 18.0,
+        "whitespace_token_count": 10,
+        "tokens_per_minute": 100.0
+      },
+      {
+        "segment_id": "s0004",
+        "start_seconds": 18.0,
+        "end_seconds": 22.0,
+        "whitespace_token_count": 4,
+        "tokens_per_minute": 60.0
+      },
+      {
+        "segment_id": "s0005",
+        "start_seconds": 22.0,
+        "end_seconds": 30.0,
+        "whitespace_token_count": 15,
+        "tokens_per_minute": 112.5
+      },
+      {
+        "segment_id": "s0006",
+        "start_seconds": 30.0,
+        "end_seconds": 35.0,
+        "whitespace_token_count": 8,
+        "tokens_per_minute": 96.0
+      },
+      {
+        "segment_id": "s0007",
+        "start_seconds": 35.0,
+        "end_seconds": 39.0,
+        "whitespace_token_count": 7,
+        "tokens_per_minute": 105.0
+      },
+      {
+        "segment_id": "s0008",
+        "start_seconds": 39.0,
+        "end_seconds": 45.0,
+        "whitespace_token_count": 9,
+        "tokens_per_minute": 90.0
+      },
+      {
+        "segment_id": "s0009",
+        "start_seconds": 45.0,
+        "end_seconds": 51.0,
+        "whitespace_token_count": 12,
+        "tokens_per_minute": 120.0
+      },
+      {
+        "segment_id": "s0010",
+        "start_seconds": 51.0,
+        "end_seconds": 57.0,
+        "whitespace_token_count": 12,
+        "tokens_per_minute": 120.0
+      },
+      {
+        "segment_id": "s0011",
+        "start_seconds": 57.0,
+        "end_seconds": 60.0,
+        "whitespace_token_count": 6,
+        "tokens_per_minute": 120.0
+      },
+      {
+        "segment_id": "s0012",
+        "start_seconds": 60.0,
+        "end_seconds": 66.0,
+        "whitespace_token_count": 8,
+        "tokens_per_minute": 80.0
+      }
+    ]
+  },
+  "presentation_plan": {
+    "available": false,
+    "text": null,
+    "source": null
+  },
+  "resources": {
+    "delivery": {
+      "role": {
+        "path": "references/roles/delivery-reviewer.md",
+        "sha256": "ff2d46bafffb652c1387a9e9a27da91f79d167bcd3d405eeb65c546616090899"
+      },
+      "rubric": {
+        "path": "references/rubrics/delivery.yaml",
+        "sha256": "1b9f543f00ac491fc5128db0b6bd8bad6e1f6725ef17ae8e8632d650c744433f"
+      },
+      "output_schema": {
+        "path": "schemas/delivery-output.schema.json",
+        "sha256": "e5027cdf52f9d3f457d5cf81b4cca7b820055cba1b2382153c64d1e71a95866a"
+      }
+    },
+    "logic": {
+      "role": {
+        "path": "references/roles/senior-logic-reviewer.md",
+        "sha256": "3a5e40b6b3d520ac3c524eba1fcd7c244cdbba920a77cf36ce5df84737ec5314"
+      },
+      "rubric": {
+        "path": "references/rubrics/logic.yaml",
+        "sha256": "16360976d3b751e15a903c5293884675a0d4f5ad8b465d154ad51c9f044a99e1"
+      },
+      "output_schema": {
+        "path": "schemas/logic-output.schema.json",
+        "sha256": "2ae44184299df5db01e1b222349d372692a0e14695337d51c073743affeb0d97"
+      }
+    }
+  }
+}

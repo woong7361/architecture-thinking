@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "context_id": "2d424652c488",
+  "created_at": "2026-08-30T11:42:50.338740+00:00",
+  "context_path": "C:\\Users\\이현웅\\Desktop\\project\\thinking\\.codex\\skills\\speech-rehearsal\\runs\\test-response-2026-08-30-1\\review-context.json",
+  "context_sha256": "4dea87fb32907d429585aaa8c08c8c3c48cd0d21bdf69327672328414cebb5b8",
+  "reviewers": [
+    "delivery_reviewer",
+    "senior_logic_reviewer"
+  ],
+  "execution": "parallel-independent",
+  "resources": {
+    "delivery": {
+      "role": {
+        "path": "references/roles/delivery-reviewer.md",
+        "sha256": "ff2d46bafffb652c1387a9e9a27da91f79d167bcd3d405eeb65c546616090899"
+      },
+      "rubric": {
+        "path": "references/rubrics/delivery.yaml",
+        "sha256": "1b9f543f00ac491fc5128db0b6bd8bad6e1f6725ef17ae8e8632d650c744433f"
+      },
+      "output_schema": {
+        "path": "schemas/delivery-output.schema.json",
+        "sha256": "e5027cdf52f9d3f457d5cf81b4cca7b820055cba1b2382153c64d1e71a95866a"
+      }
+    },
+    "logic": {
+      "role": {
+        "path": "references/roles/senior-logic-reviewer.md",
+        "sha256": "3a5e40b6b3d520ac3c524eba1fcd7c244cdbba920a77cf36ce5df84737ec5314"
+      },
+      "rubric": {
+        "path": "references/rubrics/logic.yaml",
+        "sha256": "16360976d3b751e15a903c5293884675a0d4f5ad8b465d154ad51c9f044a99e1"
+      },
+      "output_schema": {
+        "path": "schemas/logic-output.schema.json",
+        "sha256": "2ae44184299df5db01e1b222349d372692a0e14695337d51c073743affeb0d97"
+      }
+    }
+  }
+}

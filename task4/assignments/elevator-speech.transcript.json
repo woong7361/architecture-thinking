@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "text": "저는 또가 붙는 일을 해결하는 개발자입니다.\n단순히 반복되는 일은 아닌 그것을 줄여서 어떻게 가치를 전달할 수 있을지를 생각하면 안됩니다.\n예를 들어 회사 독스는 지금 너무 파파되어서 정리가 잘 안되고,\n불필요한 의사수통의 시간이 많습니다.\n그래서 팀끼리 공유할 수 있는 로컬 브레인을 만들어 불필요한 회사수통 시간을 줄이는 일을 하고 있습니다.\n또 회사에서 HTML로 콘텐츠를 만드는 프로젝트를 하고 있는데,\n해당 전 과정을 AI 파이프로 만들어 자동화하고,\n팀원들에게 공유하고 같이 발전시켜 나가면서 생산성의 교형을 받고 있습니다.\n지금 따로 해보고 있는 일은 테니스코트를 예약하려고 제가 사이트를 3개씩 열고 있길래,\n한 곳에서 모아 사람들의 예약 경험을 높이려는 일을 한번 해보려고 하고 있습니다.\n저는 단순히 반복을 줄이는 게 아닌,\n그 반복에서 가치를 찾아 해결하는 개발자로 가고 있습니다.",
+  "duration_seconds": 66.731,
+  "language": "ko",
+  "language_probability": 1,
+  "segments": [
+    {
+      "start_seconds": 0.0,
+      "end_seconds": 5.0,
+      "text": "저는 또가 붙는 일을 해결하는 개발자입니다."
+    },
+    {
+      "start_seconds": 5.0,
+      "end_seconds": 12.0,
+      "text": "단순히 반복되는 일은 아닌 그것을 줄여서 어떻게 가치를 전달할 수 있을지를 생각하면 안됩니다."
+    },
+    {
+      "start_seconds": 12.0,
+      "end_seconds": 18.0,
+      "text": "예를 들어 회사 독스는 지금 너무 파파되어서 정리가 잘 안되고,"
+    },
+    {
+      "start_seconds": 18.0,
+      "end_seconds": 22.0,
+      "text": "불필요한 의사수통의 시간이 많습니다."
+    },
+    {
+      "start_seconds": 22.0,
+      "end_seconds": 30.0,
+      "text": "그래서 팀끼리 공유할 수 있는 로컬 브레인을 만들어 불필요한 회사수통 시간을 줄이는 일을 하고 있습니다."
+    },
+    {
+      "start_seconds": 30.0,
+      "end_seconds": 35.0,
+      "text": "또 회사에서 HTML로 콘텐츠를 만드는 프로젝트를 하고 있는데,"
+    },
+    {
+      "start_seconds": 35.0,
+      "end_seconds": 39.0,
+      "text": "해당 전 과정을 AI 파이프로 만들어 자동화하고,"
+    },
+    {
+      "start_seconds": 39.0,
+      "end_seconds": 45.0,
+      "text": "팀원들에게 공유하고 같이 발전시켜 나가면서 생산성의 교형을 받고 있습니다."
+    },
+    {
+      "start_seconds": 45.0,
+      "end_seconds": 51.0,
+      "text": "지금 따로 해보고 있는 일은 테니스코트를 예약하려고 제가 사이트를 3개씩 열고 있길래,"
+    },
+    {
+      "start_seconds": 51.0,
+      "end_seconds": 57.0,
+      "text": "한 곳에서 모아 사람들의 예약 경험을 높이려는 일을 한번 해보려고 하고 있습니다."
+    },
+    {
+      "start_seconds": 57.0,
+      "end_seconds": 60.0,
+      "text": "저는 단순히 반복을 줄이는 게 아닌,"
+    },
+    {
+      "start_seconds": 60.0,
+      "end_seconds": 66.0,
+      "text": "그 반복에서 가치를 찾아 해결하는 개발자로 가고 있습니다."
+    }
+  ],
+  "source": {
+    "path": "C:\\Users\\이현웅\\Desktop\\project\\thinking\\task4\\assignments\\elevator-speech.m4a",
+    "sha256": "bfd68ad55b7562ccc6ec6ce3042767433b830eccc730dc10364151fd68acb953"
+  },
+  "provider": "local-faster-whisper",
+  "model": "small",
+  "elapsed_seconds": 27.971
+}

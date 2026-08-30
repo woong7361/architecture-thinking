@@ -1,6 +1,6 @@
-# Speech Rehearsal Feedback
+# 스피치 리허설 피드백
 
-- context: `7efb8b51809f`
+- 분석 컨텍스트: `7efb8b51809f`
 - 공백 기준 발화 단위: 525
 - 녹화 길이: 325.0초
 - 분당 발화 단위: 96.92
@@ -15,104 +15,104 @@
 
 ## 전달 진단
 
-The speech has a clear delivery target: AI-era tests should function as a stable gate, not as vague reassurance. The opening and closing are relatively strong because they speak to the audience directly and end with a concrete action. The main delivery risk is the middle: generic transitions, repeated pronouns, and visible sentence repair make listeners reconstruct how each example supports the central point.
+이 발표의 전달 목표는 분명하다. AI 시대의 테스트는 막연한 안도감을 주는 장치가 아니라 일관된 게이트로 작동해야 한다는 것이다. 도입은 청중에게 직접 말을 걸고, 마무리는 구체적인 행동을 제안한다는 점에서 비교적 강하다. 가장 큰 전달 위험은 중간 부분이다. 포괄적인 전환 표현, 반복되는 지시어, 말하다가 문장을 고치는 흔적 때문에 청중이 각 사례와 중심 주장의 관계를 스스로 재구성해야 한다.
 
-### filler_and_disfluency · caution
+### 필러와 비유창성 · 주의
 
-Fillers are not constant across the whole transcript, but they appear at important definition and example-entry moments. The repair at the refund example makes the setup sound improvised.
+필러가 전사 전체에서 계속 나타나지는 않지만, 중요한 개념을 정의하거나 사례에 진입하는 순간에 나온다. 환불 사례를 소개하면서 문장을 고친 부분은 준비되지 않은 즉흥 설명처럼 들리게 한다.
 
-- 개선 행동: Rehearse the pivot sentences around "판정", "초록의 의미", and "예시" with a silent pause before each pivot instead of filling the gap.
+- 개선 행동: `판정`, `초록의 의미`, `예시`로 넘어가는 전환 문장을 따로 연습하라. 전환 직전에는 필러로 공백을 채우지 말고 잠시 침묵하라.
 - 근거: 이제 판정, 테스트 코드가
 
-### pace_and_pause · not_evaluable
+### 속도와 멈춤 · 평가 불가
 
-The context provides overall duration and an overall metric of 96.92 whitespace tokens per minute, but segment_pace is empty and the transcript does not preserve pause lengths.
+전체 녹음 길이와 분당 공백 기준 발화 단위 96.92라는 전체 지표는 제공되었다. 하지만 구간별 속도 정보가 비어 있고 전사에는 멈춤 길이가 보존되지 않아 속도와 멈춤을 평가할 수 없다.
 
-- 개선 행동: For the next review, provide segment-level pace or audio-derived pause timestamps so pace can be diagnosed separately from wording.
-- 근거: 总时长:           5分钟25秒
+- 개선 행동: 다음 리뷰에는 구간별 발화 속도나 오디오에서 추출한 멈춤 시각을 제공하라. 그래야 문장 표현과 별개로 속도를 진단할 수 있다.
+- 근거: 전체 길이 5분 25초
 
-### verbal_style · problem
+### 언어 표현 방식 · 문제
 
-The delivery relies heavily on broad referents like "이것", "그것", and "그런 것들", plus stacked clauses ending in repeated "수도 있고" patterns.
+발표에서 `이것`, `그것`, `그런 것들`처럼 가리키는 범위가 넓은 표현을 자주 사용한다. `수도 있고`로 끝나는 절도 여러 개 이어진다.
 
-- 개선 행동: Replace vague referents at key points with the noun you mean, especially "테스트 입력", "초록 결과", "판정 기준", and "사각지대".
+- 개선 행동: 핵심 지점의 모호한 지시어를 실제로 뜻하는 명사로 바꿔라. 특히 `테스트 입력`, `초록 결과`, `판정 기준`, `사각지대`처럼 구체적으로 말하라.
 - 근거: 사각지대는 언제든 나올 수 있습니다. 중간에 내가 작업을 하다 생각날 수도 있고 맞은 케이스가 혹은 다른 서드 파티 나 라이브러리 업데이트에서 갑자기 에러가 생길 수도 있고
 
-### opening · good
+### 도입 · 좋음
 
-The opening quickly names the topic and frames a real audience concern: AI-generated code and whether tests actually guarantee behavior.
+도입에서 주제를 빠르게 밝히고 청중이 실제로 고민할 만한 문제를 제시한다. AI가 생성한 코드와 테스트가 실제 동작을 보장하는지 묻는다.
 
-- 개선 행동: Keep the audience-question opening, but end it with the central gate sentence so the following sections have a stronger anchor.
+- 개선 행동: 청중에게 질문하는 도입은 유지하되, 도입 마지막에 게이트에 관한 중심 문장을 제시하라. 그러면 뒤의 내용을 묶어주는 기준점이 더 강해진다.
 - 근거: 안녕하세요. AI 시대의 테스트에 대해서 설명을 해보려고 합니다.
 
-### core_message · caution
+### 중심 메시지 · 주의
 
-The central message is identifiable, especially in the latter half, but it arrives after several question chains and example fragments.
+특히 후반부에서는 중심 메시지를 식별할 수 있다. 하지만 여러 질문과 단편적인 사례를 거친 뒤에야 메시지가 선명해진다.
 
-- 개선 행동: Move the "흔들리지 않는 게이트" message into the first minute, then use each example as proof of that one sentence.
+- 개선 행동: `흔들리지 않는 게이트`라는 메시지를 첫 1분 안으로 옮겨라. 이후의 각 사례는 그 한 문장을 증명하는 근거로 사용하라.
 - 근거: 결론적으로 테스트란 것은 먼저 인상으로 결정한 것이 아니라 흔들리지 않는 절대적 게이트라는 것이 중요합니다.
 
-### development_and_transitions · problem
+### 전개와 전환 · 문제
 
-Transitions use broad words like "그렇다면", "이들을", and "하지만" without always stating the relationship between the previous claim and the next example.
+`그렇다면`, `이들을`, `하지만`처럼 포괄적인 표현으로 다음 내용에 넘어간다. 이때 앞의 주장과 다음 사례가 어떤 관계인지 항상 밝혀주지는 않는다.
 
-- 개선 행동: Before each example, say which claim it proves: instability of impression, limited meaning of green, or remaining blind spots.
+- 개선 행동: 각 사례를 말하기 전에 그 사례가 어떤 주장을 증명하는지 밝혀라. 인상에 따른 판단의 불안정성, 초록 결과가 보장하는 범위의 한계, 남아 있는 사각지대 중 무엇을 보여주는 사례인지 먼저 말하라.
 - 근거: 항상 흔들리게 되죠. 그렇다면 이제 판정, 테스트 코드가 있다면 그것은 괜찮은 건가요?
 
-### closing · good
+### 마무리 · 좋음
 
-The close gives a concrete next action and retrieves the gate idea from the core message.
+마무리에서 청중이 바로 해볼 수 있는 구체적인 행동을 제안하고 중심 메시지의 게이트 개념을 다시 회수한다.
 
-- 개선 행동: Keep the closing action, but cleanly articulate the final sentence before "감사합니다" so the last takeaway is not blurred by the garbled phrase at t0510-t0511.
+- 개선 행동: 마무리의 행동 제안은 유지하라. 다만 `감사합니다` 직전의 마지막 문장은 또렷하게 말해라. `t0510~t0511`의 불명확한 표현 때문에 마지막 핵심이 흐려지지 않게 해야 한다.
 - 근거: 테스트 코드가 있다면 초록인 테스트 코드를 하나 골라서 부등호 하나를 집어보는 겁니다.
 
 ## 논리 진단
 
 중심 주장은 대체로 식별된다. 테스트는 코드 전체의 안전을 보장하는 것이 아니라, 주어진 입력과 기대값에 대해 흔들리지 않는 판정 기준이어야 한다는 주장이다. 다만 사례가 그 주장의 어느 부분을 증명하는지, AI 평가가 어떻게 흔들렸는지, 결함 주입 결과를 어떻게 해석해야 하는지의 근거가 부족해 시니어 질문에는 아직 취약하다.
 
-### thesis_identifiability · caution
+### 중심 주장 식별 가능성 · 주의
 
 주장은 보이지만 늦게 선명해진다. 특히 '절대적 게이트'라는 표현이 뒤의 한정된 보장 주장과 함께 들리며 범위가 모호해진다.
 
-- 개선 행동: 초반에 테스트가 보장하는 것은 전체 안전이 아니라 특정 입력과 기대값에 대한 반복 가능한 판정이라는 한정된 thesis를 명시하라.
+- 개선 행동: 초반에 테스트가 보장하는 것은 전체 안전이 아니라 특정 입력과 기대값에 대한 반복 가능한 판정이라는 한정된 중심 주장을 명시하라.
 - 근거: 근데 테스트가 있다고 정말 안전한 걸까요?
 
-### reasoning_chain · caution
+### 추론 연결 · 주의
 
-큰 흐름은 따라갈 수 있지만 중간 연결고리가 충분히 명시되지 않는다. 청중이 이미 테스트 설계와 mutation testing의 의미를 알고 있어야 빈칸을 메울 수 있다.
+큰 흐름은 따라갈 수 있지만 중간 연결고리가 충분히 명시되지 않는다. 청중이 이미 테스트 설계와 결함 주입 테스트의 의미를 알고 있어야 빈칸을 메울 수 있다.
 
 - 개선 행동: 결함 주입이 '테스트가 실패해야 할 변경에서 실제로 실패하는지 확인하는 절차'라는 연결을 명시하고, 그 결과가 무엇을 말해주는지 분리해서 설명하라.
 - 근거: 테스트의 초록 빨강은 그 테스트가 주어진 입력에 대해서 이제 동작을 보장한다는 것이지 모든 케이스에 대해서 그것이 안전하다는 것은 아닙니다.
 
-### evidence_fit · caution
+### 근거의 적합성 · 주의
 
-사례 방향은 주장과 맞지만 증거의 해상도가 낮다. 숫자는 나오지만 그 숫자가 정확히 어떤 claim을 지지하는지 확인하기 어렵다.
+사례의 방향은 주장과 맞지만 근거의 구체성이 부족하다. 숫자는 나오지만 그 숫자가 정확히 어떤 주장을 뒷받침하는지 확인하기 어렵다.
 
 - 개선 행동: 각 사례마다 '무엇을 비교했는지', '무엇이 실패했는지', '그 실패가 어떤 결론을 지지하는지'를 한 줄씩 붙여라.
 - 근거: 결과가 흔들리고 있는 거죠. 하지만 내가 만든 인스테스트 18종을 검증했을 때는 18개 중에 16개를 통과했고 예를 들어서 2개는 틀림 명확한 응답을 얻었다고 항상 동일한 결과와 피드백이 온 것이죠.
 
-### assumptions_and_scope · problem
+### 가정과 범위 · 문제
 
 범위 설정이 가장 큰 약점이다. '절대적'이라는 단어가 테스트의 한정된 보장이라는 앞선 주장보다 강하게 들려 과대 주장으로 공격받기 쉽다.
 
 - 개선 행동: 게이트의 범위를 '명세화된 입력과 기대값 안에서'로 제한하고, 그 밖의 사각지대는 별도의 확인이나 계약 테스트가 필요하다고 경계를 세워라.
 - 근거: 사각지대는 언제든 나올 수 있습니다.
 
-### consistency · caution
+### 일관성 · 주의
 
 발표 내부에 직접 모순은 크지 않지만, 강한 표현과 한정 표현이 충돌해 들릴 수 있다.
 
 - 개선 행동: '절대적'을 '반복 가능한' 또는 '정해진 범위 안에서 흔들리지 않는'으로 바꾸거나, 발표 안에서 같은 의미로 정의하라.
 - 근거: 모든 케이스에 대해서 그것이 안전하다는 것은 아닙니다.
 
-### conclusion_support · caution
+### 결론의 근거 · 주의
 
 실천 제안은 강하지만 해석 조건이 빠져 있다. 그대로 말하면 유효한 테스트를 잘못 버리거나, 범위 밖 변경을 테스트 실패 기준으로 삼는 위험을 설명하지 못한다.
 
 - 개선 행동: 결론에서 '의도한 동작을 깨뜨리는 변경을 넣었는데도 초록이면'처럼 판단 조건을 붙여라.
 - 근거: 테스트 코드가 있다면 초록인 테스트 코드를 하나 골라서 부등호 하나를 집어보는 겁니다. 혹은 입력을 바꿔보던가 코드를 조금 바꿔보는 겁니다.
 
-### question_resilience · problem
+### 후속 질문 대응력 · 문제
 
 핵심 증거가 검증 가능한 절차로 닫혀 있지 않아 후속 질문 압력이 크다.
 
@@ -130,19 +130,19 @@ The close gives a concrete next action and retrieves the gate idea from the core
 
 ## 다음 리허설 행동
 
-- Move the central gate sentence into the opening so listeners have one anchor before the examples begin.
-- Add explicit signposts before each example: which claim the example proves and what the listener should notice.
-- Replace vague referents like "이것", "그것", and "그런 것들" with concrete nouns at definition and transition points.
+- 사례를 시작하기 전에 중심 문장을 이해할 기준점이 생기도록 게이트에 관한 중심 문장을 도입으로 옮겨라.
+- 각 사례 앞에 그 사례가 증명하는 주장과 청중이 주목해야 할 지점을 명시하라.
+- 정의와 전환 지점의 `이것`, `그것`, `그런 것들` 같은 모호한 지시어를 구체적인 명사로 바꿔라.
 - 중심 주장을 '정해진 입력과 기대값 안에서 반복 가능한 판정 기준'으로 한정해서 다시 말하라.
 - 환불 도메인 사례는 AI 평가 절차, 18개 테스트의 판정 기준, 실패 2개의 의미를 분리해 증거로 제시하라.
 - 결함 주입 제안에는 유효한 결함 변경의 조건과 초록 결과를 해석하는 기준을 붙여라.
 
 ## 한계
 
-- No audio was provided, so pitch, volume, emphasis, confidence, emotion, and audience reaction were not evaluated.
-- segment_pace is empty, so pace and pause quality could not be responsibly diagnosed.
-- The transcript appears machine-generated and contains possible recognition errors such as "인스테스트" and "일부는 투자여".
-- 이 평가는 제공된 review-context.json의 transcript만 발화 증거로 사용했다.
-- presentation_plan은 의도 파악에는 참고될 수 있지만 실제 발화의 증거로 사용하지 않았다.
+- 리뷰 입력에는 오디오가 제공되지 않았다. 따라서 음높이, 음량, 강조, 자신감, 감정, 에너지, 청중 반응은 평가하지 않았다.
+- 구간별 발화 속도 정보가 비어 있어 속도와 멈춤의 품질을 책임 있게 진단할 수 없었다.
+- 전사본은 자동 생성된 것으로 보이며 `인스테스트`, `일부는 투자여` 같은 인식 오류가 있을 수 있다.
+- 이 평가는 제공된 `review-context.json`의 전사본만 발화 증거로 사용했다.
+- 발표 계획은 의도를 파악하는 데 참고했지만 실제 발화의 증거로 사용하지 않았다.
 - 원본 코드, 테스트 파일, AI 평가 로그가 없어 사례의 사실 여부와 재현성은 검증하지 못했다.
 - 전사 오류 가능성이 있어 일부 어색한 표현은 발화 의도와 다를 수 있다.
