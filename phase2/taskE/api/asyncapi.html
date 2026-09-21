@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>빈자리 알림 메시지 계약</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@asyncapi/react-component@3.2.1/styles/default.min.css">
+<style>
+
+  :root {
+    --paper: #FBFAF7;
+    --paper-sunk: #F4F2EB;
+    --ink: #1C2321;
+    --ink-soft: #5C635B;
+    --line: #E2DFD5;
+    --court: #2F6B4F;
+    --clay: #C1663F;
+    --chrome-h: 116px;
+    color-scheme: light;
+  }
+
+  html, body { height: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans KR', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .masthead {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px 32px;
+    padding-block: 18px 16px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .identity { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+
+  .eyebrow {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--clay);
+  }
+
+  h1 {
+    margin: 0;
+    font-family: 'Gowun Batang', 'IBM Plex Sans KR', serif;
+    font-weight: 700;
+    font-size: clamp(21px, 2.4vw, 27px);
+    line-height: 1.2;
+    text-wrap: balance;
+  }
+
+  .blurb {
+    margin: 0;
+    max-width: 62ch;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+
+  .surfaces {
+    display: flex;
+    gap: 6px;
+    margin-top: 4px;
+    font-size: 12px;
+  }
+
+  .surfaces a, .surfaces span {
+    padding: 4px 10px 5px;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    text-decoration: none;
+    color: var(--ink-soft);
+    background: var(--paper);
+  }
+
+  .surfaces a:hover { color: var(--court); border-color: var(--court); }
+
+  .surfaces [aria-current='page'] {
+    color: var(--paper);
+    background: var(--court);
+    border-color: var(--court);
+  }
+
+  .facts { display: flex; flex-wrap: wrap; gap: 10px; }
+
+  .fact {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 7px 12px 8px;
+    background: var(--paper-sunk);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    min-width: 74px;
+  }
+
+  .fact dt {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .fact dd {
+    margin: 0;
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-variant-numeric: tabular-nums;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--court);
+  }
+
+  #mount { position: relative; }
+
+  /* Both renderers stick their sidebar to the viewport top; hold it below the
+     masthead so it does not ride over the heading. */
+  #mount .menu-content {
+    top: var(--chrome-h) !important;
+    height: calc(100vh - var(--chrome-h)) !important;
+  }
+
+  .booting {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 56px 20px;
+    text-align: center;
+    color: var(--ink-soft);
+    font-size: 14px;
+  }
+
+  .booting code {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px;
+    color: var(--ink);
+  }
+
+  @media (max-width: 720px) {
+    :root { --chrome-h: 0px; }
+    .masthead { padding-block: 16px 14px; }
+    .facts { gap: 8px; }
+    .fact { flex: 1 1 auto; min-width: 66px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+
+
+  /* The renderer ships its own type scale; only the family is pulled back. */
+  #mount .aui-root { font-family: inherit; }
+
+  /* It keeps the sidebar behind a burger button at every width. A wide screen
+     has room for it, and it holds below the masthead like the other page's. */
+  @media (min-width: 768px) {
+    #mount .sidebar {
+      display: block !important;
+      position: sticky;
+      align-self: flex-start;
+      top: var(--chrome-h);
+      height: calc(100vh - var(--chrome-h));
+      max-height: none;
+      overflow-y: auto;
+      background: var(--paper-sunk);
+    }
+    #mount .burger-menu { display: none !important; }
+  }
+
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="identity">
+    <span class="eyebrow">AsyncAPI 3.1 · 계약</span>
+    <h1>빈자리 알림 메시지 계약</h1>
+    <p class="blurb">빈자리를 확인한 뒤 알림이 사용자 단말까지 가는 경로다. 요청과 응답이 아니라 채널을 지나는 메시지라
+      보내는 쪽과 받는 쪽, 오가는 방향, 전달의 보증까지 이 계약이 정한다.</p>
+    <nav class="surfaces"><a href="openapi.html">HTTP 표면</a><span aria-current="page">알림 경로</span></nav>
+  </div>
+  <dl class="facts" id="facts"></dl>
+</header>
+
+<div id="mount"></div>
+<div class="booting" id="booting">
+  <span>계약을 불러오는 중이다.</span>
+  <span><code>notification-asyncapi.yaml</code></span>
+</div>
+
+<script type="application/json" id="spec-source">{"asyncapi":"3.1.0","info":{"title":"테니스 코트 빈자리 알림 메시지 계약","version":"1.0.0","description":"빈자리를 확인한 뒤 사용자 단말까지 알림이 가는 경로의 계약이다.\n요구사항은 `phase2/taskE/tennis-court-service-plan.md`이며, 채널과 오퍼레이션의 `x-requirement`가 출처를 가리킨다.\n같은 서비스의 HTTP 표면은 `tennis-alert-api.yaml`이 정한다.\n두 계약은 같은 개념에 같은 이름과 같은 형식을 쓰며, 그 일치는 `check_contract.py`가 판정한다.\n\n## 이 경계를 OpenAPI로 적을 수 없는 이유\n\n이 경로에는 요청과 응답이 없다. 확인 작업이 발송 대기에 지시를 올리고, 발송 작업이 그것을 꺼내 전송 서비스에 넘기며,\n단말은 그 바깥 경로로 받는다. OpenAPI에는 큐도 단말도 가리킬 어휘가 없고,\n`webhooks`와 `callbacks`는 우리가 상대의 URL로 보내는 HTTP 요청을 적는 자리라 거기 적으면 계약이 전달 방식을 잘못 기술한다.\nAsyncAPI는 채널과 방향과 메시지를 적는 자리를 그대로 가지고 있어, 산문으로만 적던 전달 규칙이 기계가 읽는 칸에 들어간다.\n\n## 전송 수단\n\n아직 정하지 않았다. FR-6이 발송 수단을 미결로 두었기 때문에 `servers`가 비어 있고 단말 채널의 `address`도 null이다.\n채널이 정해지면 브로커와 전송 서비스가 `servers`로, 채널별 규약이 `bindings`로 들어온다. 메시지의 내용은 그때도 바뀌지 않는다.\n\n## 시간 표현\n\n- 타임스탬프는 RFC 3339 형식이며 UTC로 표기한다.\n- `date`는 코트가 있는 지역의 날짜이고, `startTime`과 `endTime`은 그 지역의 24시간제 시각이다. 현재 지원 지역의 시간대는 `Asia/Seoul`이다.\n\n## 호환성\n\n- 메시지의 주 버전은 `schemaVersion`이다. HTTP 표면에서 경로의 `/v1`이 하는 일을 메시지에서는 이 필드가 한다.\n- 필드를 더하는 것은 호환을 깨지 않는다. 받는 쪽은 모르는 필드를 무시한다.\n- 필드를 빼는 것, 뜻을 바꾸는 것, 타입이나 형식을 좁히는 것은 호환을 깬다. 그때 `schemaVersion`을 올린다.\n- 옛 버전 앱이 새 메시지를 계속 받으므로 이 규칙은 HTTP 표면보다 여기서 더 자주 걸린다.\n","x-delivery-guarantee":[{"id":"AT_LEAST_ONCE","channel":"deviceNotification","x-checklist":"H2","summary":"같은 알림이 두 번 도착할 수 있다.","requirement":["EF-3"],"detail":"EF-3이 발송 결과를 모르는 경우에도 다시 보내 누락 대신 중복을 감수한다고 정했다.\n재시도로 나가는 메시지는 `notificationId`가 같으므로 받는 쪽은 그 값으로 이미 띄운 알림인지 판단한다.\n우리는 중복을 막지 않고 거를 수단만 제공한다.\n"},{"id":"ONE_NOTIFICATION_PER_ALERT","channel":"deviceNotification","x-checklist":"H2","summary":"신청 하나에 알림은 한 건이다.","requirement":["FR-4","EF-5","V-2"],"detail":"재시도로 같은 `notificationId`가 여러 번 나갈 수는 있어도, 한 신청에 새 `notificationId`가 두 번 생기지는 않는다.\n발송에 성공하면 그 신청은 알림 완료가 되어 확인을 멈춘다.\n"},{"id":"UNORDERED","channel":"deviceNotification","x-checklist":"H3","summary":"도착 순서를 보장하지 않는다.","rationale":"여러 신청의 알림이 서로 다른 전송 경로를 타므로 순서를 약속하면 지킬 수 없는 약속이 된다.\n요구사항이 정한 바가 없어 계약이 정했다. 받는 쪽은 도착 순서로 판단하지 말고 `confirmedAt`을 쓴다.\n"},{"id":"EXPIRY_JUDGED_BY_RECEIVER","channel":"deviceNotification","x-checklist":"H4","summary":"만료된 알림은 받는 쪽이 띄우지 않는다.","requirement":["FR-5","EF-6"],"detail":"단말이 꺼져 있다가 나중에 켜지면 푸시는 그때 도착하므로, 06시 자리의 알림이 09시에 뜨는 일이 실제로 일어난다.\n메시지에 실린 `expiresAt`이 그 경계이고 값은 FR-5가 정한 신청의 만료 시각과 같다.\n이 시각이 지난 알림으로는 예약을 시도할 수 없으므로 받는 쪽은 띄우지 않는다.\n"},{"id":"STOP_AFTER_RETRIES","channel":"deviceNotification","summary":"최초 발송과 재시도 세 번이 모두 실패하면 더 보내지 않는다.","requirement":["EF-3","V-7"],"detail":"시도는 모두 네 번이고 HTTP 계약의 `delivery.attemptCount` 상한과 같은 값이다.\n그 뒤 신청의 `delivery.status`는 `FAILED`가 되고 지시는 보관 채널로 옮겨진다.\n사용자는 HTTP 표면의 신청 조회에서 그 상태를 본다.\n"},{"id":"SENT_MEANS_ACCEPTED","channel":"deviceNotification","x-checklist":"H5","summary":"보냈다는 표시는 전송 서비스의 접수까지만 뜻한다.","rationale":"HTTP 계약의 `SENT`는 전송 서비스가 우리 메시지를 받아들였다는 뜻이다.\n단말에 도착했는지와 사용자가 봤는지는 이 경로로 알 수 없어, 우리가 아는 만큼으로 정의를 좁혔다.\n사용자가 알림을 못 받았다고 할 때 `SENT`는 그 반박 근거가 되지 못한다.\n"},{"id":"QUEUE_AT_LEAST_ONCE","x-checklist":"H2","channel":"alertDeliveryQueue","summary":"발송 작업이 같은 지시를 두 번 꺼낼 수 있다.","rationale":"대기에서 지시를 잃는 것보다 두 번 꺼내는 편이 낫다고 보아 그렇게 정했다. 요구사항이 정한 바는 없다.\n두 번 꺼내도 `notificationId`가 같으므로 단말은 한 번만 띄운다.\n"},{"id":"DEAD_LETTER_IS_TERMINAL","channel":"alertDeliveryDeadLetter","summary":"보관으로 옮겨진 지시는 저절로 다시 나가지 않는다.","requirement":["EF-3","V-7"],"detail":"다시 보낼지는 사람이 판단한다. 자동으로 되돌리면 네 번으로 끊기로 한 시도 횟수가 무의미해진다.\n"}],"x-consumer-rule":[{"rule":"모르는 필드는 무시한다. 필드를 더하는 것은 호환을 깨는 변경이 아니다.","field":null},{"rule":"`notificationId`가 같은 알림은 한 번만 띄운다.","field":"notificationId","requirement":["EF-3"]},{"rule":"`expiresAt`이 지난 알림은 띄우지 않는다.","field":"expiresAt","requirement":["EF-6"]},{"rule":"`schemaVersion`이 모르는 값이면 띄우지 않는다. 뜻을 모르는 내용을 추측해 보여주지 않는다.","field":"schemaVersion"},{"rule":"알림을 누르면 `reservationUrl`을 연다. 이 서비스는 예약을 대신하지 않으므로 그 화면에서 사용자가 직접 예약한다.","field":"reservationUrl"}]},"defaultContentType":"application/json","channels":{"alertDeliveryQueue":{"address":"alert.delivery.v1","title":"발송 대기","summary":"빈자리를 확인한 작업이 발송 지시를 올리고, 발송 작업이 꺼낸다.","description":"FR-4가 정한 두 걸음 중 첫 걸음이다. 확인과 발송을 같은 작업이 하지 않으므로 그 사이에 이 채널이 있고,\n여기 올라온 지시 하나가 알림 한 건이 된다.\n\n주소의 `v1`은 메시지의 `schemaVersion`과 같이 움직인다. 호환을 깨는 변경은 새 주소로 간다.\n","messages":{"alertDeliveryCommand":{"$ref":"#/components/messages/AlertDeliveryCommand"}}},"deviceNotification":{"address":null,"title":"단말 알림","summary":"발송 작업이 전송 서비스에 넘기고 단말이 받는 알림 한 건.","description":"주소가 null인 것은 채널을 아직 고르지 않았기 때문이다. 웹 푸시와 앱 푸시는 이 JSON을 페이로드에 그대로 싣고,\n알림톡이나 문자는 승인받은 템플릿의 변수에 필드를 대응시킨다. 어느 쪽이든 주소는 단말마다 다르고 전송 서비스가 정한다.\n\n우리가 정하는 것은 봉투가 아니라 그 안의 내용과 내용이 뜻하는 바다.\n내용이 채널에 매이지 않으므로 채널이 늘어도 이 메시지는 그대로다.\n","messages":{"alertNotification":{"$ref":"#/components/messages/AlertNotification"}}},"alertDeliveryDeadLetter":{"address":"alert.delivery.v1.dlq","title":"발송 실패 보관","summary":"네 번의 시도가 모두 실패한 지시를 옮겨 두는 자리.","description":"EF-3과 V-7이 이름까지 정한 채널이다. 여기 들어온 지시는 저절로 다시 나가지 않고, 다시 보낼지는 사람이 판단한다.\n옮기는 시점에 신청의 `delivery.status`는 `FAILED`가 된다.\n\n메시지는 발송 대기의 것과 같다. 무엇이 왜 실패했는지는 지시가 가리키는 신청과 발송 기록이 이미 갖고 있어,\n실패 사유를 담을 필드를 새로 만들지 않았다.\n","messages":{"alertDeliveryCommand":{"$ref":"#/components/messages/AlertDeliveryCommand"}}}},"operations":{"enqueueAlertDelivery":{"action":"send","channel":{"$ref":"#/channels/alertDeliveryQueue"},"title":"발송 지시를 대기에 올린다","summary":"확인 작업이 빈자리를 발견하면 그 신청의 발송 지시를 올린다.","description":"빈자리를 확인한 경우에만 올린다. 확인에 실패한 주기는 이 채널에 아무것도 올리지 않으므로,\n확인 실패만으로는 알림이 생기지 않는다(V-3). 신청 하나에 지시는 한 번만 올라간다(FR-4, EF-5).\n\n올리는 시점은 발견 즉시다(NFR-4). 빈자리는 금방 사라지므로 다음 주기를 기다리지 않는다.\n신청이 해제되거나 만료된 뒤에는 올리지 않는다(V-8).\n","x-requirement":["FR-4","NFR-4","EF-5","V-2","V-3","V-8"],"messages":[{"$ref":"#/channels/alertDeliveryQueue/messages/alertDeliveryCommand"}]},"consumeAlertDelivery":{"action":"receive","channel":{"$ref":"#/channels/alertDeliveryQueue"},"title":"발송 지시를 꺼낸다","summary":"발송 작업이 지시를 꺼내 보낼 내용을 그때 만든다.","description":"지시에는 보낼 내용이 없다. 발송 작업이 `alertId`로 신청을 읽고, 저장된 마지막 확인 결과로 메시지를 만든다.\n내용을 지시에 실어 두면 대기에 머무는 동안 낡아, 이미 찬 자리를 빈자리로 알리게 된다.\n\n그래서 더 최신 확인 결과가 있으면 그 결과로 만들어 보내고(EF-4, V-5),\n그 결과에 빈자리가 없으면 보내지 않고 신청을 감시 중으로 남긴다(V-6).\n최신 결과는 저장된 확인 결과를 쓰며 발송 직전에 예약처를 다시 조회하지는 않는다.\n\n해제되거나 만료된 신청의 지시도 여기서 걸러진다(V-8). 올리는 쪽이 막지 못하는 것은\n이미 대기에 들어간 지시이고, 그것을 버리는 판단은 꺼낼 때만 할 수 있다.\n","x-requirement":["FR-4","EF-4","V-5","V-6","V-8"],"messages":[{"$ref":"#/channels/alertDeliveryQueue/messages/alertDeliveryCommand"}]},"sendAlertNotification":{"action":"send","channel":{"$ref":"#/channels/deviceNotification"},"title":"알림을 단말로 보낸다","summary":"발송 작업이 만든 알림 한 건을 전송 서비스에 넘긴다.","description":"한 방향이다. 받는 쪽이 우리에게 응답하지 않으므로 이 오퍼레이션에는 `reply`가 없다.\n전송 규약 자체는 이 계약 밖이며 제공자가 정하고 우리가 맞춘다.\n\n전달의 의미는 `info.x-delivery-guarantee`가, 받는 쪽이 지켜야 할 것은 `info.x-consumer-rule`이 정한다.\n둘 다 스키마가 강제할 수 없어 값이 아니라 약속으로 적었고, 지켜졌는지는 발송 작업의 통합 테스트가 판정한다.\n","x-requirement":["FR-5","FR-6","EF-3","EF-6","V-7"],"messages":[{"$ref":"#/channels/deviceNotification/messages/alertNotification"}]},"parkFailedAlertDelivery":{"action":"send","channel":{"$ref":"#/channels/alertDeliveryDeadLetter"},"title":"실패한 지시를 보관으로 옮긴다","summary":"네 번째 시도까지 실패하면 지시를 보관 채널로 옮기고 그 신청의 발송을 끝낸다.","description":"옮기는 것으로 이 신청의 발송은 끝난다. 신청의 `delivery.status`가 `FAILED`가 되고 다시 시도하지 않는다.\n신청 자체는 감시 중으로 남지만 알림은 오지 않으며, 그 상태를 하나 더 둘지는 요구사항이 정할 일로 남겨 두었다.\n","x-requirement":["EF-3","V-7"],"messages":[{"$ref":"#/channels/alertDeliveryDeadLetter/messages/alertDeliveryCommand"}]}},"components":{"messages":{"AlertDeliveryCommand":{"name":"AlertDeliveryCommand","title":"발송 지시","summary":"어느 신청에 알림이 필요한지를 가리키는 한 건.","contentType":"application/json","correlationId":{"description":"알림 한 건의 식별자. 이 값이 그대로 단말 메시지로 이어져 재시도와 중복을 잇는다.","location":"$message.payload#/notificationId"},"payload":{"schemaFormat":"application/schema+json;version=draft-2020-12","schema":{"$ref":"#/components/schemas/AlertDeliveryCommand"}},"examples":[{"name":"양재1번-06시","summary":"06시 자리의 빈자리를 확인해 올린 지시","payload":{"schemaVersion":1,"notificationId":"b41f2d6c-73a8-4c51-9e0d-5a7c8f2e1b94","alertId":"6f5b2f7e-9c1a-4f0e-9a4c-2b7d5e1a8c30","enqueuedAt":"2026-10-01T02:15:41Z"}}]},"AlertNotification":{"name":"AlertNotification","title":"빈자리 알림","summary":"단말이 받는 알림 한 건의 내용.","description":"요구사항 FR-6이 담을 것을 정했고 이 메시지가 그 넷에 이름과 타입을 붙인다.\n값은 이미 HTTP 계약이 같은 뜻으로 갖고 있으므로 같은 이름과 같은 형식을 쓴다.\n","contentType":"application/json","correlationId":{"description":"재시도해도 바뀌지 않는 알림 한 건의 식별자. 받는 쪽은 이 값으로 중복을 거른다.","location":"$message.payload#/notificationId"},"payload":{"schemaFormat":"application/schema+json;version=draft-2020-12","schema":{"$ref":"#/components/schemas/AlertNotification"}},"examples":[{"name":"양재1번-06시","summary":"06시 자리가 비어 나간 알림","payload":{"schemaVersion":1,"notificationId":"b41f2d6c-73a8-4c51-9e0d-5a7c8f2e1b94","alertId":"6f5b2f7e-9c1a-4f0e-9a4c-2b7d5e1a8c30","courtId":"seoul-yangjae-1","courtName":"양재 시민의 숲 테니스장 1번","date":"2026-10-04","slot":{"startTime":"06:00","endTime":"08:00"},"confirmedAt":"2026-10-01T02:15:40Z","expiresAt":"2026-10-03T21:00:00Z","reservationUrl":"https://yeyak.seoul.go.kr/reservation/yangjae-1","disclaimer":"빈자리는 금방 사라질 수 있고, 이 알림이 예약을 보장하지 않습니다."}}]}},"schemas":{"SchemaVersion":{"type":"integer","minimum":1,"description":"이 메시지의 주 버전이다. 호환을 깨는 변경에만 오른다.\n봉투가 무엇이든 내용만으로 읽혀야 해서 본문에 싣는다. 보관 채널로 옮겨져 주소를 잃은 지시도 이 값으로 읽는다.\n"},"NotificationId":{"type":"string","format":"uuid","description":"알림 한 건의 식별자다. 발송 지시를 올릴 때 발급하고 재시도해도 바뀌지 않으므로,\n받는 쪽은 이 값으로 중복을 거른다.\n"},"AlertId":{"type":"string","format":"uuid","description":"이 알림을 만든 신청의 식별자다. HTTP 계약의 `AlertId`와 같은 값이라, 받는 쪽은 이 값으로 신청 조회 화면을 열 수 있다."},"CourtName":{"type":"string","minLength":1,"description":"사람이 읽는 코트 이름. 메시지 본문에 그대로 쓰인다."},"CourtId":{"type":"string","minLength":1,"maxLength":64,"pattern":"^[a-z0-9][a-z0-9-]*$","description":"빈자리가 난 코트의 식별자. HTTP 계약의 `CourtId`와 같은 형식이다."},"TimeSlot":{"type":"object","description":"빈자리가 난 시간대. 신청 조건의 시간대와 같다.","required":["startTime","endTime"],"properties":{"startTime":{"type":"string","pattern":"^([01][0-9]|2[0-3]):[0-5][0-9]$","description":"코트가 있는 지역 기준 시작 시각"},"endTime":{"type":"string","pattern":"^([01][0-9]|2[0-3]):[0-5][0-9]$","description":"코트가 있는 지역 기준 종료 시각"}},"additionalProperties":false},"AlertDeliveryCommand":{"type":"object","x-requirement":["FR-4","EF-4","EF-5"],"description":"발송 대기에 올라가는 지시 한 건이다. 보낼 내용이 아니라 어느 신청에 알림이 필요한지만 담는다.\n내용을 여기 실으면 대기에 머무는 동안 낡으므로, 만드는 일은 꺼내는 쪽이 맡는다.\n","required":["schemaVersion","notificationId","alertId","enqueuedAt"],"properties":{"schemaVersion":{"$ref":"#/components/schemas/SchemaVersion"},"notificationId":{"$ref":"#/components/schemas/NotificationId"},"alertId":{"$ref":"#/components/schemas/AlertId"},"enqueuedAt":{"type":"string","format":"date-time","description":"이 지시를 대기에 올린 시각. RFC 3339 형식이며 UTC로 적는다."}},"additionalProperties":false},"AlertNotification":{"type":"object","x-requirement":["FR-5","FR-6","EF-3","EF-6"],"description":"발송 작업이 만들어 단말이 받는 알림 한 건의 내용이다.","required":["schemaVersion","notificationId","alertId","courtId","courtName","date","slot","confirmedAt","expiresAt","reservationUrl","disclaimer"],"properties":{"schemaVersion":{"$ref":"#/components/schemas/SchemaVersion"},"notificationId":{"$ref":"#/components/schemas/NotificationId"},"alertId":{"$ref":"#/components/schemas/AlertId"},"courtId":{"$ref":"#/components/schemas/CourtId"},"courtName":{"$ref":"#/components/schemas/CourtName"},"date":{"type":"string","format":"date","description":"이용 날짜. 코트가 있는 지역의 날짜다."},"slot":{"$ref":"#/components/schemas/TimeSlot"},"confirmedAt":{"type":"string","format":"date-time","description":"이 빈자리를 확인한 시각이다. 발송 시각이 아니라 확인 시각이라,\n받는 쪽은 이 값으로 정보가 얼마나 지난 것인지 보여준다.\n"},"expiresAt":{"type":"string","format":"date-time","description":"이 알림이 쓸모를 잃는 시각이다. 신청의 만료 시각과 같은 값이며 HTTP 계약의 `Alert.expiresAt`에서 온다.\nEF-6대로 받는 쪽은 이 시각이 지난 알림을 띄우지 않는다.\n"},"reservationUrl":{"type":"string","format":"uri","description":"외부 예약 사이트의 이 코트 예약 화면. 알림을 누르면 여는 주소이며 HTTP 계약의 `Alert.reservationUrl`과 같은 값이다."},"disclaimer":{"type":"string","minLength":1,"description":"예약을 보장하지 않는다는 안내다. 채널마다 문구가 갈리지 않도록 보내는 쪽이 문장을 정해 싣는다."}},"additionalProperties":false}}}}</script>
+<script src="https://cdn.jsdelivr.net/npm/@asyncapi/react-component@3.2.1/browser/standalone/index.js"></script>
+<script>
+  (function () {
+    var source = document.getElementById('spec-source').textContent;
+    var spec = JSON.parse(source);
+    var mount = document.getElementById('mount');
+
+    function facts(rows) {
+      document.getElementById('facts').innerHTML = rows.map(function (fact) {
+        return '<div class="fact"><dt>' + fact[0] + '</dt><dd>' + fact[1] + '</dd></div>';
+      }).join('');
+    }
+
+    function chromeHeight() {
+      var header = document.querySelector('.masthead');
+      var height = header ? Math.round(header.getBoundingClientRect().height) : 0;
+      document.documentElement.style.setProperty('--chrome-h', (window.innerWidth > 720 ? height : 0) + 'px');
+    }
+    chromeHeight();
+    window.addEventListener('resize', chromeHeight);
+
+    function done() {
+      var booting = document.getElementById('booting');
+      if (booting) booting.remove();
+      chromeHeight();
+    }
+
+    function unavailable() {
+      var booting = document.getElementById('booting');
+      if (!booting) return;
+      booting.innerHTML =
+        '<span>렌더러를 불러오지 못했다. 이 페이지는 렌더러와 웹폰트를 처음 열 때 한 번 내려받는다.</span>' +
+        '<span><code>인터넷 연결을 확인하고 새로고침한다.</code></span>';
+    }
+
+
+    facts([
+      ['버전', spec.info.version],
+      ['채널', Object.keys(spec.channels || {}).length],
+      ['오퍼레이션', Object.keys(spec.operations || {}).length],
+      ['메시지', Object.keys((spec.components || {}).messages || {}).length],
+      ['전달 보증', (spec.info['x-delivery-guarantee'] || []).length],
+      ['스키마', Object.keys((spec.components || {}).schemas || {}).length]
+    ]);
+
+    if (typeof AsyncApiStandalone === 'undefined') {
+      unavailable();
+      return;
+    }
+
+    // The renderer parses the document asynchronously and says nothing when it
+    // finishes, so the notice goes away once something has actually landed.
+    var landed = new MutationObserver(function () {
+      if (mount.firstElementChild) {
+        done();
+        landed.disconnect();
+      }
+    });
+    landed.observe(mount, { childList: true, subtree: true });
+    window.setTimeout(function () {
+      if (!mount.firstElementChild) unavailable();
+    }, 20000);
+
+    AsyncApiStandalone.render({
+      schema: source,
+      config: {
+        show: {
+          sidebar: true,
+          info: true,
+          servers: false,
+          operations: true,
+          messages: true,
+          schemas: true,
+          errors: true
+        },
+        sidebar: { showOperations: 'byDefault' }
+      }
+    }, mount);
+
+  })();
+</script>
+</body>
+</html>
