@@ -33,7 +33,7 @@ def main() -> int:
     parser.add_argument("analysis", type=Path, help="analysis.json 경로")
     parser.add_argument("--provider", choices=["codex", "claude"], default="codex")
     parser.add_argument("--runs-dir", type=Path, default=DEFAULT_RUNS_DIR)
-    parser.add_argument("--timeout-seconds", type=int, default=600)
+    parser.add_argument("--timeout-seconds", type=int, default=1800)
     parser.add_argument("--no-mark", action="store_true", help="PASS여도 .reviewed 마킹을 하지 않는다")
     args = parser.parse_args()
 

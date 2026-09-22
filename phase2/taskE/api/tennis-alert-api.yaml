@@ -11,7 +11,7 @@ info:
 
     - 예약과 취소는 외부 예약 사이트에서 이뤄진다. 이 API로는 예약할 수 없고 예약 성공 여부도 알 수 없다.
     - 알림 발송(FR-4)과 만료(FR-5)는 서버가 스스로 수행하므로 엔드포인트가 없다. 그 결과는 신청 조회 응답의 `status`와 `delivery`로 드러난다.
-    - 코트 검색은 별도 기능이며 이 계약에 없다. `courtId`는 검색 기능이 제공한다.
+    - 코트 목록과 검색은 이 서비스의 범위 밖이다. 예약 상태는 코트 하나와 날짜 하나 단위로만 가져오고 조회하며, `courtId`는 밖에서 받는다.
     - 인증 방식 자체는 이 계약이 정하지 않는다. 남의 신청을 조회·해제할 수 없다는 FR-2의 요구 때문에 사용자 식별이 필요하며, 그 수단으로 Bearer 토큰을 쓴다.
     - 빈자리를 확인한 뒤 알림이 단말까지 가는 경로(FR-4, FR-6)는 요청과 응답이 아니라 채널을 지나는 메시지라 `notification-asyncapi.yaml`이 정한다. 두 계약은 같은 개념에 같은 이름과 형식을 쓰며, 그 일치는 계약 검사 스크립트가 판정한다.
 
@@ -57,10 +57,16 @@ paths:
 
         확인이 일어나는 동안 같은 코트·날짜로 들어온 다른 요청은 예약처를 따로 조회하지 않고 그 결과를 기다린다.
         기다리던 요청은 모두 같은 내용을 받고, 확인이 실패하면 모두 같은 실패를 받는다.
+        그래서 피크 초당 200건(NFR-1)이 몰려도 예약처로 나가는 조회는 확인 간격마다 한 번이다.
 
-        확인에 실패해도 저장된 마지막 성공 결과가 있으면 그 결과를 200으로 돌려주고 `stale`을 true로 둔다.
+        확인에 실패해도 저장된 마지막 성공 결과가 있으면 그 결과를 200으로 돌려주고 `stale`을 true로 두며
+        `staleReason`에 무엇이 실패했는지를 담는다. 처리 자체는 성공했고 달라진 것은 데이터의 신선도라서 200이다.
         저장된 성공 결과가 한 번도 없을 때만 5xx로 실패를 알린다.
-      x-requirement: [FR-3, EF-1, EF-2, NFR-3, V-4]
+
+        이 오퍼레이션만 인증을 요구하지 않는다. 신청하기 전에 조건을 고르려면 먼저 볼 수 있어야 하고,
+        돌려주는 값에 사용자를 가리키는 것이 없다.
+      security: []
+      x-requirement: [FR-7, FR-3, NFR-1, EF-1, EF-2, NFR-3, V-4]
       parameters:
         - $ref: '#/components/parameters/CourtIdPath'
         - name: date
@@ -116,7 +122,6 @@ paths:
                         endTime: '10:00'
                         available: false
         '400': { $ref: '#/components/responses/ValidationFailed' }
-        '401': { $ref: '#/components/responses/Unauthenticated' }
         '404': { $ref: '#/components/responses/CourtNotSupported' }
         '500': { $ref: '#/components/responses/InternalError' }
         '502': { $ref: '#/components/responses/UpstreamUnreadable' }
@@ -602,7 +607,7 @@ components:
 
     CourtAvailability:
       type: object
-      x-requirement: [FR-3, EF-1]
+      x-requirement: [FR-7, FR-3, EF-1]
       required: [courtId, courtName, date, confirmedAt, stale, staleReason, reservationUrl, slots]
       properties:
         courtId:
@@ -885,7 +890,7 @@ components:
       x-error-codes: [COURT_NOT_SUPPORTED, SLOT_NOT_SUPPORTED, ALERT_WINDOW_CLOSED]
 
     UpstreamUnreadable:
-      description: 외부 예약처의 응답을 읽지 못했고 돌려줄 마지막 성공 결과도 없다.
+      description: 외부 예약처의 응답을 읽지 못했고 저장된 마지막 성공 결과도 없다.
       headers:
         Retry-After:
           $ref: '#/components/headers/RetryAfter'
@@ -906,7 +911,7 @@ components:
       x-error-codes: [UPSTREAM_RESPONSE_UNREADABLE]
 
     UpstreamTimeout:
-      description: 외부 예약처가 제때 응답하지 않았고 돌려줄 마지막 성공 결과도 없다.
+      description: 외부 예약처가 제때 응답하지 않았고 저장된 마지막 성공 결과도 없다.
       headers:
         Retry-After:
           $ref: '#/components/headers/RetryAfter'
@@ -927,7 +932,7 @@ components:
       x-error-codes: [UPSTREAM_TIMEOUT]
 
     AvailabilityUnavailable:
-      description: 예약 상태를 돌려줄 수 없다. 예약처에 닿지 못했고 마지막 성공 결과도 없거나, 저장소가 제때 응답하지 않았다.
+      description: 예약 상태를 돌려줄 수 없다. 예약처에 닿지 못했고 저장된 결과도 없거나, 저장소가 제때 응답하지 않았다.
       headers:
         Retry-After:
           $ref: '#/components/headers/RetryAfter'

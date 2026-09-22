@@ -1,0 +1,106 @@
+{
+  "brief_hash": "6ec3182a",
+  "run_id": "2026-09-22_6ec3182a",
+  "failed_at": "2026-09-22T14:00:52+09:00",
+  "stage": "iter_001_eval",
+  "error_type": "ValueError",
+  "message": "claude response is not valid JSON (len=3127): {\"brief_hash\":\"6ec3182a\",\"iteration\":\"001\",\"rubric_name\":\"contract:v1-spec\",\"rubric_scores\":{\"scores\":{\"coverage\":3,\"boundary_fidelity\":4,\"unambiguity\":3,\"behavioral_altitude\":4,\"interaction_hazard_coverage\":4},\"weights\":{\"coverage\":0.25,\"boundary_fidelity\":0.25,\"unambiguity\":0.15,\"behavioral_altitude\":0.15,\"interaction_hazard_coverage\":0.2},\"weighted_total\":3.6},\"axis_rationales\":{\"coverage\":\"열거 22개, 누락 1개: [신청] 1)새 조건→감시중 1건 2)표식 없음→거절 3)같은 표식+같은 조건→처음 처리 시점 결과 재생 4)같은 표식+다른 조건→반복해도 같은 거절 5)거절로 끝난 요청은 보관 안 됨→조건 재판정 6)표식 보관 24시간 안/밖 7)표식 달라도 감시 중 같은 조건→새 신청 없음 8)끝난 신청(해제·발송·만료)과 같은 조건→새 신청 9)미지원 코트 거절 10)미운영 시간대 거절 11)이용 시작 시각 전/후 안·밖 12)만료 시각=이용 시작, 더 이른 마감이면 앞당김(짝) 13)확인 지연 표시: 마지막 성공 확인 기준 안/밖 14)한 번도 확인에 성공하지 못한 신청은 신청 시각 기준으로 확인 지연 판정 ← **누락** 15)사용자 식별 불가→거절 [조회] 16)저장 결과 없음→확인 후 반환 17)저장 결과가 확인 간격 이내/초과(짝) 18)확인 실패+저장 성공 결과 있음→오래된 결과와 이유 3종 19)저장 성공 결과 없음→실패 통보 3종 20)아직 열지 않은 날짜→운영 시간대 없음 21)미지원 코트 거절 22)사용자 식별 없이도 조회 가능. 저장소 실패는 정책이 실패 모드를 명시하지 않아 열거에서 제외. 누락 14는 정책 마지막 줄이 명시한 별개 기준점 분기이고 draft는 마지막 성공 확인이 있는 경우만 다룬다 → 누락 1개로 3. 삼각측량(6·11·12·13·17)은 풍부하나 누락 개수가 지배.\",\"boundary_fidelity\":\"모든 When이 '빈자리 알림을 신청한다'/'예약 상태를 조회한다' 두 inbound port에 1:1이고 내부 절차 나열이 없다. Then은 신청 건수·감시 상태·만료 시각·돌려받은 결과·시간대별 빈자리 여부·확인 시각·오래된 결과 여부로 단언해 도메인 상태와 반환값만 본다. 예약처 단일 확인을 '호출 1회'가 아니라 '200건이 모두 같은 확인 시각의 같은 결과를 받는다'는 net 상태로 단언한 것은 A(허용). 호출 순서·횟수·verify·내부 협력자 호출 여부·내부 표현 기본값 단언 0. 아쉬운 두 곳: Scenario Outline 제목 '…넘겼을 때만 예약처에서 다시 확인한다'가 협력 호출 여부를 제목에서 언급(단, Then은 관찰값으로 단언), '다시 시도하기까지 기다릴 시간은 확인 간격과 같은 20초'가 내부 설정값을 경계 단언에 끌어들인다. 캡 사유는 없으나 5는 아님 → 4.\",\"unambiguity\":\"대부분의 Then이 구체 도메인 관찰(건수 1건/2건, 만료 시각 2026-10-04 06:00, 확인 시각 2026-10-01 02:09:12, 오래된 이유, 확인 지연 있음/없음)이라 틀린 구현이면 실패한다. 그러나 '같은 조건을 동시에 신청해도…' 시나리오의 Then 두 줄 — '신청을 돌려받은 요청들은 모두 그 한 건을 돌려받는다', '신청을 돌려받지 못한 요청은 …거절된다' — 은 자기참조 조건절이라 두 요청이 모두 성공해도, 하나가 거절돼도 참이 되는 공허 충족 가능 단언이다. 동시 두 요청의 결과 분배를 고정하지 못한다. 느슨·봉인 단언이 존재하므로 rubric 캡대로 최대 3.\",\"behavioral_altitude\":\"클래스·메서드·필드·enum 상수·상태 코드·헤더 이름이 한 곳도 노출되지 않는다. 멱등 키는 '재시도 표식', stale은 '오래된 결과', checkDelayed는 '확인 지연 표시', 에러 코드는 '서비스가 다루지 않는 코트'·'같은 표식의 앞선 요청이 아직 처리 중'처럼 모두 도메인 서술로 풀렸고, 계산 산식이 본문에 박혀 있지 않다(확인 간격 3배 규칙은 산식 대신 02:10:59/02:11:01 경계값으로만 드러남). 다만 '다시 시도하기까지 기다릴 시간은 확인 간격과 같은 20초', '200건의 요청' 같은 운영·설정 수치가 경계 서술에 얹혀 있어 완전한 도메인 언어는 아님 → 4.\",\"interaction_hazard_coverage\":\"열거 2개, 누락 0개: (1) 신청 저장소 — 신청 생성은 비멱등이고 재시도·동시 요청이 모두 가능 → 요구 시나리오 3종 모두 있음(관측 실패 후 같은 표식 재전송→신청 1건, 서로 다른 표식의 동시 같은 조건→1건, 같은 표식 동시 2회→1건). 24시간 보관 경과 후 재전송이 재시도가 아닌 새 신청이 되는 시간 경계도 누적 건수 1/2로 덮임. (2) 외부 예약처 — 확인 중복이 관찰 가능한 효과이고 동시 조회가 몰릴 수 있음 → 확인 진행 중 동시 조회 200건이 같은 확인 시각의 같은 결과를 받는 시나리오와, 확인 실패 시 200건이 같은 실패를 받는 시나리오 모두 있음. 단언은 호출 횟수가 아니라 누적/net 상태로 되어 있어 방향이 옳다. 다만 동시 신청 시나리오의 결과 분배 단언이 조건절로 물러나 누적-상태 단언이 약함 → 4.\",\"},\"calibration_note\":\"평균 3.0 기준의 엄격 게이트로 채점했다. 열거-매핑-카운트를 실제로 수행해 coverage는 누락 1개(확인에 한 번도 성공하지 못한 신청의 확인 지연 기준)로 스케일상 3에 고정했고, 내부 산술이나 전송 형식은 열거에서 제외했다. unambiguity는 동시 신청 시나리오의 공허 충족 가능한 조건부 단언 때문에 rubric 캡(최대 3)을 적용했으며, 다른 단언이 모두 구체적이라도 상한을 넘기지 않았다. boundary_fidelity는 순서·횟수·verify 단언이 0이고 outbound를 net 상태로 단언해 캡 사유가 없으나, 협력 호출 여부를 시사하는 제목과 내부 설정값 노출 때문에 5 대신 4로 두었다. 애매한 자리는 모두 낮은 쪽으로 내렸다.\"}",
+  "config": {
+    "mode": "contract",
+    "group": "tennis-alert",
+    "provider": "claude",
+    "codex_bin": "codex",
+    "agent_models": {
+      "gen": "claude-opus-5",
+      "critique": "claude-opus-5",
+      "eval": "claude-opus-5",
+      "refine": "claude-opus-5"
+    },
+    "iteration": "001",
+    "max_iterations": 3,
+    "timeout_seconds": 1800,
+    "gen_prompt_path": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\generate-test-v1\\pipeline\\prompts\\gen_contract.md",
+    "rubric_path": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\generate-test-v1\\pipeline\\rubrics\\contract.rubric.yaml",
+    "rubric": {
+      "name": "contract:v1-spec",
+      "scale": {
+        "min": 0,
+        "max": 5
+      },
+      "_note": "boundary feature 명세 게이트. feature는 유스케이스 경계의 관찰 가능한 행동만 서술한다(테스트 코드 아님). 계산 산식은 rules 문서 몫이라 여기서 요구하지 않으며, feature에 산식이 섞여 있으면 오히려 altitude를 깎는다. 캡 조건(When 1:1 위반·상호작용/순서/내부상태/원시기본값 단언·구현세부 노출)에 걸리면 상한을 넘기지 않는다. [갱신] boundary_fidelity는 outbound '누적/net 결과 상태' 단언을 A로 인정(캡 아님) — 순서·횟수·verify만 캡. interaction_hazard_coverage 축 신설: 값 경계와 별개로 비멱등-재시도·동시요청 hazard 시나리오의 완전성을 게이트한다.",
+      "axes": {
+        "coverage": {
+          "weight": 0.25,
+          "method": "정책에서 함의되는 **유스케이스 경계 행동**(사용자가 시스템에 요청하는 유스케이스의 정상·경계·거절 결과)만 스스로 열거 → 각 항목을 시나리오에 매핑 → **누락 개수**로 채점. **범위 밖(열거하지도, 누락으로 세지도 않음)**: 일할 단가·절사·경과일 계산 같은 **내부 산술 규칙**과 중간 산출값 — 이는 rules 문서 coverage 몫이다. 경계는 관찰 결과의 안/밖 짝(예: 7일→전액 ↔ 8일→부분). axis_rationale에 '열거 N개, 누락 K개: [...]' 필수 — 열거 목록에 내부 산술을 넣지 마라.",
+          "scale": {
+            "1": "누락 2개 이상",
+            "2": "누락 1개인데 그 항목이 거절/실패 경계거나, 누락 1개 + 경계 짝 다수 결여",
+            "3": "누락 1개 (열거한 경계 행동 중 하나가 빠짐)",
+            "4": "누락 0개. 모든 경계 행동을 덮으나 일부 경계가 안/밖 한쪽만 있어 삼각측량이 아쉬움",
+            "5": "누락 0개 + 핵심 경계가 관찰 결과의 안/밖 짝으로 검증됨"
+          }
+        },
+        "boundary_fidelity": {
+          "weight": 0.25,
+          "method": "게이트 자격 축. (1) 각 When이 유스케이스(inbound port) 하나에 1:1 대응하는가(내부 절차·협력자 나열 금지), (2) 각 Then이 경계에서 관찰 가능한 결과로만 단언하는가. 허용(A, 캡 아님): 유스케이스 반환값, 외부에서 관찰되는 도메인 상태, 그리고 outbound 포트의 '누적/net 결과 상태'(예: 협력자에 반영된 효과 총액, 누계 처리량) — 이는 verify가 아니라 상태 관찰이다. 도메인 값이 0인 정당한 결과(예: 거절 시 처리 금액 0)도 도메인 결과이지 원시 기본값이 아니다. 캡(B, 구현 종속): 호출 순서·호출 횟수·verify·내부 협력자 호출 여부·내부 표현의 기본값(초기화 안 된 필드). outbound를 다룰 때 '몇 번 호출됐나'(B)와 '반영된 총량이 얼마인가'(A)를 구별하라 — 후자는 캡하지 않는다. axis_rationale에 위반 위치를 적는다.",
+          "scale": {
+            "1": "When에 내부 절차 나열 다수 또는 순서·횟수·verify 단언 다수",
+            "2": "순서·횟수·verify·내부 협력자 호출 단언이 존재 — 존재 시 최대 2",
+            "3": "대체로 경계 관찰이나 한 곳에서 순서/횟수/verify/내부표현기본값 단언 — 존재 시 최대 3",
+            "4": "모든 When이 1:1, 모든 Then이 경계 관찰. 극히 일부만 아쉬움",
+            "5": "모든 When = inbound port 1:1 + 모든 Then = 경계 관찰 결과. outbound 누적/net 상태 단언은 허용, 순서·횟수·verify·내부기본값 단언 0"
+          }
+        },
+        "unambiguity": {
+          "weight": 0.15,
+          "method": "각 Then이 '틀린 구현이면 반드시 실패하는' 구체·도메인 관찰 단언인가. 항상 참이거나 느슨한 단언은 결함 탐지력이 없다.",
+          "scale": {
+            "1": "'should work'·빈 기대값 등 검증 불가 단언 존재",
+            "2": "느슨·정성 단언이 다수",
+            "3": "구체값 위주이나 느슨 단언이 하나라도 존재 — 존재 시 최대 3",
+            "4": "모든 단언이 구체 도메인 결과. 한두 곳만 아쉬움",
+            "5": "모든 단언이 구체 도메인 관찰 결과 + 봉인된 단언 0"
+          }
+        },
+        "behavioral_altitude": {
+          "weight": 0.15,
+          "method": "도메인 어휘로만 서술했는가. 클래스명·메서드명·필드·enum 상수·기술 용어(UTC, NPE 등) 노출 시 캡. **계산 산식이 feature 본문에 섞여 있어도 감점**(산식은 rules 문서로 가야 함).",
+          "scale": {
+            "1": "구현 세부(클래스·메서드·enum) 다수 노출 또는 산식이 feature를 지배",
+            "2": "구현 용어·산식이 여러 곳에 섞임",
+            "3": "대체로 도메인어이나 구현 세부/산식이 한두 곳 노출 — 노출 시 최대 3",
+            "4": "구현 세부 미노출, 극히 일부만 다소 기술적",
+            "5": "완전히 도메인 언어로만 서술 (산식·기술용어 0)"
+          }
+        },
+        "interaction_hazard_coverage": {
+          "weight": 0.2,
+          "method": "값 경계와 별개 축. 입력이 명시한 외부 협력(outbound 의존) 중 (i) 비멱등+재시도, (ii) 효과 관찰가능+동시요청 성질을 가진 것만 열거 → 각 성질이 요구하는 상호작용 시나리오(재시도 후 누적 상태 / 동시 요청 후 누적 상태)를 draft에 매핑 → 누락 개수로 채점. 성질이 드러나지 않은 협력은 열거하지도 누락으로 세지도 않는다(오탐 금지). 단언 형태(순서·횟수 금지, net 상태만)의 옳고 그름은 boundary_fidelity가 캡하므로 이 축은 시나리오의 존재/완전성만 본다. axis_rationale에 '열거 N개, 누락 K개: [...]' 필수.",
+          "scale": {
+            "1": "성질 있는 협력에 요구되는 상호작용 시나리오가 2개 이상 누락",
+            "2": "누락 1개인데 그것이 비멱등 재시도(관측≠실제)거나, 누락 다수",
+            "3": "누락 1개",
+            "4": "누락 0개이나 일부 시나리오의 누적-상태 단언이 약함",
+            "5": "요구된 상호작용 시나리오를 모두 덮고 각 Then이 누적/net 결과 상태로 단언됨. 성질 있는 협력이 없으면 공백으로 두고 만점(범위 밖)"
+          }
+        }
+      },
+      "thresholds": {
+        "min_total": 4.2,
+        "min_axis": {
+          "coverage": 3.5,
+          "boundary_fidelity": 4.0,
+          "unambiguity": 3.5,
+          "behavioral_altitude": 3.5,
+          "interaction_hazard_coverage": 3.5
+        }
+      }
+    }
+  },
+  "lineage": {
+    "input": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\generate-test-v1\\runs\\tennis-alert-claude-opus\\feature\\2026-09-22_6ec3182a\\6ec3182a_input.json",
+    "draft": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\generate-test-v1\\runs\\tennis-alert-claude-opus\\feature\\2026-09-22_6ec3182a\\iter_001\\6ec3182a_iter-001_draft.json",
+    "critique": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\generate-test-v1\\runs\\tennis-alert-claude-opus\\feature\\2026-09-22_6ec3182a\\iter_001\\6ec3182a_iter-001_critique.json",
+    "eval": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\generate-test-v1\\runs\\tennis-alert-claude-opus\\feature\\2026-09-22_6ec3182a\\iter_001\\6ec3182a_iter-001_eval.json"
+  }
+}

@@ -21,9 +21,10 @@ def create_client(
     project_dir: Path,
     timeout_seconds: int,
     codex_bin: str = "codex",
+    effort: str | None = None,
 ) -> LLMClient:
     if provider == "claude":
         from stages.scripts.claude_client import ClaudeClient
-        return ClaudeClient(project_dir=project_dir, timeout_seconds=timeout_seconds)
+        return ClaudeClient(project_dir=project_dir, timeout_seconds=timeout_seconds, effort=effort)
     from stages.scripts.codex_client import CodexClient
-    return CodexClient(codex_bin=codex_bin, project_dir=project_dir, timeout_seconds=timeout_seconds)
+    return CodexClient(codex_bin=codex_bin, project_dir=project_dir, timeout_seconds=timeout_seconds, effort=effort)

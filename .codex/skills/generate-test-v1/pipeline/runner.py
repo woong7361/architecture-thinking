@@ -116,7 +116,7 @@ MODEL_O3 = "o3"
 
 MODEL_CLAUDE_DEFAULT = None
 MODEL_CLAUDE_SONNET = "claude-sonnet-4-6"
-MODEL_CLAUDE_OPUS = "claude-opus-4-8"
+MODEL_CLAUDE_OPUS = "claude-opus-5"
 
 AGENT_GEN = "gen"
 AGENT_CRITIQUE = "critique"
@@ -131,10 +131,10 @@ CODEX_DEFAULT_MODELS = {
 }
 
 CLAUDE_DEFAULT_MODELS = {
-    AGENT_GEN: MODEL_CLAUDE_DEFAULT,
-    AGENT_CRITIQUE: MODEL_CLAUDE_DEFAULT,
-    AGENT_EVAL: MODEL_CLAUDE_DEFAULT,
-    AGENT_REFINE: MODEL_CLAUDE_DEFAULT,
+    AGENT_GEN: MODEL_CLAUDE_OPUS,
+    AGENT_CRITIQUE: MODEL_CLAUDE_OPUS,
+    AGENT_EVAL: MODEL_CLAUDE_OPUS,
+    AGENT_REFINE: MODEL_CLAUDE_OPUS,
 }
 
 FINAL_CHECKED_RULES = ["schema", "brief_hash", "min_total", "min_axis"]
@@ -157,7 +157,7 @@ def format_score(value: object) -> str:
 def display_model(model: str | None, provider: str = PROVIDER_CODEX) -> str:
     if model:
         return model
-    return "claude-sonnet-4-6" if provider == PROVIDER_CLAUDE else "codex-cli-default"
+    return "claude-cli-default" if provider == PROVIDER_CLAUDE else "codex-cli-default"
 
 
 def summarize_errors(errors: list[object], limit: int = 3) -> str:
@@ -803,6 +803,7 @@ def run(args: argparse.Namespace) -> dict:
         project_dir=PROJECT_DIR,
         timeout_seconds=args.timeout_seconds,
         codex_bin=args.codex_bin,
+        effort=args.effort,
     )
     eval_rejections: list[dict] = []
     last_refine_request_lineage: str | None = None
@@ -1155,6 +1156,11 @@ def main() -> int:
     )
     parser.add_argument("--provider", choices=[PROVIDER_CODEX, PROVIDER_CLAUDE], default=PROVIDER_CODEX)
     parser.add_argument("--codex-bin", default="codex")
+    parser.add_argument(
+        "--effort",
+        default="high",
+        help="추론 강도. 이 값을 지원하는 provider에만 전달된다(claude). codex는 자기 설정을 쓴다.",
+    )
     parser.add_argument("--model", help="Alias for --gen-model in the current MVP.")
     parser.add_argument("--gen-model", help="Model for the Gen agent.")
     parser.add_argument("--critique-model", help="Model for the Critique agent.")
@@ -1178,7 +1184,7 @@ def main() -> int:
                              "제약을 이 파일에 append하면 다음 iter 배리어에서만 반영된다(스테이지는 inbox 직접 안 읽음).")
     parser.add_argument("--iteration", default="001")
     parser.add_argument("--max-iterations", type=int, default=3)
-    parser.add_argument("--timeout-seconds", type=int, default=600)
+    parser.add_argument("--timeout-seconds", type=int, default=1800)
     parser.add_argument("--overwrite", action="store_true", help="Overwrite existing artifacts for the same run.")
     args = parser.parse_args()
 

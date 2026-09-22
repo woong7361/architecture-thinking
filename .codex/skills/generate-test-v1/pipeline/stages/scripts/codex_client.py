@@ -10,8 +10,9 @@ from pathlib import Path
 class CodexClient:
     codex_bin: str
     project_dir: Path
-    timeout_seconds: int = 600
+    timeout_seconds: int = 1800
     bypass_approvals_and_sandbox: bool = True
+    effort: str | None = None
 
     def run_prompt(
         self,
@@ -74,6 +75,10 @@ class CodexClient:
                 "--json",
             ]
         )
+        # 추론 강도는 하네스가 정한다. 실행하는 기계의 전역 설정을 물려받으면 같은 입력이
+        # 사람마다 다른 결과·다른 소요시간을 낸다.
+        if self.effort:
+            command.extend(["-c", f'model_reasoning_effort="{self.effort}"'])
         if self.bypass_approvals_and_sandbox:
             command.append("--dangerously-bypass-approvals-and-sandbox")
 

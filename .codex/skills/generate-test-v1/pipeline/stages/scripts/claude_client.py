@@ -6,14 +6,18 @@ import subprocess
 from dataclasses import dataclass
 from pathlib import Path
 
-CLAUDE_DEFAULT_MODEL = "claude-sonnet-4-6"
+from jsonschema import Draft202012Validator
+
+CLAUDE_DEFAULT_MODEL = "claude-opus-5"
 
 
 @dataclass(frozen=True)
 class ClaudeClient:
     project_dir: Path
-    timeout_seconds: int = 600
+    timeout_seconds: int = 1800
     claude_bin: str = "claude"
+    effort: str | None = None
+    schema_retries: int = 3
 
     def run_prompt(
         self,
@@ -27,8 +31,33 @@ class ClaudeClient:
         user_with_schema = f"{user}\nOUTPUT_SCHEMA (follow this exactly, output only valid JSON matching this schema):\n{schema_content}"
         prompt = f"{system}\n\n{user_with_schema}"
         command = self._build_command(model)
-
         output_path.parent.mkdir(parents=True, exist_ok=True)
+
+        # 서버가 스키마를 강제하는 provider와 달리 이 클라이언트는 스키마를 프롬프트로만 전달한다.
+        # 그래서 받은 JSON을 여기서 스키마로 검증하고, 어긋나면 위반 내용을 붙여 다시 묻는다.
+        violations = ""
+        for _ in range(1 + self.schema_retries):
+            ask = prompt if not violations else (
+                f"{prompt}\n\nYour previous answer did not satisfy OUTPUT_SCHEMA:\n{violations}\n"
+                "Answer again with the whole JSON object. Put every property at the path the schema "
+                "gives it, and include every required property."
+            )
+            output_data = self._ask(command, ask)
+            violations = schema_violations(output_data, schema_content)
+            if not violations:
+                break
+        if violations:
+            # 버려지는 응답이 진단의 유일한 단서이므로 앞부분을 실패 기록에 함께 남긴다.
+            rejected = json.dumps(output_data, ensure_ascii=False)[:2000]
+            raise RuntimeError(
+                f"claude response does not satisfy the output schema after {1 + self.schema_retries} attempts\n"
+                f"schema: {output_schema}\nviolations: {violations}\nrejected_response: {rejected}"
+            )
+
+        output_path.write_text(json.dumps(output_data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        return None
+
+    def _ask(self, command: list[str], prompt: str) -> dict:
         try:
             completed = subprocess.run(
                 command,
@@ -48,15 +77,33 @@ class ClaudeClient:
                 f"claude CLI failed\ncommand: {command}\nstdout: {completed.stdout}\nstderr: {completed.stderr}"
             )
 
-        output_data = _parse_json(completed.stdout)
-        output_path.write_text(json.dumps(output_data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-        return None
+        return _parse_json(completed.stdout)
 
     def _build_command(self, model: str | None) -> list[str]:
         command = [self.claude_bin, "-p", "-", "--output-format", "text"]
         if model:
             command.extend(["--model", model])
+        if self.effort:
+            command.extend(["--effort", self.effort])
         return command
+
+
+def schema_violations(data: dict, schema_content: str) -> str:
+    """스키마 위반을 모델에게 그대로 돌려줄 문장으로 만든다. 위반이 없으면 빈 문자열."""
+    validator = Draft202012Validator(json.loads(schema_content))
+    errors = sorted(validator.iter_errors(data), key=lambda error: list(error.absolute_path))
+    return "\n".join(
+        f"- {'/'.join(str(part) for part in error.absolute_path) or '$'}: {error.message}{_allowed_keys(error)}"
+        for error in errors[:10]
+    )
+
+
+def _allowed_keys(error) -> str:
+    """키를 지어내 넣은 위반에는 그 자리에 허용된 키 목록을 붙인다 — 무엇을 빼야 하는지만으로는 고치기 어렵다."""
+    if error.validator != "additionalProperties":
+        return ""
+    allowed = list((error.schema or {}).get("properties", {}))
+    return f" (allowed keys here: {', '.join(allowed)})" if allowed else ""
 
 
 def _parse_json(text: str) -> dict:

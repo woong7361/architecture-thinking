@@ -19,7 +19,7 @@ def main() -> int:
     parser.add_argument("--mode", choices=MODES, default="contract")
     parser.add_argument("--provider", choices=["codex", "claude"], default="codex")
     parser.add_argument("--max-iterations", type=int, default=3)
-    parser.add_argument("--timeout-seconds", type=int, default=600)
+    parser.add_argument("--timeout-seconds", type=int, default=1800)
     parser.add_argument(
         "--runs-dir",
         type=Path,

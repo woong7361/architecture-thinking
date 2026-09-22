@@ -42,6 +42,8 @@
 - 출력은 schema의 `required`, `properties`, `additionalProperties` 계약을 그대로 따릅니다.
 - `brief_hash`와 `iteration`은 평가 대상 draft의 값을 그대로 사용합니다.
 - `rubric_scores.scores`, `rubric_scores.weights`, `axis_rationales`의 축 이름은 전달받은 rubric의 축 이름과 **정확히 일치**해야 합니다.
+- `axis_rationales`에는 축 이름 외의 키를 넣지 않습니다. 축별 근거가 아닌 항목은 schema가 지정한 자리에 둡니다.
+- `calibration_note`는 점수 전체를 어떤 기준으로 맞췄는지 적는 최상위 항목입니다. 축 하나의 근거가 아니므로 `axis_rationales` 안에 넣지 않습니다.
 
 루브릭 적용:
 - rubric에 명시된 축 이름을 임의로 바꾸거나 빠뜨리지 않습니다. rubric의 모든 축을 `scores`·`weights`·`axis_rationales`에 포함합니다.

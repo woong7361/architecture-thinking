@@ -1,0 +1,180 @@
+{
+  "brief_hash": "6ec3182a",
+  "run_id": "2026-09-22_6ec3182a",
+  "failed_at": "2026-09-22T16:02:35+09:00",
+  "terminal_reason": "max_iteration_exceeded",
+  "last_iteration": "003",
+  "failure_counts_by_category": {
+    "quality_reject": 9
+  },
+  "last_failures": [
+    {
+      "category": "quality_reject",
+      "rule": "min_total",
+      "severity": "high",
+      "retryable": false,
+      "message": "min_total: 4.1 < 4.2"
+    },
+    {
+      "category": "quality_reject",
+      "rule": "min_axis.unambiguity",
+      "severity": "high",
+      "retryable": false,
+      "message": "min_axis.unambiguity: 2 < 3.5"
+    }
+  ],
+  "best_effort_artifacts": {
+    "verdict": "REJECTED",
+    "source": "last_iteration_draft",
+    "note": "게이트 미통과 draft를 그대로 승격한 것. 값·경계는 검증되지 않았다.",
+    "paths": [
+      "artifact/tennis-alert.feature"
+    ],
+    "quality_snapshot": {
+      "rubric_name": "contract:v1-spec",
+      "weighted_total": 4.1,
+      "scores": {
+        "coverage": 5,
+        "boundary_fidelity": 4,
+        "unambiguity": 2,
+        "behavioral_altitude": 5,
+        "interaction_hazard_coverage": 4
+      },
+      "weak_axes": [
+        "unambiguity"
+      ]
+    }
+  },
+  "lineage": {
+    "input": "6ec3182a_input.json",
+    "last_draft": "iter_003/6ec3182a_iter-003_draft.json",
+    "last_critique": "iter_003/6ec3182a_iter-003_critique.json",
+    "last_eval": "iter_003/6ec3182a_iter-003_eval.json"
+  },
+  "iteration_rejections": [
+    {
+      "iteration": "001",
+      "validation": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\generate-test-v1\\runs\\tennis-alert\\feature\\2026-09-22_6ec3182a\\iter_001\\6ec3182a_iter-001_eval.validation.json",
+      "errors": [
+        "min_total: 3.55 < 4.2",
+        "min_axis.coverage: 1 < 3.5",
+        "min_axis.unambiguity: 2 < 3.5"
+      ]
+    },
+    {
+      "iteration": "002",
+      "validation": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\generate-test-v1\\runs\\tennis-alert\\feature\\2026-09-22_6ec3182a\\iter_002\\6ec3182a_iter-002_eval.validation.json",
+      "errors": [
+        "min_total: 3.15 < 4.2",
+        "min_axis.coverage: 1 < 3.5",
+        "min_axis.unambiguity: 3 < 3.5",
+        "min_axis.behavioral_altitude: 3 < 3.5"
+      ]
+    },
+    {
+      "iteration": "003",
+      "validation": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\generate-test-v1\\runs\\tennis-alert\\feature\\2026-09-22_6ec3182a\\iter_003\\6ec3182a_iter-003_eval.validation.json",
+      "errors": [
+        "min_total: 4.1 < 4.2",
+        "min_axis.unambiguity: 2 < 3.5"
+      ]
+    }
+  ],
+  "config": {
+    "mode": "contract",
+    "group": "tennis-alert",
+    "provider": "codex",
+    "codex_bin": "codex",
+    "agent_models": {
+      "gen": "gpt-5.5",
+      "critique": "gpt-5.5",
+      "eval": "gpt-5.5",
+      "refine": "gpt-5.5"
+    },
+    "iteration": "001",
+    "max_iterations": 3,
+    "timeout_seconds": 1800,
+    "gen_prompt_path": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\generate-test-v1\\pipeline\\prompts\\gen_contract.md",
+    "rubric_path": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\generate-test-v1\\pipeline\\rubrics\\contract.rubric.yaml",
+    "rubric": {
+      "name": "contract:v1-spec",
+      "scale": {
+        "min": 0,
+        "max": 5
+      },
+      "_note": "boundary feature 명세 게이트. feature는 유스케이스 경계의 관찰 가능한 행동만 서술한다(테스트 코드 아님). 계산 산식은 rules 문서 몫이라 여기서 요구하지 않으며, feature에 산식이 섞여 있으면 오히려 altitude를 깎는다. 캡 조건(When 1:1 위반·상호작용/순서/내부상태/원시기본값 단언·구현세부 노출)에 걸리면 상한을 넘기지 않는다. [갱신] boundary_fidelity는 outbound '누적/net 결과 상태' 단언을 A로 인정(캡 아님) — 순서·횟수·verify만 캡. interaction_hazard_coverage 축 신설: 값 경계와 별개로 비멱등-재시도·동시요청 hazard 시나리오의 완전성을 게이트한다.",
+      "axes": {
+        "coverage": {
+          "weight": 0.25,
+          "method": "정책에서 함의되는 **유스케이스 경계 행동**(사용자가 시스템에 요청하는 유스케이스의 정상·경계·거절 결과)만 스스로 열거 → 각 항목을 시나리오에 매핑 → **누락 개수**로 채점. **범위 밖(열거하지도, 누락으로 세지도 않음)**: 일할 단가·절사·경과일 계산 같은 **내부 산술 규칙**과 중간 산출값 — 이는 rules 문서 coverage 몫이다. 경계는 관찰 결과의 안/밖 짝(예: 7일→전액 ↔ 8일→부분). axis_rationale에 '열거 N개, 누락 K개: [...]' 필수 — 열거 목록에 내부 산술을 넣지 마라.",
+          "scale": {
+            "1": "누락 2개 이상",
+            "2": "누락 1개인데 그 항목이 거절/실패 경계거나, 누락 1개 + 경계 짝 다수 결여",
+            "3": "누락 1개 (열거한 경계 행동 중 하나가 빠짐)",
+            "4": "누락 0개. 모든 경계 행동을 덮으나 일부 경계가 안/밖 한쪽만 있어 삼각측량이 아쉬움",
+            "5": "누락 0개 + 핵심 경계가 관찰 결과의 안/밖 짝으로 검증됨"
+          }
+        },
+        "boundary_fidelity": {
+          "weight": 0.25,
+          "method": "게이트 자격 축. (1) 각 When이 유스케이스(inbound port) 하나에 1:1 대응하는가(내부 절차·협력자 나열 금지), (2) 각 Then이 경계에서 관찰 가능한 결과로만 단언하는가. 허용(A, 캡 아님): 유스케이스 반환값, 외부에서 관찰되는 도메인 상태, 그리고 outbound 포트의 '누적/net 결과 상태'(예: 협력자에 반영된 효과 총액, 누계 처리량) — 이는 verify가 아니라 상태 관찰이다. 도메인 값이 0인 정당한 결과(예: 거절 시 처리 금액 0)도 도메인 결과이지 원시 기본값이 아니다. 캡(B, 구현 종속): 호출 순서·호출 횟수·verify·내부 협력자 호출 여부·내부 표현의 기본값(초기화 안 된 필드). outbound를 다룰 때 '몇 번 호출됐나'(B)와 '반영된 총량이 얼마인가'(A)를 구별하라 — 후자는 캡하지 않는다. axis_rationale에 위반 위치를 적는다.",
+          "scale": {
+            "1": "When에 내부 절차 나열 다수 또는 순서·횟수·verify 단언 다수",
+            "2": "순서·횟수·verify·내부 협력자 호출 단언이 존재 — 존재 시 최대 2",
+            "3": "대체로 경계 관찰이나 한 곳에서 순서/횟수/verify/내부표현기본값 단언 — 존재 시 최대 3",
+            "4": "모든 When이 1:1, 모든 Then이 경계 관찰. 극히 일부만 아쉬움",
+            "5": "모든 When = inbound port 1:1 + 모든 Then = 경계 관찰 결과. outbound 누적/net 상태 단언은 허용, 순서·횟수·verify·내부기본값 단언 0"
+          }
+        },
+        "unambiguity": {
+          "weight": 0.15,
+          "method": "각 Then이 '틀린 구현이면 반드시 실패하는' 구체·도메인 관찰 단언인가. 항상 참이거나 느슨한 단언은 결함 탐지력이 없다.",
+          "scale": {
+            "1": "'should work'·빈 기대값 등 검증 불가 단언 존재",
+            "2": "느슨·정성 단언이 다수",
+            "3": "구체값 위주이나 느슨 단언이 하나라도 존재 — 존재 시 최대 3",
+            "4": "모든 단언이 구체 도메인 결과. 한두 곳만 아쉬움",
+            "5": "모든 단언이 구체 도메인 관찰 결과 + 봉인된 단언 0"
+          }
+        },
+        "behavioral_altitude": {
+          "weight": 0.15,
+          "method": "도메인 어휘로만 서술했는가. 클래스명·메서드명·필드·enum 상수·기술 용어(UTC, NPE 등) 노출 시 캡. **계산 산식이 feature 본문에 섞여 있어도 감점**(산식은 rules 문서로 가야 함).",
+          "scale": {
+            "1": "구현 세부(클래스·메서드·enum) 다수 노출 또는 산식이 feature를 지배",
+            "2": "구현 용어·산식이 여러 곳에 섞임",
+            "3": "대체로 도메인어이나 구현 세부/산식이 한두 곳 노출 — 노출 시 최대 3",
+            "4": "구현 세부 미노출, 극히 일부만 다소 기술적",
+            "5": "완전히 도메인 언어로만 서술 (산식·기술용어 0)"
+          }
+        },
+        "interaction_hazard_coverage": {
+          "weight": 0.2,
+          "method": "값 경계와 별개 축. 입력이 명시한 외부 협력(outbound 의존) 중 (i) 비멱등+재시도, (ii) 효과 관찰가능+동시요청 성질을 가진 것만 열거 → 각 성질이 요구하는 상호작용 시나리오(재시도 후 누적 상태 / 동시 요청 후 누적 상태)를 draft에 매핑 → 누락 개수로 채점. 성질이 드러나지 않은 협력은 열거하지도 누락으로 세지도 않는다(오탐 금지). 단언 형태(순서·횟수 금지, net 상태만)의 옳고 그름은 boundary_fidelity가 캡하므로 이 축은 시나리오의 존재/완전성만 본다. axis_rationale에 '열거 N개, 누락 K개: [...]' 필수.",
+          "scale": {
+            "1": "성질 있는 협력에 요구되는 상호작용 시나리오가 2개 이상 누락",
+            "2": "누락 1개인데 그것이 비멱등 재시도(관측≠실제)거나, 누락 다수",
+            "3": "누락 1개",
+            "4": "누락 0개이나 일부 시나리오의 누적-상태 단언이 약함",
+            "5": "요구된 상호작용 시나리오를 모두 덮고 각 Then이 누적/net 결과 상태로 단언됨. 성질 있는 협력이 없으면 공백으로 두고 만점(범위 밖)"
+          }
+        }
+      },
+      "thresholds": {
+        "min_total": 4.2,
+        "min_axis": {
+          "coverage": 3.5,
+          "boundary_fidelity": 4.0,
+          "unambiguity": 3.5,
+          "behavioral_altitude": 3.5,
+          "interaction_hazard_coverage": 3.5
+        }
+      }
+    }
+  },
+  "next_actions": [
+    "best_effort_artifacts를 사람이 검토한다(값·경계는 미검증).",
+    "원본 brief에 구체적 사례와 제약을 보강한다",
+    "반복 실패의 주된 category를 보고 rubric threshold 또는 stage prompt를 조정한다"
+  ]
+}
