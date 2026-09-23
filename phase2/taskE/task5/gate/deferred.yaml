@@ -1,0 +1,49 @@
+# 계약이 요구하지만 이번 계약 테스트가 덮지 않기로 한 판정 지점과 그 이유.
+# 이유가 비어 있으면 G4 가 실패한다. 미루는 것과 잊는 것을 가르기 위해서다.
+
+# --- 요청 형식 위반. 다른 게이트가 판정한다 -------------------------------------
+createAlert:VALIDATION_FAILED: 형식 위반은 G3 가 판정한다. feature 에 넣으면 스키마가 이미 보는 것을 두 번 보게 된다.
+getCourtAvailability:400: 위와 같다.
+getCourtAvailability:VALIDATION_FAILED: 위와 같다.
+listAlerts:400: 위와 같다.
+listAlerts:VALIDATION_FAILED: 위와 같다.
+getAlert:400: 위와 같다.
+getAlert:VALIDATION_FAILED: 식별자 형식 위반이다. G3 가 판정한다.
+cancelAlert:400: 위와 같다.
+cancelAlert:VALIDATION_FAILED: 위와 같다.
+
+# --- 인증. 오퍼레이션마다 갈리지 않는다 ------------------------------------------
+listAlerts:401: 인증 실패는 오퍼레이션별로 갈리는 판단이 아니라 공통 필터가 낸다. createAlert 에서 판정하고 나머지는 2차에 넣는다.
+listAlerts:UNAUTHENTICATED: 위와 같다.
+getAlert:401: 위와 같다.
+getAlert:UNAUTHENTICATED: 위와 같다.
+cancelAlert:401: 위와 같다.
+cancelAlert:UNAUTHENTICATED: 위와 같다.
+
+# --- 저장소와 내부 실패. 장애 주입 수단을 정한 뒤 넣는다 ---------------------------
+createAlert:500: 서버 내부 실패를 실경로로 재현할 수단이 아직 없다. 주입 방식을 정한 뒤 2차에 넣는다.
+createAlert:INTERNAL_ERROR: 위와 같다.
+createAlert:503: 저장소 지연과 경합을 실경로로 만들어야 한다. 2차.
+createAlert:STORAGE_TIMEOUT: 위와 같다.
+createAlert:CONCURRENT_UPDATE_CONFLICT: 1-3 에서 번역만 해 두고 적용하지 않은 낙관적 락 실패다. 경합을 주입할 수단을 정한 뒤 2차에 넣는다.
+getCourtAvailability:500: 위와 같다.
+getCourtAvailability:INTERNAL_ERROR: 위와 같다.
+getCourtAvailability:STORAGE_TIMEOUT: 저장소 지연이다. 예약처 실패 세 갈래와 달리 스텁으로 만들 수 없다. 2차.
+listAlerts:500: 위와 같다.
+listAlerts:INTERNAL_ERROR: 위와 같다.
+listAlerts:503: 위와 같다.
+listAlerts:STORAGE_TIMEOUT: 위와 같다.
+getAlert:500: 위와 같다.
+getAlert:INTERNAL_ERROR: 위와 같다.
+getAlert:503: 위와 같다.
+getAlert:STORAGE_TIMEOUT: 위와 같다.
+cancelAlert:500: 위와 같다.
+cancelAlert:INTERNAL_ERROR: 위와 같다.
+cancelAlert:503: 위와 같다.
+cancelAlert:STORAGE_TIMEOUT: 위와 같다.
+cancelAlert:CONCURRENT_UPDATE_CONFLICT: 해제와 발송이 같은 신청을 동시에 고치는 경합이다. 주입 수단이 정해지면 2차.
+
+# --- 계약이 결말을 열어 둔 자리 --------------------------------------------------
+createAlert:IDEMPOTENT_REQUEST_IN_PROGRESS: 계약이 동시 요청의 결말을 재생과 이 거절 둘 다로 허용한다.
+  시나리오는 신청이 하나뿐임을 판정하지만 이 코드가 나오도록 강제하지는 못한다.
+  잠금 대기를 응답시간 목표 너머로 미는 수단을 정한 뒤 별도 시나리오로 넣는다.
