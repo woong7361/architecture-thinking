@@ -140,6 +140,9 @@ paths:
         서버는 새 신청을 만들지 않고 처음 돌려준 응답을 그대로 다시 돌려준다. 그래서 응답을 받지 못했거나 5xx를 받았으면
         같은 키로 그대로 다시 보내면 된다. 4xx는 요청을 고쳐야 풀리므로 기록하지 않고, 같은 키로 다시 보내면 조건을 다시 판정한다.
 
+        같은 키의 앞선 요청이 아직 처리 중이면 서버는 503 `CONCURRENT_UPDATE_CONFLICT`로 물러난다.
+        `Retry-After`만큼 기다렸다 같은 키로 다시 보내면 그 요청의 결과를 재생으로 받는다.
+
         재생되는 응답은 처음 처리한 시점의 내용이다. 그 뒤로 신청의 상태가 바뀌었어도 재생 응답은 바뀌지 않으므로,
         지금 상태가 필요하면 신청 조회로 다시 읽는다. 재생인지 여부는 `Idempotency-Replayed`가 알린다.
 
@@ -215,7 +218,7 @@ paths:
                 delivery: null
         '400': { $ref: '#/components/responses/AlertRequestInvalid' }
         '401': { $ref: '#/components/responses/Unauthenticated' }
-        '409': { $ref: '#/components/responses/IdempotencyConflict' }
+        '409': { $ref: '#/components/responses/IdempotencyKeyReused' }
         '422': { $ref: '#/components/responses/AlertNotAcceptable' }
         '500': { $ref: '#/components/responses/InternalError' }
         '503': { $ref: '#/components/responses/StorageOrContentionUnavailable' }
@@ -647,33 +650,30 @@ components:
     ErrorCode:
       type: string
       description: |
-        실패의 원인을 가리키는 코드. 상황 하나에 코드 하나가 대응한다.
+        실패의 원인을 가리키는 코드. 클라이언트의 대응이 갈리는 자리마다 코드 하나를 둔다.
+        대응이 같은 두 상황에는 코드를 따로 두지 않는다. 구별해도 클라이언트가 분기할 일이 없어 무시된다.
 
-        - `VALIDATION_FAILED`: 요청의 형식이나 값이 스키마를 만족하지 않는다. 멱등 키가 UUID가 아닌 경우도 여기에 든다.
-        - `IDEMPOTENCY_KEY_MISSING`: 필수인 `Idempotency-Key` 헤더가 아예 없다.
+        - `VALIDATION_FAILED`: 요청의 형식이나 값이 스키마를 만족하지 않는다. 필수인 `Idempotency-Key` 헤더가 없거나 그 값이 UUID가 아닌 경우도 여기에 든다.
         - `UNAUTHENTICATED`: 토큰이 없거나 유효하지 않아 사용자를 식별할 수 없다.
         - `COURT_NOT_SUPPORTED`: 서비스가 지원하지 않는 코트다. 경로에서 받았으면 404, 본문에서 받았으면 422로 나간다.
         - `SLOT_NOT_SUPPORTED`: 코트는 지원하지만 그 코트가 그 날짜에 운영하지 않는 시간대다.
         - `ALERT_WINDOW_CLOSED`: 만료 시각이 이미 지나 감시할 수 없는 조건이다.
         - `ALERT_NOT_FOUND`: 그런 신청이 없거나 요청한 사용자의 것이 아니다.
         - `IDEMPOTENCY_KEY_REUSED`: 같은 키가 다른 내용의 요청에 이미 쓰였다.
-        - `IDEMPOTENT_REQUEST_IN_PROGRESS`: 같은 키의 앞선 요청이 아직 처리 중이다.
         - `UPSTREAM_TIMEOUT`: 외부 예약처가 정해진 시간 안에 응답하지 않았다.
         - `UPSTREAM_UNAVAILABLE`: 외부 예약처에 닿지 못했거나 예약처가 실패를 돌려줬다.
         - `UPSTREAM_RESPONSE_UNREADABLE`: 외부 예약처의 응답을 읽지 못했다.
         - `STORAGE_TIMEOUT`: 저장소가 정해진 시간 안에 응답하지 않았다.
-        - `CONCURRENT_UPDATE_CONFLICT`: 같은 자원을 동시에 고치려다 경합에 밀렸다.
+        - `CONCURRENT_UPDATE_CONFLICT`: 같은 자원을 동시에 고치려다 경합에 밀렸다. 같은 멱등 키의 앞선 요청이 아직 처리 중이라 물러난 경우도 여기에 든다.
         - `INTERNAL_ERROR`: 위 어디에도 해당하지 않는 서버 내부 실패다. 상태를 바꾸는 오퍼레이션은 멱등 키를 요구하므로 같은 요청을 그대로 다시 보내도 안전하다.
       enum:
         - VALIDATION_FAILED
-        - IDEMPOTENCY_KEY_MISSING
         - UNAUTHENTICATED
         - COURT_NOT_SUPPORTED
         - SLOT_NOT_SUPPORTED
         - ALERT_WINDOW_CLOSED
         - ALERT_NOT_FOUND
         - IDEMPOTENCY_KEY_REUSED
-        - IDEMPOTENT_REQUEST_IN_PROGRESS
         - UPSTREAM_TIMEOUT
         - UPSTREAM_UNAVAILABLE
         - UPSTREAM_RESPONSE_UNREADABLE
@@ -743,7 +743,7 @@ components:
       x-error-codes: [VALIDATION_FAILED]
 
     AlertRequestInvalid:
-      description: 요청 본문이 스키마를 만족하지 않거나 필수 멱등 키 헤더가 없다.
+      description: 요청이 스키마를 만족하지 않는다. 본문의 형식 위반과 필수 멱등 키 헤더의 누락이 함께 여기로 온다.
       content:
         application/problem+json:
           schema:
@@ -762,14 +762,14 @@ components:
             idempotencyKeyMissing:
               summary: 멱등 키 헤더 없음
               value:
-                type: https://api.tennis-alert.example.com/problems/idempotency-key-missing
-                title: Idempotency-Key 헤더가 필요합니다
+                type: https://api.tennis-alert.example.com/problems/validation-failed
+                title: 요청 값이 올바르지 않습니다
                 status: 400
-                detail: 이 오퍼레이션은 재시도 안전을 보장하기 위해 UUID 형식의 Idempotency-Key를 요구합니다
+                detail: 'Idempotency-Key: 필수 헤더입니다. 재시도 안전을 보장하기 위해 UUID 형식의 값을 요구합니다'
                 instance: /v1/alerts
-                code: IDEMPOTENCY_KEY_MISSING
+                code: VALIDATION_FAILED
                 retryable: false
-      x-error-codes: [VALIDATION_FAILED, IDEMPOTENCY_KEY_MISSING]
+      x-error-codes: [VALIDATION_FAILED]
 
     Unauthenticated:
       description: 사용자를 식별하지 못해 본인 것인지 판단할 수 없다.
@@ -817,38 +817,21 @@ components:
             retryable: false
       x-error-codes: [ALERT_NOT_FOUND]
 
-    IdempotencyConflict:
-      description: 멱등 키가 앞선 요청과 어긋나거나 그 요청이 아직 처리 중이다.
-      headers:
-        Retry-After:
-          $ref: '#/components/headers/RetryAfter'
+    IdempotencyKeyReused:
+      description: 멱등 키가 앞선 요청의 내용과 어긋난다.
       content:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/Problem'
-          examples:
-            keyReused:
-              summary: 같은 키가 다른 내용의 요청에 이미 쓰임
-              value:
-                type: https://api.tennis-alert.example.com/problems/idempotency-key-reused
-                title: 이미 다른 요청에 쓰인 멱등 키입니다
-                status: 409
-                detail: 같은 Idempotency-Key로 내용이 다른 요청이 앞서 처리됐습니다. 새 키로 보내십시오.
-                instance: /v1/alerts
-                code: IDEMPOTENCY_KEY_REUSED
-                retryable: false
-            inProgress:
-              summary: 같은 키의 앞선 요청이 처리 중
-              value:
-                type: https://api.tennis-alert.example.com/problems/idempotent-request-in-progress
-                title: 같은 요청을 처리하는 중입니다
-                status: 409
-                detail: 잠시 후 같은 키로 다시 보내면 처리 결과를 받습니다
-                instance: /v1/alerts
-                code: IDEMPOTENT_REQUEST_IN_PROGRESS
-                retryable: true
-                retryAfterSeconds: 1
-      x-error-codes: [IDEMPOTENCY_KEY_REUSED, IDEMPOTENT_REQUEST_IN_PROGRESS]
+          example:
+            type: https://api.tennis-alert.example.com/problems/idempotency-key-reused
+            title: 이미 다른 요청에 쓰인 멱등 키입니다
+            status: 409
+            detail: 같은 Idempotency-Key로 내용이 다른 요청이 앞서 처리됐습니다. 새 키로 보내십시오.
+            instance: /v1/alerts
+            code: IDEMPOTENCY_KEY_REUSED
+            retryable: false
+      x-error-codes: [IDEMPOTENCY_KEY_REUSED]
 
     AlertNotAcceptable:
       description: 요청 형식은 맞지만 본문이 가리킨 조건을 감시할 수 없다.
