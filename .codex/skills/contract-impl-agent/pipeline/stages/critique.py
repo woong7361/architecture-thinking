@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 
 from stages.scripts.llm_client import SANDBOX_READ_ONLY, SANDBOX_WORKSPACE_WRITE, LLMClient
-from stages.scripts.payload import block, compose, read_prompt, workspace_block
+from stages.scripts.payload import GATE_ECHO, block, compose, draft_without, read_prompt, workspace_block
 
 
 PROJECT_DIR = Path(__file__).resolve().parent.parent
@@ -77,7 +77,7 @@ def build_prompt(
     user = compose(
         block("INPUT_JSON", input_data),
         block("PROSE_SLOTS_JSON", prose_slots),
-        block("DRAFT_JSON", draft),
+        block("DRAFT_JSON", draft_without(draft, GATE_ECHO)),
         block("DRAFT_FILES_JSON", code_files or {"files": [], "omitted": []}),
         block("STANDING_DECISIONS_JSON", decisions),
         block("CONTRACT_CHANGES_JSON", contract_changes),

@@ -22,6 +22,18 @@ def block(label: str, value: object) -> str:
 def compose(*blocks: str) -> str:
     return "\n".join(part for part in blocks if part)
 
+
+# draft 안에서 다른 단계의 산출에 대한 응답을 담는 칸. `repairs`는 게이트 위반을 인용하고
+# `ignored_suggestions`는 비평의 발의를 인용한다. draft를 통째로 실으면 정보 차단 표가 막은 것이
+# 이 칸을 타고 새므로, 보면 안 되는 단계에 실을 때 뺀다.
+GATE_ECHO = ("repairs",)
+CRITIQUE_ECHO = ("ignored_suggestions",)
+
+
+def draft_without(draft: dict, keys: tuple[str, ...]) -> dict:
+    """draft에서 `keys`를 뺀 사본. 원본 산출물은 건드리지 않는다."""
+    return {key: value for key, value in (draft or {}).items() if key not in keys}
+
 def contract_version_paths(work_dir: Path) -> list[str]:
     """작업 폴더에 실재하는 계약 판본의 상대경로.
 

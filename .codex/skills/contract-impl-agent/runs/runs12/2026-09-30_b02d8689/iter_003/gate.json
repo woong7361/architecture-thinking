@@ -2,90 +2,8 @@
   "iteration": "003",
   "g0": "PASS",
   "g1": "PASS",
-  "changes": "REJECT",
-  "violations": [
-    {
-      "rule": "change.unjustified",
-      "point": null,
-      "where": "/components/schemas/AlertStatus/description",
-      "detail": "기록 cc_watching_check_source이 인용한 'cr_watching_says_periodic_check'가 이 iteration의 비평에 없다",
-      "verdict": "violation",
-      "kind": "representation",
-      "cause_id": "c_9424215d"
-    },
-    {
-      "rule": "change.unjustified",
-      "point": null,
-      "where": "/paths/~1alerts/post/description",
-      "detail": "기록 cc_create_schedule_source이 인용한 'cr_create_upstream_failure'가 이 iteration의 비평에 없다",
-      "verdict": "violation",
-      "kind": "representation",
-      "cause_id": "c_89b9fc5e"
-    },
-    {
-      "rule": "change.unjustified",
-      "point": null,
-      "where": "/paths/~1alerts/post/responses/502",
-      "detail": "기록 cc_create_upstream_unreadable이 인용한 'cr_create_upstream_failure'가 이 iteration의 비평에 없다",
-      "verdict": "violation",
-      "kind": "representation",
-      "cause_id": "c_015c2c2b"
-    },
-    {
-      "rule": "change.unjustified",
-      "point": null,
-      "where": "/paths/~1alerts/post/responses/502",
-      "detail": "기록 cc_create_upstream_unreadable은 표현 변경인데 representation_basis가 비었다 (닫힌 값: interop, spec_implication, contract_consistency)",
-      "verdict": "violation",
-      "kind": "representation",
-      "cause_id": "c_66789c3e"
-    },
-    {
-      "rule": "change.unjustified",
-      "point": null,
-      "where": "/paths/~1alerts/post/responses/504",
-      "detail": "기록 cc_create_upstream_timeout이 인용한 'cr_create_upstream_failure'가 이 iteration의 비평에 없다",
-      "verdict": "violation",
-      "kind": "representation",
-      "cause_id": "c_8d92e7cc"
-    },
-    {
-      "rule": "change.unjustified",
-      "point": null,
-      "where": "/paths/~1alerts/post/responses/504",
-      "detail": "기록 cc_create_upstream_timeout은 표현 변경인데 representation_basis가 비었다 (닫힌 값: interop, spec_implication, contract_consistency)",
-      "verdict": "violation",
-      "kind": "representation",
-      "cause_id": "c_071960be"
-    },
-    {
-      "rule": "change.unjustified",
-      "point": null,
-      "where": "/paths/~1alerts/post/responses/503",
-      "detail": "기록 cc_create_503_covers_upstream이 인용한 'cr_create_upstream_failure'가 이 iteration의 비평에 없다",
-      "verdict": "violation",
-      "kind": "representation",
-      "cause_id": "c_23721661"
-    },
-    {
-      "rule": "change.unjustified",
-      "point": null,
-      "where": "/components/responses/AlertCreateUnavailable",
-      "detail": "기록 cc_alert_create_unavailable_response이 인용한 'cr_create_upstream_failure'가 이 iteration의 비평에 없다",
-      "verdict": "violation",
-      "kind": "representation",
-      "cause_id": "c_896242e1"
-    },
-    {
-      "rule": "change.unjustified",
-      "point": null,
-      "where": "/components/responses/AlertCreateUnavailable",
-      "detail": "기록 cc_alert_create_unavailable_response은 표현 변경인데 representation_basis가 비었다 (닫힌 값: interop, spec_implication, contract_consistency)",
-      "verdict": "violation",
-      "kind": "representation",
-      "cause_id": "c_1fe2143d"
-    }
-  ],
+  "changes": "PASS",
+  "violations": [],
   "observations": [
     {
       "rule": "response.value_narrowed",
@@ -97,8 +15,7 @@
       "evidence": [
         "형식: retryAfterSeconds: 계약 None → 구현 int32",
         "형식: status: 계약 None → 구현 int32"
-      ],
-      "cause_id": "c_a90f38d4"
+      ]
     },
     {
       "rule": "response.value_narrowed",
@@ -110,8 +27,7 @@
       "evidence": [
         "형식: retryAfterSeconds: 계약 None → 구현 int32",
         "형식: status: 계약 None → 구현 int32"
-      ],
-      "cause_id": "c_a90f38d4"
+      ]
     },
     {
       "rule": "response.value_narrowed",
@@ -123,8 +39,7 @@
       "evidence": [
         "형식: retryAfterSeconds: 계약 None → 구현 int32",
         "형식: status: 계약 None → 구현 int32"
-      ],
-      "cause_id": "c_a90f38d4"
+      ]
     },
     {
       "rule": "response.value_narrowed",
@@ -136,8 +51,7 @@
       "evidence": [
         "형식: retryAfterSeconds: 계약 None → 구현 int32",
         "형식: status: 계약 None → 구현 int32"
-      ],
-      "cause_id": "c_a90f38d4"
+      ]
     },
     {
       "rule": "response.value_narrowed",
@@ -149,8 +63,7 @@
       "evidence": [
         "형식: retryAfterSeconds: 계약 None → 구현 int32",
         "형식: status: 계약 None → 구현 int32"
-      ],
-      "cause_id": "c_a90f38d4"
+      ]
     },
     {
       "rule": "response.value_narrowed",
@@ -162,8 +75,7 @@
       "evidence": [
         "형식: retryAfterSeconds: 계약 None → 구현 int32",
         "형식: status: 계약 None → 구현 int32"
-      ],
-      "cause_id": "c_a90f38d4"
+      ]
     },
     {
       "rule": "response.value_narrowed",
@@ -174,8 +86,7 @@
       "label": "harmless_to_client",
       "evidence": [
         "형식: attemptCount: 계약 None → 구현 int32"
-      ],
-      "cause_id": "c_fb02d60d"
+      ]
     },
     {
       "rule": "response.value_narrowed",
@@ -187,8 +98,7 @@
       "evidence": [
         "형식: retryAfterSeconds: 계약 None → 구현 int32",
         "형식: status: 계약 None → 구현 int32"
-      ],
-      "cause_id": "c_a90f38d4"
+      ]
     },
     {
       "rule": "response.value_narrowed",
@@ -200,8 +110,7 @@
       "evidence": [
         "형식: retryAfterSeconds: 계약 None → 구현 int32",
         "형식: status: 계약 None → 구현 int32"
-      ],
-      "cause_id": "c_a90f38d4"
+      ]
     },
     {
       "rule": "response.value_narrowed",
@@ -213,8 +122,7 @@
       "evidence": [
         "형식: retryAfterSeconds: 계약 None → 구현 int32",
         "형식: status: 계약 None → 구현 int32"
-      ],
-      "cause_id": "c_a90f38d4"
+      ]
     },
     {
       "rule": "response.value_narrowed",
@@ -226,8 +134,7 @@
       "evidence": [
         "형식: retryAfterSeconds: 계약 None → 구현 int32",
         "형식: status: 계약 None → 구현 int32"
-      ],
-      "cause_id": "c_a90f38d4"
+      ]
     },
     {
       "rule": "response.value_narrowed",
@@ -238,8 +145,7 @@
       "label": "harmless_to_client",
       "evidence": [
         "형식: attemptCount: 계약 None → 구현 int32"
-      ],
-      "cause_id": "c_09989579"
+      ]
     },
     {
       "rule": "response.value_narrowed",
@@ -250,8 +156,7 @@
       "label": "harmless_to_client",
       "evidence": [
         "형식: attemptCount: 계약 None → 구현 int32"
-      ],
-      "cause_id": "c_09989579"
+      ]
     },
     {
       "rule": "response.value_narrowed",
@@ -263,8 +168,7 @@
       "evidence": [
         "형식: retryAfterSeconds: 계약 None → 구현 int32",
         "형식: status: 계약 None → 구현 int32"
-      ],
-      "cause_id": "c_a90f38d4"
+      ]
     },
     {
       "rule": "response.value_narrowed",
@@ -276,8 +180,7 @@
       "evidence": [
         "형식: retryAfterSeconds: 계약 None → 구현 int32",
         "형식: status: 계약 None → 구현 int32"
-      ],
-      "cause_id": "c_a90f38d4"
+      ]
     },
     {
       "rule": "response.value_narrowed",
@@ -289,8 +192,7 @@
       "evidence": [
         "형식: retryAfterSeconds: 계약 None → 구현 int32",
         "형식: status: 계약 None → 구현 int32"
-      ],
-      "cause_id": "c_a90f38d4"
+      ]
     },
     {
       "rule": "response.value_narrowed",
@@ -302,8 +204,7 @@
       "evidence": [
         "형식: retryAfterSeconds: 계약 None → 구현 int32",
         "형식: status: 계약 None → 구현 int32"
-      ],
-      "cause_id": "c_a90f38d4"
+      ]
     },
     {
       "rule": "response.value_narrowed",
@@ -315,8 +216,7 @@
       "evidence": [
         "형식: retryAfterSeconds: 계약 None → 구현 int32",
         "형식: status: 계약 None → 구현 int32"
-      ],
-      "cause_id": "c_a90f38d4"
+      ]
     },
     {
       "rule": "response.value_narrowed",
@@ -328,8 +228,7 @@
       "evidence": [
         "형식: retryAfterSeconds: 계약 None → 구현 int32",
         "형식: status: 계약 None → 구현 int32"
-      ],
-      "cause_id": "c_a90f38d4"
+      ]
     },
     {
       "rule": "response.value_narrowed",
@@ -341,8 +240,7 @@
       "evidence": [
         "형식: retryAfterSeconds: 계약 None → 구현 int32",
         "형식: status: 계약 None → 구현 int32"
-      ],
-      "cause_id": "c_a90f38d4"
+      ]
     },
     {
       "rule": "response.value_narrowed",
@@ -354,8 +252,7 @@
       "evidence": [
         "형식: retryAfterSeconds: 계약 None → 구현 int32",
         "형식: status: 계약 None → 구현 int32"
-      ],
-      "cause_id": "c_a90f38d4"
+      ]
     },
     {
       "rule": "response.value_narrowed",
@@ -366,8 +263,7 @@
       "label": "harmless_to_client",
       "evidence": [
         "형식: attemptCount: 계약 None → 구현 int32"
-      ],
-      "cause_id": "c_09989579"
+      ]
     },
     {
       "rule": "response.value_narrowed",
@@ -379,8 +275,7 @@
       "evidence": [
         "형식: retryAfterSeconds: 계약 None → 구현 int32",
         "형식: status: 계약 None → 구현 int32"
-      ],
-      "cause_id": "c_a90f38d4"
+      ]
     },
     {
       "rule": "response.value_narrowed",
@@ -392,8 +287,7 @@
       "evidence": [
         "형식: retryAfterSeconds: 계약 None → 구현 int32",
         "형식: status: 계약 None → 구현 int32"
-      ],
-      "cause_id": "c_a90f38d4"
+      ]
     },
     {
       "rule": "response.value_narrowed",
@@ -405,8 +299,7 @@
       "evidence": [
         "형식: retryAfterSeconds: 계약 None → 구현 int32",
         "형식: status: 계약 None → 구현 int32"
-      ],
-      "cause_id": "c_a90f38d4"
+      ]
     },
     {
       "rule": "response.value_narrowed",
@@ -418,8 +311,7 @@
       "evidence": [
         "형식: retryAfterSeconds: 계약 None → 구현 int32",
         "형식: status: 계약 None → 구현 int32"
-      ],
-      "cause_id": "c_a90f38d4"
+      ]
     },
     {
       "rule": "response.value_narrowed",
@@ -431,8 +323,7 @@
       "evidence": [
         "형식: retryAfterSeconds: 계약 None → 구현 int32",
         "형식: status: 계약 None → 구현 int32"
-      ],
-      "cause_id": "c_a90f38d4"
+      ]
     },
     {
       "rule": "response.value_narrowed",
@@ -443,8 +334,7 @@
       "label": "harmless_to_client",
       "evidence": [
         "형식: attemptCount: 계약 None → 구현 int32"
-      ],
-      "cause_id": "c_09989579"
+      ]
     },
     {
       "rule": "response.value_narrowed",
@@ -456,8 +346,7 @@
       "evidence": [
         "형식: retryAfterSeconds: 계약 None → 구현 int32",
         "형식: status: 계약 None → 구현 int32"
-      ],
-      "cause_id": "c_a90f38d4"
+      ]
     },
     {
       "rule": "response.value_narrowed",
@@ -469,8 +358,7 @@
       "evidence": [
         "형식: retryAfterSeconds: 계약 None → 구현 int32",
         "형식: status: 계약 None → 구현 int32"
-      ],
-      "cause_id": "c_a90f38d4"
+      ]
     },
     {
       "rule": "response.value_narrowed",
@@ -482,8 +370,7 @@
       "evidence": [
         "형식: retryAfterSeconds: 계약 None → 구현 int32",
         "형식: status: 계약 None → 구현 int32"
-      ],
-      "cause_id": "c_a90f38d4"
+      ]
     },
     {
       "rule": "response.value_narrowed",
@@ -495,8 +382,7 @@
       "evidence": [
         "형식: retryAfterSeconds: 계약 None → 구현 int32",
         "형식: status: 계약 None → 구현 int32"
-      ],
-      "cause_id": "c_a90f38d4"
+      ]
     },
     {
       "rule": "response.value_narrowed",
@@ -508,8 +394,7 @@
       "evidence": [
         "형식: retryAfterSeconds: 계약 None → 구현 int32",
         "형식: status: 계약 None → 구현 int32"
-      ],
-      "cause_id": "c_a90f38d4"
+      ]
     },
     {
       "rule": "change.unmatched_record",
@@ -517,8 +402,7 @@
       "where": "/components/schemas/AlertStatus/description",
       "detail": "기록 cc_watching_check_source이 가리키는 자리가 판본 diff에 없다",
       "verdict": "observation",
-      "kind": "representation",
-      "cause_id": "c_029c337a"
+      "kind": "promise"
     },
     {
       "rule": "change.unmatched_record",
@@ -526,8 +410,7 @@
       "where": "/paths/~1alerts/post/responses/502",
       "detail": "기록 cc_create_upstream_unreadable이 가리키는 자리가 판본 diff에 없다",
       "verdict": "observation",
-      "kind": "representation",
-      "cause_id": "c_90a2d6c7"
+      "kind": "representation"
     },
     {
       "rule": "change.unmatched_record",
@@ -535,8 +418,7 @@
       "where": "/paths/~1alerts/post/responses/504",
       "detail": "기록 cc_create_upstream_timeout이 가리키는 자리가 판본 diff에 없다",
       "verdict": "observation",
-      "kind": "representation",
-      "cause_id": "c_4d7cf792"
+      "kind": "representation"
     },
     {
       "rule": "change.unmatched_record",
@@ -544,8 +426,15 @@
       "where": "/paths/~1alerts/post/responses/503",
       "detail": "기록 cc_create_503_covers_upstream이 가리키는 자리가 판본 diff에 없다",
       "verdict": "observation",
-      "kind": "representation",
-      "cause_id": "c_e1f51c9a"
+      "kind": "representation"
+    },
+    {
+      "rule": "change.basis_off_target",
+      "point": null,
+      "where": "/components/responses/AlertCreateUnavailable",
+      "detail": "기록 cc_alert_create_unavailable_response이 인용한 'cr_create_upstream_failure'는 /paths/~1alerts/post를 가리켰는데 이 기록이 고친 자리는 그 자리 안도 아니고 같은 오퍼레이션도 아니다",
+      "verdict": "observation",
+      "kind": "representation"
     },
     {
       "rule": "change.unmatched_record",
@@ -553,8 +442,15 @@
       "where": "/components/responses/AlertCreateUnavailable",
       "detail": "기록 cc_alert_create_unavailable_response이 가리키는 자리가 판본 diff에 없다",
       "verdict": "observation",
-      "kind": "representation",
-      "cause_id": "c_83224211"
+      "kind": "representation"
+    },
+    {
+      "rule": "change.basis_off_target",
+      "point": null,
+      "where": "/paths/~1alerts/post/description",
+      "detail": "기록 cc_create_unopened_date_accepted이 인용한 'cr_unopened_date_cannot_subscribe'는 /components/schemas/CourtAvailability/properties/slots를 가리켰는데 이 기록이 고친 자리는 그 자리 안도 아니고 같은 오퍼레이션도 아니다",
+      "verdict": "observation",
+      "kind": "promise"
     },
     {
       "rule": "change.diff",
@@ -562,8 +458,7 @@
       "where": "기준선 대비",
       "detail": "기준선과 달라진 좌표 10개: /paths/~1alerts/post/description, /paths/~1alerts/post/responses/502, /paths/~1alerts/post/responses/504, /paths/~1alerts/post/responses/201/description, /paths/~1alerts/post/responses/201/content/application~1json/example/lastCheckedAt, /paths/~1alerts/post/responses/503/$ref, /components/headers/IdempotencyReplayed/description, /components/schemas/AlertStatus/description, /components/schemas/CourtAvailability/properties/slots/description, /components/responses/AlertCreateUnavailable",
       "verdict": "observation",
-      "kind": "representation",
-      "cause_id": "c_fe8035a2"
+      "kind": "promise"
     },
     {
       "rule": "change.diff",
@@ -571,25 +466,23 @@
       "where": "*",
       "detail": "달라진 좌표 5개: /paths/~1alerts/post/description, /paths/~1alerts/post/responses/201/description, /paths/~1alerts/post/responses/201/content/application~1json/example/lastCheckedAt, /components/headers/IdempotencyReplayed/description, /components/schemas/CourtAvailability/properties/slots/description",
       "verdict": "observation",
-      "kind": "representation",
-      "cause_id": "c_afd497ab"
+      "kind": "promise"
     },
     {
       "rule": "change.version_label",
       "point": null,
       "where": "tennis-alert-api-v3.yaml",
       "detail": "파일명의 판 번호 3과 계약의 주 버전 1이 어긋난다",
-      "verdict": "observation",
-      "cause_id": "c_ea48d8a5"
+      "verdict": "observation"
     }
   ],
   "errors": [],
-  "derived_spec": "C:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs12\\2026-09-30_b02d8689\\iter_003\\api-docs.json",
+  "derived_spec": "C:\\Users\\이현웅\\AppData\\Local\\Temp\\claude\\C--Users-----Desktop-project-thinking\\5d694e61-671c-41b2-90ce-cf79a9d9b26e\\scratchpad\\rerun12\\regate\\2026-09-30_b02d8689\\iter_003\\api-docs.json",
   "allow_missing_gates": false,
   "log": [
-    "작업 폴더: C:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs12\\2026-09-30_b02d8689\\output (target/ 재사용 예)\n$ C:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs12\\2026-09-30_b02d8689\\output\\mvnw.cmd -B -q test → 0\n18:32:20.221 [main] INFO com.tngtech.archunit.core.PluginLoader -- Detected Java version 17.0.19\n\n$ dump_api_docs.py → 0\nC:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs12\\2026-09-30_b02d8689\\iter_003\\api-docs.json 에 저장했다. 포트 58838, 최상위 키 ['components', 'info', 'openapi', 'paths', 'security', 'servers', 'tags'], paths 3개\n"
+    "작업 폴더: C:\\Users\\이현웅\\AppData\\Local\\Temp\\claude\\C--Users-----Desktop-project-thinking\\5d694e61-671c-41b2-90ce-cf79a9d9b26e\\scratchpad\\rerun12\\regate\\2026-09-30_b02d8689\\output (target/ 재사용 예)\n$ C:\\Users\\이현웅\\AppData\\Local\\Temp\\claude\\C--Users-----Desktop-project-thinking\\5d694e61-671c-41b2-90ce-cf79a9d9b26e\\scratchpad\\rerun12\\regate\\2026-09-30_b02d8689\\output\\mvnw.cmd -B -q test → 0\n23:37:41.369 [main] INFO com.tngtech.archunit.core.PluginLoader -- Detected Java version 17.0.7\n\n$ dump_api_docs.py → 0\nC:\\Users\\이현웅\\AppData\\Local\\Temp\\claude\\C--Users-----Desktop-project-thinking\\5d694e61-671c-41b2-90ce-cf79a9d9b26e\\scratchpad\\rerun12\\regate\\2026-09-30_b02d8689\\iter_003\\api-docs.json 에 저장했다. 포트 4156, 최상위 키 ['components', 'info', 'openapi', 'paths', 'security', 'servers', 'tags'], paths 3개\n"
   ],
   "baseline_compared": true,
   "accumulated_changes": 19,
-  "critique_source": "iter_002/critique.json"
+  "critique_source": "iter_001+iter_002"
 }

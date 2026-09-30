@@ -568,8 +568,8 @@ def load_gate_rules(rules_path: Path | None, allow_missing: bool, progress: Prog
 PROSE_SLOT_EXTRACTORS = ("extract_prose_slots", "extract")
 
 
-def load_prose_slots(baseline_contract: Path | None, override: Path | None) -> tuple[list[dict], str]:
-    """산문 슬롯을 기준선에서 뽑는다. 슬롯은 기준선에서만 뽑는다 — 분모가 흔들리면 채점도 흔들린다.
+def load_prose_slots(contract: Path | None, override: Path | None) -> tuple[list[dict], str]:
+    """계약 판본 하나에서 산문 슬롯을 뽑는다.
 
     추출기는 다른 조각이 소유하므로 import를 지연시키고, 없으면 빈 목록과 SKIPPED를 돌려준다.
     """
@@ -577,7 +577,7 @@ def load_prose_slots(baseline_contract: Path | None, override: Path | None) -> t
         data = json.loads(override.read_text(encoding="utf-8"))
         slots = data.get("prose_slots", data) if isinstance(data, dict) else data
         return (slots if isinstance(slots, list) else []), f"file:{override}"
-    if baseline_contract is None or not baseline_contract.exists():
+    if contract is None or not contract.exists():
         return [], STATUS_SKIPPED
     prose_slots, _ = import_pipeline_module("tools.prose_slots")
     if prose_slots is None:
@@ -585,9 +585,26 @@ def load_prose_slots(baseline_contract: Path | None, override: Path | None) -> t
     for name in PROSE_SLOT_EXTRACTORS:
         extractor = getattr(prose_slots, name, None)
         if callable(extractor):
-            slots = extractor(load_structured(baseline_contract))
+            slots = extractor(load_structured(contract))
             return (slots if isinstance(slots, list) else []), f"tools.prose_slots.{name}"
     return [], STATUS_SKIPPED
+
+
+def draft_prose_slots(context: "RunContext", draft: dict, fallback: Path | None,
+                      override: Path | None) -> tuple[list[dict], str]:
+    """비평과 채점이 쓸 산문 슬롯. 초안이 서 있는 계약 판본에서 뽑는다.
+
+    계약을 고쳤으면 구현은 고친 계약으로 판정받는다. G1이 이미 그 판본으로 대조하므로 채점도 같은 판본을 본다.
+    약속을 지워 만점을 만드는 길은 판본 대조 게이트가 막는다 — 슬롯 문장이 바뀐 변경은 약속 변경이라
+    명세 근거를 댄 기록이 없으면 REJECT다. 판본 파일을 찾지 못하면 `fallback`(기준선)으로 물러나고 그 사실을 출처에 적는다.
+    """
+    rel = ((draft or {}).get("contract_version") or {}).get("path")
+    contract = resolve_contract_file(context, rel) if rel else None
+    if contract is None:
+        slots, source = load_prose_slots(fallback, override)
+        return slots, f"{source} (판본 {rel!r}을 찾지 못해 기준선에서 뽑았다)"
+    slots, source = load_prose_slots(contract, override)
+    return slots, f"{source} from {rel}"
 
 
 def load_ledger_writer():
@@ -2445,6 +2462,13 @@ def run(args: argparse.Namespace) -> dict:
                 + (f" -> {[item['path'] for item in code_files['omitted']][:5]}" if code_files["omitted"] else "")
             )
 
+            version_slots, version_slot_source = draft_prose_slots(
+                context, draft, baseline_contract, args.prose_slots
+            )
+            progress.line(
+                f"{iteration_label} prose_slots count={len(version_slots)} source={version_slot_source}"
+            )
+
             critique_artifact: dict | None = None
             eval_artifact: dict | None = None
             eval_result: dict = {"status": STATUS_PASS, "errors": []}
@@ -2475,7 +2499,7 @@ def run(args: argparse.Namespace) -> dict:
                                 output_path=temp_critique_path,
                                 client=client,
                                 model=agent_models[AGENT_CRITIQUE],
-                                prose_slots=prose_slots,
+                                prose_slots=version_slots,
                                 decisions=draft.get("decisions", []),
                                 contract_changes=draft.get("contract_changes", []),
                                 observations=gate_result.get("observations", []),
@@ -2557,7 +2581,7 @@ def run(args: argparse.Namespace) -> dict:
                                     client=client,
                                     model=agent_models[AGENT_EVAL],
                                     eval_output_schema=EVAL_MODEL_SCHEMA,
-                                    prose_slots=prose_slots,
+                                    prose_slots=version_slots,
                                     decisions=draft.get("decisions", []),
                                     contract_changes=draft.get("contract_changes", []),
                                     work_dir=root_context.output_dir,

@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 
 from stages.scripts.llm_client import SANDBOX_READ_ONLY, SANDBOX_WORKSPACE_WRITE, LLMClient
-from stages.scripts.payload import block, compose, read_prompt, workspace_block
+from stages.scripts.payload import CRITIQUE_ECHO, GATE_ECHO, block, compose, draft_without, read_prompt, workspace_block
 
 
 PROJECT_DIR = Path(__file__).resolve().parent.parent
@@ -29,7 +29,7 @@ def evaluate(
     raw_path: Path | None = None,
     on_note=None,
 ) -> dict | None:
-    """기준선을 분모로 루브릭을 매긴다. critique와 게이트 결과와 사람 테스트는 보지 않는다."""
+    """초안이 서 있는 계약 판본을 분모로 루브릭을 매긴다. critique와 게이트 결과와 사람 테스트는 보지 않는다."""
     input_data = json.loads(input_path.read_text(encoding="utf-8"))
     draft = json.loads(draft_path.read_text(encoding="utf-8"))
     system, user = build_prompt(
@@ -69,7 +69,7 @@ def build_prompt(
     user = compose(
         block("INPUT_JSON", input_data),
         block("PROSE_SLOTS_JSON", prose_slots),
-        block("DRAFT_JSON", draft),
+        block("DRAFT_JSON", draft_without(draft, GATE_ECHO + CRITIQUE_ECHO)),
         block("DRAFT_FILES_JSON", code_files or {"files": [], "omitted": []}),
         block("RUBRIC_JSON", rubric),
         block("STANDING_DECISIONS_JSON", decisions),

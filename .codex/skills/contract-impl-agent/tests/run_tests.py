@@ -1398,13 +1398,15 @@ def test_a_notation_basis_is_asked_only_where_the_notation_changed():
     """
     prev = contract_copy()
 
-    # 계약이 명세와 모순된 문장을 명세에 맞춘다. 슬롯 id는 포인터의 해시라 문장을 고쳐도 재고는 그대로다.
+    # 계약이 명세와 모순된 문장을 명세에 맞춘다. 문장을 바꾼 것은 약속 변경이라 명세 근거는 따로 묻지만,
+    # 표기를 바꾼 것이 아니므로 표현 근거는 묻지 않는다. 그 둘을 가르는 것이 이 자리의 확인이다.
     prose = contract_copy()
     schema(prose, "AlertStatus")["description"] = "조회가 확인을 일으킨다"
     outcome = judge_pair(prev, prose, [
         {"id": "cc_prose", "target": "#/components/schemas/AlertStatus/description",
          "basis": "critique:w3"}], baseline=prev)
-    report("문장만 고친 기록에는 표현 근거를 묻지 않는다", not outcome["violations"],
+    report("문장만 고친 기록에는 표현 근거를 묻지 않는다",
+           not [v for v in outcome["violations"] if "representation_basis" in v["detail"]],
            f"{[v['detail'] for v in outcome['violations']]}")
 
     # 상태 코드가 가리키는 응답을 바꾼다. 표기가 아니라 그 자리가 무엇을 뜻하는지가 달라진 것이다.
@@ -1448,8 +1450,118 @@ def test_a_notation_basis_is_asked_only_where_the_notation_changed():
         {"id": "cc_field_prose",
          "target": "#/components/schemas/Alert/properties/reservationUrl/description",
          "basis": "critique:w3"}], baseline=prev)
-    report("필드 아래의 설명을 고친 것은 표기 변경이 아니다", not outcome["violations"],
+    report("필드 아래의 설명을 고친 것은 표기 변경이 아니다",
+           not [v for v in outcome["violations"] if "representation_basis" in v["detail"]],
            f"{[v['detail'] for v in outcome['violations']]}")
+
+
+def test_rewriting_a_sentence_is_a_promise_change():
+    """같은 자리의 문장을 바꿔 쓴 것은 약속 변경이고, 덧붙이기만 한 것은 아니다.
+
+    비평과 채점이 그 iteration의 계약 판본으로 보므로 문장을 고쳐 약속을 무르면 채점도 따라간다. 그 길을 막는
+    것은 판본 대조뿐이라, 슬롯의 자리가 남아 있어도 앞 판본의 문장이 사라지면 명세 근거를 요구한다.
+    """
+    prev = contract_copy()
+    target = "#/components/schemas/AlertStatus/description"
+    rewritten = contract_copy()
+    schema(rewritten, "AlertStatus")["description"] = "조회가 확인을 일으킨다"
+
+    def judge(anchor):
+        one = {"id": "cc_rewrite", "target": target, "basis": "critique:w3", "spec_anchor": anchor}
+        return check_contract_changes(prev, rewritten, [one], "contract/a-v1.yaml", "contract/a-v2.yaml",
+                                      RULES, CRITIQUE, baseline=prev, accumulated=[one], spec=SPEC)
+
+    lost = reductions(prev, rewritten)
+    report("문장을 바꿔 쓴 판본은 약속 변경이다", change_kind(lost) == PROMISE and "산문 슬롯" in lost,
+           f"{ {k: len(v) for k, v in lost.items()} }")
+    outcome = judge("")
+    report("명세 근거 없이 문장을 바꿔 쓰면 위반이다",
+           any(v["rule"] in ("change.unjustified", "change.promise_reduced") for v in outcome["violations"]),
+           f"{[(v['rule'], v['detail']) for v in outcome['violations']]}")
+    outcome = judge("requirement:FR-1")
+    report("명세의 id를 가리키는 근거가 있으면 문장을 바꿔 쓸 수 있다", not outcome["violations"],
+           f"{[v['detail'] for v in outcome['violations']]}")
+
+    grown = contract_copy()
+    before = str(schema(grown, "AlertStatus").get("description") or "")
+    schema(grown, "AlertStatus")["description"] = (before + "\n\n확인은 조회가 일으킨다.").strip()
+    report("앞 문장을 그대로 두고 덧붙인 것은 줄어든 것이 없다", not reductions(prev, grown),
+           f"{ {k: len(v) for k, v in reductions(prev, grown).items()} }")
+
+    rewrapped = contract_copy()
+    schema(rewrapped, "AlertStatus")["description"] = "\n  ".join(before.split(" "))
+    report("줄을 다시 감싼 것은 같은 문장이다", not reductions(prev, rewrapped) or not before.strip(),
+           f"{ {k: len(v) for k, v in reductions(prev, rewrapped).items()} }")
+
+
+def test_draft_payload_does_not_carry_other_stages_answers():
+    """draft에 실린 다른 단계에 대한 응답은 그것을 보면 안 되는 단계의 payload에서 빠진다.
+
+    `repairs`는 게이트 위반을, `ignored_suggestions`는 비평의 발의를 인용한다. draft를 통째로 실으면
+    정보 차단 표가 막은 것이 이 칸을 타고 샌다. 채점은 둘 다 보면 안 되고, 비평은 게이트의 위반만 보면 안 된다.
+    """
+    pipeline = str(SKILL / "pipeline")
+    if pipeline not in sys.path:
+        sys.path.insert(0, pipeline)
+    from stages import critique as critique_stage, evaluator as evaluator_stage
+
+    draft = {"files": [], "decisions": [], "contract_changes": [],
+             "repairs": [{"violation_id": "c_gate_marker", "summary": "게이트 표지"}],
+             "ignored_suggestions": [{"suggestion_id": "cr_critique_marker", "reason": "비평 표지"}]}
+    _, user = evaluator_stage.build_prompt({}, draft, {}, [], [], [])
+    report("채점 payload에 게이트 위반에 대한 응답이 없다", "c_gate_marker" not in user, "")
+    report("채점 payload에 비평에 대한 응답이 없다", "cr_critique_marker" not in user, "")
+    _, user = critique_stage.build_prompt({}, draft, [], [], [], [], {})
+    report("비평 payload에 게이트 위반에 대한 응답이 없다", "c_gate_marker" not in user, "")
+    report("비평 payload는 자기 발의에 대한 응답을 그대로 받는다", "cr_critique_marker" in user, "")
+    report("원본 draft는 건드리지 않는다", "repairs" in draft and "ignored_suggestions" in draft, "")
+
+
+def test_manifest_drift_compares_each_iteration_with_its_own_changes():
+    """색인은 그 iteration에 쓰이거나 고쳐진 것의 목록이므로, 원장도 그 iteration의 변경과만 맞댄다.
+
+    뒤의 iteration에서 스켈레톤 밖 파일 전부를 맞대면 앞에서 신고했고 이번에 건드리지 않은 파일이 모두 어긋남으로
+    올라온다. 또 원장을 다시 만들 때 작업 폴더가 마지막 iteration에 서 있으면, 앞 iteration이 뒤에 생긴 파일을 본다.
+    """
+    pipeline = str(SKILL / "pipeline")
+    if pipeline not in sys.path:
+        sys.path.insert(0, pipeline)
+    import ledger as ledger_module
+
+    snapshot = {"skeleton.txt": {}, "a.java": {}, "b.java": {}}
+    skeleton = {"skeleton.txt"}
+    first = ledger_module.generator_touched(snapshot, {}, skeleton, has_prev=False)
+    report("첫 iteration은 스켈레톤 밖의 파일 전부와 맞댄다", first == {"a.java", "b.java"}, f"{sorted(first)}")
+    later = ledger_module.generator_touched(snapshot, {"b.java": {}}, skeleton, has_prev=True)
+    report("뒤의 iteration은 이번에 달라진 파일과만 맞댄다", later == {"b.java"}, f"{sorted(later)}")
+
+    with tempfile.TemporaryDirectory() as temp:
+        root = Path(temp)
+        def git(*args):
+            subprocess.run(["git", "-C", str(root), *args], check=True, capture_output=True)
+        git("init", "-q", "-b", "main")
+        git("config", "user.email", "t@example.com")
+        git("config", "user.name", "t")
+        (root / "a.txt").write_text("one", encoding="utf-8")
+        git("add", "-A")
+        git("commit", "-q", "-m", "first")
+        first_commit = subprocess.run(["git", "-C", str(root), "rev-parse", "HEAD"],
+                                      capture_output=True, text=True, check=True).stdout.strip()
+        (root / "a.txt").write_text("two", encoding="utf-8")
+        (root / "later.txt").write_text("late", encoding="utf-8")
+        git("add", "-A")
+        git("commit", "-q", "-m", "second")
+
+        past = ledger_module.iteration_snapshot(root, first_commit)
+        report("작업 폴더가 뒤에 서 있으면 그 커밋의 트리를 읽는다",
+               set(past) == {"a.txt"} and past["a.txt"]["text"] == "one", f"{ {k: v.get('text') for k, v in past.items()} }")
+        # 체크아웃이 줄바꿈을 바꾼 것처럼 디스크만 커밋과 달라져도, 원장은 커밋의 내용을 본다.
+        (root / "a.txt").write_text("two\r\n", encoding="utf-8")
+        current = ledger_module.iteration_snapshot(root, "HEAD")
+        report("디스크가 커밋과 달라도 커밋의 내용으로 해시를 낸다",
+               current["a.txt"]["text"] == "two"
+               and current["a.txt"]["sha"] != ledger_module.dir_snapshot(root)["a.txt"]["sha"],
+               f"{current['a.txt']['text']!r}")
 
 
 def test_a_pointer_reads_keyword_places_apart_from_names():
@@ -2083,6 +2195,9 @@ TESTS = [
     test_a_promise_change_with_a_spec_anchor_passes,
     test_a_representation_change_needs_a_closed_basis,
     test_a_notation_basis_is_asked_only_where_the_notation_changed,
+    test_rewriting_a_sentence_is_a_promise_change,
+    test_draft_payload_does_not_carry_other_stages_answers,
+    test_manifest_drift_compares_each_iteration_with_its_own_changes,
     test_a_pointer_reads_keyword_places_apart_from_names,
     test_restoring_a_promise_asks_only_for_the_critique,
     test_kinds_split_within_one_version,

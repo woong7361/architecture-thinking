@@ -47,6 +47,7 @@ from runner import (
     load_gate_rules,
     load_json,
     load_ledger_writer,
+    draft_prose_slots,
     load_prose_slots,
     load_report_writer,
     relative_to_run,
@@ -642,8 +643,15 @@ def main() -> int:
         )
 
     prose_slots: list[dict] = []
-    if args.stage in (STAGE_GEN, STAGE_CRITIQUE, STAGE_EVAL):
+    if args.stage == STAGE_GEN:
         prose_slots, source = load_prose_slots(baseline_contract_path(context, input_data), args.prose_slots)
+        progress.line(f"prose_slots count={len(prose_slots)} source={source}")
+    elif args.stage in (STAGE_CRITIQUE, STAGE_EVAL):
+        # 비평과 채점은 초안이 서 있는 계약 판본으로 본다. 초안이 없으면 각 단계가 그 사실로 멈춘다.
+        draft = load_json(context.draft_path) if context.draft_path.exists() else {}
+        prose_slots, source = draft_prose_slots(
+            context, draft, baseline_contract_path(context, input_data), args.prose_slots
+        )
         progress.line(f"prose_slots count={len(prose_slots)} source={source}")
 
     models = resolve_agent_models(args)

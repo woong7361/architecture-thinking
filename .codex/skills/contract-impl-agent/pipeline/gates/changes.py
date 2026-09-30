@@ -36,6 +36,7 @@ iteration 하나만 보면 앞 판본의 변경을 유지한 신고가 전부 �
 방향을 갈아 쓸 이유가 없다. 판본 사이에서는 요청이 좁아지는 것과 응답이 사라지는 것이 모두 깨는 변경이다.
 """
 
+import hashlib
 import re
 from pathlib import Path
 
@@ -193,6 +194,15 @@ def schema_properties(node):
     return {}
 
 
+SENTENCE_END = re.compile(r"(?<=[.!?。])\s+")
+
+
+def sentences_of(text):
+    """산문을 문장으로 자른다. 공백을 한 칸으로 접은 뒤 자르므로 줄을 다시 감싼 것은 같은 문장이다."""
+    flat = " ".join(str(text or "").split())
+    return [part for part in SENTENCE_END.split(flat) if part]
+
+
 def promise_inventory(doc):
     """계약이 약속한 것의 재고. {차원: {이름: 포인터}}.
 
@@ -243,10 +253,17 @@ def promise_inventory(doc):
         for field in schema_properties(node):
             declared[f"{where or '/'}:{field}"] = f"{where}/properties/{escape_token(field)}"
 
+    # 슬롯은 문장 단위로 센다. 슬롯 id는 포인터만으로 만들어져, id로만 세면 같은 자리의 문장을 뒤집어 써도
+    # 재고가 줄지 않아 표현 변경으로 지나간다. 비평과 채점이 그 iteration의 판본으로 보므로, 문장을 고쳐
+    # 약속을 무르는 길을 막는 것은 이 자리뿐이다. 문장이 약해졌는지 강해졌는지는 기계가 가리지 못하므로
+    # 앞 판본의 문장이 하나라도 그대로 남지 않으면 약속 변경으로 보고 명세 근거를 요구한다. 문장을 덧붙이기만
+    # 한 것은 앞 문장이 모두 남으므로 줄어든 것이 없다. 줄바꿈과 공백만 다른 것은 같은 문장이다.
     slots = {}
     try:
         for slot in prose_slots.extract(doc):
-            slots[slot["id"]] = slot["pointer"]
+            for sentence in sentences_of(slot.get("text")):
+                digest = hashlib.sha1(sentence.encode("utf-8")).hexdigest()[:8]
+                slots[f"{slot['id']}:{digest}"] = slot["pointer"]
     except Exception:  # noqa: BLE001
         # 산문 슬롯을 뽑지 못하면 그 차원을 판정하지 않는다. 못 본 것을 줄지 않았다고 말하지는 않는다.
         slots = None
@@ -473,6 +490,44 @@ def check_basis(f, record, target, critique, known, kind=None):
     if cited not in ids:
         f.add("change.unjustified", None, target or "-",
               f"기록 {label}이 인용한 {cited!r}가 이 run의 어느 비평에도 없다", kind=kind)
+        return
+
+    # 인용한 비평 항목이 이 자리를 가리켰는가. 위반으로 두지 않는다. 한 발의가 같은 오퍼레이션 밖의 자리까지
+    # 고치게 만드는 일이 정당하게 있고(컴포넌트를 새로 두거나, 스키마의 규칙을 그것을 쓰는 오퍼레이션에 옮겨 적는 것),
+    # 그것을 막으면 모델이 만족시킬 수 없는 요구가 된다. 사람이 리포트에서 그 연결을 확인하게 남긴다.
+    pointer = critique_pointers(critique).get(cited)
+    if pointer and target and not related_pointers(normalize_target(pointer), target):
+        f.add("change.basis_off_target", None, target,
+              f"기록 {label}이 인용한 {cited!r}는 {normalize_target(pointer)}를 가리켰는데"
+              f" 이 기록이 고친 자리는 그 자리 안도 아니고 같은 오퍼레이션도 아니다", kind=kind)
+
+
+def critique_pointers(critique):
+    """비평의 계약 검토 항목이 가리킨 좌표. {id: pointer}."""
+    found = {}
+    for one in (critique if isinstance(critique, (list, tuple)) else [critique]):
+        if not isinstance(one, dict):
+            continue
+        for item in one.get("contract_review") or []:
+            if isinstance(item, dict) and item.get("id") and item.get("pointer"):
+                found[str(item["id"])] = str(item["pointer"])
+    return found
+
+
+def operation_of(pointer):
+    """`/paths/{경로}/{메서드}`까지 자른 좌표. 오퍼레이션 밖이면 None."""
+    parts = pointer.split("/")
+    if len(parts) >= 4 and parts[1] == "paths" and parts[3] in METHODS:
+        return "/".join(parts[:4])
+    return None
+
+
+def related_pointers(pointer, target):
+    """두 좌표가 한 자리이거나 한쪽이 다른 쪽을 품거나 같은 오퍼레이션 안에 있는가."""
+    if matches(pointer, target):
+        return True
+    operation = operation_of(pointer)
+    return operation is not None and operation == operation_of(target)
 
 
 def normalize_target(target):
@@ -677,6 +732,7 @@ FALLBACK = {"rules": [
     {"id": "change.basis_is_gate_verdict", "verdict": "violation"},
     {"id": "change.version_file", "verdict": "violation"},
     {"id": "change.unmatched_record", "verdict": "observation"},
+    {"id": "change.basis_off_target", "verdict": "observation"},
     {"id": "change.anchor_uncompared", "verdict": "observation"},
     {"id": "change.diff", "verdict": "observation"},
     {"id": "change.breaking", "verdict": "observation"},

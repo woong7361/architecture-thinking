@@ -401,6 +401,14 @@ rules:
     verdict: observation
     handling: auto
 
+  - id: change.basis_off_target
+    meaning: 계약 변경이 인용한 비평 항목이 가리킨 좌표와 변경한 좌표가 한 자리도, 한 오퍼레이션도 아니다.
+      한 발의가 다른 자리의 후속 수정을 낳는 일은 정당하게 있으므로 위반이 아니고, 인용이 그 변경과
+      실제로 이어지는지를 사람이 확인하라는 표시다.
+    direction: change
+    verdict: observation
+    handling: auto
+
 # ── 판정이 서는 바닥이 무너진 자리 ──────────────────────────────────────────
 #
 # 여기 모인 판정은 계약의 어느 방향에도 들지 않는다. 컴파일과 부팅과 층 경계, 그리고 단계가 낸 산출을

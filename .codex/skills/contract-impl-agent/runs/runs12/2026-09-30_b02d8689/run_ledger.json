@@ -1,6 +1,6 @@
 {
   "run_id": "2026-09-30_b02d8689",
-  "updated_at": "2026-09-30T18:45:55+09:00",
+  "updated_at": "2026-09-30T23:55:51+09:00",
   "iterations": [
     {
       "iteration": "001",
@@ -13,17 +13,23 @@
       "file_hashes": {
         ".gitignore": "7f7c8ac9df305eb44041c7b6f0efe5c847834786e74a58928d8c2cd284d7480d",
         ".mvn/wrapper/maven-wrapper.properties": "27680bba1b7cb13995c30ccbf6f3ac15b218cb6c11aebda19e52e3fd6e65d15e",
+        "README.md": "e6e4bb4ffa2ef4d71decf6cf8c719abd5fc304795bbab809d1200a294a5b69f3",
         "contract/tennis-alert-api-v1.yaml": "0c467b8388ee7d8c091f76607037e658f944f4ebb7164c3316561d408101adf1",
         "mvnw": "b1ef6ce14df54e6f8552734080184b18f78b0a0c61ed80c08d7d78b254e44941",
         "mvnw.cmd": "46eedb8419bd14fe70d5bb2916d7b6f51806e51b39d5b76a42610384ca929c1c",
         "pom.xml": "a53d5bd6979d3c134bdb135abd1fad59dd666b34ed0c4d0d47d57fdba4bc9a4f",
-        "README.md": "e6e4bb4ffa2ef4d71decf6cf8c719abd5fc304795bbab809d1200a294a5b69f3",
+        "src/main/java/com/thinking/tennis/TennisAlertApplication.java": "2178279b50ba03794c7632534ff52fd4ba8a5a95ba487d6807a42e1e6131f2f1",
         "src/main/java/com/thinking/tennis/adapter/InMemoryCourtAvailabilityAdapter.java": "78c58ad8277ae1a1722fb8c42de58acb78107a73f4e8afdfbf9dff48ae874ea6",
         "src/main/java/com/thinking/tennis/api/AlertController.java": "4d4d43ae0cffbe20bf991b36d86f852f30fce4c3c2d0ebf8b7a9ff6f2b41fa1b",
         "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java": "9cef7cd3a0947bac808d0f58656d8ede9f2649cab6e279bf841755fb4f0ae926",
         "src/main/java/com/thinking/tennis/api/ApiPaths.java": "8459cbc0b0107b8f2f3a179c02c18d4f98d3cbd2ef61ba8f6a2113de5c37f67c",
         "src/main/java/com/thinking/tennis/api/AvailabilityController.java": "a5017103e30c9ffb5e65e589a88a76ed11ce5f31d6c2caecd2c68efde60db718",
         "src/main/java/com/thinking/tennis/api/BearerTokens.java": "f4b1c426b8d596b9f0d8f631b9e5317770ce8113f68579fbe55e1af7b2f93f7b",
+        "src/main/java/com/thinking/tennis/api/OpenApiDeclaration.java": "30f2f164666d7e9fd5e51e72536b3a1408f42ff5564493ed04ca2910d6fc9fa0",
+        "src/main/java/com/thinking/tennis/api/Problems.java": "57f8e9e70dc1a22322eab5c2fe3e28d64aaffcfcb20b06911bc0f259b3e218cc",
+        "src/main/java/com/thinking/tennis/api/RequestValidationException.java": "94befb49c05bee90aabe4ce27c8f2fda1f48f0cfe65b6a8e1f37438a99040796",
+        "src/main/java/com/thinking/tennis/api/RequestValues.java": "c2f8638abc94dfb2fe04364d6b8e2333bfdc6c3079faa7951fd3602c77a2c4ac",
+        "src/main/java/com/thinking/tennis/api/UnauthenticatedException.java": "baeaab4ecec27fe0026ae00c832dff4d82a524a91d82447543cbb170cafc1e77",
         "src/main/java/com/thinking/tennis/api/dto/AlertDeliveryResponse.java": "34a908857b000841bf2a89f649e156446c100b9688f1b8ff2222a79a0cc26f91",
         "src/main/java/com/thinking/tennis/api/dto/AlertListResponse.java": "ecc17adaa940e0babfbe764c0915e8a3488b989c21f2008cb5fa1683993d0bec",
         "src/main/java/com/thinking/tennis/api/dto/AlertResponse.java": "56978c978ba1f5e2c2dfe46a7124c48cddf51fc904c5633ad8d2c4d121534fdd",
@@ -37,11 +43,6 @@
         "src/main/java/com/thinking/tennis/api/dto/ProblemResponse.java": "773e317f4504618c01d7e7178d42c55a630c802b41f6e69442491fd0f6a72021",
         "src/main/java/com/thinking/tennis/api/dto/TimeSlotPayload.java": "97269d1d759afadca03eccd3d5068d177888ad0f63bc2074b17b7e0291d41988",
         "src/main/java/com/thinking/tennis/api/dto/UpstreamFailureReasonValue.java": "1a8fe8c98599bd8d3eb0dacc5456677ebc775524f5b6f5e6806c7469378812d3",
-        "src/main/java/com/thinking/tennis/api/OpenApiDeclaration.java": "30f2f164666d7e9fd5e51e72536b3a1408f42ff5564493ed04ca2910d6fc9fa0",
-        "src/main/java/com/thinking/tennis/api/Problems.java": "57f8e9e70dc1a22322eab5c2fe3e28d64aaffcfcb20b06911bc0f259b3e218cc",
-        "src/main/java/com/thinking/tennis/api/RequestValidationException.java": "94befb49c05bee90aabe4ce27c8f2fda1f48f0cfe65b6a8e1f37438a99040796",
-        "src/main/java/com/thinking/tennis/api/RequestValues.java": "c2f8638abc94dfb2fe04364d6b8e2333bfdc6c3079faa7951fd3602c77a2c4ac",
-        "src/main/java/com/thinking/tennis/api/UnauthenticatedException.java": "baeaab4ecec27fe0026ae00c832dff4d82a524a91d82447543cbb170cafc1e77",
         "src/main/java/com/thinking/tennis/app/AlertCommandService.java": "24a4be8cb307a8832adc46bc3db0b8dad7ffec19530cd1a8a54746441f2928d1",
         "src/main/java/com/thinking/tennis/app/AlertCondition.java": "0a1edd0d45fff7f1bd19a21aed0ab98aa69ee232962d701aee1a69a6d54201fc",
         "src/main/java/com/thinking/tennis/app/AlertExpiryJob.java": "3fb2dfb669356bc1a9729f8b182d3c24001e0eff424953f47ebefde80f0542ed",
@@ -53,6 +54,8 @@
         "src/main/java/com/thinking/tennis/app/AvailabilityQueryService.java": "95405d25445de77ea4155e4a2dd9121c449a87d4c00ceb6d397cd9aee8df1cee",
         "src/main/java/com/thinking/tennis/app/AvailabilityRepository.java": "576fb9322e010269a0fd5cbbbe7088b3dd010d8f2156bb46eec3e166abd9b9ea",
         "src/main/java/com/thinking/tennis/app/AvailabilityView.java": "9510ef907fb7b008dd24770ef41a994e9b5d4d3718eb40bbd51cec4d5a90f790",
+        "src/main/java/com/thinking/tennis/app/IdempotencyStore.java": "00d91c2603b0c1062682841442eb285966d29a6be15768b8078cd8e20a7fb883",
+        "src/main/java/com/thinking/tennis/app/WatchPolicy.java": "ff38ca7049e695316638381e375a38acf16b76b95c160bd2481bd29f3983cea1",
         "src/main/java/com/thinking/tennis/app/error/AlertNotFoundException.java": "810e1058b4799841500763a045c223931a78b55b5202487091b01a3a73321e60",
         "src/main/java/com/thinking/tennis/app/error/AlertWindowClosedException.java": "47d0a7255d82e09caca0982c51ea6bfdaf239301a9a9db6ae2b701b975fa6a16",
         "src/main/java/com/thinking/tennis/app/error/AvailabilityUnavailableException.java": "0a8d6e2543b873975bc3d99a88784fccaa65dc3ed82a60a73586b6eb7394752f",
@@ -62,11 +65,9 @@
         "src/main/java/com/thinking/tennis/app/error/SlotNotSupportedException.java": "6706baf96e079075f8d44a9114d80c289cbf6c2b940a49351442322f8a101be2",
         "src/main/java/com/thinking/tennis/app/error/StorageTimeoutException.java": "7296a410a4f8547b7b990259f53ce6f848b4aefeb085efc8fa01e0d73a9689e5",
         "src/main/java/com/thinking/tennis/app/error/UnsupportedCourtException.java": "676ca8ea8113ed6badbbecd7eff9f5ac949d172475a7c7627ba3980077bf08d7",
-        "src/main/java/com/thinking/tennis/app/IdempotencyStore.java": "00d91c2603b0c1062682841442eb285966d29a6be15768b8078cd8e20a7fb883",
         "src/main/java/com/thinking/tennis/app/store/InMemoryAlertRepository.java": "4c790b098a48ce8c48d805d5cf4a3278f0c5656e91b6f15db14e1048978bc398",
         "src/main/java/com/thinking/tennis/app/store/InMemoryAvailabilityRepository.java": "7f8ca696204e1683b631204d3bfcc25dfdba6aca7e03ba2aa48b47b45bd3cda5",
         "src/main/java/com/thinking/tennis/app/store/InMemoryIdempotencyStore.java": "99217abea5343ae7b0bb44c3637ed7e265d4895b744da8f520f01667b31b1c06",
-        "src/main/java/com/thinking/tennis/app/WatchPolicy.java": "ff38ca7049e695316638381e375a38acf16b76b95c160bd2481bd29f3983cea1",
         "src/main/java/com/thinking/tennis/domain/Alert.java": "e81282c8e9ebba8afed8d8cb493d3c6f5d6983cb4eb88592281565091463a539",
         "src/main/java/com/thinking/tennis/domain/AlertDelivery.java": "22b9ce3acb597a0cc2581f96cb89e59441336b0bfd7925fc187fcff3743194a5",
         "src/main/java/com/thinking/tennis/domain/AlertStatus.java": "ae776585914132fdc67a0bbef13ec14455c71a1ed388970ef638d93cff85c964",
@@ -75,7 +76,6 @@
         "src/main/java/com/thinking/tennis/domain/TimeSlot.java": "805d385b612d771535c596a44d2fd86cbaa13383a1b2c41740fa596f80faf6e0",
         "src/main/java/com/thinking/tennis/domain/UpstreamFailureReason.java": "9ff8d941b672c4e8743a382979b68a2bb2c783afdad013e6ade56bdb1cdac3e0",
         "src/main/java/com/thinking/tennis/port/CourtAvailabilityPort.java": "d0bd3625c535975cd875a453406009b4a2b995b5c3f8c62200ec5db9060089f7",
-        "src/main/java/com/thinking/tennis/TennisAlertApplication.java": "2178279b50ba03794c7632534ff52fd4ba8a5a95ba487d6807a42e1e6131f2f1",
         "src/main/resources/application.yaml": "f66f77cca643985bba137dcaa3300f06dd60786ac6266968bf742c2429bd1b56",
         "src/test/java/com/thinking/tennis/arch/LayerBoundaryTest.java": "febd8a0d16c114495bf27c05d9c33d88105eb60c467dc860bc19e66fcfd79c4c",
         "tools/dump_api_docs.py": "b5afaa65468210261d88fa8a788e24a1842b7498eea67b4c4d61512090bcae19"
@@ -144,18 +144,24 @@
       "file_hashes": {
         ".gitignore": "7f7c8ac9df305eb44041c7b6f0efe5c847834786e74a58928d8c2cd284d7480d",
         ".mvn/wrapper/maven-wrapper.properties": "27680bba1b7cb13995c30ccbf6f3ac15b218cb6c11aebda19e52e3fd6e65d15e",
+        "README.md": "e6e4bb4ffa2ef4d71decf6cf8c719abd5fc304795bbab809d1200a294a5b69f3",
         "contract/tennis-alert-api-v1.yaml": "0c467b8388ee7d8c091f76607037e658f944f4ebb7164c3316561d408101adf1",
         "contract/tennis-alert-api-v2.yaml": "620d9ff77ec60a77c04a226810d0acb0ebfaca281c5005e2d88548527e7e329c",
         "mvnw": "b1ef6ce14df54e6f8552734080184b18f78b0a0c61ed80c08d7d78b254e44941",
         "mvnw.cmd": "46eedb8419bd14fe70d5bb2916d7b6f51806e51b39d5b76a42610384ca929c1c",
         "pom.xml": "a53d5bd6979d3c134bdb135abd1fad59dd666b34ed0c4d0d47d57fdba4bc9a4f",
-        "README.md": "e6e4bb4ffa2ef4d71decf6cf8c719abd5fc304795bbab809d1200a294a5b69f3",
+        "src/main/java/com/thinking/tennis/TennisAlertApplication.java": "2178279b50ba03794c7632534ff52fd4ba8a5a95ba487d6807a42e1e6131f2f1",
         "src/main/java/com/thinking/tennis/adapter/InMemoryCourtAvailabilityAdapter.java": "78c58ad8277ae1a1722fb8c42de58acb78107a73f4e8afdfbf9dff48ae874ea6",
         "src/main/java/com/thinking/tennis/api/AlertController.java": "d6d2bd6145ce32c8abf9adc2954ef63fc412512fcb906430a2ead7220dfe47b8",
         "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java": "3fb558a57566004ca7273f04c2990f63421130e0250495b3440652a1d1b2de77",
         "src/main/java/com/thinking/tennis/api/ApiPaths.java": "8459cbc0b0107b8f2f3a179c02c18d4f98d3cbd2ef61ba8f6a2113de5c37f67c",
         "src/main/java/com/thinking/tennis/api/AvailabilityController.java": "a5017103e30c9ffb5e65e589a88a76ed11ce5f31d6c2caecd2c68efde60db718",
         "src/main/java/com/thinking/tennis/api/BearerTokens.java": "f4b1c426b8d596b9f0d8f631b9e5317770ce8113f68579fbe55e1af7b2f93f7b",
+        "src/main/java/com/thinking/tennis/api/OpenApiDeclaration.java": "30f2f164666d7e9fd5e51e72536b3a1408f42ff5564493ed04ca2910d6fc9fa0",
+        "src/main/java/com/thinking/tennis/api/Problems.java": "57f8e9e70dc1a22322eab5c2fe3e28d64aaffcfcb20b06911bc0f259b3e218cc",
+        "src/main/java/com/thinking/tennis/api/RequestValidationException.java": "94befb49c05bee90aabe4ce27c8f2fda1f48f0cfe65b6a8e1f37438a99040796",
+        "src/main/java/com/thinking/tennis/api/RequestValues.java": "c2f8638abc94dfb2fe04364d6b8e2333bfdc6c3079faa7951fd3602c77a2c4ac",
+        "src/main/java/com/thinking/tennis/api/UnauthenticatedException.java": "baeaab4ecec27fe0026ae00c832dff4d82a524a91d82447543cbb170cafc1e77",
         "src/main/java/com/thinking/tennis/api/dto/AlertDeliveryResponse.java": "34a908857b000841bf2a89f649e156446c100b9688f1b8ff2222a79a0cc26f91",
         "src/main/java/com/thinking/tennis/api/dto/AlertListResponse.java": "d72e09b503595deb3b3f054dba1641f5ea81ab7bfc41026e2f38f1a7853a62c4",
         "src/main/java/com/thinking/tennis/api/dto/AlertResponse.java": "8660d400f1a7f041428d28d551d6098eaa35370a95a1ea30cd943a745a84693d",
@@ -169,11 +175,6 @@
         "src/main/java/com/thinking/tennis/api/dto/ProblemResponse.java": "773e317f4504618c01d7e7178d42c55a630c802b41f6e69442491fd0f6a72021",
         "src/main/java/com/thinking/tennis/api/dto/TimeSlotPayload.java": "97269d1d759afadca03eccd3d5068d177888ad0f63bc2074b17b7e0291d41988",
         "src/main/java/com/thinking/tennis/api/dto/UpstreamFailureReasonValue.java": "1a8fe8c98599bd8d3eb0dacc5456677ebc775524f5b6f5e6806c7469378812d3",
-        "src/main/java/com/thinking/tennis/api/OpenApiDeclaration.java": "30f2f164666d7e9fd5e51e72536b3a1408f42ff5564493ed04ca2910d6fc9fa0",
-        "src/main/java/com/thinking/tennis/api/Problems.java": "57f8e9e70dc1a22322eab5c2fe3e28d64aaffcfcb20b06911bc0f259b3e218cc",
-        "src/main/java/com/thinking/tennis/api/RequestValidationException.java": "94befb49c05bee90aabe4ce27c8f2fda1f48f0cfe65b6a8e1f37438a99040796",
-        "src/main/java/com/thinking/tennis/api/RequestValues.java": "c2f8638abc94dfb2fe04364d6b8e2333bfdc6c3079faa7951fd3602c77a2c4ac",
-        "src/main/java/com/thinking/tennis/api/UnauthenticatedException.java": "baeaab4ecec27fe0026ae00c832dff4d82a524a91d82447543cbb170cafc1e77",
         "src/main/java/com/thinking/tennis/app/AlertCommandService.java": "2e7a948e3708638d09052f90d9bd1577eef9058d624ad1eee512c32d32883f38",
         "src/main/java/com/thinking/tennis/app/AlertCondition.java": "0a1edd0d45fff7f1bd19a21aed0ab98aa69ee232962d701aee1a69a6d54201fc",
         "src/main/java/com/thinking/tennis/app/AlertExpiryJob.java": "3fb2dfb669356bc1a9729f8b182d3c24001e0eff424953f47ebefde80f0542ed",
@@ -185,6 +186,8 @@
         "src/main/java/com/thinking/tennis/app/AvailabilityQueryService.java": "34e18863c1bc3e43e8f1c65951dde3def10b18131b2352813daa5665bd01360a",
         "src/main/java/com/thinking/tennis/app/AvailabilityRepository.java": "576fb9322e010269a0fd5cbbbe7088b3dd010d8f2156bb46eec3e166abd9b9ea",
         "src/main/java/com/thinking/tennis/app/AvailabilityView.java": "9510ef907fb7b008dd24770ef41a994e9b5d4d3718eb40bbd51cec4d5a90f790",
+        "src/main/java/com/thinking/tennis/app/IdempotencyStore.java": "00d91c2603b0c1062682841442eb285966d29a6be15768b8078cd8e20a7fb883",
+        "src/main/java/com/thinking/tennis/app/WatchPolicy.java": "ff38ca7049e695316638381e375a38acf16b76b95c160bd2481bd29f3983cea1",
         "src/main/java/com/thinking/tennis/app/error/AlertNotFoundException.java": "810e1058b4799841500763a045c223931a78b55b5202487091b01a3a73321e60",
         "src/main/java/com/thinking/tennis/app/error/AlertWindowClosedException.java": "47d0a7255d82e09caca0982c51ea6bfdaf239301a9a9db6ae2b701b975fa6a16",
         "src/main/java/com/thinking/tennis/app/error/AvailabilityUnavailableException.java": "0a8d6e2543b873975bc3d99a88784fccaa65dc3ed82a60a73586b6eb7394752f",
@@ -194,11 +197,9 @@
         "src/main/java/com/thinking/tennis/app/error/SlotNotSupportedException.java": "55c066300c63002d504b56a9b725b33465d4f8a001e4e1b9ef593373bf75a7b0",
         "src/main/java/com/thinking/tennis/app/error/StorageTimeoutException.java": "7296a410a4f8547b7b990259f53ce6f848b4aefeb085efc8fa01e0d73a9689e5",
         "src/main/java/com/thinking/tennis/app/error/UnsupportedCourtException.java": "676ca8ea8113ed6badbbecd7eff9f5ac949d172475a7c7627ba3980077bf08d7",
-        "src/main/java/com/thinking/tennis/app/IdempotencyStore.java": "00d91c2603b0c1062682841442eb285966d29a6be15768b8078cd8e20a7fb883",
         "src/main/java/com/thinking/tennis/app/store/InMemoryAlertRepository.java": "1e0428450d4b5ab8f79064c10b6cb6d2f82a8d2224f45d0647991a9637838b7c",
         "src/main/java/com/thinking/tennis/app/store/InMemoryAvailabilityRepository.java": "7f8ca696204e1683b631204d3bfcc25dfdba6aca7e03ba2aa48b47b45bd3cda5",
         "src/main/java/com/thinking/tennis/app/store/InMemoryIdempotencyStore.java": "99217abea5343ae7b0bb44c3637ed7e265d4895b744da8f520f01667b31b1c06",
-        "src/main/java/com/thinking/tennis/app/WatchPolicy.java": "ff38ca7049e695316638381e375a38acf16b76b95c160bd2481bd29f3983cea1",
         "src/main/java/com/thinking/tennis/domain/Alert.java": "dec5b6a78b434830c6171583304d40b21d859acabebc7d71fde62745c17260be",
         "src/main/java/com/thinking/tennis/domain/AlertDelivery.java": "22b9ce3acb597a0cc2581f96cb89e59441336b0bfd7925fc187fcff3743194a5",
         "src/main/java/com/thinking/tennis/domain/AlertStatus.java": "ae776585914132fdc67a0bbef13ec14455c71a1ed388970ef638d93cff85c964",
@@ -207,7 +208,6 @@
         "src/main/java/com/thinking/tennis/domain/TimeSlot.java": "805d385b612d771535c596a44d2fd86cbaa13383a1b2c41740fa596f80faf6e0",
         "src/main/java/com/thinking/tennis/domain/UpstreamFailureReason.java": "9ff8d941b672c4e8743a382979b68a2bb2c783afdad013e6ade56bdb1cdac3e0",
         "src/main/java/com/thinking/tennis/port/CourtAvailabilityPort.java": "d0bd3625c535975cd875a453406009b4a2b995b5c3f8c62200ec5db9060089f7",
-        "src/main/java/com/thinking/tennis/TennisAlertApplication.java": "2178279b50ba03794c7632534ff52fd4ba8a5a95ba487d6807a42e1e6131f2f1",
         "src/main/resources/application.yaml": "f66f77cca643985bba137dcaa3300f06dd60786ac6266968bf742c2429bd1b56",
         "src/test/java/com/thinking/tennis/arch/LayerBoundaryTest.java": "febd8a0d16c114495bf27c05d9c33d88105eb60c467dc860bc19e66fcfd79c4c",
         "tools/dump_api_docs.py": "b5afaa65468210261d88fa8a788e24a1842b7498eea67b4c4d61512090bcae19"
@@ -221,9 +221,9 @@
       "gate": {
         "g0": "PASS",
         "g1": "PASS",
-        "changes": "REJECT",
-        "violations": 3,
-        "observations": 41
+        "changes": "PASS",
+        "violations": 0,
+        "observations": 42
       },
       "eval": {
         "weighted_total": 3.65,
@@ -246,31 +246,25 @@
       "machine_verdict": {
         "judged": true,
         "judged_gaps": [],
-        "no_violation": false,
-        "violation_gaps": [
-          "판본 대조가 REJECT다 — 위반이 있다"
-        ],
-        "clean": false
+        "no_violation": true,
+        "violation_gaps": [],
+        "clean": true
       },
       "decision_risk": {
         "level": "medium",
         "reasons": []
       },
       "skipped_reason": null,
-      "gate_errors": [
-        "gate:change.unjustified@None: 기록 cc_watching_check_source은 표현 변경인데 representation_basis가 비었다 (닫힌 값: interop, spec_implication, contract_consistency)",
-        "gate:change.unjustified@None: 기록 cc_create_schedule_source은 표현 변경인데 representation_basis가 비었다 (닫힌 값: interop, spec_implication, contract_consistency)",
-        "gate:change.unjustified@None: 기록 cc_create_503_covers_upstream은 표현 변경인데 representation_basis가 비었다 (닫힌 값: interop, spec_implication, contract_consistency)"
-      ],
+      "gate_errors": [],
       "rubric_errors": [
-        "min_total: 3.65 < 4.2",
+        "min_total: 3.65 < 4.0",
         "min_axis.state_continuity: 3 < 4.0",
         "min_axis.judgement_disclosure: 3 < 4.0"
       ]
     },
     {
       "iteration": "003",
-      "status": "REJECT",
+      "status": "PASS",
       "draft": "iter_003/draft.json",
       "output_dir": "output",
       "commit": "aa739f978dfea3aef0a1969f378f8238597eda43",
@@ -279,19 +273,25 @@
       "file_hashes": {
         ".gitignore": "7f7c8ac9df305eb44041c7b6f0efe5c847834786e74a58928d8c2cd284d7480d",
         ".mvn/wrapper/maven-wrapper.properties": "27680bba1b7cb13995c30ccbf6f3ac15b218cb6c11aebda19e52e3fd6e65d15e",
+        "README.md": "e6e4bb4ffa2ef4d71decf6cf8c719abd5fc304795bbab809d1200a294a5b69f3",
         "contract/tennis-alert-api-v1.yaml": "0c467b8388ee7d8c091f76607037e658f944f4ebb7164c3316561d408101adf1",
         "contract/tennis-alert-api-v2.yaml": "620d9ff77ec60a77c04a226810d0acb0ebfaca281c5005e2d88548527e7e329c",
         "contract/tennis-alert-api-v3.yaml": "253dbf9e3762560b5a36c241754641402acec33cf208809bde18a8225fdd987f",
         "mvnw": "b1ef6ce14df54e6f8552734080184b18f78b0a0c61ed80c08d7d78b254e44941",
         "mvnw.cmd": "46eedb8419bd14fe70d5bb2916d7b6f51806e51b39d5b76a42610384ca929c1c",
         "pom.xml": "a53d5bd6979d3c134bdb135abd1fad59dd666b34ed0c4d0d47d57fdba4bc9a4f",
-        "README.md": "e6e4bb4ffa2ef4d71decf6cf8c719abd5fc304795bbab809d1200a294a5b69f3",
+        "src/main/java/com/thinking/tennis/TennisAlertApplication.java": "2178279b50ba03794c7632534ff52fd4ba8a5a95ba487d6807a42e1e6131f2f1",
         "src/main/java/com/thinking/tennis/adapter/InMemoryCourtAvailabilityAdapter.java": "78c58ad8277ae1a1722fb8c42de58acb78107a73f4e8afdfbf9dff48ae874ea6",
         "src/main/java/com/thinking/tennis/api/AlertController.java": "f1120cd55c222635e002b8827613d0df7a75f29a5c8f43120bb051f27c14273d",
         "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java": "b23095b6674ecf4d00924f13fda9ea5e39cf83d4e7aadf983c1f649f33967843",
         "src/main/java/com/thinking/tennis/api/ApiPaths.java": "8459cbc0b0107b8f2f3a179c02c18d4f98d3cbd2ef61ba8f6a2113de5c37f67c",
         "src/main/java/com/thinking/tennis/api/AvailabilityController.java": "a5017103e30c9ffb5e65e589a88a76ed11ce5f31d6c2caecd2c68efde60db718",
         "src/main/java/com/thinking/tennis/api/BearerTokens.java": "f4b1c426b8d596b9f0d8f631b9e5317770ce8113f68579fbe55e1af7b2f93f7b",
+        "src/main/java/com/thinking/tennis/api/OpenApiDeclaration.java": "30f2f164666d7e9fd5e51e72536b3a1408f42ff5564493ed04ca2910d6fc9fa0",
+        "src/main/java/com/thinking/tennis/api/Problems.java": "57f8e9e70dc1a22322eab5c2fe3e28d64aaffcfcb20b06911bc0f259b3e218cc",
+        "src/main/java/com/thinking/tennis/api/RequestValidationException.java": "94befb49c05bee90aabe4ce27c8f2fda1f48f0cfe65b6a8e1f37438a99040796",
+        "src/main/java/com/thinking/tennis/api/RequestValues.java": "c2f8638abc94dfb2fe04364d6b8e2333bfdc6c3079faa7951fd3602c77a2c4ac",
+        "src/main/java/com/thinking/tennis/api/UnauthenticatedException.java": "baeaab4ecec27fe0026ae00c832dff4d82a524a91d82447543cbb170cafc1e77",
         "src/main/java/com/thinking/tennis/api/dto/AlertDeliveryResponse.java": "34a908857b000841bf2a89f649e156446c100b9688f1b8ff2222a79a0cc26f91",
         "src/main/java/com/thinking/tennis/api/dto/AlertListResponse.java": "d72e09b503595deb3b3f054dba1641f5ea81ab7bfc41026e2f38f1a7853a62c4",
         "src/main/java/com/thinking/tennis/api/dto/AlertResponse.java": "8660d400f1a7f041428d28d551d6098eaa35370a95a1ea30cd943a745a84693d",
@@ -305,11 +305,6 @@
         "src/main/java/com/thinking/tennis/api/dto/ProblemResponse.java": "773e317f4504618c01d7e7178d42c55a630c802b41f6e69442491fd0f6a72021",
         "src/main/java/com/thinking/tennis/api/dto/TimeSlotPayload.java": "97269d1d759afadca03eccd3d5068d177888ad0f63bc2074b17b7e0291d41988",
         "src/main/java/com/thinking/tennis/api/dto/UpstreamFailureReasonValue.java": "1a8fe8c98599bd8d3eb0dacc5456677ebc775524f5b6f5e6806c7469378812d3",
-        "src/main/java/com/thinking/tennis/api/OpenApiDeclaration.java": "30f2f164666d7e9fd5e51e72536b3a1408f42ff5564493ed04ca2910d6fc9fa0",
-        "src/main/java/com/thinking/tennis/api/Problems.java": "57f8e9e70dc1a22322eab5c2fe3e28d64aaffcfcb20b06911bc0f259b3e218cc",
-        "src/main/java/com/thinking/tennis/api/RequestValidationException.java": "94befb49c05bee90aabe4ce27c8f2fda1f48f0cfe65b6a8e1f37438a99040796",
-        "src/main/java/com/thinking/tennis/api/RequestValues.java": "c2f8638abc94dfb2fe04364d6b8e2333bfdc6c3079faa7951fd3602c77a2c4ac",
-        "src/main/java/com/thinking/tennis/api/UnauthenticatedException.java": "baeaab4ecec27fe0026ae00c832dff4d82a524a91d82447543cbb170cafc1e77",
         "src/main/java/com/thinking/tennis/app/AlertCommandService.java": "8bcf6216916b581f31d166adf02793b9b2914bf3d326b8a679130a8b6ff10612",
         "src/main/java/com/thinking/tennis/app/AlertCondition.java": "0a1edd0d45fff7f1bd19a21aed0ab98aa69ee232962d701aee1a69a6d54201fc",
         "src/main/java/com/thinking/tennis/app/AlertExpiryJob.java": "3fb2dfb669356bc1a9729f8b182d3c24001e0eff424953f47ebefde80f0542ed",
@@ -322,6 +317,8 @@
         "src/main/java/com/thinking/tennis/app/AvailabilityRepository.java": "576fb9322e010269a0fd5cbbbe7088b3dd010d8f2156bb46eec3e166abd9b9ea",
         "src/main/java/com/thinking/tennis/app/AvailabilityView.java": "8d2cde108c6a8089033ee4caf8deaf22520a27807e10b5d71eeb5a3e9c50dc6e",
         "src/main/java/com/thinking/tennis/app/CourtIdentity.java": "6a97b504f3d65988a797108dae540ef50c431b8fd9c726e32248310f5780b852",
+        "src/main/java/com/thinking/tennis/app/IdempotencyStore.java": "c8006804ae7ea0884a0e122112d64bd8ee5641575e53819230cd112f3ad3e6e0",
+        "src/main/java/com/thinking/tennis/app/WatchPolicy.java": "ff38ca7049e695316638381e375a38acf16b76b95c160bd2481bd29f3983cea1",
         "src/main/java/com/thinking/tennis/app/error/AlertNotFoundException.java": "810e1058b4799841500763a045c223931a78b55b5202487091b01a3a73321e60",
         "src/main/java/com/thinking/tennis/app/error/AlertWindowClosedException.java": "47d0a7255d82e09caca0982c51ea6bfdaf239301a9a9db6ae2b701b975fa6a16",
         "src/main/java/com/thinking/tennis/app/error/AvailabilityUnavailableException.java": "0a8d6e2543b873975bc3d99a88784fccaa65dc3ed82a60a73586b6eb7394752f",
@@ -331,11 +328,9 @@
         "src/main/java/com/thinking/tennis/app/error/SlotNotSupportedException.java": "55c066300c63002d504b56a9b725b33465d4f8a001e4e1b9ef593373bf75a7b0",
         "src/main/java/com/thinking/tennis/app/error/StorageTimeoutException.java": "7296a410a4f8547b7b990259f53ce6f848b4aefeb085efc8fa01e0d73a9689e5",
         "src/main/java/com/thinking/tennis/app/error/UnsupportedCourtException.java": "676ca8ea8113ed6badbbecd7eff9f5ac949d172475a7c7627ba3980077bf08d7",
-        "src/main/java/com/thinking/tennis/app/IdempotencyStore.java": "c8006804ae7ea0884a0e122112d64bd8ee5641575e53819230cd112f3ad3e6e0",
         "src/main/java/com/thinking/tennis/app/store/InMemoryAlertRepository.java": "1e0428450d4b5ab8f79064c10b6cb6d2f82a8d2224f45d0647991a9637838b7c",
         "src/main/java/com/thinking/tennis/app/store/InMemoryAvailabilityRepository.java": "7f8ca696204e1683b631204d3bfcc25dfdba6aca7e03ba2aa48b47b45bd3cda5",
         "src/main/java/com/thinking/tennis/app/store/InMemoryIdempotencyStore.java": "7824887f13cce89275d1e5e6bbb088639f495f0e9fe2657b796db03ca5bc0534",
-        "src/main/java/com/thinking/tennis/app/WatchPolicy.java": "ff38ca7049e695316638381e375a38acf16b76b95c160bd2481bd29f3983cea1",
         "src/main/java/com/thinking/tennis/domain/Alert.java": "dec5b6a78b434830c6171583304d40b21d859acabebc7d71fde62745c17260be",
         "src/main/java/com/thinking/tennis/domain/AlertDelivery.java": "22b9ce3acb597a0cc2581f96cb89e59441336b0bfd7925fc187fcff3743194a5",
         "src/main/java/com/thinking/tennis/domain/AlertStatus.java": "1494009d63f110d40673477c3d90a46a26f6c4b8d5a88d6cb1c201ed08f9c3b3",
@@ -344,7 +339,6 @@
         "src/main/java/com/thinking/tennis/domain/TimeSlot.java": "805d385b612d771535c596a44d2fd86cbaa13383a1b2c41740fa596f80faf6e0",
         "src/main/java/com/thinking/tennis/domain/UpstreamFailureReason.java": "9ff8d941b672c4e8743a382979b68a2bb2c783afdad013e6ade56bdb1cdac3e0",
         "src/main/java/com/thinking/tennis/port/CourtAvailabilityPort.java": "d0bd3625c535975cd875a453406009b4a2b995b5c3f8c62200ec5db9060089f7",
-        "src/main/java/com/thinking/tennis/TennisAlertApplication.java": "2178279b50ba03794c7632534ff52fd4ba8a5a95ba487d6807a42e1e6131f2f1",
         "src/main/resources/application.yaml": "f66f77cca643985bba137dcaa3300f06dd60786ac6266968bf742c2429bd1b56",
         "src/test/java/com/thinking/tennis/arch/LayerBoundaryTest.java": "febd8a0d16c114495bf27c05d9c33d88105eb60c467dc860bc19e66fcfd79c4c",
         "tools/dump_api_docs.py": "b5afaa65468210261d88fa8a788e24a1842b7498eea67b4c4d61512090bcae19"
@@ -358,59 +352,42 @@
       "gate": {
         "g0": "PASS",
         "g1": "PASS",
-        "changes": "REJECT",
-        "violations": 9,
-        "observations": 41
+        "changes": "PASS",
+        "violations": 0,
+        "observations": 43
       },
       "eval": {
-        "weighted_total": 3.4,
+        "weighted_total": 4.0,
         "scores": {
           "request_tolerance": 4,
-          "response_fidelity": 3,
+          "response_fidelity": 4,
           "failure_faithfulness": 4,
-          "state_continuity": 3,
-          "judgement_disclosure": 3
+          "state_continuity": 4,
+          "judgement_disclosure": 4
         },
         "axis_rationales": {
-          "request_tolerance": "열거 8개, 미충족 0개: []. 입력 판정이 한자리(api/RequestValues.java)에 모여 있고 계약의 제약과 같다. courtId는 `courtId()`가 pattern `^[a-z0-9][a-z0-9-]*$`와 maxLength 64를 그대로 쓰고(slot_f8384ccf), alertId는 `alertId()`의 UUID 정규식으로만 거르며(slot_d605a592), 시간대는 `hourMinute()`가 계약과 같은 HH:mm 패턴을 본다. date는 `date()`가 ISO 날짜면 모두 받고 범위를 좁히지 않으며, 예약처가 열지 않은 날짜는 app/AvailabilityQueryService.java의 `toDomain`이 빈 slots로 옮겨 확인 성공으로 다룬다(slot_50b303be). status는 `alertStatus()`가 null·빈 문자열에 null을 돌려주어 부재 경로가 있고(slot_2da6130c), 멱등 키는 `idempotencyKey()`가 UUID만 받되 앞뒤 공백을 다듬어 계약보다 넓게 받는다(slot_a24a09dd). 본문은 api/AlertController.java의 `condition()`이 courtId·date·slot 셋만 읽어 계약의 AlertRequest와 같다(slot_5b93db46, slot_e12f9326). 시간대 정확 일치(slot_bff96712)는 app/AlertCommandService.java `process`의 `schedule.operates(...)` 판정이 맡고, 운영 시간대를 모를 때 받아들이는 것은 좁힘이 아니라 넓힘이다. 5로 올리지 않은 근거는 매핑의 `produces`뿐이다. AlertController의 네 매핑과 AvailabilityController의 매핑이 모두 `produces = APPLICATION_JSON_VALUE`라, 계약이 Accept에 대해 아무 말도 하지 않았는데 다른 Accept를 보낸 요청이 거절된다. 계약에 없는 검증이 한 곳 남아 있어 스케일 5의 둘째 조건을 만족하지 못한다.",
-          "response_fidelity": "열거 29개, 미충족 1개: [slot_ea97add0]. slot_ea97add0은 기준선이 \"여기에 없는 시간대로 알림을 신청하면 SLOT_NOT_SUPPORTED로 거절된다\"고 적었는데, 이 판본이 그 규칙의 범위를 slots가 비어 있지 않은 경우로 좁혔고(cc_unopened_date_not_rejected) 구현도 domain/CourtDayAvailability.java의 `operatingSlotsKnown()`이 빈 목록에 false를 돌려주어 app/AlertCommandService.java `process`의 거절 분기를 건너뛴다. 계약을 고쳐 없앤 약속이므로 미충족으로 센다. 나머지는 자리를 짚었다. stale·staleReason은 app/AvailabilityQueryService.java의 `failed`/`AvailabilityView.fresh`가 정하고 api/dto/CourtAvailabilityResponse.java `of`가 그대로 옮긴다(slot_3a0fe4f8, slot_aff3f79a, slot_41935322, slot_64d5d23e). confirmedAt은 `toDomain`이 포트의 confirmedAt을 그대로 담는다(slot_a24cfac0). courtName·reservationUrl은 app/CourtIdentity.java `read`/`of`를 두 표면이 함께 지나 읽는 시점의 값이다(slot_5c1e3142, slot_422fec22, slot_68584be5). lastCheckedAt과 checkDelayed는 app/AlertViewFactory.java `of`와 `isCheckDelayed`가 저장된 성공 확인과 WatchPolicy.CHECK_DELAY_THRESHOLD(20초×3)로 계산하고 한 번도 없으면 createdAt을 기준으로 삼는다(slot_dc9ce55b, slot_98b55c8f). 201·200의 갈림은 `process`의 `created` 판정이고 Location과 Idempotency-Replayed는 AlertController `createAlert`가 두 응답에 함께 싣는다(slot_a51918dd, slot_1ab21d09, slot_72175f6e, slot_8663b240). 목록 순서는 app/store/InMemoryAlertRepository.java의 NEWEST_FIRST 비교기다(slot_f3c53a32). status·delivery 상관(slot_cec09639)은 domain/Alert.java의 `deliveryPending`·`pendingDeliveryDiscarded`가 널과 PENDING 사이만 오가게 해 어기지 않는다. 타임스탬프 RFC 3339 UTC(slot_fd7db9b0)는 api/dto/AlertResponse.java `instant`의 Instant.toString()과 app/ApplicationConfig.java의 Clock.systemUTC()로 확인했고, alertId 발급(slot_a18b4f05)은 `process`의 UUID.randomUUID()다. 미충족이 한 건 있어 상한 3이다.",
-          "failure_faithfulness": "열거 24개, 미충족 0개: []. 실패를 상태 코드로 옮기는 자리는 api/ApiExceptionHandler.java 하나이고, 값의 규칙은 api/Problems.java의 `of`가 정한다. retryable은 RETRY_AFTER 표에 항목이 있는지로 정해져 4xx 코드 일곱은 모두 false, 5xx는 true이며 그때만 Retry-After 헤더를 본문의 retryAfterSeconds와 같은 값으로 싣는다(slot_8e8d68a1, slot_45cf1c57, slot_bca4f922, slot_47c11736). traceId는 `status.is5xxServerError()` 분기로 5xx에만 실린다(slot_398edd99). type은 TYPE_BASE에 코드를 케밥으로 옮긴 slug이고 title은 TITLES 표가 계약의 예시 문구를 그대로 쓴다(slot_ec620f41, slot_b4f4d18f, slot_51e7307c). instance는 api/ApiPaths.java `instance`가 요청 경로에 /v1을 앞세워 만든다(slot_249bb9ac). 상황별 분기도 계약의 문장과 같다. 코트 미지원은 `handleUnsupportedCourt`가 UnsupportedCourtException.Source로 404와 422를 가르고(slot_7ddbf2b4, slot_bf6ebdaa), 확인 실패는 `handleAvailabilityUnavailable`과 `handleScheduleUnknown`이 이유마다 504·503·502와 같은 이름의 코드로 내며 기다릴 초는 WatchPolicy.CHECK_INTERVAL을 따른 20이다(slot_36922dfa, slot_18204232, slot_524bf33a). 없는 신청과 남의 신청은 app/AlertQueryService.java `get`의 `filter(ownedBy)`가 같은 ALERT_NOT_FOUND로 모으고 detail을 싣지 않는다(slot_222a5c7a). 409는 app/store/InMemoryIdempotencyStore.java `claim`에서 완료된 자리의 지문이 다를 때만 나와 \"이미 쓰였다\"는 뜻과 같다(slot_f6be63a0). CONCURRENT_UPDATE_CONFLICT는 `claim`의 처리 중 분기와 AlertCommandService `cancel`의 compareAndSet 실패 두 자리에서 닿는다(slot_ca2fed02). 5로 올리지 않은 근거는 둘이다. STORAGE_TIMEOUT은 `handleStorageTimeout`과 응답 선언만 있고 던지는 경로가 없어(app/error/StorageTimeoutException.java) 선언한 쌍에 닿는 경로가 없고(slot_d5fad6dd, slot_524bf33a의 한쪽), 본문의 미디어 타입 실패를 `handleUnsupportedMediaType`이 VALIDATION_FAILED로 옮기는 것은 계약의 \"스키마를 만족하지 않는다\"보다 넓게 읽힌다. 저장소 장애 주입이 이 run의 범위 밖이라 앞의 것을 미충족으로 세지 않았고, 조건 한둘이 넓게 읽히는 상태에 해당해 4다.",
-          "state_continuity": "열거 24개, 미충족 1개: [slot_3b26d64c]. slot_3b26d64c은 기준선의 WATCHING 항목이 \"서버가 주기적으로 예약 상태를 확인한다\"고 적었는데 이 판본이 그 문장을 지웠고(cc_watching_check_source), 구현에도 예약 상태를 도는 주기 작업이 없다. app/AlertExpiryJob.java의 @Scheduled는 만료 전이만 훑고 확인은 app/AvailabilityQueryService.java의 `availability`/`knownSchedule`을 부르는 조회 경로에서만 일어난다. 계약을 고쳐 없앤 약속이므로 미충족으로 센다. 나머지는 유지 경로를 짚었다. 확인 간격과 단일 확인은 AvailabilityQueryService의 checkLocks와 `checkUnderLock`이 맡아, 잠금을 얻은 뒤 저장된 성공을 다시 읽어 같은 내용을 주고 실패는 `isWithinFailureWindow`로 같은 실패를 준다(slot_218b9620). 멱등 보관과 재생은 InMemoryIdempotencyStore `claim`의 putIfAbsent 한 번과 `complete`/`release`가 정하고, 재생 응답은 불변 AlertView를 그대로 돌려주어 그 뒤 상태가 바뀌어도 달라지지 않으며 보관 기간은 `isRetentionPassed`가 WatchPolicy.IDEMPOTENCY_RETENTION(24시간)으로 본다(slot_7afbe3b4, slot_a24a09dd). 4xx·5xx로 끝난 요청은 AlertCommandService `create`의 finally가 `release`를 불러 기록되지 않는다. 같은 조건 중복 신청은 InMemoryAlertRepository `insertIfNotWatching`이 조회와 저장을 한 호출로 묶어 하나만 만든다. 이 자리의 판정이 같은 사용자로 좁혀진 것(cc_dedup_scoped_to_user)은 약속을 지운 것으로 세지 않았다. FR-1 원문이 \"같은 사용자가 같은 조건으로\"이므로 기준선 문장의 생략된 주어를 출처의 뜻으로 확정한 것이다. 해제 멱등은 domain/Alert.java `canceled`가 끝난 신청을 그대로 돌려주는 것으로, 대기 폐기는 `discardPendingDelivery`로 지켜진다(slot_9231bb2f, slot_c733b457, slot_d4a3fef5, slot_3307096b, slot_e2d6a63c). 목록의 거르는 기준이 저장된 상태라는 약속은 `findByUserNewestFirst`가 status만 보고 만료를 앞당기지 않는 것으로 지켜진다(slot_85c85829). 본인 것만 보이는 규칙은 AlertQueryService의 두 메서드와 AlertCommandService `cancel`의 ownedBy 판정이다(slot_a8b0f567, slot_e23500c7). 미충족이 한 건 있어 상한 3이다.",
-          "judgement_disclosure": "신고 35건(decisions 22, contract_changes 13), 미신고 0건. 근거의 품질은 높은 쪽이다. decisions 22건 중 contract_analogy 7건과 spec_implication 5건이 계약의 다른 자리나 명세의 함의를 가리키고, convention 5건(d_trace_id_format, d_expiry_sweep_interval, d_list_order_tiebreak, d_authentication_before_validation, d_spec_declaration_scope)과 least_harm 4건도 계약이 침묵한 자리를 정확히 지목한다. 코드를 읽어 미신고를 찾았으나 새로 고른 값이 신고 밖에 있는 자리를 찾지 못했다. 확인 잠금 표가 비워지지 않는다는 사실은 d_failure_suppression_window의 rationale에 적혀 있고, Problems의 TITLES·RETRY_AFTER 값과 type slug는 계약의 예시가 답을 준 자리라 결정이 아니며, ApiExceptionHandler의 @Hidden과 매핑의 consumes 부재는 d_spec_declaration_scope와 d_protocol_failures_outside_contract가 덮는다. 상한을 3으로 내린 것은 근거가 빈 신고 때문이다. cc_create_upstream_unreadable, cc_create_upstream_timeout, cc_alert_create_unavailable_response 세 건의 representation_basis가 빈 문자열이고, 같은 결함을 세 건(c_18ca1ca9, c_4dad40ff, c_e64abfdf)에 대해 repairs가 채운 뒤에도 이 셋은 비어 있다. 스케일이 근거가 빈 신고가 있을 때를 3으로 못 박았다."
+          "request_tolerance": "열거 8개, 미충족 0개: []. slot_50b303be는 AvailabilityQueryService.toDomain이 빈 slots 목록을 그대로 CourtDayAvailability로 옮기고 api/dto/CourtAvailabilityResponse.of가 빈 배열로 싣는 자리에서 확인했다(열지 않은 날짜를 거절하는 분기 없음). slot_2da6130c는 api/RequestValues.alertStatus가 값이 없거나 빈 문자열이면 null을 돌려주고 app/AlertQueryService.list가 null 필터를 전체 조회로 다루는 자리다. slot_f8384ccf·slot_d605a592·slot_5b93db46·slot_e12f9326은 api/RequestValues의 COURT_ID 패턴과 64자 상한, UUID_VALUE 정규식, LocalDate.parse, HOUR_MINUTE 패턴이 계약 스키마와 같은 범위이고 그보다 좁은 길이·범위 검증을 더한 자리를 찾지 못했다. slot_a24a09dd는 app/store/InMemoryIdempotencyStore.key가 사용자·오퍼레이션·키로 묶고 isRetentionPassed가 WatchPolicy.IDEMPOTENCY_RETENTION(24시간)을 지나면 자리를 비워 새 요청으로 처리하는 자리다. slot_bff96712는 domain/CourtDayAvailability.operates의 시간대 정확 일치 비교다. 5로 올리지 않은 까닭은 api/AlertController와 AvailabilityController의 매핑이 produces를 걸어 계약이 말하지 않은 Accept 협상으로 요청을 되돌릴 여지가 남아 있어서다.",
+          "response_fidelity": "열거 29개, 미충족 0개: []. 확인한 자리: slot_3a0fe4f8·slot_aff3f79a·slot_41935322는 app/AvailabilityQueryService.failed와 app/AvailabilityView.fresh/stale이 저장된 마지막 성공 결과에만 stale=true와 staleReason을 붙이고 성공 경로에서는 null로 두는 자리, slot_a24cfac0·slot_64d5d23e는 CourtAvailabilityResponse.of가 confirmedAt과 slot별 available을 저장된 확인 결과에서 그대로 옮기는 자리다. slot_422fec22·slot_5c1e3142·slot_68584be5는 app/CourtIdentity.read/of를 두 표면이 함께 지나 읽는 시점의 이름·예약 주소를 내는 자리(app/AlertViewFactory.of, api/dto/CourtAvailabilityResponse.of)다. slot_dc9ce55b·slot_98b55c8f는 AlertViewFactory.of가 AvailabilityRepository.findLastSuccess의 confirmedAt을 쓰고 isCheckDelayed가 WatchPolicy.CHECK_DELAY_THRESHOLD(20초×3)를 넘겼는지 보는 자리다. slot_a51918dd는 AlertCommandService.process가 operatingSchedule로 확인을 일으킨 뒤 views.of로 lastCheckedAt을 채우고 applyCheckedSchedule이 빈자리일 때 delivery를 PENDING으로 올리는 자리, slot_1ab21d09·slot_72175f6e·slot_8663b240은 AlertCommandService.CreateResult(200/201)와 api/AlertController.createAlert가 Location(ApiPaths.alertLocation)과 Idempotency-Replayed=false를 함께 내고 재생에서만 true를 내는 자리다. slot_f3c53a32는 app/store/InMemoryAlertRepository.NEWEST_FIRST(createdAt→sequence, reversed)다. slot_cec09639·slot_a254926b는 domain/Alert.deliveryPending·pendingDeliveryDiscarded가 감시 중일 때만 null↔PENDING을 오가게 두는 자리다. slot_fd7db9b0·slot_8ed65ad8·slot_b7eb2903은 api/dto/Payloads(HH:mm)와 Instant.toString(UTC)이다. 5로 올리지 않은 까닭은 slot_c14121c8의 '더 이른 예약 마감 시각으로 앞당겨진다'는 절과 slot_cec09639의 NOTIFIED/SENT 대응이 코드에서 조건부로만(포트가 그 값을 드러내지 않고 발송 경로가 범위 밖이라) 확인되기 때문이다.",
+          "failure_faithfulness": "열거 25개, 미충족 0개: []. slot_47c11736은 api/Problems.of가 RETRY_AFTER 표에 값이 있을 때만 retryable=true로 두고 같은 값을 본문 retryAfterSeconds와 Retry-After 헤더에 함께 실으며 status.is5xxServerError()일 때만 traceId를 넣는 자리에서 확인했다(4xx 코드는 표에 없어 세 값이 모두 빠진다). slot_bca4f922도 같은 메서드다. slot_58100c30의 코드별 상황은 api/ApiExceptionHandler에서 짚었다: COURT_NOT_SUPPORTED는 UnsupportedCourtException.Source로 404/422를 가르고, SLOT_NOT_SUPPORTED는 운영 목록을 아는 때만(AlertCommandService.process의 operatingSlotsKnown 분기), ALERT_NOT_FOUND는 AlertQueryService.get/AlertCommandService.cancel의 ownedBy 필터, IDEMPOTENCY_KEY_REUSED는 InMemoryIdempotencyStore.claim의 completed+지문 불일치에서만, CONCURRENT_UPDATE_CONFLICT는 처리 중 자리와 AlertRepository.compareAndSet 실패에서 나온다. slot_36922dfa·slot_18204232·slot_524bf33a·slot_65ced694는 handleAvailabilityUnavailable과 handleScheduleUnknown의 switch가 UPSTREAM_TIMEOUT→504, UPSTREAM_UNAVAILABLE→503, UPSTREAM_RESPONSE_UNREADABLE→502로 같은 매핑을 쓰는 자리다. slot_676164c8·slot_7f26070b은 RequestValues.idempotencyKey의 누락·비UUID와 본문 형식 위반이 같은 400 VALIDATION_FAILED로 모이는 자리, slot_674794f0은 handleUnexpected다. slot_d5fad6dd와 STORAGE_TIMEOUT 쌍은 던지는 자리가 없지만 이 run의 out_of_scope가 '저장소 장애 주입'을 빼 두었으므로 미충족으로 세지 않았다. 5로 올리지 않은 까닭이 그것이고, handleUnsupportedMediaType이 계약이 코드를 두지 않은 미디어 타입 실패까지 VALIDATION_FAILED로 넓혀 읽는 자리도 함께 보았다.",
+          "state_continuity": "열거 19개, 미충족 0개: []. slot_218b9620은 AvailabilityQueryService.resolve/checkUnderLock이 코트·날짜 잠금 안에서 저장된 결과를 다시 보고(isFresh) 예약처를 한 번만 부르며, 실패는 storeFailure와 isWithinFailureWindow로 확인 간격 동안 같은 실패를 함께 받게 하는 자리에서 확인했다. slot_7afbe3b4는 AlertCommandService.create의 claim→process→complete/release 흐름이다: 4xx·5xx는 finally의 release로 기록되지 않고, 처리 중이면 IN_PROGRESS→ConcurrentUpdateException(503), 같은 키의 2xx는 Claim.replay가 처음의 AlertView 스냅숏을 그대로 돌려준다. 같은 조건 중복은 InMemoryAlertRepository.insertIfNotWatching이 사용자 범위로 findWatching을 보고 한 호출로 묶어 판정하고, domain/Alert.watches가 WATCHING만 같은 조건으로 보므로 끝난 신청과 같은 조건이면 새 신청이 만들어진다. slot_85c85829는 findByUserNewestFirst가 저장된 status로만 거르는 자리, slot_a8b0f567·slot_e23500c7은 ownedBy 실패를 AlertNotFoundException으로 모아 남의 신청과 없는 신청을 같게 두는 자리다. slot_9231bb2f는 Alert.canceled의 terminal 단락과 discardPendingDelivery, 그리고 cancel의 compareAndSet이다. slot_3b26d64c의 EXPIRED는 AlertExpiryJob.expireDueAlerts, slot_c733b457·slot_d4a3fef5·slot_3307096b·slot_e2d6a63c는 AlertDelivery.pending()의 (PENDING,0,null,null)과 AvailabilityQueryService.applyToWatchingAlerts의 올리기·버리기 전이에서 확인했다. 5로 올리지 않은 까닭은 slot_3b26d64c의 NOTIFIED와 slot_061df20e의 SENT·FAILED 전이가 발송 경로(범위 밖)에 달려 있어 그 약속을 유지하는 저장·재생 경로를 이 코드에서 짚을 수 없기 때문이다.",
+          "judgement_disclosure": "신고 34건(결정 21, 계약 변경 13), 미신고 0건. v2→v3 판본 차이를 직접 대조했더니 createAlert 산문의 세 문단(미개방 날짜 수용, 생성 시 delivery, 사용자 범위 중복 판정), 201 설명과 예시의 lastCheckedAt, IdempotencyReplayed 설명 두 문장, CourtAvailability.slots 설명이 바뀌었고 모두 cc_create_unopened_date_accepted·cc_create_delivery_at_birth·cc_dedup_scoped_to_user·cc_create_201_state_note·cc_create_201_example_last_checked·cc_replayed_header_on_dedup·cc_unopened_date_not_rejected에 기록돼 있어 기록 없이 움직인 자리를 찾지 못했다. 코드에서 계약·명세가 말하지 않은 값을 정한 자리(BearerTokens의 식별자, ApiPaths의 /v1 접두사, Problems의 traceId 형식, AlertExpiryJob의 1초 주기, InMemoryAlertRepository의 동순위 기준, AvailabilityQueryService의 실패 억제 창과 지워지지 않는 잠금 표, StorageTimeoutException의 도달 불가 선언)도 모두 대응하는 결정이 있었다. 근거 품질은 spec_implication과 contract_analogy가 다수이나 d_expiry_sweep_interval과 d_list_order_tiebreak는 계약·명세를 가리키지 못하고 관례에만 기대며, cc_create_upstream_unreadable·cc_create_upstream_timeout·cc_alert_create_unavailable_response는 representation_basis가 빈 문자열이다(다만 why와 spec_anchor는 채워져 있어 근거가 빈 신고로는 세지 않았다). 그래서 5가 아니라 4다."
         }
       },
       "unmeasured_axes": [],
       "machine_verdict": {
         "judged": true,
         "judged_gaps": [],
-        "no_violation": false,
-        "violation_gaps": [
-          "판본 대조가 REJECT다 — 위반이 있다"
-        ],
-        "clean": false
+        "no_violation": true,
+        "violation_gaps": [],
+        "clean": true
       },
       "decision_risk": {
         "level": "medium",
         "reasons": []
       },
       "skipped_reason": null,
-      "gate_errors": [
-        "gate:change.unjustified@None: 기록 cc_watching_check_source이 인용한 'cr_watching_says_periodic_check'가 이 iteration의 비평에 없다",
-        "gate:change.unjustified@None: 기록 cc_create_schedule_source이 인용한 'cr_create_upstream_failure'가 이 iteration의 비평에 없다",
-        "gate:change.unjustified@None: 기록 cc_create_upstream_unreadable이 인용한 'cr_create_upstream_failure'가 이 iteration의 비평에 없다",
-        "gate:change.unjustified@None: 기록 cc_create_upstream_unreadable은 표현 변경인데 representation_basis가 비었다 (닫힌 값: interop, spec_implication, contract_consistency)",
-        "gate:change.unjustified@None: 기록 cc_create_upstream_timeout이 인용한 'cr_create_upstream_failure'가 이 iteration의 비평에 없다",
-        "gate:change.unjustified@None: 기록 cc_create_upstream_timeout은 표현 변경인데 representation_basis가 비었다 (닫힌 값: interop, spec_implication, contract_consistency)",
-        "gate:change.unjustified@None: 기록 cc_create_503_covers_upstream이 인용한 'cr_create_upstream_failure'가 이 iteration의 비평에 없다",
-        "gate:change.unjustified@None: 기록 cc_alert_create_unavailable_response이 인용한 'cr_create_upstream_failure'가 이 iteration의 비평에 없다",
-        "gate:change.unjustified@None: 기록 cc_alert_create_unavailable_response은 표현 변경인데 representation_basis가 비었다 (닫힌 값: interop, spec_implication, contract_consistency)"
-      ],
-      "rubric_errors": [
-        "min_total: 3.4 < 4.2",
-        "min_axis.response_fidelity: 3 < 4.0",
-        "min_axis.state_continuity: 3 < 4.0",
-        "min_axis.judgement_disclosure: 3 < 4.0"
-      ]
+      "gate_errors": [],
+      "rubric_errors": []
     }
   ],
   "violations": [
@@ -479,144 +456,6 @@
       "introduced_by": null,
       "recurrence": 0,
       "status": "closed"
-    },
-    {
-      "id": "v_af7d78",
-      "rule": "change.unjustified",
-      "family": "",
-      "point": null,
-      "where": "/components/schemas/AlertStatus/description",
-      "why_it_matters": "앞 판본과 달라진 자리에 신고가 없거나, 신고에 발의한 비평과 명세 근거 중 하나가 비었다.",
-      "detail": "기록 cc_watching_check_source이 인용한 'cr_watching_says_periodic_check'가 이 iteration의 비평에 없다",
-      "label": "",
-      "label_meaning": "",
-      "evidence": [],
-      "first_seen_iteration": "002",
-      "last_seen_iteration": "003",
-      "closed_in_iteration": null,
-      "closed_by": null,
-      "closed_because": null,
-      "closed_by_verified": null,
-      "claimed_fix": null,
-      "verified_fix": null,
-      "introduced_by": null,
-      "recurrence": 0,
-      "status": "open"
-    },
-    {
-      "id": "v_74a05d",
-      "rule": "change.unjustified",
-      "family": "",
-      "point": null,
-      "where": "/paths/~1alerts/post/description",
-      "why_it_matters": "앞 판본과 달라진 자리에 신고가 없거나, 신고에 발의한 비평과 명세 근거 중 하나가 비었다.",
-      "detail": "기록 cc_create_schedule_source이 인용한 'cr_create_upstream_failure'가 이 iteration의 비평에 없다",
-      "label": "",
-      "label_meaning": "",
-      "evidence": [],
-      "first_seen_iteration": "002",
-      "last_seen_iteration": "003",
-      "closed_in_iteration": null,
-      "closed_by": null,
-      "closed_because": null,
-      "closed_by_verified": null,
-      "claimed_fix": null,
-      "verified_fix": null,
-      "introduced_by": null,
-      "recurrence": 0,
-      "status": "open"
-    },
-    {
-      "id": "v_519dc1",
-      "rule": "change.unjustified",
-      "family": "",
-      "point": null,
-      "where": "/paths/~1alerts/post/responses/503",
-      "why_it_matters": "앞 판본과 달라진 자리에 신고가 없거나, 신고에 발의한 비평과 명세 근거 중 하나가 비었다.",
-      "detail": "기록 cc_create_503_covers_upstream이 인용한 'cr_create_upstream_failure'가 이 iteration의 비평에 없다",
-      "label": "",
-      "label_meaning": "",
-      "evidence": [],
-      "first_seen_iteration": "002",
-      "last_seen_iteration": "003",
-      "closed_in_iteration": null,
-      "closed_by": null,
-      "closed_because": null,
-      "closed_by_verified": null,
-      "claimed_fix": null,
-      "verified_fix": null,
-      "introduced_by": null,
-      "recurrence": 0,
-      "status": "open"
-    },
-    {
-      "id": "v_d30880",
-      "rule": "change.unjustified",
-      "family": "",
-      "point": null,
-      "where": "/paths/~1alerts/post/responses/502",
-      "why_it_matters": "앞 판본과 달라진 자리에 신고가 없거나, 신고에 발의한 비평과 명세 근거 중 하나가 비었다.",
-      "detail": "기록 cc_create_upstream_unreadable은 표현 변경인데 representation_basis가 비었다 (닫힌 값: interop, spec_implication, contract_consistency)",
-      "label": "",
-      "label_meaning": "",
-      "evidence": [],
-      "first_seen_iteration": "003",
-      "last_seen_iteration": "003",
-      "closed_in_iteration": null,
-      "closed_by": null,
-      "closed_because": null,
-      "closed_by_verified": null,
-      "claimed_fix": null,
-      "verified_fix": null,
-      "introduced_by": null,
-      "recurrence": 0,
-      "status": "open"
-    },
-    {
-      "id": "v_db8a07",
-      "rule": "change.unjustified",
-      "family": "",
-      "point": null,
-      "where": "/paths/~1alerts/post/responses/504",
-      "why_it_matters": "앞 판본과 달라진 자리에 신고가 없거나, 신고에 발의한 비평과 명세 근거 중 하나가 비었다.",
-      "detail": "기록 cc_create_upstream_timeout은 표현 변경인데 representation_basis가 비었다 (닫힌 값: interop, spec_implication, contract_consistency)",
-      "label": "",
-      "label_meaning": "",
-      "evidence": [],
-      "first_seen_iteration": "003",
-      "last_seen_iteration": "003",
-      "closed_in_iteration": null,
-      "closed_by": null,
-      "closed_because": null,
-      "closed_by_verified": null,
-      "claimed_fix": null,
-      "verified_fix": null,
-      "introduced_by": null,
-      "recurrence": 0,
-      "status": "open"
-    },
-    {
-      "id": "v_8bbdf2",
-      "rule": "change.unjustified",
-      "family": "",
-      "point": null,
-      "where": "/components/responses/AlertCreateUnavailable",
-      "why_it_matters": "앞 판본과 달라진 자리에 신고가 없거나, 신고에 발의한 비평과 명세 근거 중 하나가 비었다.",
-      "detail": "기록 cc_alert_create_unavailable_response은 표현 변경인데 representation_basis가 비었다 (닫힌 값: interop, spec_implication, contract_consistency)",
-      "label": "",
-      "label_meaning": "",
-      "evidence": [],
-      "first_seen_iteration": "003",
-      "last_seen_iteration": "003",
-      "closed_in_iteration": null,
-      "closed_by": null,
-      "closed_because": null,
-      "closed_by_verified": null,
-      "claimed_fix": null,
-      "verified_fix": null,
-      "introduced_by": null,
-      "recurrence": 0,
-      "status": "open"
     }
   ],
   "decisions": [
@@ -2141,279 +1980,6 @@
       "detail": "사람이 확정한 원본 대비 누적으로 달라진 좌표 0개, 깨는 변경 0건"
     },
     {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/api/ApiPaths.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/api/BearerTokens.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/api/OpenApiDeclaration.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/api/Problems.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/api/RequestValidationException.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/api/RequestValues.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/api/UnauthenticatedException.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/api/dto/AlertDeliveryResponse.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/api/dto/AvailabilitySlotResponse.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/api/dto/CreateAlertRequest.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/api/dto/DeliveryStatusValue.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/api/dto/ErrorCodeValue.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/api/dto/Payloads.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/api/dto/ProblemResponse.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/api/dto/TimeSlotPayload.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/api/dto/UpstreamFailureReasonValue.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/app/AlertCondition.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/app/AlertExpiryJob.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/app/AlertQueryService.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/app/ApplicationConfig.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/app/AvailabilityRepository.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/app/AvailabilityView.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/app/IdempotencyStore.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/app/WatchPolicy.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/app/error/AlertNotFoundException.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/app/error/AlertWindowClosedException.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/app/error/AvailabilityUnavailableException.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/app/error/ConcurrentUpdateException.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/app/error/IdempotencyKeyReusedException.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/app/error/StorageTimeoutException.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/app/error/UnsupportedCourtException.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/app/store/InMemoryAvailabilityRepository.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/app/store/InMemoryIdempotencyStore.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/domain/AlertDelivery.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/domain/AlertStatus.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/domain/DeliveryStatus.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/domain/TimeSlot.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "002",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/domain/UpstreamFailureReason.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
       "kind": "gate:response.value_narrowed",
       "iteration": "002",
       "point": "getCourtAvailability:400",
@@ -2871,6 +2437,13 @@
       ]
     },
     {
+      "kind": "gate:change.basis_off_target",
+      "iteration": "002",
+      "point": null,
+      "where": "/components/responses/AlertCreateUnavailable",
+      "detail": "기록 cc_alert_create_unavailable_response이 인용한 'cr_create_upstream_failure'는 /paths/~1alerts/post를 가리켰는데 이 기록이 고친 자리는 그 자리 안도 아니고 같은 오퍼레이션도 아니다"
+    },
+    {
       "kind": "gate:change.diff",
       "iteration": "002",
       "point": null,
@@ -3016,321 +2589,6 @@
       "point": null,
       "where": "src/main/java/com/thinking/tennis/domain/Alert.java",
       "detail": "열린 위반의 좌표를 언급하지 않는 파일이 달라졌다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "contract/tennis-alert-api-v2.yaml",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/api/ApiPaths.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/api/BearerTokens.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/api/OpenApiDeclaration.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/api/Problems.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/api/RequestValidationException.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/api/RequestValues.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/api/UnauthenticatedException.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/api/dto/AlertDeliveryResponse.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/api/dto/AlertListResponse.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/api/dto/AlertResponse.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/api/dto/AlertStatusValue.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/api/dto/AvailabilitySlotResponse.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/api/dto/CreateAlertRequest.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/api/dto/DeliveryStatusValue.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/api/dto/ErrorCodeValue.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/api/dto/Payloads.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/api/dto/ProblemResponse.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/api/dto/TimeSlotPayload.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/api/dto/UpstreamFailureReasonValue.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/app/AlertCondition.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/app/AlertExpiryJob.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/app/AlertQueryService.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/app/AlertRepository.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/app/AlertView.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/app/ApplicationConfig.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/app/AvailabilityRepository.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/app/WatchPolicy.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/app/error/AlertNotFoundException.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/app/error/AlertWindowClosedException.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/app/error/AvailabilityUnavailableException.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/app/error/ConcurrentUpdateException.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/app/error/IdempotencyKeyReusedException.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/app/error/ScheduleUnknownException.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/app/error/SlotNotSupportedException.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/app/error/StorageTimeoutException.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/app/error/UnsupportedCourtException.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/app/store/InMemoryAlertRepository.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/app/store/InMemoryAvailabilityRepository.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/domain/Alert.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/domain/AlertDelivery.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/domain/DeliveryStatus.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/domain/TimeSlot.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
-    },
-    {
-      "kind": "manifest_drift",
-      "iteration": "003",
-      "point": null,
-      "where": "src/main/java/com/thinking/tennis/domain/UpstreamFailureReason.java",
-      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
     },
     {
       "kind": "gate:response.value_narrowed",
@@ -3818,11 +3076,25 @@
       "detail": "기록 cc_create_503_covers_upstream이 가리키는 자리가 판본 diff에 없다"
     },
     {
+      "kind": "gate:change.basis_off_target",
+      "iteration": "003",
+      "point": null,
+      "where": "/components/responses/AlertCreateUnavailable",
+      "detail": "기록 cc_alert_create_unavailable_response이 인용한 'cr_create_upstream_failure'는 /paths/~1alerts/post를 가리켰는데 이 기록이 고친 자리는 그 자리 안도 아니고 같은 오퍼레이션도 아니다"
+    },
+    {
       "kind": "gate:change.unmatched_record",
       "iteration": "003",
       "point": null,
       "where": "/components/responses/AlertCreateUnavailable",
       "detail": "기록 cc_alert_create_unavailable_response이 가리키는 자리가 판본 diff에 없다"
+    },
+    {
+      "kind": "gate:change.basis_off_target",
+      "iteration": "003",
+      "point": null,
+      "where": "/paths/~1alerts/post/description",
+      "detail": "기록 cc_create_unopened_date_accepted이 인용한 'cr_unopened_date_cannot_subscribe'는 /components/schemas/CourtAvailability/properties/slots를 가리켰는데 이 기록이 고친 자리는 그 자리 안도 아니고 같은 오퍼레이션도 아니다"
     },
     {
       "kind": "gate:change.diff",
@@ -3877,64 +3149,85 @@
       "kind": "collateral_change",
       "iteration": "003",
       "point": null,
+      "where": "src/main/java/com/thinking/tennis/api/AlertController.java",
+      "detail": "열린 위반이 없는데 파일이 달라졌다"
+    },
+    {
+      "kind": "collateral_change",
+      "iteration": "003",
+      "point": null,
       "where": "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
-      "detail": "열린 위반의 좌표를 언급하지 않는 파일이 달라졌다"
+      "detail": "열린 위반이 없는데 파일이 달라졌다"
     },
     {
       "kind": "collateral_change",
       "iteration": "003",
       "point": null,
       "where": "src/main/java/com/thinking/tennis/api/dto/CourtAvailabilityResponse.java",
-      "detail": "열린 위반의 좌표를 언급하지 않는 파일이 달라졌다"
+      "detail": "열린 위반이 없는데 파일이 달라졌다"
+    },
+    {
+      "kind": "collateral_change",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/AlertCommandService.java",
+      "detail": "열린 위반이 없는데 파일이 달라졌다"
     },
     {
       "kind": "collateral_change",
       "iteration": "003",
       "point": null,
       "where": "src/main/java/com/thinking/tennis/app/AlertViewFactory.java",
-      "detail": "열린 위반의 좌표를 언급하지 않는 파일이 달라졌다"
+      "detail": "열린 위반이 없는데 파일이 달라졌다"
     },
     {
       "kind": "collateral_change",
       "iteration": "003",
       "point": null,
       "where": "src/main/java/com/thinking/tennis/app/AvailabilityQueryService.java",
-      "detail": "열린 위반의 좌표를 언급하지 않는 파일이 달라졌다"
+      "detail": "열린 위반이 없는데 파일이 달라졌다"
     },
     {
       "kind": "collateral_change",
       "iteration": "003",
       "point": null,
       "where": "src/main/java/com/thinking/tennis/app/AvailabilityView.java",
-      "detail": "열린 위반의 좌표를 언급하지 않는 파일이 달라졌다"
+      "detail": "열린 위반이 없는데 파일이 달라졌다"
     },
     {
       "kind": "collateral_change",
       "iteration": "003",
       "point": null,
       "where": "src/main/java/com/thinking/tennis/app/CourtIdentity.java",
-      "detail": "열린 위반의 좌표를 언급하지 않는 파일이 달라졌다"
+      "detail": "열린 위반이 없는데 파일이 달라졌다"
     },
     {
       "kind": "collateral_change",
       "iteration": "003",
       "point": null,
       "where": "src/main/java/com/thinking/tennis/app/IdempotencyStore.java",
-      "detail": "열린 위반의 좌표를 언급하지 않는 파일이 달라졌다"
+      "detail": "열린 위반이 없는데 파일이 달라졌다"
     },
     {
       "kind": "collateral_change",
       "iteration": "003",
       "point": null,
       "where": "src/main/java/com/thinking/tennis/app/store/InMemoryIdempotencyStore.java",
-      "detail": "열린 위반의 좌표를 언급하지 않는 파일이 달라졌다"
+      "detail": "열린 위반이 없는데 파일이 달라졌다"
+    },
+    {
+      "kind": "collateral_change",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/domain/AlertStatus.java",
+      "detail": "열린 위반이 없는데 파일이 달라졌다"
     },
     {
       "kind": "collateral_change",
       "iteration": "003",
       "point": null,
       "where": "src/main/java/com/thinking/tennis/domain/CourtDayAvailability.java",
-      "detail": "열린 위반의 좌표를 언급하지 않는 파일이 달라졌다"
+      "detail": "열린 위반이 없는데 파일이 달라졌다"
     }
   ],
   "impact": {
@@ -4014,21 +3307,16 @@
     }
   },
   "pass_bar": {
-    "clean_iterations": [],
-    "judged_but_violating": [
-      "001",
+    "clean_iterations": [
       "002",
       "003"
+    ],
+    "judged_but_violating": [
+      "001"
     ],
     "blocked": {
       "001": [
         "G1이 REJECT다 — 위반이 있다"
-      ],
-      "002": [
-        "판본 대조가 REJECT다 — 위반이 있다"
-      ],
-      "003": [
-        "판본 대조가 REJECT다 — 위반이 있다"
       ]
     }
   },
@@ -4093,50 +3381,21 @@
         "critique_id": "w_unopened_date_rejected_as_slot",
         "issue": "예약처가 아직 열지 않은 날짜는 확인이 성공하고 slots가 빈 배열로 온다. AlertCommandService는 그 경우 schedule.operates가 거짓이므로 422 SLOT_NOT_SUPPORTED로 거절하고, ApiExceptionHandler는 그 자리를 따로 알아채 '운영하는 시간대가 없습니다'라는 문장을 만든다. 즉 '아직 열리지 않은 날짜'와 '그 코트가 그 시간대를 운영하지 않음'이 같은 코드로 거절된다.",
         "eval_score": 4,
-        "gate_verdict": "REJECT",
+        "gate_verdict": "PASS",
         "direction": "Critique가 더 엄하다",
-        "three_way": false,
-        "detail": "게이트도 위반을 찾았으니 갈린 것은 Eval과 Critique다. Eval이 4로 통과시킨 축이다."
-      },
-      {
-        "iteration": "003",
-        "axis": "failure_faithfulness",
-        "critique_id": "cr_window_closed_after_upstream",
-        "issue": "AlertCommandService.process가 만료 시각 판정을 외부 예약처 확인 뒤에 둔다. court를 찾고 → operatingSchedule로 확인을 일으키고 → 시간대를 판정하고 → 그 다음에야 expiresAt을 지금과 견준다. 만료 시각은 요청 본문의 date와 slot.startTime과 코트 지역 시간대만으로 계산되는 값이라 바깥에 아무것도 묻지 않고 결론이 나는데, 예약처가 닿지 않는 동안 이미 지나간 시간대로 신청하면 422 ALERT_WINDOW_CLOSED 대신 ScheduleUnknownException이 먼저 올라가 502·503·504가 나간다.",
-        "eval_score": 4,
-        "gate_verdict": "REJECT",
-        "direction": "Critique가 더 엄하다",
-        "three_way": false,
-        "detail": "게이트도 위반을 찾았으니 갈린 것은 Eval과 Critique다. Eval이 4로 통과시킨 축이다."
+        "three_way": true,
+        "detail": "게이트는 위반을 찾지 못했고 Eval은 4를 줬는데 Critique만 high로 지적했다. 셋이 갈렸다."
       }
     ],
     "machine_checkable_restatement": [
       {
-        "iteration": "002",
-        "critique_id": "w_new_alert_ignores_its_own_check",
-        "axis": "state_continuity",
-        "rule": "change.unjustified",
-        "where": "/paths/~1alerts/post/responses/503",
-        "shared": "/alerts.post",
-        "detail": "게이트가 change.unjustified로 이미 세는 좌표 `/alerts.post`를 비평이 다시 말했다"
-      },
-      {
         "iteration": "003",
-        "critique_id": "cr_window_closed_after_upstream",
-        "axis": "failure_faithfulness",
-        "rule": "change.unjustified",
-        "where": "/paths/~1alerts/post/responses/502",
-        "shared": "/alerts.post",
-        "detail": "게이트가 change.unjustified로 이미 세는 좌표 `/alerts.post`를 비평이 다시 말했다"
-      },
-      {
-        "iteration": "003",
-        "critique_id": "cr_201_last_checked_overclaim",
+        "critique_id": "cr_nullable_required_keys_unpinned",
         "axis": "response_fidelity",
-        "rule": "change.unjustified",
-        "where": "/paths/~1alerts/post/description",
-        "shared": "post.description",
-        "detail": "게이트가 change.unjustified로 이미 세는 좌표 `post.description`를 비평이 다시 말했다"
+        "rule": "response.value_narrowed",
+        "where": "Alert.delivery",
+        "shared": "Alert.delivery",
+        "detail": "게이트가 response.value_narrowed로 이미 세는 좌표 `Alert.delivery`를 비평이 다시 말했다"
       }
     ]
   },

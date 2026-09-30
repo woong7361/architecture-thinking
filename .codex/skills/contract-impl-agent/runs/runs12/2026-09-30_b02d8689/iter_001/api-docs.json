@@ -63,62 +63,6 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "본인의 신청 목록",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AlertList"
-                }
-              }
-            }
-          },
-          "503": {
-            "description": "저장소가 제때 응답하지 않아 처리하지 못했다.",
-            "headers": {
-              "Retry-After": {
-                "description": "다시 시도하기까지 기다릴 초. 본문의 `retryAfterSeconds`와 같은 값이다.",
-                "style": "simple",
-                "schema": {
-                  "minimum": 1,
-                  "type": "integer"
-                }
-              }
-            },
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Problem"
-                }
-              }
-            },
-            "x-error-codes": [
-              "STORAGE_TIMEOUT"
-            ]
-          },
-          "500": {
-            "description": "서버 내부에서 처리하지 못했다.",
-            "headers": {
-              "Retry-After": {
-                "description": "다시 시도하기까지 기다릴 초. 본문의 `retryAfterSeconds`와 같은 값이다.",
-                "style": "simple",
-                "schema": {
-                  "minimum": 1,
-                  "type": "integer"
-                }
-              }
-            },
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Problem"
-                }
-              }
-            },
-            "x-error-codes": [
-              "INTERNAL_ERROR"
-            ]
-          },
           "400": {
             "description": "요청 자체가 스키마를 만족하지 않아 처리하지 않았다.",
             "content": {
@@ -143,6 +87,62 @@
             },
             "x-error-codes": [
               "UNAUTHENTICATED"
+            ]
+          },
+          "200": {
+            "description": "본인의 신청 목록",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AlertList"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "서버 내부에서 처리하지 못했다.",
+            "headers": {
+              "Retry-After": {
+                "description": "다시 시도하기까지 기다릴 초. 본문의 `retryAfterSeconds`와 같은 값이다.",
+                "style": "simple",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "x-error-codes": [
+              "INTERNAL_ERROR"
+            ]
+          },
+          "503": {
+            "description": "저장소가 제때 응답하지 않아 처리하지 못했다.",
+            "headers": {
+              "Retry-After": {
+                "description": "다시 시도하기까지 기다릴 초. 본문의 `retryAfterSeconds`와 같은 값이다.",
+                "style": "simple",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "x-error-codes": [
+              "STORAGE_TIMEOUT"
             ]
           }
         },
@@ -190,19 +190,6 @@
           "required": true
         },
         "responses": {
-          "400": {
-            "description": "요청이 스키마를 만족하지 않는다. 본문의 형식 위반과 필수 멱등 키 헤더의 누락이 함께 여기로 온다.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Problem"
-                }
-              }
-            },
-            "x-error-codes": [
-              "VALIDATION_FAILED"
-            ]
-          },
           "201": {
             "description": "신청이 만들어졌다.",
             "headers": {
@@ -231,18 +218,8 @@
               }
             }
           },
-          "503": {
-            "description": "저장소가 제때 응답하지 않았거나 같은 자원을 고치려는 요청끼리 경합에 밀렸다.",
-            "headers": {
-              "Retry-After": {
-                "description": "다시 시도하기까지 기다릴 초. 본문의 `retryAfterSeconds`와 같은 값이다.",
-                "style": "simple",
-                "schema": {
-                  "minimum": 1,
-                  "type": "integer"
-                }
-              }
-            },
+          "401": {
+            "description": "사용자를 식별하지 못해 본인 것인지 판단할 수 없다.",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -251,8 +228,7 @@
               }
             },
             "x-error-codes": [
-              "STORAGE_TIMEOUT",
-              "CONCURRENT_UPDATE_CONFLICT"
+              "UNAUTHENTICATED"
             ]
           },
           "200": {
@@ -321,6 +297,43 @@
               "INTERNAL_ERROR"
             ]
           },
+          "400": {
+            "description": "요청이 스키마를 만족하지 않는다. 본문의 형식 위반과 필수 멱등 키 헤더의 누락이 함께 여기로 온다.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "x-error-codes": [
+              "VALIDATION_FAILED"
+            ]
+          },
+          "503": {
+            "description": "저장소가 제때 응답하지 않았거나 같은 자원을 고치려는 요청끼리 경합에 밀렸다.",
+            "headers": {
+              "Retry-After": {
+                "description": "다시 시도하기까지 기다릴 초. 본문의 `retryAfterSeconds`와 같은 값이다.",
+                "style": "simple",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "x-error-codes": [
+              "STORAGE_TIMEOUT",
+              "CONCURRENT_UPDATE_CONFLICT"
+            ]
+          },
           "409": {
             "description": "멱등 키가 앞선 요청의 내용과 어긋난다.",
             "content": {
@@ -332,19 +345,6 @@
             },
             "x-error-codes": [
               "IDEMPOTENCY_KEY_REUSED"
-            ]
-          },
-          "401": {
-            "description": "사용자를 식별하지 못해 본인 것인지 판단할 수 없다.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Problem"
-                }
-              }
-            },
-            "x-error-codes": [
-              "UNAUTHENTICATED"
             ]
           }
         },
@@ -390,29 +390,6 @@
           }
         ],
         "responses": {
-          "500": {
-            "description": "서버 내부에서 처리하지 못했다.",
-            "headers": {
-              "Retry-After": {
-                "description": "다시 시도하기까지 기다릴 초. 본문의 `retryAfterSeconds`와 같은 값이다.",
-                "style": "simple",
-                "schema": {
-                  "minimum": 1,
-                  "type": "integer"
-                }
-              }
-            },
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Problem"
-                }
-              }
-            },
-            "x-error-codes": [
-              "INTERNAL_ERROR"
-            ]
-          },
           "400": {
             "description": "요청 자체가 스키마를 만족하지 않아 처리하지 않았다.",
             "content": {
@@ -424,65 +401,6 @@
             },
             "x-error-codes": [
               "VALIDATION_FAILED"
-            ]
-          },
-          "404": {
-            "description": "경로가 가리킨 코트를 서비스가 다루지 않는다.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Problem"
-                }
-              }
-            },
-            "x-error-codes": [
-              "COURT_NOT_SUPPORTED"
-            ]
-          },
-          "504": {
-            "description": "외부 예약처가 제때 응답하지 않았고 저장된 마지막 성공 결과도 없다.",
-            "headers": {
-              "Retry-After": {
-                "description": "다시 시도하기까지 기다릴 초. 본문의 `retryAfterSeconds`와 같은 값이다.",
-                "style": "simple",
-                "schema": {
-                  "minimum": 1,
-                  "type": "integer"
-                }
-              }
-            },
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Problem"
-                }
-              }
-            },
-            "x-error-codes": [
-              "UPSTREAM_TIMEOUT"
-            ]
-          },
-          "502": {
-            "description": "외부 예약처의 응답을 읽지 못했고 저장된 마지막 성공 결과도 없다.",
-            "headers": {
-              "Retry-After": {
-                "description": "다시 시도하기까지 기다릴 초. 본문의 `retryAfterSeconds`와 같은 값이다.",
-                "style": "simple",
-                "schema": {
-                  "minimum": 1,
-                  "type": "integer"
-                }
-              }
-            },
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Problem"
-                }
-              }
-            },
-            "x-error-codes": [
-              "UPSTREAM_RESPONSE_UNREADABLE"
             ]
           },
           "200": {
@@ -517,6 +435,88 @@
             "x-error-codes": [
               "UPSTREAM_UNAVAILABLE",
               "STORAGE_TIMEOUT"
+            ]
+          },
+          "500": {
+            "description": "서버 내부에서 처리하지 못했다.",
+            "headers": {
+              "Retry-After": {
+                "description": "다시 시도하기까지 기다릴 초. 본문의 `retryAfterSeconds`와 같은 값이다.",
+                "style": "simple",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "x-error-codes": [
+              "INTERNAL_ERROR"
+            ]
+          },
+          "404": {
+            "description": "경로가 가리킨 코트를 서비스가 다루지 않는다.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "x-error-codes": [
+              "COURT_NOT_SUPPORTED"
+            ]
+          },
+          "502": {
+            "description": "외부 예약처의 응답을 읽지 못했고 저장된 마지막 성공 결과도 없다.",
+            "headers": {
+              "Retry-After": {
+                "description": "다시 시도하기까지 기다릴 초. 본문의 `retryAfterSeconds`와 같은 값이다.",
+                "style": "simple",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "x-error-codes": [
+              "UPSTREAM_RESPONSE_UNREADABLE"
+            ]
+          },
+          "504": {
+            "description": "외부 예약처가 제때 응답하지 않았고 저장된 마지막 성공 결과도 없다.",
+            "headers": {
+              "Retry-After": {
+                "description": "다시 시도하기까지 기다릴 초. 본문의 `retryAfterSeconds`와 같은 값이다.",
+                "style": "simple",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "x-error-codes": [
+              "UPSTREAM_TIMEOUT"
             ]
           }
         },
@@ -555,6 +555,29 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "신청 하나",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Alert"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "요청 자체가 스키마를 만족하지 않아 처리하지 않았다.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "x-error-codes": [
+              "VALIDATION_FAILED"
+            ]
+          },
           "404": {
             "description": "없는 신청과 남의 신청을 구분해 알리지 않는다.",
             "content": {
@@ -568,18 +591,8 @@
               "ALERT_NOT_FOUND"
             ]
           },
-          "503": {
-            "description": "저장소가 제때 응답하지 않아 처리하지 못했다.",
-            "headers": {
-              "Retry-After": {
-                "description": "다시 시도하기까지 기다릴 초. 본문의 `retryAfterSeconds`와 같은 값이다.",
-                "style": "simple",
-                "schema": {
-                  "minimum": 1,
-                  "type": "integer"
-                }
-              }
-            },
+          "401": {
+            "description": "사용자를 식별하지 못해 본인 것인지 판단할 수 없다.",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -588,7 +601,7 @@
               }
             },
             "x-error-codes": [
-              "STORAGE_TIMEOUT"
+              "UNAUTHENTICATED"
             ]
           },
           "500": {
@@ -614,18 +627,18 @@
               "INTERNAL_ERROR"
             ]
           },
-          "200": {
-            "description": "신청 하나",
-            "content": {
-              "application/json": {
+          "503": {
+            "description": "저장소가 제때 응답하지 않아 처리하지 못했다.",
+            "headers": {
+              "Retry-After": {
+                "description": "다시 시도하기까지 기다릴 초. 본문의 `retryAfterSeconds`와 같은 값이다.",
+                "style": "simple",
                 "schema": {
-                  "$ref": "#/components/schemas/Alert"
+                  "minimum": 1,
+                  "type": "integer"
                 }
               }
-            }
-          },
-          "400": {
-            "description": "요청 자체가 스키마를 만족하지 않아 처리하지 않았다.",
+            },
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -634,20 +647,7 @@
               }
             },
             "x-error-codes": [
-              "VALIDATION_FAILED"
-            ]
-          },
-          "401": {
-            "description": "사용자를 식별하지 못해 본인 것인지 판단할 수 없다.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Problem"
-                }
-              }
-            },
-            "x-error-codes": [
-              "UNAUTHENTICATED"
+              "STORAGE_TIMEOUT"
             ]
           }
         },
@@ -677,15 +677,18 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "해제 요청을 처리한 뒤의 신청 상태",
+          "400": {
+            "description": "요청 자체가 스키마를 만족하지 않아 처리하지 않았다.",
             "content": {
-              "application/json": {
+              "application/problem+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Alert"
+                  "$ref": "#/components/schemas/Problem"
                 }
               }
-            }
+            },
+            "x-error-codes": [
+              "VALIDATION_FAILED"
+            ]
           },
           "404": {
             "description": "없는 신청과 남의 신청을 구분해 알리지 않는다.",
@@ -698,6 +701,42 @@
             },
             "x-error-codes": [
               "ALERT_NOT_FOUND"
+            ]
+          },
+          "401": {
+            "description": "사용자를 식별하지 못해 본인 것인지 판단할 수 없다.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "x-error-codes": [
+              "UNAUTHENTICATED"
+            ]
+          },
+          "500": {
+            "description": "서버 내부에서 처리하지 못했다.",
+            "headers": {
+              "Retry-After": {
+                "description": "다시 시도하기까지 기다릴 초. 본문의 `retryAfterSeconds`와 같은 값이다.",
+                "style": "simple",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "x-error-codes": [
+              "INTERNAL_ERROR"
             ]
           },
           "503": {
@@ -724,54 +763,15 @@
               "CONCURRENT_UPDATE_CONFLICT"
             ]
           },
-          "500": {
-            "description": "서버 내부에서 처리하지 못했다.",
-            "headers": {
-              "Retry-After": {
-                "description": "다시 시도하기까지 기다릴 초. 본문의 `retryAfterSeconds`와 같은 값이다.",
-                "style": "simple",
-                "schema": {
-                  "minimum": 1,
-                  "type": "integer"
-                }
-              }
-            },
+          "200": {
+            "description": "해제 요청을 처리한 뒤의 신청 상태",
             "content": {
-              "application/problem+json": {
+              "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Problem"
+                  "$ref": "#/components/schemas/Alert"
                 }
               }
-            },
-            "x-error-codes": [
-              "INTERNAL_ERROR"
-            ]
-          },
-          "400": {
-            "description": "요청 자체가 스키마를 만족하지 않아 처리하지 않았다.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Problem"
-                }
-              }
-            },
-            "x-error-codes": [
-              "VALIDATION_FAILED"
-            ]
-          },
-          "401": {
-            "description": "사용자를 식별하지 못해 본인 것인지 판단할 수 없다.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Problem"
-                }
-              }
-            },
-            "x-error-codes": [
-              "UNAUTHENTICATED"
-            ]
+            }
           }
         },
         "x-requirement": [
@@ -832,75 +832,6 @@
           }
         },
         "description": "예약 단위가 되는 시간대. 코트가 운영하는 시간대와 정확히 일치해야 한다."
-      },
-      "Problem": {
-        "required": [
-          "code",
-          "retryable",
-          "status",
-          "title",
-          "type"
-        ],
-        "type": "object",
-        "properties": {
-          "type": {
-            "type": "string",
-            "description": "이 실패 종류를 설명하는 문서의 주소",
-            "format": "uri"
-          },
-          "title": {
-            "type": "string",
-            "description": "사람이 읽는 실패 이름"
-          },
-          "status": {
-            "type": "integer",
-            "description": "HTTP 상태 코드. 응답의 상태 코드와 같다.",
-            "format": "int32"
-          },
-          "detail": {
-            "type": "string",
-            "description": "이번 실패에만 해당하는 설명"
-          },
-          "instance": {
-            "type": "string",
-            "description": "실패가 난 요청의 경로",
-            "format": "uri-reference"
-          },
-          "code": {
-            "type": "string",
-            "description": "실패의 원인을 가리키는 코드. 클라이언트의 대응이 갈리는 자리마다 코드 하나를 둔다.\n대응이 같은 두 상황에는 코드를 따로 두지 않는다. 구별해도 클라이언트가 분기할 일이 없어 무시된다.\n\n- `VALIDATION_FAILED`: 요청의 형식이나 값이 스키마를 만족하지 않는다. 필수인 `Idempotency-Key` 헤더가 없거나 그 값이 UUID가 아닌 경우도 여기에 든다.\n- `UNAUTHENTICATED`: 토큰이 없거나 유효하지 않아 사용자를 식별할 수 없다.\n- `COURT_NOT_SUPPORTED`: 서비스가 지원하지 않는 코트다. 경로에서 받았으면 404, 본문에서 받았으면 422로 나간다.\n- `SLOT_NOT_SUPPORTED`: 코트는 지원하지만 그 코트가 그 날짜에 운영하지 않는 시간대다.\n- `ALERT_WINDOW_CLOSED`: 만료 시각이 이미 지나 감시할 수 없는 조건이다.\n- `ALERT_NOT_FOUND`: 그런 신청이 없거나 요청한 사용자의 것이 아니다.\n- `IDEMPOTENCY_KEY_REUSED`: 같은 키가 다른 내용의 요청에 이미 쓰였다.\n- `UPSTREAM_TIMEOUT`: 외부 예약처가 정해진 시간 안에 응답하지 않았다.\n- `UPSTREAM_UNAVAILABLE`: 외부 예약처에 닿지 못했거나 예약처가 실패를 돌려줬다.\n- `UPSTREAM_RESPONSE_UNREADABLE`: 외부 예약처의 응답을 읽지 못했다.\n- `STORAGE_TIMEOUT`: 저장소가 정해진 시간 안에 응답하지 않았다.\n- `CONCURRENT_UPDATE_CONFLICT`: 같은 자원을 동시에 고치려다 경합에 밀렸다. 같은 멱등 키의 앞선 요청이 아직 처리 중이라 물러난 경우도 여기에 든다.\n- `INTERNAL_ERROR`: 위 어디에도 해당하지 않는 서버 내부 실패다. 상태를 바꾸는 오퍼레이션은 멱등 키를 요구하므로 같은 요청을 그대로 다시 보내도 안전하다.\n",
-            "enum": [
-              "VALIDATION_FAILED",
-              "UNAUTHENTICATED",
-              "COURT_NOT_SUPPORTED",
-              "SLOT_NOT_SUPPORTED",
-              "ALERT_WINDOW_CLOSED",
-              "ALERT_NOT_FOUND",
-              "IDEMPOTENCY_KEY_REUSED",
-              "UPSTREAM_TIMEOUT",
-              "UPSTREAM_UNAVAILABLE",
-              "UPSTREAM_RESPONSE_UNREADABLE",
-              "STORAGE_TIMEOUT",
-              "CONCURRENT_UPDATE_CONFLICT",
-              "INTERNAL_ERROR"
-            ]
-          },
-          "retryable": {
-            "type": "boolean",
-            "description": "같은 요청을 그대로 다시 보내 결과가 달라질 수 있으면 true다.\nfalse이면 요청이나 조건을 바꾸지 않는 한 몇 번을 보내도 같은 실패가 난다.\n"
-          },
-          "retryAfterSeconds": {
-            "minimum": 1,
-            "type": "integer",
-            "description": "다시 시도하기까지 기다릴 초",
-            "format": "int32"
-          },
-          "traceId": {
-            "type": "string",
-            "description": "서버 로그에서 이 요청을 찾는 식별자다. 사용자가 실패를 신고할 때 이 값으로 로그를 찾는다.\n5xx에만 오고 4xx에는 오지 않는다.\n"
-          }
-        },
-        "description": "RFC 9457 형식의 실패 응답이다. `code`가 원인을 가리키고 `retryable`이 클라이언트의 다음 행동을 정한다.\n`retryable`이 true이면 `retryAfterSeconds`와 `Retry-After` 헤더가 반드시 함께 온다.\n`traceId`는 5xx에만 싣는다. 4xx는 클라이언트가 요청을 고치면 풀려 서버 로그를 찾을 일이 없다.\n두 조건 모두 스키마로는 적을 수 없어 계약 검사 스크립트가 대신 판정한다.\n"
       },
       "Alert": {
         "required": [
@@ -1041,6 +972,75 @@
           "V-2",
           "V-7"
         ]
+      },
+      "Problem": {
+        "required": [
+          "code",
+          "retryable",
+          "status",
+          "title",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "이 실패 종류를 설명하는 문서의 주소",
+            "format": "uri"
+          },
+          "title": {
+            "type": "string",
+            "description": "사람이 읽는 실패 이름"
+          },
+          "status": {
+            "type": "integer",
+            "description": "HTTP 상태 코드. 응답의 상태 코드와 같다.",
+            "format": "int32"
+          },
+          "detail": {
+            "type": "string",
+            "description": "이번 실패에만 해당하는 설명"
+          },
+          "instance": {
+            "type": "string",
+            "description": "실패가 난 요청의 경로",
+            "format": "uri-reference"
+          },
+          "code": {
+            "type": "string",
+            "description": "실패의 원인을 가리키는 코드. 클라이언트의 대응이 갈리는 자리마다 코드 하나를 둔다.\n대응이 같은 두 상황에는 코드를 따로 두지 않는다. 구별해도 클라이언트가 분기할 일이 없어 무시된다.\n\n- `VALIDATION_FAILED`: 요청의 형식이나 값이 스키마를 만족하지 않는다. 필수인 `Idempotency-Key` 헤더가 없거나 그 값이 UUID가 아닌 경우도 여기에 든다.\n- `UNAUTHENTICATED`: 토큰이 없거나 유효하지 않아 사용자를 식별할 수 없다.\n- `COURT_NOT_SUPPORTED`: 서비스가 지원하지 않는 코트다. 경로에서 받았으면 404, 본문에서 받았으면 422로 나간다.\n- `SLOT_NOT_SUPPORTED`: 코트는 지원하지만 그 코트가 그 날짜에 운영하지 않는 시간대다.\n- `ALERT_WINDOW_CLOSED`: 만료 시각이 이미 지나 감시할 수 없는 조건이다.\n- `ALERT_NOT_FOUND`: 그런 신청이 없거나 요청한 사용자의 것이 아니다.\n- `IDEMPOTENCY_KEY_REUSED`: 같은 키가 다른 내용의 요청에 이미 쓰였다.\n- `UPSTREAM_TIMEOUT`: 외부 예약처가 정해진 시간 안에 응답하지 않았다.\n- `UPSTREAM_UNAVAILABLE`: 외부 예약처에 닿지 못했거나 예약처가 실패를 돌려줬다.\n- `UPSTREAM_RESPONSE_UNREADABLE`: 외부 예약처의 응답을 읽지 못했다.\n- `STORAGE_TIMEOUT`: 저장소가 정해진 시간 안에 응답하지 않았다.\n- `CONCURRENT_UPDATE_CONFLICT`: 같은 자원을 동시에 고치려다 경합에 밀렸다. 같은 멱등 키의 앞선 요청이 아직 처리 중이라 물러난 경우도 여기에 든다.\n- `INTERNAL_ERROR`: 위 어디에도 해당하지 않는 서버 내부 실패다. 상태를 바꾸는 오퍼레이션은 멱등 키를 요구하므로 같은 요청을 그대로 다시 보내도 안전하다.\n",
+            "enum": [
+              "VALIDATION_FAILED",
+              "UNAUTHENTICATED",
+              "COURT_NOT_SUPPORTED",
+              "SLOT_NOT_SUPPORTED",
+              "ALERT_WINDOW_CLOSED",
+              "ALERT_NOT_FOUND",
+              "IDEMPOTENCY_KEY_REUSED",
+              "UPSTREAM_TIMEOUT",
+              "UPSTREAM_UNAVAILABLE",
+              "UPSTREAM_RESPONSE_UNREADABLE",
+              "STORAGE_TIMEOUT",
+              "CONCURRENT_UPDATE_CONFLICT",
+              "INTERNAL_ERROR"
+            ]
+          },
+          "retryable": {
+            "type": "boolean",
+            "description": "같은 요청을 그대로 다시 보내 결과가 달라질 수 있으면 true다.\nfalse이면 요청이나 조건을 바꾸지 않는 한 몇 번을 보내도 같은 실패가 난다.\n"
+          },
+          "retryAfterSeconds": {
+            "minimum": 1,
+            "type": "integer",
+            "description": "다시 시도하기까지 기다릴 초",
+            "format": "int32"
+          },
+          "traceId": {
+            "type": "string",
+            "description": "서버 로그에서 이 요청을 찾는 식별자다. 사용자가 실패를 신고할 때 이 값으로 로그를 찾는다.\n5xx에만 오고 4xx에는 오지 않는다.\n"
+          }
+        },
+        "description": "RFC 9457 형식의 실패 응답이다. `code`가 원인을 가리키고 `retryable`이 클라이언트의 다음 행동을 정한다.\n`retryable`이 true이면 `retryAfterSeconds`와 `Retry-After` 헤더가 반드시 함께 온다.\n`traceId`는 5xx에만 싣는다. 4xx는 클라이언트가 요청을 고치면 풀려 서버 로그를 찾을 일이 없다.\n두 조건 모두 스키마로는 적을 수 없어 계약 검사 스크립트가 대신 판정한다.\n"
       },
       "AvailabilitySlot": {
         "required": [

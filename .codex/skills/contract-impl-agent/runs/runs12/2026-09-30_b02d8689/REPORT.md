@@ -2,145 +2,35 @@
 
 이 run이 낸 구현 초안과 그 초안이 서 있는 계약 판본, 그 사이에 내린 판단을 사람이 훑을 수 있게 적는다. 판정 결과만 알려 주면 판단을 기록한 뜻이 없으므로 통과한 run에서도 같은 여섯 절을 낸다.
 
-작성 시각은 2026-09-30T18:45:55+09:00이고 기계가 읽는 판은 `run_ledger.json`이다.
+작성 시각은 2026-09-30T23:55:51+09:00이고 기계가 읽는 판은 `run_ledger.json`이다.
 
 ## 1. 요약
 
 이 run이 무엇을 남겼는지 한 자리에서 본다.
 
-**기계 판정이 깨끗한 iteration은 없다.** 다만 001, 002, 003은 판정까지는 갔고 위반이 남아 걸렸다. iteration 001은 여기서 걸렸다: G1이 REJECT다 — 위반이 있다.
+**기계 판정이 깨끗한 iteration이 있다: 002, 003.** 그 iteration에서 G0와 G1과 판본 대조가 모두 판정되었고 위반이 없었다. v0의 합격선은 최종 판정 PASS가 아니라 이것이다.
 
-판정은 **REJECT**이고 iteration 003까지 왔다. 위반 8건 가운데 2건을 코드로 닫고 0건을 계약으로 닫았으며 6건이 아직 열려 있다. 서 있는 결정은 21건, 계약 변경 기록은 13건이다.
+판정은 **PASS**이고 iteration 003까지 왔다. 위반 2건 가운데 2건을 코드로 닫고 0건을 계약으로 닫았으며 0건이 아직 열려 있다. 서 있는 결정은 21건, 계약 변경 기록은 13건이다.
 
-위반은 지점 단위로 센 것이고 그 뒤의 원인은 8개다. 고칠 일의 개수는 원인 쪽이므로 5절을 원인으로 묶어 함께 낸다.
+위반은 지점 단위로 센 것이고 그 뒤의 원인은 2개다. 고칠 일의 개수는 원인 쪽이므로 5절을 원인으로 묶어 함께 낸다.
 
 계약은 기준선 `tennis-alert-api.yaml`에서 출발해 `contract/tennis-alert-api-v3.yaml`까지 왔다. 바로 앞 판본은 `contract/tennis-alert-api-v2.yaml`이다.
 
 `decision_risk`는 **medium** 수준이다. 올릴 근거는 없다.
-
-REJECT 사유는 게이트와 루브릭을 섞지 않고 따로 적는다.
-
-게이트:
-- gate:change.unjustified@None: 기록 cc_watching_check_source이 인용한 'cr_watching_says_periodic_check'가 이 iteration의 비평에 없다
-- gate:change.unjustified@None: 기록 cc_create_schedule_source이 인용한 'cr_create_upstream_failure'가 이 iteration의 비평에 없다
-- gate:change.unjustified@None: 기록 cc_create_upstream_unreadable이 인용한 'cr_create_upstream_failure'가 이 iteration의 비평에 없다
-- gate:change.unjustified@None: 기록 cc_create_upstream_unreadable은 표현 변경인데 representation_basis가 비었다 (닫힌 값: interop, spec_implication, contract_consistency)
-- gate:change.unjustified@None: 기록 cc_create_upstream_timeout이 인용한 'cr_create_upstream_failure'가 이 iteration의 비평에 없다
-- gate:change.unjustified@None: 기록 cc_create_upstream_timeout은 표현 변경인데 representation_basis가 비었다 (닫힌 값: interop, spec_implication, contract_consistency)
-- gate:change.unjustified@None: 기록 cc_create_503_covers_upstream이 인용한 'cr_create_upstream_failure'가 이 iteration의 비평에 없다
-- gate:change.unjustified@None: 기록 cc_alert_create_unavailable_response이 인용한 'cr_create_upstream_failure'가 이 iteration의 비평에 없다
-- gate:change.unjustified@None: 기록 cc_alert_create_unavailable_response은 표현 변경인데 representation_basis가 비었다 (닫힌 값: interop, spec_implication, contract_consistency)
-
-루브릭:
-- min_total: 3.4 < 4.2
-- min_axis.response_fidelity: 3 < 4.0
-- min_axis.state_continuity: 3 < 4.0
-- min_axis.judgement_disclosure: 3 < 4.0
-
-색인과 실물이 어긋난 경로가 84곳이다. 게이트는 색인이 선언한 것을 판정하므로 선언 밖에 놓인 파일은 판정되지 않은 표면이 된다.
-
-| 경로 | iteration | 관찰 |
-| --- | --- | --- |
-| src/main/java/com/thinking/tennis/api/ApiPaths.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/api/AvailabilityController.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/api/BearerTokens.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/api/OpenApiDeclaration.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/api/Problems.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/api/RequestValidationException.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/api/RequestValues.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/api/UnauthenticatedException.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/api/dto/AlertDeliveryResponse.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/api/dto/AvailabilitySlotResponse.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/api/dto/CreateAlertRequest.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/api/dto/DeliveryStatusValue.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/api/dto/ErrorCodeValue.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/api/dto/Payloads.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/api/dto/ProblemResponse.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/api/dto/TimeSlotPayload.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/api/dto/UpstreamFailureReasonValue.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/app/AlertCondition.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/app/AlertExpiryJob.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/app/AlertQueryService.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/app/ApplicationConfig.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/app/AvailabilityRepository.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/app/AvailabilityView.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/app/IdempotencyStore.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/app/WatchPolicy.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/app/error/AlertNotFoundException.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/app/error/AlertWindowClosedException.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/app/error/AvailabilityUnavailableException.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/app/error/ConcurrentUpdateException.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/app/error/IdempotencyKeyReusedException.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/app/error/StorageTimeoutException.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/app/error/UnsupportedCourtException.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/app/store/InMemoryAvailabilityRepository.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/app/store/InMemoryIdempotencyStore.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/domain/AlertDelivery.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/domain/AlertStatus.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/domain/DeliveryStatus.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/domain/TimeSlot.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/domain/UpstreamFailureReason.java | 002 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| contract/tennis-alert-api-v2.yaml | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/api/ApiPaths.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/api/AvailabilityController.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/api/BearerTokens.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/api/OpenApiDeclaration.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/api/Problems.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/api/RequestValidationException.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/api/RequestValues.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/api/UnauthenticatedException.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/api/dto/AlertDeliveryResponse.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/api/dto/AlertListResponse.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/api/dto/AlertResponse.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/api/dto/AlertStatusValue.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/api/dto/AvailabilitySlotResponse.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/api/dto/CreateAlertRequest.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/api/dto/DeliveryStatusValue.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/api/dto/ErrorCodeValue.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/api/dto/Payloads.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/api/dto/ProblemResponse.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/api/dto/TimeSlotPayload.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/api/dto/UpstreamFailureReasonValue.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/app/AlertCondition.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/app/AlertExpiryJob.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/app/AlertQueryService.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/app/AlertRepository.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/app/AlertView.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/app/ApplicationConfig.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/app/AvailabilityRepository.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/app/WatchPolicy.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/app/error/AlertNotFoundException.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/app/error/AlertWindowClosedException.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/app/error/AvailabilityUnavailableException.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/app/error/ConcurrentUpdateException.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/app/error/IdempotencyKeyReusedException.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/app/error/ScheduleUnknownException.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/app/error/SlotNotSupportedException.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/app/error/StorageTimeoutException.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/app/error/UnsupportedCourtException.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/app/store/InMemoryAlertRepository.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/app/store/InMemoryAvailabilityRepository.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/domain/Alert.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/domain/AlertDelivery.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/domain/DeliveryStatus.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/domain/TimeSlot.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
-| src/main/java/com/thinking/tennis/domain/UpstreamFailureReason.java | 003 | 색인에 없는 파일이 작업 폴더에서 바뀌어 있다 |
 
 합격선은 두 문장이 함께 참인 상태다. **판정했다**와 **그리고 위반이 없다**를 같은 칸에 넣지 않는다. 뒤의 문장만 적으면 게이트를 부수는 것이 게이트를 통과하는 가장 쉬운 길이 된다.
 
 | iteration | 판정 | 판정했다 | 위반 없다 | G0 | G1 | 판본 대조 | 위반 | 기록 | 총점 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 001 | REJECT | 예 | 아니다 | PASS | REJECT | PASS | 2 | 31 | 4.2 |
-| 002 | REJECT | 예 | 아니다 | PASS | PASS | REJECT | 3 | 41 | 3.65 |
-| 003 | REJECT | 예 | 아니다 | PASS | PASS | REJECT | 9 | 41 | 3.4 |
+| 002 | REJECT | 예 | 예 | PASS | PASS | PASS | 0 | 42 | 3.65 |
+| 003 | PASS | 예 | 예 | PASS | PASS | PASS | 0 | 43 | 4.0 |
 
 합격선을 넘지 못한 자리마다 무엇에 걸렸는지 적는다.
 
 | iteration | 무엇에 걸렸는가 |
 | --- | --- |
 | 001 | G1이 REJECT다 — 위반이 있다 |
-| 002 | 판본 대조가 REJECT다 — 위반이 있다 |
-| 003 | 판본 대조가 REJECT다 — 위반이 있다 |
 
 ## 2. 계약을 이렇게 고쳤다
 
@@ -283,7 +173,7 @@ REJECT 사유는 게이트와 루브릭을 섞지 않고 따로 적는다.
 
 위반마다 어느 자리를 고쳤는지, 코드로 닫았는지 계약으로 닫았는지, 다시 열렸는지를 적는다.
 
-위반 8건 중 2건이 닫혔다. 굳은 것은 0건이다. 닫힘은 게이트 결과만 줄 수 있으므로 주장과 판정을 따로 싣는다.
+위반 2건 중 2건이 닫혔다. 굳은 것은 0건이다. 닫힘은 게이트 결과만 줄 수 있으므로 주장과 판정을 따로 싣는다.
 
 라벨은 그 차이가 쓰는 사람에게 어떤 뜻인지다. 판정을 가르지 않고 이 절의 순서만 정한다. 위반에 붙는 라벨만 여기 온다 — 응답의 값을 계약보다 좁게 선언한 것처럼 손해가 없는 자리는 위반이 아니라 기록이고 6절에 있다.
 
@@ -291,68 +181,14 @@ REJECT 사유는 게이트와 루브릭을 섞지 않고 따로 적는다.
 | --- | --- |
 | withholds_promised_response | 계약이 주겠다고 한 것을 구현이 주지 않게 만드는 차이다. 읽는 쪽이 있다고 믿은 것이 없다. |
 
-그 8건은 원인 8개에서 나왔다. 한 원인이 한 지점에만 걸렸으므로 고칠 일의 개수가 위반의 개수와 같다.
+그 2건은 원인 2개에서 나왔다. 한 원인이 한 지점에만 걸렸으므로 고칠 일의 개수가 위반의 개수와 같다.
 
 | 원인 | 규칙 | family | 좌표 | 라벨 | 닿는 지점 | 상태 | 닫은 방법 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| v_519dc1 | change.unjustified | — | /paths/~1alerts/post/responses/503 | — | 0 | open | — |
-| v_74a05d | change.unjustified | — | /paths/~1alerts/post/description | — | 0 | open | — |
-| v_8bbdf2 | change.unjustified | — | /components/responses/AlertCreateUnavailable | — | 0 | open | — |
-| v_af7d78 | change.unjustified | — | /components/schemas/AlertStatus/description | — | 0 | open | — |
-| v_d30880 | change.unjustified | — | /paths/~1alerts/post/responses/502 | — | 0 | open | — |
-| v_db8a07 | change.unjustified | — | /paths/~1alerts/post/responses/504 | — | 0 | open | — |
 | v_03c067 | response.field_differs | differs | AlertList | withholds_promised_response | 1 | closed | code |
 | v_430fb8 | response.field_differs | differs | CourtAvailability | withholds_promised_response | 1 | closed | code |
 
 접힌 잎이 있는 원인은 2개이고 잎은 모두 2개다. 게이트가 한 자리를 통째로 다르다고 보고 아래를 접은 것이므로, 대조기가 보지 못한 자리와 다르다. 보지 못한 자리는 3절에 따로 있다.
-
-### `change.unjustified` @ `/paths/~1alerts/post/responses/503`
-
-기록 cc_create_503_covers_upstream이 인용한 'cr_create_upstream_failure'가 이 iteration의 비평에 없다. 닿는 판정 지점은 0곳이다: .
-
-왜 문제인가 — 앞 판본과 달라진 자리에 신고가 없거나, 신고에 발의한 비평과 명세 근거 중 하나가 비었다.
-
-주장한 수정은 없다. 확인된 수정은 없다.
-
-### `change.unjustified` @ `/paths/~1alerts/post/description`
-
-기록 cc_create_schedule_source이 인용한 'cr_create_upstream_failure'가 이 iteration의 비평에 없다. 닿는 판정 지점은 0곳이다: .
-
-왜 문제인가 — 앞 판본과 달라진 자리에 신고가 없거나, 신고에 발의한 비평과 명세 근거 중 하나가 비었다.
-
-주장한 수정은 없다. 확인된 수정은 없다.
-
-### `change.unjustified` @ `/components/responses/AlertCreateUnavailable`
-
-기록 cc_alert_create_unavailable_response은 표현 변경인데 representation_basis가 비었다 (닫힌 값: interop, spec_implication, contract_consistency). 닿는 판정 지점은 0곳이다: .
-
-왜 문제인가 — 앞 판본과 달라진 자리에 신고가 없거나, 신고에 발의한 비평과 명세 근거 중 하나가 비었다.
-
-주장한 수정은 없다. 확인된 수정은 없다.
-
-### `change.unjustified` @ `/components/schemas/AlertStatus/description`
-
-기록 cc_watching_check_source이 인용한 'cr_watching_says_periodic_check'가 이 iteration의 비평에 없다. 닿는 판정 지점은 0곳이다: .
-
-왜 문제인가 — 앞 판본과 달라진 자리에 신고가 없거나, 신고에 발의한 비평과 명세 근거 중 하나가 비었다.
-
-주장한 수정은 없다. 확인된 수정은 없다.
-
-### `change.unjustified` @ `/paths/~1alerts/post/responses/502`
-
-기록 cc_create_upstream_unreadable은 표현 변경인데 representation_basis가 비었다 (닫힌 값: interop, spec_implication, contract_consistency). 닿는 판정 지점은 0곳이다: .
-
-왜 문제인가 — 앞 판본과 달라진 자리에 신고가 없거나, 신고에 발의한 비평과 명세 근거 중 하나가 비었다.
-
-주장한 수정은 없다. 확인된 수정은 없다.
-
-### `change.unjustified` @ `/paths/~1alerts/post/responses/504`
-
-기록 cc_create_upstream_timeout은 표현 변경인데 representation_basis가 비었다 (닫힌 값: interop, spec_implication, contract_consistency). 닿는 판정 지점은 0곳이다: .
-
-왜 문제인가 — 앞 판본과 달라진 자리에 신고가 없거나, 신고에 발의한 비평과 명세 근거 중 하나가 비었다.
-
-주장한 수정은 없다. 확인된 수정은 없다.
 
 ### `response.field_differs` @ `AlertList`
 
@@ -446,12 +282,6 @@ REJECT 사유는 게이트와 루브릭을 섞지 않고 따로 적는다.
 
 | id | 규칙 | 판정 지점 | 좌표 | 라벨 | 상태 | 닫은 방법 | 재발 | 처음 본 iteration | 닫힌 iteration |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| v_519dc1 | change.unjustified | — | /paths/~1alerts/post/responses/503 | — | open | — | 0 | 002 | — |
-| v_74a05d | change.unjustified | — | /paths/~1alerts/post/description | — | open | — | 0 | 002 | — |
-| v_8bbdf2 | change.unjustified | — | /components/responses/AlertCreateUnavailable | — | open | — | 0 | 003 | — |
-| v_af7d78 | change.unjustified | — | /components/schemas/AlertStatus/description | — | open | — | 0 | 002 | — |
-| v_d30880 | change.unjustified | — | /paths/~1alerts/post/responses/502 | — | open | — | 0 | 003 | — |
-| v_db8a07 | change.unjustified | — | /paths/~1alerts/post/responses/504 | — | open | — | 0 | 003 | — |
 | v_03c067 | response.field_differs | listAlerts:200 | AlertList | withholds_promised_response | closed | code | 0 | 001 | 002 |
 | v_430fb8 | response.field_differs | getCourtAvailability:200 | CourtAvailability | withholds_promised_response | closed | code | 0 | 001 | 002 |
 
@@ -469,21 +299,24 @@ REJECT 사유는 게이트와 루브릭을 섞지 않고 따로 적는다.
 | src/main/java/com/thinking/tennis/app/error/SlotNotSupportedException.java | 002 | 열린 위반의 좌표를 언급하지 않는 파일이 달라졌다 |
 | src/main/java/com/thinking/tennis/app/store/InMemoryAlertRepository.java | 002 | 열린 위반의 좌표를 언급하지 않는 파일이 달라졌다 |
 | src/main/java/com/thinking/tennis/domain/Alert.java | 002 | 열린 위반의 좌표를 언급하지 않는 파일이 달라졌다 |
-| src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java | 003 | 열린 위반의 좌표를 언급하지 않는 파일이 달라졌다 |
-| src/main/java/com/thinking/tennis/api/dto/CourtAvailabilityResponse.java | 003 | 열린 위반의 좌표를 언급하지 않는 파일이 달라졌다 |
-| src/main/java/com/thinking/tennis/app/AlertViewFactory.java | 003 | 열린 위반의 좌표를 언급하지 않는 파일이 달라졌다 |
-| src/main/java/com/thinking/tennis/app/AvailabilityQueryService.java | 003 | 열린 위반의 좌표를 언급하지 않는 파일이 달라졌다 |
-| src/main/java/com/thinking/tennis/app/AvailabilityView.java | 003 | 열린 위반의 좌표를 언급하지 않는 파일이 달라졌다 |
-| src/main/java/com/thinking/tennis/app/CourtIdentity.java | 003 | 열린 위반의 좌표를 언급하지 않는 파일이 달라졌다 |
-| src/main/java/com/thinking/tennis/app/IdempotencyStore.java | 003 | 열린 위반의 좌표를 언급하지 않는 파일이 달라졌다 |
-| src/main/java/com/thinking/tennis/app/store/InMemoryIdempotencyStore.java | 003 | 열린 위반의 좌표를 언급하지 않는 파일이 달라졌다 |
-| src/main/java/com/thinking/tennis/domain/CourtDayAvailability.java | 003 | 열린 위반의 좌표를 언급하지 않는 파일이 달라졌다 |
+| src/main/java/com/thinking/tennis/api/AlertController.java | 003 | 열린 위반이 없는데 파일이 달라졌다 |
+| src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java | 003 | 열린 위반이 없는데 파일이 달라졌다 |
+| src/main/java/com/thinking/tennis/api/dto/CourtAvailabilityResponse.java | 003 | 열린 위반이 없는데 파일이 달라졌다 |
+| src/main/java/com/thinking/tennis/app/AlertCommandService.java | 003 | 열린 위반이 없는데 파일이 달라졌다 |
+| src/main/java/com/thinking/tennis/app/AlertViewFactory.java | 003 | 열린 위반이 없는데 파일이 달라졌다 |
+| src/main/java/com/thinking/tennis/app/AvailabilityQueryService.java | 003 | 열린 위반이 없는데 파일이 달라졌다 |
+| src/main/java/com/thinking/tennis/app/AvailabilityView.java | 003 | 열린 위반이 없는데 파일이 달라졌다 |
+| src/main/java/com/thinking/tennis/app/CourtIdentity.java | 003 | 열린 위반이 없는데 파일이 달라졌다 |
+| src/main/java/com/thinking/tennis/app/IdempotencyStore.java | 003 | 열린 위반이 없는데 파일이 달라졌다 |
+| src/main/java/com/thinking/tennis/app/store/InMemoryIdempotencyStore.java | 003 | 열린 위반이 없는데 파일이 달라졌다 |
+| src/main/java/com/thinking/tennis/domain/AlertStatus.java | 003 | 열린 위반이 없는데 파일이 달라졌다 |
+| src/main/java/com/thinking/tennis/domain/CourtDayAvailability.java | 003 | 열린 위반이 없는데 파일이 달라졌다 |
 
 ## 6. 주장과 판정이 어긋난 곳
 
 모델이 스스로 한 말과 장치의 판정이 갈린 자리를 모은다. 이 절이 비면 둘이 같은 말을 했다는 뜻이다.
 
-어긋난 자리는 모두 13건이다.
+어긋난 자리는 모두 10건이다.
 
 ### 충족 주장과 게이트 판정 (2건)
 
@@ -506,27 +339,24 @@ REJECT 사유는 게이트와 루브릭을 섞지 않고 따로 적는다.
 | 003 | d_create_may_trigger_check | 결정 d_create_may_trigger_check의 고른 것이 supersedes 없이 달라졌다: '저장된 결과를 먼저 쓰고, 확인 간격보다 오래됐거나 한 번도 없으면 조회와 같은 경로로 확인을 일으킨다.' → '저장된 결과를 먼저 쓰고, 확인 간격보다 오래됐거나 한 번도 없으면 조회와 같은 경로로 확인을 일으킨다. 확인이 실패해도 저장된 마지막 성공 결과가 있으면 그 결과로 판정하며, 그 결과의 나이에는 상한을 두지 않는다.' |
 | 003 | d_court_identity_read_fresh | 결정 d_court_identity_read_fresh의 고른 것이 supersedes 없이 달라졌다: '읽는 시점에 포트에서 읽는다. 코트가 더 이상 지원되지 않으면 신청에 보관된 값으로 물러난다.' → '읽는 시점에 포트에서 읽는다. 규칙을 CourtIdentity 한 자리에 두고 신청 조회와 예약 상태 조회가 모두 그 자리를 지난다. 코트가 더 이상 지원되지 않으면 보관된 값으로 물러난다. 확인 결과에는 코트 신원을 담지 않는다.' |
 
-### 축 판정의 어긋남 (3건)
+### 축 판정의 어긋남 (2건)
 
 Critique가 심각하다고 한 축에 Eval이 높은 점수를 줬다. 방향을 함께 적는다 — 누가 더 엄한지가 읽는 사람에게 필요하다. 게이트까지 셋이 갈린 자리가 자기 평가와 계약 테스트 결과가 어긋난 지점의 후보다.
 
 | iteration | axis | critique_id | gate_verdict | eval_score | direction | 관찰 |
 | --- | --- | --- | --- | --- | --- | --- |
 | 001 | failure_faithfulness | w_create_retry_after_lies | REJECT | 4 | Critique가 더 엄하다 | 게이트도 위반을 찾았으니 갈린 것은 Eval과 Critique다. Eval이 4로 통과시킨 축이다. |
-| 002 | request_tolerance | w_unopened_date_rejected_as_slot | REJECT | 4 | Critique가 더 엄하다 | 게이트도 위반을 찾았으니 갈린 것은 Eval과 Critique다. Eval이 4로 통과시킨 축이다. |
-| 003 | failure_faithfulness | cr_window_closed_after_upstream | REJECT | 4 | Critique가 더 엄하다 | 게이트도 위반을 찾았으니 갈린 것은 Eval과 Critique다. Eval이 4로 통과시킨 축이다. |
+| 002 | request_tolerance | w_unopened_date_rejected_as_slot | PASS | 4 | Critique가 더 엄하다 | 게이트는 위반을 찾지 못했고 Eval은 4를 줬는데 Critique만 high로 지적했다. 셋이 갈렸다. |
 
-### 게이트가 세는 것을 다시 말한 지적 (3건)
+### 게이트가 세는 것을 다시 말한 지적 (1건)
 
 막지 않고 센다. 여러 run에 반복되면 프롬프트를 고칠 신호다. 겹친다고 말하려면 같은 좌표를 가리켜야 하므로 겹친 좌표를 함께 적는다.
 
 | iteration | axis | critique_id | rule | shared | 관찰 |
 | --- | --- | --- | --- | --- | --- |
-| 002 | state_continuity | w_new_alert_ignores_its_own_check | change.unjustified | /alerts.post | 게이트가 change.unjustified로 이미 세는 좌표 `/alerts.post`를 비평이 다시 말했다 |
-| 003 | failure_faithfulness | cr_window_closed_after_upstream | change.unjustified | /alerts.post | 게이트가 change.unjustified로 이미 세는 좌표 `/alerts.post`를 비평이 다시 말했다 |
-| 003 | response_fidelity | cr_201_last_checked_overclaim | change.unjustified | post.description | 게이트가 change.unjustified로 이미 세는 좌표 `post.description`를 비평이 다시 말했다 |
+| 003 | response_fidelity | cr_nullable_required_keys_unpinned | response.value_narrowed | Alert.delivery | 게이트가 response.value_narrowed로 이미 세는 좌표 `Alert.delivery`를 비평이 다시 말했다 |
 
-### 게이트가 남긴 기록 (113건)
+### 게이트가 남긴 기록 (116건)
 
 게이트가 보고 위반으로 세지 않은 차이다. 계약이 말하지 않은 자리가 자란 것과 응답의 값을 계약보다 좁게 선언한 것이 여기 온다. REJECT 사유가 아니고 뜻은 Critique가 붙인다.
 
@@ -596,6 +426,7 @@ Critique가 심각하다고 한 축에 Eval이 높은 점수를 줬다. 방향�
 | gate:response.value_narrowed | narrowed | harmless_to_client | cancelAlert:404 | Problem | 002 | 형식: 2곳에서 좁혔다 |
 | gate:response.value_narrowed | narrowed | harmless_to_client | cancelAlert:500 | Problem | 002 | 형식: 2곳에서 좁혔다 |
 | gate:response.value_narrowed | narrowed | harmless_to_client | cancelAlert:503 | Problem | 002 | 형식: 2곳에서 좁혔다 |
+| gate:change.basis_off_target | — | — | — | /components/responses/AlertCreateUnavailable | 002 | 기록 cc_alert_create_unavailable_response이 인용한 'cr_create_upstream_failure'는 /paths/~1alerts/post를 가리켰는데 이 기록이 고친 자리는 그 자리 안도 아니고 같은 오퍼레이션도 아니다 |
 | gate:change.diff | — | — | — | 기준선 대비 | 002 | 기준선과 달라진 좌표 6개: /paths/~1alerts/post/description, /paths/~1alerts/post/responses/502, /paths/~1alerts/post/responses/504, /paths/~1alerts/post/responses/503/$ref, /components/schemas/AlertStatus/description, /components/responses/AlertCreateUnavailable |
 | gate:change.diff | — | — | — | * | 002 | 달라진 좌표 6개: /paths/~1alerts/post/description, /paths/~1alerts/post/responses/502, /paths/~1alerts/post/responses/504, /paths/~1alerts/post/responses/503/$ref, /components/schemas/AlertStatus/description, /components/responses/AlertCreateUnavailable |
 | gate:change.point_churn | — | — | createAlert:502 | - | 002 | 판정 지점이 생겼다 |
@@ -641,7 +472,9 @@ Critique가 심각하다고 한 축에 Eval이 높은 점수를 줬다. 방향�
 | gate:change.unmatched_record | — | — | — | /paths/~1alerts/post/responses/502 | 003 | 기록 cc_create_upstream_unreadable이 가리키는 자리가 판본 diff에 없다 |
 | gate:change.unmatched_record | — | — | — | /paths/~1alerts/post/responses/504 | 003 | 기록 cc_create_upstream_timeout이 가리키는 자리가 판본 diff에 없다 |
 | gate:change.unmatched_record | — | — | — | /paths/~1alerts/post/responses/503 | 003 | 기록 cc_create_503_covers_upstream이 가리키는 자리가 판본 diff에 없다 |
+| gate:change.basis_off_target | — | — | — | /components/responses/AlertCreateUnavailable | 003 | 기록 cc_alert_create_unavailable_response이 인용한 'cr_create_upstream_failure'는 /paths/~1alerts/post를 가리켰는데 이 기록이 고친 자리는 그 자리 안도 아니고 같은 오퍼레이션도 아니다 |
 | gate:change.unmatched_record | — | — | — | /components/responses/AlertCreateUnavailable | 003 | 기록 cc_alert_create_unavailable_response이 가리키는 자리가 판본 diff에 없다 |
+| gate:change.basis_off_target | — | — | — | /paths/~1alerts/post/description | 003 | 기록 cc_create_unopened_date_accepted이 인용한 'cr_unopened_date_cannot_subscribe'는 /components/schemas/CourtAvailability/properties/slots를 가리켰는데 이 기록이 고친 자리는 그 자리 안도 아니고 같은 오퍼레이션도 아니다 |
 | gate:change.diff | — | — | — | 기준선 대비 | 003 | 기준선과 달라진 좌표 10개: /paths/~1alerts/post/description, /paths/~1alerts/post/responses/502, /paths/~1alerts/post/responses/504, /paths/~1alerts/post/responses/201/description, /paths/~1alerts/post/responses/201/content/application~1json/example/lastCheckedAt, /paths/~1alerts/post/responses/503/$ref, /components/headers/IdempotencyReplayed/description, /components/schemas/AlertStatus/description, /components/schemas/CourtAvailability/properties/slots/description, /components/responses/AlertCreateUnavailable |
 | gate:change.diff | — | — | — | * | 003 | 달라진 좌표 5개: /paths/~1alerts/post/description, /paths/~1alerts/post/responses/201/description, /paths/~1alerts/post/responses/201/content/application~1json/example/lastCheckedAt, /components/headers/IdempotencyReplayed/description, /components/schemas/CourtAvailability/properties/slots/description |
 | gate:change.version_label | — | — | — | tennis-alert-api-v3.yaml | 003 | 파일명의 판 번호 3과 계약의 주 버전 1이 어긋난다 |

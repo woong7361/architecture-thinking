@@ -9,8 +9,8 @@ iteration마다 찍힌 git 스냅샷은 `output.bundle` 한 파일로 묶었다(
 `response.field_differs`(응답에서 값을 좁힌 것)가 섞여 있다.
 
 `runs12`는 한 가지를 더 안고 있다. **그 run이 도는 동안 판정 규칙이 바뀌었다.** runner가 iteration마다
-디스크에서 게이트 모듈을 가져오므로 001·002·003이 서로 다른 판본으로 판정됐을 수 있고, 그래서 이 run 안의
-iteration 사이 추이는 깨끗한 측정이 아니다. 재판정해야 비교가 성립한다.
+디스크에서 게이트 모듈을 가져오므로 001·002·003이 서로 다른 판본으로 판정됐다. 그래서 이 run은 뒤에 재판정했고
+표에는 재판정한 값을 적는다(비고 참고). 그때의 판정은 git 이력에 남아 있다.
 
 판정 칸은 `G0/G1/판본대조`를 앞글자로 적는다(P=PASS, R=REJECT, S=SKIPPED). `v`는 위반, `o`는 관찰,
 뒤의 숫자는 루브릭 총점이다. 번호에 빈 자리(runs2·runs3)가 있는 것은 그 이름으로 돌린 run이 남아 있지 않기
@@ -29,4 +29,4 @@ iteration 사이 추이는 깨끗한 측정이 아니다. 재판정해야 비교
 | runs9 | 2026-09-30_b02d8689 | codex | gpt-5.5 | stage_error | 1 | 001:돌지 않음 |  |
 | runs10 | 2026-09-30_b02d8689 | 기록 없음 | 기록 없음 | 사람이 중단(iter_003 도중) | 3 | 001:P/R/P v94 o7 2.25  002:R/S/P v1 o0  003:돌지 않음 |  |
 | runs11 | 2026-09-30_b02d8689 | claude | claude-opus-5 | stage_error | 1 | 001:P/P/P v0 o31 4.20 |  |
-| runs12 | 2026-09-30_b02d8689 | claude | claude-opus-5 | max_iteration_exceeded | 3 | 001:P/R/P v2 o31 4.20  002:P/P/R v3 o41 3.65  003:P/P/R v9 o41 3.40 | 판정 규칙이 run 도중에 바뀌었다 |
+| runs12 | 2026-09-30_b02d8689 | claude | claude-opus-5 | max_iteration_exceeded (재판정 후 003 PASS) | 3 | 001:P/R/P v2 o31 4.20  002:P/P/P v0 o42 3.65  003:P/P/P v0 o43 4.00 | 판정 규칙이 run 도중에 바뀌었다. 뒤에 세 iteration의 게이트를 지금 규칙으로 다시 돌렸고(추출 스펙은 그때와 같다), iter 003의 critique·eval은 판본 기준 채점으로 다시 돌렸으며, 원장과 REPORT를 `--stage record`로 새로 냈다. iter 001·002의 critique·eval은 그때의 것이다. 표의 판정이 이 재판정의 값이다 |

@@ -520,16 +520,57 @@ def dir_snapshot(output_dir: Path | None) -> dict[str, dict]:
     return snapshot
 
 
-def generator_touched(snapshot: dict[str, dict], changes: dict[str, dict],
-                      skeleton_paths: set[str] | None) -> set[str]:
-    """지금 작업 폴더에서 생성기가 놓았거나 건드린 파일들.
+def iteration_snapshot(output_dir: Path | None, commit: str) -> dict[str, dict]:
+    """그 iteration의 작업 폴더 상태. 커밋이 있으면 그 커밋의 트리를, 없으면 디스크를 읽는다.
 
-    스켈레톤 커밋에 없던 파일과 이번에 달라진 파일이다. 색인은 생성기가 자기가 쓴 것을 신고한 것이므로
-    처음부터 있고 이번에 건드리지도 않은 스켈레톤 사본이 색인에 없는 것은 어긋남이 아니다. git이 없으면
-    스켈레톤 목록을 알 수 없으므로 이번에 달라진 것만 센다.
+    runner는 iteration마다 작업 폴더 전부를 커밋하므로 그 트리가 곧 그 iteration이다. 디스크를 읽으면 두 가지가
+    틀린다. 남은 산출물로 원장을 처음부터 다시 만들 때는 작업 폴더가 마지막 iteration에 서 있어 앞 iteration이
+    뒤에 생긴 파일을 보고, 체크아웃이 줄바꿈을 바꾸는 환경에서는 같은 파일도 커밋과 디스크의 해시가 달라
+    손대지 않은 파일이 전부 바뀐 것으로 잡힌다. 그래서 한 원장 안의 해시는 모두 커밋에서 낸다.
+    """
+    if not commit or output_dir is None:
+        return dir_snapshot(output_dir)
+    wanted = _git(output_dir, "rev-parse", "--verify", f"{commit}^{{commit}}")
+    if wanted is None:
+        return dir_snapshot(output_dir)
+    listing = _git(output_dir, "ls-tree", "-r", "-z", wanted.strip().decode("ascii", "replace"))
+    if listing is None:
+        return dir_snapshot(output_dir)
+
+    snapshot: dict[str, dict] = {}
+    for record in listing.decode("utf-8", "replace").split("\0"):
+        if "\t" not in record:
+            continue
+        head_part, rel = record.split("\t", 1)
+        parts = head_part.split()
+        if len(parts) < 3 or parts[1] != "blob":
+            continue
+        # 경로가 아니라 blob 해시로 읽는다. `git_show`와 같은 까닭으로 윈도우의 경로 길이 한도를 피한다.
+        data = _git(output_dir, "cat-file", "blob", parts[2])
+        if data is None:
+            continue
+        text = None
+        if len(data) <= MAX_DIFF_BYTES:
+            try:
+                text = normalize_newlines(data.decode("utf-8"))
+            except UnicodeDecodeError:
+                text = None
+        snapshot[rel] = {"sha": hashlib.sha256(data).hexdigest(), "text": text}
+    return snapshot
+
+
+def generator_touched(snapshot: dict[str, dict], changes: dict[str, dict],
+                      skeleton_paths: set[str] | None, has_prev: bool = False) -> set[str]:
+    """이 iteration에 생성 단계가 놓았거나 건드린 파일들. 색인과 맞댈 상대다.
+
+    색인은 그 iteration에 쓰이거나 고쳐진 것의 목록이다. 첫 iteration에는 스켈레톤 커밋에 없던 파일 전부가
+    그 목록이고, 뒤의 iteration에는 앞 iteration 대비 달라진 파일만이다. 뒤의 iteration에서도 스켈레톤 밖의
+    파일 전부를 맞대면, 앞에서 이미 신고했고 이번에 건드리지 않은 파일이 모두 "색인에 없다"로 올라와 기록이
+    신호가 되지 못한다. 처음부터 있고 건드리지 않은 스켈레톤 사본도 어긋남이 아니다. git이 없으면 스켈레톤
+    목록을 알 수 없으므로 이번에 달라진 것만 센다.
     """
     touched = set(changes)
-    if skeleton_paths is not None:
+    if not has_prev and skeleton_paths is not None:
         touched |= set(snapshot) - skeleton_paths
     return touched & set(snapshot)
 
@@ -889,7 +930,7 @@ def update_ledger(run_dir: Path, iteration: str, payload: dict) -> dict:
     # 코드 변경은 앞 iteration의 해시 색인과 지금 `output/`을 비교해 낸다. 옛 본문은 앞 커밋에서 꺼낸다.
     # 계약 판본 파일은 거기서 뺀다. 판본이 움직인 것은 2절과 3절이 좌표별로 펴므로, 여기에 두면 "확인된 수정"이
     # 계약 전문으로 덮여 코드가 실제로 달라졌는지가 가려진다.
-    snapshot = dir_snapshot(output_dir)
+    snapshot = iteration_snapshot(output_dir, commit)
     contract_paths = contract_paths_of(draft) | contract_paths_of(prev_draft)
     prev_hashes = dict((prev_entry or {}).get("file_hashes") or {})
     all_changes = (
@@ -931,7 +972,8 @@ def update_ledger(run_dir: Path, iteration: str, payload: dict) -> dict:
         payload=payload,
         declared_paths={str(e.get("path")) for e in (draft.get("files") or []) if isinstance(e, dict) and e.get("path")},
         disk_paths=set(snapshot),
-        touched_paths=generator_touched(snapshot, all_changes, git_skeleton_paths(output_dir)),
+        touched_paths=generator_touched(snapshot, all_changes, git_skeleton_paths(output_dir),
+                                        has_prev=prev_entry is not None),
         rules=rules,
         commit=commit,
         prev_commit=prev_commit,

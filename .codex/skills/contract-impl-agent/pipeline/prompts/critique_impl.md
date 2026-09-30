@@ -12,7 +12,7 @@
 ## 입력
 
 - `INPUT_JSON` — 기준선 계약 원문, `scope.operation_ids`, 요구사항 명세, `implementation_contract`.
-- `PROSE_SLOTS_JSON` — 기계가 소비하지 않는 계약의 산문 슬롯. `{id, pointer, text, axis}`다.
+- `PROSE_SLOTS_JSON` — 기계가 소비하지 않는 계약의 산문 슬롯. 이 초안의 계약 판본에서 뽑았다. `{id, pointer, text, axis}`다.
   스키마 키워드로 드러나지 않는 약속이 여기 있고, 지적의 근거로 슬롯 id를 인용할 수 있다.
 - `DRAFT_JSON` — 현재 초안의 **색인과 판단 기록**이다. 파일 원문은 여기 없다. `files`는 그 iteration에
   무엇이 쓰이거나 고쳐졌는지를 말해 주는 목록이고 각 항목은 `{path, role}`이며, `contract_version`이

@@ -1,0 +1,44 @@
+{
+  "recorded_at": "2026-09-30T23:55:51+09:00",
+  "recorded_by": "run_stage --stage record",
+  "continuous_run": false,
+  "note": "이 원장과 리포트는 한 번의 run이 끝나며 나온 것이 아니다. run 폴더에 남은 iteration 산출물을 읽어 다시 만들었고 그 과정에서 LLM을 부르지 않았다. 산출물이 없는 iteration은 넣지 않았다 — 돌리지 않은 것과 실패한 것은 다르다.",
+  "iterations": [
+    {
+      "iteration": "001",
+      "status": "REJECT",
+      "eval_present": true,
+      "critique_present": true,
+      "unmeasured_axes": [],
+      "stage_models": {
+        "draft": "claude-opus-5",
+        "critique": "claude-opus-5",
+        "eval": "claude-opus-5"
+      }
+    },
+    {
+      "iteration": "002",
+      "status": "REJECT",
+      "eval_present": true,
+      "critique_present": true,
+      "unmeasured_axes": [],
+      "stage_models": {
+        "draft": "claude-opus-5",
+        "critique": "claude-opus-5",
+        "eval": "claude-opus-5"
+      }
+    },
+    {
+      "iteration": "003",
+      "status": "PASS",
+      "eval_present": true,
+      "critique_present": true,
+      "unmeasured_axes": [],
+      "stage_models": {
+        "draft": "claude-opus-5",
+        "critique": "claude-opus-5",
+        "eval": "claude-opus-5"
+      }
+    }
+  ]
+}
