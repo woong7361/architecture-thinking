@@ -1,0 +1,316 @@
+{
+  "brief_hash": "b02d8689",
+  "run_id": "2026-09-30_b02d8689",
+  "failed_at": "2026-09-30T18:45:55+09:00",
+  "terminal_reason": "max_iteration_exceeded",
+  "last_iteration": "003",
+  "decision_risk": {
+    "level": "medium",
+    "reasons": []
+  },
+  "failure_counts_by_category": {
+    "gate_violation": 14,
+    "quality_reject": 7
+  },
+  "iteration_progress": [
+    {
+      "iteration": "001",
+      "g0": "PASS",
+      "g1": "REJECT",
+      "changes": "PASS",
+      "violations": 2,
+      "observations": 31,
+      "build_attempts": 0,
+      "rules": [
+        "response.field_differs"
+      ],
+      "critique": true,
+      "eval": true
+    },
+    {
+      "iteration": "002",
+      "g0": "PASS",
+      "g1": "PASS",
+      "changes": "REJECT",
+      "violations": 3,
+      "observations": 41,
+      "build_attempts": 0,
+      "rules": [
+        "change.unjustified"
+      ],
+      "critique": true,
+      "eval": true
+    },
+    {
+      "iteration": "003",
+      "g0": "PASS",
+      "g1": "PASS",
+      "changes": "REJECT",
+      "violations": 9,
+      "observations": 41,
+      "build_attempts": 0,
+      "rules": [
+        "change.unjustified"
+      ],
+      "critique": true,
+      "eval": true
+    }
+  ],
+  "last_failures": [
+    {
+      "category": "gate_violation",
+      "rule": "gate",
+      "severity": "high",
+      "retryable": false,
+      "message": "gate:change.unjustified@None: 기록 cc_watching_check_source이 인용한 'cr_watching_says_periodic_check'가 이 iteration의 비평에 없다"
+    },
+    {
+      "category": "gate_violation",
+      "rule": "gate",
+      "severity": "high",
+      "retryable": false,
+      "message": "gate:change.unjustified@None: 기록 cc_create_schedule_source이 인용한 'cr_create_upstream_failure'가 이 iteration의 비평에 없다"
+    },
+    {
+      "category": "gate_violation",
+      "rule": "gate",
+      "severity": "high",
+      "retryable": false,
+      "message": "gate:change.unjustified@None: 기록 cc_create_upstream_unreadable이 인용한 'cr_create_upstream_failure'가 이 iteration의 비평에 없다"
+    },
+    {
+      "category": "gate_violation",
+      "rule": "gate",
+      "severity": "high",
+      "retryable": false,
+      "message": "gate:change.unjustified@None: 기록 cc_create_upstream_unreadable은 표현 변경인데 representation_basis가 비었다 (닫힌 값: interop, spec_implication, contract_consistency)"
+    },
+    {
+      "category": "gate_violation",
+      "rule": "gate",
+      "severity": "high",
+      "retryable": false,
+      "message": "gate:change.unjustified@None: 기록 cc_create_upstream_timeout이 인용한 'cr_create_upstream_failure'가 이 iteration의 비평에 없다"
+    },
+    {
+      "category": "gate_violation",
+      "rule": "gate",
+      "severity": "high",
+      "retryable": false,
+      "message": "gate:change.unjustified@None: 기록 cc_create_upstream_timeout은 표현 변경인데 representation_basis가 비었다 (닫힌 값: interop, spec_implication, contract_consistency)"
+    },
+    {
+      "category": "gate_violation",
+      "rule": "gate",
+      "severity": "high",
+      "retryable": false,
+      "message": "gate:change.unjustified@None: 기록 cc_create_503_covers_upstream이 인용한 'cr_create_upstream_failure'가 이 iteration의 비평에 없다"
+    },
+    {
+      "category": "gate_violation",
+      "rule": "gate",
+      "severity": "high",
+      "retryable": false,
+      "message": "gate:change.unjustified@None: 기록 cc_alert_create_unavailable_response이 인용한 'cr_create_upstream_failure'가 이 iteration의 비평에 없다"
+    },
+    {
+      "category": "gate_violation",
+      "rule": "gate",
+      "severity": "high",
+      "retryable": false,
+      "message": "gate:change.unjustified@None: 기록 cc_alert_create_unavailable_response은 표현 변경인데 representation_basis가 비었다 (닫힌 값: interop, spec_implication, contract_consistency)"
+    },
+    {
+      "category": "quality_reject",
+      "rule": "min_total",
+      "severity": "high",
+      "retryable": false,
+      "message": "min_total: 3.4 < 4.2"
+    },
+    {
+      "category": "quality_reject",
+      "rule": "min_axis.response_fidelity",
+      "severity": "high",
+      "retryable": false,
+      "message": "min_axis.response_fidelity: 3 < 4.0"
+    },
+    {
+      "category": "quality_reject",
+      "rule": "min_axis.state_continuity",
+      "severity": "high",
+      "retryable": false,
+      "message": "min_axis.state_continuity: 3 < 4.0"
+    },
+    {
+      "category": "quality_reject",
+      "rule": "min_axis.judgement_disclosure",
+      "severity": "high",
+      "retryable": false,
+      "message": "min_axis.judgement_disclosure: 3 < 4.0"
+    }
+  ],
+  "lineage": {
+    "input": "b02d8689_input.json",
+    "last_draft": "iter_003/draft.json",
+    "last_gate": "iter_003/gate.json",
+    "last_critique": "iter_003/critique.json",
+    "last_eval": "iter_003/eval.json"
+  },
+  "iteration_rejections": [
+    {
+      "iteration": "001",
+      "gate": "iter_001/gate.json",
+      "skipped_reason": null,
+      "build_attempts": 0,
+      "unmeasured_axes": [],
+      "errors": [
+        "gate:response.field_differs@getCourtAvailability:200: 필수: slots: 계약이 항상 담겠다고 보장했는데 구현은 선택이다",
+        "gate:response.field_differs@listAlerts:200: 필수: items: 계약이 항상 담겠다고 보장했는데 구현은 선택이다"
+      ]
+    },
+    {
+      "iteration": "002",
+      "gate": "iter_002/gate.json",
+      "skipped_reason": null,
+      "build_attempts": 0,
+      "unmeasured_axes": [],
+      "errors": [
+        "gate:change.unjustified@None: 기록 cc_watching_check_source은 표현 변경인데 representation_basis가 비었다 (닫힌 값: interop, spec_implication, contract_consistency)",
+        "gate:change.unjustified@None: 기록 cc_create_schedule_source은 표현 변경인데 representation_basis가 비었다 (닫힌 값: interop, spec_implication, contract_consistency)",
+        "gate:change.unjustified@None: 기록 cc_create_503_covers_upstream은 표현 변경인데 representation_basis가 비었다 (닫힌 값: interop, spec_implication, contract_consistency)",
+        "min_total: 3.65 < 4.2",
+        "min_axis.state_continuity: 3 < 4.0",
+        "min_axis.judgement_disclosure: 3 < 4.0"
+      ]
+    },
+    {
+      "iteration": "003",
+      "gate": "iter_003/gate.json",
+      "skipped_reason": null,
+      "build_attempts": 0,
+      "unmeasured_axes": [],
+      "errors": [
+        "gate:change.unjustified@None: 기록 cc_watching_check_source이 인용한 'cr_watching_says_periodic_check'가 이 iteration의 비평에 없다",
+        "gate:change.unjustified@None: 기록 cc_create_schedule_source이 인용한 'cr_create_upstream_failure'가 이 iteration의 비평에 없다",
+        "gate:change.unjustified@None: 기록 cc_create_upstream_unreadable이 인용한 'cr_create_upstream_failure'가 이 iteration의 비평에 없다",
+        "gate:change.unjustified@None: 기록 cc_create_upstream_unreadable은 표현 변경인데 representation_basis가 비었다 (닫힌 값: interop, spec_implication, contract_consistency)",
+        "gate:change.unjustified@None: 기록 cc_create_upstream_timeout이 인용한 'cr_create_upstream_failure'가 이 iteration의 비평에 없다",
+        "gate:change.unjustified@None: 기록 cc_create_upstream_timeout은 표현 변경인데 representation_basis가 비었다 (닫힌 값: interop, spec_implication, contract_consistency)",
+        "gate:change.unjustified@None: 기록 cc_create_503_covers_upstream이 인용한 'cr_create_upstream_failure'가 이 iteration의 비평에 없다",
+        "gate:change.unjustified@None: 기록 cc_alert_create_unavailable_response이 인용한 'cr_create_upstream_failure'가 이 iteration의 비평에 없다",
+        "gate:change.unjustified@None: 기록 cc_alert_create_unavailable_response은 표현 변경인데 representation_basis가 비었다 (닫힌 값: interop, spec_implication, contract_consistency)",
+        "min_total: 3.4 < 4.2",
+        "min_axis.response_fidelity: 3 < 4.0",
+        "min_axis.state_continuity: 3 < 4.0",
+        "min_axis.judgement_disclosure: 3 < 4.0"
+      ]
+    }
+  ],
+  "config": {
+    "provider": "claude",
+    "codex_bin": "codex",
+    "agent_models": {
+      "gen": "claude-opus-5",
+      "critique": "claude-opus-5",
+      "eval": "claude-opus-5",
+      "refine": "claude-opus-5"
+    },
+    "iteration": "001",
+    "max_iterations": 3,
+    "timeout_seconds": 7200,
+    "gen_prompt_path": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\contract-impl-agent\\pipeline\\prompts\\gen_impl.md",
+    "rubric_path": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\contract-impl-agent\\pipeline\\rubrics\\impl.rubric.yaml",
+    "rubric": {
+      "name": "impl:v1",
+      "scale": {
+        "min": 0,
+        "max": 5
+      },
+      "_note": "계약 적합성 게이트. 게이트가 결정적으로 세는 형태(필드의 유무, 타입, 선언한 상태 코드)는 이 루브릭이 다시 보지 않는다. 축이 보는 것은 그 형태 안에 담긴 뜻이다. 채점의 분모는 그 run의 기준선에서 뽑은 `prose_slots`이고 그 iteration의 계약 판본이 아니다. 계약을 고쳐 지운 약속도 분모에 남아 있으므로 약속을 지워 만점을 만드는 길이 없다. 점수는 5로 뭉치지 않게 1~5 전 구간을 쓰고, 스케일 문장에 박힌 상한 조건에 걸리면 다른 자리가 아무리 좋아도 그 위로 올리지 않는다. 애매하면 낮은 쪽으로 내린다.",
+      "axes": {
+        "request_tolerance": {
+          "weight": 0.2,
+          "description": "계약이 받겠다고 한 요청을 다 받는다. 코드 안에 더한 검증은 추출 스펙에 드러나지 않으므로 게이트가 보지 못하고, 좁게 받는 구현은 계약을 읽고 부른 요청을 거절한다.",
+          "method": "분모는 기준선 `prose_slots` 중 이 축에 배분되고 의무로 분류된 슬롯이다. 각 슬롯의 약속을 코드가 받아들이는 입력 범위에 매핑하고, 계약이 열어 둔 것을 코드가 좁히는 자리를 미충족으로 센다. 선택 입력을 필수로 다루는 것, 계약에 없는 형식·길이·범위 검증을 더한 것, 열거형 밖을 거절하기 전에 열거형 안의 값을 거절하는 것이 미충족이다. 계약보다 넓게 받는 것은 미충족이 아니다. 계약을 고쳐 슬롯의 약속을 지웠으면 그 슬롯은 미충족으로 세고 근거는 `judgement_disclosure`가 본다. `axis_rationales`에 \"열거 N개, 미충족 K개: [...]\" 형태로 센 근거를 남긴다.",
+          "scale": {
+            "1": "미충족 3개 이상",
+            "2": "미충족 2개",
+            "3": "미충족 1개 — 미충족이 한 건이라도 있으면 최대 3",
+            "4": "미충족 0개. 다만 계약이 선택으로 둔 입력 일부에서 그것이 없을 때의 경로를 코드에서 확인할 수 없다",
+            "5": "미충족 0개 + 계약이 선택으로 둔 모든 입력에 부재 경로가 있고 계약에 없는 검증이 한 곳도 없다"
+          }
+        },
+        "response_fidelity": {
+          "weight": 0.25,
+          "description": "응답에 담긴 값이 계약이 약속한 그 값이다. 필드의 유무와 타입은 게이트가 보지만 값의 뜻은 코드를 읽어야 안다.",
+          "method": "분모는 기준선 `prose_slots` 중 이 축에 배분되고 의무로 분류된 슬롯이다. 각 슬롯이 어떤 값이 무엇을 뜻한다고 말했는지 읽고, 그 값을 만드는 코드 경로를 찾아 뜻이 같은지 본다. 형태는 맞지만 뜻이 다른 것이 미충족이다. 단위와 기준 시점이 다른 것, 계약이 정한 정렬·집계·필터와 다르게 만든 것, 같은 이름의 값이 자리마다 다른 뜻으로 실리는 것이 그에 든다. 계약보다 좁은 열거형·범위·형식은 미충족이 아니다. 계약을 고쳐 슬롯의 약속을 지웠으면 그 슬롯은 미충족으로 센다. `axis_rationales`에 \"열거 N개, 미충족 K개: [...]\" 형태로 센 근거를 남긴다.",
+          "scale": {
+            "1": "미충족 3개 이상",
+            "2": "미충족 2개",
+            "3": "미충족 1개 — 미충족이 한 건이라도 있으면 최대 3",
+            "4": "미충족 0개. 다만 값 한둘은 그것을 만드는 코드 경로가 간접적으로만 확인된다",
+            "5": "미충족 0개 + 응답에 실리는 각 값의 산출 경로를 코드에서 짚을 수 있고 그 뜻이 슬롯의 문장과 같다"
+          }
+        },
+        "failure_faithfulness": {
+          "weight": 0.2,
+          "description": "실패를 계약이 정한 코드와 상태와 재시도 가능성으로 말한다. 무엇을 선언했는지는 게이트가 보지만 어떤 상황에서 그 실패를 내는지는 코드를 읽어야 안다.",
+          "method": "분모는 기준선 `prose_slots` 중 이 축에 배분되고 의무로 분류된 슬롯이다. 각 슬롯이 말한 실패 상황을 코드의 분기에 매핑하고, 선언한 (상태 코드, 코드) 쌍에 닿는 경로가 없는 자리와 계약이 말한 상황과 다른 조건에 달린 자리를 미충족으로 센다. 한 상황에 두 쌍이 겹쳐 어느 것이 나올지 코드가 정하지 않은 것도 미충족이다. 계약을 고쳐 슬롯의 약속을 지웠으면 그 슬롯은 미충족으로 센다. `axis_rationales`에 \"열거 N개, 미충족 K개: [...]\" 형태로 센 근거를 남긴다.",
+          "scale": {
+            "1": "미충족 3개 이상",
+            "2": "미충족 2개",
+            "3": "미충족 1개 — 미충족이 한 건이라도 있으면 최대 3",
+            "4": "미충족 0개. 다만 조건 한둘이 계약의 문장보다 넓게 또는 좁게 읽힌다",
+            "5": "미충족 0개 + 선언한 모든 쌍에 닿는 경로가 있고 그 조건이 계약이 말한 상황과 같다"
+          }
+        },
+        "state_continuity": {
+          "weight": 0.2,
+          "description": "요청 사이에 걸친 약속을 지킨다. 응답 하나를 계약과 대조해서는 볼 수 없는 자리다.",
+          "method": "분모는 기준선 `prose_slots` 중 이 축에 배분되고 의무로 분류된 슬롯이다. 한 요청으로 판정되지 않는 약속을 열거하고, 그 약속을 유지하는 저장·조회·재생 경로가 코드에 있는지 본다. 같은 요청을 두 번 보냈을 때의 약속이 지켜지지 않는 것, 함께 움직여야 하는 값이 따로 바뀌는 것, 보관 기간이나 상태 전이의 순서가 계약과 다른 것이 미충족이다. 계약을 고쳐 슬롯의 약속을 지웠으면 그 슬롯은 미충족으로 센다. `axis_rationales`에 \"열거 N개, 미충족 K개: [...]\" 형태로 센 근거를 남긴다.",
+          "scale": {
+            "1": "미충족 3개 이상",
+            "2": "미충족 2개",
+            "3": "미충족 1개 — 미충족이 한 건이라도 있으면 최대 3",
+            "4": "미충족 0개. 다만 약속 한둘은 그것을 유지하는 경로가 한 요청 안에서만 확인된다",
+            "5": "미충족 0개 + 요청 사이에 걸친 각 약속마다 그것을 유지하는 저장과 재생 경로를 코드에서 짚을 수 있다"
+          }
+        },
+        "judgement_disclosure": {
+          "weight": 0.15,
+          "description": "계약이 비거나 틀린 자리에서 내린 판단을 숨기지 않는다. 고른 것이 좋은 선택인지가 아니라 신고했는지와 근거가 무엇에 기대는지의 문제다.",
+          "method": "두 단계로 센다. 먼저 신고된 `decisions`와 `contract_changes`를 분모로 근거의 품질을 본다. 계약의 다른 자리를 유추한 것과 명세가 함의한 것이 관례보다 세고, 근거가 빈 신고는 그 자체로 결함이다. 다음으로 신고되지 않은 채 고른 자리를 직접 찾는다. 계약과 명세가 정하지 않았는데 코드가 값을 정한 자리, 계약 판본이 움직였는데 기록이 없는 자리가 그것이다. 점수 구간은 근거 품질이 정하고 상한은 미신고가 정한다. 미신고는 분모가 없어 열거가 흔들리므로 점수를 만들지 않고 상한만 내린다. 계약에 답이 있는 자리를 결정으로 신고한 것은 미신고가 아니라 근거가 틀린 신고로 센다. 신고가 몇 건인지는 감점 사유가 아니다. 개수로 깎으면 판단이 줄지 않고 숨는다. `axis_rationales`에 신고 건수와 미신고 건수를 세어 남긴다.",
+          "scale": {
+            "1": "계약을 고쳤는데 기록이 없다",
+            "2": "미신고가 두 건 이상",
+            "3": "미신고가 한 건이거나 근거가 빈 신고가 있다",
+            "4": "미신고가 없고 관례에만 기댄 신고가 하나 있다",
+            "5": "미신고가 없고 모든 신고가 계약이나 명세를 가리킨다"
+          }
+        }
+      },
+      "thresholds": {
+        "min_total": 4.2,
+        "min_axis": {
+          "request_tolerance": 4.0,
+          "response_fidelity": 4.0,
+          "failure_faithfulness": 4.0,
+          "state_continuity": 4.0,
+          "judgement_disclosure": 4.0
+        }
+      }
+    },
+    "skeleton_dir": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\phase2\\taskE\\task5\\skeleton",
+    "java_home": "C:/Program Files/Amazon Corretto/jdk17.0.19_10",
+    "rules_path": "C:\\Users\\PC-220627-03\\Desktop\\project\\task\\architecture-thinking\\.codex\\skills\\contract-impl-agent\\rules\\conformance_rules.yaml",
+    "allow_missing_gates": false,
+    "max_build_attempts": 3,
+    "max_format_attempts": 2,
+    "output_first_commit": "886fd475799e9efbee267704d09b509583489c32",
+    "baseline_drift": []
+  },
+  "next_actions": [
+    "게이트 위반이 남았으면 계약이 그 자리를 무엇이라 말하는지 먼저 확인한다",
+    "반복 실패의 주된 category를 보고 프롬프트나 규칙 카드를 조정한다"
+  ]
+}

@@ -1,0 +1,514 @@
+{
+  "iteration": "003",
+  "g0": "PASS",
+  "g1": "REJECT",
+  "changes": "PASS",
+  "violations": [
+    {
+      "rule": "error.code_pair_missing",
+      "point": "getCourtAvailability:VALIDATION_FAILED",
+      "where": "responses.400",
+      "detail": "계약이 선언한 쌍이다 (400, VALIDATION_FAILED)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:values",
+      "where": "responses.400",
+      "detail": "계약의 선언 밖이다 (400, values)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_pair_missing",
+      "point": "getCourtAvailability:COURT_NOT_SUPPORTED",
+      "where": "responses.404",
+      "detail": "계약이 선언한 쌍이다 (404, COURT_NOT_SUPPORTED)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:values",
+      "where": "responses.404",
+      "detail": "계약의 선언 밖이다 (404, values)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_pair_missing",
+      "point": "getCourtAvailability:INTERNAL_ERROR",
+      "where": "responses.500",
+      "detail": "계약이 선언한 쌍이다 (500, INTERNAL_ERROR)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:values",
+      "where": "responses.500",
+      "detail": "계약의 선언 밖이다 (500, values)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_pair_missing",
+      "point": "getCourtAvailability:UPSTREAM_RESPONSE_UNREADABLE",
+      "where": "responses.502",
+      "detail": "계약이 선언한 쌍이다 (502, UPSTREAM_RESPONSE_UNREADABLE)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:values",
+      "where": "responses.502",
+      "detail": "계약의 선언 밖이다 (502, values)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_pair_missing",
+      "point": "getCourtAvailability:UPSTREAM_UNAVAILABLE",
+      "where": "responses.503",
+      "detail": "계약이 선언한 쌍이다 (503, UPSTREAM_UNAVAILABLE)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_pair_missing",
+      "point": "getCourtAvailability:STORAGE_TIMEOUT",
+      "where": "responses.503",
+      "detail": "계약이 선언한 쌍이다 (503, STORAGE_TIMEOUT)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:values",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, values)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_pair_missing",
+      "point": "getCourtAvailability:UPSTREAM_TIMEOUT",
+      "where": "responses.504",
+      "detail": "계약이 선언한 쌍이다 (504, UPSTREAM_TIMEOUT)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:values",
+      "where": "responses.504",
+      "detail": "계약의 선언 밖이다 (504, values)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_pair_missing",
+      "point": "listAlerts:VALIDATION_FAILED",
+      "where": "responses.400",
+      "detail": "계약이 선언한 쌍이다 (400, VALIDATION_FAILED)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "listAlerts:values",
+      "where": "responses.400",
+      "detail": "계약의 선언 밖이다 (400, values)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_pair_missing",
+      "point": "listAlerts:UNAUTHENTICATED",
+      "where": "responses.401",
+      "detail": "계약이 선언한 쌍이다 (401, UNAUTHENTICATED)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "listAlerts:values",
+      "where": "responses.401",
+      "detail": "계약의 선언 밖이다 (401, values)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_pair_missing",
+      "point": "listAlerts:INTERNAL_ERROR",
+      "where": "responses.500",
+      "detail": "계약이 선언한 쌍이다 (500, INTERNAL_ERROR)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "listAlerts:values",
+      "where": "responses.500",
+      "detail": "계약의 선언 밖이다 (500, values)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_pair_missing",
+      "point": "listAlerts:STORAGE_TIMEOUT",
+      "where": "responses.503",
+      "detail": "계약이 선언한 쌍이다 (503, STORAGE_TIMEOUT)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "listAlerts:values",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, values)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_pair_missing",
+      "point": "createAlert:VALIDATION_FAILED",
+      "where": "responses.400",
+      "detail": "계약이 선언한 쌍이다 (400, VALIDATION_FAILED)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "createAlert:values",
+      "where": "responses.400",
+      "detail": "계약의 선언 밖이다 (400, values)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_pair_missing",
+      "point": "createAlert:UNAUTHENTICATED",
+      "where": "responses.401",
+      "detail": "계약이 선언한 쌍이다 (401, UNAUTHENTICATED)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "createAlert:values",
+      "where": "responses.401",
+      "detail": "계약의 선언 밖이다 (401, values)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_pair_missing",
+      "point": "createAlert:IDEMPOTENCY_KEY_REUSED",
+      "where": "responses.409",
+      "detail": "계약이 선언한 쌍이다 (409, IDEMPOTENCY_KEY_REUSED)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "createAlert:values",
+      "where": "responses.409",
+      "detail": "계약의 선언 밖이다 (409, values)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_pair_missing",
+      "point": "createAlert:COURT_NOT_SUPPORTED",
+      "where": "responses.422",
+      "detail": "계약이 선언한 쌍이다 (422, COURT_NOT_SUPPORTED)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_pair_missing",
+      "point": "createAlert:SLOT_NOT_SUPPORTED",
+      "where": "responses.422",
+      "detail": "계약이 선언한 쌍이다 (422, SLOT_NOT_SUPPORTED)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_pair_missing",
+      "point": "createAlert:ALERT_WINDOW_CLOSED",
+      "where": "responses.422",
+      "detail": "계약이 선언한 쌍이다 (422, ALERT_WINDOW_CLOSED)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "createAlert:values",
+      "where": "responses.422",
+      "detail": "계약의 선언 밖이다 (422, values)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_pair_missing",
+      "point": "createAlert:INTERNAL_ERROR",
+      "where": "responses.500",
+      "detail": "계약이 선언한 쌍이다 (500, INTERNAL_ERROR)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "createAlert:values",
+      "where": "responses.500",
+      "detail": "계약의 선언 밖이다 (500, values)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_pair_missing",
+      "point": "createAlert:STORAGE_TIMEOUT",
+      "where": "responses.503",
+      "detail": "계약이 선언한 쌍이다 (503, STORAGE_TIMEOUT)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_pair_missing",
+      "point": "createAlert:CONCURRENT_UPDATE_CONFLICT",
+      "where": "responses.503",
+      "detail": "계약이 선언한 쌍이다 (503, CONCURRENT_UPDATE_CONFLICT)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "createAlert:values",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, values)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_pair_missing",
+      "point": "getAlert:VALIDATION_FAILED",
+      "where": "responses.400",
+      "detail": "계약이 선언한 쌍이다 (400, VALIDATION_FAILED)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getAlert:values",
+      "where": "responses.400",
+      "detail": "계약의 선언 밖이다 (400, values)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_pair_missing",
+      "point": "getAlert:UNAUTHENTICATED",
+      "where": "responses.401",
+      "detail": "계약이 선언한 쌍이다 (401, UNAUTHENTICATED)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getAlert:values",
+      "where": "responses.401",
+      "detail": "계약의 선언 밖이다 (401, values)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_pair_missing",
+      "point": "getAlert:ALERT_NOT_FOUND",
+      "where": "responses.404",
+      "detail": "계약이 선언한 쌍이다 (404, ALERT_NOT_FOUND)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getAlert:values",
+      "where": "responses.404",
+      "detail": "계약의 선언 밖이다 (404, values)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_pair_missing",
+      "point": "getAlert:INTERNAL_ERROR",
+      "where": "responses.500",
+      "detail": "계약이 선언한 쌍이다 (500, INTERNAL_ERROR)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getAlert:values",
+      "where": "responses.500",
+      "detail": "계약의 선언 밖이다 (500, values)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_pair_missing",
+      "point": "getAlert:STORAGE_TIMEOUT",
+      "where": "responses.503",
+      "detail": "계약이 선언한 쌍이다 (503, STORAGE_TIMEOUT)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getAlert:values",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, values)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_pair_missing",
+      "point": "cancelAlert:VALIDATION_FAILED",
+      "where": "responses.400",
+      "detail": "계약이 선언한 쌍이다 (400, VALIDATION_FAILED)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "cancelAlert:values",
+      "where": "responses.400",
+      "detail": "계약의 선언 밖이다 (400, values)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_pair_missing",
+      "point": "cancelAlert:UNAUTHENTICATED",
+      "where": "responses.401",
+      "detail": "계약이 선언한 쌍이다 (401, UNAUTHENTICATED)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "cancelAlert:values",
+      "where": "responses.401",
+      "detail": "계약의 선언 밖이다 (401, values)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_pair_missing",
+      "point": "cancelAlert:ALERT_NOT_FOUND",
+      "where": "responses.404",
+      "detail": "계약이 선언한 쌍이다 (404, ALERT_NOT_FOUND)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "cancelAlert:values",
+      "where": "responses.404",
+      "detail": "계약의 선언 밖이다 (404, values)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_pair_missing",
+      "point": "cancelAlert:INTERNAL_ERROR",
+      "where": "responses.500",
+      "detail": "계약이 선언한 쌍이다 (500, INTERNAL_ERROR)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "cancelAlert:values",
+      "where": "responses.500",
+      "detail": "계약의 선언 밖이다 (500, values)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_pair_missing",
+      "point": "cancelAlert:STORAGE_TIMEOUT",
+      "where": "responses.503",
+      "detail": "계약이 선언한 쌍이다 (503, STORAGE_TIMEOUT)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_pair_missing",
+      "point": "cancelAlert:CONCURRENT_UPDATE_CONFLICT",
+      "where": "responses.503",
+      "detail": "계약이 선언한 쌍이다 (503, CONCURRENT_UPDATE_CONFLICT)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "cancelAlert:values",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, values)",
+      "verdict": "violation"
+    }
+  ],
+  "observations": [
+    {
+      "rule": "request.field_extra",
+      "point": "listAlerts",
+      "where": "parameters.header.Authorization",
+      "detail": "계약에 없는 파라미터다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "request.field_extra",
+      "point": "createAlert",
+      "where": "parameters.header.Authorization",
+      "detail": "계약에 없는 파라미터다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "surface.status_extra",
+      "point": "createAlert:502",
+      "where": "responses",
+      "detail": "계약이 선언하지 않은 상태 코드다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "surface.status_extra",
+      "point": "createAlert:504",
+      "where": "responses",
+      "detail": "계약이 선언하지 않은 상태 코드다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "request.field_extra",
+      "point": "getAlert",
+      "where": "parameters.header.Authorization",
+      "detail": "계약에 없는 파라미터다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "request.field_extra",
+      "point": "cancelAlert",
+      "where": "parameters.header.Authorization",
+      "detail": "계약에 없는 파라미터다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "decision.unknown_point",
+      "point": "인증 토큰의 사용자 식별",
+      "where": "src/main/java/com/thinking/tennis/api/BearerUser.java",
+      "detail": "계약의 판정 지점이 아니다 (결정 d_bearer_subject_boundary)",
+      "verdict": "observation"
+    },
+    {
+      "rule": "decision.unknown_point",
+      "point": "서버 시각 공급",
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+      "detail": "계약의 판정 지점이 아니다 (결정 d_system_utc_clock)",
+      "verdict": "observation"
+    },
+    {
+      "rule": "decision.unknown_point",
+      "point": "expiresAt 계산",
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+      "detail": "계약의 판정 지점이 아니다 (결정 d_expiry_boundary)",
+      "verdict": "observation"
+    },
+    {
+      "rule": "decision.unknown_point",
+      "point": "신청 중 시간대 확인 실패",
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplicationService.java; src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+      "detail": "계약의 판정 지점이 아니다 (결정 d_create_upstream_failure_surface)",
+      "verdict": "observation"
+    },
+    {
+      "rule": "decision.unknown_point",
+      "point": "문제 응답의 type/title/traceId 값",
+      "where": "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+      "detail": "계약의 판정 지점이 아니다 (결정 d_problem_representation)",
+      "verdict": "observation"
+    },
+    {
+      "rule": "decision.unknown_point",
+      "point": "24시간 멱등 기록 정리",
+      "where": "src/main/java/com/thinking/tennis/app/InMemoryAlertStore.java",
+      "detail": "계약의 판정 지점이 아니다 (결정 d_idempotency_cleanup)",
+      "verdict": "observation"
+    },
+    {
+      "rule": "decision.unknown_point",
+      "point": "만료 상태의 HTTP 투영",
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+      "detail": "계약의 판정 지점이 아니다 (결정 d_stored_expiry_projection)",
+      "verdict": "observation"
+    },
+    {
+      "rule": "decision.unknown_point",
+      "point": "서버 소유 만료 전이 실행",
+      "where": "src/main/java/com/thinking/tennis/app/AlertExpiryJob.java",
+      "detail": "계약의 판정 지점이 아니다 (결정 d_expiry_scheduled_transition)",
+      "verdict": "observation"
+    }
+  ],
+  "errors": [],
+  "derived_spec": "C:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs4\\2026-09-29_b02d8689\\iter_003\\api-docs.json",
+  "allow_missing_gates": false,
+  "log": [
+    "작업 폴더: C:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs4\\2026-09-29_b02d8689\\output (target/ 재사용 예)\n$ C:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs4\\2026-09-29_b02d8689\\output\\mvnw.cmd -B -q test → 0\n01:14:11.453 [main] INFO com.tngtech.archunit.core.PluginLoader -- Detected Java version 17.0.19\n\n$ dump_api_docs.py → 0\nC:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs4\\2026-09-29_b02d8689\\iter_003\\api-docs.json 에 저장했다. 포트 64641, 최상위 키 ['components', 'info', 'openapi', 'paths', 'servers'], paths 3개\n"
+  ],
+  "critique_source": "none:no_critique_in_iter_002"
+}

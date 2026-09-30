@@ -1,0 +1,71 @@
+{
+  "iteration": "002",
+  "g0": "REJECT",
+  "g1": "SKIPPED",
+  "changes": "SKIPPED",
+  "violations": [
+    {
+      "rule": "g0.compile_failed",
+      "point": null,
+      "where": "mvnw test",
+      "detail": "컴파일 오류 2건\nsrc/main/java/com/thinking/tennis/api/AlertController.java:233:86 illegal start of type\nsrc/main/java/com/thinking/tennis/api/AlertController.java:233:87 reached end of file while parsing",
+      "verdict": "violation"
+    }
+  ],
+  "observations": [],
+  "errors": [],
+  "derived_spec": null,
+  "allow_missing_gates": false,
+  "log": [
+    "작업 폴더: C:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs8\\2026-09-30_b02d8689\\output (target/ 재사용 예)\n$ C:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs8\\2026-09-30_b02d8689\\output\\mvnw.cmd -B -q test → 1\n[ERROR] COMPILATION ERROR : \n[ERROR] /C:/Users/PC-220627-03/AppData/Local/Temp/claude/c--Users-PC-220627-03-Desktop-project-task-architecture-thinking/862b7ff3-a396-4dc6-9b71-a200dcde2544/scratchpad/runs8/2026-09-30_b02d8689/output/src/main/java/com/thinking/tennis/api/AlertController.java:[233,86] illegal start of type\n[ERROR] /C:/Users/PC-220627-03/AppData/Local/Temp/claude/c--Users-PC-220627-03-Desktop-project-task-architecture-thinking/862b7ff3-a396-4dc6-9b71-a200dcde2544/scratchpad/runs8/2026-09-30_b02d8689/output/src/main/java/com/thinking/tennis/api/AlertController.java:[233,87] reached end of file while parsing\n[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.13.0:compile (default-compile) on project tennis-alert-skeleton: Compilation failure: Compilation failure: \n[ERROR] /C:/Users/PC-220627-03/AppData/Local/Temp/claude/c--Users-PC-220627-03-Desktop-project-task-architecture-thinking/862b7ff3-a396-4dc6-9b71-a200dcde2544/scratchpad/runs8/2026-09-30_b02d8689/output/src/main/java/com/thinking/tennis/api/AlertController.java:[233,86] illegal start of type\n[ERROR] /C:/Users/PC-220627-03/AppData/Local/Temp/claude/c--Users-PC-220627-03-Desktop-project-task-architecture-thinking/862b7ff3-a396-4dc6-9b71-a200dcde2544/scratchpad/runs8/2026-09-30_b02d8689/output/src/main/java/com/thinking/tennis/api/AlertController.java:[233,87] reached end of file while parsing\n[ERROR] -> [Help 1]\n[ERROR] \n[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.\n[ERROR] Re-run Maven using the -X switch to enable full debug logging.\n[ERROR] \n[ERROR] For more information about the errors and possible solutions, please read the following articles:\n[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException\n"
+  ],
+  "build_attempts": [
+    {
+      "attempt": 1,
+      "commit": "9a10f1975441b27743d36f76b43a9db2dbb25064",
+      "index_declared": true,
+      "index_errors": [],
+      "failures": [
+        {
+          "rule": "g0.compile_failed",
+          "point": null,
+          "where": "mvnw test",
+          "detail": "컴파일 오류 16건\n(앞 6건만 적는다)\nsrc/main/java/com/thinking/tennis/api/AlertController.java:44:29 annotation @io.swagger.v3.oas.annotations.headers.Header is missing a default value for the element 'name'\nsrc/main/java/com/thinking/tennis/api/AlertController.java:45:29 annotation @io.swagger.v3.oas.annotations.headers.Header is missing a default value for the element 'name'\nsrc/main/java/com/thinking/tennis/api/AlertController.java:52:29 annotation @io.swagger.v3.oas.annotations.headers.Header is missing a default value for the element 'name'\nsrc/main/java/com/thinking/tennis/api/AlertController.java:53:29 annotation @io.swagger.v3.oas.annotations.headers.Header is missing a default value for the element 'name'\nsrc/main/java/com/thinking/tennis/api/AlertController.java:75:31 annotation @io.swagger.v3.oas.annotations.headers.Header is missing a default value for the element 'name'\nsrc/main/java/com/thinking/tennis/api/AlertController.java:80:31 annotation @io.swagger.v3.oas.annotations.headers.Header is missing a default value for the element 'name'",
+          "verdict": "violation"
+        }
+      ]
+    },
+    {
+      "attempt": 2,
+      "commit": "0cc6a9188d59f69ad348a74bb70f66ad10598e56",
+      "index_declared": false,
+      "index_errors": [
+        "manifest.undeclared_file: src/main/java/com/thinking/tennis/api/AlertController.java changed in the work tree but is not declared"
+      ],
+      "failures": [
+        {
+          "rule": "g0.compile_failed",
+          "point": null,
+          "where": "mvnw test",
+          "detail": "컴파일 오류 7건\n(앞 6건만 적는다)\nsrc/main/java/com/thinking/tennis/api/AlertController.java:80:31 annotation @io.swagger.v3.oas.annotations.headers.Header is missing a default value for the element 'name'\nsrc/main/java/com/thinking/tennis/api/AlertController.java:128:31 annotation @io.swagger.v3.oas.annotations.headers.Header is missing a default value for the element 'name'\nsrc/main/java/com/thinking/tennis/api/AlertController.java:133:31 annotation @io.swagger.v3.oas.annotations.headers.Header is missing a default value for the element 'name'\nsrc/main/java/com/thinking/tennis/api/AlertController.java:174:31 annotation @io.swagger.v3.oas.annotations.headers.Header is missing a default value for the element 'name'\nsrc/main/java/com/thinking/tennis/api/AlertController.java:179:31 annotation @io.swagger.v3.oas.annotations.headers.Header is missing a default value for the element 'name'\nsrc/main/java/com/thinking/tennis/api/AlertController.java:209:31 annotation @io.swagger.v3.oas.annotations.headers.Header is missing a default value for the element 'name'",
+          "verdict": "violation"
+        }
+      ]
+    },
+    {
+      "attempt": 3,
+      "commit": "1ff5b00928852df35d448150e66c71a1ae23606b",
+      "index_declared": true,
+      "index_errors": [],
+      "failures": [
+        {
+          "rule": "g0.compile_failed",
+          "point": null,
+          "where": "mvnw test",
+          "detail": "컴파일 오류 1건\nsrc/main/java/com/thinking/tennis/api/AlertController.java:234:86 class, interface, enum, or record expected",
+          "verdict": "violation"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1903 @@
+{
+  "run_id": "2026-09-30_b02d8689",
+  "updated_at": "2026-09-30T03:04:59+09:00",
+  "iterations": [
+    {
+      "iteration": "001",
+      "status": "REJECT",
+      "draft": "iter_001/draft.json",
+      "output_dir": "output",
+      "commit": "64f827eecc8ab684420edea1e7469f1f1a6bbbcf",
+      "declared_files": 29,
+      "files_on_disk": 41,
+      "file_hashes": {
+        ".gitignore": "7f7c8ac9df305eb44041c7b6f0efe5c847834786e74a58928d8c2cd284d7480d",
+        ".mvn/wrapper/maven-wrapper.properties": "27680bba1b7cb13995c30ccbf6f3ac15b218cb6c11aebda19e52e3fd6e65d15e",
+        "contract/tennis-alert-api-v1.yaml": "0c467b8388ee7d8c091f76607037e658f944f4ebb7164c3316561d408101adf1",
+        "mvnw": "b1ef6ce14df54e6f8552734080184b18f78b0a0c61ed80c08d7d78b254e44941",
+        "mvnw.cmd": "46eedb8419bd14fe70d5bb2916d7b6f51806e51b39d5b76a42610384ca929c1c",
+        "pom.xml": "a53d5bd6979d3c134bdb135abd1fad59dd666b34ed0c4d0d47d57fdba4bc9a4f",
+        "README.md": "e6e4bb4ffa2ef4d71decf6cf8c719abd5fc304795bbab809d1200a294a5b69f3",
+        "src/main/java/com/thinking/tennis/adapter/InMemoryCourtAvailabilityAdapter.java": "78c58ad8277ae1a1722fb8c42de58acb78107a73f4e8afdfbf9dff48ae874ea6",
+        "src/main/java/com/thinking/tennis/api/ApiModels.java": "50796cbd28f5b4be153cbb14d20bc3c3e0c6d715782a056a1ae20060590890c6",
+        "src/main/java/com/thinking/tennis/api/AuthenticationException.java": "d89f71256b5b16f72debdca5261ad1a3e069ef40755d617701436834c5809a4d",
+        "src/main/java/com/thinking/tennis/api/OperationId.java": "55b6ddf7fcf925cd9ee4055ca6de3f100da5c4f90f978043d54e3ce0c21db818",
+        "src/main/java/com/thinking/tennis/api/RequestValidationException.java": "2c6bb343701adaee230f287720e0893b98bd07c5ebf0216e696ae17780299ef6",
+        "src/main/java/com/thinking/tennis/api/TennisAlertController.java": "528b2622f21b1c62f7430d1a56ef59177e8673432d9e30dd089eb0a0003cd98d",
+        "src/main/java/com/thinking/tennis/api/TennisAlertExceptionHandler.java": "fa643e30a4b3e9d3e3ceb1e5120696514f3fc46368fa2523ca89aadd67a77ffb",
+        "src/main/java/com/thinking/tennis/app/AlertApplication.java": "56bdc8a5c490b255ffa824545265475e4f3f86ae411aef3af37f7ec0100d9237",
+        "src/main/java/com/thinking/tennis/app/AlertApplicationConfiguration.java": "fa6d6b24838b467ad1f8527c6bf1bbf5a598045e867d6e77994e1be2a594c19e",
+        "src/main/java/com/thinking/tennis/app/AlertApplicationException.java": "898293f338133a70a54afccf7aac0dfe2d106ebf5731d3cc451fa82621502f23",
+        "src/main/java/com/thinking/tennis/app/AlertNotFoundException.java": "90b30669ed09047a4fa02faafec17f46fe1a53e48963d1690cade1848dca3d4e",
+        "src/main/java/com/thinking/tennis/app/AlertRepository.java": "626a210bb0e3b6fa55ac9358b5f7e9660411cb91ad94a2587af8f827f2064cee",
+        "src/main/java/com/thinking/tennis/app/AlertWindowClosedException.java": "2108a71cfc262411791af7ecea0de6ff4469537af348f6decec4dfbeed778540",
+        "src/main/java/com/thinking/tennis/app/AvailabilityFailureException.java": "3b56eb5ecc2bd5a6711dac19ec2b615064006313c4769968fb8cecc115ff737f",
+        "src/main/java/com/thinking/tennis/app/AvailabilityRepository.java": "efdf8ad2c20620bfbcb76382ee5f58d60bdd0d017080b857fb4d5cd19e26198a",
+        "src/main/java/com/thinking/tennis/app/AvailabilityResult.java": "e765eb10a4e5b967787476a849fc05af0d5a409a09aacfb7d3a97e3ff44aa79f",
+        "src/main/java/com/thinking/tennis/app/ConcurrentUpdateConflictException.java": "b921e7e272d07d575790ca85cacca12bd63b35115cc3f5a1d40a5ee38bdcf411",
+        "src/main/java/com/thinking/tennis/app/CourtNotSupportedException.java": "cccd4768338e15c4ea5d88154bee111520fb9fa0b5163091d0494f08669f21dc",
+        "src/main/java/com/thinking/tennis/app/CreateAlertResult.java": "a93d226de39d97ee134e46fdaf4deba48cfdf68bc083e63e6839202061ea5dab",
+        "src/main/java/com/thinking/tennis/app/IdempotencyKeyReusedException.java": "555500f60fb6a8097fe327c88c7b3d314c410e5b5fd707b5cef6fea50540749b",
+        "src/main/java/com/thinking/tennis/app/InMemoryAlertRepository.java": "9917c0c760f23929f73a317d36e8d290e67b977e57db22179a77b568e31c8d71",
+        "src/main/java/com/thinking/tennis/app/InMemoryAvailabilityRepository.java": "76291f31715bd73354ead953c3f74e44ecdf9664ee415db1c6430f9139c71152",
+        "src/main/java/com/thinking/tennis/app/SlotNotSupportedException.java": "f728129f9c49d9b458b1083bd4d57528094ad06c8b8e8727cf51f4bd71ff8aac",
+        "src/main/java/com/thinking/tennis/app/StorageTimeoutException.java": "f0ac1437ecd68c7bcd6b5ada3614da26520d044f9d24676ddadba925777b8e35",
+        "src/main/java/com/thinking/tennis/domain/Alert.java": "99bec2b739124092fb3d7e3f564733dc2668a4a64379c2187c49aec8e360c2f6",
+        "src/main/java/com/thinking/tennis/domain/AlertDelivery.java": "4cd14f5bacdeb004259e22da43b1aa7e35c030c466979c185fd263f6a524d950",
+        "src/main/java/com/thinking/tennis/domain/AlertStatus.java": "e5940a3b840115650ef588507b690d5d049a9415e0914e03f3a0ee6e8354a3de",
+        "src/main/java/com/thinking/tennis/domain/AvailabilitySnapshot.java": "ea0ee6bf257bd6227cd8c485b57c8b777cffbcca5dd28ec725d20fd17c2fead3",
+        "src/main/java/com/thinking/tennis/domain/DeliveryStatus.java": "15b9c727006a0c34f0124bc83b418ddaea49ca10028f61a6c0fee2247825c1d1",
+        "src/main/java/com/thinking/tennis/port/CourtAvailabilityPort.java": "d0bd3625c535975cd875a453406009b4a2b995b5c3f8c62200ec5db9060089f7",
+        "src/main/java/com/thinking/tennis/TennisAlertApplication.java": "2178279b50ba03794c7632534ff52fd4ba8a5a95ba487d6807a42e1e6131f2f1",
+        "src/main/resources/application.yaml": "f66f77cca643985bba137dcaa3300f06dd60786ac6266968bf742c2429bd1b56",
+        "src/test/java/com/thinking/tennis/arch/LayerBoundaryTest.java": "febd8a0d16c114495bf27c05d9c33d88105eb60c467dc860bc19e66fcfd79c4c",
+        "tools/dump_api_docs.py": "b5afaa65468210261d88fa8a788e24a1842b7498eea67b4c4d61512090bcae19"
+      },
+      "contract": {
+        "path": "contract/tennis-alert-api-v1.yaml",
+        "from": "contract/tennis-alert-api-v1.yaml"
+      },
+      "contract_source": "output/contract/tennis-alert-api-v1.yaml",
+      "prev_contract_source": "output/contract/tennis-alert-api-v1.yaml",
+      "gate": {
+        "g0": "REJECT",
+        "g1": "SKIPPED",
+        "changes": "SKIPPED",
+        "violations": 1,
+        "observations": 0
+      },
+      "eval": null,
+      "decision_risk": {
+        "level": "high",
+        "reasons": [
+          "low confidence decisions: ['d_lazy_expiry_materialization']"
+        ]
+      },
+      "skipped_reason": "g0_reject",
+      "gate_errors": [
+        "gate:g0.compile_failed@None: 컴파일 오류 1건\nsrc/main/java/com/thinking/tennis/api/TennisAlertExceptionHandler.java:125:17 cannot find symbol\n    symbol: variable AlertApplication\n    location: class com.thinking.tennis.api.TennisAlertExceptionHandler"
+      ],
+      "rubric_errors": []
+    },
+    {
+      "iteration": "002",
+      "status": "REJECT",
+      "draft": "iter_002/draft.json",
+      "output_dir": "output",
+      "commit": "a10561a2e687fe7bd9a0798215d99dd75c254e77",
+      "declared_files": 2,
+      "files_on_disk": 41,
+      "file_hashes": {
+        ".gitignore": "7f7c8ac9df305eb44041c7b6f0efe5c847834786e74a58928d8c2cd284d7480d",
+        ".mvn/wrapper/maven-wrapper.properties": "27680bba1b7cb13995c30ccbf6f3ac15b218cb6c11aebda19e52e3fd6e65d15e",
+        "contract/tennis-alert-api-v1.yaml": "0c467b8388ee7d8c091f76607037e658f944f4ebb7164c3316561d408101adf1",
+        "mvnw": "b1ef6ce14df54e6f8552734080184b18f78b0a0c61ed80c08d7d78b254e44941",
+        "mvnw.cmd": "46eedb8419bd14fe70d5bb2916d7b6f51806e51b39d5b76a42610384ca929c1c",
+        "pom.xml": "a53d5bd6979d3c134bdb135abd1fad59dd666b34ed0c4d0d47d57fdba4bc9a4f",
+        "README.md": "e6e4bb4ffa2ef4d71decf6cf8c719abd5fc304795bbab809d1200a294a5b69f3",
+        "src/main/java/com/thinking/tennis/adapter/InMemoryCourtAvailabilityAdapter.java": "78c58ad8277ae1a1722fb8c42de58acb78107a73f4e8afdfbf9dff48ae874ea6",
+        "src/main/java/com/thinking/tennis/api/ApiModels.java": "50796cbd28f5b4be153cbb14d20bc3c3e0c6d715782a056a1ae20060590890c6",
+        "src/main/java/com/thinking/tennis/api/AuthenticationException.java": "d89f71256b5b16f72debdca5261ad1a3e069ef40755d617701436834c5809a4d",
+        "src/main/java/com/thinking/tennis/api/OperationId.java": "55b6ddf7fcf925cd9ee4055ca6de3f100da5c4f90f978043d54e3ce0c21db818",
+        "src/main/java/com/thinking/tennis/api/RequestValidationException.java": "2c6bb343701adaee230f287720e0893b98bd07c5ebf0216e696ae17780299ef6",
+        "src/main/java/com/thinking/tennis/api/TennisAlertController.java": "528b2622f21b1c62f7430d1a56ef59177e8673432d9e30dd089eb0a0003cd98d",
+        "src/main/java/com/thinking/tennis/api/TennisAlertExceptionHandler.java": "1c8a43aa72fd392edee25c60a6d7c75278ff21ae903ef63f5e37535003d718f9",
+        "src/main/java/com/thinking/tennis/app/AlertApplication.java": "56bdc8a5c490b255ffa824545265475e4f3f86ae411aef3af37f7ec0100d9237",
+        "src/main/java/com/thinking/tennis/app/AlertApplicationConfiguration.java": "fa6d6b24838b467ad1f8527c6bf1bbf5a598045e867d6e77994e1be2a594c19e",
+        "src/main/java/com/thinking/tennis/app/AlertApplicationException.java": "898293f338133a70a54afccf7aac0dfe2d106ebf5731d3cc451fa82621502f23",
+        "src/main/java/com/thinking/tennis/app/AlertNotFoundException.java": "90b30669ed09047a4fa02faafec17f46fe1a53e48963d1690cade1848dca3d4e",
+        "src/main/java/com/thinking/tennis/app/AlertRepository.java": "626a210bb0e3b6fa55ac9358b5f7e9660411cb91ad94a2587af8f827f2064cee",
+        "src/main/java/com/thinking/tennis/app/AlertWindowClosedException.java": "2108a71cfc262411791af7ecea0de6ff4469537af348f6decec4dfbeed778540",
+        "src/main/java/com/thinking/tennis/app/AvailabilityFailureException.java": "3b56eb5ecc2bd5a6711dac19ec2b615064006313c4769968fb8cecc115ff737f",
+        "src/main/java/com/thinking/tennis/app/AvailabilityRepository.java": "efdf8ad2c20620bfbcb76382ee5f58d60bdd0d017080b857fb4d5cd19e26198a",
+        "src/main/java/com/thinking/tennis/app/AvailabilityResult.java": "e765eb10a4e5b967787476a849fc05af0d5a409a09aacfb7d3a97e3ff44aa79f",
+        "src/main/java/com/thinking/tennis/app/ConcurrentUpdateConflictException.java": "b921e7e272d07d575790ca85cacca12bd63b35115cc3f5a1d40a5ee38bdcf411",
+        "src/main/java/com/thinking/tennis/app/CourtNotSupportedException.java": "cccd4768338e15c4ea5d88154bee111520fb9fa0b5163091d0494f08669f21dc",
+        "src/main/java/com/thinking/tennis/app/CreateAlertResult.java": "a93d226de39d97ee134e46fdaf4deba48cfdf68bc083e63e6839202061ea5dab",
+        "src/main/java/com/thinking/tennis/app/IdempotencyKeyReusedException.java": "555500f60fb6a8097fe327c88c7b3d314c410e5b5fd707b5cef6fea50540749b",
+        "src/main/java/com/thinking/tennis/app/InMemoryAlertRepository.java": "9917c0c760f23929f73a317d36e8d290e67b977e57db22179a77b568e31c8d71",
+        "src/main/java/com/thinking/tennis/app/InMemoryAvailabilityRepository.java": "76291f31715bd73354ead953c3f74e44ecdf9664ee415db1c6430f9139c71152",
+        "src/main/java/com/thinking/tennis/app/SlotNotSupportedException.java": "f728129f9c49d9b458b1083bd4d57528094ad06c8b8e8727cf51f4bd71ff8aac",
+        "src/main/java/com/thinking/tennis/app/StorageTimeoutException.java": "f0ac1437ecd68c7bcd6b5ada3614da26520d044f9d24676ddadba925777b8e35",
+        "src/main/java/com/thinking/tennis/domain/Alert.java": "99bec2b739124092fb3d7e3f564733dc2668a4a64379c2187c49aec8e360c2f6",
+        "src/main/java/com/thinking/tennis/domain/AlertDelivery.java": "4cd14f5bacdeb004259e22da43b1aa7e35c030c466979c185fd263f6a524d950",
+        "src/main/java/com/thinking/tennis/domain/AlertStatus.java": "e5940a3b840115650ef588507b690d5d049a9415e0914e03f3a0ee6e8354a3de",
+        "src/main/java/com/thinking/tennis/domain/AvailabilitySnapshot.java": "ea0ee6bf257bd6227cd8c485b57c8b777cffbcca5dd28ec725d20fd17c2fead3",
+        "src/main/java/com/thinking/tennis/domain/DeliveryStatus.java": "15b9c727006a0c34f0124bc83b418ddaea49ca10028f61a6c0fee2247825c1d1",
+        "src/main/java/com/thinking/tennis/port/CourtAvailabilityPort.java": "d0bd3625c535975cd875a453406009b4a2b995b5c3f8c62200ec5db9060089f7",
+        "src/main/java/com/thinking/tennis/TennisAlertApplication.java": "2178279b50ba03794c7632534ff52fd4ba8a5a95ba487d6807a42e1e6131f2f1",
+        "src/main/resources/application.yaml": "f66f77cca643985bba137dcaa3300f06dd60786ac6266968bf742c2429bd1b56",
+        "src/test/java/com/thinking/tennis/arch/LayerBoundaryTest.java": "febd8a0d16c114495bf27c05d9c33d88105eb60c467dc860bc19e66fcfd79c4c",
+        "tools/dump_api_docs.py": "b5afaa65468210261d88fa8a788e24a1842b7498eea67b4c4d61512090bcae19"
+      },
+      "contract": {
+        "path": "contract/tennis-alert-api-v1.yaml",
+        "from": "contract/tennis-alert-api-v1.yaml"
+      },
+      "contract_source": "output/contract/tennis-alert-api-v1.yaml",
+      "prev_contract_source": "output/contract/tennis-alert-api-v1.yaml",
+      "gate": {
+        "g0": "REJECT",
+        "g1": "SKIPPED",
+        "changes": "SKIPPED",
+        "violations": 1,
+        "observations": 0
+      },
+      "eval": null,
+      "decision_risk": {
+        "level": "high",
+        "reasons": [
+          "low confidence decisions: ['d_lazy_expiry_materialization']"
+        ]
+      },
+      "skipped_reason": "g0_reject",
+      "gate_errors": [
+        "gate:g0.compile_failed@None: 컴파일 오류 1건\nsrc/main/java/com/thinking/tennis/api/TennisAlertExceptionHandler.java:126:33 incompatible types: long cannot be converted to java.lang.Integer"
+      ],
+      "rubric_errors": []
+    },
+    {
+      "iteration": "003",
+      "status": "REJECT",
+      "draft": "iter_003/draft.json",
+      "output_dir": "output",
+      "commit": "3ae74dc0eb9cf6c28826c2923c1d8c172a26b276",
+      "declared_files": 2,
+      "files_on_disk": 41,
+      "file_hashes": {
+        ".gitignore": "7f7c8ac9df305eb44041c7b6f0efe5c847834786e74a58928d8c2cd284d7480d",
+        ".mvn/wrapper/maven-wrapper.properties": "27680bba1b7cb13995c30ccbf6f3ac15b218cb6c11aebda19e52e3fd6e65d15e",
+        "contract/tennis-alert-api-v1.yaml": "0c467b8388ee7d8c091f76607037e658f944f4ebb7164c3316561d408101adf1",
+        "mvnw": "b1ef6ce14df54e6f8552734080184b18f78b0a0c61ed80c08d7d78b254e44941",
+        "mvnw.cmd": "46eedb8419bd14fe70d5bb2916d7b6f51806e51b39d5b76a42610384ca929c1c",
+        "pom.xml": "a53d5bd6979d3c134bdb135abd1fad59dd666b34ed0c4d0d47d57fdba4bc9a4f",
+        "README.md": "e6e4bb4ffa2ef4d71decf6cf8c719abd5fc304795bbab809d1200a294a5b69f3",
+        "src/main/java/com/thinking/tennis/adapter/InMemoryCourtAvailabilityAdapter.java": "78c58ad8277ae1a1722fb8c42de58acb78107a73f4e8afdfbf9dff48ae874ea6",
+        "src/main/java/com/thinking/tennis/api/ApiModels.java": "50796cbd28f5b4be153cbb14d20bc3c3e0c6d715782a056a1ae20060590890c6",
+        "src/main/java/com/thinking/tennis/api/AuthenticationException.java": "d89f71256b5b16f72debdca5261ad1a3e069ef40755d617701436834c5809a4d",
+        "src/main/java/com/thinking/tennis/api/OperationId.java": "55b6ddf7fcf925cd9ee4055ca6de3f100da5c4f90f978043d54e3ce0c21db818",
+        "src/main/java/com/thinking/tennis/api/RequestValidationException.java": "2c6bb343701adaee230f287720e0893b98bd07c5ebf0216e696ae17780299ef6",
+        "src/main/java/com/thinking/tennis/api/TennisAlertController.java": "528b2622f21b1c62f7430d1a56ef59177e8673432d9e30dd089eb0a0003cd98d",
+        "src/main/java/com/thinking/tennis/api/TennisAlertExceptionHandler.java": "13a15f66089b2a8feb072f0a9536575ef867554ecb8442f78d9c7e3ab7be608f",
+        "src/main/java/com/thinking/tennis/app/AlertApplication.java": "56bdc8a5c490b255ffa824545265475e4f3f86ae411aef3af37f7ec0100d9237",
+        "src/main/java/com/thinking/tennis/app/AlertApplicationConfiguration.java": "fa6d6b24838b467ad1f8527c6bf1bbf5a598045e867d6e77994e1be2a594c19e",
+        "src/main/java/com/thinking/tennis/app/AlertApplicationException.java": "898293f338133a70a54afccf7aac0dfe2d106ebf5731d3cc451fa82621502f23",
+        "src/main/java/com/thinking/tennis/app/AlertNotFoundException.java": "90b30669ed09047a4fa02faafec17f46fe1a53e48963d1690cade1848dca3d4e",
+        "src/main/java/com/thinking/tennis/app/AlertRepository.java": "626a210bb0e3b6fa55ac9358b5f7e9660411cb91ad94a2587af8f827f2064cee",
+        "src/main/java/com/thinking/tennis/app/AlertWindowClosedException.java": "2108a71cfc262411791af7ecea0de6ff4469537af348f6decec4dfbeed778540",
+        "src/main/java/com/thinking/tennis/app/AvailabilityFailureException.java": "3b56eb5ecc2bd5a6711dac19ec2b615064006313c4769968fb8cecc115ff737f",
+        "src/main/java/com/thinking/tennis/app/AvailabilityRepository.java": "efdf8ad2c20620bfbcb76382ee5f58d60bdd0d017080b857fb4d5cd19e26198a",
+        "src/main/java/com/thinking/tennis/app/AvailabilityResult.java": "e765eb10a4e5b967787476a849fc05af0d5a409a09aacfb7d3a97e3ff44aa79f",
+        "src/main/java/com/thinking/tennis/app/ConcurrentUpdateConflictException.java": "b921e7e272d07d575790ca85cacca12bd63b35115cc3f5a1d40a5ee38bdcf411",
+        "src/main/java/com/thinking/tennis/app/CourtNotSupportedException.java": "cccd4768338e15c4ea5d88154bee111520fb9fa0b5163091d0494f08669f21dc",
+        "src/main/java/com/thinking/tennis/app/CreateAlertResult.java": "a93d226de39d97ee134e46fdaf4deba48cfdf68bc083e63e6839202061ea5dab",
+        "src/main/java/com/thinking/tennis/app/IdempotencyKeyReusedException.java": "555500f60fb6a8097fe327c88c7b3d314c410e5b5fd707b5cef6fea50540749b",
+        "src/main/java/com/thinking/tennis/app/InMemoryAlertRepository.java": "9917c0c760f23929f73a317d36e8d290e67b977e57db22179a77b568e31c8d71",
+        "src/main/java/com/thinking/tennis/app/InMemoryAvailabilityRepository.java": "76291f31715bd73354ead953c3f74e44ecdf9664ee415db1c6430f9139c71152",
+        "src/main/java/com/thinking/tennis/app/SlotNotSupportedException.java": "f728129f9c49d9b458b1083bd4d57528094ad06c8b8e8727cf51f4bd71ff8aac",
+        "src/main/java/com/thinking/tennis/app/StorageTimeoutException.java": "f0ac1437ecd68c7bcd6b5ada3614da26520d044f9d24676ddadba925777b8e35",
+        "src/main/java/com/thinking/tennis/domain/Alert.java": "99bec2b739124092fb3d7e3f564733dc2668a4a64379c2187c49aec8e360c2f6",
+        "src/main/java/com/thinking/tennis/domain/AlertDelivery.java": "4cd14f5bacdeb004259e22da43b1aa7e35c030c466979c185fd263f6a524d950",
+        "src/main/java/com/thinking/tennis/domain/AlertStatus.java": "e5940a3b840115650ef588507b690d5d049a9415e0914e03f3a0ee6e8354a3de",
+        "src/main/java/com/thinking/tennis/domain/AvailabilitySnapshot.java": "ea0ee6bf257bd6227cd8c485b57c8b777cffbcca5dd28ec725d20fd17c2fead3",
+        "src/main/java/com/thinking/tennis/domain/DeliveryStatus.java": "15b9c727006a0c34f0124bc83b418ddaea49ca10028f61a6c0fee2247825c1d1",
+        "src/main/java/com/thinking/tennis/port/CourtAvailabilityPort.java": "d0bd3625c535975cd875a453406009b4a2b995b5c3f8c62200ec5db9060089f7",
+        "src/main/java/com/thinking/tennis/TennisAlertApplication.java": "2178279b50ba03794c7632534ff52fd4ba8a5a95ba487d6807a42e1e6131f2f1",
+        "src/main/resources/application.yaml": "f66f77cca643985bba137dcaa3300f06dd60786ac6266968bf742c2429bd1b56",
+        "src/test/java/com/thinking/tennis/arch/LayerBoundaryTest.java": "febd8a0d16c114495bf27c05d9c33d88105eb60c467dc860bc19e66fcfd79c4c",
+        "tools/dump_api_docs.py": "b5afaa65468210261d88fa8a788e24a1842b7498eea67b4c4d61512090bcae19"
+      },
+      "contract": {
+        "path": "contract/tennis-alert-api-v1.yaml",
+        "from": "contract/tennis-alert-api-v1.yaml"
+      },
+      "contract_source": "output/contract/tennis-alert-api-v1.yaml",
+      "prev_contract_source": "output/contract/tennis-alert-api-v1.yaml",
+      "gate": {
+        "g0": "REJECT",
+        "g1": "SKIPPED",
+        "changes": "SKIPPED",
+        "violations": 1,
+        "observations": 0
+      },
+      "eval": null,
+      "decision_risk": {
+        "level": "high",
+        "reasons": [
+          "low confidence decisions: ['d_lazy_expiry_materialization']"
+        ]
+      },
+      "skipped_reason": "g0_reject",
+      "gate_errors": [
+        "gate:g0.compile_failed@None: 컴파일 오류 1건\nsrc/main/java/com/thinking/tennis/api/TennisAlertExceptionHandler.java:57:20 cannot find symbol\n    symbol: method setRetryAfter(java.time.Duration)\n    location: variable headers of type org.springframework.http.HttpHeaders"
+      ],
+      "rubric_errors": []
+    }
+  ],
+  "violations": [
+    {
+      "id": "v_579dfe",
+      "rule": "g0.compile_failed",
+      "point": null,
+      "where": "mvnw test",
+      "why_it_matters": "컴파일 오류 1건\nsrc/main/java/com/thinking/tennis/api/TennisAlertExceptionHandler.java:125:17 cannot find symbol\n    symbol: variable AlertApplication\n    location: class com.thinking.tennis.api.TennisAlertExceptionHandler",
+      "detail": "컴파일 오류 1건\nsrc/main/java/com/thinking/tennis/api/TennisAlertExceptionHandler.java:57:20 cannot find symbol\n    symbol: method setRetryAfter(java.time.Duration)\n    location: variable headers of type org.springframework.http.HttpHeaders",
+      "first_seen_iteration": "001",
+      "last_seen_iteration": "003",
+      "closed_in_iteration": null,
+      "closed_by": null,
+      "closed_because": null,
+      "closed_by_verified": null,
+      "claimed_fix": null,
+      "verified_fix": null,
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "open"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "d_bearer_identity",
+      "first_seen_iteration": "001",
+      "point": "인증 사용자 식별 방식",
+      "where": "src/main/java/com/thinking/tennis/api/TennisAlertController.java",
+      "question": "계약이 Bearer 사용만 정하고 토큰 검증자나 사용자 ID 형식을 정하지 않은 경우 사용자 식별값을 어떻게 정할 것인가?",
+      "considered": [
+        {
+          "choice": "Bearer 토큰 문자열 자체를 사용자 식별자로 사용",
+          "consequence": "외부 인증 서비스 없이 사용자별 격리를 구현할 수 있다."
+        },
+        {
+          "choice": "토큰을 별도 인증 포트로 검증",
+          "consequence": "계약과 제공 API에 없는 포트와 외부 의존성이 필요하다."
+        }
+      ],
+      "chosen": "Bearer 접두사를 제거한 토큰 문자열 자체를 사용자 식별자로 사용",
+      "basis": "least_harm",
+      "rationale": "인증 방식 자체가 계약 범위 밖이고 제공된 포트에 인증 검증 API가 없으므로 HTTP 표면에서 사용자별 격리만 보장한다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:201",
+        "createAlert:200",
+        "listAlerts:200",
+        "getAlert:200",
+        "cancelAlert:200",
+        "createAlert:401",
+        "listAlerts:401",
+        "getAlert:401",
+        "cancelAlert:401"
+      ],
+      "reversal_cost": "인증 어댑터와 사용자 식별 변환을 추가하고 모든 소유권 조회 경계를 교체해야 한다.",
+      "supersedes": null,
+      "last_seen_iteration": "003",
+      "status": "standing"
+    },
+    {
+      "id": "d_expiry_boundary",
+      "first_seen_iteration": "001",
+      "point": "expiresAt 계산",
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplication.java",
+      "question": "더 이른 예약 마감 시각 정보가 제공 API에 없을 때 expiresAt을 무엇으로 계산할 것인가?",
+      "considered": [
+        {
+          "choice": "이용 시작 시각을 Asia/Seoul에서 UTC Instant로 변환",
+          "consequence": "계약이 명시한 기본 만료 시각을 구현하고 외부 마감 정보가 없다는 사실을 숨기지 않는다."
+        },
+        {
+          "choice": "임의의 고정 만료 시각 또는 서버 현재 시각 사용",
+          "consequence": "이용 시작 시각 규칙과 어긋나거나 계약에 없는 수치를 만든다."
+        }
+      ],
+      "chosen": "date와 startTime을 Asia/Seoul의 이용 시작 시각으로 변환",
+      "basis": "spec_implication",
+      "rationale": "요구사항은 이용 시작 시각을 기본 만료 시각으로 명시하고, 제공 포트에는 조기 예약 마감 시각이 없다.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:201",
+        "createAlert:422",
+        "listAlerts:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "reversal_cost": "Alert 생성과 만료 판정, 응답 매핑의 시간 계산을 함께 변경해야 한다.",
+      "supersedes": null,
+      "last_seen_iteration": "003",
+      "status": "standing"
+    },
+    {
+      "id": "d_slot_validation_source",
+      "first_seen_iteration": "001",
+      "point": "알림 신청 슬롯 검증",
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplication.java",
+      "question": "계약이 슬롯 카탈로그 포트를 별도로 제공하지 않을 때 지원 슬롯 여부를 어떻게 판단할 것인가?",
+      "considered": [
+        {
+          "choice": "CourtAvailabilityPort의 코트·날짜 확인 결과에서 exact startTime/endTime을 찾는다.",
+          "consequence": "계약의 슬롯 설명과 제공 API만으로 실제 운영 슬롯을 검증할 수 있다."
+        },
+        {
+          "choice": "임의의 슬롯 목록을 코드에 하드코딩한다.",
+          "consequence": "계약과 제공 API에 없는 코트별 운영 수치를 발명하게 된다."
+        }
+      ],
+      "chosen": "캐시된 또는 새로 확인한 CourtAvailability 결과의 슬롯과 정확히 일치하는지 검증",
+      "basis": "contract_analogy",
+      "rationale": "CourtAvailability의 slots가 운영 시간대 전부이며 없는 시간대는 SLOT_NOT_SUPPORTED라는 계약 설명을 그대로 사용한다.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:201",
+        "createAlert:422",
+        "createAlert:500",
+        "getCourtAvailability:200",
+        "getCourtAvailability:502",
+        "getCourtAvailability:503",
+        "getCourtAvailability:504"
+      ],
+      "reversal_cost": "신청 유스케이스의 외부 확인 의존성과 슬롯 검증 경로를 별도 포트로 분리해야 한다.",
+      "supersedes": null,
+      "last_seen_iteration": "003",
+      "status": "standing"
+    },
+    {
+      "id": "d_create_upstream_failure_mapping",
+      "first_seen_iteration": "001",
+      "point": "신청 중 예약 상태 확인 실패",
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplication.java",
+      "question": "createAlert의 요청 조건 검증 중 외부 확인이 실패하고 POST 계약에 upstream 전용 응답이 없을 때 어떤 실패로 반환할 것인가?",
+      "considered": [
+        {
+          "choice": "INTERNAL_ERROR 500으로 반환",
+          "consequence": "POST에 선언된 500과 일치하며 upstream 전용 상태를 임의로 추가하지 않는다."
+        },
+        {
+          "choice": "GET availability와 같은 UPSTREAM_* 상태를 반환",
+          "consequence": "POST 계약에 없는 응답 표면을 추가한다."
+        }
+      ],
+      "chosen": "INTERNAL_ERROR 500으로 반환",
+      "basis": "least_harm",
+      "rationale": "POST는 500과 503만 선언하고 upstream 상태 코드는 선언하지 않았으므로 계약에 없는 응답을 넓히지 않는다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:500",
+        "createAlert:INTERNAL_ERROR"
+      ],
+      "reversal_cost": "POST 예외 매핑과 오류 계약을 함께 변경해야 한다.",
+      "supersedes": null,
+      "last_seen_iteration": "003",
+      "status": "standing"
+    },
+    {
+      "id": "d_trace_id_format",
+      "first_seen_iteration": "001",
+      "point": "5xx traceId 생성",
+      "where": "src/main/java/com/thinking/tennis/api/TennisAlertExceptionHandler.java",
+      "question": "계약이 traceId의 구체 형식을 정하지 않은 경우 어떤 식별자를 생성할 것인가?",
+      "considered": [
+        {
+          "choice": "UUID 문자열",
+          "consequence": "추가 라이브러리나 서버 로그 인프라 없이 충돌 가능성이 낮은 식별자를 제공한다."
+        },
+        {
+          "choice": "예시와 같은 ULID 문자열",
+          "consequence": "계약에 없는 생성기 또는 별도 구현이 필요하다."
+        }
+      ],
+      "chosen": "UUID 문자열을 요청별 traceId로 생성",
+      "basis": "convention",
+      "rationale": "Problem 스키마는 string만 요구하며 stack에 없는 라이브러리를 추가하지 않고 고유 식별자를 제공한다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "getCourtAvailability:500",
+        "getCourtAvailability:502",
+        "getCourtAvailability:503",
+        "getCourtAvailability:504",
+        "createAlert:500",
+        "createAlert:503",
+        "listAlerts:500",
+        "listAlerts:503",
+        "getAlert:500",
+        "getAlert:503",
+        "cancelAlert:500",
+        "cancelAlert:503"
+      ],
+      "reversal_cost": "오류 핸들러의 traceId 생성기와 로그 상관관계 포맷을 교체해야 한다.",
+      "supersedes": null,
+      "last_seen_iteration": "003",
+      "status": "standing"
+    },
+    {
+      "id": "d_lazy_expiry_materialization",
+      "first_seen_iteration": "001",
+      "point": "만료 상태의 관찰 시점",
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplication.java",
+      "question": "만료를 수행하는 주기와 스케줄러가 계약에 정해지지 않은 경우 EXPIRED 상태 전이를 언제 물질화할 것인가?",
+      "considered": [
+        {
+          "choice": "조회와 변경 요청에서 만료 시각을 평가해 상태를 물질화",
+          "consequence": "계약의 HTTP 관찰 표면을 유지하면서 임의의 스케줄 주기를 추가하지 않는다."
+        },
+        {
+          "choice": "임의의 주기 작업으로 상태를 갱신",
+          "consequence": "계약에 없는 실행 주기와 운영 동작을 도입한다."
+        }
+      ],
+      "chosen": "신청 조회와 해제, 관련 확인 시점에 만료를 평가",
+      "basis": "least_harm",
+      "rationale": "계약은 만료 결과를 HTTP 상태로 노출하지만 스케줄 주기를 정하지 않았고, 인메모리 HTTP 초안의 관찰 결과를 결정적으로 유지하기 위해 접근 시 평가한다.",
+      "confidence": "low",
+      "blast_radius": [
+        "listAlerts:200",
+        "getAlert:200",
+        "cancelAlert:200",
+        "getCourtAvailability:200"
+      ],
+      "reversal_cost": "스케줄러, 전체 신청 순회 API, 종료 수명주기와 테스트 시간 제어를 추가해야 한다.",
+      "supersedes": null,
+      "last_seen_iteration": "003",
+      "status": "standing"
+    },
+    {
+      "id": "d_delivery_state_without_sender",
+      "first_seen_iteration": "001",
+      "point": "알림 발송 상태",
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplication.java",
+      "question": "발송 채널과 발송 포트가 out_of_scope인 초안에서 빈자리 확인 후 delivery와 status를 어떻게 표현할 것인가?",
+      "considered": [
+        {
+          "choice": "delivery를 PENDING으로 만들고 발송 성공 전이는 구현하지 않는다.",
+          "consequence": "HTTP 조회가 발송 대기 상태를 표현하고 AsyncAPI 경로의 책임을 침범하지 않는다."
+        },
+        {
+          "choice": "HTTP 요청 안에서 NOTIFIED와 SENT로 완료 처리",
+          "consequence": "계약의 별도 작업과 비동기 발송 약속을 무시한다."
+        }
+      ],
+      "chosen": "빈자리 확인 시 PENDING만 기록하고 실제 발송 전이는 채널 경로에 남긴다.",
+      "basis": "spec_implication",
+      "rationale": "발송 수단과 채널은 out_of_scope이며 계약은 PENDING을 발송 전 대기로 정의한다.",
+      "confidence": "high",
+      "blast_radius": [
+        "getCourtAvailability:200",
+        "listAlerts:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "reversal_cost": "AsyncAPI 발송 포트와 성공·실패·재시도 상태 전이를 추가해야 한다.",
+      "supersedes": null,
+      "last_seen_iteration": "003",
+      "status": "standing"
+    },
+    {
+      "id": "d_failed_refresh_coalescing",
+      "first_seen_iteration": "001",
+      "point": "동시 예약 상태 확인 실패 재사용",
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplication.java",
+      "question": "같은 코트·날짜의 대기 요청이 첫 확인 실패 후 같은 실패를 받아야 할 때 실패 결과를 어떻게 공유할 것인가?",
+      "considered": [
+        {
+          "choice": "20초 동안 코트·날짜별 최근 실패를 메모하고 대기 요청에 재사용",
+          "consequence": "대기 요청이 별도 외부 조회를 만들지 않고 같은 실패와 재시도 간격을 받는다."
+        },
+        {
+          "choice": "락만 풀고 각 대기 요청이 외부 조회를 다시 수행",
+          "consequence": "EF-2와 V-4의 한 번 조회 및 동일 결과 약속을 깨뜨린다."
+        }
+      ],
+      "chosen": "확인 간격인 20초 동안 최근 실패를 코트·날짜별로 재사용",
+      "basis": "contract_analogy",
+      "rationale": "확인 간격과 Retry-After가 20초이고, 같은 갱신에 묶인 요청은 모두 같은 실패를 받아야 한다.",
+      "confidence": "high",
+      "blast_radius": [
+        "getCourtAvailability:200",
+        "getCourtAvailability:502",
+        "getCourtAvailability:503",
+        "getCourtAvailability:504",
+        "getCourtAvailability:UPSTREAM_TIMEOUT",
+        "getCourtAvailability:UPSTREAM_UNAVAILABLE",
+        "getCourtAvailability:UPSTREAM_RESPONSE_UNREADABLE"
+      ],
+      "reversal_cost": "동시 확인 캐시의 실패 상태와 만료 정책을 변경해야 한다.",
+      "supersedes": null,
+      "last_seen_iteration": "003",
+      "status": "standing"
+    },
+    {
+      "id": "d_idempotency_snapshot",
+      "first_seen_iteration": "001",
+      "point": "멱등 응답 재생 내용",
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplication.java",
+      "question": "처음 응답 뒤 상태가 변해도 같은 멱등 키의 응답을 그대로 재생하려면 무엇을 보관할 것인가?",
+      "considered": [
+        {
+          "choice": "생성 시점 Alert 복사본과 HTTP 상태를 메모리에 보관",
+          "consequence": "후속 상태 변경이 재생 응답에 영향을 주지 않는다."
+        },
+        {
+          "choice": "현재 Alert 객체 참조만 보관",
+          "consequence": "이후 취소·만료·delivery 변경이 과거 응답을 바꾼다."
+        }
+      ],
+      "chosen": "생성 시점 Alert 복사본과 상태 코드를 24시간 엔트리에 보관",
+      "basis": "contract_analogy",
+      "rationale": "계약이 재생 응답을 처음 처리한 시점의 내용으로 고정한다고 명시한다.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:201",
+        "createAlert:200",
+        "createAlert:IDEMPOTENCY_KEY_REUSED"
+      ],
+      "reversal_cost": "멱등 저장 구조와 응답 DTO 매핑을 함께 교체해야 한다.",
+      "supersedes": null,
+      "last_seen_iteration": "003",
+      "status": "standing"
+    },
+    {
+      "id": "d_location_prefix",
+      "first_seen_iteration": "001",
+      "point": "Location 헤더 경로",
+      "where": "src/main/java/com/thinking/tennis/api/TennisAlertController.java",
+      "question": "서버 URL에 /v1 접두사를 중복 매핑하지 않으면서 Location에는 어떤 상대 경로를 보낼 것인가?",
+      "considered": [
+        {
+          "choice": "라우팅 매핑은 접두사 없이 두고 Location에는 계약 예시처럼 /v1/alerts/{id}를 사용",
+          "consequence": "서버 URL 규칙과 Location 예시를 동시에 따른다."
+        },
+        {
+          "choice": "Location에도 접두사를 생략",
+          "consequence": "계약 예시의 공개 리소스 위치와 어긋난다."
+        }
+      ],
+      "chosen": "컨트롤러 매핑은 /alerts로 두고 Location은 /v1/alerts/{id}로 생성",
+      "basis": "contract_analogy",
+      "rationale": "implementation_contract는 서버 URL 접두사를 operation path에 반복하지 말라고 하고 계약 예시는 Location에 /v1을 보여준다.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:201",
+        "createAlert:200"
+      ],
+      "reversal_cost": "컨트롤러 매핑 또는 Location 생성 규칙과 배포 경로를 함께 변경해야 한다.",
+      "supersedes": null,
+      "last_seen_iteration": "003",
+      "status": "standing"
+    }
+  ],
+  "contract_changes": [],
+  "observations": [
+    {
+      "kind": "stage_skipped",
+      "iteration": "001",
+      "point": null,
+      "where": null,
+      "detail": "g0_reject"
+    },
+    {
+      "kind": "gate_unjudged",
+      "iteration": "001",
+      "point": null,
+      "where": "g1",
+      "detail": "g1가 판정되지 않았다. 미판정은 통과가 아니다"
+    },
+    {
+      "kind": "gate_unjudged",
+      "iteration": "001",
+      "point": null,
+      "where": "changes",
+      "detail": "changes가 판정되지 않았다. 미판정은 통과가 아니다"
+    },
+    {
+      "kind": "contract_step_diff",
+      "iteration": "001",
+      "point": null,
+      "where": "*",
+      "detail": "앞 판본 대비 달라진 좌표 0개, 깨는 변경 0건"
+    },
+    {
+      "kind": "baseline_diff",
+      "iteration": "001",
+      "point": null,
+      "where": "*",
+      "detail": "이 run의 기준선 대비 달라진 좌표 0개, 깨는 변경 0건"
+    },
+    {
+      "kind": "origin_diff",
+      "iteration": "001",
+      "point": null,
+      "where": "*",
+      "detail": "사람이 확정한 원본 대비 누적으로 달라진 좌표 0개, 깨는 변경 0건"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/api/ApiModels.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/api/AuthenticationException.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/api/OperationId.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/api/RequestValidationException.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/api/TennisAlertController.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplication.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplicationConfiguration.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplicationException.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/AlertNotFoundException.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/AlertRepository.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/AlertWindowClosedException.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/AvailabilityFailureException.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/AvailabilityRepository.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/AvailabilityResult.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/ConcurrentUpdateConflictException.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/CourtNotSupportedException.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/CreateAlertResult.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/IdempotencyKeyReusedException.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/InMemoryAlertRepository.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/InMemoryAvailabilityRepository.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/SlotNotSupportedException.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/StorageTimeoutException.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/domain/Alert.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/domain/AlertDelivery.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/domain/AlertStatus.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/domain/AvailabilitySnapshot.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/domain/DeliveryStatus.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "stage_skipped",
+      "iteration": "002",
+      "point": null,
+      "where": null,
+      "detail": "g0_reject"
+    },
+    {
+      "kind": "gate_unjudged",
+      "iteration": "002",
+      "point": null,
+      "where": "g1",
+      "detail": "g1가 판정되지 않았다. 미판정은 통과가 아니다"
+    },
+    {
+      "kind": "gate_unjudged",
+      "iteration": "002",
+      "point": null,
+      "where": "changes",
+      "detail": "changes가 판정되지 않았다. 미판정은 통과가 아니다"
+    },
+    {
+      "kind": "contract_step_diff",
+      "iteration": "002",
+      "point": null,
+      "where": "*",
+      "detail": "앞 판본 대비 달라진 좌표 0개, 깨는 변경 0건"
+    },
+    {
+      "kind": "baseline_diff",
+      "iteration": "002",
+      "point": null,
+      "where": "*",
+      "detail": "이 run의 기준선 대비 달라진 좌표 0개, 깨는 변경 0건"
+    },
+    {
+      "kind": "origin_diff",
+      "iteration": "002",
+      "point": null,
+      "where": "*",
+      "detail": "사람이 확정한 원본 대비 누적으로 달라진 좌표 0개, 깨는 변경 0건"
+    },
+    {
+      "kind": "collateral_change",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/api/TennisAlertExceptionHandler.java",
+      "detail": "열린 위반의 좌표를 언급하지 않는 파일이 달라졌다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/api/ApiModels.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/api/AuthenticationException.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/api/OperationId.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/api/RequestValidationException.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/api/TennisAlertController.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplication.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplicationConfiguration.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplicationException.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/AlertNotFoundException.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/AlertRepository.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/AlertWindowClosedException.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/AvailabilityFailureException.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/AvailabilityRepository.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/AvailabilityResult.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/ConcurrentUpdateConflictException.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/CourtNotSupportedException.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/CreateAlertResult.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/IdempotencyKeyReusedException.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/InMemoryAlertRepository.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/InMemoryAvailabilityRepository.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/SlotNotSupportedException.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/StorageTimeoutException.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/domain/Alert.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/domain/AlertDelivery.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/domain/AlertStatus.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/domain/AvailabilitySnapshot.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/domain/DeliveryStatus.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "stage_skipped",
+      "iteration": "003",
+      "point": null,
+      "where": null,
+      "detail": "g0_reject"
+    },
+    {
+      "kind": "gate_unjudged",
+      "iteration": "003",
+      "point": null,
+      "where": "g1",
+      "detail": "g1가 판정되지 않았다. 미판정은 통과가 아니다"
+    },
+    {
+      "kind": "gate_unjudged",
+      "iteration": "003",
+      "point": null,
+      "where": "changes",
+      "detail": "changes가 판정되지 않았다. 미판정은 통과가 아니다"
+    },
+    {
+      "kind": "contract_step_diff",
+      "iteration": "003",
+      "point": null,
+      "where": "*",
+      "detail": "앞 판본 대비 달라진 좌표 0개, 깨는 변경 0건"
+    },
+    {
+      "kind": "baseline_diff",
+      "iteration": "003",
+      "point": null,
+      "where": "*",
+      "detail": "이 run의 기준선 대비 달라진 좌표 0개, 깨는 변경 0건"
+    },
+    {
+      "kind": "origin_diff",
+      "iteration": "003",
+      "point": null,
+      "where": "*",
+      "detail": "사람이 확정한 원본 대비 누적으로 달라진 좌표 0개, 깨는 변경 0건"
+    },
+    {
+      "kind": "collateral_change",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/api/TennisAlertExceptionHandler.java",
+      "detail": "열린 위반의 좌표를 언급하지 않는 파일이 달라졌다"
+    }
+  ],
+  "impact": {
+    "iteration": "003",
+    "contract_version": {
+      "path": "contract/tennis-alert-api-v1.yaml",
+      "from": "contract/tennis-alert-api-v1.yaml"
+    },
+    "baseline_contract": "tennis-alert-api.yaml",
+    "origin_contract": "tennis-alert-api.yaml",
+    "points_gone": [],
+    "points_born": [],
+    "step_diff": {
+      "pointers": [],
+      "breaking": []
+    },
+    "baseline_diff": {
+      "pointers": [],
+      "breaking": []
+    },
+    "origin_diff": {
+      "pointers": [],
+      "breaking": [],
+      "points_gone": []
+    },
+    "closed_by_code": [],
+    "closed_by_contract": [],
+    "decision_risk": {
+      "level": "high",
+      "reasons": [
+        "low confidence decisions: ['d_lazy_expiry_materialization']"
+      ]
+    }
+  },
+  "disagreements": {
+    "claim_mismatch": [
+      {
+        "iteration": "001",
+        "point": "getCourtAvailability:200",
+        "note": "CourtAvailability 응답에 코트, 날짜, 확인 시각, stale 상태와 이유, 예약 URL, 전체 슬롯을 포함한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getCourtAvailability:400",
+        "note": "날짜와 courtId 형식 검증 실패를 VALIDATION_FAILED problem 응답으로 매핑한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getCourtAvailability:404",
+        "note": "경로 코트 미지원은 COURT_NOT_SUPPORTED와 404로 매핑한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getCourtAvailability:500",
+        "note": "계약에 정의되지 않은 내부 실패를 INTERNAL_ERROR와 500으로 매핑한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getCourtAvailability:502",
+        "note": "저장된 성공 결과가 없는 응답 해독 실패를 UPSTREAM_RESPONSE_UNREADABLE과 502로 매핑한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getCourtAvailability:503",
+        "note": "저장된 성공 결과가 없는 예약처 불가 또는 저장소 시간 초과를 재시도 가능한 503으로 표현한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getCourtAvailability:504",
+        "note": "저장된 성공 결과가 없는 외부 예약처 시간 초과를 UPSTREAM_TIMEOUT과 504로 매핑한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getCourtAvailability:VALIDATION_FAILED",
+        "note": "요청 검증 실패 problem의 code를 명시한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getCourtAvailability:COURT_NOT_SUPPORTED",
+        "note": "지원하지 않는 코트의 경로 요청과 본문 요청을 상태 코드 위치에 따라 구분한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getCourtAvailability:INTERNAL_ERROR",
+        "note": "예상하지 못한 내부 실패에 재시도 정보와 traceId를 포함한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getCourtAvailability:UPSTREAM_RESPONSE_UNREADABLE",
+        "note": "포트의 응답 해독 실패 사유를 그대로 staleReason 또는 502 code로 전달한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getCourtAvailability:UPSTREAM_UNAVAILABLE",
+        "note": "예약처 연결 또는 예약처 실패를 503 code로 전달한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getCourtAvailability:UPSTREAM_TIMEOUT",
+        "note": "예약처 시간 초과를 504 code로 전달한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getCourtAvailability:STORAGE_TIMEOUT",
+        "note": "저장소 시간 초과를 503 code로 표현할 수 있는 명시적 매핑을 둔다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "listAlerts:200",
+        "note": "사용자 소유 신청만 최근 생성 순으로 items에 담아 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "listAlerts:400",
+        "note": "status 열거형과 요청 형식 검증 실패를 400으로 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "listAlerts:401",
+        "note": "Bearer 인증이 없거나 비어 있으면 UNAUTHENTICATED를 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "listAlerts:500",
+        "note": "예상하지 못한 내부 실패를 INTERNAL_ERROR로 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "listAlerts:503",
+        "note": "저장소 시간 초과를 STORAGE_TIMEOUT으로 반환할 수 있는 핸들러를 둔다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "listAlerts:VALIDATION_FAILED",
+        "note": "잘못된 status와 요청 형식에 VALIDATION_FAILED를 사용한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "listAlerts:UNAUTHENTICATED",
+        "note": "사용자 식별 실패를 UNAUTHENTICATED로 사용한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "listAlerts:INTERNAL_ERROR",
+        "note": "목록 처리의 내부 실패에 INTERNAL_ERROR를 사용한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "listAlerts:STORAGE_TIMEOUT",
+        "note": "저장소 지연을 STORAGE_TIMEOUT으로 사용한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:201",
+        "note": "새 감시 신청을 생성하고 Location과 Idempotency-Replayed 헤더를 함께 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:200",
+        "note": "동일 사용자의 동일 조건 감시 신청이 있으면 새로 만들지 않고 기존 신청을 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:400",
+        "note": "본문, 시간 형식, UUID 멱등 키 검증 실패를 처리한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:401",
+        "note": "Bearer 토큰이 없거나 유효한 사용자 식별값이 없으면 거절한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:409",
+        "note": "같은 멱등 키로 다른 요청이 저장된 경우 IDEMPOTENCY_KEY_REUSED를 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:422",
+        "note": "본문 코트 미지원, 슬롯 미지원, 만료된 조건을 구분해 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:500",
+        "note": "지원 슬롯 확인 중 계약에 정의되지 않은 내부 실패를 INTERNAL_ERROR로 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:503",
+        "note": "동일 멱등 키 처리 중 경합은 CONCURRENT_UPDATE_CONFLICT로, 저장소 시간 초과는 STORAGE_TIMEOUT으로 표현한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:VALIDATION_FAILED",
+        "note": "Idempotency-Key, 본문 필수 필드, UUID, 날짜와 시간 형식을 명시적으로 검증한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:UNAUTHENTICATED",
+        "note": "Bearer 토큰에서 사용자 식별이 되지 않으면 401을 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:IDEMPOTENCY_KEY_REUSED",
+        "note": "멱등 키의 요청 내용 불일치를 409로 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:COURT_NOT_SUPPORTED",
+        "note": "본문의 지원하지 않는 코트를 422로 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:SLOT_NOT_SUPPORTED",
+        "note": "코트·날짜의 운영 슬롯과 정확히 일치하지 않는 요청을 422로 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:ALERT_WINDOW_CLOSED",
+        "note": "Asia/Seoul 기준 이용 시작 시각이 지난 신청을 422로 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:INTERNAL_ERROR",
+        "note": "계약에 없는 내부 실패는 재시도 가능한 500 problem으로 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:STORAGE_TIMEOUT",
+        "note": "저장소 시간 초과의 503 응답 매핑을 선언한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:CONCURRENT_UPDATE_CONFLICT",
+        "note": "같은 멱등 키의 선행 처리 중 요청을 Retry-After 1초의 503으로 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getAlert:200",
+        "note": "소유자와 일치하는 신청의 모든 필수 필드를 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getAlert:400",
+        "note": "UUID가 아닌 alertId를 VALIDATION_FAILED로 거절한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getAlert:401",
+        "note": "Bearer 인증 실패를 UNAUTHENTICATED로 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getAlert:404",
+        "note": "없는 신청과 다른 사용자의 신청을 동일한 ALERT_NOT_FOUND로 처리한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getAlert:500",
+        "note": "예상하지 못한 내부 실패를 INTERNAL_ERROR로 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getAlert:503",
+        "note": "저장소 시간 초과를 STORAGE_TIMEOUT으로 반환할 수 있는 매핑을 둔다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getAlert:VALIDATION_FAILED",
+        "note": "alertId의 UUID 형식을 명시적으로 검증한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getAlert:UNAUTHENTICATED",
+        "note": "본인 신청 조회 전에 Bearer 사용자 식별을 요구한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getAlert:ALERT_NOT_FOUND",
+        "note": "소유권 불일치를 존재하지 않는 신청과 같은 404로 숨긴다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getAlert:INTERNAL_ERROR",
+        "note": "내부 실패에 traceId와 재시도 정보를 포함한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getAlert:STORAGE_TIMEOUT",
+        "note": "저장소 시간 초과의 503 매핑을 선언한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "cancelAlert:200",
+        "note": "감시 중 신청을 CANCELED로 바꾸고 이미 끝난 신청은 현재 상태 그대로 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "cancelAlert:400",
+        "note": "UUID가 아닌 alertId를 VALIDATION_FAILED로 거절한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "cancelAlert:401",
+        "note": "Bearer 인증 실패를 UNAUTHENTICATED로 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "cancelAlert:404",
+        "note": "없는 신청과 남의 신청을 ALERT_NOT_FOUND로 동일하게 처리한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "cancelAlert:500",
+        "note": "예상하지 못한 내부 실패를 INTERNAL_ERROR로 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "cancelAlert:503",
+        "note": "저장소 시간 초과와 동시 수정 경합을 재시도 가능한 503으로 매핑한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "cancelAlert:VALIDATION_FAILED",
+        "note": "alertId의 UUID 형식을 명시적으로 검증한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "cancelAlert:UNAUTHENTICATED",
+        "note": "본인 신청 해제 전에 Bearer 사용자 식별을 요구한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "cancelAlert:ALERT_NOT_FOUND",
+        "note": "소유권이 없는 신청의 존재 여부를 노출하지 않는다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "cancelAlert:INTERNAL_ERROR",
+        "note": "내부 실패를 INTERNAL_ERROR로 표현한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "cancelAlert:STORAGE_TIMEOUT",
+        "note": "저장소 시간 초과를 STORAGE_TIMEOUT으로 표현한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "cancelAlert:CONCURRENT_UPDATE_CONFLICT",
+        "note": "동시 상태 변경 경합을 CONCURRENT_UPDATE_CONFLICT로 표현한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "getCourtAvailability:200",
+        "note": "CourtAvailability 응답에 코트, 날짜, 확인 시각, stale 상태와 이유, 예약 URL, 전체 슬롯을 포함한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "getCourtAvailability:400",
+        "note": "날짜와 courtId 형식 검증 실패를 VALIDATION_FAILED problem 응답으로 매핑한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "getCourtAvailability:404",
+        "note": "경로 코트 미지원은 COURT_NOT_SUPPORTED와 404로 매핑한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "getCourtAvailability:500",
+        "note": "계약에 정의되지 않은 내부 실패를 INTERNAL_ERROR와 500으로 매핑한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "getCourtAvailability:502",
+        "note": "저장된 성공 결과가 없는 응답 해독 실패를 UPSTREAM_RESPONSE_UNREADABLE과 502로 매핑한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "getCourtAvailability:503",
+        "note": "저장된 성공 결과가 없는 예약처 불가 또는 저장소 시간 초과를 재시도 가능한 503으로 표현한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "getCourtAvailability:504",
+        "note": "저장된 성공 결과가 없는 외부 예약처 시간 초과를 UPSTREAM_TIMEOUT과 504로 매핑한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "getCourtAvailability:VALIDATION_FAILED",
+        "note": "요청 검증 실패 problem의 code를 명시한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "getCourtAvailability:COURT_NOT_SUPPORTED",
+        "note": "지원하지 않는 코트의 경로 요청과 본문 요청을 상태 코드 위치에 따라 구분한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "getCourtAvailability:INTERNAL_ERROR",
+        "note": "예상하지 못한 내부 실패에 재시도 정보와 traceId를 포함한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "getCourtAvailability:UPSTREAM_RESPONSE_UNREADABLE",
+        "note": "포트의 응답 해독 실패 사유를 그대로 staleReason 또는 502 code로 전달한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "getCourtAvailability:UPSTREAM_UNAVAILABLE",
+        "note": "예약처 연결 또는 예약처 실패를 503 code로 전달한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "getCourtAvailability:UPSTREAM_TIMEOUT",
+        "note": "예약처 시간 초과를 504 code로 전달한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "getCourtAvailability:STORAGE_TIMEOUT",
+        "note": "저장소 시간 초과를 503 code로 표현할 수 있는 명시적 매핑을 둔다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "listAlerts:200",
+        "note": "사용자 소유 신청만 최근 생성 순으로 items에 담아 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "listAlerts:400",
+        "note": "status 열거형과 요청 형식 검증 실패를 400으로 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "listAlerts:401",
+        "note": "Bearer 인증이 없거나 비어 있으면 UNAUTHENTICATED를 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "listAlerts:500",
+        "note": "예상하지 못한 내부 실패를 INTERNAL_ERROR로 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "listAlerts:503",
+        "note": "저장소 시간 초과를 STORAGE_TIMEOUT으로 반환할 수 있는 핸들러를 둔다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "listAlerts:VALIDATION_FAILED",
+        "note": "잘못된 status와 요청 형식에 VALIDATION_FAILED를 사용한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "listAlerts:UNAUTHENTICATED",
+        "note": "사용자 식별 실패를 UNAUTHENTICATED으로 사용한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "listAlerts:INTERNAL_ERROR",
+        "note": "목록 처리의 내부 실패에 INTERNAL_ERROR를 사용한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "listAlerts:STORAGE_TIMEOUT",
+        "note": "저장소 지연을 STORAGE_TIMEOUT으로 사용한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "createAlert:201",
+        "note": "새 감시 신청을 생성하고 Location과 Idempotency-Replayed 헤더를 함께 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "createAlert:200",
+        "note": "동일 사용자의 동일 조건 감시 신청이 있으면 새로 만들지 않고 기존 신청을 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "createAlert:400",
+        "note": "본문, 시간 형식, UUID 멱등 키 검증 실패를 처리한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "createAlert:401",
+        "note": "Bearer 토큰이 없거나 유효한 사용자 식별값이 없으면 거절한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "createAlert:409",
+        "note": "같은 멱등 키로 다른 요청이 저장된 경우 IDEMPOTENCY_KEY_REUSED를 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "createAlert:422",
+        "note": "본문 코트 미지원, 슬롯 미지원, 만료된 조건을 구분해 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "createAlert:500",
+        "note": "지원 슬롯 확인 중 계약에 정의되지 않은 내부 실패를 INTERNAL_ERROR로 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "createAlert:503",
+        "note": "동일 멱등 키 처리 중 경합은 CONCURRENT_UPDATE_CONFLICT로, 저장소 시간 초과는 STORAGE_TIMEOUT으로 표현한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "createAlert:VALIDATION_FAILED",
+        "note": "Idempotency-Key, 본문 필수 필드, UUID, 날짜와 시간 형식을 명시적으로 검증한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "createAlert:UNAUTHENTICATED",
+        "note": "Bearer 토큰에서 사용자 식별이 되지 않으면 401을 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "createAlert:IDEMPOTENCY_KEY_REUSED",
+        "note": "멱등 키의 요청 내용 불일치를 409로 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "createAlert:COURT_NOT_SUPPORTED",
+        "note": "본문의 지원하지 않는 코트를 422로 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "createAlert:SLOT_NOT_SUPPORTED",
+        "note": "코트·날짜의 운영 슬롯과 정확히 일치하지 않는 요청을 422로 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "createAlert:ALERT_WINDOW_CLOSED",
+        "note": "Asia/Seoul 기준 이용 시작 시각이 지난 신청을 422로 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "createAlert:INTERNAL_ERROR",
+        "note": "계약에 없는 내부 실패는 재시도 가능한 500 problem으로 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "createAlert:STORAGE_TIMEOUT",
+        "note": "저장소 시간 초과의 503 응답 매핑을 선언한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "createAlert:CONCURRENT_UPDATE_CONFLICT",
+        "note": "같은 멱등 키의 선행 처리 중 요청을 Retry-After 1초의 503으로 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "getAlert:200",
+        "note": "소유자와 일치하는 신청의 모든 필수 필드를 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "getAlert:400",
+        "note": "UUID가 아닌 alertId를 VALIDATION_FAILED로 거절한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "getAlert:401",
+        "note": "Bearer 인증 실패를 UNAUTHENTICATED로 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "getAlert:404",
+        "note": "없는 신청과 다른 사용자의 신청을 동일한 ALERT_NOT_FOUND로 처리한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "getAlert:500",
+        "note": "예상하지 못한 내부 실패를 INTERNAL_ERROR로 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "getAlert:503",
+        "note": "저장소 시간 초과를 STORAGE_TIMEOUT으로 반환할 수 있는 매핑을 둔다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "getAlert:VALIDATION_FAILED",
+        "note": "alertId의 UUID 형식을 명시적으로 검증한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "getAlert:UNAUTHENTICATED",
+        "note": "본인 신청 조회 전에 Bearer 사용자 식별을 요구한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "getAlert:ALERT_NOT_FOUND",
+        "note": "소유권 불일치를 존재하지 않는 신청과 같은 404로 숨긴다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "getAlert:INTERNAL_ERROR",
+        "note": "내부 실패에 traceId와 재시도 정보를 포함한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "getAlert:STORAGE_TIMEOUT",
+        "note": "저장소 시간 초과의 503 매핑을 선언한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "cancelAlert:200",
+        "note": "감시 중 신청을 CANCELED로 바꾸고 이미 끝난 신청은 현재 상태 그대로 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "cancelAlert:400",
+        "note": "UUID가 아닌 alertId를 VALIDATION_FAILED로 거절한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "cancelAlert:401",
+        "note": "Bearer 인증 실패를 UNAUTHENTICATED로 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "cancelAlert:404",
+        "note": "없는 신청과 남의 신청을 ALERT_NOT_FOUND로 동일하게 처리한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "cancelAlert:500",
+        "note": "예상하지 못한 내부 실패를 INTERNAL_ERROR로 반환한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "cancelAlert:503",
+        "note": "저장소 시간 초과와 동시 수정 경합을 재시도 가능한 503으로 매핑한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "cancelAlert:VALIDATION_FAILED",
+        "note": "alertId의 UUID 형식을 명시적으로 검증한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "cancelAlert:UNAUTHENTICATED",
+        "note": "본인 신청 해제 전에 Bearer 사용자 식별을 요구한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "cancelAlert:ALERT_NOT_FOUND",
+        "note": "소유권이 없는 신청의 존재 여부를 노출하지 않는다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "cancelAlert:INTERNAL_ERROR",
+        "note": "내부 실패를 INTERNAL_ERROR로 표현한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "cancelAlert:STORAGE_TIMEOUT",
+        "note": "저장소 시간 초과를 STORAGE_TIMEOUT으로 표현한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "cancelAlert:CONCURRENT_UPDATE_CONFLICT",
+        "note": "동시 상태 변경 경합을 CONCURRENT_UPDATE_CONFLICT로 표현한다.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      }
+    ],
+    "silent_reversal": [],
+    "unjustified_proposal": [],
+    "axis_disagreement": [],
+    "machine_checkable_restatement": []
+  },
+  "pointer_touches": {}
+}

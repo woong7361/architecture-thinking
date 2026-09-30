@@ -1,0 +1,211 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Evaluator Output (impl rubric, named/closed)",
+  "description": "모델에게 주는 구조화출력 스키마. impl:v1의 다섯 축을 named/closed로 못박는다. 검증은 축을 열거하지 않는 eval_output.schema.json + validate_eval_contract가 한다.",
+  "type": "object",
+  "required": [
+    "brief_hash",
+    "iteration",
+    "rubric_name",
+    "rubric_scores",
+    "axis_rationales",
+    "slot_classifications",
+    "unmeasured_axes",
+    "calibration_note"
+  ],
+  "properties": {
+    "brief_hash": {
+      "type": "string"
+    },
+    "iteration": {
+      "type": "string"
+    },
+    "rubric_name": {
+      "type": "string"
+    },
+    "rubric_scores": {
+      "type": "object",
+      "required": [
+        "scores",
+        "weights",
+        "weighted_total"
+      ],
+      "properties": {
+        "scores": {
+          "type": "object",
+          "required": [
+            "request_tolerance",
+            "response_fidelity",
+            "failure_faithfulness",
+            "state_continuity",
+            "judgement_disclosure"
+          ],
+          "properties": {
+            "request_tolerance": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 5
+            },
+            "response_fidelity": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 5
+            },
+            "failure_faithfulness": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 5
+            },
+            "state_continuity": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 5
+            },
+            "judgement_disclosure": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 5
+            }
+          },
+          "additionalProperties": false
+        },
+        "weights": {
+          "type": "object",
+          "required": [
+            "request_tolerance",
+            "response_fidelity",
+            "failure_faithfulness",
+            "state_continuity",
+            "judgement_disclosure"
+          ],
+          "properties": {
+            "request_tolerance": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "response_fidelity": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "failure_faithfulness": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "state_continuity": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "judgement_disclosure": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "weighted_total": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 5
+        }
+      },
+      "additionalProperties": false
+    },
+    "axis_rationales": {
+      "type": "object",
+      "required": [
+        "request_tolerance",
+        "response_fidelity",
+        "failure_faithfulness",
+        "state_continuity",
+        "judgement_disclosure"
+      ],
+      "properties": {
+        "request_tolerance": {
+          "type": "string"
+        },
+        "response_fidelity": {
+          "type": "string"
+        },
+        "failure_faithfulness": {
+          "type": "string"
+        },
+        "state_continuity": {
+          "type": "string"
+        },
+        "judgement_disclosure": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "slot_classifications": {
+      "type": "array",
+      "description": "기준선 prose_slots의 분류와 충족 여부. 분모는 슬롯 목록이 고정한다. 신고할 것이 없으면 빈 배열을 낸다.",
+      "items": {
+        "type": "object",
+        "required": [
+          "slot_id",
+          "classification",
+          "axis",
+          "met",
+          "note"
+        ],
+        "properties": {
+          "slot_id": {
+            "type": "string"
+          },
+          "classification": {
+            "type": "string",
+            "enum": [
+              "obligation",
+              "description"
+            ]
+          },
+          "axis": {
+            "type": "string",
+            "enum": [
+              "request_tolerance",
+              "response_fidelity",
+              "failure_faithfulness",
+              "state_continuity",
+              "judgement_disclosure"
+            ]
+          },
+          "met": {
+            "type": "boolean"
+          },
+          "note": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "calibration_note": {
+      "type": "string"
+    },
+    "unmeasured_axes": {
+      "type": "array",
+      "description": "측정하지 못한 축의 이름. 작업 폴더의 코드를 읽지 못해 근거를 대지 못한 축을 여기 적는다. 측정하지 못한 것은 판정이 아니므로 runner가 그 채점을 판정에 쓰지 않는다. 모르는 것을 최저점으로 적지 말고 이 자리에 적어라.",
+      "items": {
+        "type": "string",
+        "enum": [
+          "request_tolerance",
+          "response_fidelity",
+          "failure_faithfulness",
+          "state_continuity",
+          "judgement_disclosure"
+        ]
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,1035 @@
+{
+  "brief_hash": "b02d8689",
+  "from_iteration": "001",
+  "to_iteration": "002",
+  "priority_order": [
+    "gate_violations",
+    "contract_version",
+    "standing_decisions",
+    "code_instructions"
+  ],
+  "open_causes": [
+    {
+      "id": "c_b6ad809d",
+      "rule": "response.status_missing",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "points": [
+        "getCourtAvailability:400",
+        "getCourtAvailability:404",
+        "getCourtAvailability:500",
+        "getCourtAvailability:502",
+        "getCourtAvailability:503",
+        "getCourtAvailability:504",
+        "listAlerts:400",
+        "listAlerts:401",
+        "listAlerts:500",
+        "listAlerts:503",
+        "createAlert:201",
+        "createAlert:400",
+        "createAlert:401",
+        "createAlert:409",
+        "createAlert:422",
+        "createAlert:500",
+        "createAlert:503",
+        "getAlert:400",
+        "getAlert:401",
+        "getAlert:404",
+        "getAlert:500",
+        "getAlert:503",
+        "cancelAlert:400",
+        "cancelAlert:401",
+        "cancelAlert:404",
+        "cancelAlert:500",
+        "cancelAlert:503"
+      ],
+      "point_count": 27,
+      "evidence_count": 27,
+      "label": "withholds_promised_response"
+    },
+    {
+      "id": "c_9346d5ac",
+      "rule": "response.field_differs",
+      "where": "Alert",
+      "detail": "경계: 3곳에서 다르다",
+      "points": [
+        "createAlert:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "point_count": 3,
+      "evidence_count": 9,
+      "label": "withholds_promised_response"
+    },
+    {
+      "id": "c_855f16dd",
+      "rule": "response.field_differs",
+      "where": "Alert",
+      "detail": "모양: courtId: 계약 ^[a-z0-9][a-z0-9-]*$ → 구현 None",
+      "points": [
+        "createAlert:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "point_count": 3,
+      "evidence_count": 3,
+      "label": "withholds_promised_response"
+    },
+    {
+      "id": "c_5b76ad7a",
+      "rule": "response.field_differs",
+      "where": "Alert",
+      "detail": "열거형: status: 계약은 ['WATCHING', 'NOTIFIED', 'CANCELED', 'EXPIRED']로 열거했는데 구현은 열거하지 않는다",
+      "points": [
+        "createAlert:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "point_count": 3,
+      "evidence_count": 3,
+      "label": "withholds_promised_response"
+    },
+    {
+      "id": "c_05c7be58",
+      "rule": "response.field_differs",
+      "where": "Alert",
+      "detail": "필수: 12곳에서 다르다",
+      "points": [
+        "createAlert:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "point_count": 3,
+      "evidence_count": 36,
+      "label": "withholds_promised_response"
+    },
+    {
+      "id": "c_4819f0a4",
+      "rule": "response.field_differs",
+      "where": "Alert",
+      "detail": "형식: reservationUrl: 계약 uri → 구현 None",
+      "points": [
+        "createAlert:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "point_count": 3,
+      "evidence_count": 3,
+      "label": "withholds_promised_response"
+    },
+    {
+      "id": "c_2ed140bf",
+      "rule": "response.field_differs",
+      "where": "Alert.delivery",
+      "detail": "경계: 2곳에서 다르다",
+      "points": [
+        "createAlert:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "point_count": 3,
+      "evidence_count": 6,
+      "label": "withholds_promised_response"
+    },
+    {
+      "id": "c_d6fce6a2",
+      "rule": "response.field_differs",
+      "where": "Alert.delivery",
+      "detail": "열거형: status: 계약은 ['PENDING', 'SENT', 'FAILED']로 열거했는데 구현은 열거하지 않는다",
+      "points": [
+        "createAlert:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "point_count": 3,
+      "evidence_count": 3,
+      "label": "withholds_promised_response"
+    },
+    {
+      "id": "c_f9b6d193",
+      "rule": "response.field_differs",
+      "where": "Alert.delivery",
+      "detail": "필수: 4곳에서 다르다",
+      "points": [
+        "createAlert:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "point_count": 3,
+      "evidence_count": 12,
+      "label": "withholds_promised_response"
+    },
+    {
+      "id": "c_2f90c7e6",
+      "rule": "response.field_differs",
+      "where": "Alert.delivery",
+      "detail": "형식: attemptCount: 계약 None → 구현 int32",
+      "points": [
+        "createAlert:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "point_count": 3,
+      "evidence_count": 3,
+      "label": "harmless_to_client"
+    },
+    {
+      "id": "c_46640b98",
+      "rule": "response.field_differs",
+      "where": "Alert.slot",
+      "detail": "모양: 2곳에서 다르다",
+      "points": [
+        "createAlert:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "point_count": 3,
+      "evidence_count": 6,
+      "label": "withholds_promised_response"
+    },
+    {
+      "id": "c_34fce4fd",
+      "rule": "response.field_differs",
+      "where": "Alert.slot",
+      "detail": "필수: 2곳에서 다르다",
+      "points": [
+        "createAlert:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "point_count": 3,
+      "evidence_count": 6,
+      "label": "withholds_promised_response"
+    },
+    {
+      "id": "c_408b88bd",
+      "rule": "request.input_differs",
+      "where": "parameters.path.alertId",
+      "detail": "형식: 계약 uuid → 구현 None",
+      "points": [
+        "getAlert",
+        "cancelAlert"
+      ],
+      "point_count": 2,
+      "evidence_count": 2,
+      "label": "harmless_to_client"
+    },
+    {
+      "id": "c_2bdc48e0",
+      "rule": "extract.blind",
+      "where": "security",
+      "detail": "계약은 인증 요구를 선언했는데 추출 스펙에는 그 조항에 대응하는 것이 없다",
+      "points": [],
+      "point_count": 1,
+      "evidence_count": 1,
+      "label": "undeclared_surface"
+    },
+    {
+      "id": "c_5fd4f867",
+      "rule": "extract.blind",
+      "where": "x-error-codes",
+      "detail": "계약은 (상태 코드, 에러 코드) 쌍을 선언했는데 추출 스펙에는 그 조항에 대응하는 것이 없다",
+      "points": [],
+      "point_count": 1,
+      "evidence_count": 1,
+      "label": "undeclared_surface"
+    },
+    {
+      "id": "c_d40b2bcd",
+      "rule": "request.input_differs",
+      "where": "AlertRequest",
+      "detail": "경계: 2곳에서 다르다",
+      "points": [
+        "createAlert"
+      ],
+      "point_count": 1,
+      "evidence_count": 2,
+      "label": "harmless_to_client"
+    },
+    {
+      "id": "c_1f0ebc9e",
+      "rule": "request.input_differs",
+      "where": "AlertRequest",
+      "detail": "모양: courtId: 계약 ^[a-z0-9][a-z0-9-]*$ → 구현 None",
+      "points": [
+        "createAlert"
+      ],
+      "point_count": 1,
+      "evidence_count": 1,
+      "label": "harmless_to_client"
+    },
+    {
+      "id": "c_da161232",
+      "rule": "request.input_differs",
+      "where": "AlertRequest",
+      "detail": "형식: date: 계약 date → 구현 None",
+      "points": [
+        "createAlert"
+      ],
+      "point_count": 1,
+      "evidence_count": 1,
+      "label": "harmless_to_client"
+    },
+    {
+      "id": "c_8dfb7b96",
+      "rule": "request.input_differs",
+      "where": "AlertRequest.slot",
+      "detail": "모양: 2곳에서 다르다",
+      "points": [
+        "createAlert"
+      ],
+      "point_count": 1,
+      "evidence_count": 2,
+      "label": "harmless_to_client"
+    },
+    {
+      "id": "c_6993156e",
+      "rule": "request.input_differs",
+      "where": "parameters.header.Idempotency-Key",
+      "detail": "형식: 계약 uuid → 구현 None",
+      "points": [
+        "createAlert"
+      ],
+      "point_count": 1,
+      "evidence_count": 1,
+      "label": "harmless_to_client"
+    },
+    {
+      "id": "c_ce72d543",
+      "rule": "request.input_differs",
+      "where": "parameters.path.courtId",
+      "detail": "경계: 2곳에서 다르다",
+      "points": [
+        "getCourtAvailability"
+      ],
+      "point_count": 1,
+      "evidence_count": 2,
+      "label": "harmless_to_client"
+    },
+    {
+      "id": "c_cb8d908d",
+      "rule": "request.input_differs",
+      "where": "parameters.path.courtId",
+      "detail": "모양: 계약 ^[a-z0-9][a-z0-9-]*$ → 구현 None",
+      "points": [
+        "getCourtAvailability"
+      ],
+      "point_count": 1,
+      "evidence_count": 1,
+      "label": "harmless_to_client"
+    },
+    {
+      "id": "c_99e3a10f",
+      "rule": "request.input_differs",
+      "where": "parameters.query.date",
+      "detail": "형식: 계약 date → 구현 None",
+      "points": [
+        "getCourtAvailability"
+      ],
+      "point_count": 1,
+      "evidence_count": 1,
+      "label": "harmless_to_client"
+    },
+    {
+      "id": "c_dccc6e48",
+      "rule": "request.input_differs",
+      "where": "parameters.query.status",
+      "detail": "열거형: 계약은 ['WATCHING', 'NOTIFIED', 'CANCELED', 'EXPIRED']로 열거했는데 구현은 열거하지 않는다",
+      "points": [
+        "listAlerts"
+      ],
+      "point_count": 1,
+      "evidence_count": 1,
+      "label": "harmless_to_client"
+    },
+    {
+      "id": "c_bc5a268b",
+      "rule": "response.field_differs",
+      "where": "AlertList",
+      "detail": "필수: items: 계약이 항상 담겠다고 보장했는데 구현은 선택이다",
+      "points": [
+        "listAlerts:200"
+      ],
+      "point_count": 1,
+      "evidence_count": 1,
+      "label": "withholds_promised_response"
+    },
+    {
+      "id": "c_abc8dbe0",
+      "rule": "response.field_differs",
+      "where": "AlertList.items[]",
+      "detail": "경계: 3곳에서 다르다",
+      "points": [
+        "listAlerts:200"
+      ],
+      "point_count": 1,
+      "evidence_count": 3,
+      "label": "withholds_promised_response"
+    },
+    {
+      "id": "c_dfd1c0e7",
+      "rule": "response.field_differs",
+      "where": "AlertList.items[]",
+      "detail": "모양: courtId: 계약 ^[a-z0-9][a-z0-9-]*$ → 구현 None",
+      "points": [
+        "listAlerts:200"
+      ],
+      "point_count": 1,
+      "evidence_count": 1,
+      "label": "withholds_promised_response"
+    },
+    {
+      "id": "c_e6c8899b",
+      "rule": "response.field_differs",
+      "where": "AlertList.items[]",
+      "detail": "열거형: status: 계약은 ['WATCHING', 'NOTIFIED', 'CANCELED', 'EXPIRED']로 열거했는데 구현은 열거하지 않는다",
+      "points": [
+        "listAlerts:200"
+      ],
+      "point_count": 1,
+      "evidence_count": 1,
+      "label": "withholds_promised_response"
+    },
+    {
+      "id": "c_67a99b02",
+      "rule": "response.field_differs",
+      "where": "AlertList.items[]",
+      "detail": "필수: 12곳에서 다르다",
+      "points": [
+        "listAlerts:200"
+      ],
+      "point_count": 1,
+      "evidence_count": 12,
+      "label": "withholds_promised_response"
+    },
+    {
+      "id": "c_d9133138",
+      "rule": "response.field_differs",
+      "where": "AlertList.items[]",
+      "detail": "형식: reservationUrl: 계약 uri → 구현 None",
+      "points": [
+        "listAlerts:200"
+      ],
+      "point_count": 1,
+      "evidence_count": 1,
+      "label": "withholds_promised_response"
+    },
+    {
+      "id": "c_85ad1e04",
+      "rule": "response.field_differs",
+      "where": "AlertList.items[].delivery",
+      "detail": "경계: 2곳에서 다르다",
+      "points": [
+        "listAlerts:200"
+      ],
+      "point_count": 1,
+      "evidence_count": 2,
+      "label": "withholds_promised_response"
+    },
+    {
+      "id": "c_feea3e12",
+      "rule": "response.field_differs",
+      "where": "AlertList.items[].delivery",
+      "detail": "열거형: status: 계약은 ['PENDING', 'SENT', 'FAILED']로 열거했는데 구현은 열거하지 않는다",
+      "points": [
+        "listAlerts:200"
+      ],
+      "point_count": 1,
+      "evidence_count": 1,
+      "label": "withholds_promised_response"
+    },
+    {
+      "id": "c_f8efdd68",
+      "rule": "response.field_differs",
+      "where": "AlertList.items[].delivery",
+      "detail": "필수: 4곳에서 다르다",
+      "points": [
+        "listAlerts:200"
+      ],
+      "point_count": 1,
+      "evidence_count": 4,
+      "label": "withholds_promised_response"
+    },
+    {
+      "id": "c_3fb4e57f",
+      "rule": "response.field_differs",
+      "where": "AlertList.items[].delivery",
+      "detail": "형식: attemptCount: 계약 None → 구현 int32",
+      "points": [
+        "listAlerts:200"
+      ],
+      "point_count": 1,
+      "evidence_count": 1,
+      "label": "harmless_to_client"
+    },
+    {
+      "id": "c_6c8ae89c",
+      "rule": "response.field_differs",
+      "where": "AlertList.items[].slot",
+      "detail": "모양: 2곳에서 다르다",
+      "points": [
+        "listAlerts:200"
+      ],
+      "point_count": 1,
+      "evidence_count": 2,
+      "label": "withholds_promised_response"
+    },
+    {
+      "id": "c_394f574a",
+      "rule": "response.field_differs",
+      "where": "AlertList.items[].slot",
+      "detail": "필수: 2곳에서 다르다",
+      "points": [
+        "listAlerts:200"
+      ],
+      "point_count": 1,
+      "evidence_count": 2,
+      "label": "withholds_promised_response"
+    },
+    {
+      "id": "c_0108462f",
+      "rule": "response.field_differs",
+      "where": "CourtAvailability",
+      "detail": "경계: 3곳에서 다르다",
+      "points": [
+        "getCourtAvailability:200"
+      ],
+      "point_count": 1,
+      "evidence_count": 3,
+      "label": "withholds_promised_response"
+    },
+    {
+      "id": "c_9b9cf43e",
+      "rule": "response.field_differs",
+      "where": "CourtAvailability",
+      "detail": "모양: courtId: 계약 ^[a-z0-9][a-z0-9-]*$ → 구현 None",
+      "points": [
+        "getCourtAvailability:200"
+      ],
+      "point_count": 1,
+      "evidence_count": 1,
+      "label": "withholds_promised_response"
+    },
+    {
+      "id": "c_ae5d8e54",
+      "rule": "response.field_differs",
+      "where": "CourtAvailability",
+      "detail": "열거형: staleReason: 계약은 ['UPSTREAM_TIMEOUT', 'UPSTREAM_UNAVAILABLE', 'UPSTREAM_RESPONSE_UNREADABLE']로 열거했는데 구현은 열거하지 않는다",
+      "points": [
+        "getCourtAvailability:200"
+      ],
+      "point_count": 1,
+      "evidence_count": 1,
+      "label": "withholds_promised_response"
+    },
+    {
+      "id": "c_436277ca",
+      "rule": "response.field_differs",
+      "where": "CourtAvailability",
+      "detail": "필수: 8곳에서 다르다",
+      "points": [
+        "getCourtAvailability:200"
+      ],
+      "point_count": 1,
+      "evidence_count": 8,
+      "label": "withholds_promised_response"
+    },
+    {
+      "id": "c_744dc250",
+      "rule": "response.field_differs",
+      "where": "CourtAvailability",
+      "detail": "형식: reservationUrl: 계약 uri → 구현 None",
+      "points": [
+        "getCourtAvailability:200"
+      ],
+      "point_count": 1,
+      "evidence_count": 1,
+      "label": "withholds_promised_response"
+    },
+    {
+      "id": "c_0f90e8ee",
+      "rule": "response.field_differs",
+      "where": "CourtAvailability.slots[]",
+      "detail": "모양: 2곳에서 다르다",
+      "points": [
+        "getCourtAvailability:200"
+      ],
+      "point_count": 1,
+      "evidence_count": 2,
+      "label": "withholds_promised_response"
+    },
+    {
+      "id": "c_92d2f010",
+      "rule": "response.field_differs",
+      "where": "CourtAvailability.slots[]",
+      "detail": "필수: 3곳에서 다르다",
+      "points": [
+        "getCourtAvailability:200"
+      ],
+      "point_count": 1,
+      "evidence_count": 3,
+      "label": "withholds_promised_response"
+    },
+    {
+      "id": "c_2aafcbd1",
+      "rule": "response.header_missing",
+      "where": "headers.Idempotency-Replayed",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "points": [
+        "createAlert:200"
+      ],
+      "point_count": 1,
+      "evidence_count": 1,
+      "label": "withholds_promised_response"
+    },
+    {
+      "id": "c_cd9df901",
+      "rule": "response.header_missing",
+      "where": "headers.Location",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "points": [
+        "createAlert:200"
+      ],
+      "point_count": 1,
+      "evidence_count": 1,
+      "label": "withholds_promised_response"
+    }
+  ],
+  "open_cause_count": 45,
+  "open_point_count": 94,
+  "rule_cards": {
+    "extract.blind": "추출한 스펙에 계약의 그 조항에 대응하는 것이 아예 없다. 미판정은 통과가 아니므로 위반으로 센다.",
+    "request.input_differs": "계약이 그 입력에 정한 타입·형식·모양·제약·열거형·필수가 구현에서 다르다.",
+    "response.field_differs": "계약이 그 필드에 정한 타입·형식·모양·제약·열거형·필수가 구현에서 다르다.",
+    "response.status_missing": "계약이 선언한 응답 상태 코드가 구현에 없다. 그 아래의 본문과 헤더와 에러 코드는 이 한 건이 설명한다.",
+    "response.header_missing": "계약이 응답에 싣겠다고 선언한 헤더가 구현에 없다."
+  },
+  "gate_observations": [
+    {
+      "rule": "request.input_extra",
+      "point": "listAlerts",
+      "where": "parameters.header.Authorization",
+      "detail": "계약이 말하지 않은 파라미터다",
+      "verdict": "observation",
+      "label": "undeclared_surface",
+      "cause_id": "c_8dd1935a"
+    },
+    {
+      "rule": "request.input_extra",
+      "point": "createAlert",
+      "where": "parameters.header.Authorization",
+      "detail": "계약이 말하지 않은 파라미터다",
+      "verdict": "observation",
+      "label": "undeclared_surface",
+      "cause_id": "c_8dd1935a"
+    },
+    {
+      "rule": "request.input_extra",
+      "point": "getAlert",
+      "where": "parameters.header.Authorization",
+      "detail": "계약이 말하지 않은 파라미터다",
+      "verdict": "observation",
+      "label": "undeclared_surface",
+      "cause_id": "c_8dd1935a"
+    },
+    {
+      "rule": "request.input_extra",
+      "point": "cancelAlert",
+      "where": "parameters.header.Authorization",
+      "detail": "계약이 말하지 않은 파라미터다",
+      "verdict": "observation",
+      "label": "undeclared_surface",
+      "cause_id": "c_8dd1935a"
+    },
+    {
+      "rule": "decision.unknown_point",
+      "point": "Bearer token owner identification",
+      "where": "src/main/java/com/thinking/tennis/api/TennisAlertController.java:authenticate",
+      "detail": "계약의 판정 지점이 아니다 (결정 d_bearer_identity)",
+      "verdict": "observation",
+      "label": "undeclared_surface",
+      "cause_id": "c_0b9d8af2"
+    },
+    {
+      "rule": "decision.unknown_point",
+      "point": "Alert lifecycle expiration",
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplicationService.java:expireDueAlerts",
+      "detail": "계약의 판정 지점이 아니다 (결정 d_lazy_expiry)",
+      "verdict": "observation",
+      "label": "undeclared_surface",
+      "cause_id": "c_4b78ce6b"
+    },
+    {
+      "rule": "decision.unknown_point",
+      "point": "Problem:traceId",
+      "where": "src/main/java/com/thinking/tennis/api/TennisAlertExceptionHandler.java:response",
+      "detail": "계약의 판정 지점이 아니다 (결정 d_trace_id_format)",
+      "verdict": "observation",
+      "label": "undeclared_surface",
+      "cause_id": "c_ccdc442f"
+    }
+  ],
+  "gate_coverage": {
+    "g0": "PASS",
+    "g1": "REJECT",
+    "contract_changes": "PASS",
+    "allow_missing_gates": false
+  },
+  "current_contract_version": {
+    "path": "contract/tennis-alert-api-v1.yaml",
+    "from": "contract/tennis-alert-api-v1.yaml"
+  },
+  "standing_decisions": [
+    {
+      "id": "d_bearer_identity",
+      "point": "Bearer token owner identification",
+      "where": "src/main/java/com/thinking/tennis/api/TennisAlertController.java:authenticate",
+      "question": "How should the HTTP layer identify a user when the contract specifies Bearer authentication but provides no verifier port or token service?",
+      "considered": [
+        {
+          "choice": "Treat the non-empty bearer token value as the owner identifier",
+          "consequence": "Keeps ownership isolation deterministic without inventing an external authentication dependency."
+        },
+        {
+          "choice": "Reject every token because no verifier is available",
+          "consequence": "Makes all authenticated operations unusable."
+        },
+        {
+          "choice": "Create a new authentication client or token format",
+          "consequence": "Adds an undeclared dependency and external integration."
+        }
+      ],
+      "chosen": "Treat a syntactically valid non-empty bearer token as the owner identifier; reject only missing or malformed bearer credentials.",
+      "basis": "least_harm",
+      "rationale": "The implementation contract exposes no authentication port and forbids creating new external clients. Token-to-owner mapping is therefore kept local and deterministic.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:401",
+        "listAlerts:401",
+        "getAlert:401",
+        "cancelAlert:401",
+        "listAlerts:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "reversal_cost": "Replace the controller identity extraction with the eventual authentication adapter and update the service calls to use its principal identifier.",
+      "supersedes": null
+    },
+    {
+      "id": "d_create_slot_cache",
+      "point": "createAlert:422",
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplicationService.java:createAlert",
+      "question": "How can createAlert validate an exact operating slot without causing an upstream availability check?",
+      "considered": [
+        {
+          "choice": "Trigger getCourtAvailability during creation",
+          "consequence": "Violates the contract prose that only availability lookup initiates confirmation."
+        },
+        {
+          "choice": "Accept every slot for a supported court",
+          "consequence": "Cannot honor SLOT_NOT_SUPPORTED for slots absent from the known schedule."
+        },
+        {
+          "choice": "Validate against the last stored availability snapshot and reject when no schedule is known",
+          "consequence": "Requires the client to perform the contract's availability lookup before creating an alert."
+        }
+      ],
+      "chosen": "Use the stored court-date availability snapshot; return SLOT_NOT_SUPPORTED when no snapshot or matching slot exists.",
+      "basis": "spec_implication",
+      "rationale": "The contract explicitly makes lookup the only operation that triggers confirmation, while also requiring exact slot validation. The provided port has no separate schedule operation, so the last stored result is the available source of truth.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:200",
+        "createAlert:201",
+        "createAlert:422"
+      ],
+      "reversal_cost": "Introduce a separate schedule port or change the creation workflow once the contract exposes one.",
+      "supersedes": null
+    },
+    {
+      "id": "d_lazy_expiry",
+      "point": "Alert lifecycle expiration",
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplicationService.java:expireDueAlerts",
+      "question": "How should EXPIRED transitions occur in an in-memory implementation without a scheduler port?",
+      "considered": [
+        {
+          "choice": "Add a background scheduler",
+          "consequence": "Adds an unprovided runtime mechanism and lifecycle surface."
+        },
+        {
+          "choice": "Reconcile expiration on alert reads and creation",
+          "consequence": "Terminal state is corrected whenever the HTTP surface observes the alert."
+        },
+        {
+          "choice": "Leave WATCHING forever after expiresAt",
+          "consequence": "Allows duplicate creation to reuse an ended alert and violates the terminal-state rule."
+        }
+      ],
+      "chosen": "Lazily transition due WATCHING alerts to EXPIRED on create, list, get, and cancel operations.",
+      "basis": "least_harm",
+      "rationale": "The contract requires server-side expiration, while this iteration provides no scheduler port. Request-time reconciliation preserves terminal behavior without adding an undeclared endpoint or dependency.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:200",
+        "createAlert:201",
+        "listAlerts:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "reversal_cost": "Move the same transition into the future expiration worker while retaining the read-time guard for race safety.",
+      "supersedes": null
+    },
+    {
+      "id": "d_idempotency_snapshot",
+      "point": "createAlert:200",
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplicationService.java:idempotencyResponses",
+      "question": "How should a replay preserve the original response after the alert changes state?",
+      "considered": [
+        {
+          "choice": "Store a copy of the alert and the original status outcome",
+          "consequence": "Replays remain stable for the declared 24-hour retention period."
+        },
+        {
+          "choice": "Store only the alert identifier",
+          "consequence": "A later read would expose current state instead of the original response."
+        },
+        {
+          "choice": "Store the live alert object",
+          "consequence": "Mutations would leak into replay responses."
+        }
+      ],
+      "chosen": "Store an immutable-by-copy alert snapshot, the original 200/201 outcome, request fingerprint, and timestamp for 24 hours.",
+      "basis": "spec_implication",
+      "rationale": "The contract explicitly requires replaying the first response byte-for-byte in meaning, including its original status outcome, rather than returning current state.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:200",
+        "createAlert:201",
+        "createAlert:409"
+      ],
+      "reversal_cost": "Replace the in-memory response record with the durable idempotency representation while preserving the same replay contract.",
+      "supersedes": null
+    },
+    {
+      "id": "d_failure_window",
+      "point": "getCourtAvailability:503",
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplicationService.java:availabilityFailures",
+      "question": "How should repeated availability requests behave immediately after an upstream failure with no successful snapshot?",
+      "considered": [
+        {
+          "choice": "Retry the upstream immediately for every request",
+          "consequence": "Can exceed the declared 20-second per court-date confirmation interval."
+        },
+        {
+          "choice": "Cache the failure reason for the confirmation interval",
+          "consequence": "Requests in that interval receive the same declared failure without another upstream call."
+        },
+        {
+          "choice": "Return a synthetic empty slot list",
+          "consequence": "Incorrectly turns confirmation failure into an availability result."
+        }
+      ],
+      "chosen": "Cache the failure reason for 20 seconds and reuse it until the interval expires.",
+      "basis": "contract_analogy",
+      "rationale": "The contract defines the refresh interval and requires concurrent callers to observe the same result; retaining the failure marker extends that rule to requests arriving just after the in-flight attempt completes.",
+      "confidence": "medium",
+      "blast_radius": [
+        "getCourtAvailability:502",
+        "getCourtAvailability:503",
+        "getCourtAvailability:504"
+      ],
+      "reversal_cost": "Replace the failure marker with the eventual persistent refresh-state record if storage semantics are added.",
+      "supersedes": null
+    },
+    {
+      "id": "d_trace_id_format",
+      "point": "Problem:traceId",
+      "where": "src/main/java/com/thinking/tennis/api/TennisAlertExceptionHandler.java:response",
+      "question": "What concrete string format should be used for the contract's unconstrained 5xx traceId?",
+      "considered": [
+        {
+          "choice": "UUID string",
+          "consequence": "Provides a locally generated unique correlation value without a new library."
+        },
+        {
+          "choice": "Timestamp string",
+          "consequence": "Can collide under concurrent requests and is less useful as a correlation identifier."
+        },
+        {
+          "choice": "Omit traceId",
+          "consequence": "Violates the prose requirement that 5xx responses include it."
+        }
+      ],
+      "chosen": "Generate a UUID string for every 5xx problem response.",
+      "basis": "convention",
+      "rationale": "The schema constrains traceId only to a string, and a UUID is a standard local correlation identifier compatible with the in-memory implementation.",
+      "confidence": "high",
+      "blast_radius": [
+        "getCourtAvailability:500",
+        "getCourtAvailability:502",
+        "getCourtAvailability:503",
+        "getCourtAvailability:504",
+        "createAlert:500",
+        "listAlerts:500",
+        "listAlerts:503",
+        "getAlert:500",
+        "getAlert:503",
+        "cancelAlert:500",
+        "cancelAlert:503"
+      ],
+      "reversal_cost": "Replace the generator with the application's logging correlation-id provider.",
+      "supersedes": null
+    }
+  ],
+  "contract_changes": [],
+  "contested_decisions": [
+    {
+      "decision_id": "d_create_slot_cache",
+      "objection": "결정의 '계약의 availability lookup만 확인을 일으킨다'는 근거는 맞지만, 그로부터 'snapshot이 없으면 SLOT_NOT_SUPPORTED'가 바로 나오지는 않는다. 계약은 운영하지 않는 시간대와 아직 운영 시간대를 모르는 상태를 같은 실패로 말한다고 정하지 않았다.",
+      "alternative": "snapshot 부재를 구현 제약으로 신고하되 계약 변경을 발의하거나, 별도 schedule 소스가 생길 때까지 createAlert가 선행 조회 필요 오류를 명확히 말하게 한다.",
+      "severity": "high"
+    },
+    {
+      "decision_id": "d_lazy_expiry",
+      "objection": "스케줄러 포트가 없다는 이유로 lazy expiry를 택한 것은 이해되지만, 계약은 만료 시각이 지나도 '잠시 WATCHING'일 수 있다고 했지 요청이 들어올 때까지 무기한 전환되지 않아도 된다고 하지는 않았다. 사용자가 오랫동안 조회하지 않은 신청은 서버 작업 없이 계속 WATCHING으로 남는다.",
+      "alternative": "현재 구현에서는 lazy expiry를 유지하되 결정의 범위를 인메모리 HTTP 표면의 보정으로 낮추고, 실제 만료 작업이 없다는 한계를 명시하라. 구현을 보강할 수 있다면 최소한 애플리케이션 내부 scheduler나 만료 포트를 추가한다.",
+      "severity": "medium"
+    }
+  ],
+  "code_instructions": [
+    {
+      "id": "w_alerts_not_linked_to_checks",
+      "axis": "state_continuity",
+      "issue": "예약 상태 확인 성공이 감시 중인 신청의 상태로 전파되지 않는다. `recordSuccessfulCheck`는 호출되지 않고, 빈 슬롯 발견 시 `delivery`를 `PENDING`으로 만들거나 발송 완료 후 `NOTIFIED`로 이어질 수 있는 상태 경로도 없다.",
+      "suggestion": "`getCourtAvailability`의 성공 스냅샷 저장 후 같은 코트·날짜의 WATCHING 신청을 갱신하는 유스케이스 경로를 추가하고, 각 신청의 `lastCheckedAt`을 `confirmedAt`으로 기록하라. 해당 slot이 available이면 계약 범위 안에서 최소 `delivery=PENDING`까지 상태를 남기고, 발송 완료 전환은 AsyncAPI/작업 경계와 맞춰 별도 포트나 내부 메서드로 드러내라.",
+      "severity": "high",
+      "target": {
+        "pointer": "src/main/java/com/thinking/tennis/app/AlertApplicationService.java:getCourtAvailability",
+        "action": "add",
+        "scope": "code"
+      }
+    },
+    {
+      "id": "w_time_parsing_too_permissive_and_too_narrow",
+      "axis": "request_tolerance",
+      "issue": "`parseTime`이 `DateTimeFormatter.ofPattern(\"HH:mm\")`와 `LocalTime.parse`에 의존해 계약의 정규식과 다른 요청 집합을 만든다. 예컨대 계약 패턴은 `6:00`을 거절하고 `06:00`만 받지만, Java 파서 설정에 따라 비정규 입력을 받아들이거나 반대로 스키마상 허용된 값을 파싱 정책 때문에 거절할 수 있다.",
+      "suggestion": "시각 문자열은 파싱 전에 계약의 `^([01][0-9]|2[0-3]):[0-5][0-9]$` 패턴으로 검증하고, 통과한 값만 `LocalTime`으로 변환하라. 날짜도 같은 원칙으로 OpenAPI `format: date`에 맞는 입력만 받도록 오류 경로를 명확히 하라.",
+      "severity": "medium",
+      "target": {
+        "pointer": "src/main/java/com/thinking/tennis/api/TennisAlertController.java:parseTime",
+        "action": "tighten",
+        "scope": "code"
+      }
+    },
+    {
+      "id": "w_check_delayed_false_for_terminal_alerts",
+      "axis": "response_fidelity",
+      "issue": "`isCheckDelayed`가 모든 상태에 대해 `createdAt` 또는 `lastCheckedAt` 기준 60초 초과를 계산한다. 해제·만료·알림 완료처럼 확인을 멈춘 신청도 시간이 지나면 `checkDelayed=true`가 된다.",
+      "suggestion": "`checkDelayed`는 WATCHING 신청에만 계산하고, terminal 상태에서는 false로 응답하라. 이미 끝난 신청에 과거 지연을 보여야 한다는 별도 근거가 있다면 계약에 그 의미를 먼저 발의해야 한다.",
+      "severity": "medium",
+      "target": {
+        "pointer": "src/main/java/com/thinking/tennis/app/AlertApplicationService.java:isCheckDelayed",
+        "action": "tighten",
+        "scope": "code"
+      }
+    },
+    {
+      "id": "w_idempotency_concurrent_failure_after_expired_record",
+      "axis": "failure_faithfulness",
+      "issue": "24시간이 지난 `idempotencyResponses`를 제거한 뒤에도 같은 요청의 `previousFingerprint`가 남아 있으면 즉시 `CONCURRENT_UPDATE_CONFLICT`를 던지는 경로가 있다. 성공 처리 후에는 보통 finally에서 payload가 지워지지만, 두 맵의 수명과 제거가 분리돼 있어 오래된 fingerprint만 남는 상태가 생기면 실제 처리 중이 아닌 요청을 503으로 말한다.",
+      "suggestion": "멱등 키 상태를 단일 레코드로 관리하거나, 만료된 응답을 제거할 때 payload claim도 함께 제거하라. `CONCURRENT_UPDATE_CONFLICT`는 실제 in-flight claim에만 연결되도록 claim 생성 시각을 두고 만료/정리 기준을 명시적으로 적용하라.",
+      "severity": "medium",
+      "target": {
+        "pointer": "src/main/java/com/thinking/tennis/app/AlertApplicationService.java:createAlert",
+        "action": "tighten",
+        "scope": "code"
+      }
+    }
+  ],
+  "contract_proposals": [
+    {
+      "id": "w_slot_cache_rejection_needs_contract_surface",
+      "axis": "judgement_disclosure",
+      "issue": "신청 생성 시 저장된 availability snapshot이 없으면 `SLOT_NOT_SUPPORTED`로 거절하는 선택은 결정으로 신고됐지만, 계약의 `createAlert` 설명과 `AlertNotAcceptable` 설명에는 '아직 조회하지 않아 운영 시간대를 모른다'는 실패 의미가 드러나지 않는다.",
+      "suggestion": "구현 선택을 유지하려면 계약에 '신청은 저장된 코트·날짜 운영 시간대 기준으로만 검증하며 저장된 결과가 없으면 먼저 availability 조회가 필요하다'는 문구와 별도 에러 의미를 발의하라. 계약 변경 근거가 받아들여지지 않으면 별도 schedule 소스나 포트를 두어 스냅샷 부재를 지원하지 않는 slot으로 말하지 않게 고쳐라.",
+      "severity": "high",
+      "target": {
+        "pointer": "/paths/~1alerts/post/responses/422",
+        "action": "add",
+        "scope": "contract"
+      }
+    },
+    {
+      "id": "cr_create_requires_known_schedule",
+      "pointer": "/paths/~1alerts/post/responses/422",
+      "finding": "현재 계약은 신청 전에 availability 조회를 해야 한다거나 저장된 운영 시간대가 없으면 신청을 거절한다고 말하지 않는다. 하지만 구현은 저장된 snapshot이 없으면 `SLOT_NOT_SUPPORTED`를 반환한다.",
+      "proposed_change": "이 선택을 계약으로 유지하려면 `createAlert` 설명 또는 422 응답에 저장된 코트·날짜 운영 시간대가 아직 없을 때의 처리를 명시하고, `SLOT_NOT_SUPPORTED`와 구분되는 코드가 필요한지 정하라. 지원하는 시간대인지 모르는 상태를 unsupported로 말하지 않도록 별도 코드(예: schedule/availability 확인 필요)를 추가하는 쪽이 의미가 더 정확하다.",
+      "action": "add",
+      "spec_anchor": "FR-1, FR-7, slot_7afbe3b4, slot_ea97add0",
+      "severity": "high"
+    }
+  ],
+  "weak_axes": [
+    "response_fidelity",
+    "failure_faithfulness",
+    "state_continuity"
+  ],
+  "weak_axis_rationales": {
+    "response_fidelity": "열거 28개, 미충족 4개: [slot_8663b240, slot_c14121c8, slot_dc9ce55b, slot_98b55c8]; 근거: src/main/java/com/thinking/tennis/api/ApiResponses.java:alert/availability는 대부분의 응답 필드를 매핑하지만, src/main/java/com/thinking/tennis/api/TennisAlertController.java:createAlert가 replay 때 checkDelayed를 다시 계산하고, src/main/java/com/thinking/tennis/app/AlertApplicationService.java:createAlert는 expiresAt을 시작 시각으로만 고정하며, src/main/java/com/thinking/tennis/domain/Alert.java:recordSuccessfulCheck는 호출 경로가 없어 lastCheckedAt/checkDelayed의 뜻이 계약과 다르다.",
+    "failure_faithfulness": "열거 33개, 미충족 3개: [slot_ecc04933, slot_d5fad6dd, slot_5f627ac2]; 근거: src/main/java/com/thinking/tennis/api/TennisAlertExceptionHandler.java:response가 Problem, Retry-After, traceId를 만들고 src/main/java/com/thinking/tennis/app/AlertApplicationService.java:availabilityFailure와 controller validation 분기가 주요 실패를 매핑하지만, 저장소 시간초과 상황은 list/get/create/cancel 저장 경로에 없고 awaitAvailability의 InterruptedException 경로만 STORAGE_TIMEOUT으로 둔다.",
+    "state_continuity": "열거 24개, 미충족 10개: [slot_85c85829, slot_7afbe3b4, slot_3b26d64c, slot_31472fbc, slot_061df20e, slot_c733b457, slot_643810e9, slot_d4a3fef5, slot_3307096b, slot_e2d6a63c]; 근거: src/main/java/com/thinking/tennis/app/AlertApplicationService.java:getCourtAvailability/createAlert는 availability 캐시·동시 refresh·멱등키 저장을 유지하지만, listAlerts가 필터 전 expireDueAlerts를 실행해 저장 status 필터 약속과 어긋나고, idempotency replay 응답은 렌더링된 원응답을 보존하지 않으며, Alert/AlertDelivery/DeliveryStatus 쪽에 발송 대기·성공·실패·재시도·DLQ 상태 전이 경로가 없다."
+  },
+  "priority": [
+    "c_b6ad809d",
+    "c_9346d5ac",
+    "c_855f16dd",
+    "c_5b76ad7a",
+    "c_05c7be58",
+    "c_4819f0a4",
+    "c_2ed140bf",
+    "c_d6fce6a2",
+    "c_f9b6d193",
+    "c_2f90c7e6",
+    "c_46640b98",
+    "c_34fce4fd",
+    "c_408b88bd",
+    "c_2bdc48e0",
+    "c_5fd4f867",
+    "c_d40b2bcd",
+    "c_1f0ebc9e",
+    "c_da161232",
+    "c_8dfb7b96",
+    "c_6993156e",
+    "c_ce72d543",
+    "c_cb8d908d",
+    "c_99e3a10f",
+    "c_dccc6e48",
+    "c_bc5a268b",
+    "c_abc8dbe0",
+    "c_dfd1c0e7",
+    "c_e6c8899b",
+    "c_67a99b02",
+    "c_d9133138",
+    "c_85ad1e04",
+    "c_feea3e12",
+    "c_f8efdd68",
+    "c_3fb4e57f",
+    "c_6c8ae89c",
+    "c_394f574a",
+    "c_0108462f",
+    "c_9b9cf43e",
+    "c_ae5d8e54",
+    "c_436277ca",
+    "c_744dc250",
+    "c_0f90e8ee",
+    "c_92d2f010",
+    "c_2aafcbd1",
+    "c_cd9df901",
+    "contract:w_slot_cache_rejection_needs_contract_surface",
+    "contract:cr_create_requires_known_schedule",
+    "code:w_alerts_not_linked_to_checks",
+    "axis:response_fidelity",
+    "axis:failure_faithfulness",
+    "axis:state_continuity"
+  ]
+}

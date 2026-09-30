@@ -1,0 +1,3741 @@
+{
+  "iteration": "002",
+  "g0": "PASS",
+  "g1": "REJECT",
+  "changes": "PASS",
+  "violations": [
+    {
+      "rule": "extract.blind",
+      "point": null,
+      "where": "x-error-codes",
+      "detail": "계약은 (상태 코드, 에러 코드) 쌍을 선언했는데 추출 스펙에는 그 조항에 대응하는 것이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "getCourtAvailability:200",
+      "where": "CourtAvailability",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['confirmedAt', 'courtId', 'courtName', 'date', 'reservationUrl', 'slots', 'stale', 'staleReason']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "getCourtAvailability:200",
+      "where": "CourtAvailability.slots[]",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['available', 'endTime', 'startTime']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:400",
+      "where": "Problem.type",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:400",
+      "where": "Problem.title",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:400",
+      "where": "Problem.status",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:400",
+      "where": "Problem.detail",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:400",
+      "where": "Problem.instance",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:400",
+      "where": "Problem.code",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:400",
+      "where": "Problem.retryable",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:400",
+      "where": "Problem.retryAfterSeconds",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:400",
+      "where": "Problem.traceId",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "getCourtAvailability:400",
+      "where": "Problem",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['code', 'retryable', 'status', 'title', 'type']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:400",
+      "where": "Problem.courtId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:400",
+      "where": "Problem.courtName",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:400",
+      "where": "Problem.date",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:400",
+      "where": "Problem.confirmedAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:400",
+      "where": "Problem.stale",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:400",
+      "where": "Problem.staleReason",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:400",
+      "where": "Problem.reservationUrl",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:400",
+      "where": "Problem.slots",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:404",
+      "where": "Problem.type",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:404",
+      "where": "Problem.title",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:404",
+      "where": "Problem.status",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:404",
+      "where": "Problem.detail",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:404",
+      "where": "Problem.instance",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:404",
+      "where": "Problem.code",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:404",
+      "where": "Problem.retryable",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:404",
+      "where": "Problem.retryAfterSeconds",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:404",
+      "where": "Problem.traceId",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "getCourtAvailability:404",
+      "where": "Problem",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['code', 'retryable', 'status', 'title', 'type']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:404",
+      "where": "Problem.courtId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:404",
+      "where": "Problem.courtName",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:404",
+      "where": "Problem.date",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:404",
+      "where": "Problem.confirmedAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:404",
+      "where": "Problem.stale",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:404",
+      "where": "Problem.staleReason",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:404",
+      "where": "Problem.reservationUrl",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:404",
+      "where": "Problem.slots",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:500",
+      "where": "Problem.type",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:500",
+      "where": "Problem.title",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:500",
+      "where": "Problem.status",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:500",
+      "where": "Problem.detail",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:500",
+      "where": "Problem.instance",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:500",
+      "where": "Problem.code",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:500",
+      "where": "Problem.retryable",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:500",
+      "where": "Problem.retryAfterSeconds",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:500",
+      "where": "Problem.traceId",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "getCourtAvailability:500",
+      "where": "Problem",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['code', 'retryable', 'status', 'title', 'type']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:500",
+      "where": "Problem.courtId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:500",
+      "where": "Problem.courtName",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:500",
+      "where": "Problem.date",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:500",
+      "where": "Problem.confirmedAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:500",
+      "where": "Problem.stale",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:500",
+      "where": "Problem.staleReason",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:500",
+      "where": "Problem.reservationUrl",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:500",
+      "where": "Problem.slots",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.header_missing",
+      "point": "getCourtAvailability:500",
+      "where": "headers.Retry-After",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:502",
+      "where": "Problem.type",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:502",
+      "where": "Problem.title",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:502",
+      "where": "Problem.status",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:502",
+      "where": "Problem.detail",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:502",
+      "where": "Problem.instance",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:502",
+      "where": "Problem.code",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:502",
+      "where": "Problem.retryable",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:502",
+      "where": "Problem.retryAfterSeconds",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:502",
+      "where": "Problem.traceId",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "getCourtAvailability:502",
+      "where": "Problem",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['code', 'retryable', 'status', 'title', 'type']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:502",
+      "where": "Problem.courtId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:502",
+      "where": "Problem.courtName",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:502",
+      "where": "Problem.date",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:502",
+      "where": "Problem.confirmedAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:502",
+      "where": "Problem.stale",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:502",
+      "where": "Problem.staleReason",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:502",
+      "where": "Problem.reservationUrl",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:502",
+      "where": "Problem.slots",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.header_missing",
+      "point": "getCourtAvailability:502",
+      "where": "headers.Retry-After",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:503",
+      "where": "Problem.type",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:503",
+      "where": "Problem.title",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:503",
+      "where": "Problem.status",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:503",
+      "where": "Problem.detail",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:503",
+      "where": "Problem.instance",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:503",
+      "where": "Problem.code",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:503",
+      "where": "Problem.retryable",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:503",
+      "where": "Problem.retryAfterSeconds",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:503",
+      "where": "Problem.traceId",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "getCourtAvailability:503",
+      "where": "Problem",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['code', 'retryable', 'status', 'title', 'type']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:503",
+      "where": "Problem.courtId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:503",
+      "where": "Problem.courtName",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:503",
+      "where": "Problem.date",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:503",
+      "where": "Problem.confirmedAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:503",
+      "where": "Problem.stale",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:503",
+      "where": "Problem.staleReason",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:503",
+      "where": "Problem.reservationUrl",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:503",
+      "where": "Problem.slots",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.header_missing",
+      "point": "getCourtAvailability:503",
+      "where": "headers.Retry-After",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:504",
+      "where": "Problem.type",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:504",
+      "where": "Problem.title",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:504",
+      "where": "Problem.status",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:504",
+      "where": "Problem.detail",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:504",
+      "where": "Problem.instance",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:504",
+      "where": "Problem.code",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:504",
+      "where": "Problem.retryable",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:504",
+      "where": "Problem.retryAfterSeconds",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:504",
+      "where": "Problem.traceId",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "getCourtAvailability:504",
+      "where": "Problem",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['code', 'retryable', 'status', 'title', 'type']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:504",
+      "where": "Problem.courtId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:504",
+      "where": "Problem.courtName",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:504",
+      "where": "Problem.date",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:504",
+      "where": "Problem.confirmedAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:504",
+      "where": "Problem.stale",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:504",
+      "where": "Problem.staleReason",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:504",
+      "where": "Problem.reservationUrl",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:504",
+      "where": "Problem.slots",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.header_missing",
+      "point": "getCourtAvailability:504",
+      "where": "headers.Retry-After",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "listAlerts:200",
+      "where": "AlertList",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['items']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "listAlerts:200",
+      "where": "AlertList.items[]",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['alertId', 'checkDelayed', 'courtId', 'courtName', 'createdAt', 'date', 'delivery', 'expiresAt', 'lastCheckedAt', 'reservationUrl', 'slot', 'status']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "listAlerts:200",
+      "where": "AlertList.items[].slot",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['endTime', 'startTime']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "listAlerts:200",
+      "where": "AlertList.items[].delivery",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['attemptCount', 'failureReason', 'lastAttemptAt', 'status']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "listAlerts:400",
+      "where": "Problem.type",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "listAlerts:400",
+      "where": "Problem.title",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "listAlerts:400",
+      "where": "Problem.status",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "listAlerts:400",
+      "where": "Problem.detail",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "listAlerts:400",
+      "where": "Problem.instance",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "listAlerts:400",
+      "where": "Problem.code",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "listAlerts:400",
+      "where": "Problem.retryable",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "listAlerts:400",
+      "where": "Problem.retryAfterSeconds",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "listAlerts:400",
+      "where": "Problem.traceId",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "listAlerts:400",
+      "where": "Problem",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['code', 'retryable', 'status', 'title', 'type']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "listAlerts:400",
+      "where": "Problem.items",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "listAlerts:401",
+      "where": "Problem.type",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "listAlerts:401",
+      "where": "Problem.title",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "listAlerts:401",
+      "where": "Problem.status",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "listAlerts:401",
+      "where": "Problem.detail",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "listAlerts:401",
+      "where": "Problem.instance",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "listAlerts:401",
+      "where": "Problem.code",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "listAlerts:401",
+      "where": "Problem.retryable",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "listAlerts:401",
+      "where": "Problem.retryAfterSeconds",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "listAlerts:401",
+      "where": "Problem.traceId",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "listAlerts:401",
+      "where": "Problem",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['code', 'retryable', 'status', 'title', 'type']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "listAlerts:401",
+      "where": "Problem.items",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "listAlerts:500",
+      "where": "Problem.type",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "listAlerts:500",
+      "where": "Problem.title",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "listAlerts:500",
+      "where": "Problem.status",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "listAlerts:500",
+      "where": "Problem.detail",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "listAlerts:500",
+      "where": "Problem.instance",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "listAlerts:500",
+      "where": "Problem.code",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "listAlerts:500",
+      "where": "Problem.retryable",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "listAlerts:500",
+      "where": "Problem.retryAfterSeconds",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "listAlerts:500",
+      "where": "Problem.traceId",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "listAlerts:500",
+      "where": "Problem",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['code', 'retryable', 'status', 'title', 'type']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "listAlerts:500",
+      "where": "Problem.items",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.header_missing",
+      "point": "listAlerts:500",
+      "where": "headers.Retry-After",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "listAlerts:503",
+      "where": "Problem.type",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "listAlerts:503",
+      "where": "Problem.title",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "listAlerts:503",
+      "where": "Problem.status",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "listAlerts:503",
+      "where": "Problem.detail",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "listAlerts:503",
+      "where": "Problem.instance",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "listAlerts:503",
+      "where": "Problem.code",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "listAlerts:503",
+      "where": "Problem.retryable",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "listAlerts:503",
+      "where": "Problem.retryAfterSeconds",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "listAlerts:503",
+      "where": "Problem.traceId",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "listAlerts:503",
+      "where": "Problem",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['code', 'retryable', 'status', 'title', 'type']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "listAlerts:503",
+      "where": "Problem.items",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.header_missing",
+      "point": "listAlerts:503",
+      "where": "headers.Retry-After",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "createAlert:201",
+      "where": "Alert",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['alertId', 'checkDelayed', 'courtId', 'courtName', 'createdAt', 'date', 'delivery', 'expiresAt', 'lastCheckedAt', 'reservationUrl', 'slot', 'status']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "createAlert:201",
+      "where": "Alert.slot",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['endTime', 'startTime']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "createAlert:201",
+      "where": "Alert.delivery",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['attemptCount', 'failureReason', 'lastAttemptAt', 'status']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.header_missing",
+      "point": "createAlert:201",
+      "where": "headers.Idempotency-Replayed",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.header_missing",
+      "point": "createAlert:201",
+      "where": "headers.Location",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "createAlert:200",
+      "where": "Alert",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['alertId', 'checkDelayed', 'courtId', 'courtName', 'createdAt', 'date', 'delivery', 'expiresAt', 'lastCheckedAt', 'reservationUrl', 'slot', 'status']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "createAlert:200",
+      "where": "Alert.slot",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['endTime', 'startTime']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "createAlert:200",
+      "where": "Alert.delivery",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['attemptCount', 'failureReason', 'lastAttemptAt', 'status']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.header_missing",
+      "point": "createAlert:200",
+      "where": "headers.Idempotency-Replayed",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.header_missing",
+      "point": "createAlert:200",
+      "where": "headers.Location",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:400",
+      "where": "Problem.type",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:400",
+      "where": "Problem.title",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:400",
+      "where": "Problem.detail",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:400",
+      "where": "Problem.instance",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:400",
+      "where": "Problem.code",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:400",
+      "where": "Problem.retryable",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:400",
+      "where": "Problem.retryAfterSeconds",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:400",
+      "where": "Problem.traceId",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "createAlert:400",
+      "where": "Problem",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['code', 'retryable', 'status', 'title', 'type']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:400",
+      "where": "Problem.alertId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:400",
+      "where": "Problem.courtId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:400",
+      "where": "Problem.courtName",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:400",
+      "where": "Problem.reservationUrl",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:400",
+      "where": "Problem.date",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:400",
+      "where": "Problem.slot",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:400",
+      "where": "Problem.createdAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:400",
+      "where": "Problem.expiresAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:400",
+      "where": "Problem.lastCheckedAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:400",
+      "where": "Problem.checkDelayed",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:400",
+      "where": "Problem.delivery",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.type_changed",
+      "point": "createAlert:400",
+      "where": "Problem.status",
+      "detail": "계약 ['integer'] → 구현 ['string']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:401",
+      "where": "Problem.type",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:401",
+      "where": "Problem.title",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:401",
+      "where": "Problem.detail",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:401",
+      "where": "Problem.instance",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:401",
+      "where": "Problem.code",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:401",
+      "where": "Problem.retryable",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:401",
+      "where": "Problem.retryAfterSeconds",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:401",
+      "where": "Problem.traceId",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "createAlert:401",
+      "where": "Problem",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['code', 'retryable', 'status', 'title', 'type']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:401",
+      "where": "Problem.alertId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:401",
+      "where": "Problem.courtId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:401",
+      "where": "Problem.courtName",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:401",
+      "where": "Problem.reservationUrl",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:401",
+      "where": "Problem.date",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:401",
+      "where": "Problem.slot",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:401",
+      "where": "Problem.createdAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:401",
+      "where": "Problem.expiresAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:401",
+      "where": "Problem.lastCheckedAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:401",
+      "where": "Problem.checkDelayed",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:401",
+      "where": "Problem.delivery",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.type_changed",
+      "point": "createAlert:401",
+      "where": "Problem.status",
+      "detail": "계약 ['integer'] → 구현 ['string']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:409",
+      "where": "Problem.type",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:409",
+      "where": "Problem.title",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:409",
+      "where": "Problem.detail",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:409",
+      "where": "Problem.instance",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:409",
+      "where": "Problem.code",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:409",
+      "where": "Problem.retryable",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:409",
+      "where": "Problem.retryAfterSeconds",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:409",
+      "where": "Problem.traceId",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "createAlert:409",
+      "where": "Problem",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['code', 'retryable', 'status', 'title', 'type']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:409",
+      "where": "Problem.alertId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:409",
+      "where": "Problem.courtId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:409",
+      "where": "Problem.courtName",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:409",
+      "where": "Problem.reservationUrl",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:409",
+      "where": "Problem.date",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:409",
+      "where": "Problem.slot",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:409",
+      "where": "Problem.createdAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:409",
+      "where": "Problem.expiresAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:409",
+      "where": "Problem.lastCheckedAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:409",
+      "where": "Problem.checkDelayed",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:409",
+      "where": "Problem.delivery",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.type_changed",
+      "point": "createAlert:409",
+      "where": "Problem.status",
+      "detail": "계약 ['integer'] → 구현 ['string']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:422",
+      "where": "Problem.type",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:422",
+      "where": "Problem.title",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:422",
+      "where": "Problem.detail",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:422",
+      "where": "Problem.instance",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:422",
+      "where": "Problem.code",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:422",
+      "where": "Problem.retryable",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:422",
+      "where": "Problem.retryAfterSeconds",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:422",
+      "where": "Problem.traceId",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "createAlert:422",
+      "where": "Problem",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['code', 'retryable', 'status', 'title', 'type']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:422",
+      "where": "Problem.alertId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:422",
+      "where": "Problem.courtId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:422",
+      "where": "Problem.courtName",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:422",
+      "where": "Problem.reservationUrl",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:422",
+      "where": "Problem.date",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:422",
+      "where": "Problem.slot",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:422",
+      "where": "Problem.createdAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:422",
+      "where": "Problem.expiresAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:422",
+      "where": "Problem.lastCheckedAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:422",
+      "where": "Problem.checkDelayed",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:422",
+      "where": "Problem.delivery",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.type_changed",
+      "point": "createAlert:422",
+      "where": "Problem.status",
+      "detail": "계약 ['integer'] → 구현 ['string']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:500",
+      "where": "Problem.type",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:500",
+      "where": "Problem.title",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:500",
+      "where": "Problem.detail",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:500",
+      "where": "Problem.instance",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:500",
+      "where": "Problem.code",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:500",
+      "where": "Problem.retryable",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:500",
+      "where": "Problem.retryAfterSeconds",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:500",
+      "where": "Problem.traceId",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "createAlert:500",
+      "where": "Problem",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['code', 'retryable', 'status', 'title', 'type']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:500",
+      "where": "Problem.alertId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:500",
+      "where": "Problem.courtId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:500",
+      "where": "Problem.courtName",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:500",
+      "where": "Problem.reservationUrl",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:500",
+      "where": "Problem.date",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:500",
+      "where": "Problem.slot",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:500",
+      "where": "Problem.createdAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:500",
+      "where": "Problem.expiresAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:500",
+      "where": "Problem.lastCheckedAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:500",
+      "where": "Problem.checkDelayed",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:500",
+      "where": "Problem.delivery",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.type_changed",
+      "point": "createAlert:500",
+      "where": "Problem.status",
+      "detail": "계약 ['integer'] → 구현 ['string']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.header_missing",
+      "point": "createAlert:500",
+      "where": "headers.Retry-After",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:503",
+      "where": "Problem.type",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:503",
+      "where": "Problem.title",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:503",
+      "where": "Problem.detail",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:503",
+      "where": "Problem.instance",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:503",
+      "where": "Problem.code",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:503",
+      "where": "Problem.retryable",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:503",
+      "where": "Problem.retryAfterSeconds",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "createAlert:503",
+      "where": "Problem.traceId",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "createAlert:503",
+      "where": "Problem",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['code', 'retryable', 'status', 'title', 'type']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:503",
+      "where": "Problem.alertId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:503",
+      "where": "Problem.courtId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:503",
+      "where": "Problem.courtName",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:503",
+      "where": "Problem.reservationUrl",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:503",
+      "where": "Problem.date",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:503",
+      "where": "Problem.slot",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:503",
+      "where": "Problem.createdAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:503",
+      "where": "Problem.expiresAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:503",
+      "where": "Problem.lastCheckedAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:503",
+      "where": "Problem.checkDelayed",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "createAlert:503",
+      "where": "Problem.delivery",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.type_changed",
+      "point": "createAlert:503",
+      "where": "Problem.status",
+      "detail": "계약 ['integer'] → 구현 ['string']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.header_missing",
+      "point": "createAlert:503",
+      "where": "headers.Retry-After",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "getAlert:200",
+      "where": "Alert",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['alertId', 'checkDelayed', 'courtId', 'courtName', 'createdAt', 'date', 'delivery', 'expiresAt', 'lastCheckedAt', 'reservationUrl', 'slot', 'status']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "getAlert:200",
+      "where": "Alert.slot",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['endTime', 'startTime']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "getAlert:200",
+      "where": "Alert.delivery",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['attemptCount', 'failureReason', 'lastAttemptAt', 'status']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:400",
+      "where": "Problem.type",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:400",
+      "where": "Problem.title",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:400",
+      "where": "Problem.detail",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:400",
+      "where": "Problem.instance",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:400",
+      "where": "Problem.code",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:400",
+      "where": "Problem.retryable",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:400",
+      "where": "Problem.retryAfterSeconds",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:400",
+      "where": "Problem.traceId",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "getAlert:400",
+      "where": "Problem",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['code', 'retryable', 'status', 'title', 'type']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:400",
+      "where": "Problem.alertId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:400",
+      "where": "Problem.courtId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:400",
+      "where": "Problem.courtName",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:400",
+      "where": "Problem.reservationUrl",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:400",
+      "where": "Problem.date",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:400",
+      "where": "Problem.slot",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:400",
+      "where": "Problem.createdAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:400",
+      "where": "Problem.expiresAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:400",
+      "where": "Problem.lastCheckedAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:400",
+      "where": "Problem.checkDelayed",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:400",
+      "where": "Problem.delivery",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.type_changed",
+      "point": "getAlert:400",
+      "where": "Problem.status",
+      "detail": "계약 ['integer'] → 구현 ['string']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:401",
+      "where": "Problem.type",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:401",
+      "where": "Problem.title",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:401",
+      "where": "Problem.detail",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:401",
+      "where": "Problem.instance",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:401",
+      "where": "Problem.code",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:401",
+      "where": "Problem.retryable",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:401",
+      "where": "Problem.retryAfterSeconds",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:401",
+      "where": "Problem.traceId",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "getAlert:401",
+      "where": "Problem",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['code', 'retryable', 'status', 'title', 'type']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:401",
+      "where": "Problem.alertId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:401",
+      "where": "Problem.courtId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:401",
+      "where": "Problem.courtName",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:401",
+      "where": "Problem.reservationUrl",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:401",
+      "where": "Problem.date",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:401",
+      "where": "Problem.slot",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:401",
+      "where": "Problem.createdAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:401",
+      "where": "Problem.expiresAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:401",
+      "where": "Problem.lastCheckedAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:401",
+      "where": "Problem.checkDelayed",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:401",
+      "where": "Problem.delivery",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.type_changed",
+      "point": "getAlert:401",
+      "where": "Problem.status",
+      "detail": "계약 ['integer'] → 구현 ['string']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:404",
+      "where": "Problem.type",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:404",
+      "where": "Problem.title",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:404",
+      "where": "Problem.detail",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:404",
+      "where": "Problem.instance",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:404",
+      "where": "Problem.code",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:404",
+      "where": "Problem.retryable",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:404",
+      "where": "Problem.retryAfterSeconds",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:404",
+      "where": "Problem.traceId",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "getAlert:404",
+      "where": "Problem",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['code', 'retryable', 'status', 'title', 'type']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:404",
+      "where": "Problem.alertId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:404",
+      "where": "Problem.courtId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:404",
+      "where": "Problem.courtName",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:404",
+      "where": "Problem.reservationUrl",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:404",
+      "where": "Problem.date",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:404",
+      "where": "Problem.slot",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:404",
+      "where": "Problem.createdAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:404",
+      "where": "Problem.expiresAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:404",
+      "where": "Problem.lastCheckedAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:404",
+      "where": "Problem.checkDelayed",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:404",
+      "where": "Problem.delivery",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.type_changed",
+      "point": "getAlert:404",
+      "where": "Problem.status",
+      "detail": "계약 ['integer'] → 구현 ['string']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:500",
+      "where": "Problem.type",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:500",
+      "where": "Problem.title",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:500",
+      "where": "Problem.detail",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:500",
+      "where": "Problem.instance",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:500",
+      "where": "Problem.code",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:500",
+      "where": "Problem.retryable",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:500",
+      "where": "Problem.retryAfterSeconds",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:500",
+      "where": "Problem.traceId",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "getAlert:500",
+      "where": "Problem",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['code', 'retryable', 'status', 'title', 'type']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:500",
+      "where": "Problem.alertId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:500",
+      "where": "Problem.courtId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:500",
+      "where": "Problem.courtName",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:500",
+      "where": "Problem.reservationUrl",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:500",
+      "where": "Problem.date",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:500",
+      "where": "Problem.slot",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:500",
+      "where": "Problem.createdAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:500",
+      "where": "Problem.expiresAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:500",
+      "where": "Problem.lastCheckedAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:500",
+      "where": "Problem.checkDelayed",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:500",
+      "where": "Problem.delivery",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.type_changed",
+      "point": "getAlert:500",
+      "where": "Problem.status",
+      "detail": "계약 ['integer'] → 구현 ['string']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.header_missing",
+      "point": "getAlert:500",
+      "where": "headers.Retry-After",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:503",
+      "where": "Problem.type",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:503",
+      "where": "Problem.title",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:503",
+      "where": "Problem.detail",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:503",
+      "where": "Problem.instance",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:503",
+      "where": "Problem.code",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:503",
+      "where": "Problem.retryable",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:503",
+      "where": "Problem.retryAfterSeconds",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getAlert:503",
+      "where": "Problem.traceId",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "getAlert:503",
+      "where": "Problem",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['code', 'retryable', 'status', 'title', 'type']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:503",
+      "where": "Problem.alertId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:503",
+      "where": "Problem.courtId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:503",
+      "where": "Problem.courtName",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:503",
+      "where": "Problem.reservationUrl",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:503",
+      "where": "Problem.date",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:503",
+      "where": "Problem.slot",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:503",
+      "where": "Problem.createdAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:503",
+      "where": "Problem.expiresAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:503",
+      "where": "Problem.lastCheckedAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:503",
+      "where": "Problem.checkDelayed",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getAlert:503",
+      "where": "Problem.delivery",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.type_changed",
+      "point": "getAlert:503",
+      "where": "Problem.status",
+      "detail": "계약 ['integer'] → 구현 ['string']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.header_missing",
+      "point": "getAlert:503",
+      "where": "headers.Retry-After",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "cancelAlert:200",
+      "where": "Alert",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['alertId', 'checkDelayed', 'courtId', 'courtName', 'createdAt', 'date', 'delivery', 'expiresAt', 'lastCheckedAt', 'reservationUrl', 'slot', 'status']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "cancelAlert:200",
+      "where": "Alert.slot",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['endTime', 'startTime']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "cancelAlert:200",
+      "where": "Alert.delivery",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['attemptCount', 'failureReason', 'lastAttemptAt', 'status']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:400",
+      "where": "Problem.type",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:400",
+      "where": "Problem.title",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:400",
+      "where": "Problem.detail",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:400",
+      "where": "Problem.instance",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:400",
+      "where": "Problem.code",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:400",
+      "where": "Problem.retryable",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:400",
+      "where": "Problem.retryAfterSeconds",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:400",
+      "where": "Problem.traceId",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "cancelAlert:400",
+      "where": "Problem",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['code', 'retryable', 'status', 'title', 'type']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:400",
+      "where": "Problem.alertId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:400",
+      "where": "Problem.courtId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:400",
+      "where": "Problem.courtName",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:400",
+      "where": "Problem.reservationUrl",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:400",
+      "where": "Problem.date",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:400",
+      "where": "Problem.slot",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:400",
+      "where": "Problem.createdAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:400",
+      "where": "Problem.expiresAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:400",
+      "where": "Problem.lastCheckedAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:400",
+      "where": "Problem.checkDelayed",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:400",
+      "where": "Problem.delivery",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.type_changed",
+      "point": "cancelAlert:400",
+      "where": "Problem.status",
+      "detail": "계약 ['integer'] → 구현 ['string']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:401",
+      "where": "Problem.type",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:401",
+      "where": "Problem.title",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:401",
+      "where": "Problem.detail",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:401",
+      "where": "Problem.instance",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:401",
+      "where": "Problem.code",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:401",
+      "where": "Problem.retryable",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:401",
+      "where": "Problem.retryAfterSeconds",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:401",
+      "where": "Problem.traceId",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "cancelAlert:401",
+      "where": "Problem",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['code', 'retryable', 'status', 'title', 'type']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:401",
+      "where": "Problem.alertId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:401",
+      "where": "Problem.courtId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:401",
+      "where": "Problem.courtName",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:401",
+      "where": "Problem.reservationUrl",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:401",
+      "where": "Problem.date",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:401",
+      "where": "Problem.slot",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:401",
+      "where": "Problem.createdAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:401",
+      "where": "Problem.expiresAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:401",
+      "where": "Problem.lastCheckedAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:401",
+      "where": "Problem.checkDelayed",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:401",
+      "where": "Problem.delivery",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.type_changed",
+      "point": "cancelAlert:401",
+      "where": "Problem.status",
+      "detail": "계약 ['integer'] → 구현 ['string']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:404",
+      "where": "Problem.type",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:404",
+      "where": "Problem.title",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:404",
+      "where": "Problem.detail",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:404",
+      "where": "Problem.instance",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:404",
+      "where": "Problem.code",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:404",
+      "where": "Problem.retryable",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:404",
+      "where": "Problem.retryAfterSeconds",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:404",
+      "where": "Problem.traceId",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "cancelAlert:404",
+      "where": "Problem",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['code', 'retryable', 'status', 'title', 'type']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:404",
+      "where": "Problem.alertId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:404",
+      "where": "Problem.courtId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:404",
+      "where": "Problem.courtName",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:404",
+      "where": "Problem.reservationUrl",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:404",
+      "where": "Problem.date",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:404",
+      "where": "Problem.slot",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:404",
+      "where": "Problem.createdAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:404",
+      "where": "Problem.expiresAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:404",
+      "where": "Problem.lastCheckedAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:404",
+      "where": "Problem.checkDelayed",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:404",
+      "where": "Problem.delivery",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.type_changed",
+      "point": "cancelAlert:404",
+      "where": "Problem.status",
+      "detail": "계약 ['integer'] → 구현 ['string']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:500",
+      "where": "Problem.type",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:500",
+      "where": "Problem.title",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:500",
+      "where": "Problem.detail",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:500",
+      "where": "Problem.instance",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:500",
+      "where": "Problem.code",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:500",
+      "where": "Problem.retryable",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:500",
+      "where": "Problem.retryAfterSeconds",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:500",
+      "where": "Problem.traceId",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "cancelAlert:500",
+      "where": "Problem",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['code', 'retryable', 'status', 'title', 'type']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:500",
+      "where": "Problem.alertId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:500",
+      "where": "Problem.courtId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:500",
+      "where": "Problem.courtName",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:500",
+      "where": "Problem.reservationUrl",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:500",
+      "where": "Problem.date",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:500",
+      "where": "Problem.slot",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:500",
+      "where": "Problem.createdAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:500",
+      "where": "Problem.expiresAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:500",
+      "where": "Problem.lastCheckedAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:500",
+      "where": "Problem.checkDelayed",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:500",
+      "where": "Problem.delivery",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.type_changed",
+      "point": "cancelAlert:500",
+      "where": "Problem.status",
+      "detail": "계약 ['integer'] → 구현 ['string']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.header_missing",
+      "point": "cancelAlert:500",
+      "where": "headers.Retry-After",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:503",
+      "where": "Problem.type",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:503",
+      "where": "Problem.title",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:503",
+      "where": "Problem.detail",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:503",
+      "where": "Problem.instance",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:503",
+      "where": "Problem.code",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:503",
+      "where": "Problem.retryable",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:503",
+      "where": "Problem.retryAfterSeconds",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "cancelAlert:503",
+      "where": "Problem.traceId",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "cancelAlert:503",
+      "where": "Problem",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['code', 'retryable', 'status', 'title', 'type']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:503",
+      "where": "Problem.alertId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:503",
+      "where": "Problem.courtId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:503",
+      "where": "Problem.courtName",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:503",
+      "where": "Problem.reservationUrl",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:503",
+      "where": "Problem.date",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:503",
+      "where": "Problem.slot",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:503",
+      "where": "Problem.createdAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:503",
+      "where": "Problem.expiresAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:503",
+      "where": "Problem.lastCheckedAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:503",
+      "where": "Problem.checkDelayed",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "cancelAlert:503",
+      "where": "Problem.delivery",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.type_changed",
+      "point": "cancelAlert:503",
+      "where": "Problem.status",
+      "detail": "계약 ['integer'] → 구현 ['string']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.header_missing",
+      "point": "cancelAlert:503",
+      "where": "headers.Retry-After",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "verdict": "violation"
+    }
+  ],
+  "observations": [
+    {
+      "rule": "request.field_extra",
+      "point": "listAlerts",
+      "where": "parameters.header.Authorization",
+      "detail": "계약에 없는 파라미터다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "request.field_extra",
+      "point": "createAlert",
+      "where": "parameters.header.Authorization",
+      "detail": "계약에 없는 파라미터다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "request.field_extra",
+      "point": "getAlert",
+      "where": "parameters.header.Authorization",
+      "detail": "계약에 없는 파라미터다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "request.field_extra",
+      "point": "cancelAlert",
+      "where": "parameters.header.Authorization",
+      "detail": "계약에 없는 파라미터다",
+      "verdict": "observation"
+    }
+  ],
+  "errors": [],
+  "derived_spec": "C:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs6\\2026-09-30_b02d8689\\iter_002\\api-docs.json",
+  "allow_missing_gates": false,
+  "log": [
+    "작업 폴더: C:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs6\\2026-09-30_b02d8689\\output (target/ 재사용 예)\n$ C:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs6\\2026-09-30_b02d8689\\output\\mvnw.cmd -B -q test → 0\n04:34:52.295 [main] INFO com.tngtech.archunit.core.PluginLoader -- Detected Java version 17.0.19\n\n$ dump_api_docs.py → 0\nC:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs6\\2026-09-30_b02d8689\\iter_002\\api-docs.json 에 저장했다. 포트 51857, 최상위 키 ['components', 'info', 'openapi', 'paths', 'servers', 'tags'], paths 3개\n"
+  ],
+  "critique_source": "none:no_critique_in_iter_001",
+  "build_attempts": [
+    {
+      "attempt": 1,
+      "commit": "61e9d8b38e058f44d5377e6c099c723067b7afad",
+      "index_declared": false,
+      "index_errors": [
+        "manifest.contract_version_missing: contract/tennis-alert-api.yaml-v1.yaml is not in the file manifest",
+        "manifest.contract_role_count: expected exactly one file with role=contract, found []"
+      ],
+      "failures": [
+        {
+          "rule": "g0.compile_failed",
+          "point": null,
+          "where": "mvnw test",
+          "detail": "컴파일 오류 1건\nsrc/main/java/com/thinking/tennis/app/ApplicationException.java:36:22 code() in com.thinking.tennis.app.ApplicationException cannot override code() in com.thinking.tennis.app.ApiException",
+          "verdict": "violation"
+        }
+      ]
+    },
+    {
+      "attempt": 2,
+      "commit": "21f95db23ddb08ea00e59521ebfe1f55125593ea",
+      "index_declared": true,
+      "index_errors": [],
+      "failures": [
+        {
+          "rule": "g0.compile_failed",
+          "point": null,
+          "where": "mvnw test",
+          "detail": "컴파일 오류 1건\nsrc/main/java/com/thinking/tennis/api/ApiExceptionHandler.java:58:33 cannot find symbol\n    symbol: method name()\n    location: class java.lang.String",
+          "verdict": "violation"
+        }
+      ]
+    }
+  ]
+}

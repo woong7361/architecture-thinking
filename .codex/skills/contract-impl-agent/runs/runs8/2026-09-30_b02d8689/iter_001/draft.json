@@ -1,0 +1,398 @@
+{
+  "brief_hash": "b02d8689",
+  "iteration": "001",
+  "stage": "gen",
+  "files": [
+    {
+      "path": "contract/tennis-alert-api-v1.yaml",
+      "role": "contract"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/AlertController.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/ApiMapper.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/ApiModels.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/OpenApiContractConfiguration.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/ApiFailure.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/AvailabilityApplicationService.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/ValidationFailure.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/config/SchedulingConfig.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/Alert.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/AlertDelivery.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/AlertSnapshot.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/AlertStatus.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/AvailabilitySnapshot.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/DeliveryStatus.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/AvailabilityFailure.java",
+      "role": "code"
+    }
+  ],
+  "contract_version": {
+    "path": "contract/tennis-alert-api-v1.yaml",
+    "from": "contract/tennis-alert-api-v1.yaml"
+  },
+  "claims": [
+    {
+      "point": "getCourtAvailability:200",
+      "note": "Availability controller returns the required availability fields and preserves stale results with staleReason."
+    },
+    {
+      "point": "getCourtAvailability:400",
+      "note": "Court identifiers and query dates are validated before use."
+    },
+    {
+      "point": "getCourtAvailability:404",
+      "note": "Unsupported path courts map to COURT_NOT_SUPPORTED."
+    },
+    {
+      "point": "getCourtAvailability:500",
+      "note": "Unexpected availability failures map to INTERNAL_ERROR."
+    },
+    {
+      "point": "getCourtAvailability:502",
+      "note": "Unreadable upstream responses map to UPSTREAM_RESPONSE_UNREADABLE with retry metadata."
+    },
+    {
+      "point": "getCourtAvailability:503",
+      "note": "Unavailable upstream responses map to UPSTREAM_UNAVAILABLE with retry metadata."
+    },
+    {
+      "point": "getCourtAvailability:504",
+      "note": "Upstream timeouts map to UPSTREAM_TIMEOUT with retry metadata."
+    },
+    {
+      "point": "createAlert:201",
+      "note": "New alerts start in WATCHING and return Location plus Idempotency-Replayed=false."
+    },
+    {
+      "point": "createAlert:200",
+      "note": "An existing WATCHING alert for the same user and condition is returned without creating another alert."
+    },
+    {
+      "point": "createAlert:400",
+      "note": "The Idempotency-Key, body, courtId, date, and slot are validated."
+    },
+    {
+      "point": "createAlert:401",
+      "note": "Alert mutations require a Bearer identity."
+    },
+    {
+      "point": "createAlert:409",
+      "note": "Reusing an idempotency key with a different request maps to IDEMPOTENCY_KEY_REUSED."
+    },
+    {
+      "point": "createAlert:422",
+      "note": "Unsupported courts, unsupported slots, and closed alert windows map to the declared codes."
+    },
+    {
+      "point": "createAlert:500",
+      "note": "Unresolved upstream failures during create map to INTERNAL_ERROR."
+    },
+    {
+      "point": "createAlert:503",
+      "note": "A concurrent in-flight idempotency request maps to CONCURRENT_UPDATE_CONFLICT."
+    },
+    {
+      "point": "listAlerts:200",
+      "note": "Only the authenticated user's alerts are returned, newest first, with optional stored-status filtering."
+    },
+    {
+      "point": "listAlerts:400",
+      "note": "Unknown status values map to VALIDATION_FAILED."
+    },
+    {
+      "point": "listAlerts:401",
+      "note": "The list endpoint requires a Bearer identity."
+    },
+    {
+      "point": "getAlert:200",
+      "note": "The authenticated owner receives the complete alert representation including nullable fields."
+    },
+    {
+      "point": "getAlert:400",
+      "note": "Non-UUID alertId values map to VALIDATION_FAILED."
+    },
+    {
+      "point": "getAlert:401",
+      "note": "The single-alert endpoint requires a Bearer identity."
+    },
+    {
+      "point": "getAlert:404",
+      "note": "Missing or foreign alerts map indistinguishably to ALERT_NOT_FOUND."
+    },
+    {
+      "point": "cancelAlert:200",
+      "note": "Cancellation is idempotent, preserves terminal states, and clears pending delivery for active alerts."
+    },
+    {
+      "point": "cancelAlert:400",
+      "note": "Non-UUID alertId values map to VALIDATION_FAILED."
+    },
+    {
+      "point": "cancelAlert:401",
+      "note": "Cancellation requires a Bearer identity."
+    },
+    {
+      "point": "cancelAlert:404",
+      "note": "Missing or foreign alerts map to ALERT_NOT_FOUND."
+    },
+    {
+      "point": "Alert:required-fields",
+      "note": "Response DTO annotations declare the contract-required alert fields, including nullable lastCheckedAt and delivery."
+    },
+    {
+      "point": "Problem:failure-rules",
+      "note": "Problem responses include status, code, retryable, retry metadata when applicable, and traceId only for retryable server failures."
+    }
+  ],
+  "decisions": [
+    {
+      "id": "d_user_identity",
+      "point": "authentication",
+      "where": "src/main/java/com/thinking/tennis/api/ApiMapper.java",
+      "question": "토큰 검증 방식이 계약에 정의되지 않은 상태에서 Bearer 토큰을 어떻게 사용자 식별자로 사용할 것인가",
+      "considered": [
+        {
+          "choice": "비어 있지 않은 Bearer 토큰 값을 사용자 식별자로 사용한다",
+          "consequence": "외부 인증 검증기 없이도 소유권 분리가 동작하지만 토큰의 진위 검증은 이 초안의 범위에 없다"
+        },
+        {
+          "choice": "검증되지 않은 Bearer 토큰을 모두 거부한다",
+          "consequence": "검증 포트나 토큰 형식이 계약에 없어 정상 사용자를 식별할 수 없다"
+        }
+      ],
+      "chosen": "비어 있지 않은 Bearer 토큰의 값 자체를 사용자 식별자로 사용한다",
+      "basis": "convention",
+      "rationale": "계약은 Bearer를 사용한다고만 정하고 검증 방식이나 제공 API를 정하지 않았다. 인메모리 초안에서 소유권 구분을 유지하는 최소 선택이다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:401",
+        "listAlerts:401",
+        "getAlert:401",
+        "cancelAlert:401",
+        "listAlerts:200",
+        "getAlert:404",
+        "cancelAlert:404"
+      ],
+      "reversal_cost": "ApiMapper.userId를 인증 포트 호출로 교체하고 사용자 식별자 전달 경계를 갱신해야 한다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_refresh_wait_deadline",
+      "point": "availability-refresh-wait",
+      "where": "src/main/java/com/thinking/tennis/app/AvailabilityApplicationService.java",
+      "question": "동일 코트·날짜의 진행 중 확인을 기다리는 최대 시간이 계약에 없을 때 얼마를 기다릴 것인가",
+      "considered": [
+        {
+          "choice": "확인 간격과 같은 20초를 기다린다",
+          "consequence": "동시 요청이 같은 외부 확인 결과를 받을 기회를 유지한다"
+        },
+        {
+          "choice": "기다리지 않고 즉시 실패한다",
+          "consequence": "EF-2와 V-4의 동일 결과 보장이 깨질 수 있다"
+        }
+      ],
+      "chosen": "20초 동안 진행 중 확인을 기다린다",
+      "basis": "contract_analogy",
+      "rationale": "확인 간격과 재시도 대기 값이 계약에서 20초로 고정되어 있어 같은 시간 창을 공유하는 선택이다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "getCourtAvailability:200",
+        "getCourtAvailability:502",
+        "getCourtAvailability:503",
+        "getCourtAvailability:504"
+      ],
+      "reversal_cost": "AvailabilityApplicationService의 대기 제한과 동시 확인 실패 매핑을 함께 변경해야 한다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_trace_id_format",
+      "point": "5xx-trace-id",
+      "where": "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+      "question": "traceId의 형식이 계약에 없을 때 어떤 식별자를 생성할 것인가",
+      "considered": [
+        {
+          "choice": "UUID 문자열을 생성한다",
+          "consequence": "추가 라이브러리 없이 고유한 추적 식별자를 제공한다"
+        },
+        {
+          "choice": "임의의 짧은 문자열을 생성한다",
+          "consequence": "길이와 충돌 정책을 별도로 정해야 한다"
+        }
+      ],
+      "chosen": "UUID 문자열을 생성한다",
+      "basis": "convention",
+      "rationale": "계약은 traceId를 로그 검색용 문자열로만 정의하고 형식을 제한하지 않는다. Java 표준 UUID가 가장 좁은 구현 선택이다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "getCourtAvailability:500",
+        "getCourtAvailability:502",
+        "getCourtAvailability:503",
+        "getCourtAvailability:504",
+        "createAlert:500",
+        "createAlert:503",
+        "listAlerts:500",
+        "getAlert:500",
+        "cancelAlert:500"
+      ],
+      "reversal_cost": "Problem 응답 생성기의 traceId 생성부와 로그 상관관계 형식을 함께 변경해야 한다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_create_slot_validation",
+      "point": "createAlert:422",
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+      "question": "본문의 시간대 지원 여부를 제공된 포트로 어떻게 판정할 것인가",
+      "considered": [
+        {
+          "choice": "코트·날짜 availability 확인 결과의 slots와 정확히 비교한다",
+          "consequence": "계약의 코트 운영 시간대와 정확히 일치하는 조건을 검증할 수 있다"
+        },
+        {
+          "choice": "코트 식별자만 확인하고 시간대는 저장한다",
+          "consequence": "SLOT_NOT_SUPPORTED를 판정할 근거가 없다"
+        }
+      ],
+      "chosen": "제공된 availability 포트의 코트·날짜 결과에서 시간대가 정확히 일치하는지 확인한다",
+      "basis": "spec_implication",
+      "rationale": "계약은 여기에 없는 시간대로 신청하면 SLOT_NOT_SUPPORTED라고 정하고, 제공 API에서 시간대 목록을 얻을 수 있는 유일한 경로가 availability 확인이다.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:200",
+        "createAlert:201",
+        "createAlert:422",
+        "createAlert:500"
+      ],
+      "reversal_cost": "AlertApplicationService의 신청 검증을 별도 지원 코트 카탈로그 포트로 옮기고 제공 API 의존을 재조정해야 한다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_expiry_scheduler_cadence",
+      "point": "AlertStatus:EXPIRED",
+      "where": "src/main/java/com/thinking/tennis/config/SchedulingConfig.java",
+      "question": "만료를 서버 작업으로 수행해야 하지만 실행 주기가 계약에 없을 때 어떻게 실행할 것인가",
+      "considered": [
+        {
+          "choice": "1초 고정 지연의 인메모리 작업으로 만료를 처리한다",
+          "consequence": "요청이 없어도 만료가 진행되며 만료 지연을 짧게 유지한다"
+        },
+        {
+          "choice": "HTTP 요청이 들어올 때만 만료를 처리한다",
+          "consequence": "요청이 없는 신청의 만료와 V-8 상태가 지연된다"
+        }
+      ],
+      "chosen": "1초 고정 지연의 인메모리 만료 작업을 사용한다",
+      "basis": "least_harm",
+      "rationale": "계약은 만료가 서버 스스로 일어나야 한다고 정하지만 주기를 정하지 않았다. 저장소와 컨테이너가 금지된 초안에서 최소한의 독립 실행 방식이다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "listAlerts:200",
+        "getAlert:200",
+        "cancelAlert:200",
+        "createAlert:200",
+        "createAlert:201"
+      ],
+      "reversal_cost": "스케줄러 주기 또는 외부 작업 트리거를 교체하고 인메모리 상태 전이 동기화를 다시 검토해야 한다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_delivery_surface",
+      "point": "Alert.delivery",
+      "where": "src/main/java/com/thinking/tennis/app/AvailabilityApplicationService.java",
+      "question": "메시지 발송 경로가 out_of_scope일 때 HTTP 조회 표면에서 발송 결과를 어디까지 만들 것인가",
+      "considered": [
+        {
+          "choice": "빈자리 발견 시 PENDING까지만 만들고 SENT/FAILED를 추정하지 않는다",
+          "consequence": "HTTP 표면이 알 수 없는 전송 결과를 만들어내지 않는다"
+        },
+        {
+          "choice": "HTTP 요청에서 SENT 또는 FAILED를 임의로 만든다",
+          "consequence": "AsyncAPI 경로와 무관한 발송 결과를 허위로 노출한다"
+        }
+      ],
+      "chosen": "빈자리 발견 시 PENDING까지만 만들고 전송 결과는 생성하지 않는다",
+      "basis": "least_harm",
+      "rationale": "알림 발송 경로는 명시적으로 out_of_scope이고 제공된 발송 포트도 없다. 계약이 허용한 null/PENDING 상태만 사용한다.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:201",
+        "createAlert:200",
+        "listAlerts:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "reversal_cost": "AsyncAPI 발송 어댑터와 상태 전이 작업을 추가하고 Alert의 SENT/FAILED 전이를 연결해야 한다.",
+      "supersedes": null
+    }
+  ],
+  "contract_changes": [],
+  "generated_at": "2026-09-30T07:31:19+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "gen_impl:v1",
+    "source_files": [
+      "b02d8689_input.json"
+    ],
+    "token_usage": {
+      "input_tokens": 3271237,
+      "cached_input_tokens": 3170688,
+      "output_tokens": 44725,
+      "reasoning_output_tokens": 19878
+    },
+    "build_attempts": 3
+  },
+  "commit": "c7d75adaa18c496515417eec722a11552cae2565"
+}

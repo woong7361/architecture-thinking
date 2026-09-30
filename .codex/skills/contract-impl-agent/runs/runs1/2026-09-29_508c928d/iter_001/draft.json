@@ -1,0 +1,417 @@
+{
+  "brief_hash": "508c928d",
+  "iteration": "001",
+  "stage": "gen",
+  "files": [
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/AlertStatus.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/DeliveryStatus.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/TimeSlot.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/Delivery.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/Availability.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/Alert.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/AlertSnapshot.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/FailureCode.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/FailureContext.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/UseCaseException.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/AvailabilityResult.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/AvailabilityService.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/CreateAlertCommand.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/CreateAlertResult.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/AlertService.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/AlertRequestDto.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/TimeSlotDto.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/TimeSlotResponse.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/DeliveryResponse.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/AlertResponse.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/AlertListResponse.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/AvailabilitySlotResponse.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/AvailabilityResponse.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/ApiMapper.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/Authentication.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/RequestParsing.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/AlertController.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+      "role": "code"
+    },
+    {
+      "path": "contract/tennis-alert-api-v1.yaml",
+      "role": "contract"
+    }
+  ],
+  "contract_version": {
+    "path": "contract/tennis-alert-api-v1.yaml",
+    "from": "contract/tennis-alert-api-v1.yaml"
+  },
+  "claims": [
+    {
+      "point": "getCourtAvailability:200",
+      "note": "코트·날짜별 20초 인메모리 캐시와 동시 요청 직렬화를 구현하고 fresh/stale 응답을 반환한다."
+    },
+    {
+      "point": "getCourtAvailability:400",
+      "note": "courtId와 ISO 날짜 형식을 검증하고 VALIDATION_FAILED로 매핑한다."
+    },
+    {
+      "point": "getCourtAvailability:404",
+      "note": "지원하지 않는 코트를 COURT_NOT_SUPPORTED로 매핑한다."
+    },
+    {
+      "point": "getCourtAvailability:500",
+      "note": "선언된 범위 밖의 내부 예외를 INTERNAL_ERROR로 매핑한다."
+    },
+    {
+      "point": "getCourtAvailability:502",
+      "note": "읽을 수 없는 외부 응답을 UPSTREAM_RESPONSE_UNREADABLE로 매핑한다."
+    },
+    {
+      "point": "getCourtAvailability:503",
+      "note": "외부 예약처 불가와 저장소·경합 코드를 retryable 503 표면으로 매핑한다."
+    },
+    {
+      "point": "getCourtAvailability:504",
+      "note": "외부 예약처 timeout을 UPSTREAM_TIMEOUT과 20초 재시도 정보로 매핑한다."
+    },
+    {
+      "point": "createAlert:201",
+      "note": "신규 신청을 인메모리로 저장하고 WATCHING 상태와 전체 Alert 응답을 반환한다."
+    },
+    {
+      "point": "createAlert:200",
+      "note": "동일 사용자의 동일 조건 WATCHING 신청을 재사용하고 새 신청을 만들지 않는다."
+    },
+    {
+      "point": "createAlert:400",
+      "note": "본문 형식과 Idempotency-Key UUID를 검증한다."
+    },
+    {
+      "point": "createAlert:401",
+      "note": "Bearer 인증이 없거나 비어 있으면 UNAUTHENTICATED를 반환한다."
+    },
+    {
+      "point": "createAlert:409",
+      "note": "같은 사용자·오퍼레이션의 멱등 키가 다른 요청 내용에 사용되면 IDEMPOTENCY_KEY_REUSED를 반환한다."
+    },
+    {
+      "point": "createAlert:422",
+      "note": "지원하지 않는 코트, 시간대, 만료된 조건을 각각 선언된 조건 실패 코드로 반환한다."
+    },
+    {
+      "point": "createAlert:500",
+      "note": "신청 검증 중 외부 확인 실패를 INTERNAL_ERROR로 매핑한다."
+    },
+    {
+      "point": "createAlert:503",
+      "note": "동일 멱등 키의 처리 중 재요청을 CONCURRENT_UPDATE_CONFLICT와 Retry-After로 반환한다."
+    },
+    {
+      "point": "listAlerts:200",
+      "note": "인증된 사용자의 신청만 저장된 상태 기준으로 필터링하고 최근 생성 순으로 반환한다."
+    },
+    {
+      "point": "listAlerts:400",
+      "note": "알 수 없는 status 값을 VALIDATION_FAILED로 반환한다."
+    },
+    {
+      "point": "listAlerts:401",
+      "note": "Bearer 인증을 요구한다."
+    },
+    {
+      "point": "listAlerts:500",
+      "note": "예상하지 못한 내부 예외를 INTERNAL_ERROR로 반환한다."
+    },
+    {
+      "point": "listAlerts:503",
+      "note": "선언된 STORAGE_TIMEOUT 응답 표면을 공통 오류 매핑에 포함한다."
+    },
+    {
+      "point": "getAlert:200",
+      "note": "소유자에게 전체 신청 표현을 반환한다."
+    },
+    {
+      "point": "getAlert:400",
+      "note": "UUID가 아닌 alertId를 VALIDATION_FAILED로 반환한다."
+    },
+    {
+      "point": "getAlert:401",
+      "note": "Bearer 인증을 요구한다."
+    },
+    {
+      "point": "getAlert:404",
+      "note": "없는 신청과 다른 사용자의 신청을 ALERT_NOT_FOUND로 동일하게 반환한다."
+    },
+    {
+      "point": "getAlert:500",
+      "note": "예상하지 못한 내부 예외를 INTERNAL_ERROR로 반환한다."
+    },
+    {
+      "point": "getAlert:503",
+      "note": "선언된 STORAGE_TIMEOUT 응답 표면을 공통 오류 매핑에 포함한다."
+    },
+    {
+      "point": "cancelAlert:200",
+      "note": "취소를 멱등적으로 적용하고 PENDING 대기를 제거하며 이미 끝난 상태는 유지한다."
+    },
+    {
+      "point": "cancelAlert:400",
+      "note": "UUID가 아닌 alertId를 VALIDATION_FAILED로 반환한다."
+    },
+    {
+      "point": "cancelAlert:401",
+      "note": "Bearer 인증을 요구한다."
+    },
+    {
+      "point": "cancelAlert:404",
+      "note": "없는 신청과 다른 사용자의 신청을 ALERT_NOT_FOUND로 동일하게 반환한다."
+    },
+    {
+      "point": "cancelAlert:500",
+      "note": "예상하지 못한 내부 예외를 INTERNAL_ERROR로 반환한다."
+    },
+    {
+      "point": "cancelAlert:503",
+      "note": "동시 신청 수정 경합을 CONCURRENT_UPDATE_CONFLICT와 Retry-After로 반환한다."
+    }
+  ],
+  "decisions": [
+    {
+      "id": "d_auth_token_identity",
+      "point": "authentication:user_identity",
+      "where": "src/main/java/com/thinking/tennis/api/Authentication.java",
+      "question": "계약이 Bearer 토큰의 검증 방식과 사용자 식별자 형식을 정하지 않은 경우 토큰을 어떻게 사용자 식별에 사용할 것인가?",
+      "considered": [
+        {
+          "choice": "Bearer 뒤의 비어 있지 않은 토큰 문자열을 사용자 식별자로 사용",
+          "consequence": "외부 인증 시스템 없이 사용자별 신청 격리를 재현한다."
+        },
+        {
+          "choice": "모든 Bearer 토큰을 하나의 사용자로 취급",
+          "consequence": "사용자 간 소유권 격리를 검증할 수 없다."
+        },
+        {
+          "choice": "토큰을 UUID로 제한",
+          "consequence": "계약에 없는 형식 제약으로 정상 토큰을 좁게 받는다."
+        }
+      ],
+      "chosen": "Bearer 뒤의 비어 있지 않은 토큰 문자열을 사용자 식별자로 사용",
+      "basis": "least_harm",
+      "rationale": "계약은 인증 방식의 구체 형식을 정하지 않았고 구현에 필요한 것은 사용자별 소유권 구분이므로 추가 형식 제약 없이 토큰 문자열을 인메모리 식별자로 사용한다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:401",
+        "listAlerts:401",
+        "getAlert:401",
+        "cancelAlert:401",
+        "listAlerts:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "reversal_cost": "Authentication을 실제 인증 검증 포트로 교체하고 컨트롤러가 전달하는 userId만 유지하면 된다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_expiration_calculation",
+      "point": "createAlert:201",
+      "where": "src/main/java/com/thinking/tennis/app/AlertService.java",
+      "question": "더 이른 예약 마감 시각을 제공하는 포트가 없을 때 expiresAt을 어떻게 계산할 것인가?",
+      "considered": [
+        {
+          "choice": "요청 시간대의 startTime을 Asia/Seoul 날짜 시각으로 사용",
+          "consequence": "계약의 기본 만료 시각인 이용 시작 시각을 표현한다."
+        },
+        {
+          "choice": "endTime을 만료 시각으로 사용",
+          "consequence": "이용 시작 뒤까지 감시해 만료 의미와 어긋난다."
+        },
+        {
+          "choice": "현재 시각에 임의의 지속 시간을 더함",
+          "consequence": "날짜·시간대와 무관한 만료가 된다."
+        }
+      ],
+      "chosen": "요청 시간대의 startTime을 Asia/Seoul 날짜 시각으로 사용",
+      "basis": "spec_implication",
+      "rationale": "계약과 명세가 만료를 이용 시작 시각으로 정의하고 지원 시간대를 Asia/Seoul로 고정하며, 더 이른 마감 시각은 제공 포트에 없다.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:201",
+        "createAlert:422",
+        "getAlert:200",
+        "listAlerts:200",
+        "cancelAlert:200"
+      ],
+      "reversal_cost": "포트가 예약 마감 시각을 제공할 때 AlertService의 expiresAt 계산을 확장한다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_upstream_failure_on_create",
+      "point": "createAlert:500",
+      "where": "src/main/java/com/thinking/tennis/app/AlertService.java",
+      "question": "신청 검증 중 외부 예약처 확인이 실패하고 createAlert에 upstream 전용 응답이 없을 때 어떤 코드로 매핑할 것인가?",
+      "considered": [
+        {
+          "choice": "INTERNAL_ERROR로 매핑",
+          "consequence": "계약에 선언된 createAlert 500 표면을 사용하고 외부 실패를 신청 성공으로 오인하지 않는다."
+        },
+        {
+          "choice": "STORAGE_TIMEOUT으로 매핑",
+          "consequence": "외부 예약처 실패를 저장소 장애로 잘못 표현한다."
+        },
+        {
+          "choice": "신청을 저장하고 슬롯 검증을 생략",
+          "consequence": "SLOT_NOT_SUPPORTED 검증을 수행하지 못한다."
+        }
+      ],
+      "chosen": "INTERNAL_ERROR로 매핑",
+      "basis": "least_harm",
+      "rationale": "createAlert에는 외부 확인 실패 응답이 선언되어 있지 않고 슬롯 지원 여부 확인이 필요하므로 성공이나 저장소 장애로 위장하지 않고 선언된 내부 실패로 전달한다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:500",
+        "createAlert:422"
+      ],
+      "reversal_cost": "신청 검증용 포트 또는 응답이 추가되면 AlertService의 예외 변환만 변경한다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_trace_id_format",
+      "point": "failure_response:traceId",
+      "where": "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+      "question": "계약이 traceId의 문자열 형식만 정하고 생성 규칙을 비워 둔 경우 어떤 식별자를 생성할 것인가?",
+      "considered": [
+        {
+          "choice": "UUID 문자열을 요청마다 생성",
+          "consequence": "추가 라이브러리 없이 고유한 5xx 추적 식별자를 제공한다."
+        },
+        {
+          "choice": "고정 문자열을 사용",
+          "consequence": "서로 다른 실패를 구분할 수 없다."
+        },
+        {
+          "choice": "서버 시각만 사용",
+          "consequence": "동일 시각 요청의 충돌 가능성이 있고 추적성이 약하다."
+        }
+      ],
+      "chosen": "UUID 문자열을 요청마다 생성",
+      "basis": "convention",
+      "rationale": "계약은 traceId를 문자열로만 요구하고 형식을 정하지 않았으므로 표준 JDK UUID를 사용한다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "getCourtAvailability:500",
+        "getCourtAvailability:502",
+        "getCourtAvailability:503",
+        "getCourtAvailability:504",
+        "createAlert:500",
+        "createAlert:503",
+        "listAlerts:500",
+        "listAlerts:503",
+        "getAlert:500",
+        "getAlert:503",
+        "cancelAlert:500",
+        "cancelAlert:503"
+      ],
+      "reversal_cost": "오류 응답 매퍼의 traceId 생성기만 로그 상관관계 시스템에 맞게 교체하면 된다.",
+      "supersedes": null
+    }
+  ],
+  "contract_changes": [],
+  "generated_at": "2026-09-29T18:43:03+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "gen_impl:v1",
+    "source_files": [
+      "508c928d_input.json"
+    ],
+    "token_usage": {
+      "input_tokens": 2343300,
+      "cached_input_tokens": 2141056,
+      "output_tokens": 47834,
+      "reasoning_output_tokens": 15747
+    }
+  },
+  "commit": "ae938d0c7e2b7e66ce81ec975145e90a41f62ca7"
+}

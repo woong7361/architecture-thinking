@@ -1,0 +1,10 @@
+{
+  "artifact": "refine_output",
+  "checked_file": "C:\\Users\\PC-220~1\\AppData\\Local\\Temp\\contract-impl-refine-_q9e1ssw\\refine-output.json",
+  "status": "REJECT",
+  "errors": [
+    "manifest.contract_version_missing: contract/tennis-alert-api-v1.yaml is not in the file manifest",
+    "manifest.contract_role_count: expected exactly one file with role=contract, found []",
+    "manifest.undeclared_file: src/main/java/com/thinking/tennis/app/AlertService.java changed in the work tree but is not declared"
+  ]
+}

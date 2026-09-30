@@ -1,0 +1,29 @@
+# 스켈레톤은 게이트가 iteration마다 부팅한다. 스펙 추출에 필요한 것만 켠다.
+# 이 파일도 사람이 소유한다. 생성 코드는 고치지 않는다.
+
+# 여러 부팅이 겹쳐도 포트가 충돌하지 않게 임의 포트로 뜬다.
+# tools/dump_api_docs.py 가 로그에서 실제 포트를 읽는다.
+server:
+  port: 0
+
+spring:
+  application:
+    name: tennis-alert-skeleton
+  # 계약은 staleReason 처럼 값이 널일 수 있는 필드도 required 로 두었다.
+  # 키가 사라지면 계약을 어기므로 널을 지우지 않는 설정을 여기서 고정한다.
+  jackson:
+    default-property-inclusion: always
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: false
+
+# 부팅이 끝났는지 확인하는 데만 쓴다.
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health

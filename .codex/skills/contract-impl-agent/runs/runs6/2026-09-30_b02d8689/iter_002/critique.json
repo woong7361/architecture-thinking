@@ -1,0 +1,188 @@
+{
+  "brief_hash": "b02d8689",
+  "iteration": "002",
+  "summary": "구현 전문을 모두 확인했으며 omitted 파일은 없다. 코트·날짜별 캐시와 동시 조회 병합, stale 결과 보존, 사용자·오퍼레이션·멱등 키 조합은 계약의 핵심 흐름을 잘 반영한다. 그러나 오류 응답의 canonical code가 손실되고, 멱등 재생 응답이 시간에 따라 변하며, 신청 생성의 슬롯 확인이 공유 캐시를 우회한다. 또한 expiresAt 계산이 계약의 조기 예약 마감 의미를 구현하지 못하고, 일부 예외 경로는 선언된 HTTP 실패 표면에 안정적으로 도달하지 않는다.",
+  "strengths": [
+    "AvailabilityService가 courtId/date별 성공 결과를 캐시하고 CompletableFuture로 동시 갱신을 하나로 합쳐, 같은 갱신의 대기 요청이 같은 결과 또는 같은 실패를 받도록 구성했다.",
+    "upstream 확인 실패 시 마지막 성공 결과를 유지하고 stale와 staleReason만 바꾸며, 확인 실패를 빈자리 없음으로 변환하지 않는다. 이는 slot_3a0fe4f8, slot_258c3e80, slot_aff3f79의 의미를 보존한다.",
+    "멱등 응답을 사용자·오퍼레이션·키로 분리하고 요청 fingerprint와 24시간 보관을 둔 점은 slot_a24a09dd와 createAlert의 재시도 경계를 구현하려는 방향이 명확하다.",
+    "HTTP 모델을 api에 두고 domain과 port에는 Spring HTTP 타입을 넣지 않아 implementation_contract의 계층 경계를 지켰다."
+  ],
+  "weaknesses": [
+    {
+      "id": "w_error_code_lost",
+      "axis": "failure_faithfulness",
+      "issue": "ApplicationException이 ApiException 생성자에 detail 또는 title 하나만 넘기므로, 상속된 code()에는 ErrorCode가 아니라 사람이 읽는 문구가 저장된다. 결과적으로 VALIDATION_FAILED나 ALERT_NOT_FOUND 대신 detail/title이 Problem.code와 type URL의 재료가 된다.",
+      "why_it_matters": "계약은 code를 클라이언트 분기의 canonical 원인으로 정의하고, Problem의 type·retryable과 함께 실패 의미를 전달한다(slot_58100c30, slot_47c11736). 현재 응답은 HTTP 상태가 맞더라도 계약의 오류 코드로 분기할 수 없다.",
+      "suggestion": "예외 하나가 ErrorCode를 직접 보유하도록 생성자와 접근자를 정리하고, ApiExceptionHandler가 그 canonical code만 직렬화하게 고친다. 가변 인자 생성자로 위치를 추론하는 경로는 제거한다.",
+      "severity": "high",
+      "target": {
+        "pointer": "src/main/java/com/thinking/tennis/app/ApplicationException.java:ApplicationException",
+        "action": "tighten",
+        "scope": "code"
+      }
+    },
+    {
+      "id": "w_replay_not_snapshot",
+      "axis": "state_continuity",
+      "issue": "StoredResponse에는 Alert만 저장하고 재생 때마다 ApiMapper를 다시 호출한다. 따라서 첫 응답에서 계산된 checkDelayed가 아니라 재생 시각의 Clock으로 다시 계산되어, 계약이 요구한 같은 키의 '처음 돌려준 응답 그대로'가 깨진다.",
+      "why_it_matters": "멱등 재시도는 네트워크 응답을 잃은 클라이언트가 같은 결과를 복구하기 위한 약속이다(slot_7afbe3b4, slot_8663b240). 같은 키인데 재생 시점에 checkDelayed가 false에서 true로 바뀌면 재시도 결과가 최초 처리 결과와 달라진다.",
+      "suggestion": "첫 2xx 처리 시 직렬화 가능한 응답 스냅샷 또는 모든 파생 필드를 저장하고, 재생 요청은 현재 시각으로 다시 매핑하지 말고 그 스냅샷을 반환한다.",
+      "severity": "high",
+      "target": {
+        "pointer": "src/main/java/com/thinking/tennis/app/AlertService.java:createAlert 및 src/main/java/com/thinking/tennis/api/AlertController.java:createAlert",
+        "action": "tighten",
+        "scope": "code"
+      }
+    },
+    {
+      "id": "w_refresh_cache_bypass",
+      "axis": "state_continuity",
+      "issue": "createAlert의 ensureSlotSupported가 AvailabilityService를 거치지 않고 CourtAvailabilityPort.checkAvailability를 직접 호출한다. 이 호출은 20초 캐시·single-flight를 우회하고, 성공 결과를 successfulChecks에 저장하거나 onAvailabilityChecked로 신청 상태에 반영하지도 않는다.",
+      "why_it_matters": "GET과 POST가 같은 court/date를 거의 동시에 처리하면 외부 예약처에 중복 확인이 나가 NFR-3과 V-4의 공유 상태 약속이 흔들린다(slot_218b9620). 같은 확인 결과를 기준으로 슬롯 검증, confirmedAt, lastCheckedAt, delivery가 이어져야 하는데 현재 경로가 둘로 갈라진다.",
+      "suggestion": "court/date 확인을 하나의 application-level coordinator/cache로 모으고, createAlert도 그 snapshot을 사용해 슬롯을 검증하도록 한다. 성공 확인의 신청 반영도 같은 경계에서 한 번만 수행한다.",
+      "severity": "high",
+      "target": {
+        "pointer": "src/main/java/com/thinking/tennis/app/AlertService.java:ensureSlotSupported",
+        "action": "tighten",
+        "scope": "code"
+      }
+    },
+    {
+      "id": "w_expires_at_ignores_cutoff",
+      "axis": "response_fidelity",
+      "issue": "expiresAt가 항상 date와 slot.startTime만으로 계산된다. 계약은 더 이른 예약 마감 시각이 확인되면 그 시각으로 expiresAt를 앞당긴다고 명시하지만, 구현에는 그 마감 시각을 읽거나 보존하는 입력이 없다(slot_c14121c8).",
+      "why_it_matters": "클라이언트가 실제 예약 마감 이후에도 감시가 유효하다고 해석할 수 있고, 만료 전이와 확인·발송 중단 시점이 실제 조건보다 늦어진다.",
+      "suggestion": "예약처 확인 결과에서 조기 마감 시각을 공급·보존하고 min(이용 시작 시각, 조기 마감 시각)으로 expiresAt를 계산한다. 해당 값을 제공할 수 없다면 그 한계를 조용히 startTime으로 대체하지 말고 포트와 계약의 미결정 사항으로 올린다.",
+      "severity": "high",
+      "target": {
+        "pointer": "src/main/java/com/thinking/tennis/app/AlertService.java:expiresAt",
+        "action": "add",
+        "scope": "code"
+      }
+    },
+    {
+      "id": "w_alert_not_found_exception_path",
+      "axis": "failure_faithfulness",
+      "issue": "getAlert와 cancelAlert는 404에서 base ApiException을 던지지만, @ExceptionHandler(ApiException.class) 메서드의 인자 타입은 더 좁은 ApplicationException이다. 선언된 AlertNotFound 응답으로 변환되는 경로가 예외 실제 타입과 일관되지 않다.",
+      "why_it_matters": "남의 신청과 없는 신청은 반드시 같은 404 표면으로 숨겨야 한다(slot_a8b0f567, slot_222a5c7a). 이 경로가 공통 Problem 변환기에 도달하지 못하면 500이나 프레임워크 기본 응답으로 바뀌어 보안·계약 의미가 동시에 깨진다.",
+      "suggestion": "예외 계층을 하나의 구체 타입으로 통일하거나 handler가 실제로 던져지는 ApiException을 받을 수 있게 만들고, 그 타입에서 status·code·instance를 손실 없이 변환한다.",
+      "severity": "high",
+      "target": {
+        "pointer": "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java:handleApiException",
+        "action": "tighten",
+        "scope": "code"
+      }
+    },
+    {
+      "id": "w_blank_status_means_omitted",
+      "axis": "request_tolerance",
+      "issue": "listAlerts의 parseStatus는 status가 빈 문자열이면 미지정(null)으로 처리한다. 계약은 status를 지정하면 저장된 해당 상태만 반환하고, 값의 집합은 AlertStatus enum으로 제한한다(slot_2da6130c).",
+      "why_it_matters": "`?status=`가 전체 목록 조회로 조용히 바뀌어 클라이언트의 필터 의도와 다른 신청이 반환된다. 잘못된 요청을 VALIDATION_FAILED로 드러내야 하는 자리에서 의미를 임의로 넓힌다.",
+      "suggestion": "null만 미지정으로 취급하고, 빈 문자열과 알 수 없는 값은 400 VALIDATION_FAILED로 변환한다.",
+      "severity": "medium",
+      "target": {
+        "pointer": "src/main/java/com/thinking/tennis/api/AlertController.java:parseStatus",
+        "action": "tighten",
+        "scope": "code"
+      }
+    }
+  ],
+  "revision_directions": [
+    "오류 응답은 HTTP 상태, canonical ErrorCode, retry 정보, 실제 요청 경로가 한 번의 변환에서 함께 보존되도록 예외 모델과 handler를 단일화한다.",
+    "멱등 재생은 현재 상태 조회가 아니라 최초 응답 스냅샷 재생이라는 경계를 코드 구조로 고정한다.",
+    "court/date 예약 확인의 캐시·single-flight·신청 반영을 오퍼레이션별로 복제하지 말고 하나의 application 경계에서 공유한다.",
+    "인증 주체와 조기 예약 마감 시각처럼 현재 제공 포트가 결정하지 않는 값을 구현자가 임의의 대체값으로 채우지 말고 계약 또는 포트 결정으로 올린다."
+  ],
+  "contract_review": [
+    {
+      "id": "cr_auth_semantics",
+      "kind": "proposal",
+      "pointer": "/components/securitySchemes/bearerAuth/description",
+      "finding": "Bearer 토큰을 쓴다는 표면은 있으나 토큰의 검증 책임, 사용자 subject 매핑, 만료·위조 토큰의 판정이 정해져 있지 않다. ErrorCode 설명은 유효하지 않은 토큰을 UNAUTHENTICATED로 분류한다고 말한다.",
+      "proposed_change": "인증 어댑터가 검증한 토큰의 subject를 사용자 식별자로 사용한다는 규칙과 검증 실패 조건을 계약에 추가한다. opaque token 자체를 subject로 허용할 의도라면 그 사실과 유효성의 정의를 명시하고 UNAUTHENTICATED 설명을 그에 맞게 고친다.",
+      "action": "add",
+      "spec_anchor": "slot_e23500c4f",
+      "severity": "high"
+    },
+    {
+      "id": "cr_create_upstream_outcome",
+      "kind": "proposal",
+      "pointer": "/paths/~1alerts/post/responses",
+      "finding": "createAlert는 슬롯 지원 여부를 확인하기 위해 외부 예약처 확인을 수행할 수 있지만, 현재 응답 표면에는 upstream 실패를 표현할 502/503/504가 없고 500 INTERNAL_ERROR는 서버 내부 실패로 정의되어 있다.",
+      "proposed_change": "createAlert가 외부 확인을 수행하는 계약이라면 UPSTREAM_TIMEOUT, UPSTREAM_UNAVAILABLE, UPSTREAM_RESPONSE_UNREADABLE의 상태·코드·retry 규칙을 추가한다. 외부 확인을 하지 않는 계약이라면 검증에 사용할 캐시된 availability 결과와 결과가 없을 때의 동작을 명시한다.",
+      "action": "add",
+      "spec_anchor": "FR-3",
+      "severity": "high"
+    },
+    {
+      "id": "cr_expiry_source",
+      "kind": "proposal",
+      "pointer": "/components/schemas/Alert/properties/expiresAt/description",
+      "finding": "expiresAt를 더 이른 예약 마감 시각으로 앞당긴다는 약속은 있으나 그 마감 시각의 출처, 확인 시점, 갱신 우선순위가 HTTP 계약과 제공 포트 어디에도 드러나지 않는다.",
+      "proposed_change": "예약 마감 시각의 출처와 갱신 규칙을 계약 또는 내부 port contract에 추가하고, 값이 없을 때 startTime을 사용할 수 있는지 여부를 명시한다.",
+      "action": "add",
+      "spec_anchor": "FR-1",
+      "severity": "high"
+    },
+    {
+      "id": "cr_auth_header_observation",
+      "kind": "observation_meaning",
+      "pointer": "/components/securitySchemes/bearerAuth",
+      "finding": "네 오퍼레이션에서 관찰된 Authorization header는 계약에 없는 일반 요청 필드라기보다 전역 bearerAuth 보안 요구를 HTTP로 실현한 것이다. availability의 security: [] 예외와도 일치한다.",
+      "proposed_change": "",
+      "spec_anchor": "slot_e23500c4f",
+      "severity": "low"
+    },
+    {
+      "id": "cr_unbounded_history",
+      "kind": "harmful_choice",
+      "pointer": "/paths/~1alerts/get/description",
+      "finding": "끝난 신청을 계속 쌓고 응답 크기 상한을 두지 않는 선택은 현재 계약 안에서는 허용되지만, 클라이언트가 응답 크기와 지연을 제한할 방법을 잃게 한다. NFR-2가 계약 범위 밖이라 이 위험의 책임 주체도 읽기 어렵다.",
+      "proposed_change": "",
+      "spec_anchor": "slot_85c85829",
+      "severity": "medium"
+    }
+  ],
+  "contested_decisions": [
+    {
+      "decision_id": "d_bearer_subject",
+      "objection": "계약의 UNAUTHENTICATED 정의는 토큰이 유효하지 않아 사용자를 식별할 수 없는 경우도 401로 처리한다고 말한다. 현재 선택은 Bearer 접두사와 비공백 여부만 확인해 임의 문자열을 사용자로 만들므로, 인증과 사용자 격리를 동일시하고 토큰 유효성 의미를 충족하지 않는다.",
+      "alternative": "검증된 인증 주체를 반환하는 인증 경계를 추가하거나, 이번 범위에서 opaque token 자체를 subject로 허용한다는 계약 변경을 먼저 발의한다. 어느 경우든 비어 있지 않다는 조건만으로 유효한 토큰으로 간주하지 않는다.",
+      "severity": "high"
+    },
+    {
+      "decision_id": "d_alert_slot_upstream_failure",
+      "objection": "실제 상황은 외부 예약처 확인 실패인데 INTERNAL_ERROR는 계약상 다른 모든 경우가 아닌 서버 내부 실패를 뜻한다. 선언된 createAlert 응답 안에 맞추기 위해 원인 코드를 바꾸면 클라이언트가 재시도 가능한 upstream 장애와 내부 장애를 구분할 수 없다.",
+      "alternative": "createAlert에 upstream 전용 실패 응답을 계약으로 추가하거나, 신청 검증을 캐시된 availability 결과에 한정해 외부 장애가 이 오퍼레이션에 직접 도달하지 않도록 경계를 바꾼다.",
+      "severity": "high"
+    },
+    {
+      "decision_id": "d_idempotency_retry_windows",
+      "objection": "경합 1초와 내부 오류 5초는 응답 examples와 유추에 기반한 값이지 계약의 명시 요구가 아니다. 이를 고정 상수로 구현하면 예시가 사실상 호환성 약속으로 승격되지만 그 근거가 계약에 없다.",
+      "alternative": "NFR-3과 본문에 명시된 upstream 20초만 계약상 고정하고, 나머지 값은 구현 정책으로 분리하거나 계약에 명시적으로 추가한다.",
+      "severity": "medium"
+    }
+  ],
+  "reader_risks": [
+    "문제 응답의 HTTP 상태가 맞으면 code도 맞을 것이라고 읽기 쉽지만, 현재 ApplicationException 경로는 detail/title을 code로 내보낼 수 있다.",
+    "멱등 재생이 저장된 Alert를 다시 매핑하므로 최초 응답과 항상 같다고 오해하기 쉽지만 checkDelayed는 재생 시각에 다시 계산된다.",
+    "createAlert의 슬롯 검증도 GET과 같은 20초 캐시와 single-flight를 공유한다고 예상하기 쉽지만 현재는 포트를 직접 호출한다.",
+    "Bearer 형식이 맞으면 실제로 검증된 사용자라고 오해할 수 있다. 현재 선택은 토큰 문자열을 곧바로 사용자 식별자로 사용한다."
+  ],
+  "critiqued_at": "2026-09-30T05:18:04+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "critique_impl:v1",
+    "source_files": [
+      "b02d8689_input.json",
+      "b02d8689_iter-002_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 87398,
+      "cached_input_tokens": 86400,
+      "output_tokens": 18091,
+      "reasoning_output_tokens": 14775
+    }
+  }
+}

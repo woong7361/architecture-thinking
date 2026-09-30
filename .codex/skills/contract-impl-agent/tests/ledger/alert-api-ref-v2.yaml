@@ -1,0 +1,82 @@
+# 위 판본에서 둘을 고쳤다. `Alert` 스키마의 이름을 `Alerts`로 바꿔 응답의 참조가 닿지 않게 만들었고,
+# 오퍼레이션에서 `$ref` 파라미터를 뺐다. 앞의 것은 대조기가 대조하지 못하는 자리이고 뒤의 것은 깨는 변경이다.
+# 원장이 둘을 같은 수에 섞지 않는지가 이 판본으로 확인된다.
+openapi: 3.1.0
+info:
+  title: 빈자리 알림 API (원장 픽스처)
+  version: 1.0.0
+servers:
+  - url: https://example.test/v1
+paths:
+  /alerts:
+    post:
+      operationId: createAlert
+      summary: 빈자리 알림을 신청한다
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlertRequest'
+      responses:
+        '201':
+          description: 신청을 받았다
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alert'
+        '422':
+          description: 본문이 계약과 다르다
+          x-error-codes:
+            - INVALID_BODY
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+components:
+  parameters:
+    CourtIdPath:
+      name: courtId
+      in: query
+      required: true
+      schema:
+        type: string
+        maxLength: 16
+  schemas:
+    AlertRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - courtId
+      properties:
+        courtId:
+          type: string
+        note:
+          type: string
+    Alerts:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - status
+        - lastCheckedAt
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          enum:
+            - ACTIVE
+            - CANCELLED
+        lastCheckedAt:
+          type:
+            - string
+            - 'null'
+          format: date-time
+    Problem:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string

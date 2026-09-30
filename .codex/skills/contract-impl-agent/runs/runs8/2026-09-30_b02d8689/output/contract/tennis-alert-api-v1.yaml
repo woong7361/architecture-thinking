@@ -1,0 +1,372 @@
+openapi: 3.1.0
+info:
+  title: 테니스 코트 빈자리 알림 API
+  version: 1.0.0
+servers:
+  - url: https://api.tennis-alert.example.com/v1
+security:
+  - bearerAuth: []
+paths:
+  /courts/{courtId}/availability:
+    get:
+      operationId: getCourtAvailability
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/CourtIdPath'
+        - name: date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourtAvailability'
+        '400': { $ref: '#/components/responses/ValidationFailed' }
+        '404': { $ref: '#/components/responses/CourtNotSupported' }
+        '500': { $ref: '#/components/responses/InternalError' }
+        '502': { $ref: '#/components/responses/UpstreamUnreadable' }
+        '503': { $ref: '#/components/responses/AvailabilityUnavailable' }
+        '504': { $ref: '#/components/responses/UpstreamTimeout' }
+  /alerts:
+    post:
+      operationId: createAlert
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKeyHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlertRequest'
+      responses:
+        '201':
+          headers:
+            Location: { $ref: '#/components/headers/Location' }
+            Idempotency-Replayed: { $ref: '#/components/headers/IdempotencyReplayed' }
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alert'
+        '200':
+          headers:
+            Location: { $ref: '#/components/headers/Location' }
+            Idempotency-Replayed: { $ref: '#/components/headers/IdempotencyReplayed' }
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alert'
+        '400': { $ref: '#/components/responses/AlertRequestInvalid' }
+        '401': { $ref: '#/components/responses/Unauthenticated' }
+        '409': { $ref: '#/components/responses/IdempotencyKeyReused' }
+        '422': { $ref: '#/components/responses/AlertNotAcceptable' }
+        '500': { $ref: '#/components/responses/InternalError' }
+        '503': { $ref: '#/components/responses/StorageOrContentionUnavailable' }
+    get:
+      operationId: listAlerts
+      parameters:
+        - name: status
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/AlertStatus'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertList'
+        '400': { $ref: '#/components/responses/ValidationFailed' }
+        '401': { $ref: '#/components/responses/Unauthenticated' }
+        '500': { $ref: '#/components/responses/InternalError' }
+        '503': { $ref: '#/components/responses/StorageUnavailable' }
+  /alerts/{alertId}:
+    get:
+      operationId: getAlert
+      parameters:
+        - $ref: '#/components/parameters/AlertIdPath'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alert'
+        '400': { $ref: '#/components/responses/ValidationFailed' }
+        '401': { $ref: '#/components/responses/Unauthenticated' }
+        '404': { $ref: '#/components/responses/AlertNotFound' }
+        '500': { $ref: '#/components/responses/InternalError' }
+        '503': { $ref: '#/components/responses/StorageUnavailable' }
+    delete:
+      operationId: cancelAlert
+      parameters:
+        - $ref: '#/components/parameters/AlertIdPath'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alert'
+        '400': { $ref: '#/components/responses/ValidationFailed' }
+        '401': { $ref: '#/components/responses/Unauthenticated' }
+        '404': { $ref: '#/components/responses/AlertNotFound' }
+        '500': { $ref: '#/components/responses/InternalError' }
+        '503': { $ref: '#/components/responses/StorageOrContentionUnavailable' }
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  parameters:
+    CourtIdPath:
+      name: courtId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/CourtId'
+    AlertIdPath:
+      name: alertId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/AlertId'
+    IdempotencyKeyHeader:
+      name: Idempotency-Key
+      in: header
+      required: true
+      schema:
+        type: string
+        format: uuid
+  headers:
+    Location:
+      schema:
+        type: string
+        format: uri-reference
+    IdempotencyReplayed:
+      required: true
+      schema:
+        type: boolean
+    RetryAfter:
+      schema:
+        type: integer
+        minimum: 1
+  schemas:
+    AlertId:
+      type: string
+      format: uuid
+    CourtId:
+      type: string
+      minLength: 1
+      maxLength: 64
+      pattern: '^[a-z0-9][a-z0-9-]*$'
+    TimeSlot:
+      type: object
+      required: [startTime, endTime]
+      additionalProperties: false
+      properties:
+        startTime:
+          type: string
+          pattern: '^([01][0-9]|2[0-3]):[0-5][0-9]$'
+        endTime:
+          type: string
+          pattern: '^([01][0-9]|2[0-3]):[0-5][0-9]$'
+    AlertRequest:
+      type: object
+      required: [courtId, date, slot]
+      additionalProperties: false
+      properties:
+        courtId: { $ref: '#/components/schemas/CourtId' }
+        date:
+          type: string
+          format: date
+        slot: { $ref: '#/components/schemas/TimeSlot' }
+    AlertStatus:
+      type: string
+      enum: [WATCHING, NOTIFIED, CANCELED, EXPIRED]
+    DeliveryStatus:
+      type: string
+      enum: [PENDING, SENT, FAILED]
+    AlertDelivery:
+      type: object
+      required: [status, attemptCount, lastAttemptAt, failureReason]
+      additionalProperties: false
+      properties:
+        status: { $ref: '#/components/schemas/DeliveryStatus' }
+        attemptCount:
+          type: integer
+          minimum: 0
+          maximum: 4
+        lastAttemptAt:
+          type: [string, 'null']
+          format: date-time
+        failureReason:
+          type: [string, 'null']
+    Alert:
+      type: object
+      required: [alertId, courtId, courtName, reservationUrl, date, slot, status, createdAt, expiresAt, lastCheckedAt, checkDelayed, delivery]
+      additionalProperties: false
+      properties:
+        alertId: { $ref: '#/components/schemas/AlertId' }
+        courtId: { $ref: '#/components/schemas/CourtId' }
+        courtName: { type: string, minLength: 1 }
+        reservationUrl: { type: string, format: uri }
+        date: { type: string, format: date }
+        slot: { $ref: '#/components/schemas/TimeSlot' }
+        status: { $ref: '#/components/schemas/AlertStatus' }
+        createdAt: { type: string, format: date-time }
+        expiresAt: { type: string, format: date-time }
+        lastCheckedAt:
+          type: [string, 'null']
+          format: date-time
+        checkDelayed: { type: boolean }
+        delivery:
+          oneOf:
+            - { $ref: '#/components/schemas/AlertDelivery' }
+            - { type: 'null' }
+    AlertList:
+      type: object
+      required: [items]
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items: { $ref: '#/components/schemas/Alert' }
+    AvailabilitySlot:
+      type: object
+      required: [startTime, endTime, available]
+      additionalProperties: false
+      properties:
+        startTime: { type: string, pattern: '^([01][0-9]|2[0-3]):[0-5][0-9]$' }
+        endTime: { type: string, pattern: '^([01][0-9]|2[0-3]):[0-5][0-9]$' }
+        available: { type: boolean }
+    CourtAvailability:
+      type: object
+      required: [courtId, courtName, date, confirmedAt, stale, staleReason, reservationUrl, slots]
+      additionalProperties: false
+      properties:
+        courtId: { $ref: '#/components/schemas/CourtId' }
+        courtName: { type: string, minLength: 1 }
+        date: { type: string, format: date }
+        confirmedAt: { type: string, format: date-time }
+        stale: { type: boolean }
+        staleReason:
+          oneOf:
+            - { $ref: '#/components/schemas/UpstreamFailureReason' }
+            - { type: 'null' }
+        reservationUrl: { type: string, format: uri }
+        slots:
+          type: array
+          items: { $ref: '#/components/schemas/AvailabilitySlot' }
+    UpstreamFailureReason:
+      type: string
+      enum: [UPSTREAM_TIMEOUT, UPSTREAM_UNAVAILABLE, UPSTREAM_RESPONSE_UNREADABLE]
+    ErrorCode:
+      type: string
+      enum: [VALIDATION_FAILED, UNAUTHENTICATED, COURT_NOT_SUPPORTED, SLOT_NOT_SUPPORTED, ALERT_WINDOW_CLOSED, ALERT_NOT_FOUND, IDEMPOTENCY_KEY_REUSED, UPSTREAM_TIMEOUT, UPSTREAM_UNAVAILABLE, UPSTREAM_RESPONSE_UNREADABLE, STORAGE_TIMEOUT, CONCURRENT_UPDATE_CONFLICT, INTERNAL_ERROR]
+    Problem:
+      type: object
+      required: [type, title, status, code, retryable]
+      additionalProperties: false
+      properties:
+        type: { type: string, format: uri }
+        title: { type: string }
+        status: { type: integer }
+        detail: { type: string }
+        instance: { type: string, format: uri-reference }
+        code: { $ref: '#/components/schemas/ErrorCode' }
+        retryable: { type: boolean }
+        retryAfterSeconds: { type: integer, minimum: 1 }
+        traceId: { type: string }
+  responses:
+    ValidationFailed:
+      description: 요청 값이 올바르지 않다.
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/Problem' }
+      x-error-codes: [VALIDATION_FAILED]
+    AlertRequestInvalid:
+      description: 요청 값이 올바르지 않다.
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/Problem' }
+      x-error-codes: [VALIDATION_FAILED]
+    Unauthenticated:
+      description: 인증이 필요하다.
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/Problem' }
+      x-error-codes: [UNAUTHENTICATED]
+    CourtNotSupported:
+      description: 지원하지 않는 코트다.
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/Problem' }
+      x-error-codes: [COURT_NOT_SUPPORTED]
+    AlertNotFound:
+      description: 신청을 찾을 수 없다.
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/Problem' }
+      x-error-codes: [ALERT_NOT_FOUND]
+    IdempotencyKeyReused:
+      description: 멱등 키가 재사용됐다.
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/Problem' }
+      x-error-codes: [IDEMPOTENCY_KEY_REUSED]
+    AlertNotAcceptable:
+      description: 신청 조건을 감시할 수 없다.
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/Problem' }
+      x-error-codes: [COURT_NOT_SUPPORTED, SLOT_NOT_SUPPORTED, ALERT_WINDOW_CLOSED]
+    UpstreamUnreadable:
+      description: 예약처 응답을 읽지 못했다.
+      headers:
+        Retry-After: { $ref: '#/components/headers/RetryAfter' }
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/Problem' }
+      x-error-codes: [UPSTREAM_RESPONSE_UNREADABLE]
+    UpstreamTimeout:
+      description: 예약처가 제때 응답하지 않았다.
+      headers:
+        Retry-After: { $ref: '#/components/headers/RetryAfter' }
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/Problem' }
+      x-error-codes: [UPSTREAM_TIMEOUT]
+    AvailabilityUnavailable:
+      description: 예약 상태를 돌려줄 수 없다.
+      headers:
+        Retry-After: { $ref: '#/components/headers/RetryAfter' }
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/Problem' }
+      x-error-codes: [UPSTREAM_UNAVAILABLE, STORAGE_TIMEOUT]
+    StorageUnavailable:
+      description: 저장소가 제때 응답하지 않았다.
+      headers:
+        Retry-After: { $ref: '#/components/headers/RetryAfter' }
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/Problem' }
+      x-error-codes: [STORAGE_TIMEOUT]
+    StorageOrContentionUnavailable:
+      description: 저장소가 제때 응답하지 않았거나 경합에 밀렸다.
+      headers:
+        Retry-After: { $ref: '#/components/headers/RetryAfter' }
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/Problem' }
+      x-error-codes: [STORAGE_TIMEOUT, CONCURRENT_UPDATE_CONFLICT]
+    InternalError:
+      description: 서버 내부에서 처리하지 못했다.
+      headers:
+        Retry-After: { $ref: '#/components/headers/RetryAfter' }
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/Problem' }
+      x-error-codes: [INTERNAL_ERROR]

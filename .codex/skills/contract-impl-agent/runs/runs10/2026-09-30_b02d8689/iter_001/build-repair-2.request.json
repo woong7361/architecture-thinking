@@ -1,0 +1,28 @@
+{
+  "brief_hash": "b02d8689",
+  "iteration": "001",
+  "purpose": "build_repair",
+  "attempt": 2,
+  "max_attempts": 3,
+  "scope": "build_only",
+  "instruction": "컴파일과 부팅만 고쳐라. 계약 적합성은 아직 판정되지 않았으므로 그 자리를 건드리지 마라. 구현을 크게 바꾸지 말고 빌드 실패의 원인만 고쳐라. 계약 판본은 그대로 둔다.",
+  "priority_order": [
+    "gate_violations"
+  ],
+  "open_causes": [
+    {
+      "id": "c_549078e4",
+      "rule": "g0.extract_failed",
+      "where": "dump_api_docs.py",
+      "detail": "부팅이 실패했거나 제한 시간 안에 포트를 열지 못했다\nDescription: Parameter 1 of constructor in com.thinking.tennis.app.AlertApplicationService required a bean of type 'java.time.Clock' that could not be found.\nAction: Consider defining a bean of type 'java.time.Clock' in your configuration.\norg.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'tennisAlertController' defined in TennisAlertController.class: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'alertApplicationService' defined in AlertApplicationService.class: Unsatisfied dependency expressed through constructor parameter 1: No qualifying bean of type 'java.time.Clock' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}\n추출기: 애플리케이션이 포트를 열기 전에 종료했다. exit 1",
+      "points": [],
+      "point_count": 1,
+      "evidence_count": 1
+    }
+  ],
+  "rule_cards": {},
+  "current_contract_version": {
+    "path": "contract/tennis-alert-api-v1.yaml",
+    "from": "contract/tennis-alert-api-v1.yaml"
+  }
+}

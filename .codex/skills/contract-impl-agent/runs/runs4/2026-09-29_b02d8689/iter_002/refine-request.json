@@ -1,0 +1,294 @@
+{
+  "brief_hash": "b02d8689",
+  "from_iteration": "002",
+  "to_iteration": "003",
+  "priority_order": [
+    "gate_violations",
+    "contract_version",
+    "standing_decisions",
+    "code_instructions"
+  ],
+  "open_violations": [
+    {
+      "rule": "g0.extract_failed",
+      "point": null,
+      "where": "dump_api_docs.py",
+      "detail": "부팅이 실패했거나 제한 시간 안에 포트를 열지 못했다\n원인: java.lang.NoSuchMethodException: com.thinking.tennis.app.AlertApplicationService.<init>()\n  ← org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.thinking.tennis.app.AlertApplicationService]: No default constructor found\n  ← org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'alertApplicationService' defined in AlertApplicationService.class: Failed to instantiate [com.thinking.tennis.app.AlertApplicationService]: No default constructor found\norg.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'tennisAlertController' defined in TennisAlertController.class: Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'alertApplicationService' defined in AlertApplicationService.class: Failed to instantiate [com.thinking.tennis.app.AlertApplicationService]: No default constructor found\n추출기: 애플리케이션이 포트를 열기 전에 종료했다. exit 1",
+      "verdict": "violation"
+    }
+  ],
+  "rule_cards": {},
+  "gate_observations": [],
+  "gate_coverage": {
+    "g0": "REJECT",
+    "g1": "SKIPPED",
+    "contract_changes": "SKIPPED",
+    "allow_missing_gates": false
+  },
+  "current_contract_version": {
+    "path": "contract/tennis-alert-api.yaml-v1.yaml",
+    "from": "contract/tennis-alert-api.yaml-v1.yaml"
+  },
+  "standing_decisions": [
+    {
+      "id": "d_bearer_subject_boundary",
+      "point": "인증 토큰의 사용자 식별",
+      "where": "src/main/java/com/thinking/tennis/api/BearerUser.java",
+      "question": "계약이 토큰 검증자와 토큰 내용 형식을 정하지 않은 상태에서 API 경계가 어떤 값을 애플리케이션 사용자 키로 넘길 것인가?",
+      "considered": [
+        {
+          "choice": "검증 가능한 형식의 불투명 Bearer subject를 인증 경계에서 추출",
+          "consequence": "HTTP 형식 오류와 애플리케이션 사용자 식별을 분리하고 추후 실제 검증기 교체 지점을 유지한다."
+        },
+        {
+          "choice": "토큰 문자열을 아무 검증 없이 사용자 키로 사용",
+          "consequence": "형식이 잘못된 값도 인증된 사용자처럼 취급된다."
+        }
+      ],
+      "chosen": "Bearer 형식과 비어 있지 않은 허용 문자 집합을 먼저 검증한 뒤 불투명 subject를 전달한다.",
+      "basis": "least_harm",
+      "rationale": "실제 토큰 검증기는 계약 범위 밖이지만 malformed bearer 값이 인증 사용자로 통과하지 않도록 어댑터 경계를 명시했다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:401",
+        "listAlerts:401",
+        "getAlert:401",
+        "cancelAlert:401"
+      ],
+      "reversal_cost": "BearerUser의 subject 추출부에 실제 인증 provider 검증기를 주입하면 된다.",
+      "supersedes": "d_bearer_subject_mapping"
+    },
+    {
+      "id": "d_system_utc_clock",
+      "point": "서버 시각 공급",
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+      "question": "계약이 UTC 타임스탬프를 요구하지만 시계 주입 방식을 정하지 않은 경우 어떤 시계를 사용할 것인가?",
+      "considered": [
+        {
+          "choice": "UTC 시스템 시계 사용",
+          "consequence": "런타임의 현재 시각으로 RFC 3339 UTC 값을 만든다."
+        },
+        {
+          "choice": "Asia/Seoul 시스템 시계 사용",
+          "consequence": "Instant 변환 전후의 지역 시각 선택이 섞일 수 있다."
+        }
+      ],
+      "chosen": "Clock.systemUTC()를 사용한다.",
+      "basis": "spec_implication",
+      "rationale": "타임스탬프는 UTC이고 지역 시간은 만료 계산에만 사용되므로 시각 공급을 UTC로 고정했다.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:201",
+        "createAlert:200",
+        "listAlerts:200",
+        "getAlert:200",
+        "cancelAlert:200",
+        "getCourtAvailability:200"
+      ],
+      "reversal_cost": "서비스의 Clock 생성 방식을 주입형으로 바꾸면 된다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_expiry_boundary",
+      "point": "expiresAt 계산",
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+      "question": "더 이른 예약 마감 시각을 제공하는 포트가 없을 때 expiresAt을 어떻게 계산할 것인가?",
+      "considered": [
+        {
+          "choice": "Asia/Seoul 기준 slot.startTime을 만료 시각으로 사용",
+          "consequence": "계약이 명시한 기본 만료 경계를 계산할 수 있다."
+        },
+        {
+          "choice": "마감 시각 정보가 없으면 신청을 거절",
+          "consequence": "계약이 허용한 정상 신청을 추가 정보 부족으로 거절하게 된다."
+        }
+      ],
+      "chosen": "이용 시작 시각을 expiresAt으로 사용한다.",
+      "basis": "spec_implication",
+      "rationale": "계약은 만료 시각을 이용 시작 시각으로 정의하고 더 이른 마감이 확인될 때만 앞당기도록 했으며 제공 포트에는 마감 정보가 없다.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:201",
+        "createAlert:200",
+        "getAlert:200",
+        "listAlerts:200",
+        "cancelAlert:200"
+      ],
+      "reversal_cost": "예약처 포트에 마감 시각을 추가하지 않고 별도 정책 공급원을 연결하면 된다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_create_upstream_failure_surface",
+      "point": "신청 중 시간대 확인 실패",
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplicationService.java; src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+      "question": "신청 조건 검증 중 외부 확인이 실패하면 어떤 계약상 의미를 보존할 것인가?",
+      "considered": [
+        {
+          "choice": "INTERNAL_ERROR로 변환",
+          "consequence": "외부 장애의 원인과 재시도 의미가 사라진다."
+        },
+        {
+          "choice": "upstream 실패 코드를 유지하고 원인별 상태와 Retry-After를 전달",
+          "consequence": "클라이언트가 외부 일시 장애와 내부 결함을 구분할 수 있다."
+        }
+      ],
+      "chosen": "UPSTREAM_TIMEOUT, UPSTREAM_UNAVAILABLE, UPSTREAM_RESPONSE_UNREADABLE을 원래 의미와 Retry-After로 유지한다.",
+      "basis": "spec_implication",
+      "rationale": "계약이 이미 외부 실패 원인과 재시도 규칙을 정의하므로 알려진 upstream 실패를 내부 오류로 숨기지 않는다.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:500",
+        "createAlert:502",
+        "createAlert:503",
+        "createAlert:504"
+      ],
+      "reversal_cost": "오퍼레이션별 upstream 응답 표면을 다시 좁히려면 핸들러와 API 선언을 함께 변경해야 한다.",
+      "supersedes": "d_create_slot_check_failure"
+    },
+    {
+      "id": "d_problem_representation",
+      "point": "문제 응답의 type/title/traceId 값",
+      "where": "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+      "question": "Problem의 자유 형식 문자열과 traceId 형식을 어떤 규칙으로 만들 것인가?",
+      "considered": [
+        {
+          "choice": "코드의 kebab-case URI, 계약 예시의 한국어 제목, UUID traceId",
+          "consequence": "모든 실패 코드가 결정적인 문서 URI와 사람이 읽을 제목을 갖는다."
+        },
+        {
+          "choice": "코드 문자열을 그대로 URI와 제목에 사용",
+          "consequence": "계약 예시의 사람이 읽는 실패 이름과 달라진다."
+        }
+      ],
+      "chosen": "코드 kebab-case URI, 한국어 제목, UUID traceId를 사용한다.",
+      "basis": "contract_analogy",
+      "rationale": "계약 예시가 problem URI와 사람이 읽는 제목을 보여 주고 traceId에는 형식 제한이 없으므로 일관된 관례를 적용했다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "getCourtAvailability:400",
+        "getCourtAvailability:404",
+        "getCourtAvailability:500",
+        "getCourtAvailability:502",
+        "getCourtAvailability:503",
+        "getCourtAvailability:504",
+        "createAlert:400",
+        "createAlert:401",
+        "createAlert:409",
+        "createAlert:422",
+        "createAlert:500",
+        "createAlert:502",
+        "createAlert:503",
+        "createAlert:504",
+        "listAlerts:400",
+        "listAlerts:401",
+        "listAlerts:500",
+        "listAlerts:503",
+        "getAlert:400",
+        "getAlert:401",
+        "getAlert:404",
+        "getAlert:500",
+        "getAlert:503",
+        "cancelAlert:400",
+        "cancelAlert:401",
+        "cancelAlert:404",
+        "cancelAlert:500",
+        "cancelAlert:503"
+      ],
+      "reversal_cost": "ApiExceptionHandler의 중앙 매핑만 수정하면 된다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_idempotency_cleanup",
+      "point": "24시간 멱등 기록 정리",
+      "where": "src/main/java/com/thinking/tennis/app/InMemoryAlertStore.java",
+      "question": "인메모리 저장소에서 24시간 보관이 지난 멱등 기록을 언제 제거할 것인가?",
+      "considered": [
+        {
+          "choice": "새 멱등 요청이 들어올 때 지연 정리",
+          "consequence": "스케줄러 없이 24시간 의미를 유지하고 부팅 구성이 늘지 않는다."
+        },
+        {
+          "choice": "주기 작업으로 정리",
+          "consequence": "계약에 없는 주기 설정과 실행 생명주기가 추가된다."
+        }
+      ],
+      "chosen": "멱등 기록 조회 시작 시 지연 정리한다.",
+      "basis": "least_harm",
+      "rationale": "계약은 보관 기간만 정하고 정리 방식은 정하지 않았으며 인메모리 구현의 의존성을 최소화했다.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:200",
+        "createAlert:201",
+        "createAlert:409",
+        "createAlert:503"
+      ],
+      "reversal_cost": "저장소에 스케줄러 또는 만료 큐를 추가하면 된다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_stored_expiry_projection",
+      "point": "만료 상태의 HTTP 투영",
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+      "question": "만료 시각이 지났지만 서버 만료 작업이 아직 상태를 저장하지 않은 신청을 조회할 때 어떻게 할 것인가?",
+      "considered": [
+        {
+          "choice": "저장된 status를 유지하고 checkDelayed만 계산",
+          "consequence": "계약의 status 필터가 저장된 status를 기준으로 한다는 약속을 보존한다."
+        },
+        {
+          "choice": "조회 때마다 EXPIRED로 지연 전환",
+          "consequence": "status 필터와 저장 상태의 의미가 달라지고 조회가 상태 변경을 일으킨다."
+        }
+      ],
+      "chosen": "HTTP 조회에서는 저장된 status를 유지한다.",
+      "basis": "contract_analogy",
+      "rationale": "목록 계약이 저장된 status를 필터 기준으로 명시하고 만료 이동은 별도 서버 작업으로 설명한다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "listAlerts:200",
+        "getAlert:200",
+        "cancelAlert:200",
+        "createAlert:422"
+      ],
+      "reversal_cost": "만료 작업을 연결하고 저장소 갱신 정책을 추가해야 한다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_expiry_scheduled_transition",
+      "point": "서버 소유 만료 전이 실행",
+      "where": "src/main/java/com/thinking/tennis/app/AlertExpiryJob.java",
+      "question": "조회 요청과 분리된 만료 상태 전이를 어떤 서버 작업으로 수행할 것인가?",
+      "considered": [
+        {
+          "choice": "고정 지연 주기의 Spring scheduled 작업",
+          "consequence": "조회 여부와 무관하게 만료 상태를 저장하고 이후 확인·발송 대상에서 제외할 수 있다."
+        },
+        {
+          "choice": "각 HTTP 조회에서 만료 상태를 갱신",
+          "consequence": "HTTP 투영이 상태 변경을 일으켜 저장 상태와 조회 계약이 섞인다."
+        }
+      ],
+      "chosen": "1초 고정 지연의 서버 작업이 WATCHING만 EXPIRED로 원자 전이한다.",
+      "basis": "spec_implication",
+      "rationale": "FR-5의 서버 소유 전이를 조회 투영과 분리하고, 저장소의 동기화 경계 안에서 terminal 전이를 수행한다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "listAlerts:200",
+        "getAlert:200",
+        "createAlert:200",
+        "cancelAlert:200"
+      ],
+      "reversal_cost": "스케줄러를 외부 작업 실행기나 만료 큐로 교체하면 된다.",
+      "supersedes": null
+    }
+  ],
+  "contract_changes": [],
+  "contested_decisions": [],
+  "code_instructions": [],
+  "contract_proposals": [],
+  "weak_axes": [],
+  "weak_axis_rationales": {},
+  "priority": [
+    "gate:g0.extract_failed@None"
+  ]
+}

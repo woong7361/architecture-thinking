@@ -1,0 +1,688 @@
+{
+  "brief_hash": "745183bc",
+  "from_iteration": "001",
+  "to_iteration": "002",
+  "priority_order": [
+    "gate_violations",
+    "contract_version",
+    "standing_decisions",
+    "code_instructions"
+  ],
+  "open_violations": [
+    {
+      "rule": "extract.blind",
+      "point": null,
+      "where": "x-error-codes",
+      "detail": "계약은 (상태 코드, 에러 코드) 쌍을 선언했는데 추출 스펙에는 그 조항에 대응하는 것이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "extract.blind",
+      "point": null,
+      "where": "security",
+      "detail": "계약은 인증 요구를 선언했는데 추출 스펙에는 그 조항에 대응하는 것이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "getCourtAvailability:200",
+      "where": "CourtAvailability",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['confirmedAt', 'courtId', 'courtName', 'date', 'reservationUrl', 'slots', 'stale', 'staleReason']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "getCourtAvailability:200",
+      "where": "CourtAvailability.slots[]",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['available', 'endTime', 'startTime']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "getCourtAvailability:400",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "getCourtAvailability:404",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "getCourtAvailability:500",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "getCourtAvailability:502",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "getCourtAvailability:503",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "getCourtAvailability:504",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "listAlerts:200",
+      "where": "AlertList",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['items']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "listAlerts:200",
+      "where": "AlertList.items[]",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['alertId', 'checkDelayed', 'courtId', 'courtName', 'createdAt', 'date', 'delivery', 'expiresAt', 'lastCheckedAt', 'reservationUrl', 'slot', 'status']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "listAlerts:200",
+      "where": "AlertList.items[].slot",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['endTime', 'startTime']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "listAlerts:200",
+      "where": "AlertList.items[].delivery",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['attemptCount', 'failureReason', 'lastAttemptAt', 'status']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "listAlerts:400",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "listAlerts:401",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "listAlerts:500",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "listAlerts:503",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "createAlert:201",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "createAlert:200",
+      "where": "Alert",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['alertId', 'checkDelayed', 'courtId', 'courtName', 'createdAt', 'date', 'delivery', 'expiresAt', 'lastCheckedAt', 'reservationUrl', 'slot', 'status']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "createAlert:200",
+      "where": "Alert.slot",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['endTime', 'startTime']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "createAlert:200",
+      "where": "Alert.delivery",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['attemptCount', 'failureReason', 'lastAttemptAt', 'status']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.header_missing",
+      "point": "createAlert:200",
+      "where": "headers.Idempotency-Replayed",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.header_missing",
+      "point": "createAlert:200",
+      "where": "headers.Location",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "createAlert:400",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "createAlert:401",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "createAlert:409",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "createAlert:422",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "createAlert:500",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "createAlert:503",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "getAlert:200",
+      "where": "Alert",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['alertId', 'checkDelayed', 'courtId', 'courtName', 'createdAt', 'date', 'delivery', 'expiresAt', 'lastCheckedAt', 'reservationUrl', 'slot', 'status']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "getAlert:200",
+      "where": "Alert.slot",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['endTime', 'startTime']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "getAlert:200",
+      "where": "Alert.delivery",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['attemptCount', 'failureReason', 'lastAttemptAt', 'status']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "getAlert:400",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "getAlert:401",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "getAlert:404",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "getAlert:500",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "getAlert:503",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "cancelAlert:200",
+      "where": "Alert",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['alertId', 'checkDelayed', 'courtId', 'courtName', 'createdAt', 'date', 'delivery', 'expiresAt', 'lastCheckedAt', 'reservationUrl', 'slot', 'status']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "cancelAlert:200",
+      "where": "Alert.slot",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['endTime', 'startTime']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "cancelAlert:200",
+      "where": "Alert.delivery",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['attemptCount', 'failureReason', 'lastAttemptAt', 'status']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "cancelAlert:400",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "cancelAlert:401",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "cancelAlert:404",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "cancelAlert:500",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "cancelAlert:503",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    }
+  ],
+  "rule_cards": {
+    "extract.blind": "추출한 스펙에 계약의 그 조항에 대응하는 것이 아예 없다. 미판정은 통과가 아니므로 위반으로 센다.",
+    "response.required_weakened": "계약이 항상 담겠다고 보장한 필드를 구현이 선택으로 낮췄다. 읽는 쪽이 없는 경우를 다뤄야 한다.",
+    "response.status_missing": "계약이 선언한 응답 상태 코드가 구현에 없다.",
+    "response.header_missing": "계약이 응답에 싣겠다고 선언한 헤더가 구현에 없다."
+  },
+  "gate_observations": [
+    {
+      "rule": "request.field_extra",
+      "point": "listAlerts",
+      "where": "parameters.header.Authorization",
+      "detail": "계약에 없는 파라미터다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "request.field_extra",
+      "point": "createAlert",
+      "where": "parameters.header.Authorization",
+      "detail": "계약에 없는 파라미터다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "request.field_extra",
+      "point": "getAlert",
+      "where": "parameters.header.Authorization",
+      "detail": "계약에 없는 파라미터다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "request.field_extra",
+      "point": "cancelAlert",
+      "where": "parameters.header.Authorization",
+      "detail": "계약에 없는 파라미터다",
+      "verdict": "observation"
+    }
+  ],
+  "gate_coverage": {
+    "g0": "PASS",
+    "g1": "REJECT",
+    "contract_changes": "PASS",
+    "allow_missing_gates": false
+  },
+  "current_contract_version": {
+    "path": "contract/tennis-alert-api-v1.yaml",
+    "from": "contract/tennis-alert-api-v1.yaml"
+  },
+  "standing_decisions": [
+    {
+      "id": "d_bearer_identity",
+      "point": "getAlert:200",
+      "where": "TennisAlertApiController.authenticate",
+      "question": "계약이 Bearer 토큰의 검증 체계와 사용자 식별자 추출 규칙을 정하지 않은 자리에서 무엇을 사용자 키로 사용할 것인가?",
+      "considered": [
+        {
+          "choice": "Bearer 값 전체를 사용자 식별자로 사용",
+          "consequence": "별도 인증 예약처 없이 사용자별 격리를 구현할 수 있다."
+        },
+        {
+          "choice": "토큰을 JWT로 파싱해 subject를 사용",
+          "consequence": "계약에 없는 토큰 형식과 검증 키가 필요하다."
+        }
+      ],
+      "chosen": "Bearer 접두사 뒤의 비어 있지 않은 값 전체를 사용자 식별자로 사용",
+      "basis": "least_harm",
+      "rationale": "계약은 Bearer 사용만 정하고 토큰 형식·검증 주체를 정하지 않았으므로 추가 인증 규칙을 만들지 않고 소유권 격리만 보장한다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:401",
+        "listAlerts:401",
+        "getAlert:401",
+        "cancelAlert:401",
+        "listAlerts:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "reversal_cost": "인증 어댑터와 사용자 키 추출을 교체하고 인메모리 저장 키의 마이그레이션이 필요하다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_clock_source",
+      "point": "createAlert:201",
+      "where": "TennisAlertApiConfiguration.tennisAlertClock",
+      "question": "UTC 타임스탬프를 계산할 시간 공급원을 어떻게 선택할 것인가?",
+      "considered": [
+        {
+          "choice": "Clock.systemUTC() 사용",
+          "consequence": "실행 시점의 UTC를 계약 형식으로 기록한다."
+        },
+        {
+          "choice": "Asia/Seoul 시스템 시계 사용",
+          "consequence": "UTC 출력 전환 과정에서 시간대 혼동 가능성이 생긴다."
+        }
+      ],
+      "chosen": "Clock.systemUTC()를 주입해 모든 Instant를 UTC로 계산",
+      "basis": "spec_implication",
+      "rationale": "계약이 타임스탬프를 UTC로 요구하고 날짜·시각만 Asia/Seoul 기준으로 구분하므로 시각 계산은 UTC Clock으로 고정했다.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:201",
+        "createAlert:200",
+        "listAlerts:200",
+        "getAlert:200",
+        "cancelAlert:200",
+        "getCourtAvailability:200"
+      ],
+      "reversal_cost": "Clock Bean과 만료·지연 계산을 사용하는 모든 유스케이스를 변경해야 한다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_availability_coalescing_executor",
+      "point": "getCourtAvailability:200",
+      "where": "AvailabilityApplicationService.runCoalescedCheck",
+      "question": "동일 코트·날짜의 동시 확인을 어떤 실행 방식으로 합칠 것인가?",
+      "considered": [
+        {
+          "choice": "공유 CompletableFuture와 공용 비동기 실행기 사용",
+          "consequence": "첫 확인 하나를 실행하고 다른 요청은 같은 결과를 기다린다."
+        },
+        {
+          "choice": "요청 스레드에서 락을 잡고 직접 외부 확인",
+          "consequence": "외부 지연 동안 요청 스레드와 잠금이 유지된다."
+        }
+      ],
+      "chosen": "코트·날짜 키별 CompletableFuture를 공유하고 완료 시 제거",
+      "basis": "contract_analogy",
+      "rationale": "계약이 같은 확인 결과를 기다리게 하므로 키별 단일 Future가 결과 동일성과 외부 호출 억제를 함께 보장한다.",
+      "confidence": "high",
+      "blast_radius": [
+        "getCourtAvailability:200",
+        "getCourtAvailability:502",
+        "getCourtAvailability:503",
+        "getCourtAvailability:504"
+      ],
+      "reversal_cost": "확인 캐시와 동시성 제어를 별도 조정자 또는 실행기 구현으로 교체해야 한다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_create_slot_validation",
+      "point": "createAlert:422",
+      "where": "AlertApplicationService.ensureSlotSupported",
+      "question": "신청 본문의 시간대가 실제 운영 시간대인지 어떤 경로로 확인할 것인가?",
+      "considered": [
+        {
+          "choice": "CourtAvailabilityPort를 통해 해당 코트·날짜의 예약 상태를 확인하고 반환된 슬롯과 정확히 비교",
+          "consequence": "계약의 운영 시간대 조건을 기존 외부 포트로 검증할 수 있다."
+        },
+        {
+          "choice": "코트별 시간대 목록을 애플리케이션에 하드코딩",
+          "consequence": "계약과 제공 포트에 없는 코트별 데이터와 변경 규칙을 새로 지어내야 한다."
+        }
+      ],
+      "chosen": "AvailabilityApplicationService를 통해 저장 결과를 사용하거나 확인을 일으킨 뒤 슬롯을 정확히 비교",
+      "basis": "contract_analogy",
+      "rationale": "계약은 코트·날짜별 슬롯이 예약 상태 결과에 있다고 명시하고 제공 API도 그 결과만 제공하므로 별도 시간표를 발명하지 않았다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:201",
+        "createAlert:200",
+        "createAlert:422",
+        "createAlert:502",
+        "createAlert:503",
+        "createAlert:504"
+      ],
+      "reversal_cost": "신청 검증 경로와 코트별 운영시간 데이터 공급원을 함께 변경해야 한다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_last_checked_projection",
+      "point": "getAlert:200",
+      "where": "AlertApplicationService.viewOf",
+      "question": "신청에 저장된 마지막 확인 시각과 공유된 코트·날짜 확인 결과를 어떻게 일치시킬 것인가?",
+      "considered": [
+        {
+          "choice": "조회 시 공유 availability 캐시의 마지막 성공 시각을 신청 응답에 반영",
+          "consequence": "같은 코트·날짜의 성공 확인을 신청의 lastCheckedAt 의미에 맞게 표시한다."
+        },
+        {
+          "choice": "신청 생성 시각만 보존하고 이후 확인 결과와 분리",
+          "consequence": "계약이 요구하는 신청 조건의 마지막 성공 확인 시각을 갱신하지 못한다."
+        }
+      ],
+      "chosen": "응답 생성 시 공유 availability 캐시의 더 최신 성공 시각을 lastCheckedAt으로 투영",
+      "basis": "spec_implication",
+      "rationale": "lastCheckedAt은 신청별 예약처 확인 시각이 아니라 해당 신청의 코트·날짜를 마지막으로 성공 확인한 시각이므로 공유 확인 결과를 읽는다.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:201",
+        "createAlert:200",
+        "listAlerts:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "reversal_cost": "신청 저장 모델에 확인 결과 참조 또는 이벤트 갱신을 추가하고 응답 계산을 변경해야 한다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_trace_id_format",
+      "point": "getCourtAvailability:500",
+      "where": "TennisAlertApiExceptionHandler.build",
+      "question": "계약이 traceId의 문자열 타입만 정한 자리에서 어떤 식별자 형식을 사용할 것인가?",
+      "considered": [
+        {
+          "choice": "UUID 문자열 생성",
+          "consequence": "추가 라이브러리 없이 요청마다 구분 가능한 식별자를 제공한다."
+        },
+        {
+          "choice": "ULID 문자열 생성",
+          "consequence": "계약에 없는 생성 규칙과 추가 구현이 필요하다."
+        }
+      ],
+      "chosen": "UUID 문자열을 traceId로 생성",
+      "basis": "convention",
+      "rationale": "계약은 traceId의 형식 세부를 정하지 않았고 UUID는 Java 표준 API로 생성 가능하다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "getCourtAvailability:500",
+        "listAlerts:500",
+        "createAlert:500",
+        "getAlert:500",
+        "cancelAlert:500"
+      ],
+      "reversal_cost": "문제 응답 생성기와 로그 상관관계 포맷을 교체해야 한다.",
+      "supersedes": null
+    }
+  ],
+  "contract_changes": [],
+  "contested_decisions": [
+    {
+      "decision_id": "d_create_slot_validation",
+      "objection": "선택한 검증 경로는 신청 생성이 저장 결과가 없을 때 외부 확인을 일으킬 수 있도록 범위를 넓힌다. 그러나 계약 산문과 요구사항은 확인을 일으키는 오퍼레이션을 availability 조회로 한정한다. 운영 시간대 검증에 availability 결과를 쓰는 것과 조회를 새로 발생시키는 것은 같은 결정이 아니다.",
+      "alternative": "createAlert는 기존에 저장된 운영 시간대 또는 확인 결과만 읽는다. 필요한 정보가 없을 때의 신청 가능 여부를 계약에 명시하거나, 외부 확인은 GET에서만 수행하도록 경계를 유지한다.",
+      "severity": "high"
+    },
+    {
+      "decision_id": "d_bearer_identity",
+      "objection": "Bearer 값 전체를 사용자 키로 삼는 선택은 토큰 검증이 없다는 사실을 숨긴 채 임의의 비어 있지 않은 문자열을 인증 주체로 승격한다. 계약이 검증 체계를 정하지 않았다는 사실은 유효성 검사를 생략해도 된다는 근거가 아니다.",
+      "alternative": "인증 검증을 담당하는 명시적 경계를 두고 검증된 주체만 유스케이스에 전달한다. 인증 제공자를 이 범위에서 정할 수 없다면 계약에 제한을 드러내고 이 구현의 사용자 키를 실제 Bearer 인증으로 간주하지 않는다.",
+      "severity": "high"
+    }
+  ],
+  "code_instructions": [
+    {
+      "id": "create-refresh-boundary",
+      "axis": "state_continuity",
+      "issue": "AlertApplicationService.ensureSlotSupported의 선택이 AvailabilityApplicationService를 통해 저장 결과가 없거나 오래된 경우 외부 확인까지 일으키는 경로를 허용한다. 초안의 결정 기록도 신청 생성 중 확인을 일으킬 수 있다고 명시한다.",
+      "suggestion": "신청 생성에서는 이미 저장된 권위 있는 운영 시간대·확인 결과만 읽어 검증하고 외부 확인이나 캐시 갱신은 수행하지 않도록 고친다. 저장된 정보만으로 판단할 수 없는 경우의 처리 규칙이 필요하다면 먼저 계약에 그 경우를 명시한 뒤 구현한다.",
+      "severity": "high",
+      "target": {
+        "pointer": "src/main/java/com/thinking/tennis/app/AlertApplicationService.java#ensureSlotSupported",
+        "action": "tighten",
+        "scope": "code"
+      }
+    },
+    {
+      "id": "raw-bearer-as-authentication",
+      "axis": "failure_faithfulness",
+      "issue": "d_bearer_identity에 따라 TennisAlertApiController.authenticate가 Bearer 접두사 뒤의 비어 있지 않은 문자열 전체를 사용자 식별자로 사용한다. 그러면 형식만 맞는 임의의 문자열도 인증된 사용자로 취급된다.",
+      "suggestion": "토큰 문자열 추출과 인증 검증을 분리하고, 검증된 사용자 주체를 반환하는 주입 가능한 인증 경계를 사용한다. 검증기를 이 범위에서 제공할 수 없다면 현재 동작을 실제 Bearer 인증으로 표현하지 말고, 계약과 구현의 제한을 명시적으로 드러낸다.",
+      "severity": "high",
+      "target": {
+        "pointer": "src/main/java/com/thinking/tennis/api/TennisAlertApiController.java#authenticate",
+        "action": "tighten",
+        "scope": "code"
+      }
+    }
+  ],
+  "contract_proposals": [
+    {
+      "id": "expiry-provenance",
+      "axis": "response_fidelity",
+      "issue": "Alert.expiresAt은 이용 시작 시각보다 이른 예약 마감 시각이 확인되면 그 시각으로 앞당겨져야 하지만, 제공된 CourtAvailabilityPort는 코트·날짜·슬롯과 확인 시각만 제공한다. 초안의 결정 기록에는 더 이른 마감 시각의 출처나 미확인 시 동작이 없다.",
+      "suggestion": "expiresAt을 계산할 수 있는 도메인 데이터의 출처와 미확인 시의 규칙을 계약과 구현에 함께 고정한다. 현재 제공 포트로는 그 정보를 알 수 없다면 startTime만 보장한다고 계약을 완화하거나, 계약이 허용하는 별도 데이터 공급 경계를 명시한다.",
+      "severity": "high",
+      "target": {
+        "pointer": "/components/schemas/Alert/properties/expiresAt/description",
+        "action": "add",
+        "scope": "contract"
+      }
+    },
+    {
+      "id": "expiry-source-clarification",
+      "pointer": "/components/schemas/Alert/properties/expiresAt/description",
+      "finding": "계약은 더 이른 예약 마감 시각이 확인되면 expiresAt을 앞당기라고 하지만 그 시각을 어떤 계약 데이터에서 얻는지, 확인할 수 없을 때 무엇을 반환하는지는 정하지 않는다. 제공된 CourtAvailabilityPort에도 해당 값이 없다.",
+      "proposed_change": "더 이른 예약 마감 시각의 출처와 확인 불가 시의 fallback을 계약에 추가하고, 현재 제공 포트가 그 의미를 공급할 수 있는지 명시한다. 공급할 수 없다면 expiresAt을 이용 시작 시각으로만 보장하도록 문구를 완화한다.",
+      "action": "add",
+      "spec_anchor": "slot_c14121c8",
+      "severity": "high"
+    },
+    {
+      "id": "unopened-date-slot-semantics",
+      "pointer": "/components/schemas/CourtAvailability/properties/slots/description",
+      "finding": "예약처가 날짜를 아직 열지 않은 경우 slots가 빈 배열이라는 의미와, slots에 없는 시간대는 SLOT_NOT_SUPPORTED라는 신청 규칙이 같은 표현을 공유한다. 날짜 미개방과 실제 운영 시간대 부재를 HTTP 계약만으로 구분할 수 없다.",
+      "proposed_change": "날짜 미개방을 나타내는 별도 상태나 필드를 추가하거나, 미개방 상태에서 createAlert가 시간대를 어떻게 검증하고 응답해야 하는지 명시한다. 미개방을 곧바로 SLOT_NOT_SUPPORTED로 해석할 것인지도 고정해야 한다.",
+      "action": "add",
+      "spec_anchor": "slot_ea97add0",
+      "severity": "high"
+    }
+  ],
+  "weak_axes": [],
+  "weak_axis_rationales": {},
+  "priority": [
+    "gate:extract.blind@None",
+    "gate:extract.blind@None",
+    "gate:response.required_weakened@getCourtAvailability:200",
+    "gate:response.required_weakened@getCourtAvailability:200",
+    "gate:response.status_missing@getCourtAvailability:400",
+    "gate:response.status_missing@getCourtAvailability:404",
+    "gate:response.status_missing@getCourtAvailability:500",
+    "gate:response.status_missing@getCourtAvailability:502",
+    "gate:response.status_missing@getCourtAvailability:503",
+    "gate:response.status_missing@getCourtAvailability:504",
+    "gate:response.required_weakened@listAlerts:200",
+    "gate:response.required_weakened@listAlerts:200",
+    "gate:response.required_weakened@listAlerts:200",
+    "gate:response.required_weakened@listAlerts:200",
+    "gate:response.status_missing@listAlerts:400",
+    "gate:response.status_missing@listAlerts:401",
+    "gate:response.status_missing@listAlerts:500",
+    "gate:response.status_missing@listAlerts:503",
+    "gate:response.status_missing@createAlert:201",
+    "gate:response.required_weakened@createAlert:200",
+    "gate:response.required_weakened@createAlert:200",
+    "gate:response.required_weakened@createAlert:200",
+    "gate:response.header_missing@createAlert:200",
+    "gate:response.header_missing@createAlert:200",
+    "gate:response.status_missing@createAlert:400",
+    "gate:response.status_missing@createAlert:401",
+    "gate:response.status_missing@createAlert:409",
+    "gate:response.status_missing@createAlert:422",
+    "gate:response.status_missing@createAlert:500",
+    "gate:response.status_missing@createAlert:503",
+    "gate:response.required_weakened@getAlert:200",
+    "gate:response.required_weakened@getAlert:200",
+    "gate:response.required_weakened@getAlert:200",
+    "gate:response.status_missing@getAlert:400",
+    "gate:response.status_missing@getAlert:401",
+    "gate:response.status_missing@getAlert:404",
+    "gate:response.status_missing@getAlert:500",
+    "gate:response.status_missing@getAlert:503",
+    "gate:response.required_weakened@cancelAlert:200",
+    "gate:response.required_weakened@cancelAlert:200",
+    "gate:response.required_weakened@cancelAlert:200",
+    "gate:response.status_missing@cancelAlert:400",
+    "gate:response.status_missing@cancelAlert:401",
+    "gate:response.status_missing@cancelAlert:404",
+    "gate:response.status_missing@cancelAlert:500",
+    "gate:response.status_missing@cancelAlert:503",
+    "contract:expiry-provenance",
+    "contract:expiry-source-clarification",
+    "contract:unopened-date-slot-semantics",
+    "code:create-refresh-boundary",
+    "code:raw-bearer-as-authentication"
+  ]
+}

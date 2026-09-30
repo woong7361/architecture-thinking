@@ -1,0 +1,748 @@
+{
+  "brief_hash": "b02d8689",
+  "iteration": "001",
+  "rubric_name": "impl:v1",
+  "rubric_scores": {
+    "scores": {
+      "request_tolerance": 1,
+      "response_fidelity": 1,
+      "failure_faithfulness": 1,
+      "state_continuity": 1,
+      "judgement_disclosure": 1
+    },
+    "weights": {
+      "request_tolerance": 0.2,
+      "response_fidelity": 0.25,
+      "failure_faithfulness": 0.2,
+      "state_continuity": 0.2,
+      "judgement_disclosure": 0.15
+    },
+    "weighted_total": 1
+  },
+  "axis_rationales": {
+    "request_tolerance": "열거 11개, 미충족 10개: [slot_50b303be, slot_2da6130c, slot_d605a592, slot_4606301c, slot_bff96712, slot_8ed65ad8, slot_b7eb2903, slot_5b93db46, slot_e12f9326]. 근거: `contract/tennis-alert-api-v1.yaml`에서 기준선의 날짜·상태·UUID·코트·시간대·신청 조건 설명이 삭제되었고, `RequestValidation.date/time/uuid/alertCommand`에는 구현 경로가 있으나 삭제된 기준선 약속은 충족으로 세지 않았다. `Authentication.requireUser`의 Bearer 사용자 식별 경로만 기준선 문구가 유지되어 충족이다.",
+    "response_fidelity": "열거 24개, 미충족 19개: [slot_3a0fe4f8, slot_72175f6e, slot_8663b240, slot_a18b4f05, slot_5c1e3142, slot_98a52931, slot_cec09639, slot_422fec22, slot_c14121c8, slot_dc9ce55b, slot_98b55c8f, slot_a254926b, slot_f3c53a32, slot_64d5d23e, slot_a24cfac0, slot_aff3f79a, slot_41935322, slot_68584be5, slot_ea97add0]. 근거: `contract/tennis-alert-api-v1.yaml`에서 기준선의 응답 의미 설명 대부분이 삭제·축약되었다. 유지된 생성 201 응답(`AlertService.create`), 중복 200 응답(`AlertService.findWatching/create`), 목록(`AlertService.list`), 단건 조회(`AlertService.get`), 해제(`AlertService.cancel`)의 기본 경로는 `AlertController`와 `ApiDtos`에서 확인되어 충족으로 세었다.",
+    "failure_faithfulness": "열거 24개, 미충족 16개: [slot_bca4f922, slot_58100c30, slot_47c11736, slot_ec620f41, slot_b4f4d18f, slot_51e7307c, slot_d90659d2, slot_249bb9ac, slot_8e8d68a1, slot_45cf1c57, slot_398edd99, slot_7f26070b, slot_bf6ebdaa, slot_524bf33a, slot_d5fad6dd, slot_ca2fed02]. 근거: 기준선의 실패 의미와 Problem 필드 설명이 `contract/tennis-alert-api-v1.yaml`에서 삭제·축약되었고, 따라서 `ApiExceptionHandler.problem/map`의 대응 경로가 있어도 삭제된 슬롯은 미충족이다. 유지된 `ValidationFailed`, `Unauthenticated`, `CourtNotSupported`, `AlertNotFound`, `IdempotencyKeyReused`, upstream timeout/unreadable, `InternalError` 응답은 `ApiExceptionHandler`와 `AvailabilityService.get`, `AlertService.create`의 분기에서 확인되어 충족이다. 슬롯 미지원은 `AvailabilityService.cachedSlotSupport`가 캐시가 없을 때 실패를 내지 않아 전체 조건 경로가 없다.",
+    "state_continuity": "열거 11개, 미충족 11개: [slot_218b9620, slot_7afbe3b4, slot_85c85829, slot_a8b0f567, slot_9231bb2f, slot_3b26d64c, slot_061df20e, slot_c733b457, slot_d4a3fef5, slot_3307096b, slot_e2d6a63c]. 근거: `contract/tennis-alert-api-v1.yaml`에서 조회 갱신·멱등 재생·소유자 목록·단건 조회·해제·상태·발송 결과의 기준선 설명이 삭제되었다. 코드상 `AvailabilityService.get`의 캐시와 잠금, `AlertService`의 멱등 저장, `Alert.cancel`은 부분 경로를 제공하지만, 서로 다른 키의 동시 중복 생성은 원자적으로 막지 못하고 멱등 재생은 저장된 동일 `Alert` 객체를 다시 직렬화하며, 만료·NOTIFIED·SENT·FAILED 전이와 발송 시도 기록 경로는 없다.",
+    "judgement_disclosure": "신고 6건, 미신고 2건 이상: 기준선 계약의 설명·예시·x-requirement를 대량 삭제·축약했지만 `CONTRACT_CHANGES_JSON`은 비어 있고, `RequestValidation.uuid`가 계약의 UUID 형식보다 버전·variant를 좁히는 추가 판단을 기록하지 않았다. 신고된 6건은 `AlertService.create`, `Authentication.requireUser`, `ApiExceptionHandler.problem`, `AvailabilityService.get`, `AlertController/AlertService`의 시계 선택을 명시한다. 계약 변경 무기록 때문에 상한을 적용했다."
+  },
+  "slot_classifications": [
+    {
+      "slot_id": "slot_fd7db9b0",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "서비스 범위·시간·호환성에 대한 설명 슬롯이므로 의무 분모에서 제외한다."
+    },
+    {
+      "slot_id": "slot_d29b457f",
+      "classification": "description",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "운영 성능의 범위 제외 설명이므로 의무 분모에서 제외한다."
+    },
+    {
+      "slot_id": "slot_c4167f47",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "태그 레이블 설명이므로 의무 분모에서 제외한다."
+    },
+    {
+      "slot_id": "slot_31d22375",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "태그 레이블 설명이므로 의무 분모에서 제외한다."
+    },
+    {
+      "slot_id": "slot_218b9620",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": false,
+      "note": "기준선의 갱신·동시 대기·stale 재사용 약속이 초안 계약에서 삭제되었다. 관련 코드는 `AvailabilityService.get`에 부분적으로 있으나 슬롯은 미충족이다."
+    },
+    {
+      "slot_id": "slot_e3393514",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "오퍼레이션 요약 레이블이므로 의무 분모에서 제외한다."
+    },
+    {
+      "slot_id": "slot_35fc8639",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "요구사항 출처 표기이므로 의무 분모에서 제외한다."
+    },
+    {
+      "slot_id": "slot_50b303be",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": false,
+      "note": "날짜 입력과 미개방 날짜의 빈 배열 약속이 초안 계약에서 삭제되었다. `AvailabilityController`와 `RequestValidation.date`는 날짜를 받지만 기준선 슬롯은 미충족이다."
+    },
+    {
+      "slot_id": "slot_3a0fe4f8",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": false,
+      "note": "200 응답의 stale 의미가 초안에서 축약되어 삭제되었다. `AvailabilityService.get`은 fresh/stale를 구분하지만 기준선 슬롯은 미충족이다."
+    },
+    {
+      "slot_id": "slot_00a1fd8b",
+      "classification": "description",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "예시 요약 레이블이므로 의무 분모에서 제외한다."
+    },
+    {
+      "slot_id": "slot_258c3e80",
+      "classification": "description",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "예시 요약 레이블이므로 의무 분모에서 제외한다."
+    },
+    {
+      "slot_id": "slot_7afbe3b4",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": false,
+      "note": "신청 멱등성·재생·동시성·조건 중복·재신청 약속이 초안 계약에서 삭제되었다. `AlertService.create`는 일부를 구현하지만 동시 조건 중복과 원본 응답 재생을 보장하지 않는다."
+    },
+    {
+      "slot_id": "slot_39d569b9",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "오퍼레이션 요약 레이블이므로 의무 분모에서 제외한다."
+    },
+    {
+      "slot_id": "slot_3d0d8fad",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "요구사항 출처 표기이므로 의무 분모에서 제외한다."
+    },
+    {
+      "slot_id": "slot_a51918dd",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "`AlertController.createAlert`와 `AlertService.create`가 새 Alert를 저장하고 201을 반환한다."
+    },
+    {
+      "slot_id": "slot_1ab21d09",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "`AlertService.findWatching/create`가 기존 WATCHING 조건을 찾아 200과 기존 Alert를 반환한다."
+    },
+    {
+      "slot_id": "slot_85c85829",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": false,
+      "note": "본인 목록·저장 status 필터·무페이지·무상한 약속이 초안 계약에서 삭제되었다. `AlertService.list`에는 일부 경로가 있으나 만료 상태 전이가 없다."
+    },
+    {
+      "slot_id": "slot_35599387",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "오퍼레이션 요약 레이블이므로 의무 분모에서 제외한다."
+    },
+    {
+      "slot_id": "slot_ace61941",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "요구사항 출처 표기이므로 의무 분모에서 제외한다."
+    },
+    {
+      "slot_id": "slot_2da6130c",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": false,
+      "note": "status 선택 필터의 기준선 설명이 초안 계약에서 삭제되었다. `AlertController.parseStatus`와 `AlertService.list`는 선택 입력 경로를 갖지만 슬롯은 미충족이다."
+    },
+    {
+      "slot_id": "slot_48013b81",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "`AlertController.listAlerts`가 `AlertListDto`로 본인 목록을 반환한다."
+    },
+    {
+      "slot_id": "slot_a8b0f567",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": false,
+      "note": "본인 단건 조회와 남의 신청의 동일 404 약속이 초안 계약에서 삭제되었다. 소유자 확인은 `AlertService.owned`에 있다."
+    },
+    {
+      "slot_id": "slot_5f1cc8c6",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "오퍼레이션 요약 레이블이므로 의무 분모에서 제외한다."
+    },
+    {
+      "slot_id": "slot_06272650",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "요구사항 출처 표기이므로 의무 분모에서 제외한다."
+    },
+    {
+      "slot_id": "slot_f85d06a3",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "`AlertController.getAlert`가 `AlertDto.from`으로 신청 하나를 반환한다."
+    },
+    {
+      "slot_id": "slot_9231bb2f",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": false,
+      "note": "해제 후 비부활·대기 폐기·이미 발송된 알림 보존·반복 호출 불변 약속이 초안 계약에서 삭제되었다. `Alert.cancel`은 일부 상태만 처리한다."
+    },
+    {
+      "slot_id": "slot_97a99280",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "오퍼레이션 요약 레이블이므로 의무 분모에서 제외한다."
+    },
+    {
+      "slot_id": "slot_4ce07730",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "요구사항 출처 표기이므로 의무 분모에서 제외한다."
+    },
+    {
+      "slot_id": "slot_a690cbd9",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "`AlertController.cancelAlert`와 `AlertService.cancel`이 처리 후 Alert 상태를 반환한다."
+    },
+    {
+      "slot_id": "slot_e23500c7",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "`Authentication.requireUser`가 Bearer 토큰을 사용자 키로 사용하고 AlertController의 네 작업에 적용한다."
+    },
+    {
+      "slot_id": "slot_f8384ccf",
+      "classification": "description",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "경로 파라미터의 설명과 검색 범위 설명이므로 의무 분모에서 제외한다."
+    },
+    {
+      "slot_id": "slot_d605a592",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": false,
+      "note": "UUID가 아니면 400이라는 기준선 설명이 초안 계약에서 삭제되었다. `RequestValidation.uuid`에 검증 경로는 있으나 기준선 슬롯은 미충족이다."
+    },
+    {
+      "slot_id": "slot_a24a09dd",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": false,
+      "note": "멱등 키 UUID·24시간 보관·만료 후 신규 처리 약속이 초안 계약에서 삭제되었다. `AlertService`의 보관 맵은 있으나 슬롯은 미충족이다."
+    },
+    {
+      "slot_id": "slot_72175f6e",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "기준선 설명이 유지되었고 `AlertController.location`이 `/v1/alerts/{id}` 위치를 만든다."
+    },
+    {
+      "slot_id": "slot_8663b240",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": false,
+      "note": "재생 응답이 최초 내용 그대로라는 기준선 설명이 초안에서 삭제·축약되었다. `AlertService.create`는 동일 mutable Alert 객체를 재직렬화한다."
+    },
+    {
+      "slot_id": "slot_bca4f922",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": false,
+      "note": "Retry-After 헤더와 본문 값의 동일성 설명이 초안에서 축약되었다. `ApiExceptionHandler.problem`에는 공통 헤더 경로가 있으나 기준선 슬롯은 미충족이다."
+    },
+    {
+      "slot_id": "slot_a18b4f05",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": false,
+      "note": "서버 발급 UUID 의미가 초안 계약에서 삭제되었다. UUID 생성은 `AlertService.create`에 있으나 기준선 슬롯은 미충족이다."
+    },
+    {
+      "slot_id": "slot_5c1e3142",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": false,
+      "note": "사람이 읽는 코트 이름 설명이 초안 계약에서 삭제되었다. 값 전달은 `ApiDtos.AlertDto.from`에 있다."
+    },
+    {
+      "slot_id": "slot_4606301c",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": false,
+      "note": "지원 코트 식별자 의미가 초안 계약에서 삭제되었다. 형식 검증은 `RequestValidation.validateCourtId`에 있으나 기준선 슬롯은 미충족이다."
+    },
+    {
+      "slot_id": "slot_bff96712",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": false,
+      "note": "운영 시간대와 정확히 일치해야 한다는 기준선 설명이 초안 계약에서 삭제되었고, `AlertService.create`는 캐시가 없으면 구조적으로 유효한 슬롯을 수락한다."
+    },
+    {
+      "slot_id": "slot_8ed65ad8",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": false,
+      "note": "지역 기준 시작 시각 설명이 초안 계약에서 삭제되었다. 형식 검증은 `RequestValidation.time`에 있으나 기준선 슬롯은 미충족이다."
+    },
+    {
+      "slot_id": "slot_b7eb2903",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": false,
+      "note": "지역 기준 종료 시각 설명이 초안 계약에서 삭제되었다. 형식 검증은 `RequestValidation.time`에 있으나 기준선 슬롯은 미충족이다."
+    },
+    {
+      "slot_id": "slot_3b26d64c",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": false,
+      "note": "상태 전이와 끝난 신청 비부활 설명이 초안 계약에서 삭제되었고, `Alert`에는 EXPIRED·NOTIFIED 전이 경로가 없다."
+    },
+    {
+      "slot_id": "slot_31472fbc",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "요구사항 출처 표기이므로 의무 분모에서 제외한다."
+    },
+    {
+      "slot_id": "slot_061df20e",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": false,
+      "note": "PENDING·SENT·FAILED의 발송 결과 상태 설명이 초안 계약에서 삭제되었고, `Alert`에는 PENDING 생성 외의 발송 전이 경로가 없다."
+    },
+    {
+      "slot_id": "slot_98a52931",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": false,
+      "note": "외부 실패 이유의 의미가 초안 계약에서 삭제되었다. enum 매핑은 `AvailabilityService.get`에 있으나 기준선 슬롯은 미충족이다."
+    },
+    {
+      "slot_id": "slot_c733b457",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": false,
+      "note": "신청당 한 건의 발송과 대기 취소·null 재설정 약속이 초안 계약에서 삭제되었고, 발송 대기를 만드는 호출 경로가 없다."
+    },
+    {
+      "slot_id": "slot_643810e9",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "요구사항 출처 표기이므로 의무 분모에서 제외한다."
+    },
+    {
+      "slot_id": "slot_d4a3fef5",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": false,
+      "note": "시도 횟수와 최대 4회 의미가 초안 계약에서 삭제되었고, `AlertDelivery` 값을 갱신하는 발송 경로가 없다."
+    },
+    {
+      "slot_id": "slot_3307096b",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": false,
+      "note": "마지막 시도 시각의 상태 유지 설명이 초안 계약에서 삭제되었고, 발송 시도 기록 경로가 없다."
+    },
+    {
+      "slot_id": "slot_e2d6a63c",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": false,
+      "note": "실패 사유와 status 우선 해석 설명이 초안 계약에서 삭제되었고, 실패 결과를 생성하는 경로가 없다."
+    },
+    {
+      "slot_id": "slot_5b93db46",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": false,
+      "note": "코트·날짜·시간대 하나라는 신청 조건 설명이 초안 계약에서 삭제되었다. DTO와 `RequestValidation.alertCommand`는 있으나 기준선 슬롯은 미충족이다."
+    },
+    {
+      "slot_id": "slot_e12f9326",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": false,
+      "note": "지역 기준 이용 날짜 설명이 초안 계약에서 삭제되었다. `RequestValidation.date` 경로는 있으나 기준선 슬롯은 미충족이다."
+    },
+    {
+      "slot_id": "slot_cec09639",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": false,
+      "note": "status와 delivery의 교차 불변식 설명이 초안 계약에서 삭제되었고, NOTIFIED/SENT/FAILED를 만드는 경로가 없다."
+    },
+    {
+      "slot_id": "slot_dbf16bb0",
+      "classification": "description",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "요구사항 출처 표기이므로 의무 분모에서 제외한다."
+    },
+    {
+      "slot_id": "slot_422fec22",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": false,
+      "note": "예약 사이트 링크의 의미가 초안 계약에서 삭제되었다. `AlertDto.from`은 포트의 URL을 전달하지만 기준선 슬롯은 미충족이다."
+    },
+    {
+      "slot_id": "slot_c14121c8",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": false,
+      "note": "만료 시각의 계산·변경·조회 시점 의미가 초안 계약에서 삭제되었다. 시작 시각 계산은 `AlertService.create`에 있으나 기준선 슬롯은 미충족이다."
+    },
+    {
+      "slot_id": "slot_dc9ce55b",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": false,
+      "note": "마지막 성공 확인 시각 의미가 초안 계약에서 삭제되었다. `AvailabilityController`와 `AlertService.recordAvailabilityCheck`에 경로는 있다."
+    },
+    {
+      "slot_id": "slot_98b55c8f",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": false,
+      "note": "3회 확인 간격 지연 의미가 초안 계약에서 삭제되었다. `AlertService.updateDelayFlag`가 60초를 계산하지만 기준선 슬롯은 미충족이다."
+    },
+    {
+      "slot_id": "slot_a254926b",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": false,
+      "note": "발송 대기 또는 취소 시 null 의미가 초안 계약에서 삭제되었고, 발송 대기 생성 경로가 없다."
+    },
+    {
+      "slot_id": "slot_f3c53a32",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": false,
+      "note": "전체 본인 목록과 최신순 의미가 초안 계약에서 삭제되었다. 최신순 정렬은 `AlertService.list`에 있으나 기준선 슬롯은 미충족이다."
+    },
+    {
+      "slot_id": "slot_64d5d23e",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": false,
+      "note": "available의 확인 시점과 stale 해석이 초안 계약에서 삭제되었다. 값 전달은 `ApiDtos.AvailabilitySlotDto.from`에 있다."
+    },
+    {
+      "slot_id": "slot_0a1d9a79",
+      "classification": "description",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "요구사항 출처 표기이므로 의무 분모에서 제외한다."
+    },
+    {
+      "slot_id": "slot_a24cfac0",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": false,
+      "note": "confirmedAt의 외부 성공 시각 의미가 초안 계약에서 삭제되었다. `AvailabilityService.get`은 포트 값을 저장한다."
+    },
+    {
+      "slot_id": "slot_aff3f79a",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": false,
+      "note": "stale가 처리 실패가 아니라 데이터 신선도라는 의미가 초안 계약에서 삭제되었다. stale 분기는 `AvailabilityService.get`에 있다."
+    },
+    {
+      "slot_id": "slot_41935322",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": false,
+      "note": "staleReason의 null/실패 이유 의미가 초안 계약에서 삭제되었다. `CourtAvailabilityDto.from`은 값을 전달한다."
+    },
+    {
+      "slot_id": "slot_68584be5",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": false,
+      "note": "예약 사이트 URL 의미가 초안 계약에서 삭제되었다. `CourtAvailabilityDto.from`은 snapshot URL을 전달한다."
+    },
+    {
+      "slot_id": "slot_ea97add0",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": false,
+      "note": "운영 시간대 전체·미개방 날짜의 빈 배열·신청 지원 시간대 의미가 초안 계약에서 삭제되었다. 슬롯 전달은 `CourtAvailabilityDto.from`에 있다."
+    },
+    {
+      "slot_id": "slot_58100c30",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": false,
+      "note": "ErrorCode별 상황과 재시도 의미가 초안 계약에서 삭제되었다. enum과 `ApiExceptionHandler.map`은 있으나 기준선 슬롯은 미충족이다."
+    },
+    {
+      "slot_id": "slot_47c11736",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": false,
+      "note": "Problem의 RFC 형식·retryable·traceId 조건이 초안 계약에서 삭제되었다. `ApiExceptionHandler.problem`에 공통 생성 경로는 있다."
+    },
+    {
+      "slot_id": "slot_ec620f41",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": false,
+      "note": "type이 실패 문서 주소라는 설명이 초안 계약에서 삭제되었다. `ApiExceptionHandler.problem`이 code 기반 URI를 만든다."
+    },
+    {
+      "slot_id": "slot_b4f4d18f",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": false,
+      "note": "title 의미가 초안 계약에서 삭제되었다. `ApiExceptionHandler.title`에 코드별 값이 있다."
+    },
+    {
+      "slot_id": "slot_51e7307c",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": false,
+      "note": "status가 HTTP 상태와 같다는 설명이 초안 계약에서 삭제되었다. `MappedFailure.status`와 `ProblemDto.status` 경로가 있다."
+    },
+    {
+      "slot_id": "slot_d90659d2",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": false,
+      "note": "detail 의미가 초안 계약에서 삭제되었다. `ApiExceptionHandler.problem`이 예외 메시지를 전달한다."
+    },
+    {
+      "slot_id": "slot_249bb9ac",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": false,
+      "note": "instance 의미가 초안 계약에서 삭제되었다. `request.getRequestURI()` 전달 경로가 있다."
+    },
+    {
+      "slot_id": "slot_8e8d68a1",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": false,
+      "note": "retryable의 재시도 판단 의미가 초안 계약에서 삭제되었다. `ApiExceptionHandler.map`이 코드별 boolean을 정한다."
+    },
+    {
+      "slot_id": "slot_45cf1c57",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": false,
+      "note": "retryAfterSeconds 의미가 초안 계약에서 삭제되었다. `ApiExceptionHandler.problem`이 본문과 헤더를 만든다."
+    },
+    {
+      "slot_id": "slot_398edd99",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": false,
+      "note": "5xx traceId 의미가 초안 계약에서 삭제되었다. `ApiExceptionHandler.problem`이 5xx에 UUID를 생성한다."
+    },
+    {
+      "slot_id": "slot_676164c8",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "기준선 설명이 유지되었고 `ApiExceptionHandler.handleBadRequest`가 VALIDATION_FAILED를 400으로 매핑한다."
+    },
+    {
+      "slot_id": "slot_7f26070b",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": false,
+      "note": "본문 오류와 멱등 키 누락을 함께 ValidationFailed로 처리한다는 기준선 설명이 초안에서 축약되었다. `AlertController`와 `RequestValidation`, `ApiExceptionHandler.handleBadRequest`에 경로가 있다."
+    },
+    {
+      "slot_id": "slot_bdb96ce7",
+      "classification": "description",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "예시 요약 레이블이므로 의무 분모에서 제외한다."
+    },
+    {
+      "slot_id": "slot_f42e07a3",
+      "classification": "description",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "예시 요약 레이블이므로 의무 분모에서 제외한다."
+    },
+    {
+      "slot_id": "slot_97116461",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "기준선 설명이 유지되었고 `Authentication.requireUser`가 UNAUTHENTICATED를 발생시키며 handler가 401로 매핑한다."
+    },
+    {
+      "slot_id": "slot_7ddbf2b4",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "기준선 설명이 유지되었고 `AvailabilityService.get`/`AlertService.create`의 COURT_NOT_SUPPORTED가 경로별 handler 매핑에 닿는다."
+    },
+    {
+      "slot_id": "slot_222a5c7a",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "기준선 설명이 유지되었고 `AlertService.owned`가 소유자 불일치를 ALERT_NOT_FOUND로 통합한다."
+    },
+    {
+      "slot_id": "slot_f6be63a0",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "기준선 설명이 유지되었고 `AlertService.create`가 fingerprint 불일치를 IDEMPOTENCY_KEY_REUSED로 발생시킨다."
+    },
+    {
+      "slot_id": "slot_bf6ebdaa",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": false,
+      "note": "지원하지 않는 본문 조건의 실패 약속이 유지되었지만, 캐시가 없을 때 `AlertService.create`가 SLOT_NOT_SUPPORTED를 내지 않아 전체 조건 경로가 없다."
+    },
+    {
+      "slot_id": "slot_3087879a",
+      "classification": "description",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "예시 요약 레이블이므로 의무 분모에서 제외한다."
+    },
+    {
+      "slot_id": "slot_dfe1b3ec",
+      "classification": "description",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "예시 요약 레이블이므로 의무 분모에서 제외한다."
+    },
+    {
+      "slot_id": "slot_56c997d9",
+      "classification": "description",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "예시 요약 레이블이므로 의무 분모에서 제외한다."
+    },
+    {
+      "slot_id": "slot_36922dfa",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "기준선 설명이 유지되었고 `AvailabilityService.get`의 CheckFailed 매핑과 `ApiExceptionHandler.map`이 502/UPSTREAM_RESPONSE_UNREADABLE에 닿는다."
+    },
+    {
+      "slot_id": "slot_18204232",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "기준선 설명이 유지되었고 `AvailabilityService.get`의 timeout 매핑과 handler가 504/UPSTREAM_TIMEOUT에 닿는다."
+    },
+    {
+      "slot_id": "slot_524bf33a",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": false,
+      "note": "저장소 장애 또는 upstream 무응답을 포함하는 기준선 설명이 초안에서 generic description으로 축약되었고, 실제 STORAGE_TIMEOUT 발생 경로가 없다."
+    },
+    {
+      "slot_id": "slot_ec73b9d6",
+      "classification": "description",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "예시 요약 레이블이므로 의무 분모에서 제외한다."
+    },
+    {
+      "slot_id": "slot_ecc04933",
+      "classification": "description",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "예시 요약 레이블이므로 의무 분모에서 제외한다."
+    },
+    {
+      "slot_id": "slot_d5fad6dd",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": false,
+      "note": "기준선 설명은 유지되었으나 `FailureCode.STORAGE_TIMEOUT`을 발생시키는 저장소 경로가 구현에 없다."
+    },
+    {
+      "slot_id": "slot_ca2fed02",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": false,
+      "note": "저장소 장애 또는 동시 경합 약속 중 저장소 장애 발생 경로가 없고, `CONCURRENT_UPDATE_CONFLICT`는 같은 멱등 키에만 제한적으로 발생한다."
+    },
+    {
+      "slot_id": "slot_5f627ac2",
+      "classification": "description",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "예시 요약 레이블이므로 의무 분모에서 제외한다."
+    },
+    {
+      "slot_id": "slot_4a1ce1a6",
+      "classification": "description",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "예시 요약 레이블이므로 의무 분모에서 제외한다."
+    },
+    {
+      "slot_id": "slot_674794f0",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "기준선 설명이 유지되었고 `ApiExceptionHandler.handleUnexpected`가 INTERNAL_ERROR와 500, retry metadata를 생성한다."
+    }
+  ],
+  "calibration_note": "측정 불가 축 없음. 모든 DRAFT_FILES_JSON 파일이 제공되어 코드와 초안 계약을 읽을 수 있었다. 기준선 prose 슬롯을 분모로 유지했고, 초안 계약에서 삭제·축약된 약속은 구현 코드가 일부 존재해도 미충족으로 세었다.",
+  "unmeasured_axes": [],
+  "evaluated_at": "2026-09-30T06:26:46+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_impl:v1",
+    "source_files": [
+      "b02d8689_input.json",
+      "b02d8689_iter-001_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 80362,
+      "cached_input_tokens": 80256,
+      "output_tokens": 21270,
+      "reasoning_output_tokens": 14040
+    }
+  }
+}

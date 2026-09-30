@@ -1,0 +1,371 @@
+{
+  "brief_hash": "b02d8689",
+  "iteration": "001",
+  "rubric_name": "impl:v1",
+  "rubric_scores": {
+    "scores": {
+      "request_tolerance": 5,
+      "response_fidelity": 4,
+      "failure_faithfulness": 4,
+      "state_continuity": 4,
+      "judgement_disclosure": 4
+    },
+    "weights": {
+      "request_tolerance": 0.2,
+      "response_fidelity": 0.25,
+      "failure_faithfulness": 0.2,
+      "state_continuity": 0.2,
+      "judgement_disclosure": 0.15
+    },
+    "weighted_total": 4.2
+  },
+  "axis_rationales": {
+    "request_tolerance": "열거 8개, 미충족 0개: []. 분모는 slot_50b303be, slot_2da6130c, slot_f8384ccf, slot_d605a592, slot_a24a09dd, slot_5b93db46, slot_e12f9326과 축이 비어 있어 내가 배분한 slot_bff96712다. date는 CourtAvailabilityController.getCourtAvailability의 @RequestParam @DateTimeFormat(ISO.DATE) LocalDate로 계약대로 필수이고, 날짜가 열리지 않은 경우는 GetCourtAvailabilityUseCase.view가 port의 빈 slots를 그대로 통과시켜 성공으로 돌려준다. 유일한 선택 입력인 status는 AlertController.listAlerts의 @RequestParam(required=false) AlertStatus와 AlertStore.findOwnedBy의 `status == null || alert.status() == status`에서 부재 경로를 직접 짚을 수 있다. alertId는 AlertController.getAlert/cancelAlert의 @PathVariable UUID이고 비UUID는 ApiErrorHandler.typeMismatch가 400으로 보낸다. 멱등 키는 @RequestHeader(\"Idempotency-Key\") UUID와 IdempotencyRegistry.RETENTION(24시간)·expired()가 받는다. 손으로 쓴 검사(RequestValidation.requireCourtIdFormat, time)는 api/dto/Patterns.COURT_ID·TIME·COURT_ID_MAX_LENGTH를 스키마 선언과 같은 상수로 공유하므로 계약에 없는 검증을 더한 자리가 없고, CreateAlertUseCase.requireOperatingSlot의 정확 일치는 slot_bff96712가 요구한 것이다.",
+    "response_fidelity": "열거 27개, 미충족 0개: []. stale과 staleReason은 GetCourtAvailabilityUseCase.view의 세 갈래(lastFailure==null이면 false/null, lastSuccess가 있으면 true/이유, 둘 다 없으면 예외)가 slot_aff3f79a·slot_41935322와 같은 뜻이고, confirmedAt·slots·available은 AlertPayloadMapper.toCourtAvailability가 port의 CourtAvailabilityCheck를 옮기기만 한다. lastCheckedAt과 checkDelayed는 AlertViewFactory.of에서 AvailabilityStore.lastConfirmedAt과 CHECK_DELAY_THRESHOLD(20초×3), 확인 기록이 없으면 createdAt 기준으로 계산돼 slot_dc9ce55b·slot_98b55c8f과 같다. items 정렬은 AlertStore.findOwnedBy의 Comparator.comparingLong(Alert::sequence).reversed()로 slot_f3c53a32의 '최근이 앞'을 지킨다. Location은 ApiUris.alertLocation, Idempotency-Replayed는 AlertController.respond가 201·200 두 경로 모두에 언제나 싣는다. expiresAt은 CreateAlertUseCase.startOfSlot이 Asia/Seoul로 이용 시작 시각을 만들며, slot_c14121c8이 말한 앞당김은 포트가 마감 시각을 드러내지 않아 '확인되는' 일이 없어 어긋나지 않는다. 4점에 머무는 것은 산출 경로를 간접으로만 짚는 값이 있기 때문이다. delivery 하위 값(AlertPayloadMapper.toDelivery)은 domain/AlertDelivery를 그대로 옮기지만 그 값을 만드는 쪽이 이 범위에 없고, 타임스탬프를 RFC 3339 UTC로 적는 것(slot_fd7db9b0)은 Instant 선언까지만 확인되고 전역 직렬화 설정은 이 단계가 열 수 없는 파일에 있다.",
+    "failure_faithfulness": "열거 24개, 미충족 0개: []. ApiErrorHandler의 clientError/serverError 두 조립기가 slot_47c11736을 그대로 구현한다. 4xx는 retryable=false에 retryAfterSeconds·traceId·Retry-After가 모두 빠지고, 5xx는 retryable=true에 세 가지가 함께 나가며 respond()가 헤더 값을 본문의 retryAfterSeconds와 같은 정수로 쓴다(slot_bca4f922). Problem.toBody()가 실을 키만 담아 slot_398edd99의 '5xx에만'을 지킨다. type과 title은 api/dto/ErrorCode.problemType()·title()이 코드마다 하나씩 들고 있어 자리마다 갈리지 않는다(slot_ec620f41, slot_b4f4d18f). 상황 매핑은 availabilityUnavailable의 switch가 UPSTREAM_TIMEOUT→504, UPSTREAM_UNAVAILABLE→503, UPSTREAM_RESPONSE_UNREADABLE→502로 갈라 slot_18204232·slot_524bf33a·slot_36922dfa와 같고, 그 자리에 닿는 조건은 GetCourtAvailabilityUseCase.view가 lastSuccess==null일 때뿐이라 '저장된 성공 결과가 없을 때만'이 지켜진다. unsupportedCourt는 Origin.PATH/BODY로 404와 422를 가르고(slot_7ddbf2b4, slot_bf6ebdaa), alertNotFound는 AlertStore.findOwned가 소유자까지 걸러 없는 신청과 남의 신청을 같은 모양으로 낸다(slot_222a5c7a). 5점으로 올리지 않은 것은 조건 둘이 계약의 문장보다 넓거나 닿지 않기 때문이다. unexpected()가 ErrorResponse인 프레임워크 4xx 전부를 400 VALIDATION_FAILED로 옮겨 메서드·Accept 불일치까지 '스키마를 만족하지 않는다'로 말하고, slot_d5fad6dd의 STORAGE_TIMEOUT은 네 오퍼레이션의 503에 선언돼 있으나 AlertStore·AvailabilityStore가 인메모리라 닿는 경로가 없다(brief의 out_of_scope가 저장소 장애 주입을 뺐으므로 미충족으로 세지 않았다).",
+    "state_continuity": "열거 12개, 미충족 0개: []. 멱등 약속(slot_7afbe3b4)은 IdempotencyRegistry가 사용자|오퍼레이션|키로 Entry를 두고 처음 돌려준 status·body·location을 통째로 보관해 재생하므로 '처음 처리한 시점의 내용'이 지켜지고, AlertController.createAlert의 finally가 2xx가 아니면 abandon을 불러 4xx·5xx를 기록하지 않는다. 처리 중 표시(replay==null)는 RequestInProgress→503으로, 지문 불일치는 IdempotencyKeyReused→409로 먼저 갈린다. 같은 조건 재신청은 CreateAlertUseCase가 conditionLock 안에서 findWatchingCondition을 보고 감시 중이면 created=false로 200을, 끝난 신청만 있으면 새로 만들어 slot_7afbe3b4의 마지막 문단과 같다. 확인 간격 묶음(slot_218b9620)은 AvailabilityStore.checkLock의 synchronized와 withinCheckInterval의 재확인, recordFailure가 실패 시도도 lastAttemptAt에 남기는 설계로 기다리던 요청이 같은 결과·같은 실패를 받게 한다. 해제 멱등(slot_9231bb2f)은 domain/Alert.canceled()가 watching이 아니면 this를 돌려주고 dropPendingDelivery()가 PENDING만 버리며 SENT·FAILED를 남기는 것으로 지켜진다. 저장된 status로 거른다는 약속(slot_85c85829)은 읽을 때 옮기지 않고 AlertExpirySweeper가 1초마다 옮기는 구조가 받친다. 4점인 것은 발송 쪽 약속의 유지 경로가 없기 때문이다. slot_3b26d64c의 NOTIFIED 전이와 slot_061df20e·slot_d4a3fef5·slot_3307096b·slot_e2d6a63c의 값은 AlertPayloadMapper.toDelivery와 domain/AlertDelivery의 통과 경로까지만 짚히고 그 값을 요청 사이에 움직이는 자리는 이 범위에 없다.",
+    "judgement_disclosure": "신고 14건, 계약 변경 0건, 내가 찾은 미신고 0건. 먼저 코드에서 계약과 명세가 정하지 않은 값을 정한 자리를 직접 열거했다. BearerUserResolver의 토큰 해석, ApiUris.VERSION_PREFIX를 Location·instance에만 붙이는 것, Problem.toBody()의 키 선택, ApiErrorHandler의 프레임워크 4xx 흡수와 UUID traceId, CreateAlertUseCase의 422 판정 순서와 AvailabilityUndetermined→500, AvailabilityStore가 실패 시도를 간격에 세는 것, Alert.sequence 타이브레이크, AlertExpirySweeper의 1초 주기 — 여덟 자리가 모두 decisions에 같은 파일·같은 질문으로 올라와 있다. 남은 자리로 본 것은 재시도 초(1·5·20)와 problem type 슬러그·title인데 계약의 예시와 '확인 간격을 따른다'는 문장이 값을 정해 주므로 고른 자리가 아니다. 저장소가 인메모리라 STORAGE_TIMEOUT이 닿지 않는 것은 brief의 out_of_scope가 저장소 장애 주입을 뺀 결과여서 미신고로 세지 않았다. 근거가 빈 신고는 없고 rationale이 모두 구체적이다. 다만 basis가 convention인 신고가 셋(d_auth_before_body_validation, d_list_order_tie_break, d_trace_id_format)이라 '모든 신고가 계약이나 명세를 가리킨다'에는 못 미친다."
+  },
+  "slot_classifications": [
+    {
+      "slot_id": "slot_fd7db9b0",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "축이 비어 있어 내가 분류했다. 범위·호환성 문단은 설명이지만 '타임스탬프는 RFC 3339 UTC', 'date는 지역 날짜', '지원 지역은 Asia/Seoul'은 응답 값의 뜻을 정하는 의무다. api/dto의 Instant·LocalDate 선언과 app/AvailabilityPolicy.COURT_ZONE이 그 자리다."
+    },
+    {
+      "slot_id": "slot_d29b457f",
+      "classification": "description",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "축이 비어 있어 내가 분류했다. NFR-2가 이 계약 밖이라는 출처 표시라 요청·응답의 의무가 아니어서 분모에서 뺐다. 표면은 OpenApiConfig.outOfScope()에 있다."
+    },
+    {
+      "slot_id": "slot_c4167f47",
+      "classification": "description",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "축이 비어 있어 내가 분류했다. 태그 설명은 문서 어휘라 분모에서 뺐다. OpenApiConfig.tennisAlertOpenApi()의 alerts 태그."
+    },
+    {
+      "slot_id": "slot_31d22375",
+      "classification": "description",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "축이 비어 있어 내가 분류했다. 태그 설명이라 분모에서 뺐다. OpenApiConfig의 availability 태그."
+    },
+    {
+      "slot_id": "slot_e23500c7",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "축이 비어 있어 내가 분류했다. '토큰이 가리키는 사용자만 자기 신청을 조회·해제한다'는 요청 사이에 걸친 소유 약속이다. BearerUserResolver.requireUser와 AlertStore.findOwned/findOwnedBy의 userId 필터가 그 자리다."
+    },
+    {
+      "slot_id": "slot_a18b4f05",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "축이 비어 있어 내가 분류했다. '서버가 신청을 만들 때 발급한다'는 응답 값의 출처를 정한다. CreateAlertUseCase.create의 UUID.randomUUID()가 그 자리다."
+    },
+    {
+      "slot_id": "slot_4606301c",
+      "classification": "description",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "축이 비어 있어 내가 분류했다. 식별자의 뜻을 적은 한 줄이고 형식은 스키마가 정해 게이트가 본다. 분모에서 뺐다."
+    },
+    {
+      "slot_id": "slot_bff96712",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "축이 비어 있어 내가 분류했다. '코트가 운영하는 시간대와 정확히 일치해야 한다'는 받아들일 입력 범위를 정하므로 요청 쪽이다. CreateAlertUseCase.requireOperatingSlot의 startTime·endTime 동시 비교가 그 자리다."
+    },
+    {
+      "slot_id": "slot_8ed65ad8",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "축이 비어 있어 내가 분류했다. '지역 기준 시작 시각'은 값의 기준 시점을 정한다. domain/TimeSlot이 LocalTime으로 들고 AlertPayloadMapper.format이 HH:mm으로 낸다."
+    },
+    {
+      "slot_id": "slot_b7eb2903",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "축이 비어 있어 내가 분류했다. 종료 시각도 같은 기준이다. AlertPayloadMapper.toTimeSlot/toAvailabilitySlot이 같은 포매터를 쓴다."
+    },
+    {
+      "slot_id": "slot_e3393514",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "오퍼레이션 요약이라 의무가 아니다. 분모에서 뺐다. CourtAvailabilityController의 @Operation summary에 같은 문구가 있다."
+    },
+    {
+      "slot_id": "slot_35fc8639",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "요구사항 출처 표시라 의무가 아니다. 분모에서 뺐다. CourtAvailabilityController의 x-requirement 확장."
+    },
+    {
+      "slot_id": "slot_39d569b9",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "요약이라 분모에서 뺐다. AlertController.createAlert의 @Operation summary."
+    },
+    {
+      "slot_id": "slot_3d0d8fad",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "출처 표시라 분모에서 뺐다. createAlert의 x-requirement 확장."
+    },
+    {
+      "slot_id": "slot_35599387",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "요약이라 분모에서 뺐다. AlertController.listAlerts의 summary."
+    },
+    {
+      "slot_id": "slot_ace61941",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "출처 표시라 분모에서 뺐다. listAlerts의 x-requirement."
+    },
+    {
+      "slot_id": "slot_5f1cc8c6",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "요약이라 분모에서 뺐다. AlertController.getAlert의 summary."
+    },
+    {
+      "slot_id": "slot_06272650",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "출처 표시라 분모에서 뺐다. getAlert의 x-requirement."
+    },
+    {
+      "slot_id": "slot_97a99280",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "요약이라 분모에서 뺐다. AlertController.cancelAlert의 summary."
+    },
+    {
+      "slot_id": "slot_4ce07730",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "출처 표시라 분모에서 뺐다. cancelAlert의 x-requirement."
+    },
+    {
+      "slot_id": "slot_31472fbc",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "출처 표시라 분모에서 뺐다. api/dto/AlertStatus의 x-requirement 확장."
+    },
+    {
+      "slot_id": "slot_643810e9",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "출처 표시라 분모에서 뺐다. api/dto/AlertDelivery의 x-requirement 확장."
+    },
+    {
+      "slot_id": "slot_dbf16bb0",
+      "classification": "description",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "출처 표시라 분모에서 뺐다. api/dto/Alert의 x-requirement 확장."
+    },
+    {
+      "slot_id": "slot_0a1d9a79",
+      "classification": "description",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "출처 표시라 분모에서 뺐다. api/dto/CourtAvailability의 x-requirement 확장."
+    },
+    {
+      "slot_id": "slot_00a1fd8b",
+      "classification": "description",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "예시의 이름표라 의무가 아니다. 그 경우의 값은 slot_3a0fe4f8과 slot_aff3f79a로 이미 센다."
+    },
+    {
+      "slot_id": "slot_258c3e80",
+      "classification": "description",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "예시의 이름표라 분모에서 뺐다. 해당 경로는 GetCourtAvailabilityUseCase.view의 stale 갈래로 센다."
+    },
+    {
+      "slot_id": "slot_bdb96ce7",
+      "classification": "description",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "예시 이름표라 분모에서 뺐다. 조건은 slot_7f26070b로 센다."
+    },
+    {
+      "slot_id": "slot_f42e07a3",
+      "classification": "description",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "예시 이름표라 분모에서 뺐다. 경로는 ApiErrorHandler.missingHeader에 있다."
+    },
+    {
+      "slot_id": "slot_3087879a",
+      "classification": "description",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "예시 이름표라 분모에서 뺐다. 조건은 slot_bf6ebdaa로 센다."
+    },
+    {
+      "slot_id": "slot_dfe1b3ec",
+      "classification": "description",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "예시 이름표라 분모에서 뺐다. 경로는 ApiErrorHandler.unsupportedSlot에 있다."
+    },
+    {
+      "slot_id": "slot_56c997d9",
+      "classification": "description",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "예시 이름표라 분모에서 뺐다. 경로는 ApiErrorHandler.windowClosed에 있다."
+    },
+    {
+      "slot_id": "slot_ec73b9d6",
+      "classification": "description",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "예시 이름표라 분모에서 뺐다. 조건은 slot_524bf33a로 센다."
+    },
+    {
+      "slot_id": "slot_ecc04933",
+      "classification": "description",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "예시 이름표라 분모에서 뺐다. 저장소 쪽은 slot_d5fad6dd에 적었다."
+    },
+    {
+      "slot_id": "slot_5f627ac2",
+      "classification": "description",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "예시 이름표라 분모에서 뺐다."
+    },
+    {
+      "slot_id": "slot_4a1ce1a6",
+      "classification": "description",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "예시 이름표라 분모에서 뺐다. 경로는 ApiErrorHandler.concurrentUpdate와 requestInProgress에 있다."
+    },
+    {
+      "slot_id": "slot_2da6130c",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "계약이 선택으로 둔 유일한 입력이다. AlertController.listAlerts의 required=false와 AlertStore.findOwnedBy의 status==null 분기에서 부재 경로를 짚었다."
+    },
+    {
+      "slot_id": "slot_a24a09dd",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "필수 UUID 헤더와 24시간 보관, 기간 뒤 새 요청 처리가 IdempotencyRegistry.RETENTION과 beginOrReplay의 expired() 분기에 있다."
+    },
+    {
+      "slot_id": "slot_d5fad6dd",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "503 STORAGE_TIMEOUT 쌍은 AlertController의 listAlerts·getAlert 응답 선언에 있으나 AlertStore가 인메모리라 닿는 경로가 없다. brief의 out_of_scope가 저장소 장애 주입을 뺐으므로 미충족으로 세지 않고 축 상한을 4로 두는 근거로만 썼다."
+    },
+    {
+      "slot_id": "slot_47c11736",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "ApiErrorHandler.clientError는 retryable=false에 traceId·retryAfterSeconds를 비우고 serverError는 셋을 함께 싣는다. Problem.toBody()가 널인 키를 아예 빼 4xx에 traceId가 따라 나가지 않는다."
+    },
+    {
+      "slot_id": "slot_58100c30",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "열세 코드 중 열둘의 발생 조건을 ApiErrorHandler의 처리기에서 짚었다. STORAGE_TIMEOUT만 선언에 머무르며 그 사유는 slot_d5fad6dd에 적었다."
+    },
+    {
+      "slot_id": "slot_7afbe3b4",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "재생·미기록·처리 중·조건 중복의 네 약속을 IdempotencyRegistry.beginOrReplay/complete/abandon과 CreateAlertUseCase의 conditionLock 블록에서 각각 짚었다."
+    },
+    {
+      "slot_id": "slot_3b26d64c",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "WATCHING 시작은 CreateAlertUseCase, CANCELED는 Alert.canceled(), EXPIRED는 AlertExpirySweeper.sweep()에 있다. NOTIFIED로 옮기는 자리는 발송 경로가 out_of_scope라 없고, 그래서 상태를 어기는 전이도 없다."
+    },
+    {
+      "slot_id": "slot_061df20e",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "세 값의 뜻은 domain/DeliveryStatus와 api/dto/DeliveryStatus가 같은 이름으로 들고 AlertPayloadMapper.toDelivery가 옮긴다. 값을 움직이는 쪽은 out_of_scope라 통과 경로까지만 확인된다."
+    },
+    {
+      "slot_id": "slot_c733b457",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "PENDING이던 대기가 사라져 delivery가 다시 null이 되는 경로는 domain/Alert.dropPendingDelivery()가 해제·만료 때 실행한다. 최신 확인에 빈자리가 없어 버리는 쪽은 발송 경로라 이 범위에 없다."
+    },
+    {
+      "slot_id": "slot_c14121c8",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "CreateAlertUseCase.startOfSlot이 Asia/Seoul로 이용 시작 시각을 만든다. '더 이른 마감 시각이 확인되면 앞당긴다'는 조건절이고 포트가 마감 시각을 드러내지 않아 확인되는 일이 없으므로 어긋나지 않는다."
+    },
+    {
+      "slot_id": "slot_98b55c8f",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "AlertViewFactory.of가 AvailabilityPolicy.CHECK_DELAY_THRESHOLD(20초×3)를 마지막 성공 확인 시각에, 없으면 createdAt에 더해 판정한다."
+    },
+    {
+      "slot_id": "slot_f3c53a32",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "AlertStore.findOwnedBy의 sequence 역순 정렬이 '최근이 앞'을 만들고 sequence는 api/dto/Alert에 없어 응답에 새지 않는다."
+    }
+  ],
+  "calibration_note": "측정 불가로 신고한 축은 없다. DRAFT_FILES_JSON에 구현 전문이 실려 왔고 omitted가 비어 있어 네 적합성 축과 judgement_disclosure 모두 코드를 읽고 판정했다. 애매해서 낮은 쪽으로 내린 자리는 셋이다. 첫째, 발송 경로가 out_of_scope라 delivery와 NOTIFIED 관련 슬롯은 값을 만드는 쪽이 없는데, 계약을 어기는 값이 나가지는 않으므로 미충족으로 세지 않고 response_fidelity와 state_continuity의 상한을 4로 눌렀다. 둘째, STORAGE_TIMEOUT은 네 오퍼레이션의 503에 선언됐으나 인메모리 저장이라 닿는 경로가 없다. brief가 저장소 장애 주입을 뺐으므로 미충족 대신 failure_faithfulness의 상한을 4로 두는 근거로만 썼고, 여기에 ApiErrorHandler.unexpected가 프레임워크 4xx를 전부 VALIDATION_FAILED로 흡수해 조건이 계약 문장보다 넓게 읽히는 점을 함께 보았다. 셋째, judgement_disclosure는 미신고를 찾지 못해 상한이 5지만 basis가 convention인 신고가 셋이라 '모든 신고가 계약이나 명세를 가리킨다'에 못 미쳐 4로 두었다. request_tolerance만 5를 준 것은 선택 입력이 status 하나뿐이고 그 부재 경로를 AlertStore.findOwnedBy에서 직접 짚었으며, 손으로 쓴 검사가 스키마 선언과 Patterns의 같은 상수를 공유해 계약에 없는 검증이 한 곳도 없기 때문이다.",
+  "unmeasured_axes": [],
+  "evaluated_at": "2026-09-30T16:03:15+09:00",
+  "model": "raw-replay",
+  "metadata": {
+    "prompt_version": "eval_impl:v1",
+    "source_files": [
+      "b02d8689_input.json",
+      "b02d8689_iter-001_draft.json"
+    ]
+  }
+}

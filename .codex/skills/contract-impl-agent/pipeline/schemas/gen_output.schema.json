@@ -1,0 +1,327 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Implementer Direct Output (gen / refine)",
+  "description": "Gen과 Refine이 내는 것. 매니페스트는 색인이고 파일 내용은 iter_00N/files/ 에 있다. basis·spec_anchor는 빈 문자열을 허용한다 — 비어 있는 것은 스키마가 아니라 G1이 change.unjustified로 잡는다.",
+  "type": "object",
+  "required": [
+    "files",
+    "contract_version",
+    "claims",
+    "decisions",
+    "contract_changes"
+  ],
+  "properties": {
+    "files": {
+      "type": "array",
+      "minItems": 1,
+      "description": "이번 iteration에 쓰거나 고친 파일의 색인. 내용은 응답이 아니라 작업 폴더(runs/<run_id>/output/)에 있다. 건드리지 않은 파일은 적지 않아도 작업 폴더에 그대로 남아 이어진다. 예외는 계약 판본이다 — 고치지 않은 iteration에도 적는다. contract_version.path가 판정에 쓰이는 포인터이므로 그것이 색인 밖을 가리키면 어느 파일이 이 초안의 계약인지 말하는 자리가 빈다.",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "role"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "description": "작업 폴더(runs/<run_id>/output/) 기준 상대경로. 절대경로·상위이동(..) 금지. 스켈레톤이 소유한 경로(immutable_paths)를 고치면 REJECT다."
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "code",
+              "contract"
+            ],
+            "description": "code는 구현, contract는 이 iteration의 계약 판본."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "contract_version": {
+      "type": "object",
+      "required": [
+        "path",
+        "from"
+      ],
+      "description": "이번 판본과 복사해 온 판본. 계보의 정본은 이 포인터이므로 판본 대조는 from을 따라간다. 고치지 않았으면 path와 from이 같다.",
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "description": "이 iteration의 계약 판본. files 매니페스트에 같은 경로가 있어야 한다."
+        },
+        "from": {
+          "type": "string",
+          "minLength": 1,
+          "description": "복사해 온 앞 판본의 경로."
+        }
+      },
+      "additionalProperties": false
+    },
+    "claims": {
+      "type": "array",
+      "description": "충족했다고 주장하는 판정 지점. 판정에 쓰지 않는다. runner가 게이트 결과와 대조해 불일치만 원장에 남긴다.",
+      "items": {
+        "type": "object",
+        "required": [
+          "point",
+          "note"
+        ],
+        "properties": {
+          "point": {
+            "type": "string",
+            "minLength": 1,
+            "description": "판정 지점 좌표. operationId:status 또는 operationId:CODE."
+          },
+          "note": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "decisions": {
+      "type": "array",
+      "description": "계약과 명세가 정하지 않은 자리에서 고른 것. 고르는 것은 막지 않고 말없이 고르는 것을 막는다.",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "point",
+          "where",
+          "question",
+          "considered",
+          "chosen",
+          "basis",
+          "rationale",
+          "confidence",
+          "blast_radius",
+          "reversal_cost"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^d_[a-z0-9_]+$"
+          },
+          "point": {
+            "type": "string",
+            "minLength": 1
+          },
+          "where": {
+            "type": "string",
+            "minLength": 1
+          },
+          "question": {
+            "type": "string",
+            "minLength": 1,
+            "description": "계약과 명세가 정하지 않은 것을 한 문장으로."
+          },
+          "considered": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": [
+                "choice",
+                "consequence"
+              ],
+              "properties": {
+                "choice": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "consequence": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "chosen": {
+            "type": "string",
+            "minLength": 1
+          },
+          "basis": {
+            "type": "string",
+            "enum": [
+              "contract_analogy",
+              "spec_implication",
+              "convention",
+              "least_harm"
+            ],
+            "description": "근거의 종류. 자유 문장으로 받으면 run마다 다른 말이 되어 집계가 안 된다. 계약 유추와 명세 함의가 관례보다 세다."
+          },
+          "rationale": {
+            "type": "string",
+            "minLength": 1
+          },
+          "confidence": {
+            "type": "string",
+            "enum": [
+              "high",
+              "medium",
+              "low"
+            ]
+          },
+          "blast_radius": {
+            "type": "array",
+            "minItems": 1,
+            "description": "이 결정이 닿는 판정 지점.",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "reversal_cost": {
+            "type": "string",
+            "minLength": 1,
+            "description": "되돌리려면 무엇을 고쳐야 하나."
+          },
+          "supersedes": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "서 있는 결정을 바꾼 경우 이전 결정 id. 적지 않고 구현이 달라지면 원장이 silent_reversal로 기록한다."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "contract_changes": {
+      "type": "array",
+      "description": "계약 판본을 고친 기록. 고친 것 자체는 위반이 아니고, 기록이 없거나 근거가 빈 것이 위반이다.",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "target",
+          "action",
+          "what",
+          "why",
+          "basis",
+          "spec_anchor",
+          "compatibility",
+          "iteration"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^cc_[a-z0-9_]+$"
+          },
+          "target": {
+            "type": "string",
+            "minLength": 1,
+            "description": "고친 자리의 JSON 포인터."
+          },
+          "action": {
+            "type": "string",
+            "enum": [
+              "remove",
+              "add",
+              "rename",
+              "relax",
+              "tighten"
+            ]
+          },
+          "what": {
+            "type": "string",
+            "minLength": 1
+          },
+          "why": {
+            "type": "string",
+            "minLength": 1
+          },
+          "basis": {
+            "type": "string",
+            "description": "이 변경을 발의한 비평 항목의 id (예: critique:w3). 빈 문자열이면 G1이 change.unjustified로 잡는다."
+          },
+          "spec_anchor": {
+            "type": "string",
+            "description": "명세의 요구사항 id나 계약의 슬롯 (예: requirement:FR-2, slot:#/paths/~1alerts/post/description). 빈 문자열이면 G1이 잡는다."
+          },
+          "compatibility": {
+            "type": "string",
+            "enum": [
+              "compatible",
+              "breaking"
+            ],
+            "description": "모델의 라벨. 판정은 대조기가 직접 하므로 이 값은 대조 결과와의 불일치를 세는 데 쓴다."
+          },
+          "migration": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "이름 변경이면 이행 계획, 아니면 null."
+          },
+          "iteration": {
+            "type": "string",
+            "pattern": "^[0-9]{3}$"
+          },
+          "representation_basis": {
+            "type": "string",
+            "enum": [
+              "interop",
+              "spec_implication",
+              "contract_consistency",
+              ""
+            ],
+            "description": "표현 변경의 근거. 모양을 바꾼 표현 변경에만 요구된다. `interop`은 상호운용을 위해, `spec_implication`은 명세가 함의해서, `contract_consistency`는 계약 안의 다른 자리와 맞추기 위해서다. 도구나 언어의 기본 표현은 근거가 아니므로 그런 값은 없다. 해당하지 않으면 빈 문자열이고, 비어 있는 것은 스키마가 아니라 게이트가 문턱으로 잡는다."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "repairs": {
+      "type": "array",
+      "description": "Refine만 채운다. 판정에 쓰지 않는다 — 고쳤는지는 다음 iteration의 게이트가 정한다.",
+      "items": {
+        "type": "object",
+        "required": [
+          "violation_id",
+          "summary"
+        ],
+        "properties": {
+          "violation_id": {
+            "type": "string",
+            "minLength": 1,
+            "description": "닫은 위반의 id. `refine_request.open_causes[].id`를 그대로 옮긴다. 조립하지 마라 — `<rule>@<where>` 꼴로 짜맞추면 틀린다."
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "ignored_suggestions": {
+      "type": "array",
+      "description": "Refine이 따르지 않은 제안과 그 이유.",
+      "items": {
+        "type": "object",
+        "required": [
+          "suggestion_id",
+          "reason"
+        ],
+        "properties": {
+          "suggestion_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

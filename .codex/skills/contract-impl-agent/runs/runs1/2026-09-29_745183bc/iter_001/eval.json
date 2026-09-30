@@ -1,0 +1,747 @@
+{
+  "brief_hash": "745183bc",
+  "iteration": "001",
+  "rubric_name": "impl:v1",
+  "rubric_scores": {
+    "scores": {
+      "request_tolerance": 5,
+      "response_fidelity": 4,
+      "failure_faithfulness": 4,
+      "state_continuity": 4,
+      "judgement_disclosure": 4
+    },
+    "weights": {
+      "request_tolerance": 0.2,
+      "response_fidelity": 0.25,
+      "failure_faithfulness": 0.2,
+      "state_continuity": 0.2,
+      "judgement_disclosure": 0.15
+    },
+    "weighted_total": 4.2
+  },
+  "axis_rationales": {
+    "request_tolerance": "열거 11개, 미충족 0개: []. `TennisAlertApiController`의 요청 매핑과 인증·UUID·날짜 파싱, `AlertApplicationService.ensureSlotSupported`, `AvailabilityApplicationService`의 날짜 조회 경로에서 필수·선택 입력을 계약 범위대로 처리한다. 선택 status 부재 경로도 `AlertApplicationService.list`에서 확인된다.",
+    "response_fidelity": "열거 24개, 미충족 0개: []. `AvailabilityApplicationService.runCoalescedCheck`가 confirmedAt, slots, stale, staleReason을 만들고, `AlertApplicationService.viewOf`가 alert 필드·정렬·lastCheckedAt·checkDelayed·delivery를 투영한다. `TennisAlertApiController`가 Location과 Idempotency-Replayed를 응답에 반영한다. 일부 값은 availability 캐시에서 alert 응답으로 간접 투영되므로 5점보다 낮게 보았다.",
+    "failure_faithfulness": "열거 24개, 미충족 0개: []. `TennisAlertApiExceptionHandler.build`와 각 예외 매핑 경로가 상태 코드·ErrorCode·retryable·retryAfterSeconds·traceId·instance를 구성하고, `TennisAlertApiController` 및 두 application service의 upstream·validation·ownership·contention 분기가 계약의 실패 상황에 연결된다.",
+    "state_continuity": "열거 12개, 미충족 0개: []. `AlertApplicationService`의 alert 저장소·멱등 기록·처리 중 키 관리·조건 중복 조회·cancel 경로와 `AvailabilityApplicationService`의 코트·날짜 캐시 및 `runCoalescedCheck`가 요청 사이의 재생·중복 억제·상태 조회·해제를 유지한다. alert 응답과 공유 availability 결과의 결합이 한 단계 간접적이어서 5점보다 낮게 보았다.",
+    "judgement_disclosure": "신고된 standing decisions 6건, contract changes 0건, 미신고 판단 0건. Bearer 사용자 키, UTC Clock, coalescing executor, 슬롯 검증, lastCheckedAt 투영, traceId 형식에 각각 선택·근거·영향 범위가 기록되어 있다. 다만 traceId 형식은 계약·명세보다 관례에 기대는 신고라 5점보다 낮게 보았다."
+  },
+  "slot_classifications": [
+    {
+      "slot_id": "slot_fd7db9b0",
+      "classification": "description",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "범위·시간·호환성에 대한 설명 슬롯이며 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_d29b457f",
+      "classification": "description",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "운영 성능 기준의 범위 제외 설명 슬롯이며 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_c4167f47",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "태그 설명 슬롯이며 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_31d22375",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "태그 설명 슬롯이며 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_218b9620",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "`AvailabilityApplicationService.getAvailability`와 `runCoalescedCheck`에서 20초 캐시·동시 확인 병합·stale 재사용 경로를 확인했다."
+    },
+    {
+      "slot_id": "slot_e3393514",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "오퍼레이션 요약 설명 슬롯이며 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_35fc8639",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "요구사항 출처 표기 슬롯이며 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_50b303be",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "`TennisAlertApiController.getCourtAvailability`의 required date 파싱과 미개방 날짜의 빈 slots 경로를 확인했다."
+    },
+    {
+      "slot_id": "slot_3a0fe4f8",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "`AvailabilityApplicationService`의 cached result 응답 경로가 저장된 마지막 결과와 stale 의미를 유지한다."
+    },
+    {
+      "slot_id": "slot_00a1fd8b",
+      "classification": "description",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "정상 응답 예시의 요약 슬롯이며 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_258c3e80",
+      "classification": "description",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "stale 응답 예시의 요약 슬롯이며 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_7afbe3b4",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "`AlertApplicationService.create`의 멱등 기록·동일 조건 재사용·처리 중 contention 경로를 확인했다."
+    },
+    {
+      "slot_id": "slot_39d569b9",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "오퍼레이션 요약 설명 슬롯이며 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_3d0d8fad",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "요구사항 출처 표기 슬롯이며 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_a51918dd",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "`TennisAlertApiController.createAlert`가 신규 생성 결과를 201로 투영한다."
+    },
+    {
+      "slot_id": "slot_1ab21d09",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "`AlertApplicationService.create`의 active 동일 조건 조회와 controller의 200 투영을 확인했다."
+    },
+    {
+      "slot_id": "slot_85c85829",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "`AlertApplicationService.list`가 사용자 키와 저장 status를 기준으로 본인 목록만 반환한다."
+    },
+    {
+      "slot_id": "slot_35599387",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "오퍼레이션 요약 설명 슬롯이며 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_ace61941",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "요구사항 출처 표기 슬롯이며 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_2da6130c",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "`AlertApplicationService.list`에서 null status는 전체 조회로, 지정 status는 저장값 필터로 처리된다."
+    },
+    {
+      "slot_id": "slot_48013b81",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "`TennisAlertApiController.listAlerts`가 본인 신청 목록 응답을 구성한다."
+    },
+    {
+      "slot_id": "slot_a8b0f567",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "`AlertApplicationService.get`의 사용자 소유권 확인과 not-found 동일 처리 경로를 확인했다."
+    },
+    {
+      "slot_id": "slot_5f1cc8c6",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "오퍼레이션 요약 설명 슬롯이며 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_06272650",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "요구사항 출처 표기 슬롯이며 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_f85d06a3",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "`TennisAlertApiController.getAlert`가 단건 alert projection을 반환한다."
+    },
+    {
+      "slot_id": "slot_9231bb2f",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "`AlertApplicationService.cancel`이 WATCHING만 CANCELED로 전이하고 종료 상태는 유지한다."
+    },
+    {
+      "slot_id": "slot_97a99280",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "오퍼레이션 요약 설명 슬롯이며 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_4ce07730",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "요구사항 출처 표기 슬롯이며 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_a690cbd9",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "`TennisAlertApiController.cancelAlert`가 처리 후 상태를 alert 응답으로 반환한다."
+    },
+    {
+      "slot_id": "slot_e23500c7",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "`TennisAlertApiController.authenticate`와 사용자 키 기반 저장·조회 경로가 본인 격리를 유지한다."
+    },
+    {
+      "slot_id": "slot_f8384ccf",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "`TennisAlertApiController`의 courtId path 처리와 `AvailabilityApplicationService`의 지원 코트 검증을 확인했다."
+    },
+    {
+      "slot_id": "slot_d605a592",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "controller의 alertId UUID 변환 및 validation 예외 경로를 확인했다."
+    },
+    {
+      "slot_id": "slot_a24a09dd",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "`TennisAlertApiController.createAlert`가 Idempotency-Key를 필수 UUID 입력으로 받고 24시간 멱등 기록 경로를 사용한다."
+    },
+    {
+      "slot_id": "slot_72175f6e",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "`TennisAlertApiController`가 신규·기존 alert id로 Location을 구성한다."
+    },
+    {
+      "slot_id": "slot_8663b240",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "create 결과의 replay 여부를 controller 응답 헤더로 투영한다."
+    },
+    {
+      "slot_id": "slot_bca4f922",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "`TennisAlertApiExceptionHandler.build`가 retryAfterSeconds와 Retry-After를 같은 값으로 구성한다."
+    },
+    {
+      "slot_id": "slot_a18b4f05",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "`AlertApplicationService`가 생성 시 UUID alertId를 발급하고 controller가 응답에 투영한다."
+    },
+    {
+      "slot_id": "slot_5c1e3142",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "지원 코트 메타데이터의 courtName을 availability·alert projection에 전달한다."
+    },
+    {
+      "slot_id": "slot_4606301c",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "courtId가 지원 코트 조회와 request fingerprint에 사용된다."
+    },
+    {
+      "slot_id": "slot_bff96712",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "`AlertApplicationService.ensureSlotSupported`가 단일 시간대 조건을 입력으로 처리한다."
+    },
+    {
+      "slot_id": "slot_8ed65ad8",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "controller/model 변환과 슬롯 비교 경로가 지역 기준 startTime을 처리한다."
+    },
+    {
+      "slot_id": "slot_b7eb2903",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "controller/model 변환과 슬롯 비교 경로가 지역 기준 endTime을 처리한다."
+    },
+    {
+      "slot_id": "slot_3b26d64c",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "`AlertApplicationService`의 상태 저장·조회·cancel projection이 WATCHING 및 종료 상태를 유지한다."
+    },
+    {
+      "slot_id": "slot_31472fbc",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "요구사항 출처 표기 슬롯이며 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_061df20e",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "`AlertApplicationService.viewOf`가 delivery 상태를 alert 응답에 일관되게 투영한다."
+    },
+    {
+      "slot_id": "slot_98a52931",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "`AvailabilityApplicationService`의 failure reason projection이 계약 enum 의미를 유지한다."
+    },
+    {
+      "slot_id": "slot_c733b457",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "`AlertApplicationService.viewOf`가 발송 결과와 null 상태를 alert lifecycle과 함께 읽도록 구성한다."
+    },
+    {
+      "slot_id": "slot_643810e9",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "요구사항 출처 표기 슬롯이며 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_d4a3fef5",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "`AlertApplicationService.viewOf`가 delivery attemptCount를 저장된 발송 결과에서 투영한다."
+    },
+    {
+      "slot_id": "slot_3307096b",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "`AlertApplicationService.viewOf`가 마지막 시도 시각과 미시도 null 의미를 유지한다."
+    },
+    {
+      "slot_id": "slot_e2d6a63c",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "`AlertApplicationService.viewOf`가 failureReason을 상태와 함께 투영한다."
+    },
+    {
+      "slot_id": "slot_5b93db46",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "create request 변환이 courtId·date·slot 단위 조건을 처리한다."
+    },
+    {
+      "slot_id": "slot_e12f9326",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "create request의 date가 지역 날짜 입력으로 파싱된다."
+    },
+    {
+      "slot_id": "slot_cec09639",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "`AlertApplicationService.viewOf`가 status와 delivery의 결합 의미를 유지한다."
+    },
+    {
+      "slot_id": "slot_dbf16bb0",
+      "classification": "description",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "요구사항 출처 표기 슬롯이며 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_422fec22",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "지원 코트의 reservationUrl을 availability·alert 응답에 전달한다."
+    },
+    {
+      "slot_id": "slot_c14121c8",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "`AlertApplicationService`가 Asia/Seoul startTime 기준 expiresAt을 계산하고 alert 조회마다 투영한다."
+    },
+    {
+      "slot_id": "slot_dc9ce55b",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "`AlertApplicationService.viewOf`가 공유 availability 캐시의 마지막 성공 시각을 lastCheckedAt으로 투영한다."
+    },
+    {
+      "slot_id": "slot_98b55c8f",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "`AlertApplicationService.viewOf`가 마지막 성공 시각 또는 createdAt을 기준으로 checkDelayed를 계산한다."
+    },
+    {
+      "slot_id": "slot_a254926b",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "alert projection에서 발송 대기 이력과 취소된 대기를 delivery null로 반영한다."
+    },
+    {
+      "slot_id": "slot_f3c53a32",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "`AlertApplicationService.list`가 createdAt 내림차순으로 본인 신청 전체를 반환한다."
+    },
+    {
+      "slot_id": "slot_64d5d23e",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "availability slot 값은 성공 확인 결과의 available을 그대로 투영하고 실패는 stale로 분리한다."
+    },
+    {
+      "slot_id": "slot_0a1d9a79",
+      "classification": "description",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "요구사항 출처 표기 슬롯이며 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_a24cfac0",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "`AvailabilityApplicationService`가 외부 성공 결과의 confirmedAt을 저장·반환한다."
+    },
+    {
+      "slot_id": "slot_aff3f79a",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "`AvailabilityApplicationService`가 마지막 성공 결과 재사용 시 stale=true로 응답한다."
+    },
+    {
+      "slot_id": "slot_41935322",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "upstream failure 시 staleReason을 저장된 stale 응답에 투영하고 fresh 응답에서는 null로 둔다."
+    },
+    {
+      "slot_id": "slot_68584be5",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "지원 코트 메타데이터의 reservationUrl을 availability 응답에 투영한다."
+    },
+    {
+      "slot_id": "slot_ea97add0",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "`AvailabilityApplicationService`가 외부 결과의 운영 slots 전체와 미개방 날짜의 빈 배열을 반환한다."
+    },
+    {
+      "slot_id": "slot_58100c30",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "`TennisAlertApiExceptionHandler`와 controller 분기가 계약 ErrorCode별 실패 원인을 사용한다."
+    },
+    {
+      "slot_id": "slot_47c11736",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "exception handler가 RFC 9457 Problem 필드와 retry/trace 조건을 구성한다."
+    },
+    {
+      "slot_id": "slot_ec620f41",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "Problem 생성 경로가 오류 종류별 type URI를 구성한다."
+    },
+    {
+      "slot_id": "slot_b4f4d18f",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "exception mapping이 계약의 사람이 읽는 title을 선택한다."
+    },
+    {
+      "slot_id": "slot_51e7307c",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "각 예외 매핑의 HTTP status와 Problem.status를 함께 구성한다."
+    },
+    {
+      "slot_id": "slot_d90659d2",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "controller·service 예외의 상황별 detail을 Problem에 전달한다."
+    },
+    {
+      "slot_id": "slot_249bb9ac",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "exception handler가 현재 요청 URI를 instance로 구성한다."
+    },
+    {
+      "slot_id": "slot_8e8d68a1",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "validation·ownership 오류와 upstream·contention 오류의 retryable 분기가 계약 의미와 일치한다."
+    },
+    {
+      "slot_id": "slot_45cf1c57",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "재시도 가능한 매핑에서 retryAfterSeconds를 구성한다."
+    },
+    {
+      "slot_id": "slot_398edd99",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "`TennisAlertApiExceptionHandler.build`가 5xx에 traceId를 생성하고 4xx에는 제외한다."
+    },
+    {
+      "slot_id": "slot_676164c8",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "요청 형식 예외가 validation Problem으로 매핑된다."
+    },
+    {
+      "slot_id": "slot_7f26070b",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "본문 형식과 Idempotency-Key 누락의 validation 경로가 제공된다."
+    },
+    {
+      "slot_id": "slot_bdb96ce7",
+      "classification": "description",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "validation 실패 예시 요약 슬롯이며 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_f42e07a3",
+      "classification": "description",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "멱등 키 누락 예시 요약 슬롯이며 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_97116461",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "`TennisAlertApiController.authenticate` 실패가 UNAUTHENTICATED Problem으로 매핑된다."
+    },
+    {
+      "slot_id": "slot_7ddbf2b4",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "availability 경로의 지원하지 않는 코트 예외가 404 COURT_NOT_SUPPORTED로 매핑된다."
+    },
+    {
+      "slot_id": "slot_222a5c7a",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "get·cancel의 소유권 불일치와 미존재가 같은 ALERT_NOT_FOUND 경로로 매핑된다."
+    },
+    {
+      "slot_id": "slot_f6be63a0",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "멱등 fingerprint 불일치가 409 IDEMPOTENCY_KEY_REUSED로 매핑된다."
+    },
+    {
+      "slot_id": "slot_bf6ebdaa",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "create의 본문 조건 불수용이 422 계열 Problem으로 분기된다."
+    },
+    {
+      "slot_id": "slot_3087879a",
+      "classification": "description",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "지원하지 않는 코트 예시 요약 슬롯이며 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_dfe1b3ec",
+      "classification": "description",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "지원하지 않는 시간대 예시 요약 슬롯이며 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_56c997d9",
+      "classification": "description",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "만료 조건 예시 요약 슬롯이며 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_36922dfa",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "availability upstream 판독 실패가 502 UPSTREAM_RESPONSE_UNREADABLE로 매핑된다."
+    },
+    {
+      "slot_id": "slot_18204232",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "availability upstream timeout이 504 UPSTREAM_TIMEOUT으로 매핑된다."
+    },
+    {
+      "slot_id": "slot_524bf33a",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "availability upstream 연결 실패와 저장 결과 부재가 503 경로로 매핑된다."
+    },
+    {
+      "slot_id": "slot_ec73b9d6",
+      "classification": "description",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "upstream unavailable 예시 요약 슬롯이며 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_ecc04933",
+      "classification": "description",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "storage timeout 예시 요약 슬롯이며 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_d5fad6dd",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "list·get·cancel 저장소 실패 매핑이 `TennisAlertApiExceptionHandler`에 연결된다."
+    },
+    {
+      "slot_id": "slot_ca2fed02",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "create·cancel의 storage 및 contention 실패가 503 Problem 매핑으로 연결된다."
+    },
+    {
+      "slot_id": "slot_5f627ac2",
+      "classification": "description",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "storage timeout 예시 요약 슬롯이며 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_4a1ce1a6",
+      "classification": "description",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "동시 수정 경합 예시 요약 슬롯이며 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_674794f0",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "예상하지 못한 예외가 handler의 INTERNAL_ERROR 500 경로로 매핑된다."
+    }
+  ],
+  "calibration_note": "실제 HTTP 표면의 핵심 경로는 직접 확인되지만 alert 응답이 availability 캐시를 통해 투영되는 일부 값과 저장소·발송 상태는 간접 경로로 판단했다. 계약이 명시한 동작과 구현 범위가 겹치는 부분은 충족으로 세되, 그 간접성을 반영해 네 적합성 축의 5점은 보수적으로 주지 않았다.",
+  "evaluated_at": "2026-09-29T22:43:48+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_impl:v1",
+    "source_files": [
+      "745183bc_input.json",
+      "745183bc_iter-001_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 877204,
+      "cached_input_tokens": 788992,
+      "output_tokens": 23994,
+      "reasoning_output_tokens": 16212
+    }
+  }
+}

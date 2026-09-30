@@ -1,0 +1,290 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Implementer Output (model-facing, gen / refine)",
+  "description": "codex --output-schema 전용. 구조화출력은 모든 객체의 required가 properties의 모든 키를 담아야 하므로 선택 필드를 널 허용으로 바꾸고 pattern·길이·개수 제약을 뺀다. 모델이 지킬 형식은 프롬프트가 말하고 판정은 gen_output.schema.json이 한다.",
+  "type": "object",
+  "required": [
+    "files",
+    "contract_version",
+    "claims",
+    "decisions",
+    "contract_changes",
+    "repairs",
+    "ignored_suggestions"
+  ],
+  "properties": {
+    "files": {
+      "type": "array",
+      "description": "이번 iteration에 쓰거나 고친 파일의 색인. 내용은 응답이 아니라 작업 폴더(runs/<run_id>/output/)에 있다. 건드리지 않은 파일은 적지 않아도 작업 폴더에 그대로 남아 이어진다. 예외는 계약 판본이다 — 고치지 않은 iteration에도 적는다. contract_version.path가 판정에 쓰이는 포인터이므로 그것이 색인 밖을 가리키면 어느 파일이 이 초안의 계약인지 말하는 자리가 빈다.",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "role"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "작업 폴더(runs/<run_id>/output/) 기준 상대경로. 절대경로·상위이동(..) 금지. 스켈레톤이 소유한 경로(immutable_paths)를 고치면 REJECT다."
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "code",
+              "contract"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "contract_version": {
+      "type": "object",
+      "required": [
+        "path",
+        "from"
+      ],
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "from": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "point",
+          "note"
+        ],
+        "properties": {
+          "point": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "point",
+          "where",
+          "question",
+          "considered",
+          "chosen",
+          "basis",
+          "rationale",
+          "confidence",
+          "blast_radius",
+          "reversal_cost",
+          "supersedes"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "point": {
+            "type": "string"
+          },
+          "where": {
+            "type": "string"
+          },
+          "question": {
+            "type": "string"
+          },
+          "considered": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "choice",
+                "consequence"
+              ],
+              "properties": {
+                "choice": {
+                  "type": "string"
+                },
+                "consequence": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "chosen": {
+            "type": "string"
+          },
+          "basis": {
+            "type": "string",
+            "enum": [
+              "contract_analogy",
+              "spec_implication",
+              "convention",
+              "least_harm"
+            ]
+          },
+          "rationale": {
+            "type": "string"
+          },
+          "confidence": {
+            "type": "string",
+            "enum": [
+              "high",
+              "medium",
+              "low"
+            ]
+          },
+          "blast_radius": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "reversal_cost": {
+            "type": "string"
+          },
+          "supersedes": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "서 있는 결정을 바꾼 경우 이전 결정 id, 아니면 null."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "contract_changes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "target",
+          "action",
+          "what",
+          "why",
+          "basis",
+          "spec_anchor",
+          "representation_basis",
+          "compatibility",
+          "migration",
+          "iteration"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "target": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string",
+            "enum": [
+              "remove",
+              "add",
+              "rename",
+              "relax",
+              "tighten"
+            ]
+          },
+          "what": {
+            "type": "string"
+          },
+          "why": {
+            "type": "string"
+          },
+          "basis": {
+            "type": "string",
+            "description": "이 변경을 발의한 비평 항목의 id (예: critique:w3). 없으면 빈 문자열."
+          },
+          "spec_anchor": {
+            "type": "string",
+            "description": "명세의 요구사항 id나 계약의 슬롯. 없으면 빈 문자열."
+          },
+          "compatibility": {
+            "type": "string",
+            "enum": [
+              "compatible",
+              "breaking"
+            ]
+          },
+          "migration": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "iteration": {
+            "type": "string"
+          },
+          "representation_basis": {
+            "type": "string",
+            "enum": [
+              "interop",
+              "spec_implication",
+              "contract_consistency",
+              ""
+            ],
+            "description": "표현 변경의 근거. 모양을 바꾼 표현 변경에만 요구된다. `interop`은 상호운용을 위해, `spec_implication`은 명세가 함의해서, `contract_consistency`는 계약 안의 다른 자리와 맞추기 위해서다. 도구나 언어의 기본 표현은 근거가 아니므로 그런 값은 없다. 해당하지 않으면 빈 문자열이고, 비어 있는 것은 스키마가 아니라 게이트가 문턱으로 잡는다."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "repairs": {
+      "type": "array",
+      "description": "Refine만 채운다. Gen은 빈 배열을 낸다.",
+      "items": {
+        "type": "object",
+        "required": [
+          "violation_id",
+          "summary"
+        ],
+        "properties": {
+          "violation_id": {
+            "type": "string",
+            "description": "닫은 위반의 id. `refine_request.open_causes[].id`를 그대로 옮긴다. 조립하지 마라 — `<rule>@<where>` 꼴로 짜맞추면 틀린다."
+          },
+          "summary": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "ignored_suggestions": {
+      "type": "array",
+      "description": "Refine이 따르지 않은 제안과 이유. Gen은 빈 배열을 낸다.",
+      "items": {
+        "type": "object",
+        "required": [
+          "suggestion_id",
+          "reason"
+        ],
+        "properties": {
+          "suggestion_id": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

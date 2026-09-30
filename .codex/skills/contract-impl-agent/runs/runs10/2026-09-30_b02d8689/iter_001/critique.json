@@ -1,0 +1,157 @@
+{
+  "brief_hash": "b02d8689",
+  "iteration": "001",
+  "summary": "초안은 HTTP 표면의 큰 골격, 소유자별 조회 격리, 중복 신청과 멱등 재생의 기본 형태를 갖췄다. 그러나 예약 상태 확인 결과가 감시 중인 신청으로 이어지는 경로가 없어 `lastCheckedAt`, `checkDelayed`, `delivery`, `NOTIFIED` 같은 조회 응답의 의미가 계약과 멀어진다. 또한 날짜와 시각 파싱이 스키마보다 좁고, 스냅샷이 없는 신청을 `SLOT_NOT_SUPPORTED`로 거절하는 선택은 현재 계약 문구만으로는 클라이언트가 예측하기 어렵다. omitted 파일은 없어 제공된 구현 전문 기준으로 검토했다.",
+  "strengths": [
+    "`getCourtAvailability`에서 같은 코트·날짜의 동시 갱신을 `CompletableFuture`로 묶어 외부 조회를 하나로 줄이려는 구조는 slot_218b9620, EF-2, V-4의 방향과 맞다.",
+    "저장된 성공 결과가 있는 외부 확인 실패를 200 stale 응답으로 돌리고, 성공 결과가 없을 때만 5xx로 옮기는 분기는 slot_218b9620과 slot_aff3f79a의 핵심 의미를 보존한다.",
+    "멱등 재생을 위해 응답 당시의 `Alert` 복사본과 최초 200/201 결과를 저장한 점은 slot_7afbe3b4의 '처음 돌려준 응답' 약속을 지키려는 좋은 방향이다.",
+    "조회·단건·해제에서 ownerId를 기준으로 필터링하고 남의 신청을 404로 숨기는 처리는 slot_85c85829와 slot_a8b0f567의 보안 의미를 구현에 반영했다."
+  ],
+  "weaknesses": [
+    {
+      "id": "w_alerts_not_linked_to_checks",
+      "axis": "state_continuity",
+      "issue": "예약 상태 확인 성공이 감시 중인 신청의 상태로 전파되지 않는다. `recordSuccessfulCheck`는 호출되지 않고, 빈 슬롯 발견 시 `delivery`를 `PENDING`으로 만들거나 발송 완료 후 `NOTIFIED`로 이어질 수 있는 상태 경로도 없다.",
+      "why_it_matters": "FR-2는 신청 조회에서 마지막 확인 시각, 확인 지연 여부, 발송 결과를 볼 수 있어야 하고 FR-4는 빈자리를 확인하면 발송 대기에 기록한다고 한다. 현재는 조회가 아무리 성공해도 신청 응답이 계속 `lastCheckedAt: null`, 시간 경과에 따른 `checkDelayed`, `delivery: null`에 머물러 HTTP 응답으로 드러나야 할 서버 작업 결과가 사라진다.",
+      "suggestion": "`getCourtAvailability`의 성공 스냅샷 저장 후 같은 코트·날짜의 WATCHING 신청을 갱신하는 유스케이스 경로를 추가하고, 각 신청의 `lastCheckedAt`을 `confirmedAt`으로 기록하라. 해당 slot이 available이면 계약 범위 안에서 최소 `delivery=PENDING`까지 상태를 남기고, 발송 완료 전환은 AsyncAPI/작업 경계와 맞춰 별도 포트나 내부 메서드로 드러내라.",
+      "severity": "high",
+      "target": {
+        "pointer": "src/main/java/com/thinking/tennis/app/AlertApplicationService.java:getCourtAvailability",
+        "action": "add",
+        "scope": "code"
+      }
+    },
+    {
+      "id": "w_time_parsing_too_permissive_and_too_narrow",
+      "axis": "request_tolerance",
+      "issue": "`parseTime`이 `DateTimeFormatter.ofPattern(\"HH:mm\")`와 `LocalTime.parse`에 의존해 계약의 정규식과 다른 요청 집합을 만든다. 예컨대 계약 패턴은 `6:00`을 거절하고 `06:00`만 받지만, Java 파서 설정에 따라 비정규 입력을 받아들이거나 반대로 스키마상 허용된 값을 파싱 정책 때문에 거절할 수 있다.",
+      "why_it_matters": "계약을 읽은 클라이언트는 slot_bff96712와 TimeSlot 패턴의 정확한 `HH:mm` 표면에 맞춰 요청한다. 구현의 파싱 규칙이 스키마 패턴과 독립적으로 움직이면 게이트가 보기 어려운 요청 수용 범위 차이가 생긴다.",
+      "suggestion": "시각 문자열은 파싱 전에 계약의 `^([01][0-9]|2[0-3]):[0-5][0-9]$` 패턴으로 검증하고, 통과한 값만 `LocalTime`으로 변환하라. 날짜도 같은 원칙으로 OpenAPI `format: date`에 맞는 입력만 받도록 오류 경로를 명확히 하라.",
+      "severity": "medium",
+      "target": {
+        "pointer": "src/main/java/com/thinking/tennis/api/TennisAlertController.java:parseTime",
+        "action": "tighten",
+        "scope": "code"
+      }
+    },
+    {
+      "id": "w_check_delayed_false_for_terminal_alerts",
+      "axis": "response_fidelity",
+      "issue": "`isCheckDelayed`가 모든 상태에 대해 `createdAt` 또는 `lastCheckedAt` 기준 60초 초과를 계산한다. 해제·만료·알림 완료처럼 확인을 멈춘 신청도 시간이 지나면 `checkDelayed=true`가 된다.",
+      "why_it_matters": "slot_98b55c8f의 확인 지연은 감시 경로가 밀리는지를 나타내는 값이고, slot_9231bb2와 slot_3b26d64c는 해제·만료·알림 완료 후 확인을 멈춘다고 설명한다. 끝난 신청에 지연 신호를 켜면 사용자는 이미 멈춘 신청을 장애나 지연 중인 감시로 오해한다.",
+      "suggestion": "`checkDelayed`는 WATCHING 신청에만 계산하고, terminal 상태에서는 false로 응답하라. 이미 끝난 신청에 과거 지연을 보여야 한다는 별도 근거가 있다면 계약에 그 의미를 먼저 발의해야 한다.",
+      "severity": "medium",
+      "target": {
+        "pointer": "src/main/java/com/thinking/tennis/app/AlertApplicationService.java:isCheckDelayed",
+        "action": "tighten",
+        "scope": "code"
+      }
+    },
+    {
+      "id": "w_idempotency_concurrent_failure_after_expired_record",
+      "axis": "failure_faithfulness",
+      "issue": "24시간이 지난 `idempotencyResponses`를 제거한 뒤에도 같은 요청의 `previousFingerprint`가 남아 있으면 즉시 `CONCURRENT_UPDATE_CONFLICT`를 던지는 경로가 있다. 성공 처리 후에는 보통 finally에서 payload가 지워지지만, 두 맵의 수명과 제거가 분리돼 있어 오래된 fingerprint만 남는 상태가 생기면 실제 처리 중이 아닌 요청을 503으로 말한다.",
+      "why_it_matters": "slot_a24a09dd는 보관 기간이 지나면 재생이 아니라 새 요청으로 처리한다고 한다. 처리 중이 아닌 오래된 키를 경합으로 말하면 재시도 가능한 실패로 오인하게 되고, 새 신청을 만들 수 있는 요청을 막는다.",
+      "suggestion": "멱등 키 상태를 단일 레코드로 관리하거나, 만료된 응답을 제거할 때 payload claim도 함께 제거하라. `CONCURRENT_UPDATE_CONFLICT`는 실제 in-flight claim에만 연결되도록 claim 생성 시각을 두고 만료/정리 기준을 명시적으로 적용하라.",
+      "severity": "medium",
+      "target": {
+        "pointer": "src/main/java/com/thinking/tennis/app/AlertApplicationService.java:createAlert",
+        "action": "tighten",
+        "scope": "code"
+      }
+    },
+    {
+      "id": "w_slot_cache_rejection_needs_contract_surface",
+      "axis": "judgement_disclosure",
+      "issue": "신청 생성 시 저장된 availability snapshot이 없으면 `SLOT_NOT_SUPPORTED`로 거절하는 선택은 결정으로 신고됐지만, 계약의 `createAlert` 설명과 `AlertNotAcceptable` 설명에는 '아직 조회하지 않아 운영 시간대를 모른다'는 실패 의미가 드러나지 않는다.",
+      "why_it_matters": "FR-1은 지원하는 코트·시간대이고 만료 전이면 신청을 저장한다고 읽히며, FR-7만 조회가 확인을 일으킨다고 말한다. 클라이언트는 신청 전에 반드시 availability를 조회해야 하는 선행 조건을 계약에서 알 수 없고, 실제로는 지원하는 slot도 스냅샷 부재 때문에 `SLOT_NOT_SUPPORTED`를 받는다.",
+      "suggestion": "구현 선택을 유지하려면 계약에 '신청은 저장된 코트·날짜 운영 시간대 기준으로만 검증하며 저장된 결과가 없으면 먼저 availability 조회가 필요하다'는 문구와 별도 에러 의미를 발의하라. 계약 변경 근거가 받아들여지지 않으면 별도 schedule 소스나 포트를 두어 스냅샷 부재를 지원하지 않는 slot으로 말하지 않게 고쳐라.",
+      "severity": "high",
+      "target": {
+        "pointer": "/paths/~1alerts/post/responses/422",
+        "action": "add",
+        "scope": "contract"
+      }
+    }
+  ],
+  "revision_directions": [
+    "예약 상태 확인, 신청 상태 갱신, 발송 대기 기록 사이의 내부 사건 흐름을 먼저 정리하라. 이 API의 핵심은 단일 응답 모양보다 조회 사이에 상태가 어떻게 이어지는지다.",
+    "시간·UUID·status 같은 값 검증은 OpenAPI 스키마의 수용 범위와 같은 상수/패턴을 기준으로 한곳에 모아라.",
+    "멱등성 저장소는 payload claim, stored response, retention을 별도 맵으로 흩어 놓지 말고 하나의 상태 모델로 다루는 편이 경합과 만료 의미를 설명하기 쉽다."
+  ],
+  "contract_review": [
+    {
+      "id": "cr_authorization_header_surface",
+      "kind": "observation_meaning",
+      "pointer": "/security",
+      "finding": "게이트 관찰의 `parameters.header.Authorization`는 코드가 계약 밖 헤더를 만든 것이 아니라 OpenAPI 전역 security의 bearerAuth가 HTTP Authorization 헤더로 구현된 것이다. 계약 본문도 사용자 식별 수단으로 Bearer 토큰을 쓴다고 설명한다.",
+      "proposed_change": "",
+      "spec_anchor": "slot_fd7db9b0, slot_e23500c7",
+      "severity": "low"
+    },
+    {
+      "id": "cr_create_requires_known_schedule",
+      "kind": "proposal",
+      "pointer": "/paths/~1alerts/post/responses/422",
+      "finding": "현재 계약은 신청 전에 availability 조회를 해야 한다거나 저장된 운영 시간대가 없으면 신청을 거절한다고 말하지 않는다. 하지만 구현은 저장된 snapshot이 없으면 `SLOT_NOT_SUPPORTED`를 반환한다.",
+      "proposed_change": "이 선택을 계약으로 유지하려면 `createAlert` 설명 또는 422 응답에 저장된 코트·날짜 운영 시간대가 아직 없을 때의 처리를 명시하고, `SLOT_NOT_SUPPORTED`와 구분되는 코드가 필요한지 정하라. 지원하는 시간대인지 모르는 상태를 unsupported로 말하지 않도록 별도 코드(예: schedule/availability 확인 필요)를 추가하는 쪽이 의미가 더 정확하다.",
+      "action": "add",
+      "spec_anchor": "FR-1, FR-7, slot_7afbe3b4, slot_ea97add0",
+      "severity": "high"
+    },
+    {
+      "id": "cr_background_expiry_observation",
+      "kind": "observation_meaning",
+      "pointer": "/components/schemas/Alert/properties/expiresAt/description",
+      "finding": "`d_lazy_expiry`와 구현의 request-time expiry는 스케줄러가 없는 인메모리 구현의 선택이다. 계약은 '서버 작업이 하므로 잠시 WATCHING으로 보일 수 있다'고 되어 있어 lazy reconciliation을 완전히 금지하지는 않지만, 실제 서버 작업이 있는 것처럼 읽힌다.",
+      "proposed_change": "",
+      "spec_anchor": "slot_c14121c8, FR-5",
+      "severity": "medium"
+    },
+    {
+      "id": "cr_trace_id_format_observation",
+      "kind": "observation_meaning",
+      "pointer": "/components/schemas/Problem/properties/traceId",
+      "finding": "UUID traceId는 계약이 문자열 이상을 제한하지 않는 빈자리를 채운 구현 선택이다. 클라이언트가 형식으로 분기하지 않아야 하므로 계약에 UUID 형식을 추가할 근거는 없다.",
+      "proposed_change": "",
+      "spec_anchor": "slot_398edd99",
+      "severity": "low"
+    }
+  ],
+  "contested_decisions": [
+    {
+      "decision_id": "d_create_slot_cache",
+      "objection": "결정의 '계약의 availability lookup만 확인을 일으킨다'는 근거는 맞지만, 그로부터 'snapshot이 없으면 SLOT_NOT_SUPPORTED'가 바로 나오지는 않는다. 계약은 운영하지 않는 시간대와 아직 운영 시간대를 모르는 상태를 같은 실패로 말한다고 정하지 않았다.",
+      "alternative": "snapshot 부재를 구현 제약으로 신고하되 계약 변경을 발의하거나, 별도 schedule 소스가 생길 때까지 createAlert가 선행 조회 필요 오류를 명확히 말하게 한다.",
+      "severity": "high"
+    },
+    {
+      "decision_id": "d_lazy_expiry",
+      "objection": "스케줄러 포트가 없다는 이유로 lazy expiry를 택한 것은 이해되지만, 계약은 만료 시각이 지나도 '잠시 WATCHING'일 수 있다고 했지 요청이 들어올 때까지 무기한 전환되지 않아도 된다고 하지는 않았다. 사용자가 오랫동안 조회하지 않은 신청은 서버 작업 없이 계속 WATCHING으로 남는다.",
+      "alternative": "현재 구현에서는 lazy expiry를 유지하되 결정의 범위를 인메모리 HTTP 표면의 보정으로 낮추고, 실제 만료 작업이 없다는 한계를 명시하라. 구현을 보강할 수 있다면 최소한 애플리케이션 내부 scheduler나 만료 포트를 추가한다.",
+      "severity": "medium"
+    }
+  ],
+  "reader_risks": [
+    "`Authorization` 헤더 관찰을 계약 위반으로 오해할 수 있다. OpenAPI security가 실제 HTTP Authorization 표면을 만든다는 점을 함께 읽어야 한다.",
+    "`SLOT_NOT_SUPPORTED`가 실제로 운영하지 않는 시간대뿐 아니라 아직 availability 조회가 없어 모르는 상태까지 포함한다고 오해할 수 있다.",
+    "`checkDelayed=true`를 모든 상태에서 감시 지연으로 해석하면, 이미 취소·만료된 신청까지 장애 상태처럼 보게 된다.",
+    "이 구현만 읽으면 availability 조회가 알림 발송 대기까지 이어진다고 생각하기 쉽지만, 현재 코드에는 그 상태 전파 경로가 없다."
+  ],
+  "critiqued_at": "2026-09-30T13:16:39+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "critique_impl:v1",
+    "source_files": [
+      "b02d8689_input.json",
+      "b02d8689_iter-001_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 62884,
+      "cached_input_tokens": 2432,
+      "output_tokens": 3634,
+      "reasoning_output_tokens": 516
+    }
+  }
+}

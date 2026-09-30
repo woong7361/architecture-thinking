@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Pipeline Critique",
+  "description": "critique_output에 runner가 계보 정보를 붙인 것. 필드 정의는 critique_output.schema.json과 같다.",
+  "type": "object",
+  "required": [
+    "brief_hash",
+    "iteration",
+    "summary",
+    "strengths",
+    "weaknesses",
+    "revision_directions",
+    "contract_review",
+    "contested_decisions",
+    "critiqued_at",
+    "model",
+    "metadata"
+  ],
+  "properties": {
+    "brief_hash": { "type": "string", "pattern": "^[a-f0-9]{8,}$" },
+    "iteration": { "type": "string", "pattern": "^[0-9]{3}$" },
+    "summary": { "type": "string", "minLength": 1 },
+    "strengths": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "weaknesses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "axis", "issue", "why_it_matters", "suggestion", "severity"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "axis": { "type": "string", "minLength": 1 },
+          "issue": { "type": "string", "minLength": 1 },
+          "why_it_matters": { "type": "string", "minLength": 1 },
+          "suggestion": { "type": "string", "minLength": 1 },
+          "severity": { "type": "string", "enum": ["low", "medium", "high"] },
+          "target": {
+            "type": "object",
+            "required": ["pointer", "action", "scope"],
+            "properties": {
+              "pointer": { "type": "string", "minLength": 1 },
+              "action": { "type": "string", "enum": ["remove", "add", "rename", "relax", "tighten"] },
+              "scope": { "type": "string", "enum": ["code", "contract"] }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "revision_directions": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "contract_review": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "kind", "pointer", "finding", "spec_anchor", "severity"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "kind": {
+            "type": "string",
+            "enum": ["proposal", "prior_change_review", "observation_meaning", "harmful_choice"]
+          },
+          "pointer": { "type": "string", "minLength": 1 },
+          "finding": { "type": "string", "minLength": 1 },
+          "proposed_change": { "type": "string" },
+          "action": { "type": "string", "enum": ["remove", "add", "rename", "relax", "tighten"] },
+          "spec_anchor": { "type": "string" },
+          "severity": { "type": "string", "enum": ["low", "medium", "high"] },
+          "unjustified_proposal": {
+            "type": "boolean",
+            "description": "runner가 붙인다. 근거가 빈 발의는 Refine에 넘기지 않고 리포트에만 남긴다."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "contested_decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["decision_id", "objection", "alternative", "severity"],
+        "properties": {
+          "decision_id": { "type": "string", "minLength": 1 },
+          "objection": { "type": "string", "minLength": 1 },
+          "alternative": { "type": "string", "minLength": 1 },
+          "severity": { "type": "string", "enum": ["low", "medium", "high"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "reader_risks": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "critiqued_at": { "type": "string", "format": "date-time" },
+    "model": { "type": "string", "minLength": 1 },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "prompt_version": { "type": "string" },
+        "source_files": { "type": "array", "items": { "type": "string" } },
+        "token_usage": { "type": "object", "additionalProperties": true }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

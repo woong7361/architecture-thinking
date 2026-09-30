@@ -1,0 +1,83 @@
+# 원장 픽스처의 계약 판본. `$ref`로 가리키는 파라미터가 있다. 대조기가 참조를 푸는 자리를 원장이 지나가는지
+# 보기 위한 것이다. 일곱 번째 run에서 이 모양의 계약이 `contract_diff`를 터뜨렸다.
+openapi: 3.1.0
+info:
+  title: 빈자리 알림 API (원장 픽스처)
+  version: 1.0.0
+servers:
+  - url: https://example.test/v1
+paths:
+  /alerts:
+    post:
+      operationId: createAlert
+      summary: 빈자리 알림을 신청한다
+      parameters:
+        - $ref: '#/components/parameters/CourtIdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlertRequest'
+      responses:
+        '201':
+          description: 신청을 받았다
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alert'
+        '422':
+          description: 본문이 계약과 다르다
+          x-error-codes:
+            - INVALID_BODY
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+components:
+  parameters:
+    CourtIdPath:
+      name: courtId
+      in: query
+      required: true
+      schema:
+        type: string
+        maxLength: 16
+  schemas:
+    AlertRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - courtId
+      properties:
+        courtId:
+          type: string
+        note:
+          type: string
+    Alert:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - status
+        - lastCheckedAt
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          enum:
+            - ACTIVE
+            - CANCELLED
+        lastCheckedAt:
+          type:
+            - string
+            - 'null'
+          format: date-time
+    Problem:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string

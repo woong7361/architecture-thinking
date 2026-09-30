@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Pipeline Eval",
+  "description": "축 이름은 루브릭이 정한다. 축 집합이 루브릭과 일치하는지는 validate_eval_contract가 대조한다.",
+  "type": "object",
+  "required": [
+    "brief_hash",
+    "iteration",
+    "rubric_name",
+    "rubric_scores",
+    "axis_rationales",
+    "evaluated_at",
+    "model",
+    "metadata"
+  ],
+  "properties": {
+    "brief_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{8,}$"
+    },
+    "iteration": {
+      "type": "string",
+      "pattern": "^[0-9]{3}$"
+    },
+    "rubric_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rubric_scores": {
+      "type": "object",
+      "required": [
+        "scores",
+        "weights",
+        "weighted_total"
+      ],
+      "properties": {
+        "scores": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 5
+          }
+        },
+        "weights": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        },
+        "weighted_total": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 5
+        }
+      },
+      "additionalProperties": false
+    },
+    "axis_rationales": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "slot_classifications": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "slot_id",
+          "classification",
+          "axis",
+          "met"
+        ],
+        "properties": {
+          "slot_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "classification": {
+            "type": "string",
+            "enum": [
+              "obligation",
+              "description"
+            ]
+          },
+          "axis": {
+            "type": "string",
+            "minLength": 1
+          },
+          "met": {
+            "type": "boolean"
+          },
+          "note": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "evaluated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "model": {
+      "type": "string",
+      "minLength": 1
+    },
+    "calibration_note": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "prompt_version": {
+          "type": "string"
+        },
+        "source_files": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "token_usage": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    },
+    "unmeasured_axes": {
+      "type": "array",
+      "description": "측정하지 못한 축의 이름. 작업 폴더의 코드를 읽지 못해 근거를 대지 못한 축을 여기 적는다. 측정하지 못한 것은 판정이 아니므로 runner가 그 채점을 판정에 쓰지 않는다. 모르는 것을 최저점으로 적지 말고 이 자리에 적어라.",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "additionalProperties": false
+}

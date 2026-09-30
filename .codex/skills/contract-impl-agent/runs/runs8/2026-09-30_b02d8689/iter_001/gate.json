@@ -1,0 +1,736 @@
+{
+  "iteration": "001",
+  "g0": "PASS",
+  "g1": "REJECT",
+  "changes": "PASS",
+  "violations": [
+    {
+      "rule": "extract.blind",
+      "point": null,
+      "where": "x-error-codes",
+      "detail": "계약은 (상태 코드, 에러 코드) 쌍을 선언했는데 추출 스펙에는 그 조항에 대응하는 것이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.type_changed",
+      "point": "getCourtAvailability:200",
+      "where": "CourtAvailability.slots[].startTime",
+      "detail": "계약 ['string'] → 구현 ['object']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.type_changed",
+      "point": "getCourtAvailability:200",
+      "where": "CourtAvailability.slots[].endTime",
+      "detail": "계약 ['string'] → 구현 ['object']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.header_missing",
+      "point": "getCourtAvailability:500",
+      "where": "headers.Retry-After",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.header_missing",
+      "point": "getCourtAvailability:502",
+      "where": "headers.Retry-After",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.header_missing",
+      "point": "getCourtAvailability:503",
+      "where": "headers.Retry-After",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.header_missing",
+      "point": "getCourtAvailability:504",
+      "where": "headers.Retry-After",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.type_changed",
+      "point": "listAlerts:200",
+      "where": "AlertList.items[].slot.startTime",
+      "detail": "계약 ['string'] → 구현 ['object']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.type_changed",
+      "point": "listAlerts:200",
+      "where": "AlertList.items[].slot.endTime",
+      "detail": "계약 ['string'] → 구현 ['object']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.header_missing",
+      "point": "listAlerts:500",
+      "where": "headers.Retry-After",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.header_missing",
+      "point": "listAlerts:503",
+      "where": "headers.Retry-After",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "request.type_narrowed",
+      "point": "createAlert",
+      "where": "AlertRequest.slot.startTime",
+      "detail": "계약 ['string'] → 구현 ['object']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "request.type_narrowed",
+      "point": "createAlert",
+      "where": "AlertRequest.slot.endTime",
+      "detail": "계약 ['string'] → 구현 ['object']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.type_changed",
+      "point": "createAlert:201",
+      "where": "Alert.slot.startTime",
+      "detail": "계약 ['string'] → 구현 ['object']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.type_changed",
+      "point": "createAlert:201",
+      "where": "Alert.slot.endTime",
+      "detail": "계약 ['string'] → 구현 ['object']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.header_missing",
+      "point": "createAlert:201",
+      "where": "headers.Idempotency-Replayed",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.header_missing",
+      "point": "createAlert:201",
+      "where": "headers.Location",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.type_changed",
+      "point": "createAlert:200",
+      "where": "Alert.slot.startTime",
+      "detail": "계약 ['string'] → 구현 ['object']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.type_changed",
+      "point": "createAlert:200",
+      "where": "Alert.slot.endTime",
+      "detail": "계약 ['string'] → 구현 ['object']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.header_missing",
+      "point": "createAlert:200",
+      "where": "headers.Idempotency-Replayed",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.header_missing",
+      "point": "createAlert:200",
+      "where": "headers.Location",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.header_missing",
+      "point": "createAlert:500",
+      "where": "headers.Retry-After",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.header_missing",
+      "point": "createAlert:503",
+      "where": "headers.Retry-After",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.type_changed",
+      "point": "getAlert:200",
+      "where": "Alert.slot.startTime",
+      "detail": "계약 ['string'] → 구현 ['object']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.type_changed",
+      "point": "getAlert:200",
+      "where": "Alert.slot.endTime",
+      "detail": "계약 ['string'] → 구현 ['object']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.header_missing",
+      "point": "getAlert:500",
+      "where": "headers.Retry-After",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.header_missing",
+      "point": "getAlert:503",
+      "where": "headers.Retry-After",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.type_changed",
+      "point": "cancelAlert:200",
+      "where": "Alert.slot.startTime",
+      "detail": "계약 ['string'] → 구현 ['object']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.type_changed",
+      "point": "cancelAlert:200",
+      "where": "Alert.slot.endTime",
+      "detail": "계약 ['string'] → 구현 ['object']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.header_missing",
+      "point": "cancelAlert:500",
+      "where": "headers.Retry-After",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.header_missing",
+      "point": "cancelAlert:503",
+      "where": "headers.Retry-After",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "verdict": "violation"
+    }
+  ],
+  "observations": [
+    {
+      "rule": "response.field_extra",
+      "point": "getCourtAvailability:200",
+      "where": "CourtAvailability.slots[].startTime.hour",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "getCourtAvailability:200",
+      "where": "CourtAvailability.slots[].startTime.minute",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "getCourtAvailability:200",
+      "where": "CourtAvailability.slots[].startTime.second",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "getCourtAvailability:200",
+      "where": "CourtAvailability.slots[].startTime.nano",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "getCourtAvailability:200",
+      "where": "CourtAvailability.slots[].endTime.hour",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "getCourtAvailability:200",
+      "where": "CourtAvailability.slots[].endTime.minute",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "getCourtAvailability:200",
+      "where": "CourtAvailability.slots[].endTime.second",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "getCourtAvailability:200",
+      "where": "CourtAvailability.slots[].endTime.nano",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "request.field_extra",
+      "point": "listAlerts",
+      "where": "parameters.header.Authorization",
+      "detail": "계약에 없는 파라미터다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "listAlerts:200",
+      "where": "AlertList.items[].slot.startTime.hour",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "listAlerts:200",
+      "where": "AlertList.items[].slot.startTime.minute",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "listAlerts:200",
+      "where": "AlertList.items[].slot.startTime.second",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "listAlerts:200",
+      "where": "AlertList.items[].slot.startTime.nano",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "listAlerts:200",
+      "where": "AlertList.items[].slot.endTime.hour",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "listAlerts:200",
+      "where": "AlertList.items[].slot.endTime.minute",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "listAlerts:200",
+      "where": "AlertList.items[].slot.endTime.second",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "listAlerts:200",
+      "where": "AlertList.items[].slot.endTime.nano",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "request.field_extra",
+      "point": "createAlert",
+      "where": "parameters.header.Authorization",
+      "detail": "계약에 없는 파라미터다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "request.field_extra",
+      "point": "createAlert",
+      "where": "AlertRequest.slot.startTime.hour",
+      "detail": "계약에 없는 요청 필드다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "request.field_extra",
+      "point": "createAlert",
+      "where": "AlertRequest.slot.startTime.minute",
+      "detail": "계약에 없는 요청 필드다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "request.field_extra",
+      "point": "createAlert",
+      "where": "AlertRequest.slot.startTime.second",
+      "detail": "계약에 없는 요청 필드다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "request.field_extra",
+      "point": "createAlert",
+      "where": "AlertRequest.slot.startTime.nano",
+      "detail": "계약에 없는 요청 필드다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "request.field_extra",
+      "point": "createAlert",
+      "where": "AlertRequest.slot.endTime.hour",
+      "detail": "계약에 없는 요청 필드다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "request.field_extra",
+      "point": "createAlert",
+      "where": "AlertRequest.slot.endTime.minute",
+      "detail": "계약에 없는 요청 필드다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "request.field_extra",
+      "point": "createAlert",
+      "where": "AlertRequest.slot.endTime.second",
+      "detail": "계약에 없는 요청 필드다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "request.field_extra",
+      "point": "createAlert",
+      "where": "AlertRequest.slot.endTime.nano",
+      "detail": "계약에 없는 요청 필드다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "createAlert:201",
+      "where": "Alert.slot.startTime.hour",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "createAlert:201",
+      "where": "Alert.slot.startTime.minute",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "createAlert:201",
+      "where": "Alert.slot.startTime.second",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "createAlert:201",
+      "where": "Alert.slot.startTime.nano",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "createAlert:201",
+      "where": "Alert.slot.endTime.hour",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "createAlert:201",
+      "where": "Alert.slot.endTime.minute",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "createAlert:201",
+      "where": "Alert.slot.endTime.second",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "createAlert:201",
+      "where": "Alert.slot.endTime.nano",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "createAlert:200",
+      "where": "Alert.slot.startTime.hour",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "createAlert:200",
+      "where": "Alert.slot.startTime.minute",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "createAlert:200",
+      "where": "Alert.slot.startTime.second",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "createAlert:200",
+      "where": "Alert.slot.startTime.nano",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "createAlert:200",
+      "where": "Alert.slot.endTime.hour",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "createAlert:200",
+      "where": "Alert.slot.endTime.minute",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "createAlert:200",
+      "where": "Alert.slot.endTime.second",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "createAlert:200",
+      "where": "Alert.slot.endTime.nano",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "request.field_extra",
+      "point": "getAlert",
+      "where": "parameters.header.Authorization",
+      "detail": "계약에 없는 파라미터다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "getAlert:200",
+      "where": "Alert.slot.startTime.hour",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "getAlert:200",
+      "where": "Alert.slot.startTime.minute",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "getAlert:200",
+      "where": "Alert.slot.startTime.second",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "getAlert:200",
+      "where": "Alert.slot.startTime.nano",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "getAlert:200",
+      "where": "Alert.slot.endTime.hour",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "getAlert:200",
+      "where": "Alert.slot.endTime.minute",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "getAlert:200",
+      "where": "Alert.slot.endTime.second",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "getAlert:200",
+      "where": "Alert.slot.endTime.nano",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "request.field_extra",
+      "point": "cancelAlert",
+      "where": "parameters.header.Authorization",
+      "detail": "계약에 없는 파라미터다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "cancelAlert:200",
+      "where": "Alert.slot.startTime.hour",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "cancelAlert:200",
+      "where": "Alert.slot.startTime.minute",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "cancelAlert:200",
+      "where": "Alert.slot.startTime.second",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "cancelAlert:200",
+      "where": "Alert.slot.startTime.nano",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "cancelAlert:200",
+      "where": "Alert.slot.endTime.hour",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "cancelAlert:200",
+      "where": "Alert.slot.endTime.minute",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "cancelAlert:200",
+      "where": "Alert.slot.endTime.second",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "response.field_extra",
+      "point": "cancelAlert:200",
+      "where": "Alert.slot.endTime.nano",
+      "detail": "계약이 열어 둔 객체다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "decision.unknown_point",
+      "point": "authentication",
+      "where": "src/main/java/com/thinking/tennis/api/ApiMapper.java",
+      "detail": "계약의 판정 지점이 아니다 (결정 d_user_identity)",
+      "verdict": "observation"
+    },
+    {
+      "rule": "decision.unknown_point",
+      "point": "availability-refresh-wait",
+      "where": "src/main/java/com/thinking/tennis/app/AvailabilityApplicationService.java",
+      "detail": "계약의 판정 지점이 아니다 (결정 d_refresh_wait_deadline)",
+      "verdict": "observation"
+    },
+    {
+      "rule": "decision.unknown_point",
+      "point": "5xx-trace-id",
+      "where": "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+      "detail": "계약의 판정 지점이 아니다 (결정 d_trace_id_format)",
+      "verdict": "observation"
+    },
+    {
+      "rule": "decision.unknown_point",
+      "point": "AlertStatus:EXPIRED",
+      "where": "src/main/java/com/thinking/tennis/config/SchedulingConfig.java",
+      "detail": "계약의 판정 지점이 아니다 (결정 d_expiry_scheduler_cadence)",
+      "verdict": "observation"
+    },
+    {
+      "rule": "decision.unknown_point",
+      "point": "Alert.delivery",
+      "where": "src/main/java/com/thinking/tennis/app/AvailabilityApplicationService.java",
+      "detail": "계약의 판정 지점이 아니다 (결정 d_delivery_surface)",
+      "verdict": "observation"
+    }
+  ],
+  "errors": [],
+  "derived_spec": "C:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs8\\2026-09-30_b02d8689\\iter_001\\api-docs.json",
+  "allow_missing_gates": false,
+  "log": [
+    "작업 폴더: C:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs8\\2026-09-30_b02d8689\\output (target/ 재사용 예)\n$ C:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs8\\2026-09-30_b02d8689\\output\\mvnw.cmd -B -q test → 0\n07:48:48.909 [main] INFO com.tngtech.archunit.core.PluginLoader -- Detected Java version 17.0.19\n\n$ dump_api_docs.py → 0\nC:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs8\\2026-09-30_b02d8689\\iter_001\\api-docs.json 에 저장했다. 포트 55883, 최상위 키 ['components', 'info', 'openapi', 'paths', 'servers', 'tags'], paths 3개\n"
+  ],
+  "critique_source": "none:first_iteration",
+  "build_attempts": [
+    {
+      "attempt": 1,
+      "commit": "a32889429ab9cc3786b24914a74d3183aa27a25f",
+      "index_declared": true,
+      "index_errors": [],
+      "failures": [
+        {
+          "rule": "g0.compile_failed",
+          "point": null,
+          "where": "mvnw test",
+          "detail": "컴파일 오류 1건\nsrc/main/java/com/thinking/tennis/api/ApiExceptionHandler.java:59:16 the switch expression does not cover all possible input values",
+          "verdict": "violation"
+        }
+      ]
+    },
+    {
+      "attempt": 2,
+      "commit": "bfd9181b5036daed819ad65304fd8af860134cea",
+      "index_declared": true,
+      "index_errors": [],
+      "failures": [
+        {
+          "rule": "g0.compile_failed",
+          "point": null,
+          "where": "mvnw test",
+          "detail": "컴파일 오류 1건\nsrc/main/java/com/thinking/tennis/api/ApiExceptionHandler.java:141:34 incompatible types: bad type in switch expression\n    org.springframework.http.HttpStatus cannot be converted to org.springframework.http.ResponseEntity<com.thinking.tennis.api.ApiModels.ProblemResponse>",
+          "verdict": "violation"
+        }
+      ]
+    },
+    {
+      "attempt": 3,
+      "commit": "c7d75adaa18c496515417eec722a11552cae2565",
+      "index_declared": true,
+      "index_errors": [],
+      "failures": [
+        {
+          "rule": "g0.compile_failed",
+          "point": null,
+          "where": "mvnw test",
+          "detail": "컴파일 오류 1건\nsrc/main/java/com/thinking/tennis/api/ApiExceptionHandler.java:141:100 cannot find symbol\n    symbol: method reason()\n    location: variable failure of type com.thinking.tennis.app.ApiFailure",
+          "verdict": "violation"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,747 @@
+{
+  "brief_hash": "508c928d",
+  "iteration": "001",
+  "rubric_name": "impl:v1",
+  "rubric_scores": {
+    "scores": {
+      "request_tolerance": 3,
+      "response_fidelity": 3,
+      "failure_faithfulness": 5,
+      "state_continuity": 2,
+      "judgement_disclosure": 3
+    },
+    "weights": {
+      "request_tolerance": 0.2,
+      "response_fidelity": 0.25,
+      "failure_faithfulness": 0.2,
+      "state_continuity": 0.2,
+      "judgement_disclosure": 0.15
+    },
+    "weighted_total": 3.2
+  },
+  "axis_rationales": {
+    "request_tolerance": "열거 8개, 미충족 1개: [slot_a24a09dd]. `src/main/java/com/thinking/tennis/api/RequestParsing.java`의 요청·UUID 파싱과 `AlertController#createAlert` 경로는 날짜, 상태 필터, UUID 경로값, 코트·시간대 요청을 받는다. 그러나 `src/main/java/com/thinking/tennis/app/AlertService.java`의 멱등 스냅샷 보관 경로에서 동일 키의 24시간 보관 후 새 요청으로 처리하는 만료 경로를 확인할 수 없다.",
+    "response_fidelity": "열거 24개, 미충족 1개: [slot_dc9ce55b]. `src/main/java/com/thinking/tennis/api/ApiMapper.java#toAlertResponse`, `AlertController`의 목록·단건·해제 응답, `AvailabilityController`와 `AvailabilityService`의 fresh/stale 매핑은 계약의 필드 의미와 정렬·상태 표현을 대체로 유지한다. 다만 `src/main/java/com/thinking/tennis/app/AlertService.java`의 조회 경로와 `Alert` 저장 상태에는 이후 코트·날짜 확인 성공 시 신청의 `lastCheckedAt`을 갱신해 재생하는 경로가 없어, 신청별 마지막 성공 확인 시각의 의미를 계속 보장하지 못한다.",
+    "failure_faithfulness": "열거 23개, 미충족 0개: []. `src/main/java/com/thinking/tennis/app/FailureCode.java`, `UseCaseException.java`, `src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java`의 상태·코드 매핑과 retryable, retryAfterSeconds, Retry-After, traceId 처리가 선언된 실패 상황에 연결된다. `AvailabilityController`의 외부 실패 분기와 `AlertController`의 검증·인증·멱등성·조건 실패 분기가 계약의 코드와 상태 쌍에 닿는다.",
+    "state_continuity": "열거 12개, 미충족 2개: [slot_7afbe3b4, slot_3b26d64c]. `AvailabilityService`의 코트·날짜 캐시와 동시 확인 억제, `AlertService`의 사용자·조건 중복 처리, `AlertSnapshot` 기반 재생, `Alert`의 해제 상태 보존 경로는 확인된다. 그러나 멱등 재생 기록의 24시간 후 폐기 경로가 없고, `Alert`·`AlertService`에 감시 중 신청을 만료 또는 알림 완료로 자동 전이시키는 지속 실행 경로가 확인되지 않는다.",
+    "judgement_disclosure": "신고된 standing decisions 4건, contract changes 0건, 미신고 판단 1건이다. 인증 토큰 식별, expiresAt 계산, createAlert의 외부 확인 실패 매핑, traceId 생성은 각각 `Authentication.java`, `AlertService.java`, `ApiExceptionHandler.java`와 신고 기록이 대응한다. 반면 `AlertService`의 멱등 기록 수명과 24시간 이후 재사용 정책을 구현 선택으로 정하면서 별도 판단 기록이 없다."
+  },
+  "slot_classifications": [
+    {
+      "slot_id": "slot_fd7db9b0",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "HTTP 계약의 범위와 배경을 설명하는 상위 설명 슬롯이므로 분모에서 제외."
+    },
+    {
+      "slot_id": "slot_d29b457f",
+      "classification": "description",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "운영 성능 기준이 HTTP 값의 의미가 아님을 설명하는 범위 밖 설명 슬롯이므로 분모에서 제외."
+    },
+    {
+      "slot_id": "slot_c4167f47",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "태그의 기능 범위를 표시하는 설명 슬롯이므로 분모에서 제외."
+    },
+    {
+      "slot_id": "slot_31d22375",
+      "classification": "description",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "태그의 기능 범위를 표시하는 설명 슬롯이므로 분모에서 제외."
+    },
+    {
+      "slot_id": "slot_218b9620",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "캐시, 단일 확인, stale 재생, 무인증이라는 요청 간 상태 약속을 담으므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_e3393514",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "오퍼레이션의 요약 명칭이므로 분모에서 제외."
+    },
+    {
+      "slot_id": "slot_35fc8639",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "요구사항 출처 메타데이터이므로 분모에서 제외."
+    },
+    {
+      "slot_id": "slot_50b303be",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "선택한 날짜 입력과 미개방 날짜의 허용 동작을 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_3a0fe4f8",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "200 응답이 마지막 확인 결과를 뜻하는 약속이므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_00a1fd8b",
+      "classification": "description",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "정상 응답 예시의 라벨이므로 분모에서 제외."
+    },
+    {
+      "slot_id": "slot_258c3e80",
+      "classification": "description",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "stale 응답 예시의 라벨이므로 분모에서 제외."
+    },
+    {
+      "slot_id": "slot_7afbe3b4",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": false,
+      "note": "멱등 재생, 동시 처리, 조건 중복, 4xx 미기록, 24시간 보관의 요청 간 약속을 담는 의무 슬롯이다. 24시간 후 키를 새 요청으로 취급하는 경로가 빠졌다."
+    },
+    {
+      "slot_id": "slot_39d569b9",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "오퍼레이션의 요약 명칭이므로 분모에서 제외."
+    },
+    {
+      "slot_id": "slot_3d0d8fad",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "요구사항 출처 메타데이터이므로 분모에서 제외."
+    },
+    {
+      "slot_id": "slot_a51918dd",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "201 응답이 새 신청 생성 결과임을 보장하는 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_1ab21d09",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "기존 감시 신청 재사용 시 200과 기존 표현을 반환하는 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_85c85829",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "사용자별 보관 상태와 상태 필터 기준을 요청 사이에 유지하는 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_35599387",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "오퍼레이션의 요약 명칭이므로 분모에서 제외."
+    },
+    {
+      "slot_id": "slot_ace61941",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "요구사항 출처 메타데이터이므로 분모에서 제외."
+    },
+    {
+      "slot_id": "slot_2da6130c",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "선택 status 입력을 저장된 상태 필터로 받는 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_48013b81",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "목록 응답이 본인 신청 목록이어야 한다는 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_a8b0f567",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "소유권과 비존재 은닉을 단건 조회 간 유지하는 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_5f1cc8c6",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "오퍼레이션의 요약 명칭이므로 분모에서 제외."
+    },
+    {
+      "slot_id": "slot_06272650",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "요구사항 출처 메타데이터이므로 분모에서 제외."
+    },
+    {
+      "slot_id": "slot_f85d06a3",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "단건 신청 표현을 반환하는 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_9231bb2f",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "해제, pending 제거, 종료 상태 보존, 반복 호출 멱등성을 요청 사이에 유지하는 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_97a99280",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "오퍼레이션의 요약 명칭이므로 분모에서 제외."
+    },
+    {
+      "slot_id": "slot_4ce07730",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "요구사항 출처 메타데이터이므로 분모에서 제외."
+    },
+    {
+      "slot_id": "slot_a690cbd9",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "해제 처리 후의 신청 상태를 반환하는 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_e23500c7",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "인증 주체의 신청 소유권을 여러 요청에 걸쳐 유지해야 하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_f8384ccf",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "지원 코트 식별자를 경로 입력으로 받는 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_d605a592",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "UUID 형식의 alertId와 잘못된 입력의 400 처리를 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_a24a09dd",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": false,
+      "note": "UUID 멱등 키와 24시간 보관 후 재사용 의미를 정하는 의무 슬롯이다. 키 만료 후 새 요청으로 처리하는 경로가 확인되지 않는다."
+    },
+    {
+      "slot_id": "slot_72175f6e",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "Location이 생성 또는 기존 신청의 위치를 가리켜야 하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_8663b240",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "재생 여부를 응답 헤더의 boolean 의미로 전달해야 하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_bca4f922",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "Retry-After 헤더와 본문 대기 시간의 의미를 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_a18b4f05",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "서버 발급 신청 식별자의 응답 의미를 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_5c1e3142",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "응답의 사람이 읽는 코트 이름 값을 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_4606301c",
+      "classification": "description",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "코트 식별자의 일반 설명이며 독립적인 동작 약속이 아니므로 분모에서 제외."
+    },
+    {
+      "slot_id": "slot_bff96712",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "시간대가 운영 단위와 정확히 일치해야 한다는 입력 조건을 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_8ed65ad8",
+      "classification": "description",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "시간 표현의 기준을 설명하는 하위 설명 슬롯이므로 분모에서 제외."
+    },
+    {
+      "slot_id": "slot_b7eb2903",
+      "classification": "description",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "시간 표현의 기준을 설명하는 하위 설명 슬롯이므로 분모에서 제외."
+    },
+    {
+      "slot_id": "slot_3b26d64c",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": false,
+      "note": "WATCHING에서 NOTIFIED, CANCELED, EXPIRED로 끝나고 되살아나지 않는 상태 전이를 정하는 의무 슬롯이다. 자동 만료·알림 완료 전이 경로가 확인되지 않는다."
+    },
+    {
+      "slot_id": "slot_31472fbc",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "요구사항 출처 메타데이터이므로 분모에서 제외."
+    },
+    {
+      "slot_id": "slot_061df20e",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "PENDING, SENT, FAILED의 발송 상태 의미를 보존해야 하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_98a52931",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "staleReason과 upstream 실패 코드의 의미를 응답에 보존해야 하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_c733b457",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "알림 한 건, pending 취소, null 재생 조건을 상태로 유지해야 하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_643810e9",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "요구사항 출처 메타데이터이므로 분모에서 제외."
+    },
+    {
+      "slot_id": "slot_d4a3fef5",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "발송 시도 횟수와 최대 재시도 상태를 유지해야 하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_3307096b",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "마지막 발송 시각의 상태 보존을 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_e2d6a63c",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "실패 사유와 status의 관계를 유지해야 하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_5b93db46",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "코트·날짜·시간대 하나로 구성된 신청 입력을 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_e12f9326",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "코트 지역 기준 날짜를 받는 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_cec09639",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "status와 delivery의 조합 의미를 응답에 유지해야 하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_dbf16bb0",
+      "classification": "description",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "요구사항 출처 메타데이터이므로 분모에서 제외."
+    },
+    {
+      "slot_id": "slot_422fec22",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "Alert 응답의 reservationUrl 의미를 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_c14121c8",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "이용 시작 시각과 조기 마감 시각을 반영하는 expiresAt 의미를 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_dc9ce55b",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": false,
+      "note": "신청 코트·날짜의 마지막 성공 확인 시각을 응답해야 하는 의무 슬롯이다. 이후 availability 성공 확인을 신청 상태에 반영하는 경로가 빠졌다."
+    },
+    {
+      "slot_id": "slot_98b55c8f",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "확인 간격 세 배 기준의 checkDelayed 의미를 응답에 반영해야 하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_a254926b",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "발송 대기 또는 취소 상태에 따른 delivery null 의미를 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_f3c53a32",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "목록 항목 전체와 최근 생성 순서를 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_64d5d23e",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "available이 확인 시점의 사실이고 실패를 뜻하지 않는다는 응답 의미를 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_0a1d9a79",
+      "classification": "description",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "요구사항 출처 메타데이터이므로 분모에서 제외."
+    },
+    {
+      "slot_id": "slot_a24cfac0",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "confirmedAt이 외부 예약처에서 성공한 시각이어야 하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_aff3f79a",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "stale이 최신 확인 실패로 이전 결과를 반환했음을 뜻해야 하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_41935322",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "staleReason의 실패 원인과 fresh 시 null 의미를 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_68584be5",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "CourtAvailability의 reservationUrl 의미를 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_ea97add0",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "운영 시간대 전부와 미개방 날짜의 빈 배열 의미를 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_58100c30",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "실패 상황별 ErrorCode 매핑을 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_47c11736",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "Problem 응답의 retryable, Retry-After, traceId 조건을 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_ec620f41",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "실패 종류를 가리키는 type 의미를 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_b4f4d18f",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "사람이 읽는 실패 title 의미를 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_51e7307c",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "Problem status와 HTTP 상태의 일치 의미를 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_d90659d2",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "실패별 detail 의미를 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_249bb9ac",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "실패 요청 경로를 instance에 담는 의미를 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_8e8d68a1",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "동일 요청 재시도 가능성에 따른 retryable 의미를 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_45cf1c57",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "재시도 대기 초를 담는 retryAfterSeconds 의미를 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_398edd99",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "5xx에만 traceId를 담고 로그 추적에 쓰는 의미를 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_676164c8",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "스키마 위반 요청을 처리하지 않는 실패 상황을 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_7f26070b",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "본문·멱등 키 형식 위반을 AlertRequestInvalid로 표현하는 의미를 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_bdb96ce7",
+      "classification": "description",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "실패 예시의 라벨이므로 분모에서 제외."
+    },
+    {
+      "slot_id": "slot_f42e07a3",
+      "classification": "description",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "실패 예시의 라벨이므로 분모에서 제외."
+    },
+    {
+      "slot_id": "slot_97116461",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "사용자 식별 실패 상황을 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_7ddbf2b4",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "경로의 지원하지 않는 코트 실패 상황을 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_222a5c7a",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "없는 신청과 남의 신청을 동일하게 숨기는 실패 의미를 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_f6be63a0",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "다른 요청에 재사용된 멱등 키의 실패 상황을 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_bf6ebdaa",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "형식은 맞지만 감시할 수 없는 조건의 실패 상황을 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_3087879a",
+      "classification": "description",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "실패 예시의 라벨이므로 분모에서 제외."
+    },
+    {
+      "slot_id": "slot_dfe1b3ec",
+      "classification": "description",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "실패 예시의 라벨이므로 분모에서 제외."
+    },
+    {
+      "slot_id": "slot_56c997d9",
+      "classification": "description",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "실패 예시의 라벨이므로 분모에서 제외."
+    },
+    {
+      "slot_id": "slot_36922dfa",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "저장된 성공 결과가 없는 응답 판독 실패의 실패 상황을 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_18204232",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "저장된 성공 결과가 없는 upstream timeout의 실패 상황을 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_524bf33a",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "upstream 불가 또는 저장소 timeout의 공통 실패 의미를 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_ec73b9d6",
+      "classification": "description",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "실패 예시의 라벨이므로 분모에서 제외."
+    },
+    {
+      "slot_id": "slot_ecc04933",
+      "classification": "description",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "실패 예시의 라벨이므로 분모에서 제외."
+    },
+    {
+      "slot_id": "slot_d5fad6dd",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "저장소 timeout 실패 상황을 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_ca2fed02",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "저장소 timeout과 동시 수정 경합의 실패 상황을 정하므로 의무 슬롯."
+    },
+    {
+      "slot_id": "slot_5f627ac2",
+      "classification": "description",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "실패 예시의 라벨이므로 분모에서 제외."
+    },
+    {
+      "slot_id": "slot_4a1ce1a6",
+      "classification": "description",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "실패 예시의 라벨이므로 분모에서 제외."
+    },
+    {
+      "slot_id": "slot_674794f0",
+      "classification": "obligation",
+      "axis": "failure_faithfulness",
+      "met": true,
+      "note": "선언되지 않은 내부 서버 실패의 의미를 정하므로 의무 슬롯."
+    }
+  ],
+  "calibration_note": "가장 애매한 지점은 비동기 알림·만료가 HTTP 표면 과제의 범위에 걸쳐 있다는 점이다. 그러나 기준선 계약은 WATCHING에서 NOTIFIED·EXPIRED로의 서버 상태 전이를 명시하고 구현 디렉터리에서 이를 지속시키는 경로가 확인되지 않아 낮은 쪽으로 반영했다. 멱등 키 보관 기간도 예시가 아니라 명시된 요청 간 약속으로 보아 미충족으로 셌다.",
+  "evaluated_at": "2026-09-29T18:56:04+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_impl:v1",
+    "source_files": [
+      "508c928d_input.json",
+      "508c928d_iter-001_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 629865,
+      "cached_input_tokens": 555392,
+      "output_tokens": 21687,
+      "reasoning_output_tokens": 12783
+    }
+  }
+}

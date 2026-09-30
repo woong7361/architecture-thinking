@@ -1,0 +1,187 @@
+{
+  "brief_hash": "b02d8689",
+  "iteration": "002",
+  "stage": "refine",
+  "files": [
+    {
+      "path": "contract/tennis-alert-api.yaml-v1.yaml",
+      "role": "contract"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/ApplicationException.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+      "role": "code"
+    }
+  ],
+  "contract_version": {
+    "path": "contract/tennis-alert-api.yaml-v1.yaml",
+    "from": "contract/tennis-alert-api.yaml-v1.yaml"
+  },
+  "claims": [],
+  "decisions": [
+    {
+      "id": "d_bearer_subject",
+      "point": "createAlert:UNAUTHENTICATED",
+      "where": "AlertController.authenticate",
+      "question": "계약이 Bearer 토큰의 검증 체계와 사용자 식별자 형식을 정하지 않은 상황에서 토큰을 어떻게 사용자로 연결할 것인가?",
+      "considered": [
+        {
+          "choice": "토큰 문자열 자체를 사용자 식별자로 사용",
+          "consequence": "외부 인증 저장소 없이 사용자별 격리를 구현할 수 있다."
+        },
+        {
+          "choice": "토큰을 별도 사용자 조회 포트로 검증",
+          "consequence": "계약과 provided_api에 없는 포트와 외부 의존성이 필요하다."
+        }
+      ],
+      "chosen": "비어 있지 않은 Bearer 토큰의 값 자체를 사용자 식별자로 사용한다.",
+      "basis": "least_harm",
+      "rationale": "계약은 Bearer 토큰을 사용한다고만 정하고 사용자 검증 포트를 제공하지 않았으므로, 범위를 넓히지 않고 본인별 격리만 보장한다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:401",
+        "listAlerts:401",
+        "getAlert:401",
+        "cancelAlert:401"
+      ],
+      "reversal_cost": "인증 어댑터와 사용자 식별 매핑을 별도 포트로 추출하고 네 오퍼레이션의 호출부를 교체해야 한다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_alert_slot_upstream_failure",
+      "point": "createAlert:500",
+      "where": "AlertService.ensureSlotSupported",
+      "question": "신청 생성 중 시간대 검증을 위한 외부 확인이 실패했지만 createAlert 응답에 upstream 전용 상태와 코드가 선언되지 않은 경우 무엇을 반환할 것인가?",
+      "considered": [
+        {
+          "choice": "계약에 없는 upstream 상태나 코드를 추가",
+          "consequence": "createAlert 계약 표면을 넓히고 선언되지 않은 오류를 만든다."
+        },
+        {
+          "choice": "선언된 500 INTERNAL_ERROR로 반환",
+          "consequence": "클라이언트는 재시도 가능한 서버 오류로 처리하고 계약 밖 코드를 받지 않는다."
+        }
+      ],
+      "chosen": "500 INTERNAL_ERROR와 retryAfterSeconds=5를 반환한다.",
+      "basis": "least_harm",
+      "rationale": "createAlert가 선언한 실패 좌표 안에서 외부 확인 실패를 표현하면서 새 상태나 오류 코드를 발명하지 않는다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:500",
+        "createAlert:INTERNAL_ERROR"
+      ],
+      "reversal_cost": "신청 생성의 검증 결과 타입과 컨트롤러 오류 매핑을 변경하고 계약에 선언된 오류 좌표와 다시 대조해야 한다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_lazy_expiry_evaluation",
+      "point": "getAlert:200",
+      "where": "AlertService.expireDueAlerts",
+      "question": "인메모리 구현에서 서버 작업으로 선언된 만료 전이를 어떤 실행 지점에서 보장할 것인가?",
+      "considered": [
+        {
+          "choice": "별도 스케줄러를 추가",
+          "consequence": "계약 범위 밖의 백그라운드 실행기와 시간 기반 테스트 인프라가 필요하다."
+        },
+        {
+          "choice": "신청을 읽거나 변경하는 시점에 만료 시각을 평가",
+          "consequence": "외부 엔드포인트 없이 조회 결과와 이후 작업에서 만료 상태를 일관되게 반영한다."
+        }
+      ],
+      "chosen": "목록·단건 조회·해제·예약 상태 확인 시점에 지연 평가한다.",
+      "basis": "least_harm",
+      "rationale": "저장소와 메시지 발송 경로가 범위 밖이고 구현은 인메모리이므로, 노출되는 상태와 확인·발송 중단을 요청 경계에서 보장한다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "listAlerts:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "reversal_cost": "만료 작업자와 저장소 상태 전이 코드를 추가하고 lazy transition 로직을 제거해야 한다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_delivery_pending_state",
+      "point": "getAlert:200",
+      "where": "AlertService.onAvailabilityChecked",
+      "question": "알림 발송 경로가 out_of_scope인 상태에서 빈자리 발견을 신청 조회에 어떻게 표현할 것인가?",
+      "considered": [
+        {
+          "choice": "발송 경로를 구현해 즉시 SENT 또는 NOTIFIED로 전이",
+          "consequence": "범위 밖 AsyncAPI와 발송 수단을 임의로 구현하게 된다."
+        },
+        {
+          "choice": "빈자리 발견 시 PENDING만 기록하고 발송 성공 전이는 외부 경로에 남김",
+          "consequence": "계약이 허용하는 감시 중 PENDING 상태를 보존하고 메시지 경로를 침범하지 않는다."
+        }
+      ],
+      "chosen": "빈자리를 발견하면 PENDING delivery를 기록하고 신청 상태는 WATCHING으로 유지한다.",
+      "basis": "spec_implication",
+      "rationale": "계약은 실제 발송 전까지 PENDING이 가능하고 발송 경로는 out_of_scope이므로, HTTP 표면에서 관찰 가능한 대기 상태까지만 구현한다.",
+      "confidence": "high",
+      "blast_radius": [
+        "getAlert:200",
+        "listAlerts:200",
+        "cancelAlert:200"
+      ],
+      "reversal_cost": "발송 포트와 작업자를 추가하고 PENDING 항목의 성공·실패 전이를 연결해야 한다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_idempotency_retry_windows",
+      "point": "createAlert:503",
+      "where": "AlertService.createAlert",
+      "question": "계약이 예시로 제시한 재시도 대기값을 인메모리 구현의 명시값으로 어떻게 사용할 것인가?",
+      "considered": [
+        {
+          "choice": "모든 재시도 응답에 같은 값 사용",
+          "consequence": "upstream 확인 간격과 경합·내부 실패의 성격을 구분하지 못한다."
+        },
+        {
+          "choice": "upstream은 20초, 경합은 1초, 내부 실패는 5초로 사용",
+          "consequence": "계약의 확인 간격 및 각 응답 예시와 일치한다."
+        }
+      ],
+      "chosen": "UPSTREAM 계열은 20초, CONCURRENT_UPDATE_CONFLICT는 1초, INTERNAL_ERROR는 5초를 사용한다.",
+      "basis": "contract_analogy",
+      "rationale": "NFR-3의 확인 간격과 각 응답 예시에 같은 값이 명시되어 있어 별도 수치를 만들지 않는다.",
+      "confidence": "high",
+      "blast_radius": [
+        "getCourtAvailability:502",
+        "getCourtAvailability:503",
+        "getCourtAvailability:504",
+        "createAlert:500",
+        "createAlert:503"
+      ],
+      "reversal_cost": "오류 매핑의 상수와 Retry-After 응답 검증을 함께 수정해야 한다.",
+      "supersedes": null
+    }
+  ],
+  "contract_changes": [],
+  "generated_at": "2026-09-30T04:28:02+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "refine_impl:v1",
+    "source_files": [
+      "b02d8689_input.json"
+    ],
+    "token_usage": {
+      "input_tokens": 713143,
+      "cached_input_tokens": 667776,
+      "output_tokens": 12318,
+      "reasoning_output_tokens": 3999
+    },
+    "build_attempts": 2,
+    "index_source": "git-diff-recovery"
+  },
+  "commit": "21f95db23ddb08ea00e59521ebfe1f55125593ea",
+  "repairs": [
+    {
+      "violation_id": "g0.compile_failed",
+      "summary": "ApplicationException이 ApiException을 상속하도록 최소 수정해 컴파일 오류를 닫았다."
+    }
+  ]
+}

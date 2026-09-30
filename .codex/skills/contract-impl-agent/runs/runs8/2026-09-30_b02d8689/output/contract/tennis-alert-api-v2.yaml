@@ -1,0 +1,573 @@
+openapi: 3.1.0
+info:
+  title: 테니스 코트 빈자리 알림 API
+  version: 1.0.0
+  description: |
+    This HTTP contract covers alert creation, alert lookup and cancellation,
+    and availability lookup for one court and one date.
+
+    Reservations and cancellations happen on the external reservation site.
+    This API never creates a reservation or reports reservation success.
+    Notification delivery and expiry are server-side workflows; their HTTP
+    representation is limited to Alert.status and Alert.delivery.
+    Court search and the court catalog are outside this API. courtId is supplied
+    by the caller. Notification transport is defined by the asynchronous
+    notification contract, not by these request/response operations.
+
+    Timestamps use RFC 3339 UTC. date is the court-local date and startTime and
+    endTime are 24-hour local times. The supported time zone is Asia/Seoul.
+
+    The /v1 path is the major version. Within one major version, adding response
+    enum values is compatible, but adding required request fields, removing
+    response fields or enum values, or narrowing a type or format is breaking.
+    Clients must treat unknown response enum values as an unknown state.
+  x-out-of-scope:
+    - requirement: NFR-2
+      reason: Response-time targets are verified by load testing rather than by the HTTP shape.
+servers:
+  - url: https://api.tennis-alert.example.com/v1
+security:
+  - bearerAuth: []
+tags:
+  - name: alerts
+    description: Alert creation, lookup and cancellation
+  - name: availability
+    description: Availability imported from the external reservation site
+paths:
+  /courts/{courtId}/availability:
+    get:
+      tags: [availability]
+      operationId: getCourtAvailability
+      summary: Get availability for one court and date
+      description: |
+        The service stores one result per court and date. If no result exists,
+        or the result is older than the 20 second confirmation interval, this
+        request performs one external lookup for that court and date.
+        Concurrent requests for the same key share one in-flight lookup and
+        receive the same completed result or the same failure.
+
+        If the lookup fails and a previous successful result exists, the
+        previous result is returned with stale=true and staleReason. This is a
+        successful response because the data is old, not because the request
+        failed. A 5xx is returned only when no successful result exists.
+        This operation is public and does not require authentication.
+      security: []
+      x-requirement: [FR-7, FR-3, NFR-1, EF-1, EF-2, NFR-3, V-4]
+      parameters:
+        - $ref: '#/components/parameters/CourtIdPath'
+        - name: date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: The latest successful result, possibly marked stale.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourtAvailability'
+        '400':
+          $ref: '#/components/responses/ValidationFailed'
+        '404':
+          $ref: '#/components/responses/CourtNotSupported'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamUnreadable'
+        '503':
+          $ref: '#/components/responses/AvailabilityUnavailable'
+        '504':
+          $ref: '#/components/responses/UpstreamTimeout'
+  /alerts:
+    post:
+      tags: [alerts]
+      operationId: createAlert
+      summary: Create an availability alert
+      description: |
+        The alert is created in WATCHING. Idempotency-Key is required.
+        A completed 2xx response is stored for 24 hours. Repeating the same
+        request with the same key replays the original response and does not
+        change the resource. Invalid 4xx requests are not stored.
+
+        A request using a key that is still being processed receives 503
+        CONCURRENT_UPDATE_CONFLICT. Repeating it after Retry-After replays the
+        completed result. The replay response is the response from the original
+        processing time, not the current alert state.
+
+        A different key for the same user and condition returns the existing
+        WATCHING alert with 200. A terminal alert does not get revived; a new
+        alert may be created for that condition.
+      x-requirement: [FR-1, V-1]
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKeyHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlertRequest'
+      responses:
+        '201':
+          description: A new alert was created.
+          headers:
+            Location:
+              $ref: '#/components/headers/Location'
+            Idempotency-Replayed:
+              $ref: '#/components/headers/IdempotencyReplayed'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alert'
+        '200':
+          description: An existing alert was returned.
+          headers:
+            Location:
+              $ref: '#/components/headers/Location'
+            Idempotency-Replayed:
+              $ref: '#/components/headers/IdempotencyReplayed'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alert'
+        '400': { $ref: '#/components/responses/AlertRequestInvalid' }
+        '401': { $ref: '#/components/responses/Unauthenticated' }
+        '409': { $ref: '#/components/responses/IdempotencyKeyReused' }
+        '422': { $ref: '#/components/responses/AlertNotAcceptable' }
+        '500': { $ref: '#/components/responses/InternalError' }
+        '503': { $ref: '#/components/responses/StorageOrContentionUnavailable' }
+    get:
+      tags: [alerts]
+      operationId: listAlerts
+      summary: List the caller's alerts
+      description: |
+        Only alerts owned by the authenticated caller are returned. Without
+        status, terminal alerts are included. With status, filtering uses the
+        stored status, so an alert whose expiry instant has passed but whose
+        background transition has not run can still appear as WATCHING.
+        Results are newest first and are not paginated.
+      x-requirement: [FR-2, NFR-1]
+      parameters:
+        - name: status
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/AlertStatus'
+      responses:
+        '200':
+          description: The caller's alerts.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertList'
+        '400': { $ref: '#/components/responses/ValidationFailed' }
+        '401': { $ref: '#/components/responses/Unauthenticated' }
+        '500': { $ref: '#/components/responses/InternalError' }
+        '503': { $ref: '#/components/responses/StorageUnavailable' }
+  /alerts/{alertId}:
+    get:
+      tags: [alerts]
+      operationId: getAlert
+      summary: Get one alert
+      description: The caller receives one of their own alerts. Foreign alerts are indistinguishable from missing alerts.
+      x-requirement: [FR-2]
+      parameters:
+        - $ref: '#/components/parameters/AlertIdPath'
+      responses:
+        '200':
+          description: One alert.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alert'
+        '400': { $ref: '#/components/responses/ValidationFailed' }
+        '401': { $ref: '#/components/responses/Unauthenticated' }
+        '404': { $ref: '#/components/responses/AlertNotFound' }
+        '500': { $ref: '#/components/responses/InternalError' }
+        '503': { $ref: '#/components/responses/StorageUnavailable' }
+    delete:
+      tags: [alerts]
+      operationId: cancelAlert
+      summary: Cancel an alert
+      description: |
+        Cancellation stops checking and pending delivery. Already sent
+        notifications are not withdrawn. Repeating the operation is
+        idempotent and returns the current terminal state.
+      x-requirement: [FR-2, V-8]
+      parameters:
+        - $ref: '#/components/parameters/AlertIdPath'
+      responses:
+        '200':
+          description: The alert after cancellation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alert'
+        '400': { $ref: '#/components/responses/ValidationFailed' }
+        '401': { $ref: '#/components/responses/Unauthenticated' }
+        '404': { $ref: '#/components/responses/AlertNotFound' }
+        '500': { $ref: '#/components/responses/InternalError' }
+        '503': { $ref: '#/components/responses/StorageOrContentionUnavailable' }
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  parameters:
+    CourtIdPath:
+      name: courtId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/CourtId'
+    AlertIdPath:
+      name: alertId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/AlertId'
+    IdempotencyKeyHeader:
+      name: Idempotency-Key
+      in: header
+      required: true
+      schema:
+        type: string
+        format: uuid
+  headers:
+    Location:
+      description: The location of the created or existing alert.
+      schema:
+        type: string
+        format: uri-reference
+    IdempotencyReplayed:
+      description: Whether this response was replayed from the completed request for the same key.
+      required: true
+      schema:
+        type: boolean
+    RetryAfter:
+      description: Seconds to wait before retrying.
+      schema:
+        type: integer
+        minimum: 1
+  schemas:
+    AlertId:
+      type: string
+      format: uuid
+    CourtName:
+      type: string
+      minLength: 1
+    CourtId:
+      type: string
+      minLength: 1
+      maxLength: 64
+      pattern: '^[a-z0-9][a-z0-9-]*$'
+    TimeSlot:
+      type: object
+      required: [startTime, endTime]
+      properties:
+        startTime:
+          type: string
+          pattern: '^([01][0-9]|2[0-3]):[0-5][0-9]$'
+        endTime:
+          type: string
+          pattern: '^([01][0-9]|2[0-3]):[0-5][0-9]$'
+      additionalProperties: false
+    AlertStatus:
+      type: string
+      x-requirement: [FR-4, FR-5]
+      enum: [WATCHING, NOTIFIED, CANCELED, EXPIRED]
+    DeliveryStatus:
+      type: string
+      enum: [PENDING, SENT, FAILED]
+    UpstreamFailureReason:
+      type: string
+      enum: [UPSTREAM_TIMEOUT, UPSTREAM_UNAVAILABLE, UPSTREAM_RESPONSE_UNREADABLE]
+    AlertDelivery:
+      type: object
+      required: [status, attemptCount, lastAttemptAt, failureReason]
+      properties:
+        status:
+          $ref: '#/components/schemas/DeliveryStatus'
+        attemptCount:
+          type: integer
+          minimum: 0
+          maximum: 4
+        lastAttemptAt:
+          type: [string, 'null']
+          format: date-time
+        failureReason:
+          type: [string, 'null']
+      additionalProperties: false
+    AlertRequest:
+      type: object
+      required: [courtId, date, slot]
+      properties:
+        courtId:
+          $ref: '#/components/schemas/CourtId'
+        date:
+          type: string
+          format: date
+        slot:
+          $ref: '#/components/schemas/TimeSlot'
+      additionalProperties: false
+    Alert:
+      type: object
+      x-requirement: [FR-2, FR-5]
+      description: |
+        status and delivery are read together. SENT implies NOTIFIED and
+        NOTIFIED implies SENT. WATCHING may have null or PENDING delivery.
+        A PENDING delivery may be cleared before sending. FAILED means no
+        further notification is sent. Terminal states are not revived.
+      required: [alertId, courtId, courtName, reservationUrl, date, slot, status, createdAt, expiresAt, lastCheckedAt, checkDelayed, delivery]
+      properties:
+        alertId:
+          $ref: '#/components/schemas/AlertId'
+        courtId:
+          $ref: '#/components/schemas/CourtId'
+        courtName:
+          $ref: '#/components/schemas/CourtName'
+        reservationUrl:
+          type: string
+          format: uri
+        date:
+          type: string
+          format: date
+        slot:
+          $ref: '#/components/schemas/TimeSlot'
+        status:
+          $ref: '#/components/schemas/AlertStatus'
+        createdAt:
+          type: string
+          format: date-time
+        expiresAt:
+          type: string
+          format: date-time
+          description: |
+            The earliest of the slot start instant and any earlier reservation
+            closing instant. The value may move earlier after creation.
+            Clients must reread it. While the server is between the expiry
+            instant and its background transition, WATCHING may still be shown;
+            the instant itself is the expiry boundary.
+        lastCheckedAt:
+          type: [string, 'null']
+          format: date-time
+        checkDelayed:
+          type: boolean
+        delivery:
+          oneOf:
+            - $ref: '#/components/schemas/AlertDelivery'
+            - type: 'null'
+      additionalProperties: false
+    AlertList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Alert'
+      additionalProperties: false
+    AvailabilitySlot:
+      type: object
+      required: [startTime, endTime, available]
+      properties:
+        startTime:
+          type: string
+          pattern: '^([01][0-9]|2[0-3]):[0-5][0-9]$'
+        endTime:
+          type: string
+          pattern: '^([01][0-9]|2[0-3]):[0-5][0-9]$'
+        available:
+          type: boolean
+      additionalProperties: false
+    CourtAvailability:
+      type: object
+      x-requirement: [FR-7, FR-3, EF-1]
+      required: [courtId, courtName, date, confirmedAt, stale, staleReason, reservationUrl, slots]
+      properties:
+        courtId:
+          $ref: '#/components/schemas/CourtId'
+        courtName:
+          $ref: '#/components/schemas/CourtName'
+        date:
+          type: string
+          format: date
+        confirmedAt:
+          type: string
+          format: date-time
+        stale:
+          type: boolean
+        staleReason:
+          oneOf:
+            - $ref: '#/components/schemas/UpstreamFailureReason'
+            - type: 'null'
+        reservationUrl:
+          type: string
+          format: uri
+        slots:
+          type: array
+          items:
+            $ref: '#/components/schemas/AvailabilitySlot'
+      additionalProperties: false
+    ErrorCode:
+      type: string
+      description: |
+        Error codes exist only where client action differs. The codes describe
+        validation, authentication, supported-court and slot checks, expiry,
+        idempotency, upstream, storage, contention and internal failures.
+      enum:
+        - VALIDATION_FAILED
+        - UNAUTHENTICATED
+        - COURT_NOT_SUPPORTED
+        - SLOT_NOT_SUPPORTED
+        - ALERT_WINDOW_CLOSED
+        - ALERT_NOT_FOUND
+        - IDEMPOTENCY_KEY_REUSED
+        - UPSTREAM_TIMEOUT
+        - UPSTREAM_UNAVAILABLE
+        - UPSTREAM_RESPONSE_UNREADABLE
+        - STORAGE_TIMEOUT
+        - CONCURRENT_UPDATE_CONFLICT
+        - INTERNAL_ERROR
+    Problem:
+      type: object
+      description: |
+        retryable=true is accompanied by retryAfterSeconds and Retry-After.
+        traceId is present only for 5xx responses. 4xx responses do not carry
+        traceId because correcting the request is the next action.
+      required: [type, title, status, code, retryable]
+      properties:
+        type:
+          type: string
+          format: uri
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
+        instance:
+          type: string
+          format: uri-reference
+        code:
+          $ref: '#/components/schemas/ErrorCode'
+        retryable:
+          type: boolean
+        retryAfterSeconds:
+          type: integer
+          minimum: 1
+        traceId:
+          type: string
+      additionalProperties: false
+  responses:
+    ValidationFailed:
+      description: Request validation failed.
+      headers: {}
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+      x-error-codes: [VALIDATION_FAILED]
+    AlertRequestInvalid:
+      description: Alert request validation failed.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+      x-error-codes: [VALIDATION_FAILED]
+    Unauthenticated:
+      description: The caller could not be identified.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+      x-error-codes: [UNAUTHENTICATED]
+    CourtNotSupported:
+      description: The requested court is not supported.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+      x-error-codes: [COURT_NOT_SUPPORTED]
+    AlertNotFound:
+      description: The alert does not exist for the caller.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+      x-error-codes: [ALERT_NOT_FOUND]
+    IdempotencyKeyReused:
+      description: The idempotency key was used for different content.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+      x-error-codes: [IDEMPOTENCY_KEY_REUSED]
+    AlertNotAcceptable:
+      description: The requested alert condition cannot be watched.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+      x-error-codes: [COURT_NOT_SUPPORTED, SLOT_NOT_SUPPORTED, ALERT_WINDOW_CLOSED]
+    UpstreamUnreadable:
+      description: The upstream response was unreadable and no successful result exists.
+      headers:
+        Retry-After:
+          $ref: '#/components/headers/RetryAfter'
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+      x-error-codes: [UPSTREAM_RESPONSE_UNREADABLE]
+    UpstreamTimeout:
+      description: The upstream did not respond in time and no successful result exists.
+      headers:
+        Retry-After:
+          $ref: '#/components/headers/RetryAfter'
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+      x-error-codes: [UPSTREAM_TIMEOUT]
+    AvailabilityUnavailable:
+      description: Availability is unavailable.
+      headers:
+        Retry-After:
+          $ref: '#/components/headers/RetryAfter'
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+      x-error-codes: [UPSTREAM_UNAVAILABLE, STORAGE_TIMEOUT]
+    StorageUnavailable:
+      description: Storage is unavailable.
+      headers:
+        Retry-After:
+          $ref: '#/components/headers/RetryAfter'
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+      x-error-codes: [STORAGE_TIMEOUT]
+    StorageOrContentionUnavailable:
+      description: Storage or concurrent update handling is unavailable.
+      headers:
+        Retry-After:
+          $ref: '#/components/headers/RetryAfter'
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+      x-error-codes: [STORAGE_TIMEOUT, CONCURRENT_UPDATE_CONFLICT]
+    InternalError:
+      description: An unexpected server error occurred.
+      headers:
+        Retry-After:
+          $ref: '#/components/headers/RetryAfter'
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+      x-error-codes: [INTERNAL_ERROR]

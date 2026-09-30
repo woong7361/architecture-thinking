@@ -1,0 +1,133 @@
+{
+  "brief_hash": "745183bc",
+  "iteration": "001",
+  "summary": "초안은 코트·날짜별 확인 결과의 캐시와 동시 요청 병합, stale 결과 보존, 신청 소유권 필터링, 멱등 재시도 같은 핵심 흐름을 계약의 구조에 맞춰 잡았다. 다만 신청 생성 경로가 조회 전용으로 규정된 외부 확인을 유발할 수 있고, Bearer 토큰을 검증 없이 사용자 키로 취급하며, 만료 시각과 날짜 미개방 상태의 데이터 출처가 충분히 드러나지 않는다. 이 세 자리는 요청 사이의 상태와 실패 의미를 바꾸므로 다음 개정에서 먼저 고정해야 한다.",
+  "strengths": [
+    "동일 코트·날짜의 동시 availability 요청을 하나의 확인으로 합치고 같은 결과를 공유하려는 구조가 계약의 EF-2와 V-4에 맞는다.",
+    "외부 확인 실패 시 마지막 성공 결과를 버리지 않고 stale과 실패 이유로 표현하려는 흐름이 EF-1과 CourtAvailability의 의미를 보존한다.",
+    "신청 목록과 단건 조회·해제에서 사용자 소유권을 기준으로 격리하고, 타 사용자 신청을 없는 신청과 같은 404로 처리하려는 방향이 FR-2의 정보 노출 방지 요구와 맞는다.",
+    "동일 멱등 키의 재생 응답과 동일 조건의 기존 감시 신청 재사용을 구분하려는 구조가 createAlert 계약의 서로 다른 멱등성 요구를 보존한다."
+  ],
+  "weaknesses": [
+    {
+      "id": "create-refresh-boundary",
+      "axis": "state_continuity",
+      "issue": "AlertApplicationService.ensureSlotSupported의 선택이 AvailabilityApplicationService를 통해 저장 결과가 없거나 오래된 경우 외부 확인까지 일으키는 경로를 허용한다. 초안의 결정 기록도 신청 생성 중 확인을 일으킬 수 있다고 명시한다.",
+      "why_it_matters": "계약은 외부 확인을 일으키는 행위를 availability 조회로 한정한다. 이 경로를 두면 POST의 성공 여부와 이후 GET의 결과가 캐시 상태와 외부 예약처 상태에 따라 달라지고, 신청 생성이 의도하지 않은 외부 호출·지연·실패를 발생시킨다. Idempotency-Key는 신청 중복만 막을 뿐 availability 상태 변화까지 재생하지 않는다.",
+      "suggestion": "신청 생성에서는 이미 저장된 권위 있는 운영 시간대·확인 결과만 읽어 검증하고 외부 확인이나 캐시 갱신은 수행하지 않도록 고친다. 저장된 정보만으로 판단할 수 없는 경우의 처리 규칙이 필요하다면 먼저 계약에 그 경우를 명시한 뒤 구현한다.",
+      "severity": "high",
+      "target": {
+        "pointer": "src/main/java/com/thinking/tennis/app/AlertApplicationService.java#ensureSlotSupported",
+        "action": "tighten",
+        "scope": "code"
+      }
+    },
+    {
+      "id": "raw-bearer-as-authentication",
+      "axis": "failure_faithfulness",
+      "issue": "d_bearer_identity에 따라 TennisAlertApiController.authenticate가 Bearer 접두사 뒤의 비어 있지 않은 문자열 전체를 사용자 식별자로 사용한다. 그러면 형식만 맞는 임의의 문자열도 인증된 사용자로 취급된다.",
+      "why_it_matters": "계약의 UNAUTHENTICATED는 토큰이 없거나 유효하지 않아 사용자를 식별할 수 없는 상황을 뜻한다. 검증되지 않은 값을 그대로 주체로 쓰면 유효하지 않은 토큰이 401이 되지 않고, 소유권 격리는 단순히 공격자가 고른 문자열의 일치 여부에 의존하게 된다.",
+      "suggestion": "토큰 문자열 추출과 인증 검증을 분리하고, 검증된 사용자 주체를 반환하는 주입 가능한 인증 경계를 사용한다. 검증기를 이 범위에서 제공할 수 없다면 현재 동작을 실제 Bearer 인증으로 표현하지 말고, 계약과 구현의 제한을 명시적으로 드러낸다.",
+      "severity": "high",
+      "target": {
+        "pointer": "src/main/java/com/thinking/tennis/api/TennisAlertApiController.java#authenticate",
+        "action": "tighten",
+        "scope": "code"
+      }
+    },
+    {
+      "id": "expiry-provenance",
+      "axis": "response_fidelity",
+      "issue": "Alert.expiresAt은 이용 시작 시각보다 이른 예약 마감 시각이 확인되면 그 시각으로 앞당겨져야 하지만, 제공된 CourtAvailabilityPort는 코트·날짜·슬롯과 확인 시각만 제공한다. 초안의 결정 기록에는 더 이른 마감 시각의 출처나 미확인 시 동작이 없다.",
+      "why_it_matters": "구현이 슬롯 시작 시각만 사용하거나 별도 규칙을 임의로 만들면 응답의 expiresAt이 알림을 시도할 수 있는 마지막 시각을 잘못 나타낸다. 단말이 만료 이후 알림을 표시하지 않는 EF-6과 신청의 만료 판단이 서로 어긋날 수 있다.",
+      "suggestion": "expiresAt을 계산할 수 있는 도메인 데이터의 출처와 미확인 시의 규칙을 계약과 구현에 함께 고정한다. 현재 제공 포트로는 그 정보를 알 수 없다면 startTime만 보장한다고 계약을 완화하거나, 계약이 허용하는 별도 데이터 공급 경계를 명시한다.",
+      "severity": "high",
+      "target": {
+        "pointer": "/components/schemas/Alert/properties/expiresAt/description",
+        "action": "add",
+        "scope": "contract"
+      }
+    }
+  ],
+  "revision_directions": [
+    "조회만이 외부 예약처 확인을 유발한다는 오퍼레이션 경계를 신청 생성 검증에도 일관되게 적용한다.",
+    "Bearer 전송 방식과 실제 토큰 검증·사용자 주체 생성의 책임을 분리해 인증 실패의 의미를 보존한다.",
+    "expiresAt의 데이터 출처와 예약처가 날짜를 아직 열지 않은 경우의 신청 검증 규칙을 계약과 구현에서 같은 말로 고정한다.",
+    "발송 실패 후에도 WATCHING으로 남는 신청의 실제 생명주기를 클라이언트가 오해하지 않도록 delivery와 status의 조합을 명시한다."
+  ],
+  "contract_review": [
+    {
+      "id": "authorization-header-observation",
+      "kind": "observation_meaning",
+      "pointer": "/components/securitySchemes/bearerAuth",
+      "finding": "GATE_OBSERVATIONS_JSON의 Authorization 헤더 관찰은 전역 bearerAuth 보안 요구를 HTTP 헤더 파라미터로 표현한 것이다. Bearer 인증은 이미 보안 스킴으로 계약되어 있으므로 이 관찰을 별도 요청 필드로 추가하거나 코드에서 제거할 대상으로 보기는 어렵다.",
+      "proposed_change": "",
+      "spec_anchor": "slot_e23500c7",
+      "severity": "low"
+    },
+    {
+      "id": "expiry-source-clarification",
+      "kind": "proposal",
+      "pointer": "/components/schemas/Alert/properties/expiresAt/description",
+      "finding": "계약은 더 이른 예약 마감 시각이 확인되면 expiresAt을 앞당기라고 하지만 그 시각을 어떤 계약 데이터에서 얻는지, 확인할 수 없을 때 무엇을 반환하는지는 정하지 않는다. 제공된 CourtAvailabilityPort에도 해당 값이 없다.",
+      "proposed_change": "더 이른 예약 마감 시각의 출처와 확인 불가 시의 fallback을 계약에 추가하고, 현재 제공 포트가 그 의미를 공급할 수 있는지 명시한다. 공급할 수 없다면 expiresAt을 이용 시작 시각으로만 보장하도록 문구를 완화한다.",
+      "action": "add",
+      "spec_anchor": "slot_c14121c8",
+      "severity": "high"
+    },
+    {
+      "id": "unopened-date-slot-semantics",
+      "kind": "proposal",
+      "pointer": "/components/schemas/CourtAvailability/properties/slots/description",
+      "finding": "예약처가 날짜를 아직 열지 않은 경우 slots가 빈 배열이라는 의미와, slots에 없는 시간대는 SLOT_NOT_SUPPORTED라는 신청 규칙이 같은 표현을 공유한다. 날짜 미개방과 실제 운영 시간대 부재를 HTTP 계약만으로 구분할 수 없다.",
+      "proposed_change": "날짜 미개방을 나타내는 별도 상태나 필드를 추가하거나, 미개방 상태에서 createAlert가 시간대를 어떻게 검증하고 응답해야 하는지 명시한다. 미개방을 곧바로 SLOT_NOT_SUPPORTED로 해석할 것인지도 고정해야 한다.",
+      "action": "add",
+      "spec_anchor": "slot_ea97add0",
+      "severity": "high"
+    },
+    {
+      "id": "failed-delivery-liveness",
+      "kind": "harmful_choice",
+      "pointer": "/components/schemas/Alert/description",
+      "finding": "delivery.status가 FAILED여도 status는 WATCHING으로 남을 수 있고, EF-3에 따라 이후 발송은 다시 시도하지 않는다. 클라이언트가 WATCHING을 앞으로도 알림이 발송될 상태로 읽으면 실제 동작과 어긋난다.",
+      "proposed_change": "",
+      "spec_anchor": "EF-3",
+      "severity": "medium"
+    }
+  ],
+  "contested_decisions": [
+    {
+      "decision_id": "d_create_slot_validation",
+      "objection": "선택한 검증 경로는 신청 생성이 저장 결과가 없을 때 외부 확인을 일으킬 수 있도록 범위를 넓힌다. 그러나 계약 산문과 요구사항은 확인을 일으키는 오퍼레이션을 availability 조회로 한정한다. 운영 시간대 검증에 availability 결과를 쓰는 것과 조회를 새로 발생시키는 것은 같은 결정이 아니다.",
+      "alternative": "createAlert는 기존에 저장된 운영 시간대 또는 확인 결과만 읽는다. 필요한 정보가 없을 때의 신청 가능 여부를 계약에 명시하거나, 외부 확인은 GET에서만 수행하도록 경계를 유지한다.",
+      "severity": "high"
+    },
+    {
+      "decision_id": "d_bearer_identity",
+      "objection": "Bearer 값 전체를 사용자 키로 삼는 선택은 토큰 검증이 없다는 사실을 숨긴 채 임의의 비어 있지 않은 문자열을 인증 주체로 승격한다. 계약이 검증 체계를 정하지 않았다는 사실은 유효성 검사를 생략해도 된다는 근거가 아니다.",
+      "alternative": "인증 검증을 담당하는 명시적 경계를 두고 검증된 주체만 유스케이스에 전달한다. 인증 제공자를 이 범위에서 정할 수 없다면 계약에 제한을 드러내고 이 구현의 사용자 키를 실제 Bearer 인증으로 간주하지 않는다.",
+      "severity": "high"
+    }
+  ],
+  "reader_risks": [
+    "클라이언트가 WATCHING 상태만 보고 앞으로도 알림이 올 것이라 판단할 수 있지만 delivery=FAILED이면 더 이상 발송되지 않을 수 있다.",
+    "availability 응답의 빈 slots를 날짜 미개방으로 읽어야 하는지 운영 시간대가 없는 것으로 읽어야 하는지 불분명해 신청 화면의 검증 결과가 구현마다 달라질 수 있다.",
+    "Bearer 보안 스킴이 선언되어 있어도 현재 선택은 토큰 유효성 검증을 보장하지 않으므로, 독자는 401이 실제 인증 실패까지 포괄한다고 오해할 수 있다.",
+    "신청 생성이 availability 확인을 유발하면 호출자는 단순 저장 요청에서도 외부 예약처 장애와 확인 지연을 경험할 수 있다."
+  ],
+  "critiqued_at": "2026-09-29T22:17:34+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "critique_impl:v1",
+    "source_files": [
+      "745183bc_input.json",
+      "745183bc_iter-001_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 813928,
+      "cached_input_tokens": 738816,
+      "output_tokens": 13186,
+      "reasoning_output_tokens": 9852
+    }
+  }
+}

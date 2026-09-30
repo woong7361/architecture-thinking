@@ -1,0 +1,293 @@
+{
+  "brief_hash": "b02d8689",
+  "from_iteration": "001",
+  "to_iteration": "002",
+  "priority_order": [
+    "gate_violations",
+    "contract_version",
+    "standing_decisions",
+    "code_instructions"
+  ],
+  "open_violations": [
+    {
+      "rule": "g0.extract_failed",
+      "point": null,
+      "where": "dump_api_docs.py",
+      "detail": "부팅이 실패했거나 제한 시간 안에 포트를 열지 못했다: \tat org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625) ~[spring-context-6.1.13.jar!/:6.1.13]\n\tat org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.3.4.jar!/:3.3.4]\n\tat org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[spring-boot-3.3.4.jar!/:3.3.4]\n\tat org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456) ~[spring-boot-3.3.4.jar!/:3.3.4]\n\tat org.springframework.boot.SpringApplication.run(SpringApplication.java:335) ~[spring-boot-3.3.4.jar!/:3.3.4]\n\tat org.springframework.boot.SpringApplication.run(SpringApplication.java:1363) ~[spring-boot-3.3.4.jar!/:3.3.4]\n\tat org.springframework.boot.SpringApplication.run(SpringApplication.java:1352) ~[spring-boot-3.3.4.jar!/:3.3.4]\n\tat com.thinking.tennis.TennisAlertApplication.main(TennisAlertApplication.java:17) ~[!/:1.0.0]\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]\n\tat java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]\n\tat org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:102) ~[tennis-alert-skeleton-1.0.0.jar:1.0.0]\n\tat org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:64) ~[tennis-alert-skeleton-1.0.0.jar:1.0.0]\n\tat org.springframework.boot.loader.launch.JarLauncher.main(JarLauncher.java:40) ~[tennis-alert-skeleton-1.0.0.jar:1.0.0]\nCaused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'alertService' defined in URL [jar:nested:/C:/Users/PC-220627-03/AppData/Local/Temp/claude/c--Users-PC-220627-03-Desktop-project-task-architecture-thinking/862b7ff3-a396-4dc6-9b71-a200dcde2544/scratchpad/runs/2026-09-29_b02d8689/output/target/tennis-alert-skeleton-1.0.0.jar/!BOOT-INF/classes/!/com/thinking/tennis/app/AlertService.class]: Failed to instantiate [com.thinking.tennis.app.AlertService]: No default constructor found\n\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1337) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1222) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\t... 26 common frames omitted\nCaused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.thinking.tennis.app.AlertService]: No default constructor found\n\tat org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:90) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1331) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\t... 38 common frames omitted\nCaused by: java.lang.NoSuchMethodException: com.thinking.tennis.app.AlertService.<init>()\n\tat java.base/java.lang.Class.getConstructor0(Class.java:3587) ~[na:na]\n\tat java.base/java.lang.Class.getDeclaredConstructor(Class.java:2756) ~[na:na]\n\tat org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:86) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\t... 39 common frames omitted\n--- 로그 끝 ---",
+      "verdict": "violation"
+    }
+  ],
+  "rule_cards": {},
+  "gate_observations": [],
+  "gate_coverage": {
+    "g0": "REJECT",
+    "g1": "SKIPPED",
+    "contract_changes": "SKIPPED",
+    "allow_missing_gates": false
+  },
+  "current_contract_version": {
+    "path": "contract/tennis-alert-api-v1.yaml",
+    "from": "contract/tennis-alert-api-v1.yaml"
+  },
+  "standing_decisions": [
+    {
+      "id": "d_clock_source",
+      "point": "all",
+      "where": "app services",
+      "question": "What supplies current time for freshness, expiry, retention, and delay calculations?",
+      "considered": [
+        {
+          "choice": "Inject a UTC Clock with a systemUTC default",
+          "consequence": "Keeps all temporal decisions coherent and testable."
+        },
+        {
+          "choice": "Call Instant.now directly",
+          "consequence": "Reduces wiring but couples every timing rule to wall-clock access."
+        }
+      ],
+      "chosen": "Use an injected java.time.Clock defaulting to UTC.",
+      "basis": "convention",
+      "rationale": "The contract requires UTC timestamps and multiple time-based rules but does not prescribe a clock API.",
+      "confidence": "high",
+      "blast_radius": [
+        "getCourtAvailability:200",
+        "createAlert:201",
+        "createAlert:200",
+        "listAlerts:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "reversal_cost": "Change service constructors and current-time reads.",
+      "supersedes": null
+    },
+    {
+      "id": "d_user_identity",
+      "point": "createAlert:401",
+      "where": "API authentication boundary",
+      "question": "How is an unspecified Bearer authentication mechanism represented in the in-memory draft?",
+      "considered": [
+        {
+          "choice": "Treat the nonblank Bearer credential as an opaque UserId",
+          "consequence": "Preserves ownership isolation without inventing token semantics."
+        },
+        {
+          "choice": "Add JWT parsing or a token-validation port",
+          "consequence": "Adds an unprovided dependency and authentication contract."
+        }
+      ],
+      "chosen": "Use the opaque credential after the Bearer prefix as the UserId.",
+      "basis": "least_harm",
+      "rationale": "The contract requires bearer-based user identification but deliberately leaves the authentication mechanism unspecified.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:401",
+        "listAlerts:401",
+        "getAlert:401",
+        "cancelAlert:401"
+      ],
+      "reversal_cost": "Replace only the inbound identity conversion when authentication is specified.",
+      "supersedes": null
+    },
+    {
+      "id": "d_availability_validation_source",
+      "point": "createAlert:422",
+      "where": "alert request validation",
+      "question": "How does alert creation obtain court metadata and validate an exact operating slot?",
+      "considered": [
+        {
+          "choice": "Use CourtAvailabilityPort metadata and the availability service snapshot/check",
+          "consequence": "Reuses the only provided reservation boundary and avoids a new catalog."
+        },
+        {
+          "choice": "Add a separate hard-coded court catalog",
+          "consequence": "Duplicates or invents a dependency outside the implementation contract."
+        }
+      ],
+      "chosen": "Use CourtAvailabilityPort and the shared availability snapshot/check path.",
+      "basis": "contract_analogy",
+      "rationale": "Court search is outside this API, while the provided port owns supported-court and slot facts.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:201",
+        "createAlert:200",
+        "createAlert:422"
+      ],
+      "reversal_cost": "Replace the validation source and its adapter wiring.",
+      "supersedes": null
+    },
+    {
+      "id": "d_refresh_failure_coalescing",
+      "point": "getCourtAvailability:503",
+      "where": "availability refresh coordination",
+      "question": "How should a failed refresh behave for concurrent waiters and immediate retries?",
+      "considered": [
+        {
+          "choice": "Retain the failed attempt for the check interval and reuse its outcome",
+          "consequence": "Concurrent callers receive the same stale result or same failure and the next retry follows 20 seconds."
+        },
+        {
+          "choice": "Retry the upstream call for every waiter",
+          "consequence": "Violates the one-refresh-per-interval and same-result behavior."
+        }
+      ],
+      "chosen": "Cache the failure reason for 20 seconds and reuse it for the same court/date.",
+      "basis": "spec_implication",
+      "rationale": "The contract ties Retry-After to the 20-second check interval and requires concurrent requests to share one refresh outcome.",
+      "confidence": "high",
+      "blast_radius": [
+        "getCourtAvailability:200",
+        "getCourtAvailability:502",
+        "getCourtAvailability:503",
+        "getCourtAvailability:504"
+      ],
+      "reversal_cost": "Change the refresh coordination state and retry policy.",
+      "supersedes": null
+    },
+    {
+      "id": "d_condition_atomicity",
+      "point": "createAlert:200",
+      "where": "duplicate alert creation",
+      "question": "How are simultaneous requests with different idempotency keys prevented from creating duplicate WATCHING alerts?",
+      "considered": [
+        {
+          "choice": "Synchronize creation per owner and alert condition",
+          "consequence": "Makes the condition check and insert atomic in the in-memory draft."
+        },
+        {
+          "choice": "Check then save without a lock",
+          "consequence": "Allows V-1 races to create multiple alerts."
+        }
+      ],
+      "chosen": "Use a per-condition lock around the duplicate check and save.",
+      "basis": "contract_analogy",
+      "rationale": "The contract requires same-condition deduplication even when requests arrive concurrently, and the storage is in-memory.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:200",
+        "createAlert:201"
+      ],
+      "reversal_cost": "Replace the repository coordination with an atomic persistence operation.",
+      "supersedes": null
+    },
+    {
+      "id": "d_lazy_expiry",
+      "point": "listAlerts:200",
+      "where": "alert lifecycle observation",
+      "question": "When does the in-memory draft materialize EXPIRED status without the out-of-scope scheduler?",
+      "considered": [
+        {
+          "choice": "Lazily transition due WATCHING alerts during owner-scoped create/list/get/cancel operations",
+          "consequence": "Stops future work and exposes terminal state when the alert is observed."
+        },
+        {
+          "choice": "Leave WATCHING forever until a background worker exists",
+          "consequence": "Fails the observable expiry behavior of the HTTP surface."
+        }
+      ],
+      "chosen": "Apply lazy expiry on owner-scoped application operations.",
+      "basis": "least_harm",
+      "rationale": "The contract assigns expiry to server work, while this draft is explicitly in-memory and has no scheduler surface.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:200",
+        "createAlert:201",
+        "listAlerts:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "reversal_cost": "Add a scheduler or replace lazy transitions with a lifecycle worker.",
+      "supersedes": null
+    },
+    {
+      "id": "d_stale_creation_validation",
+      "point": "createAlert:422",
+      "where": "slot validation after refresh failure",
+      "question": "What slot facts are used when the latest availability refresh fails but a previous successful snapshot exists?",
+      "considered": [
+        {
+          "choice": "Validate against the last successful snapshot and permit a matching request",
+          "consequence": "Preserves known operating-slot facts while exposing refresh staleness on availability reads."
+        },
+        {
+          "choice": "Reject every create request when the latest refresh is stale",
+          "consequence": "Adds a create failure rule not declared by the contract."
+        }
+      ],
+      "chosen": "Use the last successful snapshot for exact slot validation.",
+      "basis": "least_harm",
+      "rationale": "The contract defines stale results as usable 200 data and does not declare stale availability as a create rejection condition.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:200",
+        "createAlert:201",
+        "createAlert:422"
+      ],
+      "reversal_cost": "Change the create validation policy for stale snapshots.",
+      "supersedes": null
+    },
+    {
+      "id": "d_problem_trace_generation",
+      "point": "getCourtAvailability:500",
+      "where": "problem response construction",
+      "question": "How is the unspecified traceId value generated?",
+      "considered": [
+        {
+          "choice": "Generate a random UUID-shaped opaque value for each 5xx response",
+          "consequence": "Provides a per-response lookup token without exposing implementation details."
+        },
+        {
+          "choice": "Reuse a deterministic alert or idempotency identifier",
+          "consequence": "Some 5xx requests have no such identifier and could correlate unrelated failures."
+        }
+      ],
+      "chosen": "Generate a random UUID without separators for 5xx responses only.",
+      "basis": "convention",
+      "rationale": "The contract requires a traceId on 5xx responses but does not define its generator or format beyond string.",
+      "confidence": "medium",
+      "blast_radius": [
+        "getCourtAvailability:500",
+        "listAlerts:500",
+        "createAlert:500",
+        "getAlert:500",
+        "cancelAlert:500"
+      ],
+      "reversal_cost": "Replace the problem handler's trace ID generator.",
+      "supersedes": null
+    },
+    {
+      "id": "d_validation_precedence",
+      "point": "createAlert:400",
+      "where": "create request boundary",
+      "question": "Which validation runs first when authentication, idempotency, and body validation are all invalid?",
+      "considered": [
+        {
+          "choice": "Authenticate first, then validate Idempotency-Key and body",
+          "consequence": "Keeps owner-scoped processing from examining request details for an unidentified user."
+        },
+        {
+          "choice": "Validate headers/body before authentication",
+          "consequence": "Could expose request validation details to unauthenticated callers."
+        }
+      ],
+      "chosen": "Authenticate before idempotency-key and body parsing.",
+      "basis": "least_harm",
+      "rationale": "The contract requires owner identity for create and does not define precedence for multiple simultaneous failures.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:400",
+        "createAlert:401"
+      ],
+      "reversal_cost": "Reorder the controller boundary checks.",
+      "supersedes": null
+    }
+  ],
+  "contract_changes": [],
+  "contested_decisions": [],
+  "code_instructions": [],
+  "contract_proposals": [],
+  "weak_axes": [],
+  "weak_axis_rationales": {},
+  "priority": [
+    "gate:g0.extract_failed@None"
+  ]
+}

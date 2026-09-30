@@ -1,0 +1,367 @@
+{
+  "iteration": "001",
+  "g0": "PASS",
+  "g1": "REJECT",
+  "changes": "PASS",
+  "violations": [
+    {
+      "rule": "extract.blind",
+      "point": null,
+      "where": "x-error-codes",
+      "detail": "계약은 (상태 코드, 에러 코드) 쌍을 선언했는데 추출 스펙에는 그 조항에 대응하는 것이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "extract.blind",
+      "point": null,
+      "where": "security",
+      "detail": "계약은 인증 요구를 선언했는데 추출 스펙에는 그 조항에 대응하는 것이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "getCourtAvailability:200",
+      "where": "CourtAvailability",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['confirmedAt', 'courtId', 'courtName', 'date', 'reservationUrl', 'slots', 'stale', 'staleReason']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "getCourtAvailability:200",
+      "where": "CourtAvailability.slots[]",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['available', 'endTime', 'startTime']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "getCourtAvailability:400",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "getCourtAvailability:404",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "getCourtAvailability:500",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "getCourtAvailability:502",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "getCourtAvailability:503",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "getCourtAvailability:504",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "listAlerts:200",
+      "where": "AlertList",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['items']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "listAlerts:200",
+      "where": "AlertList.items[]",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['alertId', 'checkDelayed', 'courtId', 'courtName', 'createdAt', 'date', 'delivery', 'expiresAt', 'lastCheckedAt', 'reservationUrl', 'slot', 'status']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "listAlerts:200",
+      "where": "AlertList.items[].slot",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['endTime', 'startTime']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "listAlerts:200",
+      "where": "AlertList.items[].delivery",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['attemptCount', 'failureReason', 'lastAttemptAt', 'status']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "listAlerts:400",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "listAlerts:401",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "listAlerts:500",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "listAlerts:503",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "createAlert:201",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "createAlert:200",
+      "where": "Alert",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['alertId', 'checkDelayed', 'courtId', 'courtName', 'createdAt', 'date', 'delivery', 'expiresAt', 'lastCheckedAt', 'reservationUrl', 'slot', 'status']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "createAlert:200",
+      "where": "Alert.slot",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['endTime', 'startTime']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "createAlert:200",
+      "where": "Alert.delivery",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['attemptCount', 'failureReason', 'lastAttemptAt', 'status']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.header_missing",
+      "point": "createAlert:200",
+      "where": "headers.Idempotency-Replayed",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.header_missing",
+      "point": "createAlert:200",
+      "where": "headers.Location",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "createAlert:400",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "createAlert:401",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "createAlert:409",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "createAlert:422",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "createAlert:500",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "createAlert:503",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "getAlert:200",
+      "where": "Alert",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['alertId', 'checkDelayed', 'courtId', 'courtName', 'createdAt', 'date', 'delivery', 'expiresAt', 'lastCheckedAt', 'reservationUrl', 'slot', 'status']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "getAlert:200",
+      "where": "Alert.slot",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['endTime', 'startTime']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "getAlert:200",
+      "where": "Alert.delivery",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['attemptCount', 'failureReason', 'lastAttemptAt', 'status']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "getAlert:400",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "getAlert:401",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "getAlert:404",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "getAlert:500",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "getAlert:503",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "cancelAlert:200",
+      "where": "Alert",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['alertId', 'checkDelayed', 'courtId', 'courtName', 'createdAt', 'date', 'delivery', 'expiresAt', 'lastCheckedAt', 'reservationUrl', 'slot', 'status']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "cancelAlert:200",
+      "where": "Alert.slot",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['endTime', 'startTime']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "cancelAlert:200",
+      "where": "Alert.delivery",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['attemptCount', 'failureReason', 'lastAttemptAt', 'status']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "cancelAlert:400",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "cancelAlert:401",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "cancelAlert:404",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "cancelAlert:500",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.status_missing",
+      "point": "cancelAlert:503",
+      "where": "responses",
+      "detail": "계약이 선언한 상태 코드다",
+      "verdict": "violation"
+    }
+  ],
+  "observations": [
+    {
+      "rule": "request.field_extra",
+      "point": "listAlerts",
+      "where": "parameters.header.Authorization",
+      "detail": "계약에 없는 파라미터다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "request.field_extra",
+      "point": "createAlert",
+      "where": "parameters.header.Authorization",
+      "detail": "계약에 없는 파라미터다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "request.field_extra",
+      "point": "getAlert",
+      "where": "parameters.header.Authorization",
+      "detail": "계약에 없는 파라미터다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "request.field_extra",
+      "point": "cancelAlert",
+      "where": "parameters.header.Authorization",
+      "detail": "계약에 없는 파라미터다",
+      "verdict": "observation"
+    }
+  ],
+  "errors": [],
+  "derived_spec": "C:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs\\2026-09-29_745183bc\\iter_001\\api-docs.json",
+  "allow_missing_gates": false,
+  "log": [
+    "작업 폴더: C:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs\\2026-09-29_745183bc\\output (target/ 재사용 아니오)\n$ C:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs\\2026-09-29_745183bc\\output\\mvnw.cmd -B -q test → 0\n21:23:00.570 [main] INFO com.tngtech.archunit.core.PluginLoader -- Detected Java version 17.0.19\n$ dump_api_docs.py → 0\nC:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs\\2026-09-29_745183bc\\iter_001\\api-docs.json 에 저장했다. 포트 61651, 최상위 키 ['components', 'info', 'openapi', 'paths', 'servers'], paths 3개"
+  ],
+  "critique_source": "none:first_iteration"
+}

@@ -1,0 +1,26 @@
+{
+  "brief_hash": "b02d8689",
+  "iteration": "001",
+  "purpose": "build_repair",
+  "attempt": 2,
+  "max_attempts": 3,
+  "scope": "build_only",
+  "instruction": "컴파일과 부팅만 고쳐라. 계약 적합성은 아직 판정되지 않았으므로 그 자리를 건드리지 마라. 구현을 크게 바꾸지 말고 빌드 실패의 원인만 고쳐라. 계약 판본은 그대로 둔다.",
+  "priority_order": [
+    "gate_violations"
+  ],
+  "open_violations": [
+    {
+      "rule": "g0.compile_failed",
+      "point": null,
+      "where": "mvnw test",
+      "detail": "컴파일 오류 2건\nsrc/main/java/com/thinking/tennis/api/AvailabilityController.java:58:13 cannot find symbol\nsrc/main/java/com/thinking/tennis/api/ApiExceptionHandler.java:21:23 cannot find symbol\n    symbol: class ApiException\n    location: class com.thinking.tennis.api.AvailabilityController\n    location: class com.thinking.tennis.api.ApiExceptionHandler",
+      "verdict": "violation"
+    }
+  ],
+  "rule_cards": {},
+  "current_contract_version": {
+    "path": "contract/tennis-alert-api.yaml-v1.yaml",
+    "from": "contract/tennis-alert-api.yaml-v1.yaml"
+  }
+}

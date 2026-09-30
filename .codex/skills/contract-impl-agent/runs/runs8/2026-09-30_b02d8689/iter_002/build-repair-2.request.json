@@ -1,0 +1,26 @@
+{
+  "brief_hash": "b02d8689",
+  "iteration": "002",
+  "purpose": "build_repair",
+  "attempt": 2,
+  "max_attempts": 3,
+  "scope": "build_only",
+  "instruction": "컴파일과 부팅만 고쳐라. 계약 적합성은 아직 판정되지 않았으므로 그 자리를 건드리지 마라. 구현을 크게 바꾸지 말고 빌드 실패의 원인만 고쳐라. 계약 판본은 그대로 둔다.",
+  "priority_order": [
+    "gate_violations"
+  ],
+  "open_violations": [
+    {
+      "rule": "g0.compile_failed",
+      "point": null,
+      "where": "mvnw test",
+      "detail": "컴파일 오류 7건\n(앞 6건만 적는다)\nsrc/main/java/com/thinking/tennis/api/AlertController.java:80:31 annotation @io.swagger.v3.oas.annotations.headers.Header is missing a default value for the element 'name'\nsrc/main/java/com/thinking/tennis/api/AlertController.java:128:31 annotation @io.swagger.v3.oas.annotations.headers.Header is missing a default value for the element 'name'\nsrc/main/java/com/thinking/tennis/api/AlertController.java:133:31 annotation @io.swagger.v3.oas.annotations.headers.Header is missing a default value for the element 'name'\nsrc/main/java/com/thinking/tennis/api/AlertController.java:174:31 annotation @io.swagger.v3.oas.annotations.headers.Header is missing a default value for the element 'name'\nsrc/main/java/com/thinking/tennis/api/AlertController.java:179:31 annotation @io.swagger.v3.oas.annotations.headers.Header is missing a default value for the element 'name'\nsrc/main/java/com/thinking/tennis/api/AlertController.java:209:31 annotation @io.swagger.v3.oas.annotations.headers.Header is missing a default value for the element 'name'",
+      "verdict": "violation"
+    }
+  ],
+  "rule_cards": {},
+  "current_contract_version": {
+    "path": "contract/tennis-alert-api-v2.yaml",
+    "from": "contract/tennis-alert-api-v1.yaml"
+  }
+}

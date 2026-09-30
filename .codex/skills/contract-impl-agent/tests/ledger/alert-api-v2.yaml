@@ -1,0 +1,72 @@
+# 원장 픽스처의 계약 판본 v2. v1에서 `Alert.lastCheckedAt`을 필수에서만 뺐다. 필드 자신은 그대로 두었으므로
+# 달라진 것은 요구의 세기뿐이고, 원장은 그 자리에서 닫힌 위반을 `closed_by: contract`로 센다.
+openapi: 3.1.0
+info:
+  title: 빈자리 알림 API (원장 픽스처)
+  version: 1.0.0
+servers:
+  - url: https://example.test/v1
+paths:
+  /alerts:
+    post:
+      operationId: createAlert
+      summary: 빈자리 알림을 신청한다
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlertRequest'
+      responses:
+        '201':
+          description: 신청을 받았다
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alert'
+        '422':
+          description: 본문이 계약과 다르다
+          x-error-codes:
+            - INVALID_BODY
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+components:
+  schemas:
+    AlertRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - courtId
+      properties:
+        courtId:
+          type: string
+        note:
+          type: string
+    Alert:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - status
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          enum:
+            - ACTIVE
+            - CANCELLED
+        lastCheckedAt:
+          type:
+            - string
+            - 'null'
+          format: date-time
+    Problem:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string

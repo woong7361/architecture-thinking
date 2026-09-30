@@ -1,0 +1,603 @@
+{
+  "brief_hash": "b02d8689",
+  "iteration": "002",
+  "stage": "refine",
+  "files": [
+    {
+      "path": "contract/tennis-alert-api-v2.yaml",
+      "role": "contract"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/OperationId.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/ApiDtos.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/RequestValidation.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/Authentication.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/AlertController.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/FailureCode.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/ApplicationFailure.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/AlertCommand.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/CreateAlertResult.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/AvailabilityResult.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/AvailabilityService.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/AlertService.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/AlertStatus.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/DeliveryStatus.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/AlertDelivery.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/Alert.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/AvailabilitySnapshot.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/AvailabilityCacheEntry.java",
+      "role": "code"
+    }
+  ],
+  "contract_version": {
+    "path": "contract/tennis-alert-api-v2.yaml",
+    "from": "contract/tennis-alert-api-v1.yaml"
+  },
+  "claims": [
+    {
+      "point": "createAlert:200/201",
+      "note": "조건 키별 잠금으로 서로 다른 멱등 키의 동시 중복 신청을 하나로 수렴시키고, 멱등 재생에는 불변 AlertView 스냅샷을 저장한다."
+    },
+    {
+      "point": "getCourtAvailability:200/502/503/504",
+      "note": "가용성 갱신은 활성 in-flight 요청만 공유하며, 갱신 완료 뒤의 새 요청은 실패를 재사용하지 않는다. 성공 결과가 없는 실패 캐시는 슬롯 지원 판정에서 미확인으로 처리한다."
+    },
+    {
+      "point": "getAlert:200/listAlerts:200/cancelAlert:200",
+      "note": "조회 경계에서 만료를 정리하고, 공개 가용성 조회가 WATCHING 신청만 갱신하도록 제한했다. NOTIFIED·CANCELED·EXPIRED 신청은 이후 조회로 변경되지 않는다."
+    },
+    {
+      "point": "createAlert:422",
+      "note": "기존 신청을 중복 판정하기 전에 만료시켜 만료된 조건은 새 감시 신청을 막지 않게 했다."
+    },
+    {
+      "point": "createAlert:400/getAlert:400/cancelAlert:400",
+      "note": "UUID 검증은 버전·variant 비트를 제한하지 않고 canonical UUID 형식만 검사한다."
+    },
+    {
+      "point": "createAlert:401/listAlerts:401/getAlert:401/cancelAlert:401",
+      "note": "Bearer 인증 스킴 비교를 대소문자 무관하게 처리한다."
+    },
+    {
+      "point": "createAlert:200/201",
+      "note": "Location과 Idempotency-Replayed 헤더를 두 성공 경로에서 명시적으로 설정하고, 응답 DTO 필드와 Problem 필드의 필수 키를 선언했다."
+    },
+    {
+      "point": "contract:002",
+      "note": "리뷰어가 발의한 기준선 설명 7건을 v2 계약 판본에 복원했다."
+    }
+  ],
+  "decisions": [
+    {
+      "id": "d_expiry_fallback_to_slot_start",
+      "point": "createAlert:201",
+      "where": "AlertService.create",
+      "question": "What expiry instant should be used when no earlier reservation-closing instant is available from the provided port?",
+      "considered": [
+        {
+          "choice": "Use the slot start instant in Asia/Seoul",
+          "consequence": "Implements the specified default expiry and keeps the alert window deterministic."
+        },
+        {
+          "choice": "Reject the request until an external closing instant is available",
+          "consequence": "Adds an unsupported failure path and prevents otherwise valid alerts."
+        }
+      ],
+      "chosen": "Use the slot start instant in Asia/Seoul.",
+      "basis": "spec_implication",
+      "rationale": "The immutable provided port exposes no earlier closing instant, so the existing fallback remains in force.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:201",
+        "createAlert:200",
+        "createAlert:422"
+      ],
+      "reversal_cost": "Change AlertService expiry calculation and add a source for earlier closing times.",
+      "supersedes": null
+    },
+    {
+      "id": "d_raw_bearer_token_identity",
+      "point": "createAlert:401",
+      "where": "Authentication.requireUser",
+      "question": "How is the user identity represented without an authentication provider in the provided API?",
+      "considered": [
+        {
+          "choice": "Use the non-empty Bearer token as the in-memory owner key",
+          "consequence": "Keeps ownership isolation deterministic without inventing an authentication endpoint or provider."
+        },
+        {
+          "choice": "Treat every authenticated request as one shared user",
+          "consequence": "Would violate the requirement that users cannot access one another's alerts."
+        }
+      ],
+      "chosen": "Use the non-empty Bearer token as the in-memory owner key; compare the scheme case-insensitively.",
+      "basis": "least_harm",
+      "rationale": "The contract requires Bearer authentication but leaves the authentication mechanism outside scope.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:401",
+        "listAlerts:200",
+        "getAlert:200",
+        "getAlert:404",
+        "cancelAlert:200",
+        "cancelAlert:404"
+      ],
+      "reversal_cost": "Replace the authentication helper and propagate a resolved principal from the security boundary.",
+      "supersedes": null
+    },
+    {
+      "id": "d_no_cached_schedule_accepts_structural_slot",
+      "point": "createAlert:422",
+      "where": "AlertService.create",
+      "question": "How can slot support be checked before a cached availability result exists when the provided port has no schedule-only operation?",
+      "considered": [
+        {
+          "choice": "Accept the structurally valid slot until a cached availability result disproves it",
+          "consequence": "Avoids an undeclared upstream failure path while still rejecting slots disproved by known cached data."
+        },
+        {
+          "choice": "Call the upstream availability port during creation",
+          "consequence": "Introduces an upstream failure path not declared for createAlert and couples creation to an external refresh."
+        }
+      ],
+      "chosen": "Accept the structurally valid slot when no cached schedule exists; reject it when an available cached schedule proves it unsupported.",
+      "basis": "least_harm",
+      "rationale": "The null-snapshot failure state is now treated as unknown rather than dereferenced, and the immutable port still exposes no schedule-only lookup.",
+      "confidence": "low",
+      "blast_radius": [
+        "createAlert:200",
+        "createAlert:201",
+        "createAlert:422"
+      ],
+      "reversal_cost": "Add a schedule/support port or change create-time failure mapping, then update AlertService.",
+      "supersedes": null
+    },
+    {
+      "id": "d_trace_id_uuid",
+      "point": "getCourtAvailability:500",
+      "where": "ApiExceptionHandler.problem",
+      "question": "What traceId representation should be emitted for 5xx responses?",
+      "considered": [
+        {
+          "choice": "Generate a UUID string",
+          "consequence": "Provides a unique correlation value without adding a tracing dependency."
+        },
+        {
+          "choice": "Generate a ULID-like value",
+          "consequence": "Would require an additional generator or library not present in the implementation contract."
+        }
+      ],
+      "chosen": "Generate a UUID string.",
+      "basis": "convention",
+      "rationale": "The contract constrains presence and 5xx scope but does not constrain the traceId format.",
+      "confidence": "medium",
+      "blast_radius": [
+        "getCourtAvailability:500",
+        "getCourtAvailability:502",
+        "getCourtAvailability:503",
+        "getCourtAvailability:504",
+        "createAlert:500",
+        "listAlerts:500",
+        "getAlert:500"
+      ],
+      "reversal_cost": "Replace traceId generation in the shared exception handler.",
+      "supersedes": null
+    },
+    {
+      "id": "d_single_flight_failure_scope",
+      "point": "getCourtAvailability:502/503/504",
+      "where": "AvailabilityService.get",
+      "question": "How long should a failed availability refresh be reused?",
+      "considered": [
+        {
+          "choice": "Reuse the failure for every request during the retry interval",
+          "consequence": "Suppresses repeated upstream calls but extends the same result beyond the callers that shared a refresh."
+        },
+        {
+          "choice": "Share one refresh outcome only with requests that joined the active refresh",
+          "consequence": "Preserves same-result behavior for concurrent waiters while allowing a later request to retry."
+        }
+      ],
+      "chosen": "Share one refresh outcome only with requests that join the active in-flight refresh.",
+      "basis": "contract_analogy",
+      "rationale": "EF-2 and V-4 require one external lookup and the same outcome for requests waiting on that lookup; they do not extend failure reuse to later requests.",
+      "confidence": "high",
+      "blast_radius": [
+        "getCourtAvailability:200",
+        "getCourtAvailability:502",
+        "getCourtAvailability:503",
+        "getCourtAvailability:504"
+      ],
+      "reversal_cost": "Reintroduce a bounded failure cache and document its scope in the contract.",
+      "supersedes": "d_refresh_failure_reuse_window"
+    },
+    {
+      "id": "d_system_clock_for_contract_times",
+      "point": "createAlert:201",
+      "where": "AlertController and AlertService",
+      "question": "Which clock supplies createdAt, freshness, and delay calculations?",
+      "considered": [
+        {
+          "choice": "Use the system Instant clock at request handling time",
+          "consequence": "Keeps the implementation dependency-free and uses UTC Instants in the response model."
+        },
+        {
+          "choice": "Introduce an injectable clock",
+          "consequence": "Improves deterministic tests but adds an abstraction not required by the implementation contract."
+        }
+      ],
+      "chosen": "Use Instant.now() from the system clock.",
+      "basis": "convention",
+      "rationale": "The contract specifies UTC timestamps but does not require a clock abstraction.",
+      "confidence": "medium",
+      "blast_radius": [
+        "getCourtAvailability:200",
+        "createAlert:201",
+        "createAlert:200",
+        "listAlerts:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "reversal_cost": "Inject a Clock through both application services and controllers.",
+      "supersedes": null
+    }
+  ],
+  "contract_changes": [
+    {
+      "id": "cc_restore_scope_time_compatibility",
+      "target": "/info/description",
+      "action": "add",
+      "what": "기준선의 계약 범위 밖 항목, UTC·Asia/Seoul 시간 의미, /v1 호환성 규칙, 요구사항 출처와 미지의 열거형 처리 규칙을 복원했다.",
+      "why": "현재 계약에서 기준선의 범위·시간·호환성 산문이 누락되어 구현자가 API 경계와 변경 규칙을 오해할 수 있다.",
+      "basis": "critique:contract:restore_scope_time_compatibility",
+      "spec_anchor": "slot_fd7db9b0",
+      "compatibility": "compatible",
+      "migration": null,
+      "iteration": "002"
+    },
+    {
+      "id": "cc_restore_availability_semantics",
+      "target": "/paths/~1courts~1{courtId}~1availability/get/description",
+      "action": "add",
+      "what": "20초 갱신, 코트·날짜별 단일 외부 조회, 동시 요청의 동일 결과, stale fallback, 성공 결과 부재 시 실패, 무인증 조회 의미를 복원했다.",
+      "why": "가용성 조회의 갱신과 single-flight 및 stale 의미가 계약에서 사라져 구현 표면을 단순 캐시 API로 오해할 수 있다.",
+      "basis": "critique:contract:restore_availability_semantics",
+      "spec_anchor": "slot_218b9620",
+      "compatibility": "compatible",
+      "migration": null,
+      "iteration": "002"
+    },
+    {
+      "id": "cc_restore_create_idempotency_semantics",
+      "target": "/paths/~1alerts/post/description",
+      "action": "add",
+      "what": "Idempotency-Key의 보관 범위, 4xx 미기록, 처리 중 503, 최초 응답 불변 재생, 다른 키의 동일 조건 중복 제거 규칙을 복원했다.",
+      "why": "생성 재시도의 불변성과 동시 조건 중복 제거는 FR-1과 V-1의 핵심 동작이다.",
+      "basis": "critique:contract:restore_create_idempotency_semantics",
+      "spec_anchor": "slot_7afbe3b4",
+      "compatibility": "compatible",
+      "migration": null,
+      "iteration": "002"
+    },
+    {
+      "id": "cc_restore_alert_lifecycle_invariants",
+      "target": "/components/schemas/Alert/description",
+      "action": "add",
+      "what": "status·delivery 허용 조합, FAILED 이후 재발송 금지, PENDING 취소 시 null 복귀, NOTIFIED와 SENT의 관계, 종료 상태의 비가역성을 복원했다.",
+      "why": "신청 생명주기 불변조건이 필드와 열거형만으로는 드러나지 않는다.",
+      "basis": "critique:contract:restore_alert_lifecycle_invariants",
+      "spec_anchor": "slot_cec09639",
+      "compatibility": "compatible",
+      "migration": null,
+      "iteration": "002"
+    },
+    {
+      "id": "cc_restore_stale_field_meaning",
+      "target": "/components/schemas/CourtAvailability/properties/stale/description",
+      "action": "add",
+      "what": "stale이 요청 실패가 아니라 오래된 마지막 성공 결과임을 명시하고 staleReason과 confirmedAt·slots의 의미를 복원했다.",
+      "why": "확인 실패를 빈자리 없음으로 잘못 해석하지 않도록 응답 필드의 조건부 의미가 필요하다.",
+      "basis": "critique:contract:restore_stale_field_meaning",
+      "spec_anchor": "slot_aff3f79",
+      "compatibility": "compatible",
+      "migration": null,
+      "iteration": "002"
+    },
+    {
+      "id": "cc_restore_problem_conditionals",
+      "target": "/components/schemas/Problem/description",
+      "action": "add",
+      "what": "retryable=true일 때 retryAfterSeconds와 Retry-After가 함께 오고 traceId는 5xx에만 온다는 조건을 복원했다.",
+      "why": "Problem의 필드 존재 조건은 단순 required 목록만으로 표현되지 않는다.",
+      "basis": "critique:contract:restore_problem_conditionals",
+      "spec_anchor": "slot_47c11736",
+      "compatibility": "compatible",
+      "migration": null,
+      "iteration": "002"
+    },
+    {
+      "id": "cc_restore_list_ordering_scope",
+      "target": "/components/schemas/AlertList/properties/items/description",
+      "action": "add",
+      "what": "본인 신청만 반환, 저장된 status 기준 필터, 최신 신청 우선 정렬, 페이지네이션 부재 범위를 복원했다.",
+      "why": "목록의 소유자 격리와 정렬·필터 의미가 계약에서 사라져 응답 해석이 불완전했다.",
+      "basis": "critique:contract:restore_list_ordering_scope",
+      "spec_anchor": "slot_f3c53a32",
+      "compatibility": "compatible",
+      "migration": null,
+      "iteration": "002"
+    }
+  ],
+  "generated_at": "2026-09-30T06:44:58+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "refine_impl:v1",
+    "source_files": [
+      "b02d8689_input.json"
+    ],
+    "token_usage": {
+      "input_tokens": 4352045,
+      "cached_input_tokens": 4210048,
+      "output_tokens": 53048,
+      "reasoning_output_tokens": 24624
+    },
+    "build_attempts": 3,
+    "index_source": "git-diff-recovery"
+  },
+  "commit": "56ad3ea4f5ba3d4e47e724ac9a51936a8c894f11",
+  "repairs": [
+    {
+      "violation_id": "gate:extract.blind@x-error-codes",
+      "summary": "FailureCode와 예외 응답 매핑을 명시적인 구현 표면으로 정리했다."
+    },
+    {
+      "violation_id": "gate:extract.blind@security",
+      "summary": "보호 오퍼레이션에서 Authorization 헤더와 Bearer 인증 경계를 명시했다."
+    },
+    {
+      "violation_id": "gate:response.required_weakened@getCourtAvailability:200",
+      "summary": "AvailabilityResponse의 필수 응답 필드에 required JSON 선언을 추가했다."
+    },
+    {
+      "violation_id": "gate:response.required_weakened@getCourtAvailability:200.slots",
+      "summary": "AvailabilitySlotResponse의 startTime, endTime, available 키를 필수로 선언했다."
+    },
+    {
+      "violation_id": "gate:response.status_missing@getCourtAvailability:400",
+      "summary": "예외 응답 처리에서 400 ValidationFailed 상태를 명시했다."
+    },
+    {
+      "violation_id": "gate:response.status_missing@getCourtAvailability:404",
+      "summary": "예외 응답 처리에서 404 CourtNotSupported 상태를 명시했다."
+    },
+    {
+      "violation_id": "gate:response.status_missing@getCourtAvailability:500",
+      "summary": "예외 응답 처리에서 500 InternalError 상태를 명시했다."
+    },
+    {
+      "violation_id": "gate:response.status_missing@getCourtAvailability:502",
+      "summary": "예외 응답 처리에서 502 UpstreamUnreadable 상태를 명시했다."
+    },
+    {
+      "violation_id": "gate:response.status_missing@getCourtAvailability:503",
+      "summary": "예외 응답 처리에서 503 AvailabilityUnavailable 상태를 명시했다."
+    },
+    {
+      "violation_id": "gate:response.status_missing@getCourtAvailability:504",
+      "summary": "예외 응답 처리에서 504 UpstreamTimeout 상태를 명시했다."
+    },
+    {
+      "violation_id": "gate:response.required_weakened@listAlerts:200",
+      "summary": "AlertListResponse.items를 필수 키로 선언했다."
+    },
+    {
+      "violation_id": "gate:response.required_weakened@listAlerts:200.items",
+      "summary": "목록 항목을 AlertResponse 전체 필드로 고정했다."
+    },
+    {
+      "violation_id": "gate:response.required_weakened@listAlerts:200.slot",
+      "summary": "목록 시간대의 startTime과 endTime을 필수로 선언했다."
+    },
+    {
+      "violation_id": "gate:response.required_weakened@listAlerts:200.delivery",
+      "summary": "목록 발송 결과의 status, attemptCount, lastAttemptAt, failureReason 키를 보존했다."
+    },
+    {
+      "violation_id": "gate:response.status_missing@listAlerts:400",
+      "summary": "목록 검증 실패를 400으로 명시했다."
+    },
+    {
+      "violation_id": "gate:response.status_missing@listAlerts:401",
+      "summary": "목록 인증 실패를 401로 명시했다."
+    },
+    {
+      "violation_id": "gate:response.status_missing@listAlerts:500",
+      "summary": "목록 내부 실패를 500으로 명시했다."
+    },
+    {
+      "violation_id": "gate:response.status_missing@listAlerts:503",
+      "summary": "목록 저장소 실패를 503으로 명시했다."
+    },
+    {
+      "violation_id": "gate:response.status_missing@createAlert:201",
+      "summary": "생성 컨트롤러에서 신규 응답의 201 분기를 명시했다."
+    },
+    {
+      "violation_id": "gate:response.required_weakened@createAlert:200",
+      "summary": "생성 중복 응답에 AlertResponse 필수 필드를 적용했다."
+    },
+    {
+      "violation_id": "gate:response.required_weakened@createAlert:200.slot",
+      "summary": "생성 중복 응답 시간대 필드를 필수로 선언했다."
+    },
+    {
+      "violation_id": "gate:response.required_weakened@createAlert:200.delivery",
+      "summary": "생성 중복 응답 발송 결과 키를 보존했다."
+    },
+    {
+      "violation_id": "gate:response.header_missing@createAlert:200.Idempotency-Replayed",
+      "summary": "200 생성 응답에 Idempotency-Replayed 헤더를 항상 설정했다."
+    },
+    {
+      "violation_id": "gate:response.header_missing@createAlert:200.Location",
+      "summary": "200 생성 응답에 Location 헤더를 항상 설정했다."
+    },
+    {
+      "violation_id": "gate:response.status_missing@createAlert:400",
+      "summary": "생성 검증 실패를 400으로 명시했다."
+    },
+    {
+      "violation_id": "gate:response.status_missing@createAlert:401",
+      "summary": "생성 인증 실패를 401로 명시했다."
+    },
+    {
+      "violation_id": "gate:response.status_missing@createAlert:409",
+      "summary": "멱등 키 충돌을 409로 명시했다."
+    },
+    {
+      "violation_id": "gate:response.status_missing@createAlert:422",
+      "summary": "생성 조건 불가를 422로 명시했다."
+    },
+    {
+      "violation_id": "gate:response.status_missing@createAlert:500",
+      "summary": "생성 내부 실패를 500으로 명시했다."
+    },
+    {
+      "violation_id": "gate:response.status_missing@createAlert:503",
+      "summary": "생성 경합·저장소 실패를 503으로 명시했다."
+    },
+    {
+      "violation_id": "gate:response.required_weakened@getAlert:200",
+      "summary": "단건 조회 응답에 AlertResponse 필수 필드를 적용했다."
+    },
+    {
+      "violation_id": "gate:response.required_weakened@getAlert:200.slot",
+      "summary": "단건 조회 시간대 필드를 필수로 선언했다."
+    },
+    {
+      "violation_id": "gate:response.required_weakened@getAlert:200.delivery",
+      "summary": "단건 조회 발송 결과 키를 보존했다."
+    },
+    {
+      "violation_id": "gate:response.status_missing@getAlert:400",
+      "summary": "단건 조회 검증 실패를 400으로 명시했다."
+    },
+    {
+      "violation_id": "gate:response.status_missing@getAlert:401",
+      "summary": "단건 조회 인증 실패를 401로 명시했다."
+    },
+    {
+      "violation_id": "gate:response.status_missing@getAlert:404",
+      "summary": "단건 조회 소유권·존재 실패를 404로 명시했다."
+    },
+    {
+      "violation_id": "gate:response.status_missing@getAlert:500",
+      "summary": "단건 조회 내부 실패를 500으로 명시했다."
+    },
+    {
+      "violation_id": "gate:response.status_missing@getAlert:503",
+      "summary": "단건 조회 저장소 실패를 503으로 명시했다."
+    },
+    {
+      "violation_id": "gate:response.required_weakened@cancelAlert:200",
+      "summary": "해제 응답에 AlertResponse 필수 필드를 적용했다."
+    },
+    {
+      "violation_id": "gate:response.required_weakened@cancelAlert:200.slot",
+      "summary": "해제 응답 시간대 필드를 필수로 선언했다."
+    },
+    {
+      "violation_id": "gate:response.required_weakened@cancelAlert:200.delivery",
+      "summary": "해제 응답 발송 결과 키를 보존했다."
+    },
+    {
+      "violation_id": "gate:response.status_missing@cancelAlert:400",
+      "summary": "해제 검증 실패를 400으로 명시했다."
+    },
+    {
+      "violation_id": "gate:response.status_missing@cancelAlert:401",
+      "summary": "해제 인증 실패를 401로 명시했다."
+    },
+    {
+      "violation_id": "gate:response.status_missing@cancelAlert:404",
+      "summary": "해제 소유권·존재 실패를 404로 명시했다."
+    },
+    {
+      "violation_id": "gate:response.status_missing@cancelAlert:503",
+      "summary": "해제 경합·저장소 실패를 503으로 명시했다."
+    }
+  ],
+  "ignored_suggestions": [
+    {
+      "suggestion_id": "critique:expiry_ignores_earlier_closing",
+      "reason": "immutable CourtAvailabilityPort에 예약 마감 시각 capability가 없고 이번 iteration에 이를 계약으로 발의한 항목도 없어 기존 slot-start fallback 결정을 유지했다."
+    },
+    {
+      "suggestion_id": "contested:d_expiry_fallback_to_slot_start",
+      "reason": "비평의 반박은 capability gap을 지적했지만 계약 변경 발의가 아니므로 스스로 포트를 확장하거나 계약을 약화하지 않았다."
+    },
+    {
+      "suggestion_id": "contested:d_no_cached_schedule_accepts_structural_slot",
+      "reason": "제공 포트에 schedule-only 조회가 없고 createAlert에 upstream 실패 응답이 선언되지 않아 구조적으로 유효한 슬롯 fallback 결정을 유지했다. null snapshot은 이제 미확인으로 안전하게 처리한다."
+    }
+  ]
+}

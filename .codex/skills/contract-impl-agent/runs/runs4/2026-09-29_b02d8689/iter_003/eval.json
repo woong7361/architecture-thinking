@@ -1,0 +1,117 @@
+{
+  "brief_hash": "b02d8689",
+  "iteration": "003",
+  "rubric_name": "impl:v1",
+  "rubric_scores": {
+    "scores": {
+      "request_tolerance": 1,
+      "response_fidelity": 1,
+      "failure_faithfulness": 1,
+      "state_continuity": 1,
+      "judgement_disclosure": 4
+    },
+    "weights": {
+      "request_tolerance": 0.2,
+      "response_fidelity": 0.25,
+      "failure_faithfulness": 0.2,
+      "state_continuity": 0.2,
+      "judgement_disclosure": 0.15
+    },
+    "weighted_total": 1.45
+  },
+  "axis_rationales": {
+    "request_tolerance": "열거 11개, 미충족 11개: [slot_50b303be, slot_2da6130c, slot_f8384ccf, slot_d605a592, slot_a24a09dd, slot_4606301c, slot_bff96712, slot_8ed65ad8, slot_b7eb2903, slot_5b93db46, slot_e12f9326]. 계약 판본은 확인했지만 `src/main/java/com/thinking/tennis/app/AlertApplicationService.java` 및 신고된 입력 경계 위치인 `src/main/java/com/thinking/tennis/api/BearerUser.java`에서 각 입력 약속을 만드는 실제 코드 경로를 작업 디렉터리에서 직접 확인하지 못해 충족으로 매핑하지 않았다.",
+    "response_fidelity": "열거 24개, 미충족 24개: [slot_3a0fe4f8, slot_a51918dd, slot_1ab21d09, slot_48013b81, slot_f85d06a3, slot_a690cbd9, slot_72175f6e, slot_8663b240, slot_a18b4f05, slot_5c1e3142, slot_98a52931, slot_cec09639, slot_422fec22, slot_c14121c8, slot_dc9ce55b, slot_98b55c8f, slot_a254926b, slot_f3c53a32, slot_64d5d23e, slot_a24cfac0, slot_aff3f79a, slot_41935322, slot_68584be5, slot_ea97add0]. `src/main/java/com/thinking/tennis/app/AlertApplicationService.java`와 응답 투영 경로의 실제 메서드·필드 산출을 작업 디렉터리에서 직접 확인하지 못해 값의 의미를 충족으로 세지 않았다.",
+    "failure_faithfulness": "열거 24개, 미충족 24개: [slot_bca4f922, slot_58100c30, slot_47c11736, slot_ec620f41, slot_b4f4d18f, slot_51e7307c, slot_d90659d2, slot_249bb9ac, slot_8e8d68a1, slot_45cf1c57, slot_398edd99, slot_676164c8, slot_7f26070b, slot_97116461, slot_7ddbf2b4, slot_222a5c7a, slot_f6be63a0, slot_bf6ebdaa, slot_36922dfa, slot_18204232, slot_524bf33a, slot_d5fad6dd, slot_ca2fed02, slot_674794f0]. 계약의 상태·코드 선언은 확인했지만 `src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java`와 각 오퍼레이션의 예외 분기 위치를 직접 열어 상황별 도달 경로를 확인하지 못했다.",
+    "state_continuity": "열거 12개, 미충족 12개: [slot_218b9620, slot_7afbe3b4, slot_85c85829, slot_a8b0f567, slot_9231bb2f, slot_e23500c7, slot_3b26d64c, slot_061df20e, slot_c733b457, slot_d4a3fef5, slot_3307096b, slot_e2d6a63c]. `src/main/java/com/thinking/tennis/app/AlertApplicationService.java`, `src/main/java/com/thinking/tennis/app/InMemoryAlertStore.java`, `src/main/java/com/thinking/tennis/app/AlertExpiryJob.java`로 신고된 저장·재생·상태 전이 위치는 색인에 있으나, 요청 사이의 실제 보존 경로를 작업 디렉터리에서 직접 확인하지 못했다.",
+    "judgement_disclosure": "신고된 결정 9건, 계약 변경 0건, DRAFT에 명시된 미신고 판단 0건으로 집계했다. `d_problem_representation` 등 일부 근거가 계약·명세의 직접 규정보다 계약 예시와 관례에 기대므로 5점이 아닌 4점으로 낮췄다."
+  },
+  "slot_classifications": [
+    {
+      "slot_id": "slot_fd7db9b0",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "서비스 범위와 호환성에 대한 설명이며 의무 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_d29b457f",
+      "classification": "description",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "계약 범위 밖의 운영 성능 기준 설명이며 의무 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_c4167f47",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "태그의 기능 설명이며 의무 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_31d22375",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "태그의 기능 설명이며 의무 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_e23500c7",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": false,
+      "note": "사용자 식별과 소유권 경계를 정하는 의무이나 실제 인증·소유권 경로를 직접 확인하지 못했다."
+    },
+    {
+      "slot_id": "slot_a18b4f05",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": false,
+      "note": "서버 발급 식별자 의미를 정하는 의무이나 실제 생성 경로를 직접 확인하지 못했다."
+    },
+    {
+      "slot_id": "slot_4606301c",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": false,
+      "note": "지원 코트 식별자의 입력 의미를 정하는 의무이나 실제 입력 검증 경로를 직접 확인하지 못했다."
+    },
+    {
+      "slot_id": "slot_bff96712",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": false,
+      "note": "시간대가 운영 단위와 정확히 일치해야 한다는 입력 의무의 코드 경로를 직접 확인하지 못했다."
+    },
+    {
+      "slot_id": "slot_8ed65ad8",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": false,
+      "note": "지역 기준 시작 시각을 받는 입력 의무의 코드 경로를 직접 확인하지 못했다."
+    },
+    {
+      "slot_id": "slot_b7eb2903",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": false,
+      "note": "지역 기준 종료 시각을 받는 입력 의무의 코드 경로를 직접 확인하지 못했다."
+    }
+  ],
+  "calibration_note": "작업 디렉터리의 구현 원문을 직접 열어 클래스·메서드 위치를 대조할 수 없었으므로, 네 적합성 축은 근거 없는 충족을 허용하지 않고 모든 의무 슬롯을 미충족으로 계산했다. 신고된 판단은 9건이고 계약 변경은 없지만, 일부 근거가 계약 예시·관례에 기대어 judgement_disclosure를 4점으로 보정했다.",
+  "evaluated_at": "2026-09-30T01:29:53+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_impl:v1",
+    "source_files": [
+      "b02d8689_input.json",
+      "b02d8689_iter-003_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 697203,
+      "cached_input_tokens": 643840,
+      "output_tokens": 12844,
+      "reasoning_output_tokens": 9617
+    }
+  }
+}

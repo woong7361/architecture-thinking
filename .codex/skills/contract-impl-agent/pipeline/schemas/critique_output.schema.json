@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Critique Direct Output",
+  "description": "시니어 리뷰어의 출력. 계약 변경의 발의는 여기서만 나오고 반영은 하지 않는다. 점수·판정·재작성은 금지다.",
+  "type": "object",
+  "required": [
+    "brief_hash",
+    "iteration",
+    "summary",
+    "strengths",
+    "weaknesses",
+    "revision_directions",
+    "contract_review",
+    "contested_decisions"
+  ],
+  "properties": {
+    "brief_hash": { "type": "string", "pattern": "^[a-f0-9]{8,}$" },
+    "iteration": { "type": "string", "pattern": "^[0-9]{3}$" },
+    "summary": { "type": "string", "minLength": 1 },
+    "strengths": {
+      "type": "array",
+      "description": "다음 초안에서 보존할 것.",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "weaknesses": {
+      "type": "array",
+      "description": "다섯 축에 붙인 고칠 방향. axis는 필수이고 runner가 루브릭의 축 집합에 있는지 검증한다.",
+      "items": {
+        "type": "object",
+        "required": ["id", "axis", "issue", "why_it_matters", "suggestion", "severity"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "description": "이 항목의 id. 계약 변경의 basis가 critique:<id>로 인용한다."
+          },
+          "axis": {
+            "type": "string",
+            "minLength": 1,
+            "description": "루브릭과 같은 축 이름. Refine이 '이 축이 약하다'와 '여기를 이렇게 고쳐라'를 한 쌍으로 받게 한다."
+          },
+          "issue": { "type": "string", "minLength": 1 },
+          "why_it_matters": { "type": "string", "minLength": 1 },
+          "suggestion": { "type": "string", "minLength": 1 },
+          "severity": { "type": "string", "enum": ["low", "medium", "high"] },
+          "target": {
+            "type": "object",
+            "required": ["pointer", "action", "scope"],
+            "description": "표면이나 계약을 건드리는 제안에 붙는다. scope가 code면 구현을 고치라는 것이고 contract면 계약을 고치라는 발의다. 이것이 붙어 있으면 runner가 계약 발의와 구현 지시를 갈라 각각을 제자리로 보낸다.",
+            "properties": {
+              "pointer": { "type": "string", "minLength": 1 },
+              "action": { "type": "string", "enum": ["remove", "add", "rename", "relax", "tighten"] },
+              "scope": { "type": "string", "enum": ["code", "contract"] }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "revision_directions": {
+      "type": "array",
+      "description": "다음 초안의 방향. 축에 묶이지 않는 것만 여기 적는다.",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "contract_review": {
+      "type": "array",
+      "description": "계약 자체에 대한 비평. 축이 없으므로 따로 낸다. 근거가 없는 발의는 runner가 unjustified_proposal로 표시해 Refine에 넘기지 않는다.",
+      "items": {
+        "type": "object",
+        "required": ["id", "kind", "pointer", "finding", "spec_anchor", "severity"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "description": "계약 변경의 basis가 critique:<id>로 인용한다."
+          },
+          "kind": {
+            "type": "string",
+            "enum": ["proposal", "prior_change_review", "observation_meaning", "harmful_choice"],
+            "description": "변경 발의, 앞선 변경의 검토, 기록된 초과의 뜻, 손해를 주는 선택."
+          },
+          "pointer": {
+            "type": "string",
+            "minLength": 1,
+            "description": "계약 안의 좌표."
+          },
+          "finding": { "type": "string", "minLength": 1 },
+          "proposed_change": {
+            "type": "string",
+            "description": "kind가 proposal이면 무엇을 어떻게 고쳐야 하는지. 발의가 아니면 빈 문자열."
+          },
+          "action": {
+            "type": "string",
+            "enum": ["remove", "add", "rename", "relax", "tighten"],
+            "description": "발의한 변경의 종류. contract_changes.action과 같은 닫힌 값이다."
+          },
+          "spec_anchor": {
+            "type": "string",
+            "description": "명세의 요구사항 id나 계약의 슬롯. 비면 runner가 unjustified_proposal로 표시한다."
+          },
+          "severity": { "type": "string", "enum": ["low", "medium", "high"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "contested_decisions": {
+      "type": "array",
+      "description": "서 있는 결정에 대한 반박. 계약에 답이 있는 자리를 결정으로 신고했으면 여기서 반박하고 그 항목은 결정에서 위반으로 내려간다.",
+      "items": {
+        "type": "object",
+        "required": ["decision_id", "objection", "alternative", "severity"],
+        "properties": {
+          "decision_id": { "type": "string", "minLength": 1 },
+          "objection": { "type": "string", "minLength": 1 },
+          "alternative": { "type": "string", "minLength": 1 },
+          "severity": { "type": "string", "enum": ["low", "medium", "high"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "reader_risks": {
+      "type": "array",
+      "description": "계약 안에서는 합법이지만 쓰는 사람이 잘못 읽게 되는 자리.",
+      "items": { "type": "string", "minLength": 1 }
+    }
+  },
+  "additionalProperties": false
+}

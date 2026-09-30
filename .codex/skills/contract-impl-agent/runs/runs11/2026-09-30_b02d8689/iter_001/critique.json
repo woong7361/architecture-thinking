@@ -1,0 +1,173 @@
+{
+  "brief_hash": "b02d8689",
+  "iteration": "001",
+  "summary": "표면은 계약을 촘촘히 따라 그렸다. 실패 본문의 선택 키를 조립해 traceId·retryAfterSeconds 조건을 지킨 자리, 확인 실패를 stale로 옮기고 저장된 성공 결과가 없을 때만 5xx로 나가는 갈림길, 코트·날짜마다 확인을 한 번으로 묶는 자리, 멱등 기록에 엔티티가 아니라 응답을 담은 자리는 계약의 까다로운 약속을 제대로 읽은 결과다. 반면 이 초안에서 가장 무거운 자리는 계약이 아니라 계약이 비워 둔 틈이다. createAlert가 SLOT_NOT_SUPPORTED를 판정하려고 예약처 확인을 일으키고 그 결과를 조회와 공유하는 기록에 쓰는데, 계약에는 이 오퍼레이션이 예약처 실패를 알릴 상태 코드가 없고 명세는 확인을 일으키는 것이 조회뿐이라고 적었다. 이 하나에서 500 INTERNAL_ERROR라는 잘못된 이름, 신청 실패가 이후 20초의 조회 응답을 오염시키는 교차 영향, 날짜가 열리지 않은 미래 신청이 전부 422로 거절되는 결과가 함께 나온다. 확인하지 못한 자리를 적는다. application.yaml·pom.xml·port의 인메모리 어댑터·arch 테스트는 이 초안의 files에 없고 omitted도 비어 있어 읽지 않았다. 따라서 널 키를 남기는 전역 직렬화 설정의 실제 값, Instant의 직렬화 형식, 어댑터가 어떤 코트와 어떤 slots를 돌려주는지는 검증하지 못했고, 그 전제에 기대는 판단(Problem.toBody의 필요성, 빈 slots가 실제로 나오는지)은 코드의 주석과 계약만 보고 적은 것이다. 게이트가 세는 자리(필드 유무·타입·선언한 에러 코드)는 일부러 건드리지 않았다.",
+  "strengths": [
+    "Problem.toBody()가 계약 순서대로 실을 키만 담아 traceId를 5xx에만, retryAfterSeconds를 재시도 가능한 실패에만 싣고, respond()가 그 값이 있을 때만 Retry-After 헤더를 함께 보낸다. slot_47c11736이 스키마로 적을 수 없다고 한 두 조건을 코드가 한 자리에서 지킨다.",
+    "GetCourtAvailabilityUseCase.view()가 마지막 실패와 마지막 성공을 갈라, 저장된 성공 결과가 있으면 200에 stale·staleReason을 세우고 없을 때만 실패로 올린다. EF-1이 말한 '확인 실패를 빈자리 없음으로 다루지 않는다'가 상태 코드 갈림길로 정확히 옮겨졌다.",
+    "코트·날짜마다 checkLock 하나로 묶고, 잠금에서 깨어난 요청이 방금 기록된 시도를 다시 읽어 같은 결과나 같은 실패를 받는다. V-4와 slot_218b9620의 '기다리던 요청은 모두 같은 내용을 받는다'를 코드가 실제로 만족한다.",
+    "IdempotencyRegistry가 신청이 아니라 돌려준 응답(status·body·location)을 보관해, 그 뒤 상태가 바뀌어도 재생 응답이 바뀌지 않는다는 slot_7afbe3b4의 약속을 구조로 지킨다. 키를 사용자·오퍼레이션 단위로 두어 다른 사용자의 같은 키가 섞이지 않는 것도 계약대로다.",
+    "Alert.canceled()·expired()가 PENDING 대기만 버리고 SENT·FAILED는 남기며, 끝난 신청은 다시 옮기지 않는다. EF-5와 V-8, slot_c733b457이 요구한 '이미 나간 알림은 취소되지 않는다'와 '끝난 신청은 되살아나지 않는다'가 도메인 한 자리에 모여 있다.",
+    "findOwned가 없는 신청과 남의 신청을 같은 빈 값으로 만들어, 존재 여부를 드러내지 않는 404가 조회와 해제 양쪽에서 같은 모양으로 나간다."
+  ],
+  "weaknesses": [
+    {
+      "id": "w_create_triggers_and_writes_check",
+      "axis": "state_continuity",
+      "issue": "CreateAlertUseCase.operatingSlots()가 GetCourtAvailabilityUseCase.availability()를 그대로 불러, 신청 요청이 외부 예약처 확인을 일으키고 그 성공·실패를 조회와 공유하는 AvailabilityStore에 기록한다. 그래서 신청 한 건이 실패한 확인을 남기면, 그 뒤 확인 간격 동안 들어온 GET /courts/{courtId}/availability는 자기가 일으키지 않은 실패 때문에 stale=true나 5xx를 받는다. 반대로 신청이 성공 확인을 남기면 그 간격 동안 조회는 예약처를 다시 묻지 않는다.",
+      "why_it_matters": "명세는 '확인을 일으키는 것은 조회뿐'이라고 못 박았고 계약의 slot_218b9620도 확인을 일으키는 주체를 이 조회 요청으로만 적었다. 신청 경로가 같은 기록에 쓰면 요청 하나의 결과가 다른 오퍼레이션의 응답 신선도를 바꾸는데, 이 연결은 계약 어디에도 없어 계약만 읽은 사람은 예측할 수 없다. 신청이 몰리는 예약 오픈 시각에 예약처로 나가는 조회 수 상한(NFR-3, V-4)의 근거도 흔들린다.",
+      "suggestion": "신청 경로에서 확인을 일으키지 말고 AvailabilityStore에 저장된 마지막 성공 결과만 읽어 운영 시간대를 판정하도록 operatingSlots()를 바꾼다. 저장된 결과가 없어 판정할 수 없는 경우를 어떤 응답으로 내보낼지는 계약에 자리가 없으므로 contract_review:cr_create_upstream_failure의 발의가 받아들여진 뒤에 그 코드로 낸다. 그 전까지는 이 연결을 결정으로 신고한다.",
+      "severity": "high",
+      "target": {
+        "pointer": "src/main/java/com/thinking/tennis/app/CreateAlertUseCase.java#operatingSlots",
+        "action": "remove",
+        "scope": "code"
+      }
+    },
+    {
+      "id": "w_create_check_not_disclosed",
+      "axis": "judgement_disclosure",
+      "issue": "신청이 예약처 확인을 일으키고 공유 기록에 쓴다는 선택 자체가 decisions에 없다. d_slots_undetermined_internal_error는 '확인하지 못했을 때 무엇으로 나가는가'만 다루고, 확인을 일으키기로 한 앞선 판단과 그 대안(저장된 결과만 쓰기, 판정을 미루기)은 기록되지 않았다. d_failed_check_fills_interval도 조회 경로를 전제로 쓰였고 blast_radius에 createAlert가 들어 있지만, 신청이 조회의 기록을 쓴다는 사실은 그 문장 어디에도 없다.",
+      "why_it_matters": "명세의 한 문장과 정면으로 부딪히는 선택이 결정으로 신고되지 않으면, 다음 iteration이 이것을 검토된 판단으로 오해해 그대로 물려받는다. 신고된 결정만 반박할 수 있으므로 신고되지 않은 선택은 되돌릴 기회 자체가 없다.",
+      "suggestion": "'신청 조건을 판정하려고 예약처 확인을 일으키는가'를 독립된 결정으로 세우고, 고려한 선택지(확인을 일으킨다 / 저장된 마지막 성공 결과만 본다 / 슬롯 검사를 미룬다)와 각각의 결과, 그리고 명세의 '확인을 일으키는 것은 조회뿐이다'와 어긋나는 점을 근거에 함께 적는다. blast_radius에 getCourtAvailability:200과 502·503·504를 포함한다.",
+      "severity": "high"
+    },
+    {
+      "id": "w_check_delayed_on_terminal_alerts",
+      "axis": "response_fidelity",
+      "issue": "AlertViewFactory.of()가 신청의 상태를 보지 않고 checkDelayed와 lastCheckedAt을 계산한다. 해제되거나 만료된 신청, 이미 알림이 나간 신청도 마지막 성공 확인이 60초를 넘기면 checkDelayed가 true로 나가고, 시간이 지나면 끝난 신청은 예외 없이 true가 된다.",
+      "why_it_matters": "slot_98b55c8f는 이 값을 '확인이 밀리고 있는지 여부'로 정의하고 FR-2는 확인 지연을 확인 경로가 끊긴 신호로 썼다. 그런데 CANCELED·EXPIRED·NOTIFIED 신청은 계약(slot_3b26d64c)이 확인을 멈춘다고 적은 상태다. 멈추기로 한 확인이 밀리고 있다고 말하는 것이라 값의 형태는 맞지만 뜻이 계약과 다르고, 목록 조회는 끝난 신청까지 모두 돌려주므로 오래된 신청이 쌓일수록 이 거짓 신호가 응답의 대부분을 채운다.",
+      "suggestion": "AlertViewFactory.of()에서 alert.status().terminal()이면 checkDelayed를 false로 두고, 그 근거를 '확인을 멈춘 신청에는 밀릴 확인이 없다'로 적는다. lastCheckedAt은 사실의 기록이므로 그대로 둔다. 계약이 끝난 신청의 이 값을 정하지 않았다는 점은 contract_review:cr_check_delayed_terminal의 발의로 함께 올린다.",
+      "severity": "medium",
+      "target": {
+        "pointer": "src/main/java/com/thinking/tennis/app/AlertViewFactory.java#of",
+        "action": "tighten",
+        "scope": "code"
+      }
+    },
+    {
+      "id": "w_cancel_contention_from_sweeper",
+      "axis": "failure_faithfulness",
+      "issue": "CancelAlertUseCase.cancel()이 대기 없는 tryLock()으로 신청별 잠금을 잡고, 잡지 못하면 곧바로 503 CONCURRENT_UPDATE_CONFLICT를 낸다. 그런데 그 잠금을 다투는 상대는 사용자 요청만이 아니라 1초마다 도는 AlertExpirySweeper다. 만료 시각이 지난 신청을 사용자가 해제하려는 순간은 스위퍼가 바로 그 신청을 잠그는 순간과 겹치기 쉽다.",
+      "why_it_matters": "계약(slot_58100c30)은 CONCURRENT_UPDATE_CONFLICT를 '같은 자원을 동시에 고치려는 요청끼리 경합에 밀렸다'로 정의했다. 서버 작업과 부딪힌 것을 요청끼리의 경합으로 알리면, 클라이언트는 다른 요청이 있었다고 읽고 로그를 뒤진다. 게다가 대기 시간이 0이라 몇 마이크로초의 겹침도 그대로 503이 되어, 짧게 기다리면 성공했을 요청이 실패로 나간다.",
+      "suggestion": "tryLock()을 짧은 시간 상한을 둔 tryLock(timeout, unit)으로 바꿔 그 시간이 다 지난 뒤에만 ConcurrentUpdate를 낸다. 상한 값과 그것을 고른 근거를 결정으로 신고하고, 스위퍼와의 경합도 이 코드로 알린다는 사실을 함께 적는다.",
+      "severity": "medium",
+      "target": {
+        "pointer": "src/main/java/com/thinking/tennis/app/CancelAlertUseCase.java#cancel",
+        "action": "relax",
+        "scope": "code"
+      }
+    },
+    {
+      "id": "w_unopened_date_rejected",
+      "axis": "request_tolerance",
+      "issue": "CreateAlertUseCase.requireOperatingSlot()이 확인 결과의 slots에 없는 시간대를 모두 SLOT_NOT_SUPPORTED로 거절한다. 그런데 계약(slot_ea97add0, slot_50b303be)은 예약처가 아직 그 날짜를 열지 않았을 때도 slots가 빈 배열이라고 적었다. 그래서 예약이 아직 열리지 않은 날짜로 들어온 신청은 조건이 무엇이든 422로 거절되고, describeOperating()이 '운영하는 시간대가 없습니다'라는 영구 거절처럼 읽히는 설명을 붙인다.",
+      "why_it_matters": "이 서비스가 존재하는 이유가 예약 오픈 시각의 빈자리이고, 오픈 전에 미리 신청해 두는 것이 FR-1의 주된 쓰임이다. 계약을 읽고 만료 전의 미래 날짜로 정상적으로 부른 요청이 거절되며, 422와 retryable:false가 함께 나가 클라이언트는 이 조건이 영영 안 된다고 판단하고 재시도를 끊는다. 날짜가 열리지 않은 것과 운영하지 않는 시간대인 것은 클라이언트의 대응이 정반대인데 한 코드로 합쳐졌다.",
+      "suggestion": "계약이 두 상황을 가르도록 먼저 고친다(contract_review:cr_unopened_date). 그때까지 구현은 slots가 빈 배열인 경우를 '운영하지 않는 시간대'로 단정하지 말고, 그 판정을 어떻게 다룰지를 근거와 함께 결정으로 신고한다. 계약이나 명세에 근거가 생기면 빈 배열일 때는 신청을 받아 감시 중으로 두는 쪽으로 옮긴다.",
+      "severity": "high",
+      "target": {
+        "pointer": "/components/schemas/CourtAvailability/properties/slots/description",
+        "action": "relax",
+        "scope": "contract"
+      }
+    }
+  ],
+  "revision_directions": [
+    "이 초안의 무거운 자리는 모두 createAlert가 예약처를 만나는 한 지점에서 갈라져 나온다. 개별 증상(500 INTERNAL_ERROR, 빈 slots 거절, 조회 응답 오염)을 따로 고치지 말고 그 지점의 성격을 먼저 정한 뒤 아래로 내려보낸다.",
+    "계약 발의가 받아들여지기 전에 구현만 먼저 바꾸면 게이트가 선언과 코드의 어긋남으로 잡는다. cr_create_upstream_failure와 cr_unopened_date는 계약 판본을 올리는 변경이므로 계약을 먼저 고치고 그 판본을 근거로 구현을 옮긴다.",
+    "신고되지 않은 선택을 찾는 눈을 신청 경로에 한 번 더 둔다. 이 초안은 실패를 어떻게 알릴지는 꼼꼼히 신고했지만 무엇을 하기로 했는지(외부를 부른다, 공유 기록에 쓴다)는 신고하지 않았다. 결정의 대상은 실패의 이름만이 아니다."
+  ],
+  "contract_review": [
+    {
+      "id": "cr_create_upstream_failure",
+      "kind": "proposal",
+      "pointer": "/paths/~1alerts/post/responses",
+      "finding": "계약은 SLOT_NOT_SUPPORTED를 '코트는 지원하지만 그 코트가 그 날짜에 운영하지 않는 시간대'로 정의하고, 운영하는 시간대 전부가 실리는 곳은 확인 결과의 slots뿐이라고 적었다. 즉 이 판정에는 예약처 확인 결과가 반드시 필요한데, createAlert의 응답 목록에는 그 확인이 실패했을 때 쓸 코드가 하나도 없다. 그 결과 구현은 예약처 실패를 INTERNAL_ERROR로 옮길 수밖에 없었고, 계약은 '서버 내부 실패'라고 적은 코드로 외부 예약처의 장애를 알리게 됐다.",
+      "proposed_change": "createAlert에 확인 실패를 알리는 응답을 더한다. getCourtAvailability와 같은 갈래를 그대로 쓰되(UPSTREAM_TIMEOUT 504, UPSTREAM_UNAVAILABLE 503, UPSTREAM_RESPONSE_UNREADABLE 502) 셋을 한 자리로 묶는 것이 나으면 503 하나에 x-error-codes로 세 코드를 싣고 retryAfterSeconds를 확인 간격으로 둔다. 어느 쪽이든 description에 '운영 시간대를 확인하지 못해 조건을 판정할 수 없다'는 뜻을 적고, 이 경우 신청이 만들어지지 않았음을 명시한다. 이 오퍼레이션이 예약처 확인을 일으킬 수 있다는 사실도 description에 적어야 명세의 '확인을 일으키는 것은 조회뿐이다'와의 관계가 드러난다.",
+      "action": "add",
+      "spec_anchor": "FR-1, EF-1, slot_ea97add0",
+      "severity": "high"
+    },
+    {
+      "id": "cr_unopened_date",
+      "kind": "proposal",
+      "pointer": "/components/schemas/CourtAvailability/properties/slots/description",
+      "finding": "이 슬롯은 '여기에 없는 시간대로 알림을 신청하면 SLOT_NOT_SUPPORTED로 거절된다'와 '예약처가 아직 그 날짜를 열지 않았으면 빈 배열이다'를 나란히 적었다. 두 문장을 그대로 이으면 예약이 열리지 않은 모든 미래 날짜의 신청이 SLOT_NOT_SUPPORTED로 거절된다는 결론이 나오고, 이 초안의 구현이 실제로 그렇게 읽었다. 계약은 그 결론을 어디에서도 부정하지 않는다.",
+      "proposed_change": "'여기에 없는 시간대'의 범위를 좁힌다. slots가 비어 있지 않은 경우에만 SLOT_NOT_SUPPORTED의 근거가 된다고 적고, slots가 빈 배열일 때 createAlert가 어떻게 하는지를 이 스키마가 아니라 /paths/~1alerts/post/description에 한 문장으로 정한다. 신청을 받는 쪽으로 정하면 FR-1이 말한 예약 오픈 전 신청이 살고, 거절하는 쪽으로 정하려면 ALERT_WINDOW_CLOSED처럼 뜻이 다른 코드를 따로 두어야 재시도 가능성을 옳게 말할 수 있다.",
+      "action": "relax",
+      "spec_anchor": "FR-1, FR-7, slot_50b303be",
+      "severity": "high"
+    },
+    {
+      "id": "cr_check_delayed_terminal",
+      "kind": "proposal",
+      "pointer": "/components/schemas/Alert/properties/checkDelayed",
+      "finding": "이 필드는 모든 Alert에 필수인데, 확인을 멈춘 신청(CANCELED·EXPIRED·NOTIFIED)에서 무엇을 뜻하는지 계약이 정하지 않았다. AlertStatus는 이 셋에서 확인이 멈춘다고 적었으므로 '확인이 밀리고 있다'는 판정 자체가 성립하지 않는데, 규칙(마지막 성공 확인이 확인 간격의 세 배)만 남아 있어 시간이 지나면 끝난 신청은 모두 true가 된다. 목록 조회는 끝난 신청까지 돌려주므로 이 빈틈이 응답의 다수를 차지하게 된다.",
+      "proposed_change": "description에 '확인을 멈춘 신청(WATCHING이 아닌 신청)에서는 언제나 false다'를 더한다. 또는 이 값의 뜻을 '이 신청의 확인 경로가 끊겼는지'로 좁히고 감시 중인 신청에만 의미가 있다고 적는다. 어느 쪽이든 끝난 신청이 무엇을 받는지 한 문장으로 정해야 클라이언트가 이 값으로 경고를 띄울지 판단할 수 있다.",
+      "action": "tighten",
+      "spec_anchor": "FR-2, slot_98b55c8f, slot_3b26d64c",
+      "severity": "medium"
+    },
+    {
+      "id": "cr_reference_resolution_base",
+      "kind": "harmful_choice",
+      "pointer": "/components/headers/Location/description",
+      "finding": "servers가 https://api.tennis-alert.example.com/v1을 들고 있는데 Location의 예시는 /v1/alerts/{id}이고 Problem.instance의 예시도 /v1/alerts다. 두 값은 uri-reference라 서버 주소를 기준으로 푸는 것이 보통인데, 그렇게 풀면 .../v1/v1/alerts/{id}가 되어 존재하지 않는 경로가 나온다. 호스트 루트를 기준으로 풀어야 맞지만 계약은 그 기준을 적지 않았다. 이 초안이 매핑 경로에는 접두사를 넣지 않고 만들어 내보내는 참조에만 /v1을 붙이기로 한 것(d_version_prefix_in_references)도 이 빈자리를 메우려던 판단이다.",
+      "proposed_change": "",
+      "spec_anchor": "slot_72175f6e, slot_249bb9ac",
+      "severity": "medium"
+    },
+    {
+      "id": "cr_storage_timeout_unreachable",
+      "kind": "harmful_choice",
+      "pointer": "/components/schemas/ErrorCode",
+      "finding": "STORAGE_TIMEOUT은 네 오퍼레이션의 503에 선언돼 있지만, 계약은 저장소가 무엇인지도 언제 제때 응답하지 못하는지도 정하지 않는다. 그래서 읽는 사람은 이 코드가 실제로 나오는 실패라고 믿고 재시도 경로를 짜지만, 저장 방식은 계약 밖이라 어떤 구현에서는 영영 나오지 않는다(이 초안도 그렇다고 claims에 적었다). 나오지 않는 실패를 선언해 두면 클라이언트는 시험할 수 없는 분기를 들고 있게 되고, 반대로 그 분기를 지우면 저장소가 붙는 날 조용히 깨진다.",
+      "proposed_change": "",
+      "spec_anchor": "slot_58100c30, slot_d5fad6dd",
+      "severity": "low"
+    }
+  ],
+  "contested_decisions": [
+    {
+      "decision_id": "d_bearer_token_identity",
+      "objection": "토큰 문자열을 그대로 사용자 식별자로 쓰면 형식만 맞으면 어떤 값이든 유효한 사용자가 된다. 계약(slot_58100c30)은 UNAUTHENTICATED를 '토큰이 없거나 유효하지 않아 사용자를 식별할 수 없다'로 정의했는데, 이 구현에서 '유효하지 않은 토큰'이라는 상태는 존재하지 않으므로 그 절반은 닿는 코드가 없다. 결정은 이것을 인증 방식의 자유로만 적었지, 계약이 선언한 실패 조건 하나를 도달 불가능하게 만든다는 점을 근거에 담지 않았다. blast_radius도 401을 나열했을 뿐 '유효하지 않은 토큰'이 사라졌다는 사실은 드러내지 않는다.",
+      "alternative": "토큰을 식별자로 쓰는 선택 자체는 유지하되, 유효성 판정을 포트 하나로 뽑아 이 초안에서는 항상 통과하는 구현을 붙인다. 그러면 계약이 말한 두 실패(없음·유효하지 않음)가 코드 위에 모두 남고, 검증이 붙는 날 어댑터만 갈아 끼우면 된다. 그것이 과하면 결정의 근거에 '유효하지 않은 토큰으로 인한 401은 이 초안에 존재하지 않는다'를 명시적으로 적어 다음 iteration이 그 자리를 안전하다고 믿지 않게 한다.",
+      "severity": "medium"
+    },
+    {
+      "decision_id": "d_slots_undetermined_internal_error",
+      "objection": "세 선택지가 모두 나쁜 이유는 계약이 이 오퍼레이션에 맞는 코드를 두지 않았기 때문인데, 결정은 그 사실을 전제로 받아들이고 계약을 고칠 길을 고려하지 않았다. 그 결과 외부 예약처의 장애가 INTERNAL_ERROR라는 이름으로 나가고 traceId가 함께 실려, 사용자는 서버 로그를 찾으라는 안내를 받지만 원인은 서버 로그에 없다. 또 이 결정은 '신청이 예약처 확인을 일으킨다'를 이미 정해진 것으로 두고 시작하는데, 그 앞선 판단이 결정으로 신고되지 않았다.",
+      "alternative": "계약에 확인 실패 응답을 더하는 발의(cr_create_upstream_failure)를 먼저 올리고, 반영된 판본에서 UPSTREAM_* 코드로 낸다. 발의가 받아들여지기 전까지는 500을 유지하되 결정의 근거에 '계약에 자리가 없어 이름을 잘못 말하고 있으며 계약 변경을 발의했다'를 적고, 앞선 판단(확인을 일으킨다)을 별도 결정으로 세운 뒤 이 결정이 그것에 기대고 있음을 밝힌다.",
+      "severity": "medium"
+    },
+    {
+      "decision_id": "d_expiry_sweep_interval",
+      "objection": "1초 주기를 고른 근거는 '뒤늦게 보이는 창'만 보고 있고, 그 주기가 사용자 요청과 잠금을 다툰다는 사실은 blast_radius에 없다. 스위퍼가 신청별 updateLock을 잡는 동안 들어온 해제 요청은 대기 없는 tryLock에 걸려 즉시 503 CONCURRENT_UPDATE_CONFLICT를 받는다. 주기를 짧게 할수록 그 확률이 오르고, 하필 만료 시각이 막 지난 신청은 사용자가 해제하려는 신청과 겹치기 쉽다. cancelAlert:503이 blast_radius에 빠져 있어 이 결정이 실패 응답률을 바꾼다는 것이 드러나지 않는다.",
+      "alternative": "주기 값 자체는 유지해도 되지만 blast_radius에 cancelAlert:503과 cancelAlert:200을 더하고, 해제 쪽 잠금에 짧은 대기 상한을 두어 스위퍼와의 겹침이 사용자 실패로 새지 않게 한다. 두 결정(주기와 잠금 대기)은 함께 읽어야 결과를 알 수 있으므로 서로를 가리키게 적는다.",
+      "severity": "low"
+    },
+    {
+      "decision_id": "d_version_prefix_in_references",
+      "objection": "Location과 instance를 한 묶음으로 다뤘지만 둘의 성격이 다르다. Location은 클라이언트가 따라갈 참조라 배포된 표면과 같아야 한다는 근거가 선다. 반면 instance는 계약(slot_249bb9ac)이 '실패가 난 요청의 경로'로 적은 진단값인데, 이 구현은 실제로 받은 요청 경로에 /v1을 지어 붙인다. 접두사를 게이트웨이가 붙이지 않는 환경에서는 instance가 이 서비스가 서비스하지 않는 경로를 가리키게 되고, 로그를 대조하는 사람이 받은 적 없는 경로를 찾게 된다.",
+      "alternative": "Location은 그대로 두고 instance만 갈라, 전달된 원래 경로(X-Forwarded-Prefix 같은 값이 있으면 그것, 없으면 요청 경로 그대로)를 쓰도록 ApiUris.instance를 나눈다. 그 전에 계약이 이 두 값의 해석 기준을 정하지 않았다는 점(cr_reference_resolution_base)을 근거로 인용한다.",
+      "severity": "low"
+    }
+  ],
+  "reader_risks": [
+    "계약과 명세만 읽은 사람은 예약처로 나가는 조회가 GET /courts/{courtId}/availability에서만 일어난다고 믿는다. 실제로는 POST /alerts도 확인을 일으키고 같은 기록에 쓰므로, 예약 오픈 시각의 예약처 부하와 확인 실패의 파급 범위를 실제보다 작게 예상하게 된다.",
+    "createAlert가 재생한 201은 Idempotency-Replayed: true를 달고 나가지만 상태 코드는 처음과 같은 201이다. 헤더를 보지 않고 상태 코드만 읽는 중간 경로나 클라이언트는 신청이 새로 만들어졌다고 집계해, 실제보다 많은 신청이 생겼다고 믿는다.",
+    "추출한 스펙은 AlertRequest를 닫힌 객체로 말하지만(OpenApiConfig가 additionalProperties를 false로 적는다) 런타임이 선언하지 않은 필드를 거절한다는 근거는 이 초안에 없다. 게다가 멱등 지문은 코트·날짜·시간대만 보므로, 필드 이름을 잘못 적어 보낸 요청이 조용히 통과하고 같은 키의 재시도로도 취급된다.",
+    "끝난 신청의 checkDelayed가 true로 나가므로, 목록을 읽는 사람은 이미 해제하거나 만료된 신청을 두고 '서버가 내 신청을 확인하지 못하고 있다'고 읽는다. 오래된 신청이 쌓일수록 이 거짓 경고가 목록의 대부분을 차지한다.",
+    "STORAGE_TIMEOUT은 네 오퍼레이션의 503에 선언돼 있지만 이 초안에서 나가는 경로가 없다. 선언을 보고 재시도 분기를 짠 클라이언트는 그 분기를 한 번도 시험하지 못하고, 그 자리가 동작한다고 믿은 채로 저장소가 붙는 날을 맞는다.",
+    "Location과 instance의 /v1이 서버 주소 기준인지 호스트 루트 기준인지 계약이 정하지 않았다. 서버 주소에 이어 붙이는 클라이언트는 /v1/v1/alerts/{id}로 가고, 그 실패를 계약의 잘못이 아니라 자기 코드의 잘못으로 찾게 된다."
+  ],
+  "critiqued_at": "2026-09-30T15:28:12+09:00",
+  "model": "claude-opus-5",
+  "metadata": {
+    "prompt_version": "critique_impl:v1",
+    "source_files": [
+      "b02d8689_input.json",
+      "b02d8689_iter-001_draft.json"
+    ]
+  }
+}

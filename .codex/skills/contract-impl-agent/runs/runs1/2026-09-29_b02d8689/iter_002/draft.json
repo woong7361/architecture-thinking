@@ -1,0 +1,67 @@
+{
+  "brief_hash": "b02d8689",
+  "iteration": "002",
+  "stage": "refine",
+  "files": [
+    {
+      "path": "src/main/java/com/thinking/tennis/app/AlertService.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/SpringConstructorWiringConfiguration.java",
+      "role": "code"
+    },
+    {
+      "path": "contract/tennis-alert-api-v1.yaml",
+      "role": "contract"
+    }
+  ],
+  "contract_version": {
+    "path": "contract/tennis-alert-api-v1.yaml",
+    "from": "contract/tennis-alert-api-v1.yaml"
+  },
+  "claims": [
+    {
+      "point": "boot:alertService",
+      "note": "Configures the alertService bean definition for constructor autowiring so Spring can select its available dependency-injected constructor."
+    }
+  ],
+  "decisions": [
+    {
+      "id": "d_spring_constructor_selection",
+      "point": "boot:alertService",
+      "where": "Spring bean definition registration",
+      "question": "How should Spring instantiate AlertService when the service exposes multiple constructors and no constructor is explicitly annotated?",
+      "considered": [
+        {
+          "choice": "Configure the alertService bean definition to use constructor autowiring",
+          "consequence": "Spring selects a resolvable constructor without changing the service contract or adding a default constructor."
+        },
+        {
+          "choice": "Add a default constructor",
+          "consequence": "Would require inventing or manually constructing application dependencies and could leave the service improperly initialized."
+        }
+      ],
+      "chosen": "Set constructor autowiring on the existing alertService bean definition during bean-definition post-processing.",
+      "basis": "least_harm",
+      "rationale": "The boot failure is caused by constructor selection, and constructor autowiring preserves the existing dependency graph and in-memory behavior.",
+      "confidence": "medium",
+      "blast_radius": [
+        "boot:alertService"
+      ],
+      "reversal_cost": "Remove the constructor-wiring configuration once AlertService has an explicit Spring constructor declaration.",
+      "supersedes": null
+    }
+  ],
+  "contract_changes": [],
+  "commit": "008719834508c00d13002a7ada142fd8868759f5",
+  "generated_at": "2026-09-29T23:42:33+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "refine_impl:v1",
+    "source_files": [
+      "b02d8689_input.json"
+    ],
+    "index_source": "git-diff-recovery"
+  }
+}

@@ -1,0 +1,375 @@
+{
+  "brief_hash": "b02d8689",
+  "from_iteration": "002",
+  "to_iteration": "003",
+  "priority_order": [
+    "gate_violations",
+    "contract_version",
+    "standing_decisions",
+    "code_instructions"
+  ],
+  "open_violations": [
+    {
+      "rule": "g0.compile_failed",
+      "point": null,
+      "where": "mvnw test",
+      "detail": "컴파일 오류 2건\nsrc/main/java/com/thinking/tennis/api/AlertController.java:233:86 illegal start of type\nsrc/main/java/com/thinking/tennis/api/AlertController.java:233:87 reached end of file while parsing",
+      "verdict": "violation"
+    }
+  ],
+  "rule_cards": {},
+  "gate_observations": [],
+  "gate_coverage": {
+    "g0": "REJECT",
+    "g1": "SKIPPED",
+    "contract_changes": "SKIPPED",
+    "allow_missing_gates": false
+  },
+  "current_contract_version": {
+    "path": "contract/tennis-alert-api-v2.yaml",
+    "from": "contract/tennis-alert-api-v1.yaml"
+  },
+  "standing_decisions": [
+    {
+      "id": "d_user_identity",
+      "point": "authentication",
+      "where": "src/main/java/com/thinking/tennis/api/ApiMapper.java",
+      "question": "토큰 검증 방식이 계약에 정의되지 않은 상태에서 Bearer 토큰을 어떻게 사용자 식별자로 사용할 것인가",
+      "considered": [
+        {
+          "choice": "비어 있지 않은 Bearer 토큰 값을 사용자 식별자로 사용한다",
+          "consequence": "외부 인증 검증기 없이도 소유권 분리가 동작하지만 토큰의 진위 검증은 이 초안의 범위에 없다"
+        },
+        {
+          "choice": "검증되지 않은 Bearer 토큰을 모두 거부한다",
+          "consequence": "검증 포트나 토큰 형식이 계약에 없어 정상 사용자를 식별할 수 없다"
+        }
+      ],
+      "chosen": "비어 있지 않은 Bearer 토큰의 값 자체를 사용자 식별자로 사용한다",
+      "basis": "convention",
+      "rationale": "계약은 Bearer를 사용한다고만 정하고 검증 방식이나 제공 API를 정하지 않았다. 인메모리 초안에서 소유권 구분을 유지하는 최소 선택이다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:401",
+        "listAlerts:401",
+        "getAlert:401",
+        "cancelAlert:401",
+        "listAlerts:200",
+        "getAlert:404",
+        "cancelAlert:404"
+      ],
+      "reversal_cost": "ApiMapper.userId를 인증 포트 호출로 교체하고 사용자 식별자 전달 경계를 갱신해야 한다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_refresh_shared_completion",
+      "point": "availability-refresh-wait",
+      "where": "src/main/java/com/thinking/tennis/app/AvailabilityApplicationService.java",
+      "question": "동일 코트·날짜의 진행 중 확인을 기다리는 요청이 서로 다른 결과를 받지 않게 하려면 어떻게 완료를 공유할 것인가",
+      "considered": [
+        {
+          "choice": "리더 Future의 단일 완료 결과를 모든 대기 요청이 기다리게 한다",
+          "consequence": "리더와 대기자가 같은 성공 결과 또는 같은 실패를 받는다"
+        },
+        {
+          "choice": "각 대기 요청에 별도 20초 타임아웃을 둔다",
+          "consequence": "리더가 늦게 완료할 때 대기자만 다른 실패를 받을 수 있다"
+        }
+      ],
+      "chosen": "리더 Future의 단일 완료 결과를 모든 대기 요청이 기다리게 하고 별도 대기자 타임아웃을 두지 않는다",
+      "basis": "spec_implication",
+      "rationale": "계약이 동일 코트·날짜의 진행 중 요청 모두에 같은 결과를 요구하므로, 이전의 독립적인 20초 대기 제한 결정을 폐기했다.",
+      "confidence": "high",
+      "blast_radius": [
+        "getCourtAvailability:200",
+        "getCourtAvailability:502",
+        "getCourtAvailability:503",
+        "getCourtAvailability:504"
+      ],
+      "reversal_cost": "리더 완료 상태와 모든 대기자의 실패 전파를 다시 설계해야 한다.",
+      "supersedes": "d_refresh_wait_deadline"
+    },
+    {
+      "id": "d_trace_id_format",
+      "point": "5xx-trace-id",
+      "where": "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+      "question": "traceId의 형식이 계약에 없을 때 어떤 식별자를 생성할 것인가",
+      "considered": [
+        {
+          "choice": "UUID 문자열을 생성한다",
+          "consequence": "추가 라이브러리 없이 고유한 추적 식별자를 제공한다"
+        },
+        {
+          "choice": "임의의 짧은 문자열을 생성한다",
+          "consequence": "길이와 충돌 정책을 별도로 정해야 한다"
+        }
+      ],
+      "chosen": "UUID 문자열을 생성한다",
+      "basis": "convention",
+      "rationale": "계약은 traceId를 로그 검색용 문자열로만 정의하고 형식을 제한하지 않는다. Java 표준 UUID가 가장 좁은 구현 선택이다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "getCourtAvailability:500",
+        "getCourtAvailability:502",
+        "getCourtAvailability:503",
+        "getCourtAvailability:504",
+        "createAlert:500",
+        "createAlert:503",
+        "listAlerts:500",
+        "getAlert:500",
+        "cancelAlert:500"
+      ],
+      "reversal_cost": "Problem 응답 생성기의 traceId 생성부와 로그 상관관계 형식을 함께 변경해야 한다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_create_slot_validation",
+      "point": "createAlert:422",
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+      "question": "본문의 시간대 지원 여부를 제공된 포트로 어떻게 판정할 것인가",
+      "considered": [
+        {
+          "choice": "코트·날짜 availability 확인 결과의 slots와 정확히 비교한다",
+          "consequence": "계약의 코트 운영 시간대와 정확히 일치하는 조건을 검증할 수 있다"
+        },
+        {
+          "choice": "코트 식별자만 확인하고 시간대는 저장한다",
+          "consequence": "SLOT_NOT_SUPPORTED를 판정할 근거가 없다"
+        }
+      ],
+      "chosen": "제공된 availability 포트의 코트·날짜 결과에서 시간대가 정확히 일치하는지 확인한다",
+      "basis": "spec_implication",
+      "rationale": "계약은 여기에 없는 시간대로 신청하면 SLOT_NOT_SUPPORTED라고 정하고, 제공 API에서 시간대 목록을 얻을 수 있는 유일한 경로가 availability 확인이다.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:200",
+        "createAlert:201",
+        "createAlert:422",
+        "createAlert:500"
+      ],
+      "reversal_cost": "AlertApplicationService의 신청 검증을 별도 지원 코트 카탈로그 포트로 옮기고 제공 API 의존을 재조정해야 한다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_expiry_scheduler_cadence",
+      "point": "AlertStatus:EXPIRED",
+      "where": "src/main/java/com/thinking/tennis/config/SchedulingConfig.java",
+      "question": "만료를 서버 작업으로 수행해야 하지만 실행 주기가 계약에 없을 때 어떻게 실행할 것인가",
+      "considered": [
+        {
+          "choice": "1초 고정 지연의 인메모리 작업으로 만료를 처리한다",
+          "consequence": "요청이 없어도 만료가 진행되며 만료 지연을 짧게 유지한다"
+        },
+        {
+          "choice": "HTTP 요청이 들어올 때만 만료를 처리한다",
+          "consequence": "요청이 없는 신청의 만료와 V-8 상태가 지연된다"
+        }
+      ],
+      "chosen": "1초 고정 지연의 인메모리 만료 작업을 사용한다",
+      "basis": "least_harm",
+      "rationale": "계약은 만료가 서버 스스로 일어나야 한다고 정하지만 주기를 정하지 않았다. 저장소와 컨테이너가 금지된 초안에서 최소한의 독립 실행 방식이다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "listAlerts:200",
+        "getAlert:200",
+        "cancelAlert:200",
+        "createAlert:200",
+        "createAlert:201"
+      ],
+      "reversal_cost": "스케줄러 주기 또는 외부 작업 트리거를 교체하고 인메모리 상태 전이 동기화를 다시 검토해야 한다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_delivery_surface",
+      "point": "Alert.delivery",
+      "where": "src/main/java/com/thinking/tennis/app/AvailabilityApplicationService.java",
+      "question": "메시지 발송 경로가 out_of_scope일 때 HTTP 조회 표면에서 발송 결과를 어디까지 만들 것인가",
+      "considered": [
+        {
+          "choice": "빈자리 발견 시 PENDING까지만 만들고 SENT/FAILED를 추정하지 않는다",
+          "consequence": "HTTP 표면이 알 수 없는 전송 결과를 만들어내지 않는다"
+        },
+        {
+          "choice": "HTTP 요청에서 SENT 또는 FAILED를 임의로 만든다",
+          "consequence": "AsyncAPI 경로와 무관한 발송 결과를 허위로 노출한다"
+        }
+      ],
+      "chosen": "빈자리 발견 시 PENDING까지만 만들고 전송 결과는 생성하지 않는다",
+      "basis": "least_harm",
+      "rationale": "알림 발송 경로는 명시적으로 out_of_scope이고 제공된 발송 포트도 없다. 계약이 허용한 null/PENDING 상태만 사용한다.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:201",
+        "createAlert:200",
+        "listAlerts:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "reversal_cost": "AsyncAPI 발송 어댑터와 상태 전이 작업을 추가하고 Alert의 SENT/FAILED 전이를 연결해야 한다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_expiry_source_semantics",
+      "point": "Alert.expiresAt",
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+      "question": "더 이른 예약 마감 시각을 제공된 API가 노출하지 않을 때 expiresAt을 어떻게 계산할 것인가",
+      "considered": [
+        {
+          "choice": "제공된 포트가 보장하는 이용 시작 시각을 만료 경계로 사용한다",
+          "consequence": "허위의 예약 마감 시각을 만들지 않지만 더 이른 외부 마감은 반영할 수 없다"
+        },
+        {
+          "choice": "예약 마감 시각을 임의의 규칙이나 상수로 추정한다",
+          "consequence": "계약에 없는 값을 만들어 감시 가능 시간을 잘못 표시할 수 있다"
+        }
+      ],
+      "chosen": "제공된 포트가 보장하는 이용 시작 시각을 사용하고 더 이른 외부 마감은 해당 포트가 확장될 때 반영한다",
+      "basis": "least_harm",
+      "rationale": "immutable 제공 API에는 예약 마감 시각 필드가 없다. 임의의 마감 규칙을 발명하지 않고 현재 입력으로 증명 가능한 경계만 사용한다.",
+      "confidence": "low",
+      "blast_radius": [
+        "createAlert:201",
+        "createAlert:422",
+        "Alert.expiresAt",
+        "AlertStatus:EXPIRED"
+      ],
+      "reversal_cost": "포트에 예약 마감 시각을 추가할 수 있게 된 뒤 최소값 계산과 상태 전이를 함께 변경해야 한다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_inmemory_alert_store",
+      "point": "alert-storage",
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+      "question": "저장소 장애 주입이 범위 밖이고 구현 계약이 인메모리 저장을 요구할 때 알림 상태를 어디에 둘 것인가",
+      "considered": [
+        {
+          "choice": "ConcurrentHashMap으로 프로세스 내 상태를 저장한다",
+          "consequence": "외부 저장소 의존 없이 소유권, 멱등성, 상태 전이를 구현할 수 있다"
+        },
+        {
+          "choice": "새 저장소 포트를 추가한다",
+          "consequence": "제공 API와 immutable 경계를 넘어 구현 범위를 넓힌다"
+        }
+      ],
+      "chosen": "ConcurrentHashMap 기반 인메모리 저장을 사용한다",
+      "basis": "spec_implication",
+      "rationale": "구현 계약이 저장은 인메모리라고 정하고 저장소 장애 주입도 out_of_scope으로 명시한다.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert",
+        "listAlerts",
+        "getAlert",
+        "cancelAlert",
+        "AlertStatus"
+      ],
+      "reversal_cost": "저장소 포트와 원자적 조건 키 연산을 추가하고 멱등성 보관을 이식해야 한다.",
+      "supersedes": null
+    }
+  ],
+  "contract_changes": [
+    {
+      "id": "cc_restore_scope_time_compatibility",
+      "target": "/info/description",
+      "action": "add",
+      "what": "범위 밖 항목, Asia/Seoul 날짜·시각 규칙, /v1 호환성 규칙을 복원했다.",
+      "why": "HTTP 계약의 전제와 호환성 판단 기준이 축약 판본에서 사라져 있었다.",
+      "basis": "critique:cr_restore_scope_time_compatibility",
+      "spec_anchor": "slot_fd7db9b0",
+      "compatibility": "compatible",
+      "migration": null,
+      "iteration": "002"
+    },
+    {
+      "id": "cc_restore_availability_behavior",
+      "target": "/paths/~1courts~1{courtId}~1availability/get/description",
+      "action": "add",
+      "what": "20초 갱신, 코트·날짜별 단일 조회, 진행 중 요청의 동일 결과, stale 200, 인증 예외를 복원했다.",
+      "why": "동시 갱신과 stale 실패 의미가 계약에서 보이지 않았다.",
+      "basis": "critique:cr_restore_availability_behavior",
+      "spec_anchor": "slot_218b9620",
+      "compatibility": "compatible",
+      "migration": null,
+      "iteration": "002"
+    },
+    {
+      "id": "cc_restore_create_idempotency_behavior",
+      "target": "/paths/~1alerts/post/description",
+      "action": "add",
+      "what": "4xx 미기록, 2xx 재생, 진행 중 동일 키의 503, 재생 시점 고정, 동일 조건 중복 규칙을 복원했다.",
+      "why": "클라이언트 재시도와 중복 신청의 의미를 계약에 고정해야 한다.",
+      "basis": "critique:cr_restore_create_idempotency_behavior",
+      "spec_anchor": "slot_7afbe3b4",
+      "compatibility": "compatible",
+      "migration": null,
+      "iteration": "002"
+    },
+    {
+      "id": "cc_restore_list_state_filtering",
+      "target": "/paths/~1alerts/get/description",
+      "action": "add",
+      "what": "저장 상태 기준 필터, 기본 조회 범위, 정렬과 비페이지 전제를 복원했다.",
+      "why": "목록 응답의 범위와 필터 semantics가 축약되어 있었다.",
+      "basis": "critique:cr_restore_list_state_filtering",
+      "spec_anchor": "slot_85c85829",
+      "compatibility": "compatible",
+      "migration": null,
+      "iteration": "002"
+    },
+    {
+      "id": "cc_restore_alert_state_invariants",
+      "target": "/components/schemas/Alert/description",
+      "action": "add",
+      "what": "status와 delivery의 허용 조합, PENDING 취소, terminal 상태의 비가역성을 복원했다.",
+      "why": "클라이언트가 상태 조합을 해석할 수 있는 핵심 불변식이 사라져 있었다.",
+      "basis": "critique:cr_restore_alert_state_invariants",
+      "spec_anchor": "slot_cec09639",
+      "compatibility": "compatible",
+      "migration": null,
+      "iteration": "002"
+    },
+    {
+      "id": "cc_restore_expiry_semantics",
+      "target": "/components/schemas/Alert/properties/expiresAt/description",
+      "action": "add",
+      "what": "이용 시작 시각과 더 이른 예약 마감 시각의 최소값, 재조회 필요성, 전이 지연 중 표시 규칙을 복원했다.",
+      "why": "expiresAt의 실제 의미가 축약 판본에서 사라져 있었다.",
+      "basis": "critique:cr_restore_expiry_semantics",
+      "spec_anchor": "slot_c14121c8",
+      "compatibility": "compatible",
+      "migration": null,
+      "iteration": "002"
+    },
+    {
+      "id": "cc_restore_problem_conditionals",
+      "target": "/components/schemas/Problem/description",
+      "action": "add",
+      "what": "retryable과 retryAfterSeconds·Retry-After의 동반 규칙 및 5xx traceId 조건을 복원했다.",
+      "why": "재시도 메타데이터의 조건부 제공이 계약에 드러나야 한다.",
+      "basis": "critique:cr_restore_problem_conditionals",
+      "spec_anchor": "slot_47c11736",
+      "compatibility": "compatible",
+      "migration": null,
+      "iteration": "002"
+    },
+    {
+      "id": "cc_restore_error_code_meaning",
+      "target": "/components/schemas/ErrorCode/description",
+      "action": "add",
+      "what": "에러 코드가 클라이언트 대응이 갈리는 지점에만 존재한다는 원칙과 코드 집합의 의미를 복원했다.",
+      "why": "오류 코드 선택과 재시도 해석의 기준이 축약 판본에서 사라져 있었다.",
+      "basis": "critique:cr_restore_error_code_meaning",
+      "spec_anchor": "slot_58100c30",
+      "compatibility": "compatible",
+      "migration": null,
+      "iteration": "002"
+    }
+  ],
+  "contested_decisions": [],
+  "code_instructions": [],
+  "contract_proposals": [],
+  "weak_axes": [],
+  "weak_axis_rationales": {},
+  "priority": [
+    "gate:g0.compile_failed@None"
+  ]
+}

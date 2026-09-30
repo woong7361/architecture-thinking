@@ -1,0 +1,75 @@
+{
+  "iteration": "002",
+  "g0": "REJECT",
+  "g1": "SKIPPED",
+  "changes": "SKIPPED",
+  "violations": [
+    {
+      "rule": "g0.compile_failed",
+      "point": null,
+      "where": "mvnw test",
+      "detail": "컴파일 오류 6건\nsrc/main/java/com/thinking/tennis/api/AlertController.java:102:61 cannot find symbol\nsrc/main/java/com/thinking/tennis/app/AlertService.java:249:34 cannot find symbol\nsrc/main/java/com/thinking/tennis/app/AvailabilityService.java:155:34 cannot find symbol\nsrc/main/java/com/thinking/tennis/api/ApiExceptionHandler.java:28:31 incompatible types: org.springframework.http.HttpStatus cannot be converted to int\nsrc/main/java/com/thinking/tennis/api/Authentication.java:30:34 cannot find symbol\nsrc/main/java/com/thinking/tennis/api/RequestValidation.java:74:34 cannot find symbol\n    symbol: method of(com.thinking.tennis.app.FailureCode,int,boolean,<nulltype>,java.lang.String)\n    location: class com.thinking.tennis.app.ApplicationFailure\n    symbol: method of(com.thinking.tennis.app.FailureCode,int,boolean,java.lang.Integer,java.lang.String)",
+      "verdict": "violation"
+    }
+  ],
+  "observations": [],
+  "errors": [],
+  "derived_spec": null,
+  "allow_missing_gates": false,
+  "log": [
+    "작업 폴더: C:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs7\\2026-09-30_b02d8689\\output (target/ 재사용 예)\n$ C:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs7\\2026-09-30_b02d8689\\output\\mvnw.cmd -B -q test → 1\n[ERROR] COMPILATION ERROR : \n[ERROR] /C:/Users/PC-220627-03/AppData/Local/Temp/claude/c--Users-PC-220627-03-Desktop-project-task-architecture-thinking/862b7ff3-a396-4dc6-9b71-a200dcde2544/scratchpad/runs7/2026-09-30_b02d8689/output/src/main/java/com/thinking/tennis/api/AlertController.java:[102,61] cannot find symbol\n  symbol:   method of(com.thinking.tennis.app.FailureCode,int,boolean,<nulltype>,java.lang.String)\n  location: class com.thinking.tennis.app.ApplicationFailure\n[ERROR] /C:/Users/PC-220627-03/AppData/Local/Temp/claude/c--Users-PC-220627-03-Desktop-project-task-architecture-thinking/862b7ff3-a396-4dc6-9b71-a200dcde2544/scratchpad/runs7/2026-09-30_b02d8689/output/src/main/java/com/thinking/tennis/app/AlertService.java:[249,34] cannot find symbol\n  symbol:   method of(com.thinking.tennis.app.FailureCode,int,boolean,java.lang.Integer,java.lang.String)\n  location: class com.thinking.tennis.app.ApplicationFailure\n[ERROR] /C:/Users/PC-220627-03/AppData/Local/Temp/claude/c--Users-PC-220627-03-Desktop-project-task-architecture-thinking/862b7ff3-a396-4dc6-9b71-a200dcde2544/scratchpad/runs7/2026-09-30_b02d8689/output/src/main/java/com/thinking/tennis/app/AvailabilityService.java:[155,34] cannot find symbol\n  symbol:   method of(com.thinking.tennis.app.FailureCode,int,boolean,java.lang.Integer,java.lang.String)\n  location: class com.thinking.tennis.app.ApplicationFailure\n[ERROR] /C:/Users/PC-220627-03/AppData/Local/Temp/claude/c--Users-PC-220627-03-Desktop-project-task-architecture-thinking/862b7ff3-a396-4dc6-9b71-a200dcde2544/scratchpad/runs7/2026-09-30_b02d8689/output/src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java:[28,31] incompatible types: org.springframework.http.HttpStatus cannot be converted to int\n[ERROR] /C:/Users/PC-220627-03/AppData/Local/Temp/claude/c--Users-PC-220627-03-Desktop-project-task-architecture-thinking/862b7ff3-a396-4dc6-9b71-a200dcde2544/scratchpad/runs7/2026-09-30_b02d8689/output/src/main/java/com/thinking/tennis/api/Authentication.java:[30,34] cannot find symbol\n  symbol:   method of(com.thinking.tennis.app.FailureCode,int,boolean,<nulltype>,java.lang.String)\n  location: class com.thinking.tennis.app.ApplicationFailure\n[ERROR] /C:/Users/PC-220627-03/AppData/Local/Temp/claude/c--Users-PC-220627-03-Desktop-project-task-architecture-thinking/862b7ff3-a396-4dc6-9b71-a200dcde2544/scratchpad/runs7/2026-09-30_b02d8689/output/src/main/java/com/thinking/tennis/api/RequestValidation.java:[74,34] cannot find symbol\n  symbol:   method of(com.thinking.tennis.app.FailureCode,int,boolean,<nulltype>,java.lang.String)\n  location: class com.thinking.tennis.app.ApplicationFailure\n[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.13.0:compile (default-compile) on project tennis-alert-skeleton: Compilation failure: Compilation failure: \n[ERROR] /C:/Users/PC-220627-03/AppData/Local/Temp/claude/c--Users-PC-220627-03-Desktop-project-task-architecture-thinking/862b7ff3-a396-4dc6-9b71-a200dcde2544/scratchpad/runs7/2026-09-30_b02d8689/output/src/main/java/com/thinking/tennis/api/AlertController.java:[102,61] cannot find symbol\n[ERROR]   symbol:   method of(com.thinking.tennis.app.FailureCode,int,boolean,<nulltype>,java.lang.String)\n[ERROR]   location: class com.thinking.tennis.app.ApplicationFailure\n[ERROR] /C:/Users/PC-220627-03/AppData/Local/Temp/claude/c--Users-PC-220627-03-Desktop-project-task-architecture-thinking/862b7ff3-a396-4dc6-9b71-a200dcde2544/scratchpad/runs7/2026-09-30_b02d8689/output/src/main/java/com/thinking/tennis/app/AlertService.java:[249,34] cannot find symbol\n[ERROR]   symbol:   method of(com.thinking.tennis.app.FailureCode,int,boolean,java.lang.Integer,java.lang.String)\n[ERROR]   location: class com.thinking.tennis.app.ApplicationFailure\n[ERROR] /C:/Users/PC-220627-03/AppData/Local/Temp/claude/c--Users-PC-220627-03-Desktop-project-task-architecture-thinking/862b7ff3-a396-4dc6-9b71-a200dcde2544/scratchpad/runs7/2026-09-30_b02d8689/output/src/main/java/com/thinking/tennis/app/AvailabilityService.java:[155,34] cannot find symbol\n[ERROR]   symbol:   method of(com.thinking.tennis.app.FailureCode,int,boolean,java.lang.Integer,java.lang.String)\n[ERROR]   location: class com.thinking.tennis.app.ApplicationFailure\n[ERROR] /C:/Users/PC-220627-03/AppData/Local/Temp/claude/c--Users-PC-220627-03-Desktop-project-task-architecture-thinking/862b7ff3-a396-4dc6-9b71-a200dcde2544/scratchpad/runs7/2026-09-30_b02d8689/output/src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java:[28,31] incompatible types: org.springframework.http.HttpStatus cannot be converted to int\n[ERROR] /C:/Users/PC-220627-03/AppData/Local/Temp/claude/c--Users-PC-220627-03-Desktop-project-task-architecture-thinking/862b7ff3-a396-4dc6-9b71-a200dcde2544/scratchpad/runs7/2026-09-30_b02d8689/output/src/main/java/com/thinking/tennis/api/Authentication.java:[30,34] cannot find symbol\n[ERROR]   symbol:   method of(com.thinking.tennis.app.FailureCode,int,boolean,<nulltype>,java.lang.String)\n[ERROR]   location: class com.thinking.tennis.app.ApplicationFailure\n[ERROR] /C:/Users/PC-220627-03/AppData/Local/Temp/claude/c--Users-PC-220627-03-Desktop-project-task-architecture-thinking/862b7ff3-a396-4dc6-9b71-a200dcde2544/scratchpad/runs7/2026-09-30_b02d8689/output/src/main/java/com/thinking/tennis/api/RequestValidation.java:[74,34] cannot find symbol\n[ERROR]   symbol:   method of(com.thinking.tennis.app.FailureCode,int,boolean,<nulltype>,java.lang.String)\n[ERROR]   location: class com.thinking.tennis.app.ApplicationFailure\n[ERROR] -> [Help 1]\n[ERROR] \n[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.\n[ERROR] Re-run Maven using the -X switch to enable full debug logging.\n[ERROR] \n[ERROR] For more information about the errors and possible solutions, please read the following articles:\n[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException\n"
+  ],
+  "build_attempts": [
+    {
+      "attempt": 1,
+      "commit": "5b2ecfb23ee4678e43b7fa12b14cfe15a0cccee6",
+      "index_declared": false,
+      "index_errors": [
+        "manifest.contract_version_missing: contract/tennis-alert-api-v2.yaml is not in the file manifest",
+        "manifest.contract_role_count: expected exactly one file with role=contract, found []"
+      ],
+      "failures": [
+        {
+          "rule": "g0.arch_boundary",
+          "point": null,
+          "where": "mvnw test",
+          "detail": "층 경계나 테스트가 깨졌다\n[ERROR] Tests run: 4, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 1.131 s <<< FAILURE! -- in com.thinking.tennis.arch.LayerBoundaryTest\nArchitecture Violation [Priority: MEDIUM] - Rule 'no classes that reside in a package '..app..' should depend on classes that reside in any package ['jakarta.servlet..', 'org.springframework.web..', 'com.fasterxml.jackson..'], because 유스케이스는 포트를 엮는 순서만 소유하므로 프로토콜과 표현 형식을 몰라야 한다' was violated (9 times):\n[ERROR]   LayerBoundaryTest.appDoesNotDependOnHttpOrSerialization:53->check:78 Architecture Violation [Priority: MEDIUM] - Rule 'no classes that reside in a package '..app..' should depend on classes that reside in any package ['jakarta.servlet..', 'org.springframework.web..', 'com.fasterxml.jackson..'], because 유스케이스는 포트를 엮는 순서만 소유하므로 프로토콜과 표현 형식을 몰라야 한다' was violated (9 times):\n[ERROR] Tests run: 4, Failures: 1, Errors: 0, Skipped: 0",
+          "verdict": "violation"
+        }
+      ]
+    },
+    {
+      "attempt": 2,
+      "commit": "a99b447f1407cf1abf3e4c70bee3cd4615711bc7",
+      "index_declared": true,
+      "index_errors": [],
+      "failures": [
+        {
+          "rule": "g0.compile_failed",
+          "point": null,
+          "where": "mvnw test",
+          "detail": "컴파일 오류 8건\n(앞 6건만 적는다)\nsrc/main/java/com/thinking/tennis/app/ApplicationFailure.java:61:6 cannot find symbol\nsrc/main/java/com/thinking/tennis/app/ApplicationFailure.java:68:6 cannot find symbol\nsrc/main/java/com/thinking/tennis/app/ApplicationFailure.java:75:6 cannot find symbol\nsrc/main/java/com/thinking/tennis/app/ApplicationFailure.java:82:6 cannot find symbol\nsrc/main/java/com/thinking/tennis/app/ApplicationFailure.java:89:6 cannot find symbol\nsrc/main/java/com/thinking/tennis/app/ApplicationFailure.java:96:6 cannot find symbol\n    symbol: class ResponseStatus\n    location: class com.thinking.tennis.app.ApplicationFailure",
+          "verdict": "violation"
+        }
+      ]
+    },
+    {
+      "attempt": 3,
+      "commit": "56ad3ea4f5ba3d4e47e724ac9a51936a8c894f11",
+      "index_declared": false,
+      "index_errors": [
+        "manifest.contract_version_missing: contract/tennis-alert-api-v2.yaml is not in the file manifest",
+        "manifest.contract_role_count: expected exactly one file with role=contract, found []"
+      ],
+      "failures": [
+        {
+          "rule": "g0.arch_boundary",
+          "point": null,
+          "where": "mvnw test",
+          "detail": "층 경계나 테스트가 깨졌다\n[ERROR] Tests run: 4, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 1.140 s <<< FAILURE! -- in com.thinking.tennis.arch.LayerBoundaryTest\nArchitecture Violation [Priority: MEDIUM] - Rule 'no classes that reside in a package '..app..' should depend on classes that reside in any package ['jakarta.servlet..', 'org.springframework.web..', 'com.fasterxml.jackson..'], because 유스케이스는 포트를 엮는 순서만 소유하므로 프로토콜과 표현 형식을 몰라야 한다' was violated (8 times):\n[ERROR]   LayerBoundaryTest.appDoesNotDependOnHttpOrSerialization:53->check:78 Architecture Violation [Priority: MEDIUM] - Rule 'no classes that reside in a package '..app..' should depend on classes that reside in any package ['jakarta.servlet..', 'org.springframework.web..', 'com.fasterxml.jackson..'], because 유스케이스는 포트를 엮는 순서만 소유하므로 프로토콜과 표현 형식을 몰라야 한다' was violated (8 times):\n[ERROR] Tests run: 4, Failures: 1, Errors: 0, Skipped: 0",
+          "verdict": "violation"
+        }
+      ]
+    }
+  ]
+}

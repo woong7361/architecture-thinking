@@ -1,0 +1,124 @@
+{
+  "brief_hash": "508c928d",
+  "iteration": "002",
+  "rubric_name": "impl:v1",
+  "rubric_scores": {
+    "scores": {
+      "request_tolerance": 5,
+      "response_fidelity": 5,
+      "failure_faithfulness": 5,
+      "state_continuity": 3,
+      "judgement_disclosure": 4
+    },
+    "weights": {
+      "request_tolerance": 0.2,
+      "response_fidelity": 0.25,
+      "failure_faithfulness": 0.2,
+      "state_continuity": 0.2,
+      "judgement_disclosure": 0.15
+    },
+    "weighted_total": 4.45
+  },
+  "axis_rationales": {
+    "request_tolerance": "열거 10개, 미충족 0개: []. AvailabilityController.getCourtAvailability와 AlertController의 createAlert/listAlerts/getAlert/cancelAlert 입력 매핑, AlertService의 조건·시간대 검증에서 계약이 허용한 날짜·코트·시간대·UUID 입력 범위를 확인했다.",
+    "response_fidelity": "열거 28개, 미충족 0개: []. AvailabilityController.getCourtAvailability의 fresh/stale 변환과 AlertController의 생성·목록·단건·해제 응답 매핑, AlertService의 expiresAt·alertId·reservationUrl·delivery 상태 산출 경로가 계약의 의미와 일치한다.",
+    "failure_faithfulness": "열거 33개, 미충족 0개: []. ApiExceptionHandler의 Problem 생성·traceId·재시도 헤더 매핑과 AlertController/AlertService의 validation, 인증, 멱등 키, 조건 실패, upstream 실패 분기에서 계약의 상태·코드·retryable 의미를 확인했다.",
+    "state_continuity": "열거 24개, 미충족 1개: [slot_3b26d64c]. AvailabilityController.getCourtAvailability의 코트·날짜 캐시와 동시 갱신 직렬화, AlertService 및 AlertController의 멱등 재생·조건 중복·소유권 필터·취소 멱등 경로는 확인되지만, 기준선의 AlertStatus WATCHING 주기 확인 약속은 contract/tennis-alert-api-v2.yaml의 /components/schemas/AlertStatus/description에서 제거되어 루브릭상 미충족으로 남는다.",
+    "judgement_disclosure": "신고 결정 4건, 계약 변경 4건, 미신고 0건. d_auth_token_identity, d_expiration_calculation, d_upstream_failure_surface, d_trace_id_format과 cc_alertstatus_polling_wording, cc_create_upstream_failure_surface, cc_remove_unextractable_error_extensions, cc_remove_unextractable_security_declarations가 각각 위치·선택·근거를 기록한다. traceId 선택은 계약·명세보다 관례(convention)에 의존한 신고라 5점보다 낮게 평가했다."
+  },
+  "slot_classifications": [
+    {
+      "slot_id": "slot_fd7db9b0",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "서비스 범위·시간 표현·호환성에 대한 설명으로 분모에서 제외한다."
+    },
+    {
+      "slot_id": "slot_d29b457f",
+      "classification": "description",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "운영 성능 기준의 범위 제외 설명으로 분모에서 제외한다."
+    },
+    {
+      "slot_id": "slot_c4167f47",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "alerts 태그의 기능 요약 설명으로 분모에서 제외한다."
+    },
+    {
+      "slot_id": "slot_31d22375",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "availability 태그의 기능 요약 설명으로 분모에서 제외한다."
+    },
+    {
+      "slot_id": "slot_e23500c7",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "Authentication.java의 Bearer 사용자 식별과 AlertController의 본인 신청 소유권 경로가 사용자별 조회·해제 약속을 유지한다."
+    },
+    {
+      "slot_id": "slot_a18b4f05",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "AlertService의 생성 경로에서 서버 발급 alertId를 저장하고 이후 조회·목록·해제 응답에 재사용한다."
+    },
+    {
+      "slot_id": "slot_4606301c",
+      "classification": "description",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "CourtId의 의미를 설명하는 정의로 분모에서 제외한다."
+    },
+    {
+      "slot_id": "slot_bff96712",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "AlertService의 신청 조건 검증에서 코트가 해당 날짜에 운영하는 시간대와의 정확한 일치 조건을 확인한다."
+    },
+    {
+      "slot_id": "slot_8ed65ad8",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "입력 시간대의 startTime을 코트 지역 기준 시각으로 해석하는 경로가 AlertService 검증과 만료 계산에 있다."
+    },
+    {
+      "slot_id": "slot_b7eb2903",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "입력 시간대의 endTime을 코트 지역 기준 시각으로 해석하는 경로가 AlertService 검증에 있다."
+    },
+    {
+      "slot_id": "slot_3b26d64c",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": false,
+      "note": "기준선의 WATCHING 주기 확인 문장이 contract/tennis-alert-api-v2.yaml에서 제거되었다. 계약 변경 cc_alertstatus_polling_wording으로 지워진 약속이므로 분모에는 남아 미충족이다."
+    }
+  ],
+  "calibration_note": "가장 낮은 쪽으로 조정한 지점은 계약 판본에서 제거된 기준선 AlertStatus 약속이다. 구현이 새 판본의 조회 유발 모델과 맞더라도 기준선 슬롯을 지운 변경은 해당 축의 미충족으로 계산했다. traceId는 신고되었지만 근거가 convention에 머물러 judgement_disclosure를 4점으로 제한했다.",
+  "evaluated_at": "2026-09-29T20:04:23+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_impl:v1",
+    "source_files": [
+      "508c928d_input.json",
+      "508c928d_iter-002_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 683716,
+      "cached_input_tokens": 544512,
+      "output_tokens": 11859,
+      "reasoning_output_tokens": 9562
+    }
+  }
+}

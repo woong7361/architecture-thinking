@@ -1,0 +1,1466 @@
+{
+  "run_id": "2026-09-29_b02d8689",
+  "updated_at": "2026-09-29T23:46:18+09:00",
+  "iterations": [
+    {
+      "iteration": "001",
+      "status": "REJECT",
+      "draft": "iter_001/draft.json",
+      "output_dir": "output",
+      "commit": "13c26b8a6106bbbc8de17d2f2274766bfb9f5c25",
+      "declared_files": 16,
+      "files_on_disk": 28,
+      "file_hashes": {
+        ".gitignore": "7f7c8ac9df305eb44041c7b6f0efe5c847834786e74a58928d8c2cd284d7480d",
+        ".mvn/wrapper/maven-wrapper.properties": "27680bba1b7cb13995c30ccbf6f3ac15b218cb6c11aebda19e52e3fd6e65d15e",
+        "contract/tennis-alert-api-v1.yaml": "0c467b8388ee7d8c091f76607037e658f944f4ebb7164c3316561d408101adf1",
+        "mvnw": "b1ef6ce14df54e6f8552734080184b18f78b0a0c61ed80c08d7d78b254e44941",
+        "mvnw.cmd": "46eedb8419bd14fe70d5bb2916d7b6f51806e51b39d5b76a42610384ca929c1c",
+        "pom.xml": "a53d5bd6979d3c134bdb135abd1fad59dd666b34ed0c4d0d47d57fdba4bc9a4f",
+        "README.md": "e6e4bb4ffa2ef4d71decf6cf8c719abd5fc304795bbab809d1200a294a5b69f3",
+        "src/main/java/com/thinking/tennis/adapter/InMemoryCourtAvailabilityAdapter.java": "78c58ad8277ae1a1722fb8c42de58acb78107a73f4e8afdfbf9dff48ae874ea6",
+        "src/main/java/com/thinking/tennis/api/AlertController.java": "c17108e95d69ec29f1580c8cc4a2983130b2b873597c2bfad4565ffd3c3eeb32",
+        "src/main/java/com/thinking/tennis/api/ApiAuthentication.java": "0b516169bfc0a0e8e60f8af68474966cd424a4d6d40fb1596bac7c44accdf755",
+        "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java": "bc2beef45a6474728703ede4553a4c74fb789255a0b1f7d471288f0503c8d074",
+        "src/main/java/com/thinking/tennis/api/ApiModels.java": "77c3800ab8a569955b295d7047705abc4d8fb8bbff346849f481d23b66682cf1",
+        "src/main/java/com/thinking/tennis/api/AvailabilityController.java": "546a2621f2b8e9c0138df1410410de2392a3eb33b6841841e5ac60efe8a0ba5c",
+        "src/main/java/com/thinking/tennis/api/RequestValidationException.java": "09fa1fc9212c832ebe615f31979e4353fbdc434604c74a8724bafc743d55867e",
+        "src/main/java/com/thinking/tennis/app/AlertService.java": "b344d89a4c001ff6ed8beead5261d4b70642200abd21e524d78759f527bc2d4f",
+        "src/main/java/com/thinking/tennis/app/AvailabilityService.java": "ff280ff1e464e0e5693e21fd56e4988dbc7fd3143e10689b114fea8af80756d8",
+        "src/main/java/com/thinking/tennis/app/InMemoryAlertRepository.java": "53b7f29be7566b4e0d66492c11e06c5b0ea808c394793fd9c987a630c5a4096f",
+        "src/main/java/com/thinking/tennis/domain/Alert.java": "9338a5906b45a5fa707d0ede4ddd3b9b417052c52dba5bcace94e8d068ced187",
+        "src/main/java/com/thinking/tennis/domain/AlertRepository.java": "fda2a58ddb77146f56c1709c8d606a30efd4c84dbe8f4646c919ed17952fff6c",
+        "src/main/java/com/thinking/tennis/domain/AvailabilitySnapshot.java": "a175000239cb25589400381a364620a573e8306ca2418ffb649f90d5d996b93f",
+        "src/main/java/com/thinking/tennis/domain/DomainExceptions.java": "0d65a19ef46afb5ebb9817ad14a6eb2f721bd1467b3ad9d56da9678d05e08982",
+        "src/main/java/com/thinking/tennis/domain/TimeWindow.java": "ed812247ff38784c2be2796055810665e20487de1482c345453906a73082894f",
+        "src/main/java/com/thinking/tennis/domain/UserId.java": "26c937bc8e3ca5adc5cdf4ec7aa4478bd972cd7d28556cbf732ba745f86b8db4",
+        "src/main/java/com/thinking/tennis/port/CourtAvailabilityPort.java": "d0bd3625c535975cd875a453406009b4a2b995b5c3f8c62200ec5db9060089f7",
+        "src/main/java/com/thinking/tennis/TennisAlertApplication.java": "2178279b50ba03794c7632534ff52fd4ba8a5a95ba487d6807a42e1e6131f2f1",
+        "src/main/resources/application.yaml": "f66f77cca643985bba137dcaa3300f06dd60786ac6266968bf742c2429bd1b56",
+        "src/test/java/com/thinking/tennis/arch/LayerBoundaryTest.java": "febd8a0d16c114495bf27c05d9c33d88105eb60c467dc860bc19e66fcfd79c4c",
+        "tools/dump_api_docs.py": "b5afaa65468210261d88fa8a788e24a1842b7498eea67b4c4d61512090bcae19"
+      },
+      "contract": {
+        "path": "contract/tennis-alert-api-v1.yaml",
+        "from": "contract/tennis-alert-api-v1.yaml"
+      },
+      "contract_source": "output/contract/tennis-alert-api-v1.yaml",
+      "prev_contract_source": "output/contract/tennis-alert-api-v1.yaml",
+      "gate": {
+        "g0": "REJECT",
+        "g1": "SKIPPED",
+        "changes": "SKIPPED",
+        "violations": 1,
+        "observations": 0
+      },
+      "eval": null,
+      "decision_risk": {
+        "level": "low",
+        "reasons": []
+      },
+      "skipped_reason": "g0_reject",
+      "gate_errors": [
+        "gate:g0.extract_failed@None: 부팅이 실패했거나 제한 시간 안에 포트를 열지 못했다: \tat org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625) ~[spring-context-6.1.13.jar!/:6.1.13]\n\tat org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.3.4.jar!/:3.3.4]\n\tat org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[spring-boot-3.3.4.jar!/:3.3.4]\n\tat org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456) ~[spring-boot-3.3.4.jar!/:3.3.4]\n\tat org.springframework.boot.SpringApplication.run(SpringApplication.java:335) ~[spring-boot-3.3.4.jar!/:3.3.4]\n\tat org.springframework.boot.SpringApplication.run(SpringApplication.java:1363) ~[spring-boot-3.3.4.jar!/:3.3.4]\n\tat org.springframework.boot.SpringApplication.run(SpringApplication.java:1352) ~[spring-boot-3.3.4.jar!/:3.3.4]\n\tat com.thinking.tennis.TennisAlertApplication.main(TennisAlertApplication.java:17) ~[!/:1.0.0]\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]\n\tat java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]\n\tat org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:102) ~[tennis-alert-skeleton-1.0.0.jar:1.0.0]\n\tat org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:64) ~[tennis-alert-skeleton-1.0.0.jar:1.0.0]\n\tat org.springframework.boot.loader.launch.JarLauncher.main(JarLauncher.java:40) ~[tennis-alert-skeleton-1.0.0.jar:1.0.0]\nCaused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'alertService' defined in URL [jar:nested:/C:/Users/PC-220627-03/AppData/Local/Temp/claude/c--Users-PC-220627-03-Desktop-project-task-architecture-thinking/862b7ff3-a396-4dc6-9b71-a200dcde2544/scratchpad/runs/2026-09-29_b02d8689/output/target/tennis-alert-skeleton-1.0.0.jar/!BOOT-INF/classes/!/com/thinking/tennis/app/AlertService.class]: Failed to instantiate [com.thinking.tennis.app.AlertService]: No default constructor found\n\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1337) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1222) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\t... 26 common frames omitted\nCaused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.thinking.tennis.app.AlertService]: No default constructor found\n\tat org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:90) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1331) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\t... 38 common frames omitted\nCaused by: java.lang.NoSuchMethodException: com.thinking.tennis.app.AlertService.<init>()\n\tat java.base/java.lang.Class.getConstructor0(Class.java:3587) ~[na:na]\n\tat java.base/java.lang.Class.getDeclaredConstructor(Class.java:2756) ~[na:na]\n\tat org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:86) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\t... 39 common frames omitted\n--- 로그 끝 ---"
+      ],
+      "rubric_errors": []
+    },
+    {
+      "iteration": "002",
+      "status": "REJECT",
+      "draft": "iter_002/draft.json",
+      "output_dir": "output",
+      "commit": "008719834508c00d13002a7ada142fd8868759f5",
+      "declared_files": 3,
+      "files_on_disk": 29,
+      "file_hashes": {
+        ".gitignore": "7f7c8ac9df305eb44041c7b6f0efe5c847834786e74a58928d8c2cd284d7480d",
+        ".mvn/wrapper/maven-wrapper.properties": "27680bba1b7cb13995c30ccbf6f3ac15b218cb6c11aebda19e52e3fd6e65d15e",
+        "contract/tennis-alert-api-v1.yaml": "0c467b8388ee7d8c091f76607037e658f944f4ebb7164c3316561d408101adf1",
+        "mvnw": "b1ef6ce14df54e6f8552734080184b18f78b0a0c61ed80c08d7d78b254e44941",
+        "mvnw.cmd": "46eedb8419bd14fe70d5bb2916d7b6f51806e51b39d5b76a42610384ca929c1c",
+        "pom.xml": "a53d5bd6979d3c134bdb135abd1fad59dd666b34ed0c4d0d47d57fdba4bc9a4f",
+        "README.md": "e6e4bb4ffa2ef4d71decf6cf8c719abd5fc304795bbab809d1200a294a5b69f3",
+        "src/main/java/com/thinking/tennis/adapter/InMemoryCourtAvailabilityAdapter.java": "78c58ad8277ae1a1722fb8c42de58acb78107a73f4e8afdfbf9dff48ae874ea6",
+        "src/main/java/com/thinking/tennis/api/AlertController.java": "c17108e95d69ec29f1580c8cc4a2983130b2b873597c2bfad4565ffd3c3eeb32",
+        "src/main/java/com/thinking/tennis/api/ApiAuthentication.java": "0b516169bfc0a0e8e60f8af68474966cd424a4d6d40fb1596bac7c44accdf755",
+        "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java": "bc2beef45a6474728703ede4553a4c74fb789255a0b1f7d471288f0503c8d074",
+        "src/main/java/com/thinking/tennis/api/ApiModels.java": "77c3800ab8a569955b295d7047705abc4d8fb8bbff346849f481d23b66682cf1",
+        "src/main/java/com/thinking/tennis/api/AvailabilityController.java": "546a2621f2b8e9c0138df1410410de2392a3eb33b6841841e5ac60efe8a0ba5c",
+        "src/main/java/com/thinking/tennis/api/RequestValidationException.java": "09fa1fc9212c832ebe615f31979e4353fbdc434604c74a8724bafc743d55867e",
+        "src/main/java/com/thinking/tennis/app/AlertService.java": "60242238cce55d912ce5c6c7ab9927ad6c6aa10eab42f2ef83eb98d38372390f",
+        "src/main/java/com/thinking/tennis/app/AvailabilityService.java": "ff280ff1e464e0e5693e21fd56e4988dbc7fd3143e10689b114fea8af80756d8",
+        "src/main/java/com/thinking/tennis/app/InMemoryAlertRepository.java": "53b7f29be7566b4e0d66492c11e06c5b0ea808c394793fd9c987a630c5a4096f",
+        "src/main/java/com/thinking/tennis/app/SpringConstructorWiringConfiguration.java": "1595f60d3be0b693b6e4c7877ea1b5d4f45eef0a425bb5a03140565e667bcc97",
+        "src/main/java/com/thinking/tennis/domain/Alert.java": "9338a5906b45a5fa707d0ede4ddd3b9b417052c52dba5bcace94e8d068ced187",
+        "src/main/java/com/thinking/tennis/domain/AlertRepository.java": "fda2a58ddb77146f56c1709c8d606a30efd4c84dbe8f4646c919ed17952fff6c",
+        "src/main/java/com/thinking/tennis/domain/AvailabilitySnapshot.java": "a175000239cb25589400381a364620a573e8306ca2418ffb649f90d5d996b93f",
+        "src/main/java/com/thinking/tennis/domain/DomainExceptions.java": "0d65a19ef46afb5ebb9817ad14a6eb2f721bd1467b3ad9d56da9678d05e08982",
+        "src/main/java/com/thinking/tennis/domain/TimeWindow.java": "ed812247ff38784c2be2796055810665e20487de1482c345453906a73082894f",
+        "src/main/java/com/thinking/tennis/domain/UserId.java": "26c937bc8e3ca5adc5cdf4ec7aa4478bd972cd7d28556cbf732ba745f86b8db4",
+        "src/main/java/com/thinking/tennis/port/CourtAvailabilityPort.java": "d0bd3625c535975cd875a453406009b4a2b995b5c3f8c62200ec5db9060089f7",
+        "src/main/java/com/thinking/tennis/TennisAlertApplication.java": "2178279b50ba03794c7632534ff52fd4ba8a5a95ba487d6807a42e1e6131f2f1",
+        "src/main/resources/application.yaml": "f66f77cca643985bba137dcaa3300f06dd60786ac6266968bf742c2429bd1b56",
+        "src/test/java/com/thinking/tennis/arch/LayerBoundaryTest.java": "febd8a0d16c114495bf27c05d9c33d88105eb60c467dc860bc19e66fcfd79c4c",
+        "tools/dump_api_docs.py": "b5afaa65468210261d88fa8a788e24a1842b7498eea67b4c4d61512090bcae19"
+      },
+      "contract": {
+        "path": "contract/tennis-alert-api-v1.yaml",
+        "from": "contract/tennis-alert-api-v1.yaml"
+      },
+      "contract_source": "output/contract/tennis-alert-api-v1.yaml",
+      "prev_contract_source": "output/contract/tennis-alert-api-v1.yaml",
+      "gate": {
+        "g0": "REJECT",
+        "g1": "SKIPPED",
+        "changes": "SKIPPED",
+        "violations": 4,
+        "observations": 0
+      },
+      "eval": null,
+      "decision_risk": {
+        "level": "low",
+        "reasons": []
+      },
+      "skipped_reason": "g0_reject",
+      "gate_errors": [
+        "gate:g0.extract_failed@None: 부팅이 실패했거나 제한 시간 안에 포트를 열지 못했다: \tat org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:237) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1375) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1212) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\t... 26 common frames omitted\nCaused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'availabilityService' defined in URL [jar:nested:/C:/Users/PC-220627-03/AppData/Local/Temp/claude/c--Users-PC-220627-03-Desktop-project-task-architecture-thinking/862b7ff3-a396-4dc6-9b71-a200dcde2544/scratchpad/runs/2026-09-29_b02d8689/output/target/tennis-alert-skeleton-1.0.0.jar/!BOOT-INF/classes/!/com/thinking/tennis/app/AvailabilityService.class]: Failed to instantiate [com.thinking.tennis.app.AvailabilityService]: No default constructor found\n\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1337) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1222) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\t... 40 common frames omitted\nCaused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.thinking.tennis.app.AvailabilityService]: No default constructor found\n\tat org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:90) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1331) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\t... 52 common frames omitted\nCaused by: java.lang.NoSuchMethodException: com.thinking.tennis.app.AvailabilityService.<init>()\n\tat java.base/java.lang.Class.getConstructor0(Class.java:3587) ~[na:na]\n\tat java.base/java.lang.Class.getDeclaredConstructor(Class.java:2756) ~[na:na]\n\tat org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:86) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\t... 53 common frames omitted\n--- 로그 끝 ---",
+        "gate:manifest.contract_version_missing@None: manifest.contract_version_missing: contract/tennis-alert-api-v1.yaml is not in the file manifest",
+        "gate:manifest.contract_role_count@None: manifest.contract_role_count: expected exactly one file with role=contract, found []",
+        "gate:manifest.undeclared_file@None: manifest.undeclared_file: src/main/java/com/thinking/tennis/app/AlertService.java changed in the work tree but is not declared"
+      ],
+      "rubric_errors": []
+    },
+    {
+      "iteration": "003",
+      "status": "REJECT",
+      "draft": "iter_003/draft.json",
+      "output_dir": "output",
+      "commit": "70f07561cc33b43e51b3ae5d3eee28c3dd64b08b",
+      "declared_files": 4,
+      "files_on_disk": 30,
+      "file_hashes": {
+        ".gitignore": "7f7c8ac9df305eb44041c7b6f0efe5c847834786e74a58928d8c2cd284d7480d",
+        ".mvn/wrapper/maven-wrapper.properties": "27680bba1b7cb13995c30ccbf6f3ac15b218cb6c11aebda19e52e3fd6e65d15e",
+        "contract/tennis-alert-api-v1.yaml": "0c467b8388ee7d8c091f76607037e658f944f4ebb7164c3316561d408101adf1",
+        "mvnw": "b1ef6ce14df54e6f8552734080184b18f78b0a0c61ed80c08d7d78b254e44941",
+        "mvnw.cmd": "46eedb8419bd14fe70d5bb2916d7b6f51806e51b39d5b76a42610384ca929c1c",
+        "pom.xml": "a53d5bd6979d3c134bdb135abd1fad59dd666b34ed0c4d0d47d57fdba4bc9a4f",
+        "README.md": "e6e4bb4ffa2ef4d71decf6cf8c719abd5fc304795bbab809d1200a294a5b69f3",
+        "src/main/java/com/thinking/tennis/adapter/InMemoryCourtAvailabilityAdapter.java": "78c58ad8277ae1a1722fb8c42de58acb78107a73f4e8afdfbf9dff48ae874ea6",
+        "src/main/java/com/thinking/tennis/api/AlertController.java": "c17108e95d69ec29f1580c8cc4a2983130b2b873597c2bfad4565ffd3c3eeb32",
+        "src/main/java/com/thinking/tennis/api/ApiAuthentication.java": "0b516169bfc0a0e8e60f8af68474966cd424a4d6d40fb1596bac7c44accdf755",
+        "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java": "bc2beef45a6474728703ede4553a4c74fb789255a0b1f7d471288f0503c8d074",
+        "src/main/java/com/thinking/tennis/api/ApiModels.java": "77c3800ab8a569955b295d7047705abc4d8fb8bbff346849f481d23b66682cf1",
+        "src/main/java/com/thinking/tennis/api/AvailabilityController.java": "546a2621f2b8e9c0138df1410410de2392a3eb33b6841841e5ac60efe8a0ba5c",
+        "src/main/java/com/thinking/tennis/api/RequestValidationException.java": "09fa1fc9212c832ebe615f31979e4353fbdc434604c74a8724bafc743d55867e",
+        "src/main/java/com/thinking/tennis/app/AlertService.java": "60242238cce55d912ce5c6c7ab9927ad6c6aa10eab42f2ef83eb98d38372390f",
+        "src/main/java/com/thinking/tennis/app/AvailabilityService.java": "ff280ff1e464e0e5693e21fd56e4988dbc7fd3143e10689b114fea8af80756d8",
+        "src/main/java/com/thinking/tennis/app/AvailabilityServiceConstructorWiringConfiguration.java": "99c7a8a26b57145503f71050b4cd67aaa97e2cd738db989a99c02dca239a4d9c",
+        "src/main/java/com/thinking/tennis/app/InMemoryAlertRepository.java": "53b7f29be7566b4e0d66492c11e06c5b0ea808c394793fd9c987a630c5a4096f",
+        "src/main/java/com/thinking/tennis/app/SpringConstructorWiringConfiguration.java": "1595f60d3be0b693b6e4c7877ea1b5d4f45eef0a425bb5a03140565e667bcc97",
+        "src/main/java/com/thinking/tennis/domain/Alert.java": "9338a5906b45a5fa707d0ede4ddd3b9b417052c52dba5bcace94e8d068ced187",
+        "src/main/java/com/thinking/tennis/domain/AlertRepository.java": "fda2a58ddb77146f56c1709c8d606a30efd4c84dbe8f4646c919ed17952fff6c",
+        "src/main/java/com/thinking/tennis/domain/AvailabilitySnapshot.java": "a175000239cb25589400381a364620a573e8306ca2418ffb649f90d5d996b93f",
+        "src/main/java/com/thinking/tennis/domain/DomainExceptions.java": "0d65a19ef46afb5ebb9817ad14a6eb2f721bd1467b3ad9d56da9678d05e08982",
+        "src/main/java/com/thinking/tennis/domain/TimeWindow.java": "ed812247ff38784c2be2796055810665e20487de1482c345453906a73082894f",
+        "src/main/java/com/thinking/tennis/domain/UserId.java": "26c937bc8e3ca5adc5cdf4ec7aa4478bd972cd7d28556cbf732ba745f86b8db4",
+        "src/main/java/com/thinking/tennis/port/CourtAvailabilityPort.java": "d0bd3625c535975cd875a453406009b4a2b995b5c3f8c62200ec5db9060089f7",
+        "src/main/java/com/thinking/tennis/TennisAlertApplication.java": "2178279b50ba03794c7632534ff52fd4ba8a5a95ba487d6807a42e1e6131f2f1",
+        "src/main/resources/application.yaml": "f66f77cca643985bba137dcaa3300f06dd60786ac6266968bf742c2429bd1b56",
+        "src/test/java/com/thinking/tennis/arch/LayerBoundaryTest.java": "febd8a0d16c114495bf27c05d9c33d88105eb60c467dc860bc19e66fcfd79c4c",
+        "tools/dump_api_docs.py": "b5afaa65468210261d88fa8a788e24a1842b7498eea67b4c4d61512090bcae19"
+      },
+      "contract": {
+        "path": "contract/tennis-alert-api-v1.yaml",
+        "from": "contract/tennis-alert-api-v1.yaml"
+      },
+      "contract_source": "output/contract/tennis-alert-api-v1.yaml",
+      "prev_contract_source": "output/contract/tennis-alert-api-v1.yaml",
+      "gate": {
+        "g0": "REJECT",
+        "g1": "SKIPPED",
+        "changes": "SKIPPED",
+        "violations": 1,
+        "observations": 0
+      },
+      "eval": null,
+      "decision_risk": {
+        "level": "low",
+        "reasons": []
+      },
+      "skipped_reason": "g0_reject",
+      "gate_errors": [
+        "gate:g0.compile_failed@None: [ERROR] COMPILATION ERROR : \n[ERROR] /C:/Users/PC-220627-03/AppData/Local/Temp/claude/c--Users-PC-220627-03-Desktop-project-task-architecture-thinking/862b7ff3-a396-4dc6-9b71-a200dcde2544/scratchpad/runs/2026-09-29_b02d8689/output/src/main/java/com/thinking/tennis/app/AvailabilityServiceConstructorWiringConfiguration.java:[17,21] cannot find symbol\n  symbol:   method setAutowireMode(int)\n  location: interface org.springframework.beans.factory.config.BeanDefinition\n[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.13.0:compile (default-compile) on project tennis-alert-skeleton: Compilation failure\n[ERROR] /C:/Users/PC-220627-03/AppData/Local/Temp/claude/c--Users-PC-220627-03-Desktop-project-task-architecture-thinking/862b7ff3-a396-4dc6-9b71-a200dcde2544/scratchpad/runs/2026-09-29_b02d8689/output/src/main/java/com/thinking/tennis/app/AvailabilityServiceConstructorWiringConfiguration.java:[17,21] cannot find symbol\n[ERROR]   symbol:   method setAutowireMode(int)\n[ERROR]   location: interface org.springframework.beans.factory.config.BeanDefinition\n[ERROR] -> [Help 1]\n[ERROR] \n[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.\n[ERROR] Re-run Maven using the -X switch to enable full debug logging.\n[ERROR] \n[ERROR] For more information about the errors and possible solutions, please read the following articles:\n[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException"
+      ],
+      "rubric_errors": []
+    }
+  ],
+  "violations": [
+    {
+      "id": "v_cff1b6",
+      "rule": "g0.extract_failed",
+      "point": null,
+      "where": "dump_api_docs.py",
+      "why_it_matters": "부팅이 실패했거나 제한 시간 안에 포트를 열지 못했다: \tat org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625) ~[spring-context-6.1.13.jar!/:6.1.13]\n\tat org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.3.4.jar!/:3.3.4]\n\tat org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[spring-boot-3.3.4.jar!/:3.3.4]\n\tat org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456) ~[spring-boot-3.3.4.jar!/:3.3.4]\n\tat org.springframework.boot.SpringApplication.run(SpringApplication.java:335) ~[spring-boot-3.3.4.jar!/:3.3.4]\n\tat org.springframework.boot.SpringApplication.run(SpringApplication.java:1363) ~[spring-boot-3.3.4.jar!/:3.3.4]\n\tat org.springframework.boot.SpringApplication.run(SpringApplication.java:1352) ~[spring-boot-3.3.4.jar!/:3.3.4]\n\tat com.thinking.tennis.TennisAlertApplication.main(TennisAlertApplication.java:17) ~[!/:1.0.0]\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]\n\tat java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]\n\tat org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:102) ~[tennis-alert-skeleton-1.0.0.jar:1.0.0]\n\tat org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:64) ~[tennis-alert-skeleton-1.0.0.jar:1.0.0]\n\tat org.springframework.boot.loader.launch.JarLauncher.main(JarLauncher.java:40) ~[tennis-alert-skeleton-1.0.0.jar:1.0.0]\nCaused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'alertService' defined in URL [jar:nested:/C:/Users/PC-220627-03/AppData/Local/Temp/claude/c--Users-PC-220627-03-Desktop-project-task-architecture-thinking/862b7ff3-a396-4dc6-9b71-a200dcde2544/scratchpad/runs/2026-09-29_b02d8689/output/target/tennis-alert-skeleton-1.0.0.jar/!BOOT-INF/classes/!/com/thinking/tennis/app/AlertService.class]: Failed to instantiate [com.thinking.tennis.app.AlertService]: No default constructor found\n\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1337) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1222) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\t... 26 common frames omitted\nCaused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.thinking.tennis.app.AlertService]: No default constructor found\n\tat org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:90) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1331) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\t... 38 common frames omitted\nCaused by: java.lang.NoSuchMethodException: com.thinking.tennis.app.AlertService.<init>()\n\tat java.base/java.lang.Class.getConstructor0(Class.java:3587) ~[na:na]\n\tat java.base/java.lang.Class.getDeclaredConstructor(Class.java:2756) ~[na:na]\n\tat org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:86) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\t... 39 common frames omitted\n--- 로그 끝 ---",
+      "detail": "부팅이 실패했거나 제한 시간 안에 포트를 열지 못했다: \tat org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:237) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1375) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1212) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\t... 26 common frames omitted\nCaused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'availabilityService' defined in URL [jar:nested:/C:/Users/PC-220627-03/AppData/Local/Temp/claude/c--Users-PC-220627-03-Desktop-project-task-architecture-thinking/862b7ff3-a396-4dc6-9b71-a200dcde2544/scratchpad/runs/2026-09-29_b02d8689/output/target/tennis-alert-skeleton-1.0.0.jar/!BOOT-INF/classes/!/com/thinking/tennis/app/AvailabilityService.class]: Failed to instantiate [com.thinking.tennis.app.AvailabilityService]: No default constructor found\n\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1337) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1222) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\t... 40 common frames omitted\nCaused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.thinking.tennis.app.AvailabilityService]: No default constructor found\n\tat org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:90) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1331) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\t... 52 common frames omitted\nCaused by: java.lang.NoSuchMethodException: com.thinking.tennis.app.AvailabilityService.<init>()\n\tat java.base/java.lang.Class.getConstructor0(Class.java:3587) ~[na:na]\n\tat java.base/java.lang.Class.getDeclaredConstructor(Class.java:2756) ~[na:na]\n\tat org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:86) ~[spring-beans-6.1.13.jar!/:6.1.13]\n\t... 53 common frames omitted\n--- 로그 끝 ---",
+      "first_seen_iteration": "001",
+      "last_seen_iteration": "002",
+      "closed_in_iteration": "003",
+      "closed_by": "code",
+      "closed_because": "계약 판본이 앞 iteration과 같다",
+      "closed_by_verified": true,
+      "claimed_fix": null,
+      "verified_fix": {
+        "files": [],
+        "diff": "",
+        "note": "이 위반의 좌표를 언급하는 파일 변경이 없다"
+      },
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "closed"
+    },
+    {
+      "id": "v_271ee5",
+      "rule": "manifest.contract_version_missing",
+      "point": null,
+      "where": "iter_002 refine_output",
+      "why_it_matters": "manifest.contract_version_missing: contract/tennis-alert-api-v1.yaml is not in the file manifest",
+      "detail": "manifest.contract_version_missing: contract/tennis-alert-api-v1.yaml is not in the file manifest",
+      "first_seen_iteration": "002",
+      "last_seen_iteration": "002",
+      "closed_in_iteration": "003",
+      "closed_by": "code",
+      "closed_because": "계약 판본이 앞 iteration과 같다",
+      "closed_by_verified": true,
+      "claimed_fix": null,
+      "verified_fix": {
+        "files": [],
+        "diff": "",
+        "note": "이 위반의 좌표를 언급하는 파일 변경이 없다"
+      },
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "closed"
+    },
+    {
+      "id": "v_5a5284",
+      "rule": "manifest.contract_role_count",
+      "point": null,
+      "where": "iter_002 refine_output",
+      "why_it_matters": "manifest.contract_role_count: expected exactly one file with role=contract, found []",
+      "detail": "manifest.contract_role_count: expected exactly one file with role=contract, found []",
+      "first_seen_iteration": "002",
+      "last_seen_iteration": "002",
+      "closed_in_iteration": "003",
+      "closed_by": "code",
+      "closed_because": "계약 판본이 앞 iteration과 같다",
+      "closed_by_verified": true,
+      "claimed_fix": null,
+      "verified_fix": {
+        "files": [],
+        "diff": "",
+        "note": "이 위반의 좌표를 언급하는 파일 변경이 없다"
+      },
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "closed"
+    },
+    {
+      "id": "v_459e29",
+      "rule": "manifest.undeclared_file",
+      "point": null,
+      "where": "iter_002 refine_output",
+      "why_it_matters": "색인에 없는 파일이 작업 폴더에서 바뀌었다. 판정 대상 밖에 조용히 놓인 파일은 판정되지 않은 표면이 된다.",
+      "detail": "manifest.undeclared_file: src/main/java/com/thinking/tennis/app/AlertService.java changed in the work tree but is not declared",
+      "first_seen_iteration": "002",
+      "last_seen_iteration": "002",
+      "closed_in_iteration": "003",
+      "closed_by": "code",
+      "closed_because": "계약 판본이 앞 iteration과 같다",
+      "closed_by_verified": true,
+      "claimed_fix": null,
+      "verified_fix": {
+        "files": [],
+        "diff": "",
+        "note": "이 위반의 좌표를 언급하는 파일 변경이 없다"
+      },
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "closed"
+    },
+    {
+      "id": "v_579dfe",
+      "rule": "g0.compile_failed",
+      "point": null,
+      "where": "mvnw test",
+      "why_it_matters": "[ERROR] COMPILATION ERROR : \n[ERROR] /C:/Users/PC-220627-03/AppData/Local/Temp/claude/c--Users-PC-220627-03-Desktop-project-task-architecture-thinking/862b7ff3-a396-4dc6-9b71-a200dcde2544/scratchpad/runs/2026-09-29_b02d8689/output/src/main/java/com/thinking/tennis/app/AvailabilityServiceConstructorWiringConfiguration.java:[17,21] cannot find symbol\n  symbol:   method setAutowireMode(int)\n  location: interface org.springframework.beans.factory.config.BeanDefinition\n[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.13.0:compile (default-compile) on project tennis-alert-skeleton: Compilation failure\n[ERROR] /C:/Users/PC-220627-03/AppData/Local/Temp/claude/c--Users-PC-220627-03-Desktop-project-task-architecture-thinking/862b7ff3-a396-4dc6-9b71-a200dcde2544/scratchpad/runs/2026-09-29_b02d8689/output/src/main/java/com/thinking/tennis/app/AvailabilityServiceConstructorWiringConfiguration.java:[17,21] cannot find symbol\n[ERROR]   symbol:   method setAutowireMode(int)\n[ERROR]   location: interface org.springframework.beans.factory.config.BeanDefinition\n[ERROR] -> [Help 1]\n[ERROR] \n[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.\n[ERROR] Re-run Maven using the -X switch to enable full debug logging.\n[ERROR] \n[ERROR] For more information about the errors and possible solutions, please read the following articles:\n[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException",
+      "detail": "[ERROR] COMPILATION ERROR : \n[ERROR] /C:/Users/PC-220627-03/AppData/Local/Temp/claude/c--Users-PC-220627-03-Desktop-project-task-architecture-thinking/862b7ff3-a396-4dc6-9b71-a200dcde2544/scratchpad/runs/2026-09-29_b02d8689/output/src/main/java/com/thinking/tennis/app/AvailabilityServiceConstructorWiringConfiguration.java:[17,21] cannot find symbol\n  symbol:   method setAutowireMode(int)\n  location: interface org.springframework.beans.factory.config.BeanDefinition\n[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.13.0:compile (default-compile) on project tennis-alert-skeleton: Compilation failure\n[ERROR] /C:/Users/PC-220627-03/AppData/Local/Temp/claude/c--Users-PC-220627-03-Desktop-project-task-architecture-thinking/862b7ff3-a396-4dc6-9b71-a200dcde2544/scratchpad/runs/2026-09-29_b02d8689/output/src/main/java/com/thinking/tennis/app/AvailabilityServiceConstructorWiringConfiguration.java:[17,21] cannot find symbol\n[ERROR]   symbol:   method setAutowireMode(int)\n[ERROR]   location: interface org.springframework.beans.factory.config.BeanDefinition\n[ERROR] -> [Help 1]\n[ERROR] \n[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.\n[ERROR] Re-run Maven using the -X switch to enable full debug logging.\n[ERROR] \n[ERROR] For more information about the errors and possible solutions, please read the following articles:\n[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException",
+      "first_seen_iteration": "003",
+      "last_seen_iteration": "003",
+      "closed_in_iteration": null,
+      "closed_by": null,
+      "closed_because": null,
+      "closed_by_verified": null,
+      "claimed_fix": null,
+      "verified_fix": null,
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "open"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "d_clock_source",
+      "first_seen_iteration": "001",
+      "point": "all",
+      "where": "app services",
+      "question": "What supplies current time for freshness, expiry, retention, and delay calculations?",
+      "considered": [
+        {
+          "choice": "Inject a UTC Clock with a systemUTC default",
+          "consequence": "Keeps all temporal decisions coherent and testable."
+        },
+        {
+          "choice": "Call Instant.now directly",
+          "consequence": "Reduces wiring but couples every timing rule to wall-clock access."
+        }
+      ],
+      "chosen": "Use an injected java.time.Clock defaulting to UTC.",
+      "basis": "convention",
+      "rationale": "The contract requires UTC timestamps and multiple time-based rules but does not prescribe a clock API.",
+      "confidence": "high",
+      "blast_radius": [
+        "getCourtAvailability:200",
+        "createAlert:201",
+        "createAlert:200",
+        "listAlerts:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "reversal_cost": "Change service constructors and current-time reads.",
+      "supersedes": null,
+      "last_seen_iteration": "001",
+      "status": "withdrawn",
+      "withdrawn_in_iteration": "002",
+      "silent_reversal": true
+    },
+    {
+      "id": "d_user_identity",
+      "first_seen_iteration": "001",
+      "point": "createAlert:401",
+      "where": "API authentication boundary",
+      "question": "How is an unspecified Bearer authentication mechanism represented in the in-memory draft?",
+      "considered": [
+        {
+          "choice": "Treat the nonblank Bearer credential as an opaque UserId",
+          "consequence": "Preserves ownership isolation without inventing token semantics."
+        },
+        {
+          "choice": "Add JWT parsing or a token-validation port",
+          "consequence": "Adds an unprovided dependency and authentication contract."
+        }
+      ],
+      "chosen": "Use the opaque credential after the Bearer prefix as the UserId.",
+      "basis": "least_harm",
+      "rationale": "The contract requires bearer-based user identification but deliberately leaves the authentication mechanism unspecified.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:401",
+        "listAlerts:401",
+        "getAlert:401",
+        "cancelAlert:401"
+      ],
+      "reversal_cost": "Replace only the inbound identity conversion when authentication is specified.",
+      "supersedes": null,
+      "last_seen_iteration": "001",
+      "status": "withdrawn",
+      "withdrawn_in_iteration": "002",
+      "silent_reversal": true
+    },
+    {
+      "id": "d_availability_validation_source",
+      "first_seen_iteration": "001",
+      "point": "createAlert:422",
+      "where": "alert request validation",
+      "question": "How does alert creation obtain court metadata and validate an exact operating slot?",
+      "considered": [
+        {
+          "choice": "Use CourtAvailabilityPort metadata and the availability service snapshot/check",
+          "consequence": "Reuses the only provided reservation boundary and avoids a new catalog."
+        },
+        {
+          "choice": "Add a separate hard-coded court catalog",
+          "consequence": "Duplicates or invents a dependency outside the implementation contract."
+        }
+      ],
+      "chosen": "Use CourtAvailabilityPort and the shared availability snapshot/check path.",
+      "basis": "contract_analogy",
+      "rationale": "Court search is outside this API, while the provided port owns supported-court and slot facts.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:201",
+        "createAlert:200",
+        "createAlert:422"
+      ],
+      "reversal_cost": "Replace the validation source and its adapter wiring.",
+      "supersedes": null,
+      "last_seen_iteration": "001",
+      "status": "withdrawn",
+      "withdrawn_in_iteration": "002",
+      "silent_reversal": true
+    },
+    {
+      "id": "d_refresh_failure_coalescing",
+      "first_seen_iteration": "001",
+      "point": "getCourtAvailability:503",
+      "where": "availability refresh coordination",
+      "question": "How should a failed refresh behave for concurrent waiters and immediate retries?",
+      "considered": [
+        {
+          "choice": "Retain the failed attempt for the check interval and reuse its outcome",
+          "consequence": "Concurrent callers receive the same stale result or same failure and the next retry follows 20 seconds."
+        },
+        {
+          "choice": "Retry the upstream call for every waiter",
+          "consequence": "Violates the one-refresh-per-interval and same-result behavior."
+        }
+      ],
+      "chosen": "Cache the failure reason for 20 seconds and reuse it for the same court/date.",
+      "basis": "spec_implication",
+      "rationale": "The contract ties Retry-After to the 20-second check interval and requires concurrent requests to share one refresh outcome.",
+      "confidence": "high",
+      "blast_radius": [
+        "getCourtAvailability:200",
+        "getCourtAvailability:502",
+        "getCourtAvailability:503",
+        "getCourtAvailability:504"
+      ],
+      "reversal_cost": "Change the refresh coordination state and retry policy.",
+      "supersedes": null,
+      "last_seen_iteration": "001",
+      "status": "withdrawn",
+      "withdrawn_in_iteration": "002",
+      "silent_reversal": true
+    },
+    {
+      "id": "d_condition_atomicity",
+      "first_seen_iteration": "001",
+      "point": "createAlert:200",
+      "where": "duplicate alert creation",
+      "question": "How are simultaneous requests with different idempotency keys prevented from creating duplicate WATCHING alerts?",
+      "considered": [
+        {
+          "choice": "Synchronize creation per owner and alert condition",
+          "consequence": "Makes the condition check and insert atomic in the in-memory draft."
+        },
+        {
+          "choice": "Check then save without a lock",
+          "consequence": "Allows V-1 races to create multiple alerts."
+        }
+      ],
+      "chosen": "Use a per-condition lock around the duplicate check and save.",
+      "basis": "contract_analogy",
+      "rationale": "The contract requires same-condition deduplication even when requests arrive concurrently, and the storage is in-memory.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:200",
+        "createAlert:201"
+      ],
+      "reversal_cost": "Replace the repository coordination with an atomic persistence operation.",
+      "supersedes": null,
+      "last_seen_iteration": "001",
+      "status": "withdrawn",
+      "withdrawn_in_iteration": "002",
+      "silent_reversal": true
+    },
+    {
+      "id": "d_lazy_expiry",
+      "first_seen_iteration": "001",
+      "point": "listAlerts:200",
+      "where": "alert lifecycle observation",
+      "question": "When does the in-memory draft materialize EXPIRED status without the out-of-scope scheduler?",
+      "considered": [
+        {
+          "choice": "Lazily transition due WATCHING alerts during owner-scoped create/list/get/cancel operations",
+          "consequence": "Stops future work and exposes terminal state when the alert is observed."
+        },
+        {
+          "choice": "Leave WATCHING forever until a background worker exists",
+          "consequence": "Fails the observable expiry behavior of the HTTP surface."
+        }
+      ],
+      "chosen": "Apply lazy expiry on owner-scoped application operations.",
+      "basis": "least_harm",
+      "rationale": "The contract assigns expiry to server work, while this draft is explicitly in-memory and has no scheduler surface.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:200",
+        "createAlert:201",
+        "listAlerts:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "reversal_cost": "Add a scheduler or replace lazy transitions with a lifecycle worker.",
+      "supersedes": null,
+      "last_seen_iteration": "001",
+      "status": "withdrawn",
+      "withdrawn_in_iteration": "002",
+      "silent_reversal": true
+    },
+    {
+      "id": "d_stale_creation_validation",
+      "first_seen_iteration": "001",
+      "point": "createAlert:422",
+      "where": "slot validation after refresh failure",
+      "question": "What slot facts are used when the latest availability refresh fails but a previous successful snapshot exists?",
+      "considered": [
+        {
+          "choice": "Validate against the last successful snapshot and permit a matching request",
+          "consequence": "Preserves known operating-slot facts while exposing refresh staleness on availability reads."
+        },
+        {
+          "choice": "Reject every create request when the latest refresh is stale",
+          "consequence": "Adds a create failure rule not declared by the contract."
+        }
+      ],
+      "chosen": "Use the last successful snapshot for exact slot validation.",
+      "basis": "least_harm",
+      "rationale": "The contract defines stale results as usable 200 data and does not declare stale availability as a create rejection condition.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:200",
+        "createAlert:201",
+        "createAlert:422"
+      ],
+      "reversal_cost": "Change the create validation policy for stale snapshots.",
+      "supersedes": null,
+      "last_seen_iteration": "001",
+      "status": "withdrawn",
+      "withdrawn_in_iteration": "002",
+      "silent_reversal": true
+    },
+    {
+      "id": "d_problem_trace_generation",
+      "first_seen_iteration": "001",
+      "point": "getCourtAvailability:500",
+      "where": "problem response construction",
+      "question": "How is the unspecified traceId value generated?",
+      "considered": [
+        {
+          "choice": "Generate a random UUID-shaped opaque value for each 5xx response",
+          "consequence": "Provides a per-response lookup token without exposing implementation details."
+        },
+        {
+          "choice": "Reuse a deterministic alert or idempotency identifier",
+          "consequence": "Some 5xx requests have no such identifier and could correlate unrelated failures."
+        }
+      ],
+      "chosen": "Generate a random UUID without separators for 5xx responses only.",
+      "basis": "convention",
+      "rationale": "The contract requires a traceId on 5xx responses but does not define its generator or format beyond string.",
+      "confidence": "medium",
+      "blast_radius": [
+        "getCourtAvailability:500",
+        "listAlerts:500",
+        "createAlert:500",
+        "getAlert:500",
+        "cancelAlert:500"
+      ],
+      "reversal_cost": "Replace the problem handler's trace ID generator.",
+      "supersedes": null,
+      "last_seen_iteration": "001",
+      "status": "withdrawn",
+      "withdrawn_in_iteration": "002",
+      "silent_reversal": true
+    },
+    {
+      "id": "d_validation_precedence",
+      "first_seen_iteration": "001",
+      "point": "createAlert:400",
+      "where": "create request boundary",
+      "question": "Which validation runs first when authentication, idempotency, and body validation are all invalid?",
+      "considered": [
+        {
+          "choice": "Authenticate first, then validate Idempotency-Key and body",
+          "consequence": "Keeps owner-scoped processing from examining request details for an unidentified user."
+        },
+        {
+          "choice": "Validate headers/body before authentication",
+          "consequence": "Could expose request validation details to unauthenticated callers."
+        }
+      ],
+      "chosen": "Authenticate before idempotency-key and body parsing.",
+      "basis": "least_harm",
+      "rationale": "The contract requires owner identity for create and does not define precedence for multiple simultaneous failures.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:400",
+        "createAlert:401"
+      ],
+      "reversal_cost": "Reorder the controller boundary checks.",
+      "supersedes": null,
+      "last_seen_iteration": "001",
+      "status": "withdrawn",
+      "withdrawn_in_iteration": "002",
+      "silent_reversal": true
+    },
+    {
+      "id": "d_spring_constructor_selection",
+      "first_seen_iteration": "002",
+      "point": "boot:alertService",
+      "where": "Spring bean definition registration",
+      "question": "How should Spring instantiate AlertService when the service exposes multiple constructors and no constructor is explicitly annotated?",
+      "considered": [
+        {
+          "choice": "Configure the alertService bean definition to use constructor autowiring",
+          "consequence": "Spring selects a resolvable constructor without changing the service contract or adding a default constructor."
+        },
+        {
+          "choice": "Add a default constructor",
+          "consequence": "Would require inventing or manually constructing application dependencies and could leave the service improperly initialized."
+        }
+      ],
+      "chosen": "Set constructor autowiring on the existing alertService bean definition during bean-definition post-processing.",
+      "basis": "least_harm",
+      "rationale": "The boot failure is caused by constructor selection, and constructor autowiring preserves the existing dependency graph and in-memory behavior.",
+      "confidence": "medium",
+      "blast_radius": [
+        "boot:alertService"
+      ],
+      "reversal_cost": "Remove the constructor-wiring configuration once AlertService has an explicit Spring constructor declaration.",
+      "supersedes": null,
+      "last_seen_iteration": "003",
+      "status": "standing"
+    },
+    {
+      "id": "d_spring_availability_constructor_selection",
+      "first_seen_iteration": "003",
+      "point": "boot:availabilityService",
+      "where": "Spring bean definition registration",
+      "question": "How should Spring instantiate AvailabilityService when its bean definition does not enable constructor autowiring?",
+      "considered": [
+        {
+          "choice": "Configure the availabilityService bean definition to use constructor autowiring",
+          "consequence": "Spring resolves the existing constructor from registered application dependencies without adding a default constructor."
+        },
+        {
+          "choice": "Add a default constructor",
+          "consequence": "Would bypass the service's required dependencies or require inventing manual construction behavior."
+        }
+      ],
+      "chosen": "Add a focused bean-definition post-processor that enables constructor autowiring for availabilityService.",
+      "basis": "least_harm",
+      "rationale": "The startup failure is specifically caused by Spring searching for a no-argument constructor; enabling constructor autowiring preserves the existing dependency graph and keeps the change isolated to boot wiring.",
+      "confidence": "high",
+      "blast_radius": [
+        "boot:availabilityService"
+      ],
+      "reversal_cost": "Remove the focused wiring configuration once AvailabilityService declares an explicit Spring constructor.",
+      "supersedes": null,
+      "last_seen_iteration": "003",
+      "status": "standing"
+    }
+  ],
+  "contract_changes": [],
+  "observations": [
+    {
+      "kind": "stage_skipped",
+      "iteration": "001",
+      "point": null,
+      "where": null,
+      "detail": "g0_reject"
+    },
+    {
+      "kind": "gate_unjudged",
+      "iteration": "001",
+      "point": null,
+      "where": "g1",
+      "detail": "g1가 판정되지 않았다. 미판정은 통과가 아니다"
+    },
+    {
+      "kind": "gate_unjudged",
+      "iteration": "001",
+      "point": null,
+      "where": "changes",
+      "detail": "changes가 판정되지 않았다. 미판정은 통과가 아니다"
+    },
+    {
+      "kind": "contract_step_diff",
+      "iteration": "001",
+      "point": null,
+      "where": "*",
+      "detail": "앞 판본 대비 달라진 좌표 0개, 깨는 변경 0건"
+    },
+    {
+      "kind": "baseline_diff",
+      "iteration": "001",
+      "point": null,
+      "where": "*",
+      "detail": "이 run의 기준선 대비 달라진 좌표 0개, 깨는 변경 0건"
+    },
+    {
+      "kind": "origin_diff",
+      "iteration": "001",
+      "point": null,
+      "where": "*",
+      "detail": "사람이 확정한 원본 대비 누적으로 달라진 좌표 0개, 깨는 변경 0건"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/api/AlertController.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/api/ApiAuthentication.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/api/ApiModels.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/api/RequestValidationException.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/AvailabilityService.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/InMemoryAlertRepository.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/domain/Alert.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/domain/AlertRepository.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/domain/AvailabilitySnapshot.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/domain/DomainExceptions.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/domain/TimeWindow.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/domain/UserId.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "stage_skipped",
+      "iteration": "002",
+      "point": null,
+      "where": null,
+      "detail": "g0_reject"
+    },
+    {
+      "kind": "gate_unjudged",
+      "iteration": "002",
+      "point": null,
+      "where": "g1",
+      "detail": "g1가 판정되지 않았다. 미판정은 통과가 아니다"
+    },
+    {
+      "kind": "gate_unjudged",
+      "iteration": "002",
+      "point": null,
+      "where": "changes",
+      "detail": "changes가 판정되지 않았다. 미판정은 통과가 아니다"
+    },
+    {
+      "kind": "contract_step_diff",
+      "iteration": "002",
+      "point": null,
+      "where": "*",
+      "detail": "앞 판본 대비 달라진 좌표 0개, 깨는 변경 0건"
+    },
+    {
+      "kind": "baseline_diff",
+      "iteration": "002",
+      "point": null,
+      "where": "*",
+      "detail": "이 run의 기준선 대비 달라진 좌표 0개, 깨는 변경 0건"
+    },
+    {
+      "kind": "origin_diff",
+      "iteration": "002",
+      "point": null,
+      "where": "*",
+      "detail": "사람이 확정한 원본 대비 누적으로 달라진 좌표 0개, 깨는 변경 0건"
+    },
+    {
+      "kind": "collateral_change",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/AlertService.java",
+      "detail": "열린 위반의 좌표를 언급하지 않는 파일이 달라졌다"
+    },
+    {
+      "kind": "collateral_change",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/SpringConstructorWiringConfiguration.java",
+      "detail": "열린 위반의 좌표를 언급하지 않는 파일이 달라졌다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/api/AlertController.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/api/ApiAuthentication.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/api/ApiModels.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/api/RequestValidationException.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/AvailabilityService.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/InMemoryAlertRepository.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/domain/Alert.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/domain/AlertRepository.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/domain/AvailabilitySnapshot.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/domain/DomainExceptions.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/domain/TimeWindow.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "manifest_drift",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/domain/UserId.java",
+      "detail": "색인에 없는 파일이 작업 폴더에서 바뀌어 있다"
+    },
+    {
+      "kind": "stage_skipped",
+      "iteration": "003",
+      "point": null,
+      "where": null,
+      "detail": "g0_reject"
+    },
+    {
+      "kind": "gate_unjudged",
+      "iteration": "003",
+      "point": null,
+      "where": "g1",
+      "detail": "g1가 판정되지 않았다. 미판정은 통과가 아니다"
+    },
+    {
+      "kind": "gate_unjudged",
+      "iteration": "003",
+      "point": null,
+      "where": "changes",
+      "detail": "changes가 판정되지 않았다. 미판정은 통과가 아니다"
+    },
+    {
+      "kind": "contract_step_diff",
+      "iteration": "003",
+      "point": null,
+      "where": "*",
+      "detail": "앞 판본 대비 달라진 좌표 0개, 깨는 변경 0건"
+    },
+    {
+      "kind": "baseline_diff",
+      "iteration": "003",
+      "point": null,
+      "where": "*",
+      "detail": "이 run의 기준선 대비 달라진 좌표 0개, 깨는 변경 0건"
+    },
+    {
+      "kind": "origin_diff",
+      "iteration": "003",
+      "point": null,
+      "where": "*",
+      "detail": "사람이 확정한 원본 대비 누적으로 달라진 좌표 0개, 깨는 변경 0건"
+    },
+    {
+      "kind": "collateral_change",
+      "iteration": "003",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/AvailabilityServiceConstructorWiringConfiguration.java",
+      "detail": "열린 위반의 좌표를 언급하지 않는 파일이 달라졌다"
+    }
+  ],
+  "impact": {
+    "iteration": "003",
+    "contract_version": {
+      "path": "contract/tennis-alert-api-v1.yaml",
+      "from": "contract/tennis-alert-api-v1.yaml"
+    },
+    "baseline_contract": "tennis-alert-api.yaml",
+    "origin_contract": "tennis-alert-api.yaml",
+    "points_gone": [],
+    "points_born": [],
+    "step_diff": {
+      "pointers": [],
+      "breaking": []
+    },
+    "baseline_diff": {
+      "pointers": [],
+      "breaking": []
+    },
+    "origin_diff": {
+      "pointers": [],
+      "breaking": [],
+      "points_gone": []
+    },
+    "closed_by_code": [
+      "v_cff1b6",
+      "v_271ee5",
+      "v_5a5284",
+      "v_459e29"
+    ],
+    "closed_by_contract": [],
+    "decision_risk": {
+      "level": "low",
+      "reasons": []
+    }
+  },
+  "disagreements": {
+    "claim_mismatch": [
+      {
+        "iteration": "001",
+        "point": "getCourtAvailability:200",
+        "note": "Returns complete availability data with court metadata, UTC confirmation time, stale fields, reservation URL, and all slots.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getCourtAvailability:400",
+        "note": "Validates courtId and date format and maps malformed requests to VALIDATION_FAILED.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getCourtAvailability:404",
+        "note": "Maps unsupported path courts to COURT_NOT_SUPPORTED.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getCourtAvailability:500",
+        "note": "Maps unexpected failures to INTERNAL_ERROR with retry metadata and traceId.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getCourtAvailability:502",
+        "note": "Maps unreadable upstream responses to UPSTREAM_RESPONSE_UNREADABLE.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getCourtAvailability:503",
+        "note": "Maps unavailable upstream responses and storage timeout failures to their declared 503 codes.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getCourtAvailability:504",
+        "note": "Maps upstream timeouts to UPSTREAM_TIMEOUT.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getCourtAvailability:VALIDATION_FAILED",
+        "note": "Problem responses use application/problem+json with status, code, retryable, and request instance.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getCourtAvailability:COURT_NOT_SUPPORTED",
+        "note": "Path-level unsupported courts are distinguished as 404.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getCourtAvailability:UPSTREAM_RESPONSE_UNREADABLE",
+        "note": "Unreadable upstream checks produce 502, retryAfterSeconds 20, Retry-After, and traceId.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getCourtAvailability:UPSTREAM_UNAVAILABLE",
+        "note": "Unavailable upstream checks produce 503, retryAfterSeconds 20, Retry-After, and traceId.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getCourtAvailability:UPSTREAM_TIMEOUT",
+        "note": "Timed out upstream checks produce 504, retryAfterSeconds 20, Retry-After, and traceId.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getCourtAvailability:STORAGE_TIMEOUT",
+        "note": "Storage timeout is explicitly mapped to retryable 503 storage failure.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getCourtAvailability:INTERNAL_ERROR",
+        "note": "Unhandled failures produce retryable 500 responses with traceId.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "listAlerts:200",
+        "note": "Lists only the authenticated owner's alerts, newest first, with optional stored-status filtering and complete nullable fields.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "listAlerts:400",
+        "note": "Invalid status values are mapped to VALIDATION_FAILED.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "listAlerts:401",
+        "note": "Missing or malformed bearer credentials are mapped to UNAUTHENTICATED.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "listAlerts:500",
+        "note": "Unexpected failures are mapped to INTERNAL_ERROR.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "listAlerts:503",
+        "note": "Storage timeout is explicitly mapped to retryable STORAGE_TIMEOUT.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "listAlerts:VALIDATION_FAILED",
+        "note": "Invalid query status returns the declared problem code.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "listAlerts:UNAUTHENTICATED",
+        "note": "Owner-scoped list access requires a nonblank Bearer credential.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "listAlerts:STORAGE_TIMEOUT",
+        "note": "Storage timeout mapping is declared in the common problem handler.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "listAlerts:INTERNAL_ERROR",
+        "note": "Unhandled list failures use the declared 500 problem shape.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:201",
+        "note": "Creates a WATCHING alert, returns the full Alert representation, Location, and Idempotency-Replayed=false.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:200",
+        "note": "Returns an existing WATCHING alert for the same owner and condition without creating a second alert.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:400",
+        "note": "Validates JSON shape, additional fields, UUID Idempotency-Key, date, courtId, and HH:mm slot values.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:401",
+        "note": "Requires a bearer identity before processing the create request.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:409",
+        "note": "Same scoped idempotency key with a different request fingerprint maps to IDEMPOTENCY_KEY_REUSED.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:422",
+        "note": "Distinguishes unsupported body court, unsupported slot, and closed alert window.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:500",
+        "note": "Unexpected create failures use INTERNAL_ERROR.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:503",
+        "note": "Concurrent idempotency processing uses CONCURRENT_UPDATE_CONFLICT with Retry-After; storage timeout is also mapped.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:VALIDATION_FAILED",
+        "note": "Request validation failures are not retained in the idempotency store.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:UNAUTHENTICATED",
+        "note": "Bearer credentials are required for owner scoping.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:IDEMPOTENCY_KEY_REUSED",
+        "note": "Completed 2xx requests retain the request fingerprint for 24 hours and reject changed reuse.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:COURT_NOT_SUPPORTED",
+        "note": "Body court support is mapped to 422.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:SLOT_NOT_SUPPORTED",
+        "note": "Requested slot must exactly match a known operating slot.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:ALERT_WINDOW_CLOSED",
+        "note": "Expiry is derived from the Asia/Seoul slot start and past windows are rejected.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:CONCURRENT_UPDATE_CONFLICT",
+        "note": "Concurrent same-key processing returns retryable 503.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:STORAGE_TIMEOUT",
+        "note": "Storage timeout mapping is explicitly declared.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:INTERNAL_ERROR",
+        "note": "Unhandled create failures include retry metadata and traceId.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getAlert:200",
+        "note": "Returns the complete alert representation for the authenticated owner.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getAlert:400",
+        "note": "Non-canonical UUID alert IDs are rejected as VALIDATION_FAILED.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getAlert:401",
+        "note": "Missing or malformed bearer credentials are rejected as UNAUTHENTICATED.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getAlert:404",
+        "note": "Missing and non-owned alerts both map to ALERT_NOT_FOUND.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getAlert:500",
+        "note": "Unexpected failures are mapped to INTERNAL_ERROR.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getAlert:503",
+        "note": "Storage timeout is explicitly mapped to retryable STORAGE_TIMEOUT.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "getAlert:ALERT_NOT_FOUND",
+        "note": "Owner filtering makes missing and non-owned resources indistinguishable.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "cancelAlert:200",
+        "note": "Cancellation is idempotent and returns the resulting complete alert representation.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "cancelAlert:400",
+        "note": "Non-canonical UUID alert IDs are rejected as VALIDATION_FAILED.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "cancelAlert:401",
+        "note": "Missing or malformed bearer credentials are rejected as UNAUTHENTICATED.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "cancelAlert:404",
+        "note": "Missing and non-owned alerts both map to ALERT_NOT_FOUND.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "cancelAlert:500",
+        "note": "Unexpected failures are mapped to INTERNAL_ERROR.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "cancelAlert:503",
+        "note": "Contention and storage timeout mappings are explicitly declared.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "cancelAlert:ALERT_NOT_FOUND",
+        "note": "Cancellation never reveals whether another user's alert exists.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "cancelAlert:CONCURRENT_UPDATE_CONFLICT",
+        "note": "Retryable contention mapping is available for state-changing failures.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "cancelAlert:STORAGE_TIMEOUT",
+        "note": "Storage timeout mapping is explicitly declared.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "cancelAlert:INTERNAL_ERROR",
+        "note": "Unhandled cancellation failures include retry metadata and traceId.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "001",
+        "point": "contract:prose",
+        "note": "The baseline contract was copied to the required versioned contract artifact path.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "boot:alertService",
+        "note": "Configures the alertService bean definition for constructor autowiring so Spring can select its available dependency-injected constructor.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "003",
+        "point": "boot:alertService",
+        "note": "Keeps constructor autowiring configured for AlertService.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "003",
+        "point": "boot:availabilityService",
+        "note": "Configures constructor autowiring for AvailabilityService so Spring can resolve its existing constructor dependencies.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      }
+    ],
+    "silent_reversal": [
+      {
+        "iteration": "002",
+        "decision_id": "d_clock_source",
+        "detail": "서 있던 결정 d_clock_source이 supersedes 없이 사라졌다"
+      },
+      {
+        "iteration": "002",
+        "decision_id": "d_user_identity",
+        "detail": "서 있던 결정 d_user_identity이 supersedes 없이 사라졌다"
+      },
+      {
+        "iteration": "002",
+        "decision_id": "d_availability_validation_source",
+        "detail": "서 있던 결정 d_availability_validation_source이 supersedes 없이 사라졌다"
+      },
+      {
+        "iteration": "002",
+        "decision_id": "d_refresh_failure_coalescing",
+        "detail": "서 있던 결정 d_refresh_failure_coalescing이 supersedes 없이 사라졌다"
+      },
+      {
+        "iteration": "002",
+        "decision_id": "d_condition_atomicity",
+        "detail": "서 있던 결정 d_condition_atomicity이 supersedes 없이 사라졌다"
+      },
+      {
+        "iteration": "002",
+        "decision_id": "d_lazy_expiry",
+        "detail": "서 있던 결정 d_lazy_expiry이 supersedes 없이 사라졌다"
+      },
+      {
+        "iteration": "002",
+        "decision_id": "d_stale_creation_validation",
+        "detail": "서 있던 결정 d_stale_creation_validation이 supersedes 없이 사라졌다"
+      },
+      {
+        "iteration": "002",
+        "decision_id": "d_problem_trace_generation",
+        "detail": "서 있던 결정 d_problem_trace_generation이 supersedes 없이 사라졌다"
+      },
+      {
+        "iteration": "002",
+        "decision_id": "d_validation_precedence",
+        "detail": "서 있던 결정 d_validation_precedence이 supersedes 없이 사라졌다"
+      }
+    ],
+    "unjustified_proposal": [],
+    "axis_disagreement": [],
+    "machine_checkable_restatement": []
+  },
+  "pointer_touches": {}
+}

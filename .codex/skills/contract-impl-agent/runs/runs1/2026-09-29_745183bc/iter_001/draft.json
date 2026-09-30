@@ -1,0 +1,480 @@
+{
+  "brief_hash": "745183bc",
+  "iteration": "001",
+  "stage": "gen",
+  "files": [
+    {
+      "path": "contract/tennis-alert-api-v1.yaml",
+      "role": "contract"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/AvailabilityApplicationService.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/TennisAlertApiConfiguration.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/TennisAlertApiController.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/TennisAlertApiExceptionHandler.java",
+      "role": "code"
+    }
+  ],
+  "contract_version": {
+    "path": "contract/tennis-alert-api-v1.yaml",
+    "from": "contract/tennis-alert-api-v1.yaml"
+  },
+  "claims": [
+    {
+      "point": "getCourtAvailability:200",
+      "note": "코트·날짜별 20초 캐시, 동시 확인 병합, 최신 성공 결과와 stale 표현을 구현했다."
+    },
+    {
+      "point": "getCourtAvailability:400",
+      "note": "courtId와 date 형식 오류를 VALIDATION_FAILED로 매핑한다."
+    },
+    {
+      "point": "getCourtAvailability:404",
+      "note": "지원하지 않는 경로 코트를 COURT_NOT_SUPPORTED로 매핑한다."
+    },
+    {
+      "point": "getCourtAvailability:500",
+      "note": "예상하지 못한 서버 실패를 INTERNAL_ERROR로 매핑한다."
+    },
+    {
+      "point": "getCourtAvailability:502",
+      "note": "예약처 응답 판독 실패를 UPSTREAM_RESPONSE_UNREADABLE로 매핑한다."
+    },
+    {
+      "point": "getCourtAvailability:503",
+      "note": "예약처 연결 실패를 UPSTREAM_UNAVAILABLE로 매핑한다."
+    },
+    {
+      "point": "getCourtAvailability:504",
+      "note": "예약처 타임아웃을 UPSTREAM_TIMEOUT으로 매핑한다."
+    },
+    {
+      "point": "getCourtAvailability:VALIDATION_FAILED",
+      "note": "스키마 형식 오류를 문제 응답으로 반환한다."
+    },
+    {
+      "point": "getCourtAvailability:COURT_NOT_SUPPORTED",
+      "note": "경로 코트 미지원 오류를 404로 반환한다."
+    },
+    {
+      "point": "getCourtAvailability:INTERNAL_ERROR",
+      "note": "예상하지 못한 서버 오류에 traceId와 재시도 정보를 포함한다."
+    },
+    {
+      "point": "getCourtAvailability:UPSTREAM_RESPONSE_UNREADABLE",
+      "note": "저장된 성공 결과가 없으면 502, 있으면 stale 200으로 반환한다."
+    },
+    {
+      "point": "getCourtAvailability:UPSTREAM_UNAVAILABLE",
+      "note": "저장된 성공 결과가 없으면 503, 있으면 stale 200으로 반환한다."
+    },
+    {
+      "point": "getCourtAvailability:UPSTREAM_TIMEOUT",
+      "note": "저장된 성공 결과가 없으면 504, 있으면 stale 200으로 반환한다."
+    },
+    {
+      "point": "listAlerts:200",
+      "note": "Bearer 토큰 사용자 소유 신청만 생성 시각 내림차순으로 반환하고 선택 status로 필터링한다."
+    },
+    {
+      "point": "listAlerts:400",
+      "note": "status 열거형과 요청 형식 오류를 VALIDATION_FAILED로 반환한다."
+    },
+    {
+      "point": "listAlerts:401",
+      "note": "Bearer 인증 누락 또는 빈 값을 UNAUTHENTICATED로 반환한다."
+    },
+    {
+      "point": "listAlerts:500",
+      "note": "예상하지 못한 서버 실패를 INTERNAL_ERROR로 반환한다."
+    },
+    {
+      "point": "listAlerts:503",
+      "note": "저장소 오류 좌표를 STORAGE_TIMEOUT으로 매핑할 수 있는 문제 매핑을 제공한다."
+    },
+    {
+      "point": "listAlerts:VALIDATION_FAILED",
+      "note": "잘못된 status와 형식 오류를 400 문제 응답으로 반환한다."
+    },
+    {
+      "point": "listAlerts:UNAUTHENTICATED",
+      "note": "사용자 식별 실패를 401 문제 응답으로 반환한다."
+    },
+    {
+      "point": "listAlerts:INTERNAL_ERROR",
+      "note": "예상하지 못한 서버 오류를 500 문제 응답으로 반환한다."
+    },
+    {
+      "point": "listAlerts:STORAGE_TIMEOUT",
+      "note": "저장소 타임아웃 문제 형식을 제공한다."
+    },
+    {
+      "point": "createAlert:201",
+      "note": "지원 코트·시간대·만료 전 조건을 검증한 뒤 WATCHING 신청을 생성하고 Location과 Idempotency-Replayed를 반환한다."
+    },
+    {
+      "point": "createAlert:200",
+      "note": "같은 사용자의 동일 WATCHING 조건은 새 신청 없이 기존 신청을 반환한다."
+    },
+    {
+      "point": "createAlert:400",
+      "note": "본문, UUID Idempotency-Key, UUID 형식 오류를 VALIDATION_FAILED로 반환한다."
+    },
+    {
+      "point": "createAlert:401",
+      "note": "Bearer 인증 실패를 UNAUTHENTICATED로 반환한다."
+    },
+    {
+      "point": "createAlert:409",
+      "note": "완료된 멱등 키를 다른 요청 내용에 재사용하면 IDEMPOTENCY_KEY_REUSED로 반환한다."
+    },
+    {
+      "point": "createAlert:422",
+      "note": "본문 코트 미지원, 시간대 미지원, 만료된 조건을 각각 계약 코드로 반환한다."
+    },
+    {
+      "point": "createAlert:500",
+      "note": "예상하지 못한 서버 실패를 INTERNAL_ERROR로 반환한다."
+    },
+    {
+      "point": "createAlert:503",
+      "note": "동일 멱등 키의 처리 중 경합을 CONCURRENT_UPDATE_CONFLICT로 반환한다."
+    },
+    {
+      "point": "createAlert:VALIDATION_FAILED",
+      "note": "요청 형식과 필수 멱등 키를 검증한다."
+    },
+    {
+      "point": "createAlert:UNAUTHENTICATED",
+      "note": "Bearer 토큰을 사용자 식별에 사용한다."
+    },
+    {
+      "point": "createAlert:IDEMPOTENCY_KEY_REUSED",
+      "note": "사용자·오퍼레이션·키 범위에서 요청 fingerprint를 비교한다."
+    },
+    {
+      "point": "createAlert:COURT_NOT_SUPPORTED",
+      "note": "본문 코트 미지원은 422로 반환한다."
+    },
+    {
+      "point": "createAlert:SLOT_NOT_SUPPORTED",
+      "note": "예약 상태 포트가 반환한 운영 시간대와 정확히 일치하지 않으면 거절한다."
+    },
+    {
+      "point": "createAlert:ALERT_WINDOW_CLOSED",
+      "note": "Asia/Seoul 기준 이용 시작 시각이 현재 시각 이하이면 거절한다."
+    },
+    {
+      "point": "createAlert:INTERNAL_ERROR",
+      "note": "예상하지 못한 서버 오류 응답을 제공한다."
+    },
+    {
+      "point": "createAlert:STORAGE_TIMEOUT",
+      "note": "저장소 타임아웃 문제 형식을 제공한다."
+    },
+    {
+      "point": "createAlert:CONCURRENT_UPDATE_CONFLICT",
+      "note": "처리 중인 동일 멱등 키 재요청을 503과 Retry-After 1초로 반환한다."
+    },
+    {
+      "point": "getAlert:200",
+      "note": "인증 사용자 소유 신청의 모든 계약 필드를 반환한다."
+    },
+    {
+      "point": "getAlert:400",
+      "note": "UUID가 아닌 alertId를 VALIDATION_FAILED로 반환한다."
+    },
+    {
+      "point": "getAlert:401",
+      "note": "Bearer 인증 실패를 UNAUTHENTICATED로 반환한다."
+    },
+    {
+      "point": "getAlert:404",
+      "note": "없는 신청과 타 사용자 신청을 ALERT_NOT_FOUND로 동일 처리한다."
+    },
+    {
+      "point": "getAlert:500",
+      "note": "예상하지 못한 서버 실패를 INTERNAL_ERROR로 반환한다."
+    },
+    {
+      "point": "getAlert:503",
+      "note": "저장소 오류 좌표를 STORAGE_TIMEOUT으로 매핑할 수 있는 문제 매핑을 제공한다."
+    },
+    {
+      "point": "getAlert:VALIDATION_FAILED",
+      "note": "alertId 형식 오류를 400 문제 응답으로 반환한다."
+    },
+    {
+      "point": "getAlert:UNAUTHENTICATED",
+      "note": "사용자 식별 실패를 401 문제 응답으로 반환한다."
+    },
+    {
+      "point": "getAlert:ALERT_NOT_FOUND",
+      "note": "소유권이 없는 신청도 존재하지 않는 신청과 같은 404로 반환한다."
+    },
+    {
+      "point": "getAlert:INTERNAL_ERROR",
+      "note": "예상하지 못한 서버 오류를 500 문제 응답으로 반환한다."
+    },
+    {
+      "point": "getAlert:STORAGE_TIMEOUT",
+      "note": "저장소 타임아웃 문제 형식을 제공한다."
+    },
+    {
+      "point": "cancelAlert:200",
+      "note": "WATCHING 신청은 CANCELED로 바꾸고 이미 끝난 신청은 현재 상태를 그대로 반환한다."
+    },
+    {
+      "point": "cancelAlert:400",
+      "note": "UUID가 아닌 alertId를 VALIDATION_FAILED로 반환한다."
+    },
+    {
+      "point": "cancelAlert:401",
+      "note": "Bearer 인증 실패를 UNAUTHENTICATED로 반환한다."
+    },
+    {
+      "point": "cancelAlert:404",
+      "note": "없는 신청과 타 사용자 신청을 ALERT_NOT_FOUND로 동일 처리한다."
+    },
+    {
+      "point": "cancelAlert:500",
+      "note": "예상하지 못한 서버 실패를 INTERNAL_ERROR로 반환한다."
+    },
+    {
+      "point": "cancelAlert:503",
+      "note": "저장소 및 동시 수정 문제 형식을 제공한다."
+    },
+    {
+      "point": "cancelAlert:VALIDATION_FAILED",
+      "note": "alertId 형식 오류를 400 문제 응답으로 반환한다."
+    },
+    {
+      "point": "cancelAlert:UNAUTHENTICATED",
+      "note": "사용자 식별 실패를 401 문제 응답으로 반환한다."
+    },
+    {
+      "point": "cancelAlert:ALERT_NOT_FOUND",
+      "note": "소유권이 없는 신청도 존재하지 않는 신청과 같은 404로 반환한다."
+    },
+    {
+      "point": "cancelAlert:INTERNAL_ERROR",
+      "note": "예상하지 못한 서버 오류를 500 문제 응답으로 반환한다."
+    },
+    {
+      "point": "cancelAlert:STORAGE_TIMEOUT",
+      "note": "저장소 타임아웃 문제 형식을 제공한다."
+    },
+    {
+      "point": "cancelAlert:CONCURRENT_UPDATE_CONFLICT",
+      "note": "동시 수정 문제 형식을 제공한다."
+    }
+  ],
+  "decisions": [
+    {
+      "id": "d_bearer_identity",
+      "point": "getAlert:200",
+      "where": "TennisAlertApiController.authenticate",
+      "question": "계약이 Bearer 토큰의 검증 체계와 사용자 식별자 추출 규칙을 정하지 않은 자리에서 무엇을 사용자 키로 사용할 것인가?",
+      "considered": [
+        {
+          "choice": "Bearer 값 전체를 사용자 식별자로 사용",
+          "consequence": "별도 인증 예약처 없이 사용자별 격리를 구현할 수 있다."
+        },
+        {
+          "choice": "토큰을 JWT로 파싱해 subject를 사용",
+          "consequence": "계약에 없는 토큰 형식과 검증 키가 필요하다."
+        }
+      ],
+      "chosen": "Bearer 접두사 뒤의 비어 있지 않은 값 전체를 사용자 식별자로 사용",
+      "basis": "least_harm",
+      "rationale": "계약은 Bearer 사용만 정하고 토큰 형식·검증 주체를 정하지 않았으므로 추가 인증 규칙을 만들지 않고 소유권 격리만 보장한다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:401",
+        "listAlerts:401",
+        "getAlert:401",
+        "cancelAlert:401",
+        "listAlerts:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "reversal_cost": "인증 어댑터와 사용자 키 추출을 교체하고 인메모리 저장 키의 마이그레이션이 필요하다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_clock_source",
+      "point": "createAlert:201",
+      "where": "TennisAlertApiConfiguration.tennisAlertClock",
+      "question": "UTC 타임스탬프를 계산할 시간 공급원을 어떻게 선택할 것인가?",
+      "considered": [
+        {
+          "choice": "Clock.systemUTC() 사용",
+          "consequence": "실행 시점의 UTC를 계약 형식으로 기록한다."
+        },
+        {
+          "choice": "Asia/Seoul 시스템 시계 사용",
+          "consequence": "UTC 출력 전환 과정에서 시간대 혼동 가능성이 생긴다."
+        }
+      ],
+      "chosen": "Clock.systemUTC()를 주입해 모든 Instant를 UTC로 계산",
+      "basis": "spec_implication",
+      "rationale": "계약이 타임스탬프를 UTC로 요구하고 날짜·시각만 Asia/Seoul 기준으로 구분하므로 시각 계산은 UTC Clock으로 고정했다.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:201",
+        "createAlert:200",
+        "listAlerts:200",
+        "getAlert:200",
+        "cancelAlert:200",
+        "getCourtAvailability:200"
+      ],
+      "reversal_cost": "Clock Bean과 만료·지연 계산을 사용하는 모든 유스케이스를 변경해야 한다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_availability_coalescing_executor",
+      "point": "getCourtAvailability:200",
+      "where": "AvailabilityApplicationService.runCoalescedCheck",
+      "question": "동일 코트·날짜의 동시 확인을 어떤 실행 방식으로 합칠 것인가?",
+      "considered": [
+        {
+          "choice": "공유 CompletableFuture와 공용 비동기 실행기 사용",
+          "consequence": "첫 확인 하나를 실행하고 다른 요청은 같은 결과를 기다린다."
+        },
+        {
+          "choice": "요청 스레드에서 락을 잡고 직접 외부 확인",
+          "consequence": "외부 지연 동안 요청 스레드와 잠금이 유지된다."
+        }
+      ],
+      "chosen": "코트·날짜 키별 CompletableFuture를 공유하고 완료 시 제거",
+      "basis": "contract_analogy",
+      "rationale": "계약이 같은 확인 결과를 기다리게 하므로 키별 단일 Future가 결과 동일성과 외부 호출 억제를 함께 보장한다.",
+      "confidence": "high",
+      "blast_radius": [
+        "getCourtAvailability:200",
+        "getCourtAvailability:502",
+        "getCourtAvailability:503",
+        "getCourtAvailability:504"
+      ],
+      "reversal_cost": "확인 캐시와 동시성 제어를 별도 조정자 또는 실행기 구현으로 교체해야 한다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_create_slot_validation",
+      "point": "createAlert:422",
+      "where": "AlertApplicationService.ensureSlotSupported",
+      "question": "신청 본문의 시간대가 실제 운영 시간대인지 어떤 경로로 확인할 것인가?",
+      "considered": [
+        {
+          "choice": "CourtAvailabilityPort를 통해 해당 코트·날짜의 예약 상태를 확인하고 반환된 슬롯과 정확히 비교",
+          "consequence": "계약의 운영 시간대 조건을 기존 외부 포트로 검증할 수 있다."
+        },
+        {
+          "choice": "코트별 시간대 목록을 애플리케이션에 하드코딩",
+          "consequence": "계약과 제공 포트에 없는 코트별 데이터와 변경 규칙을 새로 지어내야 한다."
+        }
+      ],
+      "chosen": "AvailabilityApplicationService를 통해 저장 결과를 사용하거나 확인을 일으킨 뒤 슬롯을 정확히 비교",
+      "basis": "contract_analogy",
+      "rationale": "계약은 코트·날짜별 슬롯이 예약 상태 결과에 있다고 명시하고 제공 API도 그 결과만 제공하므로 별도 시간표를 발명하지 않았다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:201",
+        "createAlert:200",
+        "createAlert:422",
+        "createAlert:502",
+        "createAlert:503",
+        "createAlert:504"
+      ],
+      "reversal_cost": "신청 검증 경로와 코트별 운영시간 데이터 공급원을 함께 변경해야 한다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_last_checked_projection",
+      "point": "getAlert:200",
+      "where": "AlertApplicationService.viewOf",
+      "question": "신청에 저장된 마지막 확인 시각과 공유된 코트·날짜 확인 결과를 어떻게 일치시킬 것인가?",
+      "considered": [
+        {
+          "choice": "조회 시 공유 availability 캐시의 마지막 성공 시각을 신청 응답에 반영",
+          "consequence": "같은 코트·날짜의 성공 확인을 신청의 lastCheckedAt 의미에 맞게 표시한다."
+        },
+        {
+          "choice": "신청 생성 시각만 보존하고 이후 확인 결과와 분리",
+          "consequence": "계약이 요구하는 신청 조건의 마지막 성공 확인 시각을 갱신하지 못한다."
+        }
+      ],
+      "chosen": "응답 생성 시 공유 availability 캐시의 더 최신 성공 시각을 lastCheckedAt으로 투영",
+      "basis": "spec_implication",
+      "rationale": "lastCheckedAt은 신청별 예약처 확인 시각이 아니라 해당 신청의 코트·날짜를 마지막으로 성공 확인한 시각이므로 공유 확인 결과를 읽는다.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:201",
+        "createAlert:200",
+        "listAlerts:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "reversal_cost": "신청 저장 모델에 확인 결과 참조 또는 이벤트 갱신을 추가하고 응답 계산을 변경해야 한다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_trace_id_format",
+      "point": "getCourtAvailability:500",
+      "where": "TennisAlertApiExceptionHandler.build",
+      "question": "계약이 traceId의 문자열 타입만 정한 자리에서 어떤 식별자 형식을 사용할 것인가?",
+      "considered": [
+        {
+          "choice": "UUID 문자열 생성",
+          "consequence": "추가 라이브러리 없이 요청마다 구분 가능한 식별자를 제공한다."
+        },
+        {
+          "choice": "ULID 문자열 생성",
+          "consequence": "계약에 없는 생성 규칙과 추가 구현이 필요하다."
+        }
+      ],
+      "chosen": "UUID 문자열을 traceId로 생성",
+      "basis": "convention",
+      "rationale": "계약은 traceId의 형식 세부를 정하지 않았고 UUID는 Java 표준 API로 생성 가능하다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "getCourtAvailability:500",
+        "listAlerts:500",
+        "createAlert:500",
+        "getAlert:500",
+        "cancelAlert:500"
+      ],
+      "reversal_cost": "문제 응답 생성기와 로그 상관관계 포맷을 교체해야 한다.",
+      "supersedes": null
+    }
+  ],
+  "contract_changes": [],
+  "generated_at": "2026-09-29T21:22:56+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "gen_impl:v1",
+    "source_files": [
+      "745183bc_input.json"
+    ],
+    "token_usage": {
+      "input_tokens": 2082432,
+      "cached_input_tokens": 1759360,
+      "output_tokens": 42585,
+      "reasoning_output_tokens": 14462
+    }
+  },
+  "commit": "9c039c560fb3683dc3f6a4f8726ea1e9ceff9f11"
+}

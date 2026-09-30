@@ -1,0 +1,385 @@
+{
+  "iteration": "001",
+  "g0": "PASS",
+  "g1": "PASS",
+  "changes": "PASS",
+  "violations": [],
+  "observations": [
+    {
+      "rule": "response.value_narrowed",
+      "point": "getCourtAvailability:400",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ]
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "getCourtAvailability:404",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ]
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "getCourtAvailability:500",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ]
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "getCourtAvailability:502",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ]
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "getCourtAvailability:503",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ]
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "getCourtAvailability:504",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ]
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "listAlerts:200",
+      "where": "AlertList.items[].delivery",
+      "detail": "형식: attemptCount: 계약 None → 구현 int32",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: attemptCount: 계약 None → 구현 int32"
+      ]
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "listAlerts:400",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ]
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "listAlerts:401",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ]
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "listAlerts:500",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ]
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "listAlerts:503",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ]
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "createAlert:201",
+      "where": "Alert.delivery",
+      "detail": "형식: attemptCount: 계약 None → 구현 int32",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: attemptCount: 계약 None → 구현 int32"
+      ]
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "createAlert:200",
+      "where": "Alert.delivery",
+      "detail": "형식: attemptCount: 계약 None → 구현 int32",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: attemptCount: 계약 None → 구현 int32"
+      ]
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "createAlert:400",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ]
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "createAlert:401",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ]
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "createAlert:409",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ]
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "createAlert:422",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ]
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "createAlert:500",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ]
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "createAlert:503",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ]
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "getAlert:200",
+      "where": "Alert.delivery",
+      "detail": "형식: attemptCount: 계약 None → 구현 int32",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: attemptCount: 계약 None → 구현 int32"
+      ]
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "getAlert:400",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ]
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "getAlert:401",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ]
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "getAlert:404",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ]
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "getAlert:500",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ]
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "getAlert:503",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ]
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "cancelAlert:200",
+      "where": "Alert.delivery",
+      "detail": "형식: attemptCount: 계약 None → 구현 int32",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: attemptCount: 계약 None → 구현 int32"
+      ]
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "cancelAlert:400",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ]
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "cancelAlert:401",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ]
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "cancelAlert:404",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ]
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "cancelAlert:500",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ]
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "cancelAlert:503",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ]
+    }
+  ],
+  "errors": [],
+  "derived_spec": "C:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs11\\2026-09-30_b02d8689\\iter_001\\api-docs.json",
+  "allow_missing_gates": false,
+  "log": [
+    "작업 폴더: C:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs11\\2026-09-30_b02d8689\\output (target/ 재사용 예)\n$ C:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs11\\2026-09-30_b02d8689\\output\\mvnw.cmd -B -q test → 0\n15:57:28.332 [main] INFO com.tngtech.archunit.core.PluginLoader -- Detected Java version 17.0.19\n\n$ dump_api_docs.py → 0\nC:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs11\\2026-09-30_b02d8689\\iter_001\\api-docs.json 에 저장했다. 포트 50543, 최상위 키 ['components', 'info', 'openapi', 'paths', 'security', 'servers', 'tags'], paths 3개\n"
+  ],
+  "baseline_compared": true,
+  "accumulated_changes": 0,
+  "critique_source": "none:first_iteration"
+}

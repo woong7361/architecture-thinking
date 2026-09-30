@@ -1,0 +1,1416 @@
+{
+  "iteration": "002",
+  "g0": "PASS",
+  "g1": "REJECT",
+  "changes": "REJECT",
+  "violations": [
+    {
+      "rule": "request.operation_missing",
+      "point": "getCourtAvailability",
+      "where": "GET /courts/{courtId}/availability",
+      "detail": "경로는 있는데 그 오퍼레이션이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "request.operation_missing",
+      "point": "listAlerts",
+      "where": "GET /alerts",
+      "detail": "경로는 있는데 그 오퍼레이션이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "request.operation_missing",
+      "point": "createAlert",
+      "where": "POST /alerts",
+      "detail": "경로는 있는데 그 오퍼레이션이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "request.operation_missing",
+      "point": "getAlert",
+      "where": "GET /alerts/{alertId}",
+      "detail": "경로는 있는데 그 오퍼레이션이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "request.operation_missing",
+      "point": "cancelAlert",
+      "where": "DELETE /alerts/{alertId}",
+      "detail": "경로는 있는데 그 오퍼레이션이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/tags",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/info/x-out-of-scope",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/info/description",
+      "detail": "changed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1courts~1{courtId}~1availability/get/tags",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1courts~1{courtId}~1availability/get/summary",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1courts~1{courtId}~1availability/get/security",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1courts~1{courtId}~1availability/get/x-requirement",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1courts~1{courtId}~1availability/get/description",
+      "detail": "changed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1courts~1{courtId}~1availability/get/parameters/1/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1courts~1{courtId}~1availability/get/parameters/1/example",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1courts~1{courtId}~1availability/get/responses/200/description",
+      "detail": "changed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1courts~1{courtId}~1availability/get/responses/200/content/application~1json/examples",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts/post/tags",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts/post/summary",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts/post/x-requirement",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts/post/description",
+      "detail": "changed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts/post/requestBody/content/application~1json/example",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts/get/tags",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts/get/summary",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts/get/x-requirement",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts/get/description",
+      "detail": "changed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts/get/parameters/0/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts/get/responses/200/content/application~1json/example",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts~1{alertId}/get/tags",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts~1{alertId}/get/summary",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts~1{alertId}/get/x-requirement",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts~1{alertId}/get/description",
+      "detail": "changed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts~1{alertId}/get/responses/200/content/application~1json/example",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts~1{alertId}/delete/tags",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts~1{alertId}/delete/summary",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts~1{alertId}/delete/x-requirement",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts~1{alertId}/delete/description",
+      "detail": "changed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts~1{alertId}/delete/responses/200/description",
+      "detail": "changed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts~1{alertId}/delete/responses/200/content/application~1json/example",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/securitySchemes",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/parameters/CourtIdPath/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/parameters/AlertIdPath/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/parameters/IdempotencyKeyHeader/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/parameters/IdempotencyKeyHeader/example",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/headers/Location/example",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/headers/Location/description",
+      "detail": "changed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/headers/IdempotencyReplayed/example",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/headers/IdempotencyReplayed/description",
+      "detail": "changed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/headers/RetryAfter/example",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/headers/RetryAfter/description",
+      "detail": "changed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/AlertId/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/AlertId/examples",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/CourtName/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/CourtName/examples",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/CourtId/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/CourtId/examples",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/TimeSlot/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/TimeSlot/properties/startTime/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/TimeSlot/properties/startTime/examples",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/TimeSlot/properties/endTime/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/TimeSlot/properties/endTime/examples",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/AlertStatus/x-requirement",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/DeliveryStatus/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/UpstreamFailureReason/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/AlertDelivery/x-requirement",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/AlertDelivery/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/AlertDelivery/properties/attemptCount/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/AlertDelivery/properties/lastAttemptAt/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/AlertDelivery/properties/failureReason/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/AlertRequest/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/AlertRequest/properties/date/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/Alert/x-requirement",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/Alert/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/Alert/properties/reservationUrl/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/Alert/properties/expiresAt/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/Alert/properties/lastCheckedAt/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/Alert/properties/checkDelayed/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/Alert/properties/delivery/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/AlertList/properties/items/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/AvailabilitySlot/properties/available/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/CourtAvailability/x-requirement",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/CourtAvailability/properties/confirmedAt/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/CourtAvailability/properties/stale/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/CourtAvailability/properties/staleReason/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/CourtAvailability/properties/reservationUrl/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/CourtAvailability/properties/slots/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/ErrorCode/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/Problem/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/Problem/properties/type/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/Problem/properties/title/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/Problem/properties/status/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/Problem/properties/detail/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/Problem/properties/instance/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/Problem/properties/retryable/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/Problem/properties/retryAfterSeconds/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/Problem/properties/traceId/description",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/StorageOrContentionOrUpstreamUnavailable",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/ValidationFailed/x-error-codes",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/ValidationFailed/description",
+      "detail": "changed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/ValidationFailed/content/application~1problem+json/example",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/AlertRequestInvalid/x-error-codes",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/AlertRequestInvalid/description",
+      "detail": "changed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/AlertRequestInvalid/content/application~1problem+json/examples",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/Unauthenticated/x-error-codes",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/Unauthenticated/description",
+      "detail": "changed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/Unauthenticated/content/application~1problem+json/example",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/CourtNotSupported/x-error-codes",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/CourtNotSupported/description",
+      "detail": "changed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/CourtNotSupported/content/application~1problem+json/example",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/AlertNotFound/x-error-codes",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/AlertNotFound/description",
+      "detail": "changed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/AlertNotFound/content/application~1problem+json/example",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/IdempotencyKeyReused/x-error-codes",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/IdempotencyKeyReused/description",
+      "detail": "changed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/IdempotencyKeyReused/content/application~1problem+json/example",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/AlertNotAcceptable/x-error-codes",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/AlertNotAcceptable/description",
+      "detail": "changed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/AlertNotAcceptable/content/application~1problem+json/examples",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/UpstreamUnreadable/x-error-codes",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/UpstreamUnreadable/description",
+      "detail": "changed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/UpstreamUnreadable/content/application~1problem+json/example",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/UpstreamTimeout/x-error-codes",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/UpstreamTimeout/description",
+      "detail": "changed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/UpstreamTimeout/content/application~1problem+json/example",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/AvailabilityUnavailable/x-error-codes",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/AvailabilityUnavailable/description",
+      "detail": "changed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/AvailabilityUnavailable/content/application~1problem+json/examples",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/StorageUnavailable/x-error-codes",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/StorageUnavailable/description",
+      "detail": "changed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/StorageUnavailable/content/application~1problem+json/example",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/StorageOrContentionUnavailable/x-error-codes",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/StorageOrContentionUnavailable/description",
+      "detail": "changed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/StorageOrContentionUnavailable/content/application~1problem+json/examples",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/InternalError/x-error-codes",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/InternalError/description",
+      "detail": "changed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/InternalError/content/application~1problem+json/example",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    }
+  ],
+  "observations": [
+    {
+      "rule": "decision.unknown_point",
+      "point": "authentication:user_identity",
+      "where": "src/main/java/com/thinking/tennis/api/Authentication.java",
+      "detail": "계약의 판정 지점이 아니다 (결정 d_auth_token_identity)",
+      "verdict": "observation"
+    },
+    {
+      "rule": "decision.unknown_point",
+      "point": "failure_response:traceId",
+      "where": "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+      "detail": "계약의 판정 지점이 아니다 (결정 d_trace_id_format)",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.unmatched_record",
+      "point": null,
+      "where": "/components/responses/*/x-error-codes",
+      "detail": "기록 cc_remove_unextractable_error_extensions이 가리키는 자리가 판본 diff에 없다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.diff",
+      "point": null,
+      "where": "*",
+      "detail": "달라진 좌표 140개: /security, /tags, /info/x-out-of-scope, /info/description, /paths/~1courts~1{courtId}~1availability/get/tags, /paths/~1courts~1{courtId}~1availability/get/summary, /paths/~1courts~1{courtId}~1availability/get/security, /paths/~1courts~1{courtId}~1availability/get/x-requirement, /paths/~1courts~1{courtId}~1availability/get/description, /paths/~1courts~1{courtId}~1availability/get/parameters/1/description, /paths/~1courts~1{courtId}~1availability/get/parameters/1/example, /paths/~1courts~1{courtId}~1availability/get/responses/200/description, /paths/~1courts~1{courtId}~1availability/get/responses/200/content/application~1json/examples, /paths/~1alerts/post/tags, /paths/~1alerts/post/summary, /paths/~1alerts/post/x-requirement, /paths/~1alerts/post/description, /paths/~1alerts/post/requestBody/content/application~1json/example, /paths/~1alerts/post/responses/502, /paths/~1alerts/post/responses/504, /paths/~1alerts/post/responses/201/description, /paths/~1alerts/post/responses/201/content/application~1json/example, /paths/~1alerts/post/responses/200/description, /paths/~1alerts/post/responses/200/content/application~1json/example, /paths/~1alerts/post/responses/503/$ref, /paths/~1alerts/get/tags, /paths/~1alerts/get/summary, /paths/~1alerts/get/x-requirement, /paths/~1alerts/get/description, /paths/~1alerts/get/parameters/0/description, /paths/~1alerts/get/responses/200/content/application~1json/example, /paths/~1alerts~1{alertId}/get/tags, /paths/~1alerts~1{alertId}/get/summary, /paths/~1alerts~1{alertId}/get/x-requirement, /paths/~1alerts~1{alertId}/get/description, /paths/~1alerts~1{alertId}/get/responses/200/content/application~1json/example, /paths/~1alerts~1{alertId}/delete/tags, /paths/~1alerts~1{alertId}/delete/summary, /paths/~1alerts~1{alertId}/delete/x-requirement, /paths/~1alerts~1{alertId}/delete/description",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.breaking",
+      "point": null,
+      "where": "getCourtAvailability.400",
+      "detail": "getCourtAvailability.400: 선언했던 에러 코드가 사라졌다 ['VALIDATION_FAILED']",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.breaking",
+      "point": null,
+      "where": "getCourtAvailability.404",
+      "detail": "getCourtAvailability.404: 선언했던 에러 코드가 사라졌다 ['COURT_NOT_SUPPORTED']",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.breaking",
+      "point": null,
+      "where": "getCourtAvailability.500",
+      "detail": "getCourtAvailability.500: 선언했던 에러 코드가 사라졌다 ['INTERNAL_ERROR']",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.breaking",
+      "point": null,
+      "where": "getCourtAvailability.502",
+      "detail": "getCourtAvailability.502: 선언했던 에러 코드가 사라졌다 ['UPSTREAM_RESPONSE_UNREADABLE']",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.breaking",
+      "point": null,
+      "where": "getCourtAvailability.503",
+      "detail": "getCourtAvailability.503: 선언했던 에러 코드가 사라졌다 ['UPSTREAM_UNAVAILABLE', 'STORAGE_TIMEOUT']",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.breaking",
+      "point": null,
+      "where": "getCourtAvailability.504",
+      "detail": "getCourtAvailability.504: 선언했던 에러 코드가 사라졌다 ['UPSTREAM_TIMEOUT']",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.breaking",
+      "point": null,
+      "where": "createAlert.400",
+      "detail": "createAlert.400: 선언했던 에러 코드가 사라졌다 ['VALIDATION_FAILED']",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.breaking",
+      "point": null,
+      "where": "createAlert.401",
+      "detail": "createAlert.401: 선언했던 에러 코드가 사라졌다 ['UNAUTHENTICATED']",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.breaking",
+      "point": null,
+      "where": "createAlert.409",
+      "detail": "createAlert.409: 선언했던 에러 코드가 사라졌다 ['IDEMPOTENCY_KEY_REUSED']",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.breaking",
+      "point": null,
+      "where": "createAlert.422",
+      "detail": "createAlert.422: 선언했던 에러 코드가 사라졌다 ['COURT_NOT_SUPPORTED', 'SLOT_NOT_SUPPORTED', 'ALERT_WINDOW_CLOSED']",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.breaking",
+      "point": null,
+      "where": "createAlert.500",
+      "detail": "createAlert.500: 선언했던 에러 코드가 사라졌다 ['INTERNAL_ERROR']",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.breaking",
+      "point": null,
+      "where": "createAlert.503",
+      "detail": "createAlert.503: 선언했던 에러 코드가 사라졌다 ['STORAGE_TIMEOUT', 'CONCURRENT_UPDATE_CONFLICT']",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.breaking",
+      "point": null,
+      "where": "listAlerts.400",
+      "detail": "listAlerts.400: 선언했던 에러 코드가 사라졌다 ['VALIDATION_FAILED']",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.breaking",
+      "point": null,
+      "where": "listAlerts.401",
+      "detail": "listAlerts.401: 선언했던 에러 코드가 사라졌다 ['UNAUTHENTICATED']",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.breaking",
+      "point": null,
+      "where": "listAlerts.500",
+      "detail": "listAlerts.500: 선언했던 에러 코드가 사라졌다 ['INTERNAL_ERROR']",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.breaking",
+      "point": null,
+      "where": "listAlerts.503",
+      "detail": "listAlerts.503: 선언했던 에러 코드가 사라졌다 ['STORAGE_TIMEOUT']",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.breaking",
+      "point": null,
+      "where": "getAlert.400",
+      "detail": "getAlert.400: 선언했던 에러 코드가 사라졌다 ['VALIDATION_FAILED']",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.breaking",
+      "point": null,
+      "where": "getAlert.401",
+      "detail": "getAlert.401: 선언했던 에러 코드가 사라졌다 ['UNAUTHENTICATED']",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.breaking",
+      "point": null,
+      "where": "getAlert.404",
+      "detail": "getAlert.404: 선언했던 에러 코드가 사라졌다 ['ALERT_NOT_FOUND']",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.breaking",
+      "point": null,
+      "where": "getAlert.500",
+      "detail": "getAlert.500: 선언했던 에러 코드가 사라졌다 ['INTERNAL_ERROR']",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.breaking",
+      "point": null,
+      "where": "getAlert.503",
+      "detail": "getAlert.503: 선언했던 에러 코드가 사라졌다 ['STORAGE_TIMEOUT']",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.breaking",
+      "point": null,
+      "where": "cancelAlert.400",
+      "detail": "cancelAlert.400: 선언했던 에러 코드가 사라졌다 ['VALIDATION_FAILED']",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.breaking",
+      "point": null,
+      "where": "cancelAlert.401",
+      "detail": "cancelAlert.401: 선언했던 에러 코드가 사라졌다 ['UNAUTHENTICATED']",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.breaking",
+      "point": null,
+      "where": "cancelAlert.404",
+      "detail": "cancelAlert.404: 선언했던 에러 코드가 사라졌다 ['ALERT_NOT_FOUND']",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.breaking",
+      "point": null,
+      "where": "cancelAlert.500",
+      "detail": "cancelAlert.500: 선언했던 에러 코드가 사라졌다 ['INTERNAL_ERROR']",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.breaking",
+      "point": null,
+      "where": "cancelAlert.503",
+      "detail": "cancelAlert.503: 선언했던 에러 코드가 사라졌다 ['STORAGE_TIMEOUT', 'CONCURRENT_UPDATE_CONFLICT']",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "cancelAlert:ALERT_NOT_FOUND",
+      "where": "-",
+      "detail": "판정 지점이 사라졌다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "cancelAlert:CONCURRENT_UPDATE_CONFLICT",
+      "where": "-",
+      "detail": "판정 지점이 사라졌다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "cancelAlert:INTERNAL_ERROR",
+      "where": "-",
+      "detail": "판정 지점이 사라졌다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "cancelAlert:STORAGE_TIMEOUT",
+      "where": "-",
+      "detail": "판정 지점이 사라졌다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "cancelAlert:UNAUTHENTICATED",
+      "where": "-",
+      "detail": "판정 지점이 사라졌다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "cancelAlert:VALIDATION_FAILED",
+      "where": "-",
+      "detail": "판정 지점이 사라졌다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "createAlert:ALERT_WINDOW_CLOSED",
+      "where": "-",
+      "detail": "판정 지점이 사라졌다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "createAlert:CONCURRENT_UPDATE_CONFLICT",
+      "where": "-",
+      "detail": "판정 지점이 사라졌다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "createAlert:COURT_NOT_SUPPORTED",
+      "where": "-",
+      "detail": "판정 지점이 사라졌다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "createAlert:IDEMPOTENCY_KEY_REUSED",
+      "where": "-",
+      "detail": "판정 지점이 사라졌다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "createAlert:INTERNAL_ERROR",
+      "where": "-",
+      "detail": "판정 지점이 사라졌다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "createAlert:SLOT_NOT_SUPPORTED",
+      "where": "-",
+      "detail": "판정 지점이 사라졌다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "createAlert:STORAGE_TIMEOUT",
+      "where": "-",
+      "detail": "판정 지점이 사라졌다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "createAlert:UNAUTHENTICATED",
+      "where": "-",
+      "detail": "판정 지점이 사라졌다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "createAlert:VALIDATION_FAILED",
+      "where": "-",
+      "detail": "판정 지점이 사라졌다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "getAlert:ALERT_NOT_FOUND",
+      "where": "-",
+      "detail": "판정 지점이 사라졌다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "getAlert:INTERNAL_ERROR",
+      "where": "-",
+      "detail": "판정 지점이 사라졌다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "getAlert:STORAGE_TIMEOUT",
+      "where": "-",
+      "detail": "판정 지점이 사라졌다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "getAlert:UNAUTHENTICATED",
+      "where": "-",
+      "detail": "판정 지점이 사라졌다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "getAlert:VALIDATION_FAILED",
+      "where": "-",
+      "detail": "판정 지점이 사라졌다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "getCourtAvailability:COURT_NOT_SUPPORTED",
+      "where": "-",
+      "detail": "판정 지점이 사라졌다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "getCourtAvailability:INTERNAL_ERROR",
+      "where": "-",
+      "detail": "판정 지점이 사라졌다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "getCourtAvailability:STORAGE_TIMEOUT",
+      "where": "-",
+      "detail": "판정 지점이 사라졌다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "getCourtAvailability:UPSTREAM_RESPONSE_UNREADABLE",
+      "where": "-",
+      "detail": "판정 지점이 사라졌다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "getCourtAvailability:UPSTREAM_TIMEOUT",
+      "where": "-",
+      "detail": "판정 지점이 사라졌다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "getCourtAvailability:UPSTREAM_UNAVAILABLE",
+      "where": "-",
+      "detail": "판정 지점이 사라졌다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "getCourtAvailability:VALIDATION_FAILED",
+      "where": "-",
+      "detail": "판정 지점이 사라졌다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "listAlerts:INTERNAL_ERROR",
+      "where": "-",
+      "detail": "판정 지점이 사라졌다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "listAlerts:STORAGE_TIMEOUT",
+      "where": "-",
+      "detail": "판정 지점이 사라졌다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "listAlerts:UNAUTHENTICATED",
+      "where": "-",
+      "detail": "판정 지점이 사라졌다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "listAlerts:VALIDATION_FAILED",
+      "where": "-",
+      "detail": "판정 지점이 사라졌다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "createAlert:502",
+      "where": "-",
+      "detail": "판정 지점이 생겼다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "createAlert:504",
+      "where": "-",
+      "detail": "판정 지점이 생겼다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.version_label",
+      "point": null,
+      "where": "tennis-alert-api-v2.yaml",
+      "detail": "파일명의 판 번호 2과 계약의 주 버전 1이 어긋난다",
+      "verdict": "observation"
+    }
+  ],
+  "errors": [],
+  "derived_spec": "C:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs\\2026-09-29_508c928d\\iter_002\\api-docs.json",
+  "allow_missing_gates": false,
+  "log": [
+    "작업 폴더: C:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs\\2026-09-29_508c928d\\output (target/ 재사용 예)\n$ C:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs\\2026-09-29_508c928d\\output\\mvnw.cmd -B -q test → 0\n19:14:51.116 [main] INFO com.tngtech.archunit.core.PluginLoader -- Detected Java version 17.0.19\n$ dump_api_docs.py → 0\nC:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs\\2026-09-29_508c928d\\iter_002\\api-docs.json 에 저장했다. 포트 59914, 최상위 키 ['components', 'info', 'openapi', 'paths', 'servers'], paths 3개"
+  ]
+}

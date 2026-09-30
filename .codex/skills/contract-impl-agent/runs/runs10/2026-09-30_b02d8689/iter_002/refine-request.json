@@ -1,0 +1,247 @@
+{
+  "brief_hash": "b02d8689",
+  "from_iteration": "002",
+  "to_iteration": "003",
+  "priority_order": [
+    "gate_violations",
+    "contract_version",
+    "standing_decisions",
+    "code_instructions"
+  ],
+  "open_causes": [
+    {
+      "id": "c_a08ff9d8",
+      "rule": "g0.compile_failed",
+      "where": "mvnw test",
+      "detail": "컴파일 오류 2건\nsrc/main/java/com/thinking/tennis/domain/AlertDelivery.java:22:12 recursive constructor invocation\nsrc/main/java/com/thinking/tennis/app/AlertApplicationService.java:201:82 incompatible types: long cannot be converted to java.lang.Integer",
+      "points": [],
+      "point_count": 1,
+      "evidence_count": 1
+    }
+  ],
+  "open_cause_count": 1,
+  "open_point_count": 1,
+  "rule_cards": {},
+  "gate_observations": [],
+  "gate_coverage": {
+    "g0": "REJECT",
+    "g1": "SKIPPED",
+    "contract_changes": "PASS",
+    "allow_missing_gates": false
+  },
+  "current_contract_version": {
+    "path": "contract/tennis-alert-api-v1.yaml",
+    "from": "contract/tennis-alert-api-v1.yaml"
+  },
+  "standing_decisions": [
+    {
+      "id": "d_bearer_identity",
+      "point": "Bearer token owner identification",
+      "where": "src/main/java/com/thinking/tennis/api/TennisAlertController.java:authenticate",
+      "question": "How should the HTTP layer identify a user when the contract specifies Bearer authentication but provides no verifier port or token service?",
+      "considered": [
+        {
+          "choice": "Treat the non-empty bearer token value as the owner identifier",
+          "consequence": "Keeps ownership isolation deterministic without inventing an external authentication dependency."
+        },
+        {
+          "choice": "Reject every token because no verifier is available",
+          "consequence": "Makes all authenticated operations unusable."
+        },
+        {
+          "choice": "Create a new authentication client or token format",
+          "consequence": "Adds an undeclared dependency and external integration."
+        }
+      ],
+      "chosen": "Treat a syntactically valid non-empty bearer token as the owner identifier; reject only missing or malformed bearer credentials.",
+      "basis": "least_harm",
+      "rationale": "The implementation contract exposes no authentication port and forbids creating new external clients. Token-to-owner mapping is therefore kept local and deterministic.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:401",
+        "listAlerts:401",
+        "getAlert:401",
+        "cancelAlert:401",
+        "listAlerts:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "reversal_cost": "Replace the controller identity extraction with the eventual authentication adapter and update the service calls to use its principal identifier.",
+      "supersedes": null
+    },
+    {
+      "id": "d_create_slot_cache",
+      "point": "createAlert:422",
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplicationService.java:createAlert",
+      "question": "How can createAlert validate an exact operating slot without causing an upstream availability check?",
+      "considered": [
+        {
+          "choice": "Trigger getCourtAvailability during creation",
+          "consequence": "Violates the contract prose that only availability lookup initiates confirmation."
+        },
+        {
+          "choice": "Accept every slot for a supported court",
+          "consequence": "Cannot honor SLOT_NOT_SUPPORTED for slots absent from the known schedule."
+        },
+        {
+          "choice": "Validate against the last stored availability snapshot and reject when no schedule is known",
+          "consequence": "Requires the client to perform the contract's availability lookup before creating an alert."
+        }
+      ],
+      "chosen": "Use the stored court-date availability snapshot; return SLOT_NOT_SUPPORTED when no snapshot or matching slot exists.",
+      "basis": "spec_implication",
+      "rationale": "The contract explicitly makes lookup the only operation that triggers confirmation, while also requiring exact slot validation. The provided port has no separate schedule operation, so the last stored result is the available source of truth.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:200",
+        "createAlert:201",
+        "createAlert:422"
+      ],
+      "reversal_cost": "Introduce a separate schedule port or change the creation workflow once the contract exposes one.",
+      "supersedes": null
+    },
+    {
+      "id": "d_lazy_expiry",
+      "point": "Alert lifecycle expiration",
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplicationService.java:expireDueAlerts",
+      "question": "How should EXPIRED transitions occur in an in-memory implementation without a scheduler port?",
+      "considered": [
+        {
+          "choice": "Add a background scheduler",
+          "consequence": "Adds an unprovided runtime mechanism and lifecycle surface."
+        },
+        {
+          "choice": "Reconcile expiration on alert reads and creation",
+          "consequence": "Terminal state is corrected whenever the HTTP surface observes the alert."
+        },
+        {
+          "choice": "Leave WATCHING forever after expiresAt",
+          "consequence": "Allows duplicate creation to reuse an ended alert and violates the terminal-state rule."
+        }
+      ],
+      "chosen": "Lazily transition due WATCHING alerts to EXPIRED on create, list, get, and cancel operations.",
+      "basis": "least_harm",
+      "rationale": "The contract requires server-side expiration, while this iteration provides no scheduler port. Request-time reconciliation preserves terminal behavior without adding an undeclared endpoint or dependency.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:200",
+        "createAlert:201",
+        "listAlerts:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "reversal_cost": "Move the same transition into the future expiration worker while retaining the read-time guard for race safety.",
+      "supersedes": null
+    },
+    {
+      "id": "d_idempotency_snapshot",
+      "point": "createAlert:200",
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplicationService.java:idempotencyResponses",
+      "question": "How should a replay preserve the original response after the alert changes state?",
+      "considered": [
+        {
+          "choice": "Store a copy of the alert and the original status outcome",
+          "consequence": "Replays remain stable for the declared 24-hour retention period."
+        },
+        {
+          "choice": "Store only the alert identifier",
+          "consequence": "A later read would expose current state instead of the original response."
+        },
+        {
+          "choice": "Store the live alert object",
+          "consequence": "Mutations would leak into replay responses."
+        }
+      ],
+      "chosen": "Store an immutable-by-copy alert snapshot, the original 200/201 outcome, request fingerprint, and timestamp for 24 hours.",
+      "basis": "spec_implication",
+      "rationale": "The contract explicitly requires replaying the first response byte-for-byte in meaning, including its original status outcome, rather than returning current state.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:200",
+        "createAlert:201",
+        "createAlert:409"
+      ],
+      "reversal_cost": "Replace the in-memory response record with the durable idempotency representation while preserving the same replay contract.",
+      "supersedes": null
+    },
+    {
+      "id": "d_failure_window",
+      "point": "getCourtAvailability:503",
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplicationService.java:availabilityFailures",
+      "question": "How should repeated availability requests behave immediately after an upstream failure with no successful snapshot?",
+      "considered": [
+        {
+          "choice": "Retry the upstream immediately for every request",
+          "consequence": "Can exceed the declared 20-second per court-date confirmation interval."
+        },
+        {
+          "choice": "Cache the failure reason for the confirmation interval",
+          "consequence": "Requests in that interval receive the same declared failure without another upstream call."
+        },
+        {
+          "choice": "Return a synthetic empty slot list",
+          "consequence": "Incorrectly turns confirmation failure into an availability result."
+        }
+      ],
+      "chosen": "Cache the failure reason for 20 seconds and reuse it until the interval expires.",
+      "basis": "contract_analogy",
+      "rationale": "The contract defines the refresh interval and requires concurrent callers to observe the same result; retaining the failure marker extends that rule to requests arriving just after the in-flight attempt completes.",
+      "confidence": "medium",
+      "blast_radius": [
+        "getCourtAvailability:502",
+        "getCourtAvailability:503",
+        "getCourtAvailability:504"
+      ],
+      "reversal_cost": "Replace the failure marker with the eventual persistent refresh-state record if storage semantics are added.",
+      "supersedes": null
+    },
+    {
+      "id": "d_trace_id_format",
+      "point": "Problem:traceId",
+      "where": "src/main/java/com/thinking/tennis/api/TennisAlertExceptionHandler.java:response",
+      "question": "What concrete string format should be used for the contract's unconstrained 5xx traceId?",
+      "considered": [
+        {
+          "choice": "UUID string",
+          "consequence": "Provides a locally generated unique correlation value without a new library."
+        },
+        {
+          "choice": "Timestamp string",
+          "consequence": "Can collide under concurrent requests and is less useful as a correlation identifier."
+        },
+        {
+          "choice": "Omit traceId",
+          "consequence": "Violates the prose requirement that 5xx responses include it."
+        }
+      ],
+      "chosen": "Generate a UUID string for every 5xx problem response.",
+      "basis": "convention",
+      "rationale": "The schema constrains traceId only to a string, and a UUID is a standard local correlation identifier compatible with the in-memory implementation.",
+      "confidence": "high",
+      "blast_radius": [
+        "getCourtAvailability:500",
+        "getCourtAvailability:502",
+        "getCourtAvailability:503",
+        "getCourtAvailability:504",
+        "createAlert:500",
+        "listAlerts:500",
+        "listAlerts:503",
+        "getAlert:500",
+        "getAlert:503",
+        "cancelAlert:500",
+        "cancelAlert:503"
+      ],
+      "reversal_cost": "Replace the generator with the application's logging correlation-id provider.",
+      "supersedes": null
+    }
+  ],
+  "contract_changes": [],
+  "contested_decisions": [],
+  "code_instructions": [],
+  "contract_proposals": [],
+  "weak_axes": [],
+  "weak_axis_rationales": {},
+  "priority": [
+    "c_a08ff9d8"
+  ]
+}

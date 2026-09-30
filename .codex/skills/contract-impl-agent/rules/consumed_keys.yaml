@@ -1,0 +1,207 @@
+# 게이트가 소비하는 계약 키
+#
+# "스키마가 표현하지 못한 것"이라고만 적으면 판정할 때마다 범위가 달라진다. 그래서 경계를 이 목록이 정한다.
+# 여기 적힌 키는 기계가 결정적으로 읽고 대조하는 자리이고, 여기 없는 텍스트 키가 산문 약속의 모집단이다.
+# `pipeline/tools/prose_slots.py`가 이 파일을 제외 목록으로 읽는다. 게이트가 새 키를 보게 되면 그 키를
+# 여기 더하고, 그날부터 그 키는 산문 슬롯에서 빠진다.
+#
+# `consumed_by` 값
+#   g0      스켈레톤 컴파일·ArchUnit·추출 스펙 덤프
+#   g1      구현과 그 iteration의 계약 판본 대조
+#   g3      응답 실물 검증 (v1에서 붙는다. 지금은 예약만 해 둔다)
+#   version 계약 판본 대조와 판본 파일 규약
+#
+# `scope` 값
+#   exact-key  그 키 자체를 소비한다. 키 아래의 하위 트리는 소비하지 않는다
+#   subtree    그 키와 그 아래를 모두 소비한다
+
+version: 1
+
+keys:
+  # ── 표면 ────────────────────────────────────────────────────────────────
+  - key: paths
+    scope: exact-key
+    consumed_by: [g1]
+    note: 경로 문자열 자체가 판정 대상이다. 계약이 선언한 경로가 구현에 없으면 위반이고, 계약에 없는 경로는 기록이다.
+  - key: operationId
+    scope: exact-key
+    consumed_by: [g1]
+    note: 판정 지점 좌표의 앞자리다. 오퍼레이션을 경로·메서드가 아니라 이 id로 맞춘다.
+  - key: security
+    scope: subtree
+    consumed_by: [g1]
+    note: 오퍼레이션이 인증을 요구하는지. 계약이 비운 자리에 구현이 인증을 더하면 요청을 좁힌 것이다.
+  - key: servers
+    scope: subtree
+    consumed_by: [version]
+    note: url 안의 주 버전 표기를 읽는다.
+
+  # ── 요청 ────────────────────────────────────────────────────────────────
+  - key: parameters
+    scope: exact-key
+    consumed_by: [g1]
+    note: 파라미터의 이름·위치·필수 여부와 그 스키마를 읽는다.
+  - key: name
+    scope: exact-key
+    consumed_by: [g1]
+    note: 파라미터를 짝지을 때 쓰는 이름이다.
+  - key: in
+    scope: exact-key
+    consumed_by: [g1]
+    note: 파라미터가 어디에 실리는지.
+  - key: requestBody
+    scope: exact-key
+    consumed_by: [g1]
+    note: 요청 본문의 유무와 그 스키마를 읽는다.
+
+  # ── 응답 ────────────────────────────────────────────────────────────────
+  - key: responses
+    scope: exact-key
+    consumed_by: [g1]
+    note: 선언된 상태 코드의 집합이다. 하나가 빠지면 위반이고 더 있으면 기록이다.
+  - key: content
+    scope: exact-key
+    consumed_by: [g1]
+    note: 미디어 타입 아래의 스키마에 닿는 통로다.
+  - key: headers
+    scope: exact-key
+    consumed_by: [g1]
+    note: 응답 헤더의 이름만 소비한다. 계약이 그 밖의 헤더를 금지하지 않았으므로 초과 헤더는 기록이다.
+  - key: x-error-codes
+    scope: subtree
+    consumed_by: [g1]
+    note: 상태 코드와 짝지어 판정 지점 `operationId:CODE`를 만든다.
+
+  # ── 스키마 키워드 ───────────────────────────────────────────────────────
+  # 요청이면 좁아지는 쪽이, 응답이면 넓어지는 쪽이 손해다. 방향은 규칙 카드가 정한다.
+  - key: $ref
+    scope: exact-key
+    consumed_by: [g1, g3, version]
+    note: 대조 전에 따라가 펼친다.
+  - key: schema
+    scope: exact-key
+    consumed_by: [g1]
+  - key: type
+    scope: exact-key
+    consumed_by: [g1]
+  - key: format
+    scope: exact-key
+    consumed_by: [g1]
+  - key: pattern
+    scope: exact-key
+    consumed_by: [g1]
+  - key: enum
+    scope: exact-key
+    consumed_by: [g1]
+  - key: const
+    scope: exact-key
+    consumed_by: [g1]
+  - key: default
+    scope: exact-key
+    consumed_by: [g1]
+  - key: required
+    scope: exact-key
+    consumed_by: [g1]
+  - key: properties
+    scope: exact-key
+    consumed_by: [g1]
+  - key: additionalProperties
+    scope: exact-key
+    consumed_by: [g1]
+    note: 응답 객체가 닫혔는지 열렸는지가 초과 필드를 위반으로 볼지 기록으로 볼지를 정한다.
+  - key: items
+    scope: exact-key
+    consumed_by: [g1]
+  - key: oneOf
+    scope: exact-key
+    consumed_by: [g1]
+  - key: anyOf
+    scope: exact-key
+    consumed_by: [g1]
+  - key: allOf
+    scope: exact-key
+    consumed_by: [g1]
+  - key: not
+    scope: exact-key
+    consumed_by: [g1]
+  - key: nullable
+    scope: exact-key
+    consumed_by: [g1]
+  - key: minimum
+    scope: exact-key
+    consumed_by: [g1]
+  - key: maximum
+    scope: exact-key
+    consumed_by: [g1]
+  - key: exclusiveMinimum
+    scope: exact-key
+    consumed_by: [g1]
+  - key: exclusiveMaximum
+    scope: exact-key
+    consumed_by: [g1]
+  - key: minLength
+    scope: exact-key
+    consumed_by: [g1]
+  - key: maxLength
+    scope: exact-key
+    consumed_by: [g1]
+  - key: minItems
+    scope: exact-key
+    consumed_by: [g1]
+  - key: maxItems
+    scope: exact-key
+    consumed_by: [g1]
+  - key: uniqueItems
+    scope: exact-key
+    consumed_by: [g1]
+  - key: multipleOf
+    scope: exact-key
+    consumed_by: [g1]
+
+  # ── 판본 ────────────────────────────────────────────────────────────────
+  - key: version
+    scope: exact-key
+    consumed_by: [version]
+    note: info.version이다. 판본 파일명과 어긋나는 것은 규약 문제이므로 기록으로 남긴다.
+
+  # ── 아직 붙지 않은 게이트가 예약한 키 ───────────────────────────────────
+  # G3가 붙는 날 이 둘은 산문에서 빠진다. 그때까지는 예시 아래의 `summary`처럼
+  # 이 키의 하위 트리에 있는 텍스트가 여전히 산문 슬롯이다(scope가 exact-key인 이유다).
+  - key: example
+    scope: exact-key
+    consumed_by: [g3]
+    note: 계약의 예시를 요청으로 태워 실물 응답을 판정한다.
+  - key: examples
+    scope: exact-key
+    consumed_by: [g3]
+    note: 같은 일을 하는 복수형이다.
+
+# ── 추출 스펙에서 비교하지 않는 자리 ────────────────────────────────────────
+#
+# 위의 `keys`는 계약에서 소비하는 키이고, 여기는 **구현의 추출 스펙에서 소비하지 않는** 자리다.
+# 추출 스펙은 스켈레톤을 부팅해 springdoc에서 받으므로 구현이 약속한 계약이 아닌 값이 섞인다.
+# 그 값을 대조하면 구현과 무관한 차이가 위반으로 쏟아진다. `run_g1`이 대조 전에 이 포인터를 지운다.
+# 왜 빠졌는지가 코드가 아니라 이 파일에 남아야 하므로 목록을 여기 둔다.
+derived_spec_ignored:
+  - pointer: /openapi
+    reason: 계약은 3.1.0이고 springdoc 출력은 3.0.1이다. 문서 판본은 구현이 약속한 것이 아니라 도구가 내는 값이다.
+      다만 표기 차이는 판정에 영향이 있어서 널 허용 표기를 양쪽으로 정규화한다.
+  - pointer: /info
+    reason: 제목과 버전이 springdoc 기본값("OpenAPI definition", "v0")이다. `info.version`은 계약 판본끼리
+      비교할 때만 쓰는 값이고 구현 대조의 대상이 아니다.
+  - pointer: /servers
+    reason: 임의 포트로 띄우므로 url이 run마다 달라진다. 부팅 방식이 남긴 값이다. 주 버전 표기도 여기서 읽지만
+      그것 역시 계약 판본끼리 비교할 때만 쓴다.
+
+# ── 널 허용의 두 표기 ──────────────────────────────────────────────────────
+#
+# 같은 약속이 문서 판본에 따라 다르게 적힌다. 정규화하지 않으면 널 허용 필드마다 타입 불일치가 잡혀
+# 헛 REJECT가 쏟아진다. `pipeline/gates/schema_compare.py`의 `unwrap_nullable`이 셋을 같게 본다.
+# 널 자체의 판정, 곧 키가 응답에 실제로 실리는지는 실물 응답을 보는 G3의 몫이라 여기서는 펴기만 한다.
+nullable_notations:
+  - notation: "type: [X, 'null']"
+    source: OpenAPI 3.1 / JSON Schema 2020-12. 계약이 쓰는 표기다.
+  - notation: "oneOf: [{$ref: X}, {type: 'null'}]"
+    source: 계약이 `$ref`와 널을 함께 쓸 때의 표기다.
+  - notation: "nullable: true"
+    source: OpenAPI 3.0. springdoc 3.0.1 출력이 쓰는 표기다.

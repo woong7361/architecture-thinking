@@ -1,0 +1,132 @@
+{
+  "brief_hash": "508c928d",
+  "iteration": "001",
+  "summary": "초안은 계층 분리, 만료 시각 계산, 캐시·동시 조회 억제, 멱등 처리의 주요 의도를 기록하고 있다. 다만 구현 경로가 계약의 서버 기본 경로와 중복될 가능성이 있고, 신청 생성 중 외부 확인 실패를 INTERNAL_ERROR로 매핑하는 선택은 계약의 실패 의미와 어긋난다. 또한 WATCHING의 설명이 조회 시에만 확인한다는 명세와 충돌하므로 계약과 구현의 경계를 먼저 정리해야 한다.",
+  "strengths": [
+    "d_expiration_calculation은 이용 시작 시각과 Asia/Seoul이라는 계약 근거를 사용해 expiresAt을 계산하고 있으며, 선택과 영향 범위를 기록했다.",
+    "getCourtAvailability에 코트·날짜별 캐시, 동시 요청 직렬화, 마지막 성공 결과의 stale 응답이라는 상태 연속성의 핵심 의도가 드러나 있다.",
+    "Bearer 사용자 식별과 traceId 생성 방식에 대해 고려한 대안, 근거, 영향 범위를 남겨 판단을 숨기지 않았다.",
+    "알림 생성의 동일 조건 재사용, 멱등 키 재생, 해제의 반복 호출 보존 등 요청 사이의 상태 약속을 초안 주장에 명시했다."
+  ],
+  "weaknesses": [
+    {
+      "id": "w_route_base_path_duplication",
+      "axis": "request_tolerance",
+      "issue": "게이트 관찰에는 구현 경로가 /v1/alerts, /v1/alerts/{alertId}, /v1/courts/{courtId}/availability로 기록되어 있다. 계약의 paths는 /alerts, /alerts/{alertId}, /courts/{courtId}/availability이고 /v1은 servers.url에 이미 포함되어 있다.",
+      "why_it_matters": "계약 클라이언트가 호출할 URL에 버전 접두사가 중복되거나, 구현과 계약 중 한쪽만 맞는 상태가 된다. 관찰된 경로를 계약에 추가하면 서버 기본 경로와 애플리케이션 매핑의 책임이 뒤섞인다.",
+      "suggestion": "컨트롤러 매핑과 서버 기본 경로 중 한 곳만 /v1을 소유하도록 정리하고, 최종 외부 URL이 계약의 servers.url과 paths를 합친 값과 정확히 일치하는지 확인한다.",
+      "severity": "high",
+      "target": {
+        "pointer": "src/main/java/com/thinking/tennis/api/AvailabilityController.java 및 AlertController.java의 클래스 경로 매핑",
+        "action": "remove",
+        "scope": "code"
+      }
+    },
+    {
+      "id": "w_create_upstream_failure_mapping",
+      "axis": "failure_faithfulness",
+      "issue": "초안의 d_upstream_failure_on_create와 claims는 신청 생성 중 외부 예약처 확인 실패를 createAlert의 INTERNAL_ERROR 500으로 매핑한다.",
+      "why_it_matters": "계약은 UPSTREAM_TIMEOUT, UPSTREAM_UNAVAILABLE, UPSTREAM_RESPONSE_UNREADABLE을 외부 확인 실패의 의미로 정의하고, INTERNAL_ERROR는 그 밖의 서버 내부 실패로 정의한다. 현재 매핑은 외부 장애를 내부 결함처럼 보이게 하며, 클라이언트가 올바른 재시도 의미와 원인을 얻지 못하게 한다.",
+      "suggestion": "생성 과정에서 외부 확인을 계속 수행한다면 그 실패를 계약에 명시된 upstream 응답과 재시도 정보로 보존하고, 그렇지 않다면 생성 경로에서 실시간 외부 확인을 제거해 INTERNAL_ERROR로 위장하지 않는다.",
+      "severity": "high",
+      "target": {
+        "pointer": "src/main/java/com/thinking/tennis/app/AlertService.java의 createAlert 외부 확인 실패 변환",
+        "action": "remove",
+        "scope": "code"
+      }
+    },
+    {
+      "id": "w_trace_id_correlation_undisclosed",
+      "axis": "judgement_disclosure",
+      "issue": "d_trace_id_format은 UUID 문자열을 생성한다는 형식만 결정했지만, 그 값이 실제 서버 로그에서 요청을 찾는 식별자로 어떻게 연결되는지는 결정하거나 주장에 남기지 않았다.",
+      "why_it_matters": "응답에 임의 UUID만 실리고 로그에는 다른 요청 식별자가 기록되면 traceId가 계약상 약속한 추적 기능을 하지 못한다. 형식 선택을 로그 상관관계 보장으로 오해하게 된다.",
+      "suggestion": "요청별 traceId를 로그 컨텍스트와 함께 전달하거나 기존 추적 식별자를 재사용하고, 응답 값과 로그 검색 값의 연결 방식을 결정 기록에 명시한다.",
+      "severity": "medium",
+      "target": {
+        "pointer": "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java의 traceId 생성·로그 상관관계",
+        "action": "add",
+        "scope": "code"
+      }
+    }
+  ],
+  "revision_directions": [
+    "서버 기본 경로와 컨트롤러 경로의 소유권을 하나로 정리한 뒤 모든 오퍼레이션의 실제 외부 URL을 다시 대조한다.",
+    "createAlert가 실시간 예약 상태 확인에 의존하는지 먼저 계약으로 확정하고, 그 결정에 맞춰 upstream 실패를 보존하거나 생성 경로에서 제거한다.",
+    "WATCHING, 멱등 재생, traceId처럼 산문이 의미를 결정하는 부분은 구현 주장과 계약 문장을 한 가지 실행 모델로 맞춘다."
+  ],
+  "contract_review": [
+    {
+      "id": "cr_alertstatus_polling_wording",
+      "kind": "proposal",
+      "pointer": "/components/schemas/AlertStatus/description",
+      "finding": "WATCHING 설명은 서버가 주기적으로 예약 상태를 확인한다고 말하지만, FR-7과 GET availability 설명은 확인을 조회가 일으키며 아무도 조회하지 않으면 확인하지 않는다고 규정한다.",
+      "proposed_change": "주기적 확인을 뜻하는 문장을 제거하고, 조회 요청이 있을 때만 확인이 일어나며 조회가 없으면 감시 중이어도 예약처를 확인하지 않는다고 명시한다.",
+      "action": "remove",
+      "spec_anchor": "FR-7",
+      "severity": "high"
+    },
+    {
+      "id": "cr_create_upstream_failure_surface",
+      "kind": "proposal",
+      "pointer": "/paths/~1alerts/post/responses",
+      "finding": "현재 POST /alerts는 슬롯 검증을 위해 외부 확인을 수행할 수 있다는 구현 판단과 그 확인 실패를 받을 HTTP 표면을 계약에 함께 정의하지 않는다. 초안은 이를 INTERNAL_ERROR로 처리하지만 이는 ErrorCode의 의미와 맞지 않는다.",
+      "proposed_change": "생성 시 외부 확인을 계약상 허용할 경우 UPSTREAM_TIMEOUT, UPSTREAM_UNAVAILABLE, UPSTREAM_RESPONSE_UNREADABLE 중 해당 코드를 보존하는 5xx 응답과 Retry-After 규칙을 POST /alerts에 추가한다.",
+      "action": "add",
+      "spec_anchor": "FR-1, EF-1",
+      "severity": "high"
+    },
+    {
+      "id": "cr_v1_path_observation",
+      "kind": "observation_meaning",
+      "pointer": "/servers/0/url",
+      "finding": "게이트가 관찰한 /v1이 포함된 세 경로는 계약에 빠진 오퍼레이션이라기보다 servers.url의 /v1과 구현 매핑이 중복된 것으로 해석하는 편이 맞다.",
+      "proposed_change": "",
+      "spec_anchor": "contract:/servers/0/url",
+      "severity": "high"
+    },
+    {
+      "id": "cr_idempotency_verbatim_wording",
+      "kind": "harmful_choice",
+      "pointer": "/paths/~1alerts/post/description",
+      "finding": "멱등 재생 응답을 처음 응답 그대로 돌려준다고 설명하면서 Idempotency-Replayed는 최초 처리 시 false, 재생 시 true로 달라진다고 별도로 정의한다. 독자는 응답 전체가 바이트 단위로 동일하다고 읽을 수 있다.",
+      "proposed_change": "",
+      "spec_anchor": "slot_7afbe3b4, slot_8663b240",
+      "severity": "medium"
+    }
+  ],
+  "contested_decisions": [
+    {
+      "decision_id": "d_upstream_failure_on_create",
+      "objection": "계약이 INTERNAL_ERROR를 미분류 내부 실패로 정의하고 외부 확인 실패에는 별도 UPSTREAM_* 코드를 부여했으므로, 외부 실패를 INTERNAL_ERROR로 고르는 근거가 약하다. 이는 단순한 구현 편의가 아니라 클라이언트의 재시도와 장애 분류를 바꾼다.",
+      "alternative": "생성 시 외부 확인을 하지 않는 흐름으로 바꾸거나, 외부 확인을 유지할 경우 POST /alerts에 upstream 실패 응답과 Retry-After 규칙을 계약으로 추가한 뒤 해당 코드를 그대로 전달한다.",
+      "severity": "high"
+    },
+    {
+      "decision_id": "d_trace_id_format",
+      "objection": "UUID라는 문자열 형식은 traceId가 서버 로그에서 요청을 찾게 된다는 계약 의미를 보장하지 않는다. 현재 결정은 생성 형식만 다루고 로그와의 상관관계를 비워 둔다.",
+      "alternative": "요청 컨텍스트에 traceId를 바인딩해 같은 값을 로그와 응답에 사용하고, 기존 추적 헤더를 채택할 경우 우선순위와 생성 규칙을 함께 기록한다.",
+      "severity": "medium"
+    }
+  ],
+  "reader_risks": [
+    "/v1 경로 관찰을 계약의 누락으로 오해해 서버 기본 경로와 컨트롤러 매핑의 중복을 계약에 굳혀 버릴 위험이 있다.",
+    "WATCHING을 읽는 사람은 실제 명세와 달리 백그라운드 주기 확인이 항상 동작한다고 이해할 수 있다.",
+    "createAlert의 INTERNAL_ERROR를 보면 외부 예약처 장애와 서버 내부 결함을 구분할 수 없고, 재시도 가능한 조건도 오해할 수 있다.",
+    "검증되지 않은 Bearer 문자열을 사용자 식별자로 쓰는 선택이 실제 인증·토큰 검증을 제공한다는 뜻으로 읽힐 위험이 있다."
+  ],
+  "critiqued_at": "2026-09-29T18:49:00+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "critique_impl:v1",
+    "source_files": [
+      "508c928d_input.json",
+      "508c928d_iter-001_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 329083,
+      "cached_input_tokens": 263040,
+      "output_tokens": 11007,
+      "reasoning_output_tokens": 8021
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "brief_hash": "b02d8689",
+  "iteration": "002",
+  "purpose": "build_repair",
+  "attempt": 1,
+  "max_attempts": 3,
+  "scope": "build_only",
+  "instruction": "컴파일과 부팅만 고쳐라. 계약 적합성은 아직 판정되지 않았으므로 그 자리를 건드리지 마라. 구현을 크게 바꾸지 말고 빌드 실패의 원인만 고쳐라. 계약 판본은 그대로 둔다.",
+  "priority_order": [
+    "gate_violations"
+  ],
+  "open_violations": [
+    {
+      "rule": "g0.arch_boundary",
+      "point": null,
+      "where": "mvnw test",
+      "detail": "층 경계나 테스트가 깨졌다\n[ERROR] Tests run: 4, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 1.131 s <<< FAILURE! -- in com.thinking.tennis.arch.LayerBoundaryTest\nArchitecture Violation [Priority: MEDIUM] - Rule 'no classes that reside in a package '..app..' should depend on classes that reside in any package ['jakarta.servlet..', 'org.springframework.web..', 'com.fasterxml.jackson..'], because 유스케이스는 포트를 엮는 순서만 소유하므로 프로토콜과 표현 형식을 몰라야 한다' was violated (9 times):\n[ERROR]   LayerBoundaryTest.appDoesNotDependOnHttpOrSerialization:53->check:78 Architecture Violation [Priority: MEDIUM] - Rule 'no classes that reside in a package '..app..' should depend on classes that reside in any package ['jakarta.servlet..', 'org.springframework.web..', 'com.fasterxml.jackson..'], because 유스케이스는 포트를 엮는 순서만 소유하므로 프로토콜과 표현 형식을 몰라야 한다' was violated (9 times):\n[ERROR] Tests run: 4, Failures: 1, Errors: 0, Skipped: 0",
+      "verdict": "violation"
+    }
+  ],
+  "rule_cards": {},
+  "current_contract_version": {
+    "path": "contract/tennis-alert-api-v2.yaml",
+    "from": "contract/tennis-alert-api-v1.yaml"
+  }
+}

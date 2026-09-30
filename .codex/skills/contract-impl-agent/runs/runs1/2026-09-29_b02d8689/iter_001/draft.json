@@ -1,0 +1,577 @@
+{
+  "brief_hash": "b02d8689",
+  "iteration": "001",
+  "stage": "gen",
+  "files": [
+    {
+      "path": "contract/tennis-alert-api-v1.yaml",
+      "role": "contract"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/AlertController.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/ApiAuthentication.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/ApiModels.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/RequestValidationException.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/AlertService.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/AvailabilityService.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/InMemoryAlertRepository.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/Alert.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/AlertRepository.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/AvailabilitySnapshot.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/DomainExceptions.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/TimeWindow.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/UserId.java",
+      "role": "code"
+    }
+  ],
+  "contract_version": {
+    "path": "contract/tennis-alert-api-v1.yaml",
+    "from": "contract/tennis-alert-api-v1.yaml"
+  },
+  "claims": [
+    {
+      "point": "getCourtAvailability:200",
+      "note": "Returns complete availability data with court metadata, UTC confirmation time, stale fields, reservation URL, and all slots."
+    },
+    {
+      "point": "getCourtAvailability:400",
+      "note": "Validates courtId and date format and maps malformed requests to VALIDATION_FAILED."
+    },
+    {
+      "point": "getCourtAvailability:404",
+      "note": "Maps unsupported path courts to COURT_NOT_SUPPORTED."
+    },
+    {
+      "point": "getCourtAvailability:500",
+      "note": "Maps unexpected failures to INTERNAL_ERROR with retry metadata and traceId."
+    },
+    {
+      "point": "getCourtAvailability:502",
+      "note": "Maps unreadable upstream responses to UPSTREAM_RESPONSE_UNREADABLE."
+    },
+    {
+      "point": "getCourtAvailability:503",
+      "note": "Maps unavailable upstream responses and storage timeout failures to their declared 503 codes."
+    },
+    {
+      "point": "getCourtAvailability:504",
+      "note": "Maps upstream timeouts to UPSTREAM_TIMEOUT."
+    },
+    {
+      "point": "getCourtAvailability:VALIDATION_FAILED",
+      "note": "Problem responses use application/problem+json with status, code, retryable, and request instance."
+    },
+    {
+      "point": "getCourtAvailability:COURT_NOT_SUPPORTED",
+      "note": "Path-level unsupported courts are distinguished as 404."
+    },
+    {
+      "point": "getCourtAvailability:UPSTREAM_RESPONSE_UNREADABLE",
+      "note": "Unreadable upstream checks produce 502, retryAfterSeconds 20, Retry-After, and traceId."
+    },
+    {
+      "point": "getCourtAvailability:UPSTREAM_UNAVAILABLE",
+      "note": "Unavailable upstream checks produce 503, retryAfterSeconds 20, Retry-After, and traceId."
+    },
+    {
+      "point": "getCourtAvailability:UPSTREAM_TIMEOUT",
+      "note": "Timed out upstream checks produce 504, retryAfterSeconds 20, Retry-After, and traceId."
+    },
+    {
+      "point": "getCourtAvailability:STORAGE_TIMEOUT",
+      "note": "Storage timeout is explicitly mapped to retryable 503 storage failure."
+    },
+    {
+      "point": "getCourtAvailability:INTERNAL_ERROR",
+      "note": "Unhandled failures produce retryable 500 responses with traceId."
+    },
+    {
+      "point": "listAlerts:200",
+      "note": "Lists only the authenticated owner's alerts, newest first, with optional stored-status filtering and complete nullable fields."
+    },
+    {
+      "point": "listAlerts:400",
+      "note": "Invalid status values are mapped to VALIDATION_FAILED."
+    },
+    {
+      "point": "listAlerts:401",
+      "note": "Missing or malformed bearer credentials are mapped to UNAUTHENTICATED."
+    },
+    {
+      "point": "listAlerts:500",
+      "note": "Unexpected failures are mapped to INTERNAL_ERROR."
+    },
+    {
+      "point": "listAlerts:503",
+      "note": "Storage timeout is explicitly mapped to retryable STORAGE_TIMEOUT."
+    },
+    {
+      "point": "listAlerts:VALIDATION_FAILED",
+      "note": "Invalid query status returns the declared problem code."
+    },
+    {
+      "point": "listAlerts:UNAUTHENTICATED",
+      "note": "Owner-scoped list access requires a nonblank Bearer credential."
+    },
+    {
+      "point": "listAlerts:STORAGE_TIMEOUT",
+      "note": "Storage timeout mapping is declared in the common problem handler."
+    },
+    {
+      "point": "listAlerts:INTERNAL_ERROR",
+      "note": "Unhandled list failures use the declared 500 problem shape."
+    },
+    {
+      "point": "createAlert:201",
+      "note": "Creates a WATCHING alert, returns the full Alert representation, Location, and Idempotency-Replayed=false."
+    },
+    {
+      "point": "createAlert:200",
+      "note": "Returns an existing WATCHING alert for the same owner and condition without creating a second alert."
+    },
+    {
+      "point": "createAlert:400",
+      "note": "Validates JSON shape, additional fields, UUID Idempotency-Key, date, courtId, and HH:mm slot values."
+    },
+    {
+      "point": "createAlert:401",
+      "note": "Requires a bearer identity before processing the create request."
+    },
+    {
+      "point": "createAlert:409",
+      "note": "Same scoped idempotency key with a different request fingerprint maps to IDEMPOTENCY_KEY_REUSED."
+    },
+    {
+      "point": "createAlert:422",
+      "note": "Distinguishes unsupported body court, unsupported slot, and closed alert window."
+    },
+    {
+      "point": "createAlert:500",
+      "note": "Unexpected create failures use INTERNAL_ERROR."
+    },
+    {
+      "point": "createAlert:503",
+      "note": "Concurrent idempotency processing uses CONCURRENT_UPDATE_CONFLICT with Retry-After; storage timeout is also mapped."
+    },
+    {
+      "point": "createAlert:VALIDATION_FAILED",
+      "note": "Request validation failures are not retained in the idempotency store."
+    },
+    {
+      "point": "createAlert:UNAUTHENTICATED",
+      "note": "Bearer credentials are required for owner scoping."
+    },
+    {
+      "point": "createAlert:IDEMPOTENCY_KEY_REUSED",
+      "note": "Completed 2xx requests retain the request fingerprint for 24 hours and reject changed reuse."
+    },
+    {
+      "point": "createAlert:COURT_NOT_SUPPORTED",
+      "note": "Body court support is mapped to 422."
+    },
+    {
+      "point": "createAlert:SLOT_NOT_SUPPORTED",
+      "note": "Requested slot must exactly match a known operating slot."
+    },
+    {
+      "point": "createAlert:ALERT_WINDOW_CLOSED",
+      "note": "Expiry is derived from the Asia/Seoul slot start and past windows are rejected."
+    },
+    {
+      "point": "createAlert:CONCURRENT_UPDATE_CONFLICT",
+      "note": "Concurrent same-key processing returns retryable 503."
+    },
+    {
+      "point": "createAlert:STORAGE_TIMEOUT",
+      "note": "Storage timeout mapping is explicitly declared."
+    },
+    {
+      "point": "createAlert:INTERNAL_ERROR",
+      "note": "Unhandled create failures include retry metadata and traceId."
+    },
+    {
+      "point": "getAlert:200",
+      "note": "Returns the complete alert representation for the authenticated owner."
+    },
+    {
+      "point": "getAlert:400",
+      "note": "Non-canonical UUID alert IDs are rejected as VALIDATION_FAILED."
+    },
+    {
+      "point": "getAlert:401",
+      "note": "Missing or malformed bearer credentials are rejected as UNAUTHENTICATED."
+    },
+    {
+      "point": "getAlert:404",
+      "note": "Missing and non-owned alerts both map to ALERT_NOT_FOUND."
+    },
+    {
+      "point": "getAlert:500",
+      "note": "Unexpected failures are mapped to INTERNAL_ERROR."
+    },
+    {
+      "point": "getAlert:503",
+      "note": "Storage timeout is explicitly mapped to retryable STORAGE_TIMEOUT."
+    },
+    {
+      "point": "getAlert:ALERT_NOT_FOUND",
+      "note": "Owner filtering makes missing and non-owned resources indistinguishable."
+    },
+    {
+      "point": "cancelAlert:200",
+      "note": "Cancellation is idempotent and returns the resulting complete alert representation."
+    },
+    {
+      "point": "cancelAlert:400",
+      "note": "Non-canonical UUID alert IDs are rejected as VALIDATION_FAILED."
+    },
+    {
+      "point": "cancelAlert:401",
+      "note": "Missing or malformed bearer credentials are rejected as UNAUTHENTICATED."
+    },
+    {
+      "point": "cancelAlert:404",
+      "note": "Missing and non-owned alerts both map to ALERT_NOT_FOUND."
+    },
+    {
+      "point": "cancelAlert:500",
+      "note": "Unexpected failures are mapped to INTERNAL_ERROR."
+    },
+    {
+      "point": "cancelAlert:503",
+      "note": "Contention and storage timeout mappings are explicitly declared."
+    },
+    {
+      "point": "cancelAlert:ALERT_NOT_FOUND",
+      "note": "Cancellation never reveals whether another user's alert exists."
+    },
+    {
+      "point": "cancelAlert:CONCURRENT_UPDATE_CONFLICT",
+      "note": "Retryable contention mapping is available for state-changing failures."
+    },
+    {
+      "point": "cancelAlert:STORAGE_TIMEOUT",
+      "note": "Storage timeout mapping is explicitly declared."
+    },
+    {
+      "point": "cancelAlert:INTERNAL_ERROR",
+      "note": "Unhandled cancellation failures include retry metadata and traceId."
+    },
+    {
+      "point": "contract:prose",
+      "note": "The baseline contract was copied to the required versioned contract artifact path."
+    }
+  ],
+  "decisions": [
+    {
+      "id": "d_clock_source",
+      "point": "all",
+      "where": "app services",
+      "question": "What supplies current time for freshness, expiry, retention, and delay calculations?",
+      "considered": [
+        {
+          "choice": "Inject a UTC Clock with a systemUTC default",
+          "consequence": "Keeps all temporal decisions coherent and testable."
+        },
+        {
+          "choice": "Call Instant.now directly",
+          "consequence": "Reduces wiring but couples every timing rule to wall-clock access."
+        }
+      ],
+      "chosen": "Use an injected java.time.Clock defaulting to UTC.",
+      "basis": "convention",
+      "rationale": "The contract requires UTC timestamps and multiple time-based rules but does not prescribe a clock API.",
+      "confidence": "high",
+      "blast_radius": [
+        "getCourtAvailability:200",
+        "createAlert:201",
+        "createAlert:200",
+        "listAlerts:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "reversal_cost": "Change service constructors and current-time reads.",
+      "supersedes": null
+    },
+    {
+      "id": "d_user_identity",
+      "point": "createAlert:401",
+      "where": "API authentication boundary",
+      "question": "How is an unspecified Bearer authentication mechanism represented in the in-memory draft?",
+      "considered": [
+        {
+          "choice": "Treat the nonblank Bearer credential as an opaque UserId",
+          "consequence": "Preserves ownership isolation without inventing token semantics."
+        },
+        {
+          "choice": "Add JWT parsing or a token-validation port",
+          "consequence": "Adds an unprovided dependency and authentication contract."
+        }
+      ],
+      "chosen": "Use the opaque credential after the Bearer prefix as the UserId.",
+      "basis": "least_harm",
+      "rationale": "The contract requires bearer-based user identification but deliberately leaves the authentication mechanism unspecified.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:401",
+        "listAlerts:401",
+        "getAlert:401",
+        "cancelAlert:401"
+      ],
+      "reversal_cost": "Replace only the inbound identity conversion when authentication is specified.",
+      "supersedes": null
+    },
+    {
+      "id": "d_availability_validation_source",
+      "point": "createAlert:422",
+      "where": "alert request validation",
+      "question": "How does alert creation obtain court metadata and validate an exact operating slot?",
+      "considered": [
+        {
+          "choice": "Use CourtAvailabilityPort metadata and the availability service snapshot/check",
+          "consequence": "Reuses the only provided reservation boundary and avoids a new catalog."
+        },
+        {
+          "choice": "Add a separate hard-coded court catalog",
+          "consequence": "Duplicates or invents a dependency outside the implementation contract."
+        }
+      ],
+      "chosen": "Use CourtAvailabilityPort and the shared availability snapshot/check path.",
+      "basis": "contract_analogy",
+      "rationale": "Court search is outside this API, while the provided port owns supported-court and slot facts.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:201",
+        "createAlert:200",
+        "createAlert:422"
+      ],
+      "reversal_cost": "Replace the validation source and its adapter wiring.",
+      "supersedes": null
+    },
+    {
+      "id": "d_refresh_failure_coalescing",
+      "point": "getCourtAvailability:503",
+      "where": "availability refresh coordination",
+      "question": "How should a failed refresh behave for concurrent waiters and immediate retries?",
+      "considered": [
+        {
+          "choice": "Retain the failed attempt for the check interval and reuse its outcome",
+          "consequence": "Concurrent callers receive the same stale result or same failure and the next retry follows 20 seconds."
+        },
+        {
+          "choice": "Retry the upstream call for every waiter",
+          "consequence": "Violates the one-refresh-per-interval and same-result behavior."
+        }
+      ],
+      "chosen": "Cache the failure reason for 20 seconds and reuse it for the same court/date.",
+      "basis": "spec_implication",
+      "rationale": "The contract ties Retry-After to the 20-second check interval and requires concurrent requests to share one refresh outcome.",
+      "confidence": "high",
+      "blast_radius": [
+        "getCourtAvailability:200",
+        "getCourtAvailability:502",
+        "getCourtAvailability:503",
+        "getCourtAvailability:504"
+      ],
+      "reversal_cost": "Change the refresh coordination state and retry policy.",
+      "supersedes": null
+    },
+    {
+      "id": "d_condition_atomicity",
+      "point": "createAlert:200",
+      "where": "duplicate alert creation",
+      "question": "How are simultaneous requests with different idempotency keys prevented from creating duplicate WATCHING alerts?",
+      "considered": [
+        {
+          "choice": "Synchronize creation per owner and alert condition",
+          "consequence": "Makes the condition check and insert atomic in the in-memory draft."
+        },
+        {
+          "choice": "Check then save without a lock",
+          "consequence": "Allows V-1 races to create multiple alerts."
+        }
+      ],
+      "chosen": "Use a per-condition lock around the duplicate check and save.",
+      "basis": "contract_analogy",
+      "rationale": "The contract requires same-condition deduplication even when requests arrive concurrently, and the storage is in-memory.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:200",
+        "createAlert:201"
+      ],
+      "reversal_cost": "Replace the repository coordination with an atomic persistence operation.",
+      "supersedes": null
+    },
+    {
+      "id": "d_lazy_expiry",
+      "point": "listAlerts:200",
+      "where": "alert lifecycle observation",
+      "question": "When does the in-memory draft materialize EXPIRED status without the out-of-scope scheduler?",
+      "considered": [
+        {
+          "choice": "Lazily transition due WATCHING alerts during owner-scoped create/list/get/cancel operations",
+          "consequence": "Stops future work and exposes terminal state when the alert is observed."
+        },
+        {
+          "choice": "Leave WATCHING forever until a background worker exists",
+          "consequence": "Fails the observable expiry behavior of the HTTP surface."
+        }
+      ],
+      "chosen": "Apply lazy expiry on owner-scoped application operations.",
+      "basis": "least_harm",
+      "rationale": "The contract assigns expiry to server work, while this draft is explicitly in-memory and has no scheduler surface.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:200",
+        "createAlert:201",
+        "listAlerts:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "reversal_cost": "Add a scheduler or replace lazy transitions with a lifecycle worker.",
+      "supersedes": null
+    },
+    {
+      "id": "d_stale_creation_validation",
+      "point": "createAlert:422",
+      "where": "slot validation after refresh failure",
+      "question": "What slot facts are used when the latest availability refresh fails but a previous successful snapshot exists?",
+      "considered": [
+        {
+          "choice": "Validate against the last successful snapshot and permit a matching request",
+          "consequence": "Preserves known operating-slot facts while exposing refresh staleness on availability reads."
+        },
+        {
+          "choice": "Reject every create request when the latest refresh is stale",
+          "consequence": "Adds a create failure rule not declared by the contract."
+        }
+      ],
+      "chosen": "Use the last successful snapshot for exact slot validation.",
+      "basis": "least_harm",
+      "rationale": "The contract defines stale results as usable 200 data and does not declare stale availability as a create rejection condition.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:200",
+        "createAlert:201",
+        "createAlert:422"
+      ],
+      "reversal_cost": "Change the create validation policy for stale snapshots.",
+      "supersedes": null
+    },
+    {
+      "id": "d_problem_trace_generation",
+      "point": "getCourtAvailability:500",
+      "where": "problem response construction",
+      "question": "How is the unspecified traceId value generated?",
+      "considered": [
+        {
+          "choice": "Generate a random UUID-shaped opaque value for each 5xx response",
+          "consequence": "Provides a per-response lookup token without exposing implementation details."
+        },
+        {
+          "choice": "Reuse a deterministic alert or idempotency identifier",
+          "consequence": "Some 5xx requests have no such identifier and could correlate unrelated failures."
+        }
+      ],
+      "chosen": "Generate a random UUID without separators for 5xx responses only.",
+      "basis": "convention",
+      "rationale": "The contract requires a traceId on 5xx responses but does not define its generator or format beyond string.",
+      "confidence": "medium",
+      "blast_radius": [
+        "getCourtAvailability:500",
+        "listAlerts:500",
+        "createAlert:500",
+        "getAlert:500",
+        "cancelAlert:500"
+      ],
+      "reversal_cost": "Replace the problem handler's trace ID generator.",
+      "supersedes": null
+    },
+    {
+      "id": "d_validation_precedence",
+      "point": "createAlert:400",
+      "where": "create request boundary",
+      "question": "Which validation runs first when authentication, idempotency, and body validation are all invalid?",
+      "considered": [
+        {
+          "choice": "Authenticate first, then validate Idempotency-Key and body",
+          "consequence": "Keeps owner-scoped processing from examining request details for an unidentified user."
+        },
+        {
+          "choice": "Validate headers/body before authentication",
+          "consequence": "Could expose request validation details to unauthenticated callers."
+        }
+      ],
+      "chosen": "Authenticate before idempotency-key and body parsing.",
+      "basis": "least_harm",
+      "rationale": "The contract requires owner identity for create and does not define precedence for multiple simultaneous failures.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:400",
+        "createAlert:401"
+      ],
+      "reversal_cost": "Reorder the controller boundary checks.",
+      "supersedes": null
+    }
+  ],
+  "contract_changes": [],
+  "generated_at": "2026-09-29T23:29:29+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "gen_impl:v1",
+    "source_files": [
+      "b02d8689_input.json"
+    ],
+    "token_usage": {
+      "input_tokens": 2731290,
+      "cached_input_tokens": 2485248,
+      "output_tokens": 49320,
+      "reasoning_output_tokens": 16349
+    }
+  },
+  "commit": "13c26b8a6106bbbc8de17d2f2274766bfb9f5c25"
+}

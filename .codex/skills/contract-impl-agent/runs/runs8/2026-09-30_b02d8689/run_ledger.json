@@ -1,0 +1,2875 @@
+{
+  "run_id": "2026-09-30_b02d8689",
+  "updated_at": "2026-09-30T09:02:12+09:00",
+  "iterations": [
+    {
+      "iteration": "001",
+      "status": "REJECT",
+      "draft": "iter_001/draft.json",
+      "output_dir": "output",
+      "commit": "c7d75adaa18c496515417eec722a11552cae2565",
+      "declared_files": 19,
+      "files_on_disk": 31,
+      "file_hashes": {
+        ".gitignore": "7f7c8ac9df305eb44041c7b6f0efe5c847834786e74a58928d8c2cd284d7480d",
+        ".mvn/wrapper/maven-wrapper.properties": "27680bba1b7cb13995c30ccbf6f3ac15b218cb6c11aebda19e52e3fd6e65d15e",
+        "contract/tennis-alert-api-v1.yaml": "3796b16708e89bd9d56da587faf9f5cc1912d5c28da6f0be690cc8d3a68628f9",
+        "mvnw": "b1ef6ce14df54e6f8552734080184b18f78b0a0c61ed80c08d7d78b254e44941",
+        "mvnw.cmd": "46eedb8419bd14fe70d5bb2916d7b6f51806e51b39d5b76a42610384ca929c1c",
+        "pom.xml": "a53d5bd6979d3c134bdb135abd1fad59dd666b34ed0c4d0d47d57fdba4bc9a4f",
+        "README.md": "e6e4bb4ffa2ef4d71decf6cf8c719abd5fc304795bbab809d1200a294a5b69f3",
+        "src/main/java/com/thinking/tennis/adapter/InMemoryCourtAvailabilityAdapter.java": "78c58ad8277ae1a1722fb8c42de58acb78107a73f4e8afdfbf9dff48ae874ea6",
+        "src/main/java/com/thinking/tennis/api/AlertController.java": "af755b2237f60b8c4dcad8c7368521505ed7e2bf7c781054b7b685f25f6154f4",
+        "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java": "4dfc6df434d98655eb24249fc88caa6f7630af67cf0c3e0075c350a852abbaa7",
+        "src/main/java/com/thinking/tennis/api/ApiMapper.java": "2587c02dccaa9d43215f643dfd5367189602f912c98601dc8fb4b2aebaf8e40c",
+        "src/main/java/com/thinking/tennis/api/ApiModels.java": "da148e4df838062d9a03d5275f5a5aa0eb4d90b411aacbb6a4615dbed98fbe2c",
+        "src/main/java/com/thinking/tennis/api/AvailabilityController.java": "8e4f2445f69b8fd1e8a5177c08ce3182fc26713a64dd928b93b9e4d5bc1d8b10",
+        "src/main/java/com/thinking/tennis/api/OpenApiContractConfiguration.java": "e8c82ce0340cef55a488fd9953afbdcefa0fc25f5aa384a2da8244e47044d961",
+        "src/main/java/com/thinking/tennis/app/AlertApplicationService.java": "00c42f4ba0f1023c9214d0ba0064a532c51b5233138e1a11b3a281227b4a9a08",
+        "src/main/java/com/thinking/tennis/app/ApiFailure.java": "c650655d6ac6151725d81fbbbdf2f07a802c4da2a9119a6e7e482c12e76a9085",
+        "src/main/java/com/thinking/tennis/app/AvailabilityApplicationService.java": "0d90afe463576eebe3957f4941eab82ad54e16b6a6e0601698fde3150d2f40d1",
+        "src/main/java/com/thinking/tennis/app/AvailabilityFailure.java": "b59bf8cdfbb61334d59aab72d3880c75e92454cd5af3ca04869a476606f78373",
+        "src/main/java/com/thinking/tennis/app/ValidationFailure.java": "f69bbec0ed7395b589c1e9106a7cdde2daec5f950cd535b19ad6163cae66baab",
+        "src/main/java/com/thinking/tennis/config/SchedulingConfig.java": "ece803a6a327c5aab2d5cfdec7f0f4a68f3c3bda63fe26a1065a0bc597805c7e",
+        "src/main/java/com/thinking/tennis/domain/Alert.java": "ae5a46839c517215d35f68d319e8e07fd70db244f732e52709180b2ed923eba2",
+        "src/main/java/com/thinking/tennis/domain/AlertDelivery.java": "4cd14f5bacdeb004259e22da43b1aa7e35c030c466979c185fd263f6a524d950",
+        "src/main/java/com/thinking/tennis/domain/AlertSnapshot.java": "c271d424fcd77d1c6b9b580e31fb8e5a08515d27e23204a63dcc5e3a4115c63f",
+        "src/main/java/com/thinking/tennis/domain/AlertStatus.java": "e5940a3b840115650ef588507b690d5d049a9415e0914e03f3a0ee6e8354a3de",
+        "src/main/java/com/thinking/tennis/domain/AvailabilitySnapshot.java": "f16c3659bec032c69196bb8739a1aa74a4b4d88e5b2b69e6875e576e5c904f7f",
+        "src/main/java/com/thinking/tennis/domain/DeliveryStatus.java": "15b9c727006a0c34f0124bc83b418ddaea49ca10028f61a6c0fee2247825c1d1",
+        "src/main/java/com/thinking/tennis/port/CourtAvailabilityPort.java": "d0bd3625c535975cd875a453406009b4a2b995b5c3f8c62200ec5db9060089f7",
+        "src/main/java/com/thinking/tennis/TennisAlertApplication.java": "2178279b50ba03794c7632534ff52fd4ba8a5a95ba487d6807a42e1e6131f2f1",
+        "src/main/resources/application.yaml": "f66f77cca643985bba137dcaa3300f06dd60786ac6266968bf742c2429bd1b56",
+        "src/test/java/com/thinking/tennis/arch/LayerBoundaryTest.java": "febd8a0d16c114495bf27c05d9c33d88105eb60c467dc860bc19e66fcfd79c4c",
+        "tools/dump_api_docs.py": "b5afaa65468210261d88fa8a788e24a1842b7498eea67b4c4d61512090bcae19"
+      },
+      "contract": {
+        "path": "contract/tennis-alert-api-v1.yaml",
+        "from": "contract/tennis-alert-api-v1.yaml"
+      },
+      "contract_source": "output/contract/tennis-alert-api-v1.yaml",
+      "prev_contract_source": "output/contract/tennis-alert-api-v1.yaml",
+      "gate": {
+        "g0": "PASS",
+        "g1": "REJECT",
+        "changes": "PASS",
+        "violations": 31,
+        "observations": 65
+      },
+      "eval": {
+        "weighted_total": 2.6,
+        "scores": {
+          "request_tolerance": 5,
+          "response_fidelity": 2,
+          "failure_faithfulness": 1,
+          "state_continuity": 3,
+          "judgement_disclosure": 2
+        },
+        "axis_rationales": {
+          "request_tolerance": "열거 12개, 미충족 0개: []. `AlertController.validateCreateRequest`, `ApiMapper.userId/date/uuid/status/requireCourtId/requireTimeSlot/requireIdempotencyKey`, `ApiModels.AlertRequest/TimeSlot`, `AlertApplicationService.createWithoutIdempotency`에서 선택 입력의 부재 경로, 날짜·UUID·상태·코트·시간대·멱등 키 수용 경로를 확인했다.",
+          "response_fidelity": "열거 23개, 미충족 2개: [slot_422fec22, slot_dc9ce55b]. `ApiMapper.alert/availability`, `AvailabilityApplicationService.fresh/staleOrThrow`, `Alert.snapshot`, `ApiModels`가 대부분의 응답 의미를 보존한다. 그러나 `AlertApplicationService.createWithoutIdempotency`는 `expiresAt`을 시작 시각으로만 계산하고 더 이른 예약 마감 시각을 반영하지 않으며, `AvailabilityApplicationService`의 stale 결과를 이용해 생성한 신청은 `AlertApplicationService.applyAvailability`가 stale snapshot을 건너뛰어 `lastCheckedAt`이 null로 남을 수 있다.",
+          "failure_faithfulness": "열거 23개, 미충족 4개: [slot_58100c30, slot_524bf33a, slot_d5fad6dd, slot_ca2fed02]. `ApiExceptionHandler.validation/unreadable/apiFailure/availabilityFailure/response`에서 검증·인증·코트·슬롯·만료·조회 불가·멱등성·경합·upstream·내부 오류의 경로와 재시도 메타데이터를 확인했다. 반면 `STORAGE_TIMEOUT`을 발생시키거나 503으로 매핑하는 경로가 없고, generic `unexpected`는 저장소 장애를 `INTERNAL_ERROR` 500으로 처리한다.",
+          "state_continuity": "열거 11개, 미충족 1개: [slot_7afbe3b4]. `AvailabilityApplicationService.cache/inFlight`, `AlertApplicationService.create`의 멱등성 보관·재생, `Alert.cancel/expire`, `AlertApplicationService.expireDueAlerts`에서 요청 간 캐시·대기·재생·상태 전이를 확인했다. 그러나 `AlertApplicationService.createWithoutIdempotency`의 감시 중 동일 조건 검색과 `alerts.put`이 원자적으로 묶이지 않아 서로 다른 멱등 키의 동시 신청이 중복 생성될 수 있다.",
+          "judgement_disclosure": "신고 6건, 미신고 2건: 신고된 6개 결정은 인증 식별자, 갱신 대기, traceId 형식, 슬롯 검증, 만료 스케줄 주기, PENDING-only 발송 표면에 각각 근거와 영향 범위를 제시한다. 그러나 `contract/tennis-alert-api-v1.yaml`이 기준선의 설명·요구사항 연결·예시를 대폭 삭제했는데 `CONTRACT_CHANGES_JSON`이 비어 있고, `AlertApplicationService`의 `ConcurrentHashMap` 인메모리 저장 선택도 신고 목록에 없다."
+        }
+      },
+      "decision_risk": {
+        "level": "low",
+        "reasons": []
+      },
+      "skipped_reason": null,
+      "gate_errors": [
+        "gate:extract.blind@None: 계약은 (상태 코드, 에러 코드) 쌍을 선언했는데 추출 스펙에는 그 조항에 대응하는 것이 없다",
+        "gate:response.type_changed@getCourtAvailability:200: 계약 ['string'] → 구현 ['object']",
+        "gate:response.type_changed@getCourtAvailability:200: 계약 ['string'] → 구현 ['object']",
+        "gate:response.header_missing@getCourtAvailability:500: 계약이 싣겠다고 선언한 헤더다",
+        "gate:response.header_missing@getCourtAvailability:502: 계약이 싣겠다고 선언한 헤더다",
+        "gate:response.header_missing@getCourtAvailability:503: 계약이 싣겠다고 선언한 헤더다",
+        "gate:response.header_missing@getCourtAvailability:504: 계약이 싣겠다고 선언한 헤더다",
+        "gate:response.type_changed@listAlerts:200: 계약 ['string'] → 구현 ['object']",
+        "gate:response.type_changed@listAlerts:200: 계약 ['string'] → 구현 ['object']",
+        "gate:response.header_missing@listAlerts:500: 계약이 싣겠다고 선언한 헤더다",
+        "gate:response.header_missing@listAlerts:503: 계약이 싣겠다고 선언한 헤더다",
+        "gate:request.type_narrowed@createAlert: 계약 ['string'] → 구현 ['object']",
+        "gate:request.type_narrowed@createAlert: 계약 ['string'] → 구현 ['object']",
+        "gate:response.type_changed@createAlert:201: 계약 ['string'] → 구현 ['object']",
+        "gate:response.type_changed@createAlert:201: 계약 ['string'] → 구현 ['object']",
+        "gate:response.header_missing@createAlert:201: 계약이 싣겠다고 선언한 헤더다",
+        "gate:response.header_missing@createAlert:201: 계약이 싣겠다고 선언한 헤더다",
+        "gate:response.type_changed@createAlert:200: 계약 ['string'] → 구현 ['object']",
+        "gate:response.type_changed@createAlert:200: 계약 ['string'] → 구현 ['object']",
+        "gate:response.header_missing@createAlert:200: 계약이 싣겠다고 선언한 헤더다",
+        "gate:response.header_missing@createAlert:200: 계약이 싣겠다고 선언한 헤더다",
+        "gate:response.header_missing@createAlert:500: 계약이 싣겠다고 선언한 헤더다",
+        "gate:response.header_missing@createAlert:503: 계약이 싣겠다고 선언한 헤더다",
+        "gate:response.type_changed@getAlert:200: 계약 ['string'] → 구현 ['object']",
+        "gate:response.type_changed@getAlert:200: 계약 ['string'] → 구현 ['object']",
+        "gate:response.header_missing@getAlert:500: 계약이 싣겠다고 선언한 헤더다",
+        "gate:response.header_missing@getAlert:503: 계약이 싣겠다고 선언한 헤더다",
+        "gate:response.type_changed@cancelAlert:200: 계약 ['string'] → 구현 ['object']",
+        "gate:response.type_changed@cancelAlert:200: 계약 ['string'] → 구현 ['object']",
+        "gate:response.header_missing@cancelAlert:500: 계약이 싣겠다고 선언한 헤더다",
+        "gate:response.header_missing@cancelAlert:503: 계약이 싣겠다고 선언한 헤더다"
+      ],
+      "rubric_errors": [
+        "min_total: 2.6 < 4.2",
+        "min_axis.response_fidelity: 2 < 4.0",
+        "min_axis.failure_faithfulness: 1 < 4.0",
+        "min_axis.state_continuity: 3 < 4.0",
+        "min_axis.judgement_disclosure: 2 < 4.0"
+      ]
+    },
+    {
+      "iteration": "002",
+      "status": "REJECT",
+      "draft": "iter_002/draft.json",
+      "output_dir": "output",
+      "commit": "1ff5b00928852df35d448150e66c71a1ae23606b",
+      "declared_files": 20,
+      "files_on_disk": 33,
+      "file_hashes": {
+        ".gitignore": "7f7c8ac9df305eb44041c7b6f0efe5c847834786e74a58928d8c2cd284d7480d",
+        ".mvn/wrapper/maven-wrapper.properties": "27680bba1b7cb13995c30ccbf6f3ac15b218cb6c11aebda19e52e3fd6e65d15e",
+        "contract/tennis-alert-api-v1.yaml": "3796b16708e89bd9d56da587faf9f5cc1912d5c28da6f0be690cc8d3a68628f9",
+        "contract/tennis-alert-api-v2.yaml": "7aa3ff110095f100f8dd1d06c9d36db6908138713a5cece603d712c5a043c9a6",
+        "mvnw": "b1ef6ce14df54e6f8552734080184b18f78b0a0c61ed80c08d7d78b254e44941",
+        "mvnw.cmd": "46eedb8419bd14fe70d5bb2916d7b6f51806e51b39d5b76a42610384ca929c1c",
+        "pom.xml": "a53d5bd6979d3c134bdb135abd1fad59dd666b34ed0c4d0d47d57fdba4bc9a4f",
+        "README.md": "e6e4bb4ffa2ef4d71decf6cf8c719abd5fc304795bbab809d1200a294a5b69f3",
+        "src/main/java/com/thinking/tennis/adapter/InMemoryCourtAvailabilityAdapter.java": "78c58ad8277ae1a1722fb8c42de58acb78107a73f4e8afdfbf9dff48ae874ea6",
+        "src/main/java/com/thinking/tennis/api/AlertController.java": "ac8babb79431479392801d5d26dc3d3b4046d2f636cb43f578b625ecf3dc0db3",
+        "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java": "7fa86143a0ead0cc87f8ca54e9f49389c1d8d0ddf86bad4bde53a601c7a20ea0",
+        "src/main/java/com/thinking/tennis/api/ApiMapper.java": "04f0edbb4099e71f27e3a0549978d5ad02d768192d2ea03c96409071866ac66e",
+        "src/main/java/com/thinking/tennis/api/ApiModels.java": "763742857f48f41d608645b6c0348fc617a472baf82ecad2a0d419549ed88c8c",
+        "src/main/java/com/thinking/tennis/api/AvailabilityController.java": "6e5bb9bd5db072780296a691f997dc5653f1a9aef036b5277f6259e50622aad6",
+        "src/main/java/com/thinking/tennis/api/OpenApiContractConfiguration.java": "c668f2a7fc46202135443654cbccfd9eab9d7a87b0716678c25b654f6d2b6f6a",
+        "src/main/java/com/thinking/tennis/app/AlertApplicationService.java": "94d98330f264b1d32c005871bc0bffcc0f3ec67be5da8e4af92d6460067b340e",
+        "src/main/java/com/thinking/tennis/app/ApiFailure.java": "00ef7df1ca62a5222ab0e33440b24b918b134d8d31ba52d3dfda826826d5aefd",
+        "src/main/java/com/thinking/tennis/app/AvailabilityApplicationService.java": "00dbe2c20f7b0e6e5288dae7a0ed09bdb21dbf1f32fcf988c76fcf5b006e613e",
+        "src/main/java/com/thinking/tennis/app/AvailabilityFailure.java": "b59bf8cdfbb61334d59aab72d3880c75e92454cd5af3ca04869a476606f78373",
+        "src/main/java/com/thinking/tennis/app/ValidationFailure.java": "d5da6413bd78c5aec11004297f49d353b4f47f96977d879f2dcf6192de0edf3b",
+        "src/main/java/com/thinking/tennis/config/SchedulingConfig.java": "ece803a6a327c5aab2d5cfdec7f0f4a68f3c3bda63fe26a1065a0bc597805c7e",
+        "src/main/java/com/thinking/tennis/domain/Alert.java": "1de913864a866ae161567d18edbec8379a03822634f01b5cad9f6afe888ae16d",
+        "src/main/java/com/thinking/tennis/domain/AlertDelivery.java": "4cd14f5bacdeb004259e22da43b1aa7e35c030c466979c185fd263f6a524d950",
+        "src/main/java/com/thinking/tennis/domain/AlertSnapshot.java": "9c18280cffc30a3025e8d4d828d354be690aafc1912c031b7bcd88377df930a9",
+        "src/main/java/com/thinking/tennis/domain/AlertStatus.java": "e5940a3b840115650ef588507b690d5d049a9415e0914e03f3a0ee6e8354a3de",
+        "src/main/java/com/thinking/tennis/domain/AvailabilitySnapshot.java": "dcaf6bad5d7d125e9a2840059dad02e7994024e1d146769f768ac56ca13a96d6",
+        "src/main/java/com/thinking/tennis/domain/DeliveryStatus.java": "15b9c727006a0c34f0124bc83b418ddaea49ca10028f61a6c0fee2247825c1d1",
+        "src/main/java/com/thinking/tennis/port/CourtAvailabilityPort.java": "d0bd3625c535975cd875a453406009b4a2b995b5c3f8c62200ec5db9060089f7",
+        "src/main/java/com/thinking/tennis/TennisAlertApplication.java": "2178279b50ba03794c7632534ff52fd4ba8a5a95ba487d6807a42e1e6131f2f1",
+        "src/main/java/io/swagger/v3/oas/annotations/headers/Header.java": "7cd1372140383da237c5d4f319d66b63a3ba25ae44669f19650b0968e43204a7",
+        "src/main/resources/application.yaml": "f66f77cca643985bba137dcaa3300f06dd60786ac6266968bf742c2429bd1b56",
+        "src/test/java/com/thinking/tennis/arch/LayerBoundaryTest.java": "febd8a0d16c114495bf27c05d9c33d88105eb60c467dc860bc19e66fcfd79c4c",
+        "tools/dump_api_docs.py": "b5afaa65468210261d88fa8a788e24a1842b7498eea67b4c4d61512090bcae19"
+      },
+      "contract": {
+        "path": "contract/tennis-alert-api-v2.yaml",
+        "from": "contract/tennis-alert-api-v1.yaml"
+      },
+      "contract_source": "output/contract/tennis-alert-api-v2.yaml",
+      "prev_contract_source": "output/contract/tennis-alert-api-v1.yaml",
+      "gate": {
+        "g0": "REJECT",
+        "g1": "SKIPPED",
+        "changes": "SKIPPED",
+        "violations": 1,
+        "observations": 0
+      },
+      "eval": null,
+      "decision_risk": {
+        "level": "high",
+        "reasons": [
+          "low confidence decisions: ['d_expiry_source_semantics']"
+        ]
+      },
+      "skipped_reason": "g0_reject",
+      "gate_errors": [
+        "gate:g0.compile_failed@None: 컴파일 오류 2건\nsrc/main/java/com/thinking/tennis/api/AlertController.java:233:86 illegal start of type\nsrc/main/java/com/thinking/tennis/api/AlertController.java:233:87 reached end of file while parsing"
+      ],
+      "rubric_errors": []
+    }
+  ],
+  "violations": [
+    {
+      "id": "v_42778f",
+      "rule": "extract.blind",
+      "point": null,
+      "where": "x-error-codes",
+      "why_it_matters": "추출한 스펙에 계약의 그 조항에 대응하는 것이 아예 없다. 미판정은 통과가 아니므로 위반으로 센다.",
+      "detail": "계약은 (상태 코드, 에러 코드) 쌍을 선언했는데 추출 스펙에는 그 조항에 대응하는 것이 없다",
+      "first_seen_iteration": "001",
+      "last_seen_iteration": "001",
+      "closed_in_iteration": "002",
+      "closed_by": "code",
+      "closed_because": "위반의 좌표가 새 판본에도 그대로 있다",
+      "closed_by_verified": true,
+      "claimed_fix": null,
+      "verified_fix": {
+        "files": [
+          "src/main/java/com/thinking/tennis/api/AlertController.java",
+          "src/main/java/com/thinking/tennis/api/AvailabilityController.java"
+        ],
+        "diff": "--- a/src/main/java/com/thinking/tennis/api/AlertController.java\n+++ b/src/main/java/com/thinking/tennis/api/AlertController.java\n@@ -5,8 +5,7 @@\n import com.thinking.tennis.app.ValidationFailure;\n-import com.thinking.tennis.domain.Alert;\n import com.thinking.tennis.domain.AlertStatus;\n import io.swagger.v3.oas.annotations.Operation;\n-import io.swagger.v3.oas.annotations.Parameter;\n-import io.swagger.v3.oas.annotations.media.Content;\n-import io.swagger.v3.oas.annotations.media.Schema;\n+import io.swagger.v3.oas.annotations.extensions.Extension;\n+import io.swagger.v3.oas.annotations.extensions.ExtensionProperty;\n+import io.swagger.v3.oas.annotations.headers.Header;\n import io.swagger.v3.oas.annotations.responses.ApiResponse;\n@@ -14,4 +13,2 @@\n import io.swagger.v3.oas.annotations.security.SecurityRequirement;\n-import io.swagger.v3.oas.annotations.tags.Tag;\n-import java.util.UUID;\n import org.springframework.http.HttpHeaders;\n@@ -28,2 +25,5 @@\n \n+import java.net.URI;\n+import java.util.List;\n+\n @RestController\n@@ -31,160 +31,203 @@\n @SecurityRequirement(name = \"bearerAuth\")\n-@Tag(name = \"alerts\", description = \"빈자리 알림 신청의 생성, 조회, 해제\")\n-public final class AlertController {\n-    private final AlertApplicationService alertService;\n-\n-    public AlertController(AlertApplicationService alertService) {\n-        this.alertService = alertService;\n-    }\n-\n-    @Operation(\n-            operationId = \"createAlert\",\n-            summary = \"빈자리 알림 신청\"\n-    )\n-    @ApiResponses({\n... (342줄 더)",
+        "note": ""
+      },
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "closed"
+    },
+    {
+      "id": "v_6884fd",
+      "rule": "response.type_changed",
+      "point": "getCourtAvailability:200",
+      "where": "CourtAvailability.slots[].startTime",
+      "why_it_matters": "구현이 응답에 담는 타입이 계약이 약속한 타입과 다르다. 좁히는 것과 달리 읽는 쪽이 깨진다.",
+      "detail": "계약 ['string'] → 구현 ['object']",
+      "first_seen_iteration": "001",
+      "last_seen_iteration": "001",
+      "closed_in_iteration": "002",
+      "closed_by": "code",
+      "closed_because": "위반의 좌표가 새 판본에도 그대로 있다",
+      "closed_by_verified": true,
+      "claimed_fix": null,
+      "verified_fix": {
+        "files": [
+          "src/main/java/com/thinking/tennis/api/AlertController.java",
+          "src/main/java/com/thinking/tennis/api/ApiMapper.java",
+          "src/main/java/com/thinking/tennis/api/ApiModels.java",
+          "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+          "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+          "src/main/java/com/thinking/tennis/app/AvailabilityApplicationService.java",
+          "src/main/java/com/thinking/tennis/domain/Alert.java",
+          "src/main/java/com/thinking/tennis/domain/AvailabilitySnapshot.java"
+        ],
+        "diff": "--- a/src/main/java/com/thinking/tennis/api/AlertController.java\n+++ b/src/main/java/com/thinking/tennis/api/AlertController.java\n@@ -5,8 +5,7 @@\n import com.thinking.tennis.app.ValidationFailure;\n-import com.thinking.tennis.domain.Alert;\n import com.thinking.tennis.domain.AlertStatus;\n import io.swagger.v3.oas.annotations.Operation;\n-import io.swagger.v3.oas.annotations.Parameter;\n-import io.swagger.v3.oas.annotations.media.Content;\n-import io.swagger.v3.oas.annotations.media.Schema;\n+import io.swagger.v3.oas.annotations.extensions.Extension;\n+import io.swagger.v3.oas.annotations.extensions.ExtensionProperty;\n+import io.swagger.v3.oas.annotations.headers.Header;\n import io.swagger.v3.oas.annotations.responses.ApiResponse;\n@@ -14,4 +13,2 @@\n import io.swagger.v3.oas.annotations.security.SecurityRequirement;\n-import io.swagger.v3.oas.annotations.tags.Tag;\n-import java.util.UUID;\n import org.springframework.http.HttpHeaders;\n@@ -28,2 +25,5 @@\n \n+import java.net.URI;\n+import java.util.List;\n+\n @RestController\n@@ -31,160 +31,203 @@\n @SecurityRequirement(name = \"bearerAuth\")\n-@Tag(name = \"alerts\", description = \"빈자리 알림 신청의 생성, 조회, 해제\")\n-public final class AlertController {\n-    private final AlertApplicationService alertService;\n-\n-    public AlertController(AlertApplicationService alertService) {\n-        this.alertService = alertService;\n-    }\n-\n-    @Operation(\n-            operationId = \"createAlert\",\n-            summary = \"빈자리 알림 신청\"\n-    )\n-    @ApiResponses({\n... (342줄 더)",
+        "note": ""
+      },
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "closed"
+    },
+    {
+      "id": "v_20931f",
+      "rule": "response.type_changed",
+      "point": "getCourtAvailability:200",
+      "where": "CourtAvailability.slots[].endTime",
+      "why_it_matters": "구현이 응답에 담는 타입이 계약이 약속한 타입과 다르다. 좁히는 것과 달리 읽는 쪽이 깨진다.",
+      "detail": "계약 ['string'] → 구현 ['object']",
+      "first_seen_iteration": "001",
+      "last_seen_iteration": "001",
+      "closed_in_iteration": "002",
+      "closed_by": "code",
+      "closed_because": "위반의 좌표가 새 판본에도 그대로 있다",
+      "closed_by_verified": true,
+      "claimed_fix": null,
+      "verified_fix": {
+        "files": [
+          "src/main/java/com/thinking/tennis/api/AlertController.java",
+          "src/main/java/com/thinking/tennis/api/ApiMapper.java",
+          "src/main/java/com/thinking/tennis/api/ApiModels.java",
+          "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+          "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+          "src/main/java/com/thinking/tennis/app/AvailabilityApplicationService.java",
+          "src/main/java/com/thinking/tennis/domain/Alert.java",
+          "src/main/java/com/thinking/tennis/domain/AvailabilitySnapshot.java"
+        ],
+        "diff": "--- a/src/main/java/com/thinking/tennis/api/AlertController.java\n+++ b/src/main/java/com/thinking/tennis/api/AlertController.java\n@@ -5,8 +5,7 @@\n import com.thinking.tennis.app.ValidationFailure;\n-import com.thinking.tennis.domain.Alert;\n import com.thinking.tennis.domain.AlertStatus;\n import io.swagger.v3.oas.annotations.Operation;\n-import io.swagger.v3.oas.annotations.Parameter;\n-import io.swagger.v3.oas.annotations.media.Content;\n-import io.swagger.v3.oas.annotations.media.Schema;\n+import io.swagger.v3.oas.annotations.extensions.Extension;\n+import io.swagger.v3.oas.annotations.extensions.ExtensionProperty;\n+import io.swagger.v3.oas.annotations.headers.Header;\n import io.swagger.v3.oas.annotations.responses.ApiResponse;\n@@ -14,4 +13,2 @@\n import io.swagger.v3.oas.annotations.security.SecurityRequirement;\n-import io.swagger.v3.oas.annotations.tags.Tag;\n-import java.util.UUID;\n import org.springframework.http.HttpHeaders;\n@@ -28,2 +25,5 @@\n \n+import java.net.URI;\n+import java.util.List;\n+\n @RestController\n@@ -31,160 +31,203 @@\n @SecurityRequirement(name = \"bearerAuth\")\n-@Tag(name = \"alerts\", description = \"빈자리 알림 신청의 생성, 조회, 해제\")\n-public final class AlertController {\n-    private final AlertApplicationService alertService;\n-\n-    public AlertController(AlertApplicationService alertService) {\n-        this.alertService = alertService;\n-    }\n-\n-    @Operation(\n-            operationId = \"createAlert\",\n-            summary = \"빈자리 알림 신청\"\n-    )\n-    @ApiResponses({\n... (342줄 더)",
+        "note": ""
+      },
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "closed"
+    },
+    {
+      "id": "v_66c368",
+      "rule": "response.header_missing",
+      "point": "getCourtAvailability:500",
+      "where": "headers.Retry-After",
+      "why_it_matters": "계약이 응답에 싣겠다고 선언한 헤더가 구현에 없다.",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "first_seen_iteration": "001",
+      "last_seen_iteration": "001",
+      "closed_in_iteration": "002",
+      "closed_by": "code",
+      "closed_because": "위반의 좌표가 새 판본에도 그대로 있다",
+      "closed_by_verified": true,
+      "claimed_fix": null,
+      "verified_fix": {
+        "files": [
+          "src/main/java/com/thinking/tennis/api/AlertController.java",
+          "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+          "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+          "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+          "src/main/java/com/thinking/tennis/app/ApiFailure.java",
+          "src/main/java/io/swagger/v3/oas/annotations/headers/Header.java"
+        ],
+        "diff": "--- a/src/main/java/com/thinking/tennis/api/AlertController.java\n+++ b/src/main/java/com/thinking/tennis/api/AlertController.java\n@@ -5,8 +5,7 @@\n import com.thinking.tennis.app.ValidationFailure;\n-import com.thinking.tennis.domain.Alert;\n import com.thinking.tennis.domain.AlertStatus;\n import io.swagger.v3.oas.annotations.Operation;\n-import io.swagger.v3.oas.annotations.Parameter;\n-import io.swagger.v3.oas.annotations.media.Content;\n-import io.swagger.v3.oas.annotations.media.Schema;\n+import io.swagger.v3.oas.annotations.extensions.Extension;\n+import io.swagger.v3.oas.annotations.extensions.ExtensionProperty;\n+import io.swagger.v3.oas.annotations.headers.Header;\n import io.swagger.v3.oas.annotations.responses.ApiResponse;\n@@ -14,4 +13,2 @@\n import io.swagger.v3.oas.annotations.security.SecurityRequirement;\n-import io.swagger.v3.oas.annotations.tags.Tag;\n-import java.util.UUID;\n import org.springframework.http.HttpHeaders;\n@@ -28,2 +25,5 @@\n \n+import java.net.URI;\n+import java.util.List;\n+\n @RestController\n@@ -31,160 +31,203 @@\n @SecurityRequirement(name = \"bearerAuth\")\n-@Tag(name = \"alerts\", description = \"빈자리 알림 신청의 생성, 조회, 해제\")\n-public final class AlertController {\n-    private final AlertApplicationService alertService;\n-\n-    public AlertController(AlertApplicationService alertService) {\n-        this.alertService = alertService;\n-    }\n-\n-    @Operation(\n-            operationId = \"createAlert\",\n-            summary = \"빈자리 알림 신청\"\n-    )\n-    @ApiResponses({\n... (342줄 더)",
+        "note": ""
+      },
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "closed"
+    },
+    {
+      "id": "v_ac43d1",
+      "rule": "response.header_missing",
+      "point": "getCourtAvailability:502",
+      "where": "headers.Retry-After",
+      "why_it_matters": "계약이 응답에 싣겠다고 선언한 헤더가 구현에 없다.",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "first_seen_iteration": "001",
+      "last_seen_iteration": "001",
+      "closed_in_iteration": "002",
+      "closed_by": "code",
+      "closed_because": "위반의 좌표가 새 판본에도 그대로 있다",
+      "closed_by_verified": true,
+      "claimed_fix": null,
+      "verified_fix": {
+        "files": [
+          "src/main/java/com/thinking/tennis/api/AlertController.java",
+          "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+          "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+          "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+          "src/main/java/com/thinking/tennis/app/ApiFailure.java",
+          "src/main/java/io/swagger/v3/oas/annotations/headers/Header.java"
+        ],
+        "diff": "--- a/src/main/java/com/thinking/tennis/api/AlertController.java\n+++ b/src/main/java/com/thinking/tennis/api/AlertController.java\n@@ -5,8 +5,7 @@\n import com.thinking.tennis.app.ValidationFailure;\n-import com.thinking.tennis.domain.Alert;\n import com.thinking.tennis.domain.AlertStatus;\n import io.swagger.v3.oas.annotations.Operation;\n-import io.swagger.v3.oas.annotations.Parameter;\n-import io.swagger.v3.oas.annotations.media.Content;\n-import io.swagger.v3.oas.annotations.media.Schema;\n+import io.swagger.v3.oas.annotations.extensions.Extension;\n+import io.swagger.v3.oas.annotations.extensions.ExtensionProperty;\n+import io.swagger.v3.oas.annotations.headers.Header;\n import io.swagger.v3.oas.annotations.responses.ApiResponse;\n@@ -14,4 +13,2 @@\n import io.swagger.v3.oas.annotations.security.SecurityRequirement;\n-import io.swagger.v3.oas.annotations.tags.Tag;\n-import java.util.UUID;\n import org.springframework.http.HttpHeaders;\n@@ -28,2 +25,5 @@\n \n+import java.net.URI;\n+import java.util.List;\n+\n @RestController\n@@ -31,160 +31,203 @@\n @SecurityRequirement(name = \"bearerAuth\")\n-@Tag(name = \"alerts\", description = \"빈자리 알림 신청의 생성, 조회, 해제\")\n-public final class AlertController {\n-    private final AlertApplicationService alertService;\n-\n-    public AlertController(AlertApplicationService alertService) {\n-        this.alertService = alertService;\n-    }\n-\n-    @Operation(\n-            operationId = \"createAlert\",\n-            summary = \"빈자리 알림 신청\"\n-    )\n-    @ApiResponses({\n... (342줄 더)",
+        "note": ""
+      },
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "closed"
+    },
+    {
+      "id": "v_f677a5",
+      "rule": "response.header_missing",
+      "point": "getCourtAvailability:503",
+      "where": "headers.Retry-After",
+      "why_it_matters": "계약이 응답에 싣겠다고 선언한 헤더가 구현에 없다.",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "first_seen_iteration": "001",
+      "last_seen_iteration": "001",
+      "closed_in_iteration": "002",
+      "closed_by": "code",
+      "closed_because": "위반의 좌표가 새 판본에도 그대로 있다",
+      "closed_by_verified": true,
+      "claimed_fix": null,
+      "verified_fix": {
+        "files": [
+          "src/main/java/com/thinking/tennis/api/AlertController.java",
+          "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+          "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+          "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+          "src/main/java/com/thinking/tennis/app/ApiFailure.java",
+          "src/main/java/io/swagger/v3/oas/annotations/headers/Header.java"
+        ],
+        "diff": "--- a/src/main/java/com/thinking/tennis/api/AlertController.java\n+++ b/src/main/java/com/thinking/tennis/api/AlertController.java\n@@ -5,8 +5,7 @@\n import com.thinking.tennis.app.ValidationFailure;\n-import com.thinking.tennis.domain.Alert;\n import com.thinking.tennis.domain.AlertStatus;\n import io.swagger.v3.oas.annotations.Operation;\n-import io.swagger.v3.oas.annotations.Parameter;\n-import io.swagger.v3.oas.annotations.media.Content;\n-import io.swagger.v3.oas.annotations.media.Schema;\n+import io.swagger.v3.oas.annotations.extensions.Extension;\n+import io.swagger.v3.oas.annotations.extensions.ExtensionProperty;\n+import io.swagger.v3.oas.annotations.headers.Header;\n import io.swagger.v3.oas.annotations.responses.ApiResponse;\n@@ -14,4 +13,2 @@\n import io.swagger.v3.oas.annotations.security.SecurityRequirement;\n-import io.swagger.v3.oas.annotations.tags.Tag;\n-import java.util.UUID;\n import org.springframework.http.HttpHeaders;\n@@ -28,2 +25,5 @@\n \n+import java.net.URI;\n+import java.util.List;\n+\n @RestController\n@@ -31,160 +31,203 @@\n @SecurityRequirement(name = \"bearerAuth\")\n-@Tag(name = \"alerts\", description = \"빈자리 알림 신청의 생성, 조회, 해제\")\n-public final class AlertController {\n-    private final AlertApplicationService alertService;\n-\n-    public AlertController(AlertApplicationService alertService) {\n-        this.alertService = alertService;\n-    }\n-\n-    @Operation(\n-            operationId = \"createAlert\",\n-            summary = \"빈자리 알림 신청\"\n-    )\n-    @ApiResponses({\n... (342줄 더)",
+        "note": ""
+      },
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "closed"
+    },
+    {
+      "id": "v_2cecbf",
+      "rule": "response.header_missing",
+      "point": "getCourtAvailability:504",
+      "where": "headers.Retry-After",
+      "why_it_matters": "계약이 응답에 싣겠다고 선언한 헤더가 구현에 없다.",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "first_seen_iteration": "001",
+      "last_seen_iteration": "001",
+      "closed_in_iteration": "002",
+      "closed_by": "code",
+      "closed_because": "위반의 좌표가 새 판본에도 그대로 있다",
+      "closed_by_verified": true,
+      "claimed_fix": null,
+      "verified_fix": {
+        "files": [
+          "src/main/java/com/thinking/tennis/api/AlertController.java",
+          "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+          "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+          "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+          "src/main/java/com/thinking/tennis/app/ApiFailure.java",
+          "src/main/java/io/swagger/v3/oas/annotations/headers/Header.java"
+        ],
+        "diff": "--- a/src/main/java/com/thinking/tennis/api/AlertController.java\n+++ b/src/main/java/com/thinking/tennis/api/AlertController.java\n@@ -5,8 +5,7 @@\n import com.thinking.tennis.app.ValidationFailure;\n-import com.thinking.tennis.domain.Alert;\n import com.thinking.tennis.domain.AlertStatus;\n import io.swagger.v3.oas.annotations.Operation;\n-import io.swagger.v3.oas.annotations.Parameter;\n-import io.swagger.v3.oas.annotations.media.Content;\n-import io.swagger.v3.oas.annotations.media.Schema;\n+import io.swagger.v3.oas.annotations.extensions.Extension;\n+import io.swagger.v3.oas.annotations.extensions.ExtensionProperty;\n+import io.swagger.v3.oas.annotations.headers.Header;\n import io.swagger.v3.oas.annotations.responses.ApiResponse;\n@@ -14,4 +13,2 @@\n import io.swagger.v3.oas.annotations.security.SecurityRequirement;\n-import io.swagger.v3.oas.annotations.tags.Tag;\n-import java.util.UUID;\n import org.springframework.http.HttpHeaders;\n@@ -28,2 +25,5 @@\n \n+import java.net.URI;\n+import java.util.List;\n+\n @RestController\n@@ -31,160 +31,203 @@\n @SecurityRequirement(name = \"bearerAuth\")\n-@Tag(name = \"alerts\", description = \"빈자리 알림 신청의 생성, 조회, 해제\")\n-public final class AlertController {\n-    private final AlertApplicationService alertService;\n-\n-    public AlertController(AlertApplicationService alertService) {\n-        this.alertService = alertService;\n-    }\n-\n-    @Operation(\n-            operationId = \"createAlert\",\n-            summary = \"빈자리 알림 신청\"\n-    )\n-    @ApiResponses({\n... (342줄 더)",
+        "note": ""
+      },
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "closed"
+    },
+    {
+      "id": "v_bf20cf",
+      "rule": "response.type_changed",
+      "point": "listAlerts:200",
+      "where": "AlertList.items[].slot.startTime",
+      "why_it_matters": "구현이 응답에 담는 타입이 계약이 약속한 타입과 다르다. 좁히는 것과 달리 읽는 쪽이 깨진다.",
+      "detail": "계약 ['string'] → 구현 ['object']",
+      "first_seen_iteration": "001",
+      "last_seen_iteration": "001",
+      "closed_in_iteration": "002",
+      "closed_by": "code",
+      "closed_because": "위반의 좌표가 새 판본에도 그대로 있다",
+      "closed_by_verified": true,
+      "claimed_fix": null,
+      "verified_fix": {
+        "files": [
+          "src/main/java/com/thinking/tennis/api/AlertController.java",
+          "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+          "src/main/java/com/thinking/tennis/api/ApiMapper.java",
+          "src/main/java/com/thinking/tennis/api/ApiModels.java",
+          "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+          "src/main/java/com/thinking/tennis/app/ApiFailure.java",
+          "src/main/java/com/thinking/tennis/app/AvailabilityApplicationService.java",
+          "src/main/java/com/thinking/tennis/domain/Alert.java",
+          "src/main/java/com/thinking/tennis/domain/AvailabilitySnapshot.java"
+        ],
+        "diff": "--- a/src/main/java/com/thinking/tennis/api/AlertController.java\n+++ b/src/main/java/com/thinking/tennis/api/AlertController.java\n@@ -5,8 +5,7 @@\n import com.thinking.tennis.app.ValidationFailure;\n-import com.thinking.tennis.domain.Alert;\n import com.thinking.tennis.domain.AlertStatus;\n import io.swagger.v3.oas.annotations.Operation;\n-import io.swagger.v3.oas.annotations.Parameter;\n-import io.swagger.v3.oas.annotations.media.Content;\n-import io.swagger.v3.oas.annotations.media.Schema;\n+import io.swagger.v3.oas.annotations.extensions.Extension;\n+import io.swagger.v3.oas.annotations.extensions.ExtensionProperty;\n+import io.swagger.v3.oas.annotations.headers.Header;\n import io.swagger.v3.oas.annotations.responses.ApiResponse;\n@@ -14,4 +13,2 @@\n import io.swagger.v3.oas.annotations.security.SecurityRequirement;\n-import io.swagger.v3.oas.annotations.tags.Tag;\n-import java.util.UUID;\n import org.springframework.http.HttpHeaders;\n@@ -28,2 +25,5 @@\n \n+import java.net.URI;\n+import java.util.List;\n+\n @RestController\n@@ -31,160 +31,203 @@\n @SecurityRequirement(name = \"bearerAuth\")\n-@Tag(name = \"alerts\", description = \"빈자리 알림 신청의 생성, 조회, 해제\")\n-public final class AlertController {\n-    private final AlertApplicationService alertService;\n-\n-    public AlertController(AlertApplicationService alertService) {\n-        this.alertService = alertService;\n-    }\n-\n-    @Operation(\n-            operationId = \"createAlert\",\n-            summary = \"빈자리 알림 신청\"\n-    )\n-    @ApiResponses({\n... (342줄 더)",
+        "note": ""
+      },
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "closed"
+    },
+    {
+      "id": "v_02467d",
+      "rule": "response.type_changed",
+      "point": "listAlerts:200",
+      "where": "AlertList.items[].slot.endTime",
+      "why_it_matters": "구현이 응답에 담는 타입이 계약이 약속한 타입과 다르다. 좁히는 것과 달리 읽는 쪽이 깨진다.",
+      "detail": "계약 ['string'] → 구현 ['object']",
+      "first_seen_iteration": "001",
+      "last_seen_iteration": "001",
+      "closed_in_iteration": "002",
+      "closed_by": "code",
+      "closed_because": "위반의 좌표가 새 판본에도 그대로 있다",
+      "closed_by_verified": true,
+      "claimed_fix": null,
+      "verified_fix": {
+        "files": [
+          "src/main/java/com/thinking/tennis/api/AlertController.java",
+          "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+          "src/main/java/com/thinking/tennis/api/ApiMapper.java",
+          "src/main/java/com/thinking/tennis/api/ApiModels.java",
+          "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+          "src/main/java/com/thinking/tennis/app/ApiFailure.java",
+          "src/main/java/com/thinking/tennis/app/AvailabilityApplicationService.java",
+          "src/main/java/com/thinking/tennis/domain/Alert.java",
+          "src/main/java/com/thinking/tennis/domain/AvailabilitySnapshot.java"
+        ],
+        "diff": "--- a/src/main/java/com/thinking/tennis/api/AlertController.java\n+++ b/src/main/java/com/thinking/tennis/api/AlertController.java\n@@ -5,8 +5,7 @@\n import com.thinking.tennis.app.ValidationFailure;\n-import com.thinking.tennis.domain.Alert;\n import com.thinking.tennis.domain.AlertStatus;\n import io.swagger.v3.oas.annotations.Operation;\n-import io.swagger.v3.oas.annotations.Parameter;\n-import io.swagger.v3.oas.annotations.media.Content;\n-import io.swagger.v3.oas.annotations.media.Schema;\n+import io.swagger.v3.oas.annotations.extensions.Extension;\n+import io.swagger.v3.oas.annotations.extensions.ExtensionProperty;\n+import io.swagger.v3.oas.annotations.headers.Header;\n import io.swagger.v3.oas.annotations.responses.ApiResponse;\n@@ -14,4 +13,2 @@\n import io.swagger.v3.oas.annotations.security.SecurityRequirement;\n-import io.swagger.v3.oas.annotations.tags.Tag;\n-import java.util.UUID;\n import org.springframework.http.HttpHeaders;\n@@ -28,2 +25,5 @@\n \n+import java.net.URI;\n+import java.util.List;\n+\n @RestController\n@@ -31,160 +31,203 @@\n @SecurityRequirement(name = \"bearerAuth\")\n-@Tag(name = \"alerts\", description = \"빈자리 알림 신청의 생성, 조회, 해제\")\n-public final class AlertController {\n-    private final AlertApplicationService alertService;\n-\n-    public AlertController(AlertApplicationService alertService) {\n-        this.alertService = alertService;\n-    }\n-\n-    @Operation(\n-            operationId = \"createAlert\",\n-            summary = \"빈자리 알림 신청\"\n-    )\n-    @ApiResponses({\n... (342줄 더)",
+        "note": ""
+      },
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "closed"
+    },
+    {
+      "id": "v_7de05d",
+      "rule": "response.header_missing",
+      "point": "listAlerts:500",
+      "where": "headers.Retry-After",
+      "why_it_matters": "계약이 응답에 싣겠다고 선언한 헤더가 구현에 없다.",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "first_seen_iteration": "001",
+      "last_seen_iteration": "001",
+      "closed_in_iteration": "002",
+      "closed_by": "code",
+      "closed_because": "위반의 좌표가 새 판본에도 그대로 있다",
+      "closed_by_verified": true,
+      "claimed_fix": null,
+      "verified_fix": {
+        "files": [
+          "src/main/java/com/thinking/tennis/api/AlertController.java",
+          "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+          "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+          "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+          "src/main/java/com/thinking/tennis/app/ApiFailure.java",
+          "src/main/java/io/swagger/v3/oas/annotations/headers/Header.java"
+        ],
+        "diff": "--- a/src/main/java/com/thinking/tennis/api/AlertController.java\n+++ b/src/main/java/com/thinking/tennis/api/AlertController.java\n@@ -5,8 +5,7 @@\n import com.thinking.tennis.app.ValidationFailure;\n-import com.thinking.tennis.domain.Alert;\n import com.thinking.tennis.domain.AlertStatus;\n import io.swagger.v3.oas.annotations.Operation;\n-import io.swagger.v3.oas.annotations.Parameter;\n-import io.swagger.v3.oas.annotations.media.Content;\n-import io.swagger.v3.oas.annotations.media.Schema;\n+import io.swagger.v3.oas.annotations.extensions.Extension;\n+import io.swagger.v3.oas.annotations.extensions.ExtensionProperty;\n+import io.swagger.v3.oas.annotations.headers.Header;\n import io.swagger.v3.oas.annotations.responses.ApiResponse;\n@@ -14,4 +13,2 @@\n import io.swagger.v3.oas.annotations.security.SecurityRequirement;\n-import io.swagger.v3.oas.annotations.tags.Tag;\n-import java.util.UUID;\n import org.springframework.http.HttpHeaders;\n@@ -28,2 +25,5 @@\n \n+import java.net.URI;\n+import java.util.List;\n+\n @RestController\n@@ -31,160 +31,203 @@\n @SecurityRequirement(name = \"bearerAuth\")\n-@Tag(name = \"alerts\", description = \"빈자리 알림 신청의 생성, 조회, 해제\")\n-public final class AlertController {\n-    private final AlertApplicationService alertService;\n-\n-    public AlertController(AlertApplicationService alertService) {\n-        this.alertService = alertService;\n-    }\n-\n-    @Operation(\n-            operationId = \"createAlert\",\n-            summary = \"빈자리 알림 신청\"\n-    )\n-    @ApiResponses({\n... (342줄 더)",
+        "note": ""
+      },
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "closed"
+    },
+    {
+      "id": "v_1757b8",
+      "rule": "response.header_missing",
+      "point": "listAlerts:503",
+      "where": "headers.Retry-After",
+      "why_it_matters": "계약이 응답에 싣겠다고 선언한 헤더가 구현에 없다.",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "first_seen_iteration": "001",
+      "last_seen_iteration": "001",
+      "closed_in_iteration": "002",
+      "closed_by": "code",
+      "closed_because": "위반의 좌표가 새 판본에도 그대로 있다",
+      "closed_by_verified": true,
+      "claimed_fix": null,
+      "verified_fix": {
+        "files": [
+          "src/main/java/com/thinking/tennis/api/AlertController.java",
+          "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+          "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+          "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+          "src/main/java/com/thinking/tennis/app/ApiFailure.java",
+          "src/main/java/io/swagger/v3/oas/annotations/headers/Header.java"
+        ],
+        "diff": "--- a/src/main/java/com/thinking/tennis/api/AlertController.java\n+++ b/src/main/java/com/thinking/tennis/api/AlertController.java\n@@ -5,8 +5,7 @@\n import com.thinking.tennis.app.ValidationFailure;\n-import com.thinking.tennis.domain.Alert;\n import com.thinking.tennis.domain.AlertStatus;\n import io.swagger.v3.oas.annotations.Operation;\n-import io.swagger.v3.oas.annotations.Parameter;\n-import io.swagger.v3.oas.annotations.media.Content;\n-import io.swagger.v3.oas.annotations.media.Schema;\n+import io.swagger.v3.oas.annotations.extensions.Extension;\n+import io.swagger.v3.oas.annotations.extensions.ExtensionProperty;\n+import io.swagger.v3.oas.annotations.headers.Header;\n import io.swagger.v3.oas.annotations.responses.ApiResponse;\n@@ -14,4 +13,2 @@\n import io.swagger.v3.oas.annotations.security.SecurityRequirement;\n-import io.swagger.v3.oas.annotations.tags.Tag;\n-import java.util.UUID;\n import org.springframework.http.HttpHeaders;\n@@ -28,2 +25,5 @@\n \n+import java.net.URI;\n+import java.util.List;\n+\n @RestController\n@@ -31,160 +31,203 @@\n @SecurityRequirement(name = \"bearerAuth\")\n-@Tag(name = \"alerts\", description = \"빈자리 알림 신청의 생성, 조회, 해제\")\n-public final class AlertController {\n-    private final AlertApplicationService alertService;\n-\n-    public AlertController(AlertApplicationService alertService) {\n-        this.alertService = alertService;\n-    }\n-\n-    @Operation(\n-            operationId = \"createAlert\",\n-            summary = \"빈자리 알림 신청\"\n-    )\n-    @ApiResponses({\n... (342줄 더)",
+        "note": ""
+      },
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "closed"
+    },
+    {
+      "id": "v_f7441a",
+      "rule": "request.type_narrowed",
+      "point": "createAlert",
+      "where": "AlertRequest.slot.startTime",
+      "why_it_matters": "구현이 받는 타입이 계약이 받겠다고 한 타입보다 좁다. 계약상 적법한 값이 거절된다.",
+      "detail": "계약 ['string'] → 구현 ['object']",
+      "first_seen_iteration": "001",
+      "last_seen_iteration": "001",
+      "closed_in_iteration": "002",
+      "closed_by": "code",
+      "closed_because": "위반의 좌표가 새 판본에도 그대로 있다",
+      "closed_by_verified": true,
+      "claimed_fix": null,
+      "verified_fix": {
+        "files": [
+          "src/main/java/com/thinking/tennis/api/AlertController.java",
+          "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+          "src/main/java/com/thinking/tennis/api/ApiMapper.java",
+          "src/main/java/com/thinking/tennis/api/ApiModels.java",
+          "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+          "src/main/java/com/thinking/tennis/app/ApiFailure.java",
+          "src/main/java/com/thinking/tennis/app/AvailabilityApplicationService.java",
+          "src/main/java/com/thinking/tennis/domain/Alert.java",
+          "src/main/java/com/thinking/tennis/domain/AvailabilitySnapshot.java"
+        ],
+        "diff": "--- a/src/main/java/com/thinking/tennis/api/AlertController.java\n+++ b/src/main/java/com/thinking/tennis/api/AlertController.java\n@@ -5,8 +5,7 @@\n import com.thinking.tennis.app.ValidationFailure;\n-import com.thinking.tennis.domain.Alert;\n import com.thinking.tennis.domain.AlertStatus;\n import io.swagger.v3.oas.annotations.Operation;\n-import io.swagger.v3.oas.annotations.Parameter;\n-import io.swagger.v3.oas.annotations.media.Content;\n-import io.swagger.v3.oas.annotations.media.Schema;\n+import io.swagger.v3.oas.annotations.extensions.Extension;\n+import io.swagger.v3.oas.annotations.extensions.ExtensionProperty;\n+import io.swagger.v3.oas.annotations.headers.Header;\n import io.swagger.v3.oas.annotations.responses.ApiResponse;\n@@ -14,4 +13,2 @@\n import io.swagger.v3.oas.annotations.security.SecurityRequirement;\n-import io.swagger.v3.oas.annotations.tags.Tag;\n-import java.util.UUID;\n import org.springframework.http.HttpHeaders;\n@@ -28,2 +25,5 @@\n \n+import java.net.URI;\n+import java.util.List;\n+\n @RestController\n@@ -31,160 +31,203 @@\n @SecurityRequirement(name = \"bearerAuth\")\n-@Tag(name = \"alerts\", description = \"빈자리 알림 신청의 생성, 조회, 해제\")\n-public final class AlertController {\n-    private final AlertApplicationService alertService;\n-\n-    public AlertController(AlertApplicationService alertService) {\n-        this.alertService = alertService;\n-    }\n-\n-    @Operation(\n-            operationId = \"createAlert\",\n-            summary = \"빈자리 알림 신청\"\n-    )\n-    @ApiResponses({\n... (342줄 더)",
+        "note": ""
+      },
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "closed"
+    },
+    {
+      "id": "v_228ec7",
+      "rule": "request.type_narrowed",
+      "point": "createAlert",
+      "where": "AlertRequest.slot.endTime",
+      "why_it_matters": "구현이 받는 타입이 계약이 받겠다고 한 타입보다 좁다. 계약상 적법한 값이 거절된다.",
+      "detail": "계약 ['string'] → 구현 ['object']",
+      "first_seen_iteration": "001",
+      "last_seen_iteration": "001",
+      "closed_in_iteration": "002",
+      "closed_by": "code",
+      "closed_because": "위반의 좌표가 새 판본에도 그대로 있다",
+      "closed_by_verified": true,
+      "claimed_fix": null,
+      "verified_fix": {
+        "files": [
+          "src/main/java/com/thinking/tennis/api/AlertController.java",
+          "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+          "src/main/java/com/thinking/tennis/api/ApiMapper.java",
+          "src/main/java/com/thinking/tennis/api/ApiModels.java",
+          "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+          "src/main/java/com/thinking/tennis/app/ApiFailure.java",
+          "src/main/java/com/thinking/tennis/app/AvailabilityApplicationService.java",
+          "src/main/java/com/thinking/tennis/domain/Alert.java",
+          "src/main/java/com/thinking/tennis/domain/AvailabilitySnapshot.java"
+        ],
+        "diff": "--- a/src/main/java/com/thinking/tennis/api/AlertController.java\n+++ b/src/main/java/com/thinking/tennis/api/AlertController.java\n@@ -5,8 +5,7 @@\n import com.thinking.tennis.app.ValidationFailure;\n-import com.thinking.tennis.domain.Alert;\n import com.thinking.tennis.domain.AlertStatus;\n import io.swagger.v3.oas.annotations.Operation;\n-import io.swagger.v3.oas.annotations.Parameter;\n-import io.swagger.v3.oas.annotations.media.Content;\n-import io.swagger.v3.oas.annotations.media.Schema;\n+import io.swagger.v3.oas.annotations.extensions.Extension;\n+import io.swagger.v3.oas.annotations.extensions.ExtensionProperty;\n+import io.swagger.v3.oas.annotations.headers.Header;\n import io.swagger.v3.oas.annotations.responses.ApiResponse;\n@@ -14,4 +13,2 @@\n import io.swagger.v3.oas.annotations.security.SecurityRequirement;\n-import io.swagger.v3.oas.annotations.tags.Tag;\n-import java.util.UUID;\n import org.springframework.http.HttpHeaders;\n@@ -28,2 +25,5 @@\n \n+import java.net.URI;\n+import java.util.List;\n+\n @RestController\n@@ -31,160 +31,203 @@\n @SecurityRequirement(name = \"bearerAuth\")\n-@Tag(name = \"alerts\", description = \"빈자리 알림 신청의 생성, 조회, 해제\")\n-public final class AlertController {\n-    private final AlertApplicationService alertService;\n-\n-    public AlertController(AlertApplicationService alertService) {\n-        this.alertService = alertService;\n-    }\n-\n-    @Operation(\n-            operationId = \"createAlert\",\n-            summary = \"빈자리 알림 신청\"\n-    )\n-    @ApiResponses({\n... (342줄 더)",
+        "note": ""
+      },
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "closed"
+    },
+    {
+      "id": "v_bada47",
+      "rule": "response.type_changed",
+      "point": "createAlert:201",
+      "where": "Alert.slot.startTime",
+      "why_it_matters": "구현이 응답에 담는 타입이 계약이 약속한 타입과 다르다. 좁히는 것과 달리 읽는 쪽이 깨진다.",
+      "detail": "계약 ['string'] → 구현 ['object']",
+      "first_seen_iteration": "001",
+      "last_seen_iteration": "001",
+      "closed_in_iteration": "002",
+      "closed_by": "code",
+      "closed_because": "위반의 좌표가 새 판본에도 그대로 있다",
+      "closed_by_verified": true,
+      "claimed_fix": null,
+      "verified_fix": {
+        "files": [
+          "src/main/java/com/thinking/tennis/api/AlertController.java",
+          "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+          "src/main/java/com/thinking/tennis/api/ApiMapper.java",
+          "src/main/java/com/thinking/tennis/api/ApiModels.java",
+          "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+          "src/main/java/com/thinking/tennis/api/OpenApiContractConfiguration.java",
+          "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+          "src/main/java/com/thinking/tennis/app/ApiFailure.java",
+          "src/main/java/com/thinking/tennis/app/AvailabilityApplicationService.java",
+          "src/main/java/com/thinking/tennis/domain/Alert.java",
+          "src/main/java/com/thinking/tennis/domain/AlertSnapshot.java",
+          "src/main/java/com/thinking/tennis/domain/AvailabilitySnapshot.java"
+        ],
+        "diff": "--- a/src/main/java/com/thinking/tennis/api/AlertController.java\n+++ b/src/main/java/com/thinking/tennis/api/AlertController.java\n@@ -5,8 +5,7 @@\n import com.thinking.tennis.app.ValidationFailure;\n-import com.thinking.tennis.domain.Alert;\n import com.thinking.tennis.domain.AlertStatus;\n import io.swagger.v3.oas.annotations.Operation;\n-import io.swagger.v3.oas.annotations.Parameter;\n-import io.swagger.v3.oas.annotations.media.Content;\n-import io.swagger.v3.oas.annotations.media.Schema;\n+import io.swagger.v3.oas.annotations.extensions.Extension;\n+import io.swagger.v3.oas.annotations.extensions.ExtensionProperty;\n+import io.swagger.v3.oas.annotations.headers.Header;\n import io.swagger.v3.oas.annotations.responses.ApiResponse;\n@@ -14,4 +13,2 @@\n import io.swagger.v3.oas.annotations.security.SecurityRequirement;\n-import io.swagger.v3.oas.annotations.tags.Tag;\n-import java.util.UUID;\n import org.springframework.http.HttpHeaders;\n@@ -28,2 +25,5 @@\n \n+import java.net.URI;\n+import java.util.List;\n+\n @RestController\n@@ -31,160 +31,203 @@\n @SecurityRequirement(name = \"bearerAuth\")\n-@Tag(name = \"alerts\", description = \"빈자리 알림 신청의 생성, 조회, 해제\")\n-public final class AlertController {\n-    private final AlertApplicationService alertService;\n-\n-    public AlertController(AlertApplicationService alertService) {\n-        this.alertService = alertService;\n-    }\n-\n-    @Operation(\n-            operationId = \"createAlert\",\n-            summary = \"빈자리 알림 신청\"\n-    )\n-    @ApiResponses({\n... (342줄 더)",
+        "note": ""
+      },
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "closed"
+    },
+    {
+      "id": "v_08da55",
+      "rule": "response.type_changed",
+      "point": "createAlert:201",
+      "where": "Alert.slot.endTime",
+      "why_it_matters": "구현이 응답에 담는 타입이 계약이 약속한 타입과 다르다. 좁히는 것과 달리 읽는 쪽이 깨진다.",
+      "detail": "계약 ['string'] → 구현 ['object']",
+      "first_seen_iteration": "001",
+      "last_seen_iteration": "001",
+      "closed_in_iteration": "002",
+      "closed_by": "code",
+      "closed_because": "위반의 좌표가 새 판본에도 그대로 있다",
+      "closed_by_verified": true,
+      "claimed_fix": null,
+      "verified_fix": {
+        "files": [
+          "src/main/java/com/thinking/tennis/api/AlertController.java",
+          "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+          "src/main/java/com/thinking/tennis/api/ApiMapper.java",
+          "src/main/java/com/thinking/tennis/api/ApiModels.java",
+          "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+          "src/main/java/com/thinking/tennis/api/OpenApiContractConfiguration.java",
+          "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+          "src/main/java/com/thinking/tennis/app/ApiFailure.java",
+          "src/main/java/com/thinking/tennis/app/AvailabilityApplicationService.java",
+          "src/main/java/com/thinking/tennis/domain/Alert.java",
+          "src/main/java/com/thinking/tennis/domain/AlertSnapshot.java",
+          "src/main/java/com/thinking/tennis/domain/AvailabilitySnapshot.java"
+        ],
+        "diff": "--- a/src/main/java/com/thinking/tennis/api/AlertController.java\n+++ b/src/main/java/com/thinking/tennis/api/AlertController.java\n@@ -5,8 +5,7 @@\n import com.thinking.tennis.app.ValidationFailure;\n-import com.thinking.tennis.domain.Alert;\n import com.thinking.tennis.domain.AlertStatus;\n import io.swagger.v3.oas.annotations.Operation;\n-import io.swagger.v3.oas.annotations.Parameter;\n-import io.swagger.v3.oas.annotations.media.Content;\n-import io.swagger.v3.oas.annotations.media.Schema;\n+import io.swagger.v3.oas.annotations.extensions.Extension;\n+import io.swagger.v3.oas.annotations.extensions.ExtensionProperty;\n+import io.swagger.v3.oas.annotations.headers.Header;\n import io.swagger.v3.oas.annotations.responses.ApiResponse;\n@@ -14,4 +13,2 @@\n import io.swagger.v3.oas.annotations.security.SecurityRequirement;\n-import io.swagger.v3.oas.annotations.tags.Tag;\n-import java.util.UUID;\n import org.springframework.http.HttpHeaders;\n@@ -28,2 +25,5 @@\n \n+import java.net.URI;\n+import java.util.List;\n+\n @RestController\n@@ -31,160 +31,203 @@\n @SecurityRequirement(name = \"bearerAuth\")\n-@Tag(name = \"alerts\", description = \"빈자리 알림 신청의 생성, 조회, 해제\")\n-public final class AlertController {\n-    private final AlertApplicationService alertService;\n-\n-    public AlertController(AlertApplicationService alertService) {\n-        this.alertService = alertService;\n-    }\n-\n-    @Operation(\n-            operationId = \"createAlert\",\n-            summary = \"빈자리 알림 신청\"\n-    )\n-    @ApiResponses({\n... (342줄 더)",
+        "note": ""
+      },
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "closed"
+    },
+    {
+      "id": "v_faff5b",
+      "rule": "response.header_missing",
+      "point": "createAlert:201",
+      "where": "headers.Idempotency-Replayed",
+      "why_it_matters": "계약이 응답에 싣겠다고 선언한 헤더가 구현에 없다.",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "first_seen_iteration": "001",
+      "last_seen_iteration": "001",
+      "closed_in_iteration": "002",
+      "closed_by": "code",
+      "closed_because": "위반의 좌표가 새 판본에도 그대로 있다",
+      "closed_by_verified": true,
+      "claimed_fix": null,
+      "verified_fix": {
+        "files": [
+          "src/main/java/com/thinking/tennis/api/AlertController.java",
+          "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+          "src/main/java/com/thinking/tennis/api/ApiMapper.java",
+          "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+          "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+          "src/main/java/io/swagger/v3/oas/annotations/headers/Header.java"
+        ],
+        "diff": "--- a/src/main/java/com/thinking/tennis/api/AlertController.java\n+++ b/src/main/java/com/thinking/tennis/api/AlertController.java\n@@ -5,8 +5,7 @@\n import com.thinking.tennis.app.ValidationFailure;\n-import com.thinking.tennis.domain.Alert;\n import com.thinking.tennis.domain.AlertStatus;\n import io.swagger.v3.oas.annotations.Operation;\n-import io.swagger.v3.oas.annotations.Parameter;\n-import io.swagger.v3.oas.annotations.media.Content;\n-import io.swagger.v3.oas.annotations.media.Schema;\n+import io.swagger.v3.oas.annotations.extensions.Extension;\n+import io.swagger.v3.oas.annotations.extensions.ExtensionProperty;\n+import io.swagger.v3.oas.annotations.headers.Header;\n import io.swagger.v3.oas.annotations.responses.ApiResponse;\n@@ -14,4 +13,2 @@\n import io.swagger.v3.oas.annotations.security.SecurityRequirement;\n-import io.swagger.v3.oas.annotations.tags.Tag;\n-import java.util.UUID;\n import org.springframework.http.HttpHeaders;\n@@ -28,2 +25,5 @@\n \n+import java.net.URI;\n+import java.util.List;\n+\n @RestController\n@@ -31,160 +31,203 @@\n @SecurityRequirement(name = \"bearerAuth\")\n-@Tag(name = \"alerts\", description = \"빈자리 알림 신청의 생성, 조회, 해제\")\n-public final class AlertController {\n-    private final AlertApplicationService alertService;\n-\n-    public AlertController(AlertApplicationService alertService) {\n-        this.alertService = alertService;\n-    }\n-\n-    @Operation(\n-            operationId = \"createAlert\",\n-            summary = \"빈자리 알림 신청\"\n-    )\n-    @ApiResponses({\n... (342줄 더)",
+        "note": ""
+      },
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "closed"
+    },
+    {
+      "id": "v_3f44cf",
+      "rule": "response.header_missing",
+      "point": "createAlert:201",
+      "where": "headers.Location",
+      "why_it_matters": "계약이 응답에 싣겠다고 선언한 헤더가 구현에 없다.",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "first_seen_iteration": "001",
+      "last_seen_iteration": "001",
+      "closed_in_iteration": "002",
+      "closed_by": "code",
+      "closed_because": "위반의 좌표가 새 판본에도 그대로 있다",
+      "closed_by_verified": true,
+      "claimed_fix": null,
+      "verified_fix": {
+        "files": [
+          "src/main/java/com/thinking/tennis/api/AlertController.java",
+          "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+          "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+          "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+          "src/main/java/io/swagger/v3/oas/annotations/headers/Header.java"
+        ],
+        "diff": "--- a/src/main/java/com/thinking/tennis/api/AlertController.java\n+++ b/src/main/java/com/thinking/tennis/api/AlertController.java\n@@ -5,8 +5,7 @@\n import com.thinking.tennis.app.ValidationFailure;\n-import com.thinking.tennis.domain.Alert;\n import com.thinking.tennis.domain.AlertStatus;\n import io.swagger.v3.oas.annotations.Operation;\n-import io.swagger.v3.oas.annotations.Parameter;\n-import io.swagger.v3.oas.annotations.media.Content;\n-import io.swagger.v3.oas.annotations.media.Schema;\n+import io.swagger.v3.oas.annotations.extensions.Extension;\n+import io.swagger.v3.oas.annotations.extensions.ExtensionProperty;\n+import io.swagger.v3.oas.annotations.headers.Header;\n import io.swagger.v3.oas.annotations.responses.ApiResponse;\n@@ -14,4 +13,2 @@\n import io.swagger.v3.oas.annotations.security.SecurityRequirement;\n-import io.swagger.v3.oas.annotations.tags.Tag;\n-import java.util.UUID;\n import org.springframework.http.HttpHeaders;\n@@ -28,2 +25,5 @@\n \n+import java.net.URI;\n+import java.util.List;\n+\n @RestController\n@@ -31,160 +31,203 @@\n @SecurityRequirement(name = \"bearerAuth\")\n-@Tag(name = \"alerts\", description = \"빈자리 알림 신청의 생성, 조회, 해제\")\n-public final class AlertController {\n-    private final AlertApplicationService alertService;\n-\n-    public AlertController(AlertApplicationService alertService) {\n-        this.alertService = alertService;\n-    }\n-\n-    @Operation(\n-            operationId = \"createAlert\",\n-            summary = \"빈자리 알림 신청\"\n-    )\n-    @ApiResponses({\n... (342줄 더)",
+        "note": ""
+      },
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "closed"
+    },
+    {
+      "id": "v_7709b5",
+      "rule": "response.type_changed",
+      "point": "createAlert:200",
+      "where": "Alert.slot.startTime",
+      "why_it_matters": "구현이 응답에 담는 타입이 계약이 약속한 타입과 다르다. 좁히는 것과 달리 읽는 쪽이 깨진다.",
+      "detail": "계약 ['string'] → 구현 ['object']",
+      "first_seen_iteration": "001",
+      "last_seen_iteration": "001",
+      "closed_in_iteration": "002",
+      "closed_by": "code",
+      "closed_because": "위반의 좌표가 새 판본에도 그대로 있다",
+      "closed_by_verified": true,
+      "claimed_fix": null,
+      "verified_fix": {
+        "files": [
+          "src/main/java/com/thinking/tennis/api/AlertController.java",
+          "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+          "src/main/java/com/thinking/tennis/api/ApiMapper.java",
+          "src/main/java/com/thinking/tennis/api/ApiModels.java",
+          "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+          "src/main/java/com/thinking/tennis/api/OpenApiContractConfiguration.java",
+          "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+          "src/main/java/com/thinking/tennis/app/ApiFailure.java",
+          "src/main/java/com/thinking/tennis/app/AvailabilityApplicationService.java",
+          "src/main/java/com/thinking/tennis/domain/Alert.java",
+          "src/main/java/com/thinking/tennis/domain/AlertSnapshot.java",
+          "src/main/java/com/thinking/tennis/domain/AvailabilitySnapshot.java"
+        ],
+        "diff": "--- a/src/main/java/com/thinking/tennis/api/AlertController.java\n+++ b/src/main/java/com/thinking/tennis/api/AlertController.java\n@@ -5,8 +5,7 @@\n import com.thinking.tennis.app.ValidationFailure;\n-import com.thinking.tennis.domain.Alert;\n import com.thinking.tennis.domain.AlertStatus;\n import io.swagger.v3.oas.annotations.Operation;\n-import io.swagger.v3.oas.annotations.Parameter;\n-import io.swagger.v3.oas.annotations.media.Content;\n-import io.swagger.v3.oas.annotations.media.Schema;\n+import io.swagger.v3.oas.annotations.extensions.Extension;\n+import io.swagger.v3.oas.annotations.extensions.ExtensionProperty;\n+import io.swagger.v3.oas.annotations.headers.Header;\n import io.swagger.v3.oas.annotations.responses.ApiResponse;\n@@ -14,4 +13,2 @@\n import io.swagger.v3.oas.annotations.security.SecurityRequirement;\n-import io.swagger.v3.oas.annotations.tags.Tag;\n-import java.util.UUID;\n import org.springframework.http.HttpHeaders;\n@@ -28,2 +25,5 @@\n \n+import java.net.URI;\n+import java.util.List;\n+\n @RestController\n@@ -31,160 +31,203 @@\n @SecurityRequirement(name = \"bearerAuth\")\n-@Tag(name = \"alerts\", description = \"빈자리 알림 신청의 생성, 조회, 해제\")\n-public final class AlertController {\n-    private final AlertApplicationService alertService;\n-\n-    public AlertController(AlertApplicationService alertService) {\n-        this.alertService = alertService;\n-    }\n-\n-    @Operation(\n-            operationId = \"createAlert\",\n-            summary = \"빈자리 알림 신청\"\n-    )\n-    @ApiResponses({\n... (342줄 더)",
+        "note": ""
+      },
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "closed"
+    },
+    {
+      "id": "v_fe64f8",
+      "rule": "response.type_changed",
+      "point": "createAlert:200",
+      "where": "Alert.slot.endTime",
+      "why_it_matters": "구현이 응답에 담는 타입이 계약이 약속한 타입과 다르다. 좁히는 것과 달리 읽는 쪽이 깨진다.",
+      "detail": "계약 ['string'] → 구현 ['object']",
+      "first_seen_iteration": "001",
+      "last_seen_iteration": "001",
+      "closed_in_iteration": "002",
+      "closed_by": "code",
+      "closed_because": "위반의 좌표가 새 판본에도 그대로 있다",
+      "closed_by_verified": true,
+      "claimed_fix": null,
+      "verified_fix": {
+        "files": [
+          "src/main/java/com/thinking/tennis/api/AlertController.java",
+          "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+          "src/main/java/com/thinking/tennis/api/ApiMapper.java",
+          "src/main/java/com/thinking/tennis/api/ApiModels.java",
+          "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+          "src/main/java/com/thinking/tennis/api/OpenApiContractConfiguration.java",
+          "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+          "src/main/java/com/thinking/tennis/app/ApiFailure.java",
+          "src/main/java/com/thinking/tennis/app/AvailabilityApplicationService.java",
+          "src/main/java/com/thinking/tennis/domain/Alert.java",
+          "src/main/java/com/thinking/tennis/domain/AlertSnapshot.java",
+          "src/main/java/com/thinking/tennis/domain/AvailabilitySnapshot.java"
+        ],
+        "diff": "--- a/src/main/java/com/thinking/tennis/api/AlertController.java\n+++ b/src/main/java/com/thinking/tennis/api/AlertController.java\n@@ -5,8 +5,7 @@\n import com.thinking.tennis.app.ValidationFailure;\n-import com.thinking.tennis.domain.Alert;\n import com.thinking.tennis.domain.AlertStatus;\n import io.swagger.v3.oas.annotations.Operation;\n-import io.swagger.v3.oas.annotations.Parameter;\n-import io.swagger.v3.oas.annotations.media.Content;\n-import io.swagger.v3.oas.annotations.media.Schema;\n+import io.swagger.v3.oas.annotations.extensions.Extension;\n+import io.swagger.v3.oas.annotations.extensions.ExtensionProperty;\n+import io.swagger.v3.oas.annotations.headers.Header;\n import io.swagger.v3.oas.annotations.responses.ApiResponse;\n@@ -14,4 +13,2 @@\n import io.swagger.v3.oas.annotations.security.SecurityRequirement;\n-import io.swagger.v3.oas.annotations.tags.Tag;\n-import java.util.UUID;\n import org.springframework.http.HttpHeaders;\n@@ -28,2 +25,5 @@\n \n+import java.net.URI;\n+import java.util.List;\n+\n @RestController\n@@ -31,160 +31,203 @@\n @SecurityRequirement(name = \"bearerAuth\")\n-@Tag(name = \"alerts\", description = \"빈자리 알림 신청의 생성, 조회, 해제\")\n-public final class AlertController {\n-    private final AlertApplicationService alertService;\n-\n-    public AlertController(AlertApplicationService alertService) {\n-        this.alertService = alertService;\n-    }\n-\n-    @Operation(\n-            operationId = \"createAlert\",\n-            summary = \"빈자리 알림 신청\"\n-    )\n-    @ApiResponses({\n... (342줄 더)",
+        "note": ""
+      },
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "closed"
+    },
+    {
+      "id": "v_9c7d67",
+      "rule": "response.header_missing",
+      "point": "createAlert:200",
+      "where": "headers.Idempotency-Replayed",
+      "why_it_matters": "계약이 응답에 싣겠다고 선언한 헤더가 구현에 없다.",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "first_seen_iteration": "001",
+      "last_seen_iteration": "001",
+      "closed_in_iteration": "002",
+      "closed_by": "code",
+      "closed_because": "위반의 좌표가 새 판본에도 그대로 있다",
+      "closed_by_verified": true,
+      "claimed_fix": null,
+      "verified_fix": {
+        "files": [
+          "src/main/java/com/thinking/tennis/api/AlertController.java",
+          "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+          "src/main/java/com/thinking/tennis/api/ApiMapper.java",
+          "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+          "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+          "src/main/java/io/swagger/v3/oas/annotations/headers/Header.java"
+        ],
+        "diff": "--- a/src/main/java/com/thinking/tennis/api/AlertController.java\n+++ b/src/main/java/com/thinking/tennis/api/AlertController.java\n@@ -5,8 +5,7 @@\n import com.thinking.tennis.app.ValidationFailure;\n-import com.thinking.tennis.domain.Alert;\n import com.thinking.tennis.domain.AlertStatus;\n import io.swagger.v3.oas.annotations.Operation;\n-import io.swagger.v3.oas.annotations.Parameter;\n-import io.swagger.v3.oas.annotations.media.Content;\n-import io.swagger.v3.oas.annotations.media.Schema;\n+import io.swagger.v3.oas.annotations.extensions.Extension;\n+import io.swagger.v3.oas.annotations.extensions.ExtensionProperty;\n+import io.swagger.v3.oas.annotations.headers.Header;\n import io.swagger.v3.oas.annotations.responses.ApiResponse;\n@@ -14,4 +13,2 @@\n import io.swagger.v3.oas.annotations.security.SecurityRequirement;\n-import io.swagger.v3.oas.annotations.tags.Tag;\n-import java.util.UUID;\n import org.springframework.http.HttpHeaders;\n@@ -28,2 +25,5 @@\n \n+import java.net.URI;\n+import java.util.List;\n+\n @RestController\n@@ -31,160 +31,203 @@\n @SecurityRequirement(name = \"bearerAuth\")\n-@Tag(name = \"alerts\", description = \"빈자리 알림 신청의 생성, 조회, 해제\")\n-public final class AlertController {\n-    private final AlertApplicationService alertService;\n-\n-    public AlertController(AlertApplicationService alertService) {\n-        this.alertService = alertService;\n-    }\n-\n-    @Operation(\n-            operationId = \"createAlert\",\n-            summary = \"빈자리 알림 신청\"\n-    )\n-    @ApiResponses({\n... (342줄 더)",
+        "note": ""
+      },
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "closed"
+    },
+    {
+      "id": "v_5bdad4",
+      "rule": "response.header_missing",
+      "point": "createAlert:200",
+      "where": "headers.Location",
+      "why_it_matters": "계약이 응답에 싣겠다고 선언한 헤더가 구현에 없다.",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "first_seen_iteration": "001",
+      "last_seen_iteration": "001",
+      "closed_in_iteration": "002",
+      "closed_by": "code",
+      "closed_because": "위반의 좌표가 새 판본에도 그대로 있다",
+      "closed_by_verified": true,
+      "claimed_fix": null,
+      "verified_fix": {
+        "files": [
+          "src/main/java/com/thinking/tennis/api/AlertController.java",
+          "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+          "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+          "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+          "src/main/java/io/swagger/v3/oas/annotations/headers/Header.java"
+        ],
+        "diff": "--- a/src/main/java/com/thinking/tennis/api/AlertController.java\n+++ b/src/main/java/com/thinking/tennis/api/AlertController.java\n@@ -5,8 +5,7 @@\n import com.thinking.tennis.app.ValidationFailure;\n-import com.thinking.tennis.domain.Alert;\n import com.thinking.tennis.domain.AlertStatus;\n import io.swagger.v3.oas.annotations.Operation;\n-import io.swagger.v3.oas.annotations.Parameter;\n-import io.swagger.v3.oas.annotations.media.Content;\n-import io.swagger.v3.oas.annotations.media.Schema;\n+import io.swagger.v3.oas.annotations.extensions.Extension;\n+import io.swagger.v3.oas.annotations.extensions.ExtensionProperty;\n+import io.swagger.v3.oas.annotations.headers.Header;\n import io.swagger.v3.oas.annotations.responses.ApiResponse;\n@@ -14,4 +13,2 @@\n import io.swagger.v3.oas.annotations.security.SecurityRequirement;\n-import io.swagger.v3.oas.annotations.tags.Tag;\n-import java.util.UUID;\n import org.springframework.http.HttpHeaders;\n@@ -28,2 +25,5 @@\n \n+import java.net.URI;\n+import java.util.List;\n+\n @RestController\n@@ -31,160 +31,203 @@\n @SecurityRequirement(name = \"bearerAuth\")\n-@Tag(name = \"alerts\", description = \"빈자리 알림 신청의 생성, 조회, 해제\")\n-public final class AlertController {\n-    private final AlertApplicationService alertService;\n-\n-    public AlertController(AlertApplicationService alertService) {\n-        this.alertService = alertService;\n-    }\n-\n-    @Operation(\n-            operationId = \"createAlert\",\n-            summary = \"빈자리 알림 신청\"\n-    )\n-    @ApiResponses({\n... (342줄 더)",
+        "note": ""
+      },
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "closed"
+    },
+    {
+      "id": "v_bd1a4d",
+      "rule": "response.header_missing",
+      "point": "createAlert:500",
+      "where": "headers.Retry-After",
+      "why_it_matters": "계약이 응답에 싣겠다고 선언한 헤더가 구현에 없다.",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "first_seen_iteration": "001",
+      "last_seen_iteration": "001",
+      "closed_in_iteration": "002",
+      "closed_by": "code",
+      "closed_because": "위반의 좌표가 새 판본에도 그대로 있다",
+      "closed_by_verified": true,
+      "claimed_fix": null,
+      "verified_fix": {
+        "files": [
+          "src/main/java/com/thinking/tennis/api/AlertController.java",
+          "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+          "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+          "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+          "src/main/java/com/thinking/tennis/app/ApiFailure.java",
+          "src/main/java/io/swagger/v3/oas/annotations/headers/Header.java"
+        ],
+        "diff": "--- a/src/main/java/com/thinking/tennis/api/AlertController.java\n+++ b/src/main/java/com/thinking/tennis/api/AlertController.java\n@@ -5,8 +5,7 @@\n import com.thinking.tennis.app.ValidationFailure;\n-import com.thinking.tennis.domain.Alert;\n import com.thinking.tennis.domain.AlertStatus;\n import io.swagger.v3.oas.annotations.Operation;\n-import io.swagger.v3.oas.annotations.Parameter;\n-import io.swagger.v3.oas.annotations.media.Content;\n-import io.swagger.v3.oas.annotations.media.Schema;\n+import io.swagger.v3.oas.annotations.extensions.Extension;\n+import io.swagger.v3.oas.annotations.extensions.ExtensionProperty;\n+import io.swagger.v3.oas.annotations.headers.Header;\n import io.swagger.v3.oas.annotations.responses.ApiResponse;\n@@ -14,4 +13,2 @@\n import io.swagger.v3.oas.annotations.security.SecurityRequirement;\n-import io.swagger.v3.oas.annotations.tags.Tag;\n-import java.util.UUID;\n import org.springframework.http.HttpHeaders;\n@@ -28,2 +25,5 @@\n \n+import java.net.URI;\n+import java.util.List;\n+\n @RestController\n@@ -31,160 +31,203 @@\n @SecurityRequirement(name = \"bearerAuth\")\n-@Tag(name = \"alerts\", description = \"빈자리 알림 신청의 생성, 조회, 해제\")\n-public final class AlertController {\n-    private final AlertApplicationService alertService;\n-\n-    public AlertController(AlertApplicationService alertService) {\n-        this.alertService = alertService;\n-    }\n-\n-    @Operation(\n-            operationId = \"createAlert\",\n-            summary = \"빈자리 알림 신청\"\n-    )\n-    @ApiResponses({\n... (342줄 더)",
+        "note": ""
+      },
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "closed"
+    },
+    {
+      "id": "v_3b2c4c",
+      "rule": "response.header_missing",
+      "point": "createAlert:503",
+      "where": "headers.Retry-After",
+      "why_it_matters": "계약이 응답에 싣겠다고 선언한 헤더가 구현에 없다.",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "first_seen_iteration": "001",
+      "last_seen_iteration": "001",
+      "closed_in_iteration": "002",
+      "closed_by": "code",
+      "closed_because": "위반의 좌표가 새 판본에도 그대로 있다",
+      "closed_by_verified": true,
+      "claimed_fix": null,
+      "verified_fix": {
+        "files": [
+          "src/main/java/com/thinking/tennis/api/AlertController.java",
+          "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+          "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+          "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+          "src/main/java/com/thinking/tennis/app/ApiFailure.java",
+          "src/main/java/io/swagger/v3/oas/annotations/headers/Header.java"
+        ],
+        "diff": "--- a/src/main/java/com/thinking/tennis/api/AlertController.java\n+++ b/src/main/java/com/thinking/tennis/api/AlertController.java\n@@ -5,8 +5,7 @@\n import com.thinking.tennis.app.ValidationFailure;\n-import com.thinking.tennis.domain.Alert;\n import com.thinking.tennis.domain.AlertStatus;\n import io.swagger.v3.oas.annotations.Operation;\n-import io.swagger.v3.oas.annotations.Parameter;\n-import io.swagger.v3.oas.annotations.media.Content;\n-import io.swagger.v3.oas.annotations.media.Schema;\n+import io.swagger.v3.oas.annotations.extensions.Extension;\n+import io.swagger.v3.oas.annotations.extensions.ExtensionProperty;\n+import io.swagger.v3.oas.annotations.headers.Header;\n import io.swagger.v3.oas.annotations.responses.ApiResponse;\n@@ -14,4 +13,2 @@\n import io.swagger.v3.oas.annotations.security.SecurityRequirement;\n-import io.swagger.v3.oas.annotations.tags.Tag;\n-import java.util.UUID;\n import org.springframework.http.HttpHeaders;\n@@ -28,2 +25,5 @@\n \n+import java.net.URI;\n+import java.util.List;\n+\n @RestController\n@@ -31,160 +31,203 @@\n @SecurityRequirement(name = \"bearerAuth\")\n-@Tag(name = \"alerts\", description = \"빈자리 알림 신청의 생성, 조회, 해제\")\n-public final class AlertController {\n-    private final AlertApplicationService alertService;\n-\n-    public AlertController(AlertApplicationService alertService) {\n-        this.alertService = alertService;\n-    }\n-\n-    @Operation(\n-            operationId = \"createAlert\",\n-            summary = \"빈자리 알림 신청\"\n-    )\n-    @ApiResponses({\n... (342줄 더)",
+        "note": ""
+      },
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "closed"
+    },
+    {
+      "id": "v_2bd4ca",
+      "rule": "response.type_changed",
+      "point": "getAlert:200",
+      "where": "Alert.slot.startTime",
+      "why_it_matters": "구현이 응답에 담는 타입이 계약이 약속한 타입과 다르다. 좁히는 것과 달리 읽는 쪽이 깨진다.",
+      "detail": "계약 ['string'] → 구현 ['object']",
+      "first_seen_iteration": "001",
+      "last_seen_iteration": "001",
+      "closed_in_iteration": "002",
+      "closed_by": "code",
+      "closed_because": "위반의 좌표가 새 판본에도 그대로 있다",
+      "closed_by_verified": true,
+      "claimed_fix": null,
+      "verified_fix": {
+        "files": [
+          "src/main/java/com/thinking/tennis/api/AlertController.java",
+          "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+          "src/main/java/com/thinking/tennis/api/ApiMapper.java",
+          "src/main/java/com/thinking/tennis/api/ApiModels.java",
+          "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+          "src/main/java/com/thinking/tennis/api/OpenApiContractConfiguration.java",
+          "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+          "src/main/java/com/thinking/tennis/app/ApiFailure.java",
+          "src/main/java/com/thinking/tennis/app/AvailabilityApplicationService.java",
+          "src/main/java/com/thinking/tennis/domain/Alert.java",
+          "src/main/java/com/thinking/tennis/domain/AlertSnapshot.java",
+          "src/main/java/com/thinking/tennis/domain/AvailabilitySnapshot.java"
+        ],
+        "diff": "--- a/src/main/java/com/thinking/tennis/api/AlertController.java\n+++ b/src/main/java/com/thinking/tennis/api/AlertController.java\n@@ -5,8 +5,7 @@\n import com.thinking.tennis.app.ValidationFailure;\n-import com.thinking.tennis.domain.Alert;\n import com.thinking.tennis.domain.AlertStatus;\n import io.swagger.v3.oas.annotations.Operation;\n-import io.swagger.v3.oas.annotations.Parameter;\n-import io.swagger.v3.oas.annotations.media.Content;\n-import io.swagger.v3.oas.annotations.media.Schema;\n+import io.swagger.v3.oas.annotations.extensions.Extension;\n+import io.swagger.v3.oas.annotations.extensions.ExtensionProperty;\n+import io.swagger.v3.oas.annotations.headers.Header;\n import io.swagger.v3.oas.annotations.responses.ApiResponse;\n@@ -14,4 +13,2 @@\n import io.swagger.v3.oas.annotations.security.SecurityRequirement;\n-import io.swagger.v3.oas.annotations.tags.Tag;\n-import java.util.UUID;\n import org.springframework.http.HttpHeaders;\n@@ -28,2 +25,5 @@\n \n+import java.net.URI;\n+import java.util.List;\n+\n @RestController\n@@ -31,160 +31,203 @@\n @SecurityRequirement(name = \"bearerAuth\")\n-@Tag(name = \"alerts\", description = \"빈자리 알림 신청의 생성, 조회, 해제\")\n-public final class AlertController {\n-    private final AlertApplicationService alertService;\n-\n-    public AlertController(AlertApplicationService alertService) {\n-        this.alertService = alertService;\n-    }\n-\n-    @Operation(\n-            operationId = \"createAlert\",\n-            summary = \"빈자리 알림 신청\"\n-    )\n-    @ApiResponses({\n... (342줄 더)",
+        "note": ""
+      },
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "closed"
+    },
+    {
+      "id": "v_9b0716",
+      "rule": "response.type_changed",
+      "point": "getAlert:200",
+      "where": "Alert.slot.endTime",
+      "why_it_matters": "구현이 응답에 담는 타입이 계약이 약속한 타입과 다르다. 좁히는 것과 달리 읽는 쪽이 깨진다.",
+      "detail": "계약 ['string'] → 구현 ['object']",
+      "first_seen_iteration": "001",
+      "last_seen_iteration": "001",
+      "closed_in_iteration": "002",
+      "closed_by": "code",
+      "closed_because": "위반의 좌표가 새 판본에도 그대로 있다",
+      "closed_by_verified": true,
+      "claimed_fix": null,
+      "verified_fix": {
+        "files": [
+          "src/main/java/com/thinking/tennis/api/AlertController.java",
+          "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+          "src/main/java/com/thinking/tennis/api/ApiMapper.java",
+          "src/main/java/com/thinking/tennis/api/ApiModels.java",
+          "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+          "src/main/java/com/thinking/tennis/api/OpenApiContractConfiguration.java",
+          "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+          "src/main/java/com/thinking/tennis/app/ApiFailure.java",
+          "src/main/java/com/thinking/tennis/app/AvailabilityApplicationService.java",
+          "src/main/java/com/thinking/tennis/domain/Alert.java",
+          "src/main/java/com/thinking/tennis/domain/AlertSnapshot.java",
+          "src/main/java/com/thinking/tennis/domain/AvailabilitySnapshot.java"
+        ],
+        "diff": "--- a/src/main/java/com/thinking/tennis/api/AlertController.java\n+++ b/src/main/java/com/thinking/tennis/api/AlertController.java\n@@ -5,8 +5,7 @@\n import com.thinking.tennis.app.ValidationFailure;\n-import com.thinking.tennis.domain.Alert;\n import com.thinking.tennis.domain.AlertStatus;\n import io.swagger.v3.oas.annotations.Operation;\n-import io.swagger.v3.oas.annotations.Parameter;\n-import io.swagger.v3.oas.annotations.media.Content;\n-import io.swagger.v3.oas.annotations.media.Schema;\n+import io.swagger.v3.oas.annotations.extensions.Extension;\n+import io.swagger.v3.oas.annotations.extensions.ExtensionProperty;\n+import io.swagger.v3.oas.annotations.headers.Header;\n import io.swagger.v3.oas.annotations.responses.ApiResponse;\n@@ -14,4 +13,2 @@\n import io.swagger.v3.oas.annotations.security.SecurityRequirement;\n-import io.swagger.v3.oas.annotations.tags.Tag;\n-import java.util.UUID;\n import org.springframework.http.HttpHeaders;\n@@ -28,2 +25,5 @@\n \n+import java.net.URI;\n+import java.util.List;\n+\n @RestController\n@@ -31,160 +31,203 @@\n @SecurityRequirement(name = \"bearerAuth\")\n-@Tag(name = \"alerts\", description = \"빈자리 알림 신청의 생성, 조회, 해제\")\n-public final class AlertController {\n-    private final AlertApplicationService alertService;\n-\n-    public AlertController(AlertApplicationService alertService) {\n-        this.alertService = alertService;\n-    }\n-\n-    @Operation(\n-            operationId = \"createAlert\",\n-            summary = \"빈자리 알림 신청\"\n-    )\n-    @ApiResponses({\n... (342줄 더)",
+        "note": ""
+      },
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "closed"
+    },
+    {
+      "id": "v_9800b4",
+      "rule": "response.header_missing",
+      "point": "getAlert:500",
+      "where": "headers.Retry-After",
+      "why_it_matters": "계약이 응답에 싣겠다고 선언한 헤더가 구현에 없다.",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "first_seen_iteration": "001",
+      "last_seen_iteration": "001",
+      "closed_in_iteration": "002",
+      "closed_by": "code",
+      "closed_because": "위반의 좌표가 새 판본에도 그대로 있다",
+      "closed_by_verified": true,
+      "claimed_fix": null,
+      "verified_fix": {
+        "files": [
+          "src/main/java/com/thinking/tennis/api/AlertController.java",
+          "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+          "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+          "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+          "src/main/java/com/thinking/tennis/app/ApiFailure.java",
+          "src/main/java/io/swagger/v3/oas/annotations/headers/Header.java"
+        ],
+        "diff": "--- a/src/main/java/com/thinking/tennis/api/AlertController.java\n+++ b/src/main/java/com/thinking/tennis/api/AlertController.java\n@@ -5,8 +5,7 @@\n import com.thinking.tennis.app.ValidationFailure;\n-import com.thinking.tennis.domain.Alert;\n import com.thinking.tennis.domain.AlertStatus;\n import io.swagger.v3.oas.annotations.Operation;\n-import io.swagger.v3.oas.annotations.Parameter;\n-import io.swagger.v3.oas.annotations.media.Content;\n-import io.swagger.v3.oas.annotations.media.Schema;\n+import io.swagger.v3.oas.annotations.extensions.Extension;\n+import io.swagger.v3.oas.annotations.extensions.ExtensionProperty;\n+import io.swagger.v3.oas.annotations.headers.Header;\n import io.swagger.v3.oas.annotations.responses.ApiResponse;\n@@ -14,4 +13,2 @@\n import io.swagger.v3.oas.annotations.security.SecurityRequirement;\n-import io.swagger.v3.oas.annotations.tags.Tag;\n-import java.util.UUID;\n import org.springframework.http.HttpHeaders;\n@@ -28,2 +25,5 @@\n \n+import java.net.URI;\n+import java.util.List;\n+\n @RestController\n@@ -31,160 +31,203 @@\n @SecurityRequirement(name = \"bearerAuth\")\n-@Tag(name = \"alerts\", description = \"빈자리 알림 신청의 생성, 조회, 해제\")\n-public final class AlertController {\n-    private final AlertApplicationService alertService;\n-\n-    public AlertController(AlertApplicationService alertService) {\n-        this.alertService = alertService;\n-    }\n-\n-    @Operation(\n-            operationId = \"createAlert\",\n-            summary = \"빈자리 알림 신청\"\n-    )\n-    @ApiResponses({\n... (342줄 더)",
+        "note": ""
+      },
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "closed"
+    },
+    {
+      "id": "v_336018",
+      "rule": "response.header_missing",
+      "point": "getAlert:503",
+      "where": "headers.Retry-After",
+      "why_it_matters": "계약이 응답에 싣겠다고 선언한 헤더가 구현에 없다.",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "first_seen_iteration": "001",
+      "last_seen_iteration": "001",
+      "closed_in_iteration": "002",
+      "closed_by": "code",
+      "closed_because": "위반의 좌표가 새 판본에도 그대로 있다",
+      "closed_by_verified": true,
+      "claimed_fix": null,
+      "verified_fix": {
+        "files": [
+          "src/main/java/com/thinking/tennis/api/AlertController.java",
+          "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+          "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+          "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+          "src/main/java/com/thinking/tennis/app/ApiFailure.java",
+          "src/main/java/io/swagger/v3/oas/annotations/headers/Header.java"
+        ],
+        "diff": "--- a/src/main/java/com/thinking/tennis/api/AlertController.java\n+++ b/src/main/java/com/thinking/tennis/api/AlertController.java\n@@ -5,8 +5,7 @@\n import com.thinking.tennis.app.ValidationFailure;\n-import com.thinking.tennis.domain.Alert;\n import com.thinking.tennis.domain.AlertStatus;\n import io.swagger.v3.oas.annotations.Operation;\n-import io.swagger.v3.oas.annotations.Parameter;\n-import io.swagger.v3.oas.annotations.media.Content;\n-import io.swagger.v3.oas.annotations.media.Schema;\n+import io.swagger.v3.oas.annotations.extensions.Extension;\n+import io.swagger.v3.oas.annotations.extensions.ExtensionProperty;\n+import io.swagger.v3.oas.annotations.headers.Header;\n import io.swagger.v3.oas.annotations.responses.ApiResponse;\n@@ -14,4 +13,2 @@\n import io.swagger.v3.oas.annotations.security.SecurityRequirement;\n-import io.swagger.v3.oas.annotations.tags.Tag;\n-import java.util.UUID;\n import org.springframework.http.HttpHeaders;\n@@ -28,2 +25,5 @@\n \n+import java.net.URI;\n+import java.util.List;\n+\n @RestController\n@@ -31,160 +31,203 @@\n @SecurityRequirement(name = \"bearerAuth\")\n-@Tag(name = \"alerts\", description = \"빈자리 알림 신청의 생성, 조회, 해제\")\n-public final class AlertController {\n-    private final AlertApplicationService alertService;\n-\n-    public AlertController(AlertApplicationService alertService) {\n-        this.alertService = alertService;\n-    }\n-\n-    @Operation(\n-            operationId = \"createAlert\",\n-            summary = \"빈자리 알림 신청\"\n-    )\n-    @ApiResponses({\n... (342줄 더)",
+        "note": ""
+      },
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "closed"
+    },
+    {
+      "id": "v_da98ea",
+      "rule": "response.type_changed",
+      "point": "cancelAlert:200",
+      "where": "Alert.slot.startTime",
+      "why_it_matters": "구현이 응답에 담는 타입이 계약이 약속한 타입과 다르다. 좁히는 것과 달리 읽는 쪽이 깨진다.",
+      "detail": "계약 ['string'] → 구현 ['object']",
+      "first_seen_iteration": "001",
+      "last_seen_iteration": "001",
+      "closed_in_iteration": "002",
+      "closed_by": "code",
+      "closed_because": "위반의 좌표가 새 판본에도 그대로 있다",
+      "closed_by_verified": true,
+      "claimed_fix": null,
+      "verified_fix": {
+        "files": [
+          "src/main/java/com/thinking/tennis/api/AlertController.java",
+          "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+          "src/main/java/com/thinking/tennis/api/ApiMapper.java",
+          "src/main/java/com/thinking/tennis/api/ApiModels.java",
+          "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+          "src/main/java/com/thinking/tennis/api/OpenApiContractConfiguration.java",
+          "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+          "src/main/java/com/thinking/tennis/app/ApiFailure.java",
+          "src/main/java/com/thinking/tennis/app/AvailabilityApplicationService.java",
+          "src/main/java/com/thinking/tennis/domain/Alert.java",
+          "src/main/java/com/thinking/tennis/domain/AlertSnapshot.java",
+          "src/main/java/com/thinking/tennis/domain/AvailabilitySnapshot.java"
+        ],
+        "diff": "--- a/src/main/java/com/thinking/tennis/api/AlertController.java\n+++ b/src/main/java/com/thinking/tennis/api/AlertController.java\n@@ -5,8 +5,7 @@\n import com.thinking.tennis.app.ValidationFailure;\n-import com.thinking.tennis.domain.Alert;\n import com.thinking.tennis.domain.AlertStatus;\n import io.swagger.v3.oas.annotations.Operation;\n-import io.swagger.v3.oas.annotations.Parameter;\n-import io.swagger.v3.oas.annotations.media.Content;\n-import io.swagger.v3.oas.annotations.media.Schema;\n+import io.swagger.v3.oas.annotations.extensions.Extension;\n+import io.swagger.v3.oas.annotations.extensions.ExtensionProperty;\n+import io.swagger.v3.oas.annotations.headers.Header;\n import io.swagger.v3.oas.annotations.responses.ApiResponse;\n@@ -14,4 +13,2 @@\n import io.swagger.v3.oas.annotations.security.SecurityRequirement;\n-import io.swagger.v3.oas.annotations.tags.Tag;\n-import java.util.UUID;\n import org.springframework.http.HttpHeaders;\n@@ -28,2 +25,5 @@\n \n+import java.net.URI;\n+import java.util.List;\n+\n @RestController\n@@ -31,160 +31,203 @@\n @SecurityRequirement(name = \"bearerAuth\")\n-@Tag(name = \"alerts\", description = \"빈자리 알림 신청의 생성, 조회, 해제\")\n-public final class AlertController {\n-    private final AlertApplicationService alertService;\n-\n-    public AlertController(AlertApplicationService alertService) {\n-        this.alertService = alertService;\n-    }\n-\n-    @Operation(\n-            operationId = \"createAlert\",\n-            summary = \"빈자리 알림 신청\"\n-    )\n-    @ApiResponses({\n... (342줄 더)",
+        "note": ""
+      },
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "closed"
+    },
+    {
+      "id": "v_43c02f",
+      "rule": "response.type_changed",
+      "point": "cancelAlert:200",
+      "where": "Alert.slot.endTime",
+      "why_it_matters": "구현이 응답에 담는 타입이 계약이 약속한 타입과 다르다. 좁히는 것과 달리 읽는 쪽이 깨진다.",
+      "detail": "계약 ['string'] → 구현 ['object']",
+      "first_seen_iteration": "001",
+      "last_seen_iteration": "001",
+      "closed_in_iteration": "002",
+      "closed_by": "code",
+      "closed_because": "위반의 좌표가 새 판본에도 그대로 있다",
+      "closed_by_verified": true,
+      "claimed_fix": null,
+      "verified_fix": {
+        "files": [
+          "src/main/java/com/thinking/tennis/api/AlertController.java",
+          "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+          "src/main/java/com/thinking/tennis/api/ApiMapper.java",
+          "src/main/java/com/thinking/tennis/api/ApiModels.java",
+          "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+          "src/main/java/com/thinking/tennis/api/OpenApiContractConfiguration.java",
+          "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+          "src/main/java/com/thinking/tennis/app/ApiFailure.java",
+          "src/main/java/com/thinking/tennis/app/AvailabilityApplicationService.java",
+          "src/main/java/com/thinking/tennis/domain/Alert.java",
+          "src/main/java/com/thinking/tennis/domain/AlertSnapshot.java",
+          "src/main/java/com/thinking/tennis/domain/AvailabilitySnapshot.java"
+        ],
+        "diff": "--- a/src/main/java/com/thinking/tennis/api/AlertController.java\n+++ b/src/main/java/com/thinking/tennis/api/AlertController.java\n@@ -5,8 +5,7 @@\n import com.thinking.tennis.app.ValidationFailure;\n-import com.thinking.tennis.domain.Alert;\n import com.thinking.tennis.domain.AlertStatus;\n import io.swagger.v3.oas.annotations.Operation;\n-import io.swagger.v3.oas.annotations.Parameter;\n-import io.swagger.v3.oas.annotations.media.Content;\n-import io.swagger.v3.oas.annotations.media.Schema;\n+import io.swagger.v3.oas.annotations.extensions.Extension;\n+import io.swagger.v3.oas.annotations.extensions.ExtensionProperty;\n+import io.swagger.v3.oas.annotations.headers.Header;\n import io.swagger.v3.oas.annotations.responses.ApiResponse;\n@@ -14,4 +13,2 @@\n import io.swagger.v3.oas.annotations.security.SecurityRequirement;\n-import io.swagger.v3.oas.annotations.tags.Tag;\n-import java.util.UUID;\n import org.springframework.http.HttpHeaders;\n@@ -28,2 +25,5 @@\n \n+import java.net.URI;\n+import java.util.List;\n+\n @RestController\n@@ -31,160 +31,203 @@\n @SecurityRequirement(name = \"bearerAuth\")\n-@Tag(name = \"alerts\", description = \"빈자리 알림 신청의 생성, 조회, 해제\")\n-public final class AlertController {\n-    private final AlertApplicationService alertService;\n-\n-    public AlertController(AlertApplicationService alertService) {\n-        this.alertService = alertService;\n-    }\n-\n-    @Operation(\n-            operationId = \"createAlert\",\n-            summary = \"빈자리 알림 신청\"\n-    )\n-    @ApiResponses({\n... (342줄 더)",
+        "note": ""
+      },
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "closed"
+    },
+    {
+      "id": "v_bbde5e",
+      "rule": "response.header_missing",
+      "point": "cancelAlert:500",
+      "where": "headers.Retry-After",
+      "why_it_matters": "계약이 응답에 싣겠다고 선언한 헤더가 구현에 없다.",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "first_seen_iteration": "001",
+      "last_seen_iteration": "001",
+      "closed_in_iteration": "002",
+      "closed_by": "code",
+      "closed_because": "위반의 좌표가 새 판본에도 그대로 있다",
+      "closed_by_verified": true,
+      "claimed_fix": null,
+      "verified_fix": {
+        "files": [
+          "src/main/java/com/thinking/tennis/api/AlertController.java",
+          "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+          "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+          "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+          "src/main/java/com/thinking/tennis/app/ApiFailure.java",
+          "src/main/java/io/swagger/v3/oas/annotations/headers/Header.java"
+        ],
+        "diff": "--- a/src/main/java/com/thinking/tennis/api/AlertController.java\n+++ b/src/main/java/com/thinking/tennis/api/AlertController.java\n@@ -5,8 +5,7 @@\n import com.thinking.tennis.app.ValidationFailure;\n-import com.thinking.tennis.domain.Alert;\n import com.thinking.tennis.domain.AlertStatus;\n import io.swagger.v3.oas.annotations.Operation;\n-import io.swagger.v3.oas.annotations.Parameter;\n-import io.swagger.v3.oas.annotations.media.Content;\n-import io.swagger.v3.oas.annotations.media.Schema;\n+import io.swagger.v3.oas.annotations.extensions.Extension;\n+import io.swagger.v3.oas.annotations.extensions.ExtensionProperty;\n+import io.swagger.v3.oas.annotations.headers.Header;\n import io.swagger.v3.oas.annotations.responses.ApiResponse;\n@@ -14,4 +13,2 @@\n import io.swagger.v3.oas.annotations.security.SecurityRequirement;\n-import io.swagger.v3.oas.annotations.tags.Tag;\n-import java.util.UUID;\n import org.springframework.http.HttpHeaders;\n@@ -28,2 +25,5 @@\n \n+import java.net.URI;\n+import java.util.List;\n+\n @RestController\n@@ -31,160 +31,203 @@\n @SecurityRequirement(name = \"bearerAuth\")\n-@Tag(name = \"alerts\", description = \"빈자리 알림 신청의 생성, 조회, 해제\")\n-public final class AlertController {\n-    private final AlertApplicationService alertService;\n-\n-    public AlertController(AlertApplicationService alertService) {\n-        this.alertService = alertService;\n-    }\n-\n-    @Operation(\n-            operationId = \"createAlert\",\n-            summary = \"빈자리 알림 신청\"\n-    )\n-    @ApiResponses({\n... (342줄 더)",
+        "note": ""
+      },
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "closed"
+    },
+    {
+      "id": "v_4fcb76",
+      "rule": "response.header_missing",
+      "point": "cancelAlert:503",
+      "where": "headers.Retry-After",
+      "why_it_matters": "계약이 응답에 싣겠다고 선언한 헤더가 구현에 없다.",
+      "detail": "계약이 싣겠다고 선언한 헤더다",
+      "first_seen_iteration": "001",
+      "last_seen_iteration": "001",
+      "closed_in_iteration": "002",
+      "closed_by": "code",
+      "closed_because": "위반의 좌표가 새 판본에도 그대로 있다",
+      "closed_by_verified": true,
+      "claimed_fix": null,
+      "verified_fix": {
+        "files": [
+          "src/main/java/com/thinking/tennis/api/AlertController.java",
+          "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+          "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+          "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+          "src/main/java/com/thinking/tennis/app/ApiFailure.java",
+          "src/main/java/io/swagger/v3/oas/annotations/headers/Header.java"
+        ],
+        "diff": "--- a/src/main/java/com/thinking/tennis/api/AlertController.java\n+++ b/src/main/java/com/thinking/tennis/api/AlertController.java\n@@ -5,8 +5,7 @@\n import com.thinking.tennis.app.ValidationFailure;\n-import com.thinking.tennis.domain.Alert;\n import com.thinking.tennis.domain.AlertStatus;\n import io.swagger.v3.oas.annotations.Operation;\n-import io.swagger.v3.oas.annotations.Parameter;\n-import io.swagger.v3.oas.annotations.media.Content;\n-import io.swagger.v3.oas.annotations.media.Schema;\n+import io.swagger.v3.oas.annotations.extensions.Extension;\n+import io.swagger.v3.oas.annotations.extensions.ExtensionProperty;\n+import io.swagger.v3.oas.annotations.headers.Header;\n import io.swagger.v3.oas.annotations.responses.ApiResponse;\n@@ -14,4 +13,2 @@\n import io.swagger.v3.oas.annotations.security.SecurityRequirement;\n-import io.swagger.v3.oas.annotations.tags.Tag;\n-import java.util.UUID;\n import org.springframework.http.HttpHeaders;\n@@ -28,2 +25,5 @@\n \n+import java.net.URI;\n+import java.util.List;\n+\n @RestController\n@@ -31,160 +31,203 @@\n @SecurityRequirement(name = \"bearerAuth\")\n-@Tag(name = \"alerts\", description = \"빈자리 알림 신청의 생성, 조회, 해제\")\n-public final class AlertController {\n-    private final AlertApplicationService alertService;\n-\n-    public AlertController(AlertApplicationService alertService) {\n-        this.alertService = alertService;\n-    }\n-\n-    @Operation(\n-            operationId = \"createAlert\",\n-            summary = \"빈자리 알림 신청\"\n-    )\n-    @ApiResponses({\n... (342줄 더)",
+        "note": ""
+      },
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "closed"
+    },
+    {
+      "id": "v_579dfe",
+      "rule": "g0.compile_failed",
+      "point": null,
+      "where": "mvnw test",
+      "why_it_matters": "컴파일 오류 2건\nsrc/main/java/com/thinking/tennis/api/AlertController.java:233:86 illegal start of type\nsrc/main/java/com/thinking/tennis/api/AlertController.java:233:87 reached end of file while parsing",
+      "detail": "컴파일 오류 2건\nsrc/main/java/com/thinking/tennis/api/AlertController.java:233:86 illegal start of type\nsrc/main/java/com/thinking/tennis/api/AlertController.java:233:87 reached end of file while parsing",
+      "first_seen_iteration": "002",
+      "last_seen_iteration": "002",
+      "closed_in_iteration": null,
+      "closed_by": null,
+      "closed_because": null,
+      "closed_by_verified": null,
+      "claimed_fix": null,
+      "verified_fix": null,
+      "introduced_by": null,
+      "recurrence": 0,
+      "status": "open"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "d_user_identity",
+      "first_seen_iteration": "001",
+      "point": "authentication",
+      "where": "src/main/java/com/thinking/tennis/api/ApiMapper.java",
+      "question": "토큰 검증 방식이 계약에 정의되지 않은 상태에서 Bearer 토큰을 어떻게 사용자 식별자로 사용할 것인가",
+      "considered": [
+        {
+          "choice": "비어 있지 않은 Bearer 토큰 값을 사용자 식별자로 사용한다",
+          "consequence": "외부 인증 검증기 없이도 소유권 분리가 동작하지만 토큰의 진위 검증은 이 초안의 범위에 없다"
+        },
+        {
+          "choice": "검증되지 않은 Bearer 토큰을 모두 거부한다",
+          "consequence": "검증 포트나 토큰 형식이 계약에 없어 정상 사용자를 식별할 수 없다"
+        }
+      ],
+      "chosen": "비어 있지 않은 Bearer 토큰의 값 자체를 사용자 식별자로 사용한다",
+      "basis": "convention",
+      "rationale": "계약은 Bearer를 사용한다고만 정하고 검증 방식이나 제공 API를 정하지 않았다. 인메모리 초안에서 소유권 구분을 유지하는 최소 선택이다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:401",
+        "listAlerts:401",
+        "getAlert:401",
+        "cancelAlert:401",
+        "listAlerts:200",
+        "getAlert:404",
+        "cancelAlert:404"
+      ],
+      "reversal_cost": "ApiMapper.userId를 인증 포트 호출로 교체하고 사용자 식별자 전달 경계를 갱신해야 한다.",
+      "supersedes": null,
+      "last_seen_iteration": "002",
+      "status": "standing"
+    },
+    {
+      "id": "d_refresh_wait_deadline",
+      "first_seen_iteration": "001",
+      "point": "availability-refresh-wait",
+      "where": "src/main/java/com/thinking/tennis/app/AvailabilityApplicationService.java",
+      "question": "동일 코트·날짜의 진행 중 확인을 기다리는 최대 시간이 계약에 없을 때 얼마를 기다릴 것인가",
+      "considered": [
+        {
+          "choice": "확인 간격과 같은 20초를 기다린다",
+          "consequence": "동시 요청이 같은 외부 확인 결과를 받을 기회를 유지한다"
+        },
+        {
+          "choice": "기다리지 않고 즉시 실패한다",
+          "consequence": "EF-2와 V-4의 동일 결과 보장이 깨질 수 있다"
+        }
+      ],
+      "chosen": "20초 동안 진행 중 확인을 기다린다",
+      "basis": "contract_analogy",
+      "rationale": "확인 간격과 재시도 대기 값이 계약에서 20초로 고정되어 있어 같은 시간 창을 공유하는 선택이다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "getCourtAvailability:200",
+        "getCourtAvailability:502",
+        "getCourtAvailability:503",
+        "getCourtAvailability:504"
+      ],
+      "reversal_cost": "AvailabilityApplicationService의 대기 제한과 동시 확인 실패 매핑을 함께 변경해야 한다.",
+      "supersedes": null,
+      "last_seen_iteration": "001",
+      "status": "superseded",
+      "superseded_in_iteration": "002"
+    },
+    {
+      "id": "d_trace_id_format",
+      "first_seen_iteration": "001",
+      "point": "5xx-trace-id",
+      "where": "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+      "question": "traceId의 형식이 계약에 없을 때 어떤 식별자를 생성할 것인가",
+      "considered": [
+        {
+          "choice": "UUID 문자열을 생성한다",
+          "consequence": "추가 라이브러리 없이 고유한 추적 식별자를 제공한다"
+        },
+        {
+          "choice": "임의의 짧은 문자열을 생성한다",
+          "consequence": "길이와 충돌 정책을 별도로 정해야 한다"
+        }
+      ],
+      "chosen": "UUID 문자열을 생성한다",
+      "basis": "convention",
+      "rationale": "계약은 traceId를 로그 검색용 문자열로만 정의하고 형식을 제한하지 않는다. Java 표준 UUID가 가장 좁은 구현 선택이다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "getCourtAvailability:500",
+        "getCourtAvailability:502",
+        "getCourtAvailability:503",
+        "getCourtAvailability:504",
+        "createAlert:500",
+        "createAlert:503",
+        "listAlerts:500",
+        "getAlert:500",
+        "cancelAlert:500"
+      ],
+      "reversal_cost": "Problem 응답 생성기의 traceId 생성부와 로그 상관관계 형식을 함께 변경해야 한다.",
+      "supersedes": null,
+      "last_seen_iteration": "002",
+      "status": "standing"
+    },
+    {
+      "id": "d_create_slot_validation",
+      "first_seen_iteration": "001",
+      "point": "createAlert:422",
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+      "question": "본문의 시간대 지원 여부를 제공된 포트로 어떻게 판정할 것인가",
+      "considered": [
+        {
+          "choice": "코트·날짜 availability 확인 결과의 slots와 정확히 비교한다",
+          "consequence": "계약의 코트 운영 시간대와 정확히 일치하는 조건을 검증할 수 있다"
+        },
+        {
+          "choice": "코트 식별자만 확인하고 시간대는 저장한다",
+          "consequence": "SLOT_NOT_SUPPORTED를 판정할 근거가 없다"
+        }
+      ],
+      "chosen": "제공된 availability 포트의 코트·날짜 결과에서 시간대가 정확히 일치하는지 확인한다",
+      "basis": "spec_implication",
+      "rationale": "계약은 여기에 없는 시간대로 신청하면 SLOT_NOT_SUPPORTED라고 정하고, 제공 API에서 시간대 목록을 얻을 수 있는 유일한 경로가 availability 확인이다.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:200",
+        "createAlert:201",
+        "createAlert:422",
+        "createAlert:500"
+      ],
+      "reversal_cost": "AlertApplicationService의 신청 검증을 별도 지원 코트 카탈로그 포트로 옮기고 제공 API 의존을 재조정해야 한다.",
+      "supersedes": null,
+      "last_seen_iteration": "002",
+      "status": "standing"
+    },
+    {
+      "id": "d_expiry_scheduler_cadence",
+      "first_seen_iteration": "001",
+      "point": "AlertStatus:EXPIRED",
+      "where": "src/main/java/com/thinking/tennis/config/SchedulingConfig.java",
+      "question": "만료를 서버 작업으로 수행해야 하지만 실행 주기가 계약에 없을 때 어떻게 실행할 것인가",
+      "considered": [
+        {
+          "choice": "1초 고정 지연의 인메모리 작업으로 만료를 처리한다",
+          "consequence": "요청이 없어도 만료가 진행되며 만료 지연을 짧게 유지한다"
+        },
+        {
+          "choice": "HTTP 요청이 들어올 때만 만료를 처리한다",
+          "consequence": "요청이 없는 신청의 만료와 V-8 상태가 지연된다"
+        }
+      ],
+      "chosen": "1초 고정 지연의 인메모리 만료 작업을 사용한다",
+      "basis": "least_harm",
+      "rationale": "계약은 만료가 서버 스스로 일어나야 한다고 정하지만 주기를 정하지 않았다. 저장소와 컨테이너가 금지된 초안에서 최소한의 독립 실행 방식이다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "listAlerts:200",
+        "getAlert:200",
+        "cancelAlert:200",
+        "createAlert:200",
+        "createAlert:201"
+      ],
+      "reversal_cost": "스케줄러 주기 또는 외부 작업 트리거를 교체하고 인메모리 상태 전이 동기화를 다시 검토해야 한다.",
+      "supersedes": null,
+      "last_seen_iteration": "002",
+      "status": "standing"
+    },
+    {
+      "id": "d_delivery_surface",
+      "first_seen_iteration": "001",
+      "point": "Alert.delivery",
+      "where": "src/main/java/com/thinking/tennis/app/AvailabilityApplicationService.java",
+      "question": "메시지 발송 경로가 out_of_scope일 때 HTTP 조회 표면에서 발송 결과를 어디까지 만들 것인가",
+      "considered": [
+        {
+          "choice": "빈자리 발견 시 PENDING까지만 만들고 SENT/FAILED를 추정하지 않는다",
+          "consequence": "HTTP 표면이 알 수 없는 전송 결과를 만들어내지 않는다"
+        },
+        {
+          "choice": "HTTP 요청에서 SENT 또는 FAILED를 임의로 만든다",
+          "consequence": "AsyncAPI 경로와 무관한 발송 결과를 허위로 노출한다"
+        }
+      ],
+      "chosen": "빈자리 발견 시 PENDING까지만 만들고 전송 결과는 생성하지 않는다",
+      "basis": "least_harm",
+      "rationale": "알림 발송 경로는 명시적으로 out_of_scope이고 제공된 발송 포트도 없다. 계약이 허용한 null/PENDING 상태만 사용한다.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:201",
+        "createAlert:200",
+        "listAlerts:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "reversal_cost": "AsyncAPI 발송 어댑터와 상태 전이 작업을 추가하고 Alert의 SENT/FAILED 전이를 연결해야 한다.",
+      "supersedes": null,
+      "last_seen_iteration": "002",
+      "status": "standing"
+    },
+    {
+      "id": "d_refresh_shared_completion",
+      "first_seen_iteration": "002",
+      "point": "availability-refresh-wait",
+      "where": "src/main/java/com/thinking/tennis/app/AvailabilityApplicationService.java",
+      "question": "동일 코트·날짜의 진행 중 확인을 기다리는 요청이 서로 다른 결과를 받지 않게 하려면 어떻게 완료를 공유할 것인가",
+      "considered": [
+        {
+          "choice": "리더 Future의 단일 완료 결과를 모든 대기 요청이 기다리게 한다",
+          "consequence": "리더와 대기자가 같은 성공 결과 또는 같은 실패를 받는다"
+        },
+        {
+          "choice": "각 대기 요청에 별도 20초 타임아웃을 둔다",
+          "consequence": "리더가 늦게 완료할 때 대기자만 다른 실패를 받을 수 있다"
+        }
+      ],
+      "chosen": "리더 Future의 단일 완료 결과를 모든 대기 요청이 기다리게 하고 별도 대기자 타임아웃을 두지 않는다",
+      "basis": "spec_implication",
+      "rationale": "계약이 동일 코트·날짜의 진행 중 요청 모두에 같은 결과를 요구하므로, 이전의 독립적인 20초 대기 제한 결정을 폐기했다.",
+      "confidence": "high",
+      "blast_radius": [
+        "getCourtAvailability:200",
+        "getCourtAvailability:502",
+        "getCourtAvailability:503",
+        "getCourtAvailability:504"
+      ],
+      "reversal_cost": "리더 완료 상태와 모든 대기자의 실패 전파를 다시 설계해야 한다.",
+      "supersedes": "d_refresh_wait_deadline",
+      "last_seen_iteration": "002",
+      "status": "standing"
+    },
+    {
+      "id": "d_expiry_source_semantics",
+      "first_seen_iteration": "002",
+      "point": "Alert.expiresAt",
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+      "question": "더 이른 예약 마감 시각을 제공된 API가 노출하지 않을 때 expiresAt을 어떻게 계산할 것인가",
+      "considered": [
+        {
+          "choice": "제공된 포트가 보장하는 이용 시작 시각을 만료 경계로 사용한다",
+          "consequence": "허위의 예약 마감 시각을 만들지 않지만 더 이른 외부 마감은 반영할 수 없다"
+        },
+        {
+          "choice": "예약 마감 시각을 임의의 규칙이나 상수로 추정한다",
+          "consequence": "계약에 없는 값을 만들어 감시 가능 시간을 잘못 표시할 수 있다"
+        }
+      ],
+      "chosen": "제공된 포트가 보장하는 이용 시작 시각을 사용하고 더 이른 외부 마감은 해당 포트가 확장될 때 반영한다",
+      "basis": "least_harm",
+      "rationale": "immutable 제공 API에는 예약 마감 시각 필드가 없다. 임의의 마감 규칙을 발명하지 않고 현재 입력으로 증명 가능한 경계만 사용한다.",
+      "confidence": "low",
+      "blast_radius": [
+        "createAlert:201",
+        "createAlert:422",
+        "Alert.expiresAt",
+        "AlertStatus:EXPIRED"
+      ],
+      "reversal_cost": "포트에 예약 마감 시각을 추가할 수 있게 된 뒤 최소값 계산과 상태 전이를 함께 변경해야 한다.",
+      "supersedes": null,
+      "last_seen_iteration": "002",
+      "status": "standing"
+    },
+    {
+      "id": "d_inmemory_alert_store",
+      "first_seen_iteration": "002",
+      "point": "alert-storage",
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+      "question": "저장소 장애 주입이 범위 밖이고 구현 계약이 인메모리 저장을 요구할 때 알림 상태를 어디에 둘 것인가",
+      "considered": [
+        {
+          "choice": "ConcurrentHashMap으로 프로세스 내 상태를 저장한다",
+          "consequence": "외부 저장소 의존 없이 소유권, 멱등성, 상태 전이를 구현할 수 있다"
+        },
+        {
+          "choice": "새 저장소 포트를 추가한다",
+          "consequence": "제공 API와 immutable 경계를 넘어 구현 범위를 넓힌다"
+        }
+      ],
+      "chosen": "ConcurrentHashMap 기반 인메모리 저장을 사용한다",
+      "basis": "spec_implication",
+      "rationale": "구현 계약이 저장은 인메모리라고 정하고 저장소 장애 주입도 out_of_scope으로 명시한다.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert",
+        "listAlerts",
+        "getAlert",
+        "cancelAlert",
+        "AlertStatus"
+      ],
+      "reversal_cost": "저장소 포트와 원자적 조건 키 연산을 추가하고 멱등성 보관을 이식해야 한다.",
+      "supersedes": null,
+      "last_seen_iteration": "002",
+      "status": "standing"
+    }
+  ],
+  "contract_changes": [
+    {
+      "id": "cc_restore_scope_time_compatibility",
+      "first_seen_iteration": "002",
+      "target": "/info/description",
+      "action": "add",
+      "what": "범위 밖 항목, Asia/Seoul 날짜·시각 규칙, /v1 호환성 규칙을 복원했다.",
+      "why": "HTTP 계약의 전제와 호환성 판단 기준이 축약 판본에서 사라져 있었다.",
+      "basis": "critique:cr_restore_scope_time_compatibility",
+      "spec_anchor": "slot_fd7db9b0",
+      "compatibility_claimed": "compatible",
+      "compatibility_verdict": "compatible",
+      "breaking_lines": [],
+      "uncompared_lines": [],
+      "migration": null,
+      "iteration": "002",
+      "last_seen_iteration": "002"
+    },
+    {
+      "id": "cc_restore_availability_behavior",
+      "first_seen_iteration": "002",
+      "target": "/paths/~1courts~1{courtId}~1availability/get/description",
+      "action": "add",
+      "what": "20초 갱신, 코트·날짜별 단일 조회, 진행 중 요청의 동일 결과, stale 200, 인증 예외를 복원했다.",
+      "why": "동시 갱신과 stale 실패 의미가 계약에서 보이지 않았다.",
+      "basis": "critique:cr_restore_availability_behavior",
+      "spec_anchor": "slot_218b9620",
+      "compatibility_claimed": "compatible",
+      "compatibility_verdict": "compatible",
+      "breaking_lines": [],
+      "uncompared_lines": [],
+      "migration": null,
+      "iteration": "002",
+      "last_seen_iteration": "002"
+    },
+    {
+      "id": "cc_restore_create_idempotency_behavior",
+      "first_seen_iteration": "002",
+      "target": "/paths/~1alerts/post/description",
+      "action": "add",
+      "what": "4xx 미기록, 2xx 재생, 진행 중 동일 키의 503, 재생 시점 고정, 동일 조건 중복 규칙을 복원했다.",
+      "why": "클라이언트 재시도와 중복 신청의 의미를 계약에 고정해야 한다.",
+      "basis": "critique:cr_restore_create_idempotency_behavior",
+      "spec_anchor": "slot_7afbe3b4",
+      "compatibility_claimed": "compatible",
+      "compatibility_verdict": "compatible",
+      "breaking_lines": [],
+      "uncompared_lines": [],
+      "migration": null,
+      "iteration": "002",
+      "last_seen_iteration": "002"
+    },
+    {
+      "id": "cc_restore_list_state_filtering",
+      "first_seen_iteration": "002",
+      "target": "/paths/~1alerts/get/description",
+      "action": "add",
+      "what": "저장 상태 기준 필터, 기본 조회 범위, 정렬과 비페이지 전제를 복원했다.",
+      "why": "목록 응답의 범위와 필터 semantics가 축약되어 있었다.",
+      "basis": "critique:cr_restore_list_state_filtering",
+      "spec_anchor": "slot_85c85829",
+      "compatibility_claimed": "compatible",
+      "compatibility_verdict": "compatible",
+      "breaking_lines": [],
+      "uncompared_lines": [],
+      "migration": null,
+      "iteration": "002",
+      "last_seen_iteration": "002"
+    },
+    {
+      "id": "cc_restore_alert_state_invariants",
+      "first_seen_iteration": "002",
+      "target": "/components/schemas/Alert/description",
+      "action": "add",
+      "what": "status와 delivery의 허용 조합, PENDING 취소, terminal 상태의 비가역성을 복원했다.",
+      "why": "클라이언트가 상태 조합을 해석할 수 있는 핵심 불변식이 사라져 있었다.",
+      "basis": "critique:cr_restore_alert_state_invariants",
+      "spec_anchor": "slot_cec09639",
+      "compatibility_claimed": "compatible",
+      "compatibility_verdict": "compatible",
+      "breaking_lines": [],
+      "uncompared_lines": [],
+      "migration": null,
+      "iteration": "002",
+      "last_seen_iteration": "002"
+    },
+    {
+      "id": "cc_restore_expiry_semantics",
+      "first_seen_iteration": "002",
+      "target": "/components/schemas/Alert/properties/expiresAt/description",
+      "action": "add",
+      "what": "이용 시작 시각과 더 이른 예약 마감 시각의 최소값, 재조회 필요성, 전이 지연 중 표시 규칙을 복원했다.",
+      "why": "expiresAt의 실제 의미가 축약 판본에서 사라져 있었다.",
+      "basis": "critique:cr_restore_expiry_semantics",
+      "spec_anchor": "slot_c14121c8",
+      "compatibility_claimed": "compatible",
+      "compatibility_verdict": "compatible",
+      "breaking_lines": [],
+      "uncompared_lines": [],
+      "migration": null,
+      "iteration": "002",
+      "last_seen_iteration": "002"
+    },
+    {
+      "id": "cc_restore_problem_conditionals",
+      "first_seen_iteration": "002",
+      "target": "/components/schemas/Problem/description",
+      "action": "add",
+      "what": "retryable과 retryAfterSeconds·Retry-After의 동반 규칙 및 5xx traceId 조건을 복원했다.",
+      "why": "재시도 메타데이터의 조건부 제공이 계약에 드러나야 한다.",
+      "basis": "critique:cr_restore_problem_conditionals",
+      "spec_anchor": "slot_47c11736",
+      "compatibility_claimed": "compatible",
+      "compatibility_verdict": "compatible",
+      "breaking_lines": [],
+      "uncompared_lines": [],
+      "migration": null,
+      "iteration": "002",
+      "last_seen_iteration": "002"
+    },
+    {
+      "id": "cc_restore_error_code_meaning",
+      "first_seen_iteration": "002",
+      "target": "/components/schemas/ErrorCode/description",
+      "action": "add",
+      "what": "에러 코드가 클라이언트 대응이 갈리는 지점에만 존재한다는 원칙과 코드 집합의 의미를 복원했다.",
+      "why": "오류 코드 선택과 재시도 해석의 기준이 축약 판본에서 사라져 있었다.",
+      "basis": "critique:cr_restore_error_code_meaning",
+      "spec_anchor": "slot_58100c30",
+      "compatibility_claimed": "compatible",
+      "compatibility_verdict": "compatible",
+      "breaking_lines": [],
+      "uncompared_lines": [],
+      "migration": null,
+      "iteration": "002",
+      "last_seen_iteration": "002"
+    }
+  ],
+  "observations": [
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "getCourtAvailability:200",
+      "where": "CourtAvailability.slots[].startTime.hour",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "getCourtAvailability:200",
+      "where": "CourtAvailability.slots[].startTime.minute",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "getCourtAvailability:200",
+      "where": "CourtAvailability.slots[].startTime.second",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "getCourtAvailability:200",
+      "where": "CourtAvailability.slots[].startTime.nano",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "getCourtAvailability:200",
+      "where": "CourtAvailability.slots[].endTime.hour",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "getCourtAvailability:200",
+      "where": "CourtAvailability.slots[].endTime.minute",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "getCourtAvailability:200",
+      "where": "CourtAvailability.slots[].endTime.second",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "getCourtAvailability:200",
+      "where": "CourtAvailability.slots[].endTime.nano",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:request.field_extra",
+      "iteration": "001",
+      "point": "listAlerts",
+      "where": "parameters.header.Authorization",
+      "detail": "계약에 없는 파라미터다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "listAlerts:200",
+      "where": "AlertList.items[].slot.startTime.hour",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "listAlerts:200",
+      "where": "AlertList.items[].slot.startTime.minute",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "listAlerts:200",
+      "where": "AlertList.items[].slot.startTime.second",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "listAlerts:200",
+      "where": "AlertList.items[].slot.startTime.nano",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "listAlerts:200",
+      "where": "AlertList.items[].slot.endTime.hour",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "listAlerts:200",
+      "where": "AlertList.items[].slot.endTime.minute",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "listAlerts:200",
+      "where": "AlertList.items[].slot.endTime.second",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "listAlerts:200",
+      "where": "AlertList.items[].slot.endTime.nano",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:request.field_extra",
+      "iteration": "001",
+      "point": "createAlert",
+      "where": "parameters.header.Authorization",
+      "detail": "계약에 없는 파라미터다"
+    },
+    {
+      "kind": "gate:request.field_extra",
+      "iteration": "001",
+      "point": "createAlert",
+      "where": "AlertRequest.slot.startTime.hour",
+      "detail": "계약에 없는 요청 필드다"
+    },
+    {
+      "kind": "gate:request.field_extra",
+      "iteration": "001",
+      "point": "createAlert",
+      "where": "AlertRequest.slot.startTime.minute",
+      "detail": "계약에 없는 요청 필드다"
+    },
+    {
+      "kind": "gate:request.field_extra",
+      "iteration": "001",
+      "point": "createAlert",
+      "where": "AlertRequest.slot.startTime.second",
+      "detail": "계약에 없는 요청 필드다"
+    },
+    {
+      "kind": "gate:request.field_extra",
+      "iteration": "001",
+      "point": "createAlert",
+      "where": "AlertRequest.slot.startTime.nano",
+      "detail": "계약에 없는 요청 필드다"
+    },
+    {
+      "kind": "gate:request.field_extra",
+      "iteration": "001",
+      "point": "createAlert",
+      "where": "AlertRequest.slot.endTime.hour",
+      "detail": "계약에 없는 요청 필드다"
+    },
+    {
+      "kind": "gate:request.field_extra",
+      "iteration": "001",
+      "point": "createAlert",
+      "where": "AlertRequest.slot.endTime.minute",
+      "detail": "계약에 없는 요청 필드다"
+    },
+    {
+      "kind": "gate:request.field_extra",
+      "iteration": "001",
+      "point": "createAlert",
+      "where": "AlertRequest.slot.endTime.second",
+      "detail": "계약에 없는 요청 필드다"
+    },
+    {
+      "kind": "gate:request.field_extra",
+      "iteration": "001",
+      "point": "createAlert",
+      "where": "AlertRequest.slot.endTime.nano",
+      "detail": "계약에 없는 요청 필드다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "createAlert:201",
+      "where": "Alert.slot.startTime.hour",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "createAlert:201",
+      "where": "Alert.slot.startTime.minute",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "createAlert:201",
+      "where": "Alert.slot.startTime.second",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "createAlert:201",
+      "where": "Alert.slot.startTime.nano",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "createAlert:201",
+      "where": "Alert.slot.endTime.hour",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "createAlert:201",
+      "where": "Alert.slot.endTime.minute",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "createAlert:201",
+      "where": "Alert.slot.endTime.second",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "createAlert:201",
+      "where": "Alert.slot.endTime.nano",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "createAlert:200",
+      "where": "Alert.slot.startTime.hour",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "createAlert:200",
+      "where": "Alert.slot.startTime.minute",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "createAlert:200",
+      "where": "Alert.slot.startTime.second",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "createAlert:200",
+      "where": "Alert.slot.startTime.nano",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "createAlert:200",
+      "where": "Alert.slot.endTime.hour",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "createAlert:200",
+      "where": "Alert.slot.endTime.minute",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "createAlert:200",
+      "where": "Alert.slot.endTime.second",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "createAlert:200",
+      "where": "Alert.slot.endTime.nano",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:request.field_extra",
+      "iteration": "001",
+      "point": "getAlert",
+      "where": "parameters.header.Authorization",
+      "detail": "계약에 없는 파라미터다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "getAlert:200",
+      "where": "Alert.slot.startTime.hour",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "getAlert:200",
+      "where": "Alert.slot.startTime.minute",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "getAlert:200",
+      "where": "Alert.slot.startTime.second",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "getAlert:200",
+      "where": "Alert.slot.startTime.nano",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "getAlert:200",
+      "where": "Alert.slot.endTime.hour",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "getAlert:200",
+      "where": "Alert.slot.endTime.minute",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "getAlert:200",
+      "where": "Alert.slot.endTime.second",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "getAlert:200",
+      "where": "Alert.slot.endTime.nano",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:request.field_extra",
+      "iteration": "001",
+      "point": "cancelAlert",
+      "where": "parameters.header.Authorization",
+      "detail": "계약에 없는 파라미터다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "cancelAlert:200",
+      "where": "Alert.slot.startTime.hour",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "cancelAlert:200",
+      "where": "Alert.slot.startTime.minute",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "cancelAlert:200",
+      "where": "Alert.slot.startTime.second",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "cancelAlert:200",
+      "where": "Alert.slot.startTime.nano",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "cancelAlert:200",
+      "where": "Alert.slot.endTime.hour",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "cancelAlert:200",
+      "where": "Alert.slot.endTime.minute",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "cancelAlert:200",
+      "where": "Alert.slot.endTime.second",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:response.field_extra",
+      "iteration": "001",
+      "point": "cancelAlert:200",
+      "where": "Alert.slot.endTime.nano",
+      "detail": "계약이 열어 둔 객체다"
+    },
+    {
+      "kind": "gate:decision.unknown_point",
+      "iteration": "001",
+      "point": "authentication",
+      "where": "src/main/java/com/thinking/tennis/api/ApiMapper.java",
+      "detail": "계약의 판정 지점이 아니다 (결정 d_user_identity)"
+    },
+    {
+      "kind": "gate:decision.unknown_point",
+      "iteration": "001",
+      "point": "availability-refresh-wait",
+      "where": "src/main/java/com/thinking/tennis/app/AvailabilityApplicationService.java",
+      "detail": "계약의 판정 지점이 아니다 (결정 d_refresh_wait_deadline)"
+    },
+    {
+      "kind": "gate:decision.unknown_point",
+      "iteration": "001",
+      "point": "5xx-trace-id",
+      "where": "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+      "detail": "계약의 판정 지점이 아니다 (결정 d_trace_id_format)"
+    },
+    {
+      "kind": "gate:decision.unknown_point",
+      "iteration": "001",
+      "point": "AlertStatus:EXPIRED",
+      "where": "src/main/java/com/thinking/tennis/config/SchedulingConfig.java",
+      "detail": "계약의 판정 지점이 아니다 (결정 d_expiry_scheduler_cadence)"
+    },
+    {
+      "kind": "gate:decision.unknown_point",
+      "iteration": "001",
+      "point": "Alert.delivery",
+      "where": "src/main/java/com/thinking/tennis/app/AvailabilityApplicationService.java",
+      "detail": "계약의 판정 지점이 아니다 (결정 d_delivery_surface)"
+    },
+    {
+      "kind": "contract_step_diff",
+      "iteration": "001",
+      "point": null,
+      "where": "*",
+      "detail": "앞 판본 대비 달라진 좌표 0개, 깨는 변경 0건"
+    },
+    {
+      "kind": "baseline_diff",
+      "iteration": "001",
+      "point": null,
+      "where": "*",
+      "detail": "이 run의 기준선 대비 달라진 좌표 127개, 깨는 변경 0건"
+    },
+    {
+      "kind": "origin_diff",
+      "iteration": "001",
+      "point": null,
+      "where": "*",
+      "detail": "사람이 확정한 원본 대비 누적으로 달라진 좌표 127개, 깨는 변경 0건"
+    },
+    {
+      "kind": "stage_skipped",
+      "iteration": "002",
+      "point": null,
+      "where": null,
+      "detail": "g0_reject"
+    },
+    {
+      "kind": "gate_unjudged",
+      "iteration": "002",
+      "point": null,
+      "where": "g1",
+      "detail": "g1가 판정되지 않았다. 미판정은 통과가 아니다"
+    },
+    {
+      "kind": "gate_unjudged",
+      "iteration": "002",
+      "point": null,
+      "where": "changes",
+      "detail": "changes가 판정되지 않았다. 미판정은 통과가 아니다"
+    },
+    {
+      "kind": "contract_step_diff",
+      "iteration": "002",
+      "point": null,
+      "where": "*",
+      "detail": "앞 판본 대비 달라진 좌표 60개, 깨는 변경 0건"
+    },
+    {
+      "kind": "baseline_diff",
+      "iteration": "002",
+      "point": null,
+      "where": "*",
+      "detail": "이 run의 기준선 대비 달라진 좌표 112개, 깨는 변경 0건"
+    },
+    {
+      "kind": "origin_diff",
+      "iteration": "002",
+      "point": null,
+      "where": "*",
+      "detail": "사람이 확정한 원본 대비 누적으로 달라진 좌표 112개, 깨는 변경 0건"
+    },
+    {
+      "kind": "collateral_change",
+      "iteration": "002",
+      "point": null,
+      "where": "src/main/java/com/thinking/tennis/app/ValidationFailure.java",
+      "detail": "열린 위반의 좌표를 언급하지 않는 파일이 달라졌다"
+    }
+  ],
+  "impact": {
+    "iteration": "002",
+    "contract_version": {
+      "path": "contract/tennis-alert-api-v2.yaml",
+      "from": "contract/tennis-alert-api-v1.yaml"
+    },
+    "baseline_contract": "tennis-alert-api.yaml",
+    "origin_contract": "tennis-alert-api.yaml",
+    "points_gone": [],
+    "points_born": [],
+    "step_diff": {
+      "pointers": [
+        "/tags",
+        "/info/description",
+        "/info/x-out-of-scope",
+        "/paths/~1courts~1{courtId}~1availability/get/tags",
+        "/paths/~1courts~1{courtId}~1availability/get/summary",
+        "/paths/~1courts~1{courtId}~1availability/get/description",
+        "/paths/~1courts~1{courtId}~1availability/get/x-requirement",
+        "/paths/~1courts~1{courtId}~1availability/get/responses/200/description",
+        "/paths/~1alerts/post/tags",
+        "/paths/~1alerts/post/summary",
+        "/paths/~1alerts/post/description",
+        "/paths/~1alerts/post/x-requirement",
+        "/paths/~1alerts/post/responses/201/description",
+        "/paths/~1alerts/post/responses/200/description",
+        "/paths/~1alerts/get/tags",
+        "/paths/~1alerts/get/summary",
+        "/paths/~1alerts/get/description",
+        "/paths/~1alerts/get/x-requirement",
+        "/paths/~1alerts/get/responses/200/description",
+        "/paths/~1alerts~1{alertId}/get/tags",
+        "/paths/~1alerts~1{alertId}/get/summary",
+        "/paths/~1alerts~1{alertId}/get/description",
+        "/paths/~1alerts~1{alertId}/get/x-requirement",
+        "/paths/~1alerts~1{alertId}/get/responses/200/description",
+        "/paths/~1alerts~1{alertId}/delete/tags",
+        "/paths/~1alerts~1{alertId}/delete/summary",
+        "/paths/~1alerts~1{alertId}/delete/description",
+        "/paths/~1alerts~1{alertId}/delete/x-requirement",
+        "/paths/~1alerts~1{alertId}/delete/responses/200/description",
+        "/components/headers/Location/description",
+        "/components/headers/IdempotencyReplayed/description",
+        "/components/headers/RetryAfter/description",
+        "/components/schemas/CourtName",
+        "/components/schemas/AlertStatus/x-requirement",
+        "/components/schemas/Alert/x-requirement",
+        "/components/schemas/Alert/description",
+        "/components/schemas/Alert/properties/courtName/type",
+        "/components/schemas/Alert/properties/courtName/minLength",
+        "/components/schemas/Alert/properties/courtName/$ref",
+        "/components/schemas/Alert/properties/expiresAt/description",
+        "/components/schemas/CourtAvailability/x-requirement",
+        "/components/schemas/CourtAvailability/properties/courtName/type",
+        "/components/schemas/CourtAvailability/properties/courtName/minLength",
+        "/components/schemas/CourtAvailability/properties/courtName/$ref",
+        "/components/schemas/ErrorCode/description",
+        "/components/schemas/Problem/description",
+        "/components/responses/ValidationFailed/headers",
+        "/components/responses/ValidationFailed/description",
+        "/components/responses/AlertRequestInvalid/description",
+        "/components/responses/Unauthenticated/description",
+        "/components/responses/CourtNotSupported/description",
+        "/components/responses/AlertNotFound/description",
+        "/components/responses/IdempotencyKeyReused/description",
+        "/components/responses/AlertNotAcceptable/description",
+        "/components/responses/UpstreamUnreadable/description",
+        "/components/responses/UpstreamTimeout/description",
+        "/components/responses/AvailabilityUnavailable/description",
+        "/components/responses/StorageUnavailable/description",
+        "/components/responses/StorageOrContentionUnavailable/description",
+        "/components/responses/InternalError/description"
+      ],
+      "breaking": [],
+      "uncompared": [],
+      "error": null
+    },
+    "baseline_diff": {
+      "pointers": [
+        "/info/description",
+        "/info/x-out-of-scope/0/reason",
+        "/tags/0/description",
+        "/tags/1/description",
+        "/paths/~1courts~1{courtId}~1availability/get/summary",
+        "/paths/~1courts~1{courtId}~1availability/get/description",
+        "/paths/~1courts~1{courtId}~1availability/get/parameters/1/description",
+        "/paths/~1courts~1{courtId}~1availability/get/parameters/1/example",
+        "/paths/~1courts~1{courtId}~1availability/get/responses/200/description",
+        "/paths/~1courts~1{courtId}~1availability/get/responses/200/content/application~1json/examples",
+        "/paths/~1alerts/post/summary",
+        "/paths/~1alerts/post/description",
+        "/paths/~1alerts/post/requestBody/content/application~1json/example",
+        "/paths/~1alerts/post/responses/201/description",
+        "/paths/~1alerts/post/responses/201/content/application~1json/example",
+        "/paths/~1alerts/post/responses/200/description",
+        "/paths/~1alerts/post/responses/200/content/application~1json/example",
+        "/paths/~1alerts/get/summary",
+        "/paths/~1alerts/get/description",
+        "/paths/~1alerts/get/parameters/0/description",
+        "/paths/~1alerts/get/responses/200/description",
+        "/paths/~1alerts/get/responses/200/content/application~1json/example",
+        "/paths/~1alerts~1{alertId}/get/summary",
+        "/paths/~1alerts~1{alertId}/get/description",
+        "/paths/~1alerts~1{alertId}/get/responses/200/description",
+        "/paths/~1alerts~1{alertId}/get/responses/200/content/application~1json/example",
+        "/paths/~1alerts~1{alertId}/delete/summary",
+        "/paths/~1alerts~1{alertId}/delete/description",
+        "/paths/~1alerts~1{alertId}/delete/responses/200/description",
+        "/paths/~1alerts~1{alertId}/delete/responses/200/content/application~1json/example",
+        "/components/securitySchemes/bearerAuth/description",
+        "/components/parameters/CourtIdPath/description",
+        "/components/parameters/AlertIdPath/description",
+        "/components/parameters/IdempotencyKeyHeader/description",
+        "/components/parameters/IdempotencyKeyHeader/example",
+        "/components/headers/Location/example",
+        "/components/headers/Location/description",
+        "/components/headers/IdempotencyReplayed/example",
+        "/components/headers/IdempotencyReplayed/description",
+        "/components/headers/RetryAfter/example",
+        "/components/headers/RetryAfter/description",
+        "/components/schemas/AlertId/description",
+        "/components/schemas/AlertId/examples",
+        "/components/schemas/CourtName/description",
+        "/components/schemas/CourtName/examples",
+        "/components/schemas/CourtId/description",
+        "/components/schemas/CourtId/examples",
+        "/components/schemas/TimeSlot/description",
+        "/components/schemas/TimeSlot/properties/startTime/description",
+        "/components/schemas/TimeSlot/properties/startTime/examples",
+        "/components/schemas/TimeSlot/properties/endTime/description",
+        "/components/schemas/TimeSlot/properties/endTime/examples",
+        "/components/schemas/AlertStatus/description",
+        "/components/schemas/DeliveryStatus/description",
+        "/components/schemas/UpstreamFailureReason/description",
+        "/components/schemas/AlertDelivery/x-requirement",
+        "/components/schemas/AlertDelivery/description",
+        "/components/schemas/AlertDelivery/properties/attemptCount/description",
+        "/components/schemas/AlertDelivery/properties/lastAttemptAt/description",
+        "/components/schemas/AlertDelivery/properties/failureReason/description",
+        "/components/schemas/AlertRequest/description",
+        "/components/schemas/AlertRequest/properties/date/description",
+        "/components/schemas/Alert/description",
+        "/components/schemas/Alert/properties/reservationUrl/description",
+        "/components/schemas/Alert/properties/expiresAt/description",
+        "/components/schemas/Alert/properties/lastCheckedAt/description",
+        "/components/schemas/Alert/properties/checkDelayed/description",
+        "/components/schemas/Alert/properties/delivery/description",
+        "/components/schemas/AlertList/properties/items/description",
+        "/components/schemas/AvailabilitySlot/properties/available/description",
+        "/components/schemas/CourtAvailability/properties/confirmedAt/description",
+        "/components/schemas/CourtAvailability/properties/stale/description",
+        "/components/schemas/CourtAvailability/properties/staleReason/description",
+        "/components/schemas/CourtAvailability/properties/reservationUrl/description",
+        "/components/schemas/CourtAvailability/properties/slots/description",
+        "/components/schemas/ErrorCode/description",
+        "/components/schemas/Problem/description",
+        "/components/schemas/Problem/properties/type/description",
+        "/components/schemas/Problem/properties/title/description",
+        "/components/schemas/Problem/properties/status/description",
+        "/components/schemas/Problem/properties/detail/description",
+        "/components/schemas/Problem/properties/instance/description",
+        "/components/schemas/Problem/properties/retryable/description",
+        "/components/schemas/Problem/properties/retryAfterSeconds/description",
+        "/components/schemas/Problem/properties/traceId/description",
+        "/components/responses/ValidationFailed/headers",
+        "/components/responses/ValidationFailed/description",
+        "/components/responses/ValidationFailed/content/application~1problem+json/example",
+        "/components/responses/AlertRequestInvalid/description",
+        "/components/responses/AlertRequestInvalid/content/application~1problem+json/examples",
+        "/components/responses/Unauthenticated/description",
+        "/components/responses/Unauthenticated/content/application~1problem+json/example",
+        "/components/responses/CourtNotSupported/description",
+        "/components/responses/CourtNotSupported/content/application~1problem+json/example",
+        "/components/responses/AlertNotFound/description",
+        "/components/responses/AlertNotFound/content/application~1problem+json/example",
+        "/components/responses/IdempotencyKeyReused/description",
+        "/components/responses/IdempotencyKeyReused/content/application~1problem+json/example",
+        "/components/responses/AlertNotAcceptable/description",
+        "/components/responses/AlertNotAcceptable/content/application~1problem+json/examples",
+        "/components/responses/UpstreamUnreadable/description",
+        "/components/responses/UpstreamUnreadable/content/application~1problem+json/example",
+        "/components/responses/UpstreamTimeout/description",
+        "/components/responses/UpstreamTimeout/content/application~1problem+json/example",
+        "/components/responses/AvailabilityUnavailable/description",
+        "/components/responses/AvailabilityUnavailable/content/application~1problem+json/examples",
+        "/components/responses/StorageUnavailable/description",
+        "/components/responses/StorageUnavailable/content/application~1problem+json/example",
+        "/components/responses/StorageOrContentionUnavailable/description",
+        "/components/responses/StorageOrContentionUnavailable/content/application~1problem+json/examples",
+        "/components/responses/InternalError/description",
+        "/components/responses/InternalError/content/application~1problem+json/example"
+      ],
+      "breaking": [],
+      "uncompared": [],
+      "error": null
+    },
+    "origin_diff": {
+      "pointers": [
+        "/info/description",
+        "/info/x-out-of-scope/0/reason",
+        "/tags/0/description",
+        "/tags/1/description",
+        "/paths/~1courts~1{courtId}~1availability/get/summary",
+        "/paths/~1courts~1{courtId}~1availability/get/description",
+        "/paths/~1courts~1{courtId}~1availability/get/parameters/1/description",
+        "/paths/~1courts~1{courtId}~1availability/get/parameters/1/example",
+        "/paths/~1courts~1{courtId}~1availability/get/responses/200/description",
+        "/paths/~1courts~1{courtId}~1availability/get/responses/200/content/application~1json/examples",
+        "/paths/~1alerts/post/summary",
+        "/paths/~1alerts/post/description",
+        "/paths/~1alerts/post/requestBody/content/application~1json/example",
+        "/paths/~1alerts/post/responses/201/description",
+        "/paths/~1alerts/post/responses/201/content/application~1json/example",
+        "/paths/~1alerts/post/responses/200/description",
+        "/paths/~1alerts/post/responses/200/content/application~1json/example",
+        "/paths/~1alerts/get/summary",
+        "/paths/~1alerts/get/description",
+        "/paths/~1alerts/get/parameters/0/description",
+        "/paths/~1alerts/get/responses/200/description",
+        "/paths/~1alerts/get/responses/200/content/application~1json/example",
+        "/paths/~1alerts~1{alertId}/get/summary",
+        "/paths/~1alerts~1{alertId}/get/description",
+        "/paths/~1alerts~1{alertId}/get/responses/200/description",
+        "/paths/~1alerts~1{alertId}/get/responses/200/content/application~1json/example",
+        "/paths/~1alerts~1{alertId}/delete/summary",
+        "/paths/~1alerts~1{alertId}/delete/description",
+        "/paths/~1alerts~1{alertId}/delete/responses/200/description",
+        "/paths/~1alerts~1{alertId}/delete/responses/200/content/application~1json/example",
+        "/components/securitySchemes/bearerAuth/description",
+        "/components/parameters/CourtIdPath/description",
+        "/components/parameters/AlertIdPath/description",
+        "/components/parameters/IdempotencyKeyHeader/description",
+        "/components/parameters/IdempotencyKeyHeader/example",
+        "/components/headers/Location/example",
+        "/components/headers/Location/description",
+        "/components/headers/IdempotencyReplayed/example",
+        "/components/headers/IdempotencyReplayed/description",
+        "/components/headers/RetryAfter/example",
+        "/components/headers/RetryAfter/description",
+        "/components/schemas/AlertId/description",
+        "/components/schemas/AlertId/examples",
+        "/components/schemas/CourtName/description",
+        "/components/schemas/CourtName/examples",
+        "/components/schemas/CourtId/description",
+        "/components/schemas/CourtId/examples",
+        "/components/schemas/TimeSlot/description",
+        "/components/schemas/TimeSlot/properties/startTime/description",
+        "/components/schemas/TimeSlot/properties/startTime/examples",
+        "/components/schemas/TimeSlot/properties/endTime/description",
+        "/components/schemas/TimeSlot/properties/endTime/examples",
+        "/components/schemas/AlertStatus/description",
+        "/components/schemas/DeliveryStatus/description",
+        "/components/schemas/UpstreamFailureReason/description",
+        "/components/schemas/AlertDelivery/x-requirement",
+        "/components/schemas/AlertDelivery/description",
+        "/components/schemas/AlertDelivery/properties/attemptCount/description",
+        "/components/schemas/AlertDelivery/properties/lastAttemptAt/description",
+        "/components/schemas/AlertDelivery/properties/failureReason/description",
+        "/components/schemas/AlertRequest/description",
+        "/components/schemas/AlertRequest/properties/date/description",
+        "/components/schemas/Alert/description",
+        "/components/schemas/Alert/properties/reservationUrl/description",
+        "/components/schemas/Alert/properties/expiresAt/description",
+        "/components/schemas/Alert/properties/lastCheckedAt/description",
+        "/components/schemas/Alert/properties/checkDelayed/description",
+        "/components/schemas/Alert/properties/delivery/description",
+        "/components/schemas/AlertList/properties/items/description",
+        "/components/schemas/AvailabilitySlot/properties/available/description",
+        "/components/schemas/CourtAvailability/properties/confirmedAt/description",
+        "/components/schemas/CourtAvailability/properties/stale/description",
+        "/components/schemas/CourtAvailability/properties/staleReason/description",
+        "/components/schemas/CourtAvailability/properties/reservationUrl/description",
+        "/components/schemas/CourtAvailability/properties/slots/description",
+        "/components/schemas/ErrorCode/description",
+        "/components/schemas/Problem/description",
+        "/components/schemas/Problem/properties/type/description",
+        "/components/schemas/Problem/properties/title/description",
+        "/components/schemas/Problem/properties/status/description",
+        "/components/schemas/Problem/properties/detail/description",
+        "/components/schemas/Problem/properties/instance/description",
+        "/components/schemas/Problem/properties/retryable/description",
+        "/components/schemas/Problem/properties/retryAfterSeconds/description",
+        "/components/schemas/Problem/properties/traceId/description",
+        "/components/responses/ValidationFailed/headers",
+        "/components/responses/ValidationFailed/description",
+        "/components/responses/ValidationFailed/content/application~1problem+json/example",
+        "/components/responses/AlertRequestInvalid/description",
+        "/components/responses/AlertRequestInvalid/content/application~1problem+json/examples",
+        "/components/responses/Unauthenticated/description",
+        "/components/responses/Unauthenticated/content/application~1problem+json/example",
+        "/components/responses/CourtNotSupported/description",
+        "/components/responses/CourtNotSupported/content/application~1problem+json/example",
+        "/components/responses/AlertNotFound/description",
+        "/components/responses/AlertNotFound/content/application~1problem+json/example",
+        "/components/responses/IdempotencyKeyReused/description",
+        "/components/responses/IdempotencyKeyReused/content/application~1problem+json/example",
+        "/components/responses/AlertNotAcceptable/description",
+        "/components/responses/AlertNotAcceptable/content/application~1problem+json/examples",
+        "/components/responses/UpstreamUnreadable/description",
+        "/components/responses/UpstreamUnreadable/content/application~1problem+json/example",
+        "/components/responses/UpstreamTimeout/description",
+        "/components/responses/UpstreamTimeout/content/application~1problem+json/example",
+        "/components/responses/AvailabilityUnavailable/description",
+        "/components/responses/AvailabilityUnavailable/content/application~1problem+json/examples",
+        "/components/responses/StorageUnavailable/description",
+        "/components/responses/StorageUnavailable/content/application~1problem+json/example",
+        "/components/responses/StorageOrContentionUnavailable/description",
+        "/components/responses/StorageOrContentionUnavailable/content/application~1problem+json/examples",
+        "/components/responses/InternalError/description",
+        "/components/responses/InternalError/content/application~1problem+json/example"
+      ],
+      "breaking": [],
+      "uncompared": [],
+      "error": null,
+      "points_gone": []
+    },
+    "closed_by_code": [
+      "v_42778f",
+      "v_6884fd",
+      "v_20931f",
+      "v_66c368",
+      "v_ac43d1",
+      "v_f677a5",
+      "v_2cecbf",
+      "v_bf20cf",
+      "v_02467d",
+      "v_7de05d",
+      "v_1757b8",
+      "v_f7441a",
+      "v_228ec7",
+      "v_bada47",
+      "v_08da55",
+      "v_faff5b",
+      "v_3f44cf",
+      "v_7709b5",
+      "v_fe64f8",
+      "v_9c7d67",
+      "v_5bdad4",
+      "v_bd1a4d",
+      "v_3b2c4c",
+      "v_2bd4ca",
+      "v_9b0716",
+      "v_9800b4",
+      "v_336018",
+      "v_da98ea",
+      "v_43c02f",
+      "v_bbde5e",
+      "v_4fcb76"
+    ],
+    "closed_by_contract": [],
+    "decision_risk": {
+      "level": "high",
+      "reasons": [
+        "low confidence decisions: ['d_expiry_source_semantics']"
+      ]
+    }
+  },
+  "disagreements": {
+    "claim_mismatch": [
+      {
+        "iteration": "001",
+        "point": "getCourtAvailability:200",
+        "note": "Availability controller returns the required availability fields and preserves stale results with staleReason.",
+        "detail": "충족했다고 주장한 판정 지점에 게이트 위반이 남아 있다"
+      },
+      {
+        "iteration": "001",
+        "point": "getCourtAvailability:500",
+        "note": "Unexpected availability failures map to INTERNAL_ERROR.",
+        "detail": "충족했다고 주장한 판정 지점에 게이트 위반이 남아 있다"
+      },
+      {
+        "iteration": "001",
+        "point": "getCourtAvailability:502",
+        "note": "Unreadable upstream responses map to UPSTREAM_RESPONSE_UNREADABLE with retry metadata.",
+        "detail": "충족했다고 주장한 판정 지점에 게이트 위반이 남아 있다"
+      },
+      {
+        "iteration": "001",
+        "point": "getCourtAvailability:503",
+        "note": "Unavailable upstream responses map to UPSTREAM_UNAVAILABLE with retry metadata.",
+        "detail": "충족했다고 주장한 판정 지점에 게이트 위반이 남아 있다"
+      },
+      {
+        "iteration": "001",
+        "point": "getCourtAvailability:504",
+        "note": "Upstream timeouts map to UPSTREAM_TIMEOUT with retry metadata.",
+        "detail": "충족했다고 주장한 판정 지점에 게이트 위반이 남아 있다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:201",
+        "note": "New alerts start in WATCHING and return Location plus Idempotency-Replayed=false.",
+        "detail": "충족했다고 주장한 판정 지점에 게이트 위반이 남아 있다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:200",
+        "note": "An existing WATCHING alert for the same user and condition is returned without creating another alert.",
+        "detail": "충족했다고 주장한 판정 지점에 게이트 위반이 남아 있다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:500",
+        "note": "Unresolved upstream failures during create map to INTERNAL_ERROR.",
+        "detail": "충족했다고 주장한 판정 지점에 게이트 위반이 남아 있다"
+      },
+      {
+        "iteration": "001",
+        "point": "createAlert:503",
+        "note": "A concurrent in-flight idempotency request maps to CONCURRENT_UPDATE_CONFLICT.",
+        "detail": "충족했다고 주장한 판정 지점에 게이트 위반이 남아 있다"
+      },
+      {
+        "iteration": "001",
+        "point": "listAlerts:200",
+        "note": "Only the authenticated user's alerts are returned, newest first, with optional stored-status filtering.",
+        "detail": "충족했다고 주장한 판정 지점에 게이트 위반이 남아 있다"
+      },
+      {
+        "iteration": "001",
+        "point": "getAlert:200",
+        "note": "The authenticated owner receives the complete alert representation including nullable fields.",
+        "detail": "충족했다고 주장한 판정 지점에 게이트 위반이 남아 있다"
+      },
+      {
+        "iteration": "001",
+        "point": "cancelAlert:200",
+        "note": "Cancellation is idempotent, preserves terminal states, and clears pending delivery for active alerts.",
+        "detail": "충족했다고 주장한 판정 지점에 게이트 위반이 남아 있다"
+      },
+      {
+        "iteration": "002",
+        "point": "getCourtAvailability:200",
+        "note": "Availability responses expose HH:mm string times and share one completed refresh result across concurrent requests.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "getCourtAvailability:500/502/503/504",
+        "note": "Retry-After is declared in the generated HTTP surface and emitted with retryable failure responses.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "createAlert:200/201",
+        "note": "Location and Idempotency-Replayed headers are declared and emitted; completed idempotent responses are retained for 24 hours.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "createAlert:400",
+        "note": "Missing request parameters and malformed request bodies map to VALIDATION_FAILED with HTTP 400.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "createAlert:200/201/422",
+        "note": "Same-condition deduplication is synchronized and expiry is checked before reuse or pending-delivery creation.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "Alert:required-fields",
+        "note": "API DTOs preserve nullable lastCheckedAt and delivery fields without serialization exclusion.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "Alert.expiresAt",
+        "note": "Expiry is enforced at state-transition boundaries and by the scheduled cleanup task.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "contract:v2",
+        "note": "The approved contract proposals restore scope, time, compatibility, refresh, idempotency, filtering, state, expiry, problem, and error-code semantics.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      },
+      {
+        "iteration": "002",
+        "point": "verification",
+        "note": "Maven verification was not run because the provided PowerShell runner failed during sandbox process setup.",
+        "detail": "G1이 미판정이라 이 주장을 대조할 수 없다"
+      }
+    ],
+    "silent_reversal": [],
+    "unjustified_proposal": [],
+    "axis_disagreement": [],
+    "machine_checkable_restatement": [
+      {
+        "iteration": "001",
+        "critique_id": "w_missing_parameter_failure_mapping",
+        "axis": "failure_faithfulness",
+        "rule": "decision.unknown_point",
+        "detail": "게이트가 decision.unknown_point로 이미 세는 자리를 비평이 다시 말했다"
+      },
+      {
+        "iteration": "001",
+        "critique_id": "w_expiry_transition_guard",
+        "axis": "state_continuity",
+        "rule": "response.type_changed",
+        "detail": "게이트가 response.type_changed로 이미 세는 자리를 비평이 다시 말했다"
+      },
+      {
+        "iteration": "001",
+        "critique_id": "w_condition_dedup_not_atomic",
+        "axis": "state_continuity",
+        "rule": "response.type_changed",
+        "detail": "게이트가 response.type_changed로 이미 세는 자리를 비평이 다시 말했다"
+      },
+      {
+        "iteration": "001",
+        "critique_id": "w_expiry_source_semantics",
+        "axis": "response_fidelity",
+        "rule": "response.type_changed",
+        "detail": "게이트가 response.type_changed로 이미 세는 자리를 비평이 다시 말했다"
+      },
+      {
+        "iteration": "001",
+        "critique_id": "w_refresh_waiter_divergence",
+        "axis": "state_continuity",
+        "rule": "decision.unknown_point",
+        "detail": "게이트가 decision.unknown_point로 이미 세는 자리를 비평이 다시 말했다"
+      },
+      {
+        "iteration": "001",
+        "critique_id": "w_contract_semantics_unreported",
+        "axis": "judgement_disclosure",
+        "rule": "decision.unknown_point",
+        "detail": "게이트가 decision.unknown_point로 이미 세는 자리를 비평이 다시 말했다"
+      }
+    ]
+  },
+  "pointer_touches": {
+    "/tags": [
+      "002"
+    ],
+    "/info/description": [
+      "002"
+    ],
+    "/info/x-out-of-scope": [
+      "002"
+    ],
+    "/paths/~1courts~1{courtId}~1availability/get/tags": [
+      "002"
+    ],
+    "/paths/~1courts~1{courtId}~1availability/get/summary": [
+      "002"
+    ],
+    "/paths/~1courts~1{courtId}~1availability/get/description": [
+      "002"
+    ],
+    "/paths/~1courts~1{courtId}~1availability/get/x-requirement": [
+      "002"
+    ],
+    "/paths/~1courts~1{courtId}~1availability/get/responses/200/description": [
+      "002"
+    ],
+    "/paths/~1alerts/post/tags": [
+      "002"
+    ],
+    "/paths/~1alerts/post/summary": [
+      "002"
+    ],
+    "/paths/~1alerts/post/description": [
+      "002"
+    ],
+    "/paths/~1alerts/post/x-requirement": [
+      "002"
+    ],
+    "/paths/~1alerts/post/responses/201/description": [
+      "002"
+    ],
+    "/paths/~1alerts/post/responses/200/description": [
+      "002"
+    ],
+    "/paths/~1alerts/get/tags": [
+      "002"
+    ],
+    "/paths/~1alerts/get/summary": [
+      "002"
+    ],
+    "/paths/~1alerts/get/description": [
+      "002"
+    ],
+    "/paths/~1alerts/get/x-requirement": [
+      "002"
+    ],
+    "/paths/~1alerts/get/responses/200/description": [
+      "002"
+    ],
+    "/paths/~1alerts~1{alertId}/get/tags": [
+      "002"
+    ],
+    "/paths/~1alerts~1{alertId}/get/summary": [
+      "002"
+    ],
+    "/paths/~1alerts~1{alertId}/get/description": [
+      "002"
+    ],
+    "/paths/~1alerts~1{alertId}/get/x-requirement": [
+      "002"
+    ],
+    "/paths/~1alerts~1{alertId}/get/responses/200/description": [
+      "002"
+    ],
+    "/paths/~1alerts~1{alertId}/delete/tags": [
+      "002"
+    ],
+    "/paths/~1alerts~1{alertId}/delete/summary": [
+      "002"
+    ],
+    "/paths/~1alerts~1{alertId}/delete/description": [
+      "002"
+    ],
+    "/paths/~1alerts~1{alertId}/delete/x-requirement": [
+      "002"
+    ],
+    "/paths/~1alerts~1{alertId}/delete/responses/200/description": [
+      "002"
+    ],
+    "/components/headers/Location/description": [
+      "002"
+    ],
+    "/components/headers/IdempotencyReplayed/description": [
+      "002"
+    ],
+    "/components/headers/RetryAfter/description": [
+      "002"
+    ],
+    "/components/schemas/CourtName": [
+      "002"
+    ],
+    "/components/schemas/AlertStatus/x-requirement": [
+      "002"
+    ],
+    "/components/schemas/Alert/x-requirement": [
+      "002"
+    ],
+    "/components/schemas/Alert/description": [
+      "002"
+    ],
+    "/components/schemas/Alert/properties/courtName/type": [
+      "002"
+    ],
+    "/components/schemas/Alert/properties/courtName/minLength": [
+      "002"
+    ],
+    "/components/schemas/Alert/properties/courtName/$ref": [
+      "002"
+    ],
+    "/components/schemas/Alert/properties/expiresAt/description": [
+      "002"
+    ],
+    "/components/schemas/CourtAvailability/x-requirement": [
+      "002"
+    ],
+    "/components/schemas/CourtAvailability/properties/courtName/type": [
+      "002"
+    ],
+    "/components/schemas/CourtAvailability/properties/courtName/minLength": [
+      "002"
+    ],
+    "/components/schemas/CourtAvailability/properties/courtName/$ref": [
+      "002"
+    ],
+    "/components/schemas/ErrorCode/description": [
+      "002"
+    ],
+    "/components/schemas/Problem/description": [
+      "002"
+    ],
+    "/components/responses/ValidationFailed/headers": [
+      "002"
+    ],
+    "/components/responses/ValidationFailed/description": [
+      "002"
+    ],
+    "/components/responses/AlertRequestInvalid/description": [
+      "002"
+    ],
+    "/components/responses/Unauthenticated/description": [
+      "002"
+    ],
+    "/components/responses/CourtNotSupported/description": [
+      "002"
+    ],
+    "/components/responses/AlertNotFound/description": [
+      "002"
+    ],
+    "/components/responses/IdempotencyKeyReused/description": [
+      "002"
+    ],
+    "/components/responses/AlertNotAcceptable/description": [
+      "002"
+    ],
+    "/components/responses/UpstreamUnreadable/description": [
+      "002"
+    ],
+    "/components/responses/UpstreamTimeout/description": [
+      "002"
+    ],
+    "/components/responses/AvailabilityUnavailable/description": [
+      "002"
+    ],
+    "/components/responses/StorageUnavailable/description": [
+      "002"
+    ],
+    "/components/responses/StorageOrContentionUnavailable/description": [
+      "002"
+    ],
+    "/components/responses/InternalError/description": [
+      "002"
+    ]
+  }
+}

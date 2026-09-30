@@ -1,0 +1,118 @@
+{
+  "brief_hash": "b02d8689",
+  "iteration": "002",
+  "rubric_name": "impl:v1",
+  "rubric_scores": {
+    "scores": {
+      "request_tolerance": 3,
+      "response_fidelity": 1,
+      "failure_faithfulness": 1,
+      "state_continuity": 1,
+      "judgement_disclosure": 3
+    },
+    "weights": {
+      "request_tolerance": 0.2,
+      "response_fidelity": 0.25,
+      "failure_faithfulness": 0.2,
+      "state_continuity": 0.2,
+      "judgement_disclosure": 0.15
+    },
+    "weighted_total": 1.75
+  },
+  "axis_rationales": {
+    "request_tolerance": "열거 14개, 미충족 1개: [slot_bff96712]. AlertController.toCommand와 AlertService.validateAlertRequest는 courtId/date/slot 및 선택 status 부재를 처리하고, AvailabilityController.getCourtAvailability는 date와 path courtId를 받는다. 그러나 AlertService.ensureSlotSupported는 createAlert에서 TimeSlot이 운영 시간대와 정확히 일치하는지 외부 확인으로 즉시 검증해, 확인이 실패하면 계약상 요청 자체의 시간대 수용 여부가 아니라 500으로 거절될 수 있다. AlertService.validateAlertRequest, AvailabilityController.getCourtAvailability, ApiModels.AlertRequest/TimeSlotRequest를 읽었다.",
+    "response_fidelity": "열거 26개, 미충족 7개: [slot_72175f6e, slot_8663b240, slot_cec09639, slot_dbf16bb0, slot_c14121c8, slot_98b55c8f, slot_ea97add0]. AlertController.createAlert는 Location과 Idempotency-Replayed를 만들지만 AlertService.createAlert가 멱등 재생 StoredResponse.body에 상태 객체 참조를 저장해 후속 상태 변화를 반영할 수 있고, 같은 조건 기존 신청의 Location은 맞으나 재생 응답의 '처음 처리 시점' 의미가 흔들린다. ApiMapper.toAlertResponse는 NOTIFIED/SENT 불변식을 만드는 경로가 없고 FAILED 이후 재발송 중단도 HTTP 응답 산출 경로에서 확인되지 않는다. AlertService.expiresAt은 이용 시작 시각만 쓰며 더 이른 예약 마감 시각 반영 경로가 없다. ApiMapper.isCheckDelayed는 60초 상수로만 계산해 CHECK_INTERVAL의 세 배에는 맞지만 AvailabilityService.CHECK_INTERVAL과 결합되지 않는다. AlertService.ensureSlotSupported는 createAlert용 외부 확인 결과를 AvailabilityService.successfulChecks에 저장하지 않아 신청 직후 slots 응답과 조회 캐시 의미가 분리된다. ApiMapper.toAvailabilityResponse, AlertService.createAlert/ensureSlotSupported, AvailabilityService.refresh를 읽었다.",
+    "failure_faithfulness": "열거 34개, 미충족 6개: [slot_58100c30, slot_47c11736, slot_ec620f41, slot_bca4f922, slot_222a5c7a, slot_674794f0]. ApiExceptionHandler.toProblem(ApplicationException) 호출에서 ApplicationException이 code()를 오버라이드하지 않아 Problem.code가 ErrorCode가 아니라 ApiException의 varargs 기반 문자열이 되며 type도 잘못된 slug가 된다. AlertService.getAlert/cancelAlert는 ApplicationException이 아니라 ApiException을 직접 던져 handler 파라미터 ApplicationException 경로와 맞지 않고 ALERT_NOT_FOUND 의미 경로가 안정적으로 매핑되지 않는다. handleUnexpected는 모든 예외 instance를 /v1/alerts로 고정해 실패가 난 요청 경로 의미를 지키지 못한다. retryable이면 Retry-After를 싣는 경로와 5xx traceId 경로는 ApiExceptionHandler.handleApiException/toProblem에 있다. ApiExceptionHandler, ApplicationException, ApiException, AlertService.getAlert/cancelAlert, AvailabilityService.upstreamFailure를 읽었다.",
+    "state_continuity": "열거 30개, 미충족 5개: [slot_218b9620, slot_7afbe3b4, slot_3b26d64c, slot_061df20e, slot_643810e9]. AvailabilityService.inFlight가 같은 코트·날짜 동시 조회를 합치고 stale 반환 경로를 두지만, AlertService.ensureSlotSupported가 createAlert마다 availabilityPort.checkAvailability를 직접 호출해 코트·날짜 단위 확인 저장과 중복 억제 경로를 우회한다. AlertService.createAlert는 2xx 저장과 24시간 TTL을 두지만 StoredResponse.body가 Alert 객체라 재생 응답이 처음 처리 시점 내용으로 고정된다는 약속을 충분히 보존하지 못한다. AlertStatus의 NOTIFIED 전이, DeliveryStatus SENT/FAILED 전이, EF-3/V-7의 최대 3회 재시도와 DLQ 경로는 구현에 없다. AlertService.onAvailabilityChecked는 PENDING 한 건 및 취소/만료 시 null 제거는 구현한다. AvailabilityService.getAvailability/refresh, AlertService.createAlert/onAvailabilityChecked/expireDueAlerts/cancelAlert를 읽었다.",
+    "judgement_disclosure": "신고 5건, 계약 변경 0건, 미신고 1건: [ApplicationException.code 미오버라이드]. Bearer 주체, createAlert 중 upstream 실패, lazy 만료 평가, out-of-scope 발송의 PENDING 표현, retryAfter 수치는 신고되어 있고 근거가 계약/명세 또는 범위 제약을 가리킨다. 그러나 ApplicationException이 ErrorCode 필드를 보관하면서 code()를 오버라이드하지 않아 실제 Problem.code 값을 ApiException 기본 판단에 맡기는 구현상 선택이 생겼고 신고 목록에 없다. ApplicationException, ApiException, ApiExceptionHandler.toProblem을 읽었다."
+  },
+  "slot_classifications": [
+    {
+      "slot_id": "slot_fd7db9b0",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "전체 범위와 시간/호환성 설명으로 여러 축 배경이나 개별 구현 의무 분모로 세지 않았다."
+    },
+    {
+      "slot_id": "slot_d29b457f",
+      "classification": "description",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "NFR-2가 HTTP 표면 밖 성능 기준이라는 범위 설명이라 구현 의무 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_c4167f47",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "태그 설명으로 오퍼레이션 존재를 설명하지만 별도 동작 의무는 아니다."
+    },
+    {
+      "slot_id": "slot_31d22375",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "태그 설명으로 예약 상태 조회 영역을 설명하지만 별도 동작 의무는 아니다."
+    },
+    {
+      "slot_id": "slot_e23500c7",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "Bearer 토큰 주체로 사용자별 격리를 유지하는 약속이며 AlertController.authenticate와 AlertService userId 필터에서 확인된다."
+    },
+    {
+      "slot_id": "slot_a18b4f05",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "서버가 alertId를 발급해 응답에 싣는 값의 의미이며 AlertService.createAlert의 UUID.randomUUID와 ApiMapper.toAlertResponse에서 확인된다."
+    },
+    {
+      "slot_id": "slot_4606301c",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "지원 코트 식별자 수용과 판정의 요청 의무이며 AvailabilityService.getAvailability와 AlertService.validateAlertRequest에서 findCourt로 확인된다."
+    },
+    {
+      "slot_id": "slot_bff96712",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": false,
+      "note": "TimeSlot은 운영 시간대와 정확히 일치해야 하는 신청 조건이나 createAlert의 ensureSlotSupported가 외부 확인 실패 때 수용 판정 대신 500으로 거절한다."
+    },
+    {
+      "slot_id": "slot_8ed65ad8",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "지역 기준 HH:mm 시작 시각 입력 의무이며 AlertService.validateAlertRequest와 ApiMapper.formatTime에서 Asia/Seoul 날짜 기반 처리와 HH:mm 파싱을 확인했다."
+    },
+    {
+      "slot_id": "slot_b7eb2903",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "지역 기준 HH:mm 종료 시각 입력 의무이며 AlertService.validateAlertRequest와 ApiMapper.formatTime에서 확인된다."
+    }
+  ],
+  "calibration_note": "측정 불가 축은 없다.\nApplicationException의 code 산출 결함은 실패 응답 대부분의 의미를 흔들어 failure_faithfulness를 낮게 보았고, 발송/만료 관련 축은 out_of_scope 신고가 일부 있으나 기준선 슬롯에는 NOTIFIED/SENT/FAILED 전이가 남아 있어 미충족으로 셌다.",
+  "unmeasured_axes": [],
+  "evaluated_at": "2026-09-30T05:23:58+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_impl:v1",
+    "source_files": [
+      "b02d8689_input.json",
+      "b02d8689_iter-002_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 89709,
+      "cached_input_tokens": 2432,
+      "output_tokens": 2429,
+      "reasoning_output_tokens": 516
+    }
+  }
+}

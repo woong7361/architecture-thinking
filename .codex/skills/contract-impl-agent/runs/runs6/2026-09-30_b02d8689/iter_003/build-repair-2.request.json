@@ -1,0 +1,26 @@
+{
+  "brief_hash": "b02d8689",
+  "iteration": "003",
+  "purpose": "build_repair",
+  "attempt": 2,
+  "max_attempts": 3,
+  "scope": "build_only",
+  "instruction": "컴파일과 부팅만 고쳐라. 계약 적합성은 아직 판정되지 않았으므로 그 자리를 건드리지 마라. 구현을 크게 바꾸지 말고 빌드 실패의 원인만 고쳐라. 계약 판본은 그대로 둔다.",
+  "priority_order": [
+    "gate_violations"
+  ],
+  "open_violations": [
+    {
+      "rule": "g0.extract_failed",
+      "point": null,
+      "where": "dump_api_docs.py",
+      "detail": "부팅이 실패했거나 제한 시간 안에 포트를 열지 못했다\n원인: java.lang.NoSuchMethodException: com.thinking.tennis.app.AlertService.<init>()\n  ← org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.thinking.tennis.app.AlertService]: No default constructor found\n  ← org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'alertService' defined in AlertService.class: Failed to instantiate [com.thinking.tennis.app.AlertService]: No default constructor found\norg.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'alertController' defined in AlertController.class: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'alertService' defined in AlertService.class: Failed to instantiate [com.thinking.tennis.app.AlertService]: No default constructor found\n추출기: 애플리케이션이 포트를 열기 전에 종료했다. exit 1",
+      "verdict": "violation"
+    }
+  ],
+  "rule_cards": {},
+  "current_contract_version": {
+    "path": "contract/tennis-alert-api.yaml-v2.yaml",
+    "from": "contract/tennis-alert-api.yaml-v1.yaml"
+  }
+}

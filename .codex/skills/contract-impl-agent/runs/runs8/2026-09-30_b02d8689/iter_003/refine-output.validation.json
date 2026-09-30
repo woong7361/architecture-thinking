@@ -1,0 +1,9 @@
+{
+  "artifact": "refine_output",
+  "checked_file": "C:\\Users\\PC-220~1\\AppData\\Local\\Temp\\contract-impl-refine-ax5u2p06\\refine-output.json",
+  "status": "REJECT",
+  "errors": [
+    "manifest.contract_version_missing: contract/tennis-alert-api-v2.yaml is not in the file manifest",
+    "manifest.contract_role_count: expected exactly one file with role=contract, found []"
+  ]
+}

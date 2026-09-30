@@ -1,0 +1,117 @@
+{
+  "brief_hash": "b02d8689",
+  "iteration": "001",
+  "rubric_name": "impl:v1",
+  "rubric_scores": {
+    "scores": {
+      "request_tolerance": 5,
+      "response_fidelity": 5,
+      "failure_faithfulness": 5,
+      "state_continuity": 3,
+      "judgement_disclosure": 5
+    },
+    "weights": {
+      "request_tolerance": 0.2,
+      "response_fidelity": 0.25,
+      "failure_faithfulness": 0.2,
+      "state_continuity": 0.2,
+      "judgement_disclosure": 0.15
+    },
+    "weighted_total": 4.6
+  },
+  "axis_rationales": {
+    "request_tolerance": "열거 11개, 미충족 0개: []. `src/main/java/com/thinking/tennis/api/RequestValidation.java`의 요청·UUID·상태·멱등 키 검증과 `TennisAlertController`의 선택적 status 및 필수 date/body/header 수용 경로가 계약의 입력 범위와 맞는다. `AlertRequest`의 courtId/date/slot 및 `TimeSlot`의 startTime/endTime은 계약 스키마에 대응하며 계약에 없는 추가적인 범위 축소 경로는 확인되지 않는다.",
+    "response_fidelity": "열거 23개, 미충족 0개: []. `src/main/java/com/thinking/tennis/app/AvailabilityService.java`의 캐시·갱신 결과와 `AvailabilityResponse` 변환부가 confirmedAt, stale, staleReason, reservationUrl, slots의 의미를 유지한다. `AlertApplicationService`와 `AlertResponse`가 expiresAt, lastCheckedAt, checkDelayed, delivery를 저장된 도메인 값에서 투영하고, `TennisAlertController`가 Location 및 Idempotency-Replayed 응답 헤더를 생성한다. 목록은 `InMemoryAlertStore`의 소유자 필터와 생성 시각 역순 경로를 사용한다.",
+    "failure_faithfulness": "열거 24개, 미충족 0개: []. `src/main/java/com/thinking/tennis/app/AvailabilityService.java`의 외부 확인 실패 분기와 `UseCaseException`이 UPSTREAM_TIMEOUT/UPSTREAM_UNAVAILABLE/UPSTREAM_RESPONSE_UNREADABLE 및 저장·경합 실패를 구분한다. `src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java`가 선언된 HTTP 상태, code, retryable, retryAfterSeconds, 5xx traceId 및 4xx 무traceId 규칙으로 매핑하고, `RequestValidation`과 `TennisAlertController`가 validation/authentication/not-found/idempotency 실패 경로를 연결한다.",
+    "state_continuity": "열거 12개, 미충족 1개: [slot_3b26d64c]. `InMemoryAlertStore`와 `AlertApplicationService`에서 소유자별 조회, 동일 조건의 WATCHING 중복 억제, 멱등 키 재생·24시간 정리, terminal 상태의 해제 반복 호출을 유지한다. `AvailabilityService`는 코트·날짜 키별 캐시와 동시 갱신 경로를 유지한다. 다만 `AlertStatus`의 EXPIRED 자동 전이와 이를 실제로 수행하는 서버 작업 경로가 `src/main/java/com/thinking/tennis/domain/AlertStatus.java` 및 `AlertApplicationService`의 HTTP 조회·해제 경로에서 확인되지 않아 해당 상태 전이 슬롯을 미충족으로 셌다.",
+    "judgement_disclosure": "신고된 판단 7건, 계약 변경 0건, 미신고 판단 0건. `STANDING_DECISIONS_JSON`의 Bearer 사용자 키, UTC 시계, 만료 경계, create 중 확인 실패, Problem 문자열, 멱등 기록 정리, 저장된 만료 상태 투영 판단은 각각 계약 또는 요구사항 명세의 명시 내용·함의·계약 공백을 가리키며 대안과 영향 범위도 기록되어 있다. 계약을 수정한 기록은 없고, 별도의 무기록 계약 해석은 확인되지 않는다."
+  },
+  "slot_classifications": [
+    {
+      "slot_id": "slot_fd7db9b0",
+      "classification": "description",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "계약의 범위·호환성·시간 표현을 설명하는 혼합 서술로, 단일 구현 의무의 분모에서는 제외했다."
+    },
+    {
+      "slot_id": "slot_d29b457f",
+      "classification": "description",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "NFR-2가 HTTP 계약 밖임을 밝히는 범위 설명이므로 의무 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_c4167f47",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "태그의 기능 분류 설명이며 별도 실행 약속은 아니므로 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_31d22375",
+      "classification": "description",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "태그의 기능 분류 설명이며 별도 응답 값의 약속은 아니므로 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_e23500c7",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "BearerUser와 보호된 컨트롤러 경로가 토큰 사용자와 신청 소유자를 일관되게 연결한다."
+    },
+    {
+      "slot_id": "slot_a18b4f05",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "AlertApplicationService의 생성 경로가 서버 발급 UUID를 AlertResponse의 alertId로 투영한다."
+    },
+    {
+      "slot_id": "slot_4606301c",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "RequestValidation과 AlertRequest가 서비스가 지원하는 courtId 입력을 받는다."
+    },
+    {
+      "slot_id": "slot_bff96712",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "AlertRequest와 TimeSlot 검증 경로가 코트 하나·날짜 하나·시간대 하나의 신청 조건을 수용한다."
+    },
+    {
+      "slot_id": "slot_8ed65ad8",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "TimeSlot의 startTime을 코트 지역 기준 HH:mm 입력으로 검증하고 전달한다."
+    },
+    {
+      "slot_id": "slot_b7eb2903",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "TimeSlot의 endTime을 코트 지역 기준 HH:mm 입력으로 검증하고 전달한다."
+    }
+  ],
+  "calibration_note": "요청·응답·실패 축은 각 약속을 연결하는 직접적인 API/서비스/저장소 경로가 확인되어 5점으로 두었다. 상태 연속성은 멱등·소유권·해제·캐시 약속은 연결되지만 EXPIRED 자동 전이 경로가 보이지 않아 엄격히 3점으로 낮췄다.",
+  "evaluated_at": "2026-09-30T00:53:54+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_impl:v1",
+    "source_files": [
+      "b02d8689_input.json",
+      "b02d8689_iter-001_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 1073912,
+      "cached_input_tokens": 986752,
+      "output_tokens": 19293,
+      "reasoning_output_tokens": 16294
+    }
+  }
+}

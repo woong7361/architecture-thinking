@@ -1,0 +1,478 @@
+{
+  "brief_hash": "b02d8689",
+  "iteration": "001",
+  "stage": "gen",
+  "files": [
+    {
+      "path": "contract/tennis-alert-api.yaml-v1.yaml",
+      "role": "contract"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/DomainModels.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/ApplicationException.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/AlertCommand.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/CreateAlertResult.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/AvailabilityService.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/AlertService.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/ApiModels.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/ApiMapper.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/AlertController.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/OpenApiConfiguration.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/ApiException.java",
+      "role": "code"
+    }
+  ],
+  "contract_version": {
+    "path": "contract/tennis-alert-api.yaml-v1.yaml",
+    "from": "contract/tennis-alert-api.yaml-v1.yaml"
+  },
+  "claims": [
+    {
+      "point": "getCourtAvailability:200",
+      "note": "코트·날짜별 성공 결과를 인메모리에 저장하고 20초 이내 결과를 재사용하며 stale 필드를 포함한 전체 응답을 반환한다."
+    },
+    {
+      "point": "getCourtAvailability:400",
+      "note": "courtId와 date 형식을 명시적으로 검증하고 RFC 9457 문제 응답을 반환한다."
+    },
+    {
+      "point": "getCourtAvailability:404",
+      "note": "지원하지 않는 경로 코트를 COURT_NOT_SUPPORTED로 구분한다."
+    },
+    {
+      "point": "getCourtAvailability:500",
+      "note": "예상하지 못한 내부 실패를 INTERNAL_ERROR로 매핑한다."
+    },
+    {
+      "point": "getCourtAvailability:502",
+      "note": "저장된 성공 결과가 없고 외부 응답을 읽지 못한 경우 UPSTREAM_RESPONSE_UNREADABLE을 반환한다."
+    },
+    {
+      "point": "getCourtAvailability:503",
+      "note": "저장된 성공 결과가 없고 예약처에 연결하지 못한 경우 UPSTREAM_UNAVAILABLE을 반환한다."
+    },
+    {
+      "point": "getCourtAvailability:504",
+      "note": "저장된 성공 결과가 없고 예약처가 시간 안에 응답하지 않은 경우 UPSTREAM_TIMEOUT을 반환한다."
+    },
+    {
+      "point": "getCourtAvailability:VALIDATION_FAILED",
+      "note": "요청 형식 오류를 명시적인 400 문제 응답으로 노출한다."
+    },
+    {
+      "point": "getCourtAvailability:COURT_NOT_SUPPORTED",
+      "note": "포트의 지원 코트 조회 결과와 경로 입력을 404로 매핑한다."
+    },
+    {
+      "point": "getCourtAvailability:INTERNAL_ERROR",
+      "note": "전역 예외 매핑에서 5xx traceId와 재시도 정보를 포함한다."
+    },
+    {
+      "point": "getCourtAvailability:UPSTREAM_RESPONSE_UNREADABLE",
+      "note": "실패 사유 이름을 계약의 에러 코드와 동일하게 보존한다."
+    },
+    {
+      "point": "getCourtAvailability:UPSTREAM_UNAVAILABLE",
+      "note": "확인 실패를 빈자리 없음으로 바꾸지 않고 재시도 가능한 503으로 반환한다."
+    },
+    {
+      "point": "getCourtAvailability:STORAGE_TIMEOUT",
+      "note": "계약에 선언된 저장소 오류 코드는 문제 스키마와 OpenAPI 응답 선언에 보존했다."
+    },
+    {
+      "point": "getCourtAvailability:UPSTREAM_TIMEOUT",
+      "note": "재시도 가능한 504와 Retry-After 20초를 반환한다."
+    },
+    {
+      "point": "createAlert:201",
+      "note": "검증된 조건에 대해 WATCHING 신청을 생성하고 Location과 Idempotency-Replayed=false를 보낸다."
+    },
+    {
+      "point": "createAlert:200",
+      "note": "같은 사용자의 동일한 WATCHING 조건은 새 신청 없이 기존 신청을 반환한다."
+    },
+    {
+      "point": "createAlert:400",
+      "note": "UUID 멱등 키, 본문 필수값, CourtId, 날짜, 시간 형식과 추가 필드를 검증한다."
+    },
+    {
+      "point": "createAlert:401",
+      "note": "Bearer 토큰이 없거나 비어 있으면 UNAUTHENTICATED를 반환한다."
+    },
+    {
+      "point": "createAlert:409",
+      "note": "24시간 안에 같은 멱등 키로 다른 요청이 처리된 경우 IDEMPOTENCY_KEY_REUSED를 반환한다."
+    },
+    {
+      "point": "createAlert:422",
+      "note": "지원 코트, 운영 시간대, 이용 시작 시각을 명시적으로 판정한다."
+    },
+    {
+      "point": "createAlert:500",
+      "note": "신청 조건 확인 중 외부 확인 실패를 계약에 선언된 INTERNAL_ERROR로 매핑한다."
+    },
+    {
+      "point": "createAlert:503",
+      "note": "같은 멱등 키의 앞선 요청이 처리 중이면 CONCURRENT_UPDATE_CONFLICT와 Retry-After를 반환한다."
+    },
+    {
+      "point": "createAlert:VALIDATION_FAILED",
+      "note": "4xx 요청은 멱등 응답 저장소에 기록하지 않고 재검증한다."
+    },
+    {
+      "point": "createAlert:UNAUTHENTICATED",
+      "note": "신청 생성에도 전역 Bearer 보안 요구를 적용한다."
+    },
+    {
+      "point": "createAlert:IDEMPOTENCY_KEY_REUSED",
+      "note": "사용자·오퍼레이션·키 조합과 요청 fingerprint를 비교한다."
+    },
+    {
+      "point": "createAlert:COURT_NOT_SUPPORTED",
+      "note": "본문의 지원하지 않는 코트를 422로 반환한다."
+    },
+    {
+      "point": "createAlert:SLOT_NOT_SUPPORTED",
+      "note": "포트가 반환한 해당 날짜의 운영 시간대와 정확히 일치하는지 확인한다."
+    },
+    {
+      "point": "createAlert:ALERT_WINDOW_CLOSED",
+      "note": "Asia/Seoul 기준 이용 시작 시각을 UTC 만료 시각으로 계산해 지난 조건을 거절한다."
+    },
+    {
+      "point": "createAlert:INTERNAL_ERROR",
+      "note": "계약에 없는 upstream 응답을 새 오류 코드로 확장하지 않고 INTERNAL_ERROR로 반환한다."
+    },
+    {
+      "point": "createAlert:STORAGE_TIMEOUT",
+      "note": "OpenAPI 응답 선언에 저장소 시간 초과 코드를 보존한다."
+    },
+    {
+      "point": "createAlert:CONCURRENT_UPDATE_CONFLICT",
+      "note": "동시 처리 중인 같은 키는 새 신청을 만들지 않고 503으로 물러난다."
+    },
+    {
+      "point": "listAlerts:200",
+      "note": "인증된 사용자 소유 신청만 최근 생성 순으로 모두 반환하고 선택 status로 저장 상태를 필터링한다."
+    },
+    {
+      "point": "listAlerts:400",
+      "note": "알 수 없는 status 값을 VALIDATION_FAILED로 거절한다."
+    },
+    {
+      "point": "listAlerts:401",
+      "note": "Bearer 인증 실패를 UNAUTHENTICATED로 반환한다."
+    },
+    {
+      "point": "listAlerts:500",
+      "note": "예상하지 못한 내부 실패를 INTERNAL_ERROR로 매핑한다."
+    },
+    {
+      "point": "listAlerts:503",
+      "note": "계약의 StorageUnavailable 응답과 STORAGE_TIMEOUT 코드를 OpenAPI에 선언한다."
+    },
+    {
+      "point": "listAlerts:VALIDATION_FAILED",
+      "note": "status 열거형을 도구 기본값에 맡기지 않고 애플리케이션에서 판정한다."
+    },
+    {
+      "point": "listAlerts:UNAUTHENTICATED",
+      "note": "목록 조회에 bearerAuth 요구를 명시한다."
+    },
+    {
+      "point": "listAlerts:INTERNAL_ERROR",
+      "note": "전역 예외 처리에서 5xx 문제 형식을 사용한다."
+    },
+    {
+      "point": "listAlerts:STORAGE_TIMEOUT",
+      "note": "계약의 저장소 장애 좌표를 응답 선언에 포함한다."
+    },
+    {
+      "point": "getAlert:200",
+      "note": "소유자에 한해 UUID 신청을 전체 필드와 함께 반환한다."
+    },
+    {
+      "point": "getAlert:400",
+      "note": "alertId가 UUID가 아니면 VALIDATION_FAILED로 반환한다."
+    },
+    {
+      "point": "getAlert:401",
+      "note": "Bearer 인증 실패를 UNAUTHENTICATED로 반환한다."
+    },
+    {
+      "point": "getAlert:404",
+      "note": "없는 신청과 다른 사용자의 신청을 동일한 ALERT_NOT_FOUND로 반환한다."
+    },
+    {
+      "point": "getAlert:500",
+      "note": "예상하지 못한 내부 실패를 INTERNAL_ERROR로 매핑한다."
+    },
+    {
+      "point": "getAlert:503",
+      "note": "계약의 StorageUnavailable 응답과 STORAGE_TIMEOUT 코드를 보존한다."
+    },
+    {
+      "point": "getAlert:VALIDATION_FAILED",
+      "note": "UUID 형식을 명시적으로 검사한다."
+    },
+    {
+      "point": "getAlert:UNAUTHENTICATED",
+      "note": "단건 조회에 bearerAuth 요구를 명시한다."
+    },
+    {
+      "point": "getAlert:ALERT_NOT_FOUND",
+      "note": "사용자 소유권 검사를 응답 존재 여부와 동일하게 처리한다."
+    },
+    {
+      "point": "getAlert:INTERNAL_ERROR",
+      "note": "5xx 문제 응답에 traceId를 포함한다."
+    },
+    {
+      "point": "getAlert:STORAGE_TIMEOUT",
+      "note": "계약의 저장소 장애 좌표를 응답 선언에 포함한다."
+    },
+    {
+      "point": "cancelAlert:200",
+      "note": "WATCHING 신청을 CANCELED로 바꾸고 PENDING delivery를 null로 만든다. 이미 끝난 상태는 그대로 반환한다."
+    },
+    {
+      "point": "cancelAlert:400",
+      "note": "alertId UUID 형식을 명시적으로 검증한다."
+    },
+    {
+      "point": "cancelAlert:401",
+      "note": "Bearer 인증 실패를 UNAUTHENTICATED로 반환한다."
+    },
+    {
+      "point": "cancelAlert:404",
+      "note": "없는 신청과 남의 신청을 ALERT_NOT_FOUND로 동일하게 반환한다."
+    },
+    {
+      "point": "cancelAlert:500",
+      "note": "예상하지 못한 내부 실패를 INTERNAL_ERROR로 매핑한다."
+    },
+    {
+      "point": "cancelAlert:503",
+      "note": "동시 수정 오류와 저장소 오류 좌표를 OpenAPI에 선언한다."
+    },
+    {
+      "point": "cancelAlert:VALIDATION_FAILED",
+      "note": "잘못된 UUID를 400 문제 응답으로 반환한다."
+    },
+    {
+      "point": "cancelAlert:UNAUTHENTICATED",
+      "note": "해제 오퍼레이션에 bearerAuth 요구를 명시한다."
+    },
+    {
+      "point": "cancelAlert:ALERT_NOT_FOUND",
+      "note": "소유자 확인 실패를 존재하지 않는 신청과 같은 응답으로 처리한다."
+    },
+    {
+      "point": "cancelAlert:INTERNAL_ERROR",
+      "note": "5xx 문제 응답에 traceId와 재시도 정보를 포함한다."
+    },
+    {
+      "point": "cancelAlert:STORAGE_TIMEOUT",
+      "note": "계약의 저장소 장애 좌표를 응답 선언에 포함한다."
+    },
+    {
+      "point": "cancelAlert:CONCURRENT_UPDATE_CONFLICT",
+      "note": "해제 오퍼레이션의 경합 오류 좌표를 응답 선언에 포함한다."
+    }
+  ],
+  "decisions": [
+    {
+      "id": "d_bearer_subject",
+      "point": "createAlert:UNAUTHENTICATED",
+      "where": "AlertController.authenticate",
+      "question": "계약이 Bearer 토큰의 검증 체계와 사용자 식별자 형식을 정하지 않은 상황에서 토큰을 어떻게 사용자로 연결할 것인가?",
+      "considered": [
+        {
+          "choice": "토큰 문자열 자체를 사용자 식별자로 사용",
+          "consequence": "외부 인증 저장소 없이 사용자별 격리를 구현할 수 있다."
+        },
+        {
+          "choice": "토큰을 별도 사용자 조회 포트로 검증",
+          "consequence": "계약과 provided_api에 없는 포트와 외부 의존성이 필요하다."
+        }
+      ],
+      "chosen": "비어 있지 않은 Bearer 토큰의 값 자체를 사용자 식별자로 사용한다.",
+      "basis": "least_harm",
+      "rationale": "계약은 Bearer 토큰을 사용한다고만 정하고 사용자 검증 포트를 제공하지 않았으므로, 범위를 넓히지 않고 본인별 격리만 보장한다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:401",
+        "listAlerts:401",
+        "getAlert:401",
+        "cancelAlert:401"
+      ],
+      "reversal_cost": "인증 어댑터와 사용자 식별 매핑을 별도 포트로 추출하고 네 오퍼레이션의 호출부를 교체해야 한다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_alert_slot_upstream_failure",
+      "point": "createAlert:500",
+      "where": "AlertService.ensureSlotSupported",
+      "question": "신청 생성 중 시간대 검증을 위한 외부 확인이 실패했지만 createAlert 응답에 upstream 전용 상태와 코드가 선언되지 않은 경우 무엇을 반환할 것인가?",
+      "considered": [
+        {
+          "choice": "계약에 없는 upstream 상태나 코드를 추가",
+          "consequence": "createAlert 계약 표면을 넓히고 선언되지 않은 오류를 만든다."
+        },
+        {
+          "choice": "선언된 500 INTERNAL_ERROR로 반환",
+          "consequence": "클라이언트는 재시도 가능한 서버 오류로 처리하고 계약 밖 코드를 받지 않는다."
+        }
+      ],
+      "chosen": "500 INTERNAL_ERROR와 retryAfterSeconds=5를 반환한다.",
+      "basis": "least_harm",
+      "rationale": "createAlert가 선언한 실패 좌표 안에서 외부 확인 실패를 표현하면서 새 상태나 오류 코드를 발명하지 않는다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:500",
+        "createAlert:INTERNAL_ERROR"
+      ],
+      "reversal_cost": "신청 생성의 검증 결과 타입과 컨트롤러 오류 매핑을 변경하고 계약에 선언된 오류 좌표와 다시 대조해야 한다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_lazy_expiry_evaluation",
+      "point": "getAlert:200",
+      "where": "AlertService.expireDueAlerts",
+      "question": "인메모리 구현에서 서버 작업으로 선언된 만료 전이를 어떤 실행 지점에서 보장할 것인가?",
+      "considered": [
+        {
+          "choice": "별도 스케줄러를 추가",
+          "consequence": "계약 범위 밖의 백그라운드 실행기와 시간 기반 테스트 인프라가 필요하다."
+        },
+        {
+          "choice": "신청을 읽거나 변경하는 시점에 만료 시각을 평가",
+          "consequence": "외부 엔드포인트 없이 조회 결과와 이후 작업에서 만료 상태를 일관되게 반영한다."
+        }
+      ],
+      "chosen": "목록·단건 조회·해제·예약 상태 확인 시점에 지연 평가한다.",
+      "basis": "least_harm",
+      "rationale": "저장소와 메시지 발송 경로가 범위 밖이고 구현은 인메모리이므로, 노출되는 상태와 확인·발송 중단을 요청 경계에서 보장한다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "listAlerts:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "reversal_cost": "만료 작업자와 저장소 상태 전이 코드를 추가하고 lazy transition 로직을 제거해야 한다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_delivery_pending_state",
+      "point": "getAlert:200",
+      "where": "AlertService.onAvailabilityChecked",
+      "question": "알림 발송 경로가 out_of_scope인 상태에서 빈자리 발견을 신청 조회에 어떻게 표현할 것인가?",
+      "considered": [
+        {
+          "choice": "발송 경로를 구현해 즉시 SENT 또는 NOTIFIED로 전이",
+          "consequence": "범위 밖 AsyncAPI와 발송 수단을 임의로 구현하게 된다."
+        },
+        {
+          "choice": "빈자리 발견 시 PENDING만 기록하고 발송 성공 전이는 외부 경로에 남김",
+          "consequence": "계약이 허용하는 감시 중 PENDING 상태를 보존하고 메시지 경로를 침범하지 않는다."
+        }
+      ],
+      "chosen": "빈자리를 발견하면 PENDING delivery를 기록하고 신청 상태는 WATCHING으로 유지한다.",
+      "basis": "spec_implication",
+      "rationale": "계약은 실제 발송 전까지 PENDING이 가능하고 발송 경로는 out_of_scope이므로, HTTP 표면에서 관찰 가능한 대기 상태까지만 구현한다.",
+      "confidence": "high",
+      "blast_radius": [
+        "getAlert:200",
+        "listAlerts:200",
+        "cancelAlert:200"
+      ],
+      "reversal_cost": "발송 포트와 작업자를 추가하고 PENDING 항목의 성공·실패 전이를 연결해야 한다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_idempotency_retry_windows",
+      "point": "createAlert:503",
+      "where": "AlertService.createAlert",
+      "question": "계약이 예시로 제시한 재시도 대기값을 인메모리 구현의 명시값으로 어떻게 사용할 것인가?",
+      "considered": [
+        {
+          "choice": "모든 재시도 응답에 같은 값 사용",
+          "consequence": "upstream 확인 간격과 경합·내부 실패의 성격을 구분하지 못한다."
+        },
+        {
+          "choice": "upstream은 20초, 경합은 1초, 내부 실패는 5초로 사용",
+          "consequence": "계약의 확인 간격 및 각 응답 예시와 일치한다."
+        }
+      ],
+      "chosen": "UPSTREAM 계열은 20초, CONCURRENT_UPDATE_CONFLICT는 1초, INTERNAL_ERROR는 5초를 사용한다.",
+      "basis": "contract_analogy",
+      "rationale": "NFR-3의 확인 간격과 각 응답 예시에 같은 값이 명시되어 있어 별도 수치를 만들지 않는다.",
+      "confidence": "high",
+      "blast_radius": [
+        "getCourtAvailability:502",
+        "getCourtAvailability:503",
+        "getCourtAvailability:504",
+        "createAlert:500",
+        "createAlert:503"
+      ],
+      "reversal_cost": "오류 매핑의 상수와 Retry-After 응답 검증을 함께 수정해야 한다.",
+      "supersedes": null
+    }
+  ],
+  "contract_changes": [],
+  "generated_at": "2026-09-30T03:31:40+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "gen_impl:v1",
+    "source_files": [
+      "b02d8689_input.json"
+    ],
+    "token_usage": {
+      "input_tokens": 3484917,
+      "cached_input_tokens": 3312256,
+      "output_tokens": 50580,
+      "reasoning_output_tokens": 13690
+    },
+    "build_attempts": 3,
+    "index_source": "git-diff-recovery"
+  },
+  "commit": "4db12e456da3785007e1782e14d6c65f2b9cc5a3"
+}

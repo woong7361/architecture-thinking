@@ -1,0 +1,118 @@
+{
+  "brief_hash": "b02d8689",
+  "iteration": "001",
+  "rubric_name": "impl:v1",
+  "rubric_scores": {
+    "scores": {
+      "request_tolerance": 5,
+      "response_fidelity": 1,
+      "failure_faithfulness": 1,
+      "state_continuity": 1,
+      "judgement_disclosure": 4
+    },
+    "weights": {
+      "request_tolerance": 0.2,
+      "response_fidelity": 0.25,
+      "failure_faithfulness": 0.2,
+      "state_continuity": 0.2,
+      "judgement_disclosure": 0.15
+    },
+    "weighted_total": 2.25
+  },
+  "axis_rationales": {
+    "request_tolerance": "열거 11개, 미충족 0개: []; 근거: src/main/java/com/thinking/tennis/api/TennisAlertController.java의 getCourtAvailability/createAlert/listAlerts와 parseDate/parseTime/parseUuid/parseStatus/validateCourtId가 날짜·상태·UUID·코트 식별자 입력을 처리하고, src/main/java/com/thinking/tennis/app/AlertApplicationService.java:createAlert가 court lookup과 저장된 availability snapshot으로 정확한 slot을 판정한다.",
+    "response_fidelity": "열거 28개, 미충족 4개: [slot_8663b240, slot_c14121c8, slot_dc9ce55b, slot_98b55c8]; 근거: src/main/java/com/thinking/tennis/api/ApiResponses.java:alert/availability는 대부분의 응답 필드를 매핑하지만, src/main/java/com/thinking/tennis/api/TennisAlertController.java:createAlert가 replay 때 checkDelayed를 다시 계산하고, src/main/java/com/thinking/tennis/app/AlertApplicationService.java:createAlert는 expiresAt을 시작 시각으로만 고정하며, src/main/java/com/thinking/tennis/domain/Alert.java:recordSuccessfulCheck는 호출 경로가 없어 lastCheckedAt/checkDelayed의 뜻이 계약과 다르다.",
+    "failure_faithfulness": "열거 33개, 미충족 3개: [slot_ecc04933, slot_d5fad6dd, slot_5f627ac2]; 근거: src/main/java/com/thinking/tennis/api/TennisAlertExceptionHandler.java:response가 Problem, Retry-After, traceId를 만들고 src/main/java/com/thinking/tennis/app/AlertApplicationService.java:availabilityFailure와 controller validation 분기가 주요 실패를 매핑하지만, 저장소 시간초과 상황은 list/get/create/cancel 저장 경로에 없고 awaitAvailability의 InterruptedException 경로만 STORAGE_TIMEOUT으로 둔다.",
+    "state_continuity": "열거 24개, 미충족 10개: [slot_85c85829, slot_7afbe3b4, slot_3b26d64c, slot_31472fbc, slot_061df20e, slot_c733b457, slot_643810e9, slot_d4a3fef5, slot_3307096b, slot_e2d6a63c]; 근거: src/main/java/com/thinking/tennis/app/AlertApplicationService.java:getCourtAvailability/createAlert는 availability 캐시·동시 refresh·멱등키 저장을 유지하지만, listAlerts가 필터 전 expireDueAlerts를 실행해 저장 status 필터 약속과 어긋나고, idempotency replay 응답은 렌더링된 원응답을 보존하지 않으며, Alert/AlertDelivery/DeliveryStatus 쪽에 발송 대기·성공·실패·재시도·DLQ 상태 전이 경로가 없다.",
+    "judgement_disclosure": "신고 6개, 계약 변경 0개, 미신고 0개: []; 근거: 신고된 결정은 TennisAlertController.java:authenticate, AlertApplicationService.java:createAlert/expireDueAlerts/idempotencyResponses/availabilityFailures, TennisAlertExceptionHandler.java:response에서 확인되며, d_trace_id_format은 관례 기반 신고다."
+  },
+  "slot_classifications": [
+    {
+      "slot_id": "slot_fd7db9b0",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "범위·시간·호환성 배경 설명이며 구체 약속은 개별 오퍼레이션과 스키마 슬롯에서 채점했다."
+    },
+    {
+      "slot_id": "slot_d29b457f",
+      "classification": "description",
+      "axis": "judgement_disclosure",
+      "met": true,
+      "note": "NFR-2가 HTTP 구현 분모 밖임을 알리는 설명이라 의무 분모에서 제외했다."
+    },
+    {
+      "slot_id": "slot_c4167f47",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "alerts 태그 설명으로 오퍼레이션 약속은 하위 path 슬롯에서 채점했다."
+    },
+    {
+      "slot_id": "slot_31d22375",
+      "classification": "description",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "availability 태그 설명으로 오퍼레이션 약속은 하위 path 슬롯에서 채점했다."
+    },
+    {
+      "slot_id": "slot_e23500c7",
+      "classification": "obligation",
+      "axis": "state_continuity",
+      "met": true,
+      "note": "Bearer 토큰 값을 ownerId로 쓰고 list/get/cancel/create에서 ownerId로 필터링한다."
+    },
+    {
+      "slot_id": "slot_a18b4f05",
+      "classification": "obligation",
+      "axis": "response_fidelity",
+      "met": true,
+      "note": "AlertApplicationService.createAlert가 UUID.randomUUID로 alertId를 발급한다."
+    },
+    {
+      "slot_id": "slot_4606301c",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "TennisAlertController.validateCourtId와 availabilityPort.findCourt/createAlert court lookup으로 지원 코트 식별자를 처리한다."
+    },
+    {
+      "slot_id": "slot_bff96712",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "AlertApplicationService.createAlert가 저장된 availability snapshot의 start/end와 정확히 일치하는 slot만 받는다."
+    },
+    {
+      "slot_id": "slot_8ed65ad8",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "TennisAlertController.parseTime이 HH:mm LocalTime을 받고 AlertApplicationService.COURT_ZONE으로 날짜-시각을 해석한다."
+    },
+    {
+      "slot_id": "slot_b7eb2903",
+      "classification": "obligation",
+      "axis": "request_tolerance",
+      "met": true,
+      "note": "TennisAlertController.parseTime이 HH:mm LocalTime을 받고 slot 종료 시각을 지역 시각 값으로 보존한다."
+    }
+  ],
+  "calibration_note": "측정 불가 축 없음.\n발송·저장소처럼 범위가 애매한 곳은 HTTP 응답 상태에 드러나는 기준선 슬롯만 세었고, 읽은 코드에서 유지 경로가 없으면 미충족으로 낮은 쪽을 적용했다.",
+  "unmeasured_axes": [],
+  "evaluated_at": "2026-09-30T13:19:53+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "eval_impl:v1",
+    "source_files": [
+      "b02d8689_input.json",
+      "b02d8689_iter-001_draft.json"
+    ],
+    "token_usage": {
+      "input_tokens": 64789,
+      "cached_input_tokens": 2432,
+      "output_tokens": 10263,
+      "reasoning_output_tokens": 8804
+    }
+  }
+}

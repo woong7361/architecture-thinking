@@ -1,0 +1,213 @@
+{
+  "brief_hash": "b02d8689",
+  "iteration": "002",
+  "summary": "DRAFT_FILES_JSON의 omitted가 비어 있어 계약 판본과 구현 전문을 모두 읽고 비평했다. 읽지 못해 확인하지 못한 자리는 없다. 다만 게이트의 위반 목록과 사람이 쓴 테스트와 eval 결과는 주어지지 않았으므로, 아래 지적은 모두 코드와 계약과 명세를 맞대어 읽어 얻은 것이고 실행으로 확인한 것이 아니다. 이번 초안은 앞 iteration의 가장 큰 구멍이던 '신청 중 확인 실패를 500으로 접던 자리'를 계약 발의와 구현 양쪽에서 닫았고, EF-2·V-4의 단일 조회 억제와 EF-1의 오래된 결과 되돌리기를 조회와 신청이 같은 경로로 공유하게 만들어 확인 실패가 빈자리 없음이나 미지원 시간대로 새지 않는다. 남은 무게는 세 군데다. 첫째, 신청이 방금 얻은 확인 결과를 자기 자신에게 적용하지 않아 이미 비어 있는 자리를 신청해도 발송 대기가 오르지 않고, 아무도 그 코트·날짜를 다시 조회하지 않으면 영원히 오르지 않는다. 둘째, 코트 이름과 예약 링크를 신청 조회는 읽는 시점에 읽고 예약 상태 조회는 확인 시점의 스냅숏으로 내보내, 그 정책을 세운 결정이 막겠다던 어긋남이 두 표면 사이에 그대로 남아 있다. 셋째, 계약이 예약처가 아직 열지 않은 날짜의 신청을 SLOT_NOT_SUPPORTED로 거절하게 만들어 놓았고 구현이 그것을 충실히 따르는데, 그 경우가 이 서비스의 주된 쓰임이다. 앞의 둘은 구현 쪽, 셋째는 계약 쪽에서 풀어야 한다.",
+  "strengths": [
+    "EF-2와 V-4를 코트·날짜 단위 잠금 하나로 지켰고, 잠금을 얻은 뒤 저장된 성공과 저장된 실패를 다시 읽어 기다리던 요청이 성공이든 실패든 같은 결과를 받게 했다. 잠금 안에서 다시 읽는 이 두 줄이 없으면 피크에 잠금을 순서대로 통과한 요청 수만큼 예약처 조회가 나간다.",
+    "EF-1의 '확인 실패를 빈자리 없음으로 다루지 않는다'를 한 경로에 모아 조회와 신청이 함께 쓴다. knownSchedule이 resolve를 그대로 재사용하므로, 확인이 실패해도 저장된 성공 결과가 있으면 신청의 시간대 판정도 그 결과로 이뤄지고 SLOT_NOT_SUPPORTED로 새지 않는다.",
+    "멱등 재생이 AlertView 스냅숏을 보관해 돌려준다. 재생 때 신청을 다시 읽어 뷰를 만들면 계약이 약속한 '처음 처리한 시점의 내용'이 깨지는데, 그 자리를 저장 쪽에서 막았다. 자리를 잡는 claim이 예약처 확인보다 앞서 일어나 재생이 확인을 다시 일으키지 않는 것도 같은 성질을 지킨다.",
+    "실패 본문을 순서 있는 맵으로 조립해, 널을 허용하지 않는 Problem의 선택 필드는 키째 빼고 널을 허용하며 필수인 Alert.lastCheckedAt·delivery의 키는 남겼다. 서로 반대인 두 규칙을 전역 직렬화 설정을 건드리지 않고 함께 지킨 자리다.",
+    "UnsupportedCourtException.Source가 '식별자를 어디서 받았는가'라는 사실만 들고 나와, 같은 원인이 404와 422로 갈리는 계약의 요구를 포트가 HTTP를 모른 채로 지키게 했다.",
+    "예외 처리기를 추출 스펙에서 감춰, 오퍼레이션마다 선언한 실패 목록이 계약이 그 오퍼레이션에 적은 목록과 같게 유지된다."
+  ],
+  "weaknesses": [
+    {
+      "id": "w_new_alert_ignores_its_own_check",
+      "axis": "state_continuity",
+      "issue": "AlertCommandService.process는 operatingSchedule로 그 코트·날짜의 확인 결과를 손에 쥐고도 schedule.operates만 보고 schedule.isAvailable(slot)은 보지 않는다. 새 신청은 delivery가 널인 채로 저장되고, PENDING으로 옮기는 전이는 AvailabilityQueryService가 예약처 확인에 새로 성공한 직후(applyToWatchingAlerts)에만 일어난다. 저장된 결과가 확인 간격 안이어서 resolve가 일찍 돌아오는 경로에서는 그 전이가 아예 불리지 않는다. 그래서 이미 비어 있는 시간대로 신청해도 발송 대기가 오르지 않고, 다음 기회는 누군가 그 코트·날짜를 확인 간격이 지난 뒤 다시 조회해 확인이 새로 성공할 때뿐이다. 조회가 끊긴 코트·날짜에서는 그 기회가 오지 않는다.",
+      "why_it_matters": "FR-4는 빈자리를 확인하면 발송 대기에 기록하라고 하고, 이 초안은 그 기록을 이 표면의 몫으로 신고했다(d_delivery_pending_only). 그런데 신청 자신이 일으킨 확인의 결과만 버려지므로, 가장 흔한 사용 흐름인 '조회해서 비어 있는 것을 보고 바로 신청한다'에서 대기가 오르지 않는다. 선착순 예약에서 한 확인 간격은 그 자리를 놓치기에 충분한 시간이고, 아무도 조회하지 않는 조합에서는 손실이 무한하다. 계약이 '감시 중인 신청의 delivery는 null이거나 PENDING'이라고 적은 범위도 생성 직후에는 한쪽으로만 닫힌다.",
+      "suggestion": "process가 operatingSchedule에서 받은 CourtDayAvailability를 신청 저장 직후에 그 신청 하나에도 적용하라. insertIfNotWatching으로 실제 저장된 신청이 새로 만든 것이고 schedule.isAvailable(condition.slot())이 참이면 deliveryPending 전이를 한 번 걸고, 그 전이가 실패하면(경합) 넘어간다. 확인 결과가 오래된 것(stale)일 때 대기를 올릴지는 갈림길이므로, 올리지 않기로 한다면 그 선택을 decision으로 신고하라. 함께, applyToWatchingAlerts가 '새로 확인에 성공했을 때'에만 불리는 사실을 코드 주석이 아니라 decision에 적어 다음 초안이 그 범위를 다시 추측하지 않게 하라.",
+      "severity": "high",
+      "target": {
+        "pointer": "/paths/~1alerts/post",
+        "action": "add",
+        "scope": "code"
+      }
+    },
+    {
+      "id": "w_court_identity_two_policies",
+      "axis": "response_fidelity",
+      "issue": "AlertViewFactory는 코트 이름과 예약 화면 주소를 읽는 시점에 포트에서 다시 읽는다(d_court_identity_read_fresh). 그런데 CourtAvailabilityResponse.of는 저장된 CourtDayAvailability에 박제된 courtName·reservationUrl을 그대로 내보내고, 그 값은 마지막으로 확인에 성공한 시점의 스냅숏이며 stale 응답에서는 임의로 오래된 값이다. 같은 코트에 대해 두 오퍼레이션이 서로 다른 시점의 이름과 링크를 말한다.",
+      "why_it_matters": "d_court_identity_read_fresh가 막겠다고 적은 손해가 바로 '조회가 보여 준 링크와 알림에 실릴 링크가 갈리는 것'인데, 그 정책이 신청 표면에만 적용돼 정작 조회 표면이 낡은 링크를 내보낸다. 계약은 Alert.reservationUrl을 '알림에 담기는 링크와 같다'로, CourtAvailability.reservationUrl을 '외부 예약 사이트의 이 코트 예약 화면'으로 적어 둘이 같은 것을 가리킨다고 읽히므로, 두 값이 갈리면 어느 쪽이 참인지 클라이언트가 고를 근거가 없다. 링크가 낡은 쪽을 눌러 예약을 시도하지 못하면 이 서비스가 존재하는 이유가 사라진다.",
+      "suggestion": "CourtDayAvailability에는 courtId와 확인 결과만 두고, 코트 이름과 예약 화면 주소는 응답을 만드는 시점에 CourtAvailabilityPort.findCourt로 읽어 채워라. 지원이 끊겨 빈 값이면 신청 쪽과 같은 규칙으로 저장된 값으로 물러나라. 두 표면이 같은 한 자리에서 코트 신원을 읽게 만드는 것이 목적이고, 저장 구조를 그대로 두더라도 최소한 두 응답 조립기가 같은 헬퍼를 지나게 하라.",
+      "severity": "medium",
+      "target": {
+        "pointer": "/components/schemas/CourtAvailability/properties/reservationUrl",
+        "action": "add",
+        "scope": "code"
+      }
+    },
+    {
+      "id": "w_unopened_date_rejected_as_slot",
+      "axis": "request_tolerance",
+      "issue": "예약처가 아직 열지 않은 날짜는 확인이 성공하고 slots가 빈 배열로 온다. AlertCommandService는 그 경우 schedule.operates가 거짓이므로 422 SLOT_NOT_SUPPORTED로 거절하고, ApiExceptionHandler는 그 자리를 따로 알아채 '운영하는 시간대가 없습니다'라는 문장을 만든다. 즉 '아직 열리지 않은 날짜'와 '그 코트가 그 시간대를 운영하지 않음'이 같은 코드로 거절된다.",
+      "why_it_matters": "예약 오픈 전에 미리 걸어 두는 것이 이 서비스의 주된 쓰임이고, NFR-1도 피크를 예약 오픈 시각으로 잡았다. 지금 표면에서는 오픈 전에는 신청할 수 없고 오픈된 뒤에야 신청할 수 있는데, 오픈된 뒤에는 이미 사용자가 직접 보고 있으므로 알림의 값이 크게 떨어진다. 빈 배열을 알아채는 분기를 코드가 이미 두고도 그 뜻의 차이를 결정으로 신고하지 않아, 다음 초안이 이 자리를 안전하다고 믿게 된다.",
+      "suggestion": "계약 쪽에서 먼저 풀어야 하므로 cr_unopened_date_cannot_subscribe를 근거로 인용해 판본을 고치고, 고치기 전까지는 이 거절이 의도된 것인지, 아니면 계약 문장을 따른 것일 뿐인지를 decision으로 신고하라. 계약이 열리지 않은 날짜의 신청을 받도록 바뀌면, 빈 slots를 '판정 불가'로 다루어 신청을 감시 중으로 받고 운영 시간대는 다음 확인에서 판정하도록 AlertCommandService의 분기를 나눠라.",
+      "severity": "high",
+      "target": {
+        "pointer": "/components/schemas/CourtAvailability/properties/slots",
+        "action": "relax",
+        "scope": "contract"
+      }
+    },
+    {
+      "id": "w_failure_window_equals_retry_advice",
+      "axis": "failure_faithfulness",
+      "issue": "확인이 실패하면 AvailabilityQueryService가 실패를 저장하고, isRecent가 참인 동안(now가 failedAt+20초를 지나지 않은 동안) 예약처를 다시 부르지 않고 같은 실패를 돌려준다. 그 창의 길이가 확인 간격 20초이고 경계가 포함이며, 실패 응답이 클라이언트에게 알려 주는 retryAfterSeconds와 Retry-After도 정확히 20이다. 계약이 시킨 대로 20초를 기다렸다 다시 보낸 요청은 경계에 걸려 새 확인 없이 저장된 실패를 그대로 받는다.",
+      "why_it_matters": "계약은 retryable이 true이면 그 초만큼 기다린 뒤 결과가 달라질 수 있다고 약속한다. 안내한 시각에 보낸 요청이 구조적으로 새 시도를 만들지 못하면 그 약속이 참이 아니고, 클라이언트는 안내를 믿고 기다린 뒤 같은 실패를 받아 지수 백오프로 물러나며 복구를 실제보다 늦게 알아챈다. 예약 오픈처럼 초가 값을 가지는 국면에서 한 주기를 통째로 잃는다.",
+      "suggestion": "실패 억제 창과 안내하는 대기 초를 같은 값으로 두지 마라. 억제 창을 확인 간격보다 짧게 잡거나 isRecent의 경계를 배타로 바꿔(now.isBefore(failedAt.plus(...))가 아니라 지난 시점부터 즉시 다시 시도하게), 안내한 시각에 도착한 요청이 반드시 새 확인을 일으키게 하라. 값을 고치면 그 값이 명세에서 온 것이 아니라 이 구현이 고른 것이므로 WatchPolicy에 이름을 붙여 두고 근거를 적어라.",
+      "severity": "medium",
+      "target": {
+        "pointer": "/components/schemas/Problem/properties/retryAfterSeconds",
+        "action": "relax",
+        "scope": "code"
+      }
+    },
+    {
+      "id": "w_negative_cache_undeclared",
+      "axis": "judgement_disclosure",
+      "issue": "확인 실패를 저장해 두고 확인 간격 동안 예약처를 다시 부르지 않는 동작(AvailabilityRepository.storeFailure/findLastFailure와 clearFailure)은 계약에도 명세에도 없고, 결정 목록에도 없다. d_create_upstream_failure_codes의 근거 문장에 '구현의 20초 실패 창'이라는 말로 스쳐 지나갈 뿐이다. 마찬가지로 코트·날짜마다 만들어지는 checkLocks 항목이 지워지지 않고 계속 쌓이는 것도 신고되지 않았다.",
+      "why_it_matters": "이 억제 창은 EF-2가 말한 '그 조회가 실패하면 모두 마지막 성공 결과에 갱신 실패 표시를 달아 받는다'의 범위를 잠금 안에 있던 요청 너머로 넓히는 선택이고, 실패 응답의 재시도 안내가 참인지까지 결정한다. 신고되지 않은 선택은 다음 iteration이 그 자리를 건드릴 때 무엇이 깨지는지 모른 채 고치게 만들고, 반대로 그것이 의도가 아니라 부작용이었을 가능성도 배제하지 못한다.",
+      "suggestion": "실패 억제 창을 독립한 decision으로 신고하라. 물음은 '확인이 실패한 뒤 다음 확인을 언제 허용하는가'이고, considered에는 잠금 안에 있던 요청에게만 같은 실패를 주는 안과 확인 간격만큼 새 시도를 막는 안을 두고, blast_radius에 getCourtAvailability의 502·503·504와 createAlert의 502·503·504를 모두 적어라. checkLocks가 자라기만 하는 사실도 같은 신고에 한 줄로 남겨 다음 초안이 그것을 새로 발견하지 않게 하라.",
+      "severity": "medium"
+    }
+  ],
+  "revision_directions": [
+    "이번 판본에서 계약을 고친 자리와 구현을 고친 자리가 한 쌍으로 움직였다(신청 중 확인 실패). 다음 초안에서도 그 형식을 유지하되, 계약 변경은 반드시 이 비평의 항목 id를 basis에 인용하고 인용할 항목이 없으면 고치지 마라.",
+    "코트 신원(이름·예약 링크)을 읽는 규칙이 표면마다 다른 것이 이번의 대표적인 어긋남이다. 같은 개념을 두 곳에서 조립할 때는 조립기를 하나로 모으고, 모으지 못하면 왜 다른지를 결정으로 남겨라.",
+    "'계약이 선언했는데 이 run에서 닿지 않는 자리'와 '닿을 수 있는데 구현이 채우지 않은 자리'를 구별해 기록하라. STORAGE_TIMEOUT은 전자이고 명시적으로 신고됐다. 생성 시점의 발송 대기는 후자인데 지금 그 구별이 기록에 없다.",
+    "명세의 문장을 넘어서는 선택(신청이 확인을 일으키는 것)을 계약에 반영할 때는, 넘어선 범위와 넘어서지 않은 범위를 계약 산문이 함께 적게 하라. 지금 계약은 신청이 확인을 일으킨다고만 적고, 주기 작업을 두지 않는다는 명세의 원래 뜻은 어디에도 남지 않았다."
+  ],
+  "contract_review": [
+    {
+      "id": "cr_unopened_date_cannot_subscribe",
+      "kind": "proposal",
+      "pointer": "/components/schemas/CourtAvailability/properties/slots",
+      "finding": "계약은 slots를 '그 날짜에 이 코트가 운영하는 시간대 전부'로 두면서 '여기에 없는 시간대로 알림을 신청하면 SLOT_NOT_SUPPORTED로 거절된다'와 '예약처가 아직 그 날짜를 열지 않았으면 빈 배열이다'를 나란히 적었다. 두 문장을 합치면 예약처가 열지 않은 날짜에는 어떤 시간대로도 알림을 신청할 수 없다는 뜻이 되고, 구현이 그대로 따라 422를 낸다. 그런데 예약이 열리기 전에 미리 걸어 두는 것이 이 서비스의 주된 쓰임이고 NFR-1도 피크를 예약 오픈 시각으로 잡았다. 계약이 자기 목적을 막는 자리다.",
+      "proposed_change": "slots의 산문에서 '여기에 없는 시간대로 신청하면 거절된다'는 규칙의 적용 범위를 slots가 비어 있지 않은 경우로 한정하고, slots가 빈 배열일 때는 운영 시간대를 아직 판정할 수 없다는 뜻이므로 신청을 감시 중으로 받는다고 적어라. 그에 맞춰 /paths/~1alerts/post/description에 '예약처가 그 날짜를 아직 열지 않았으면 시간대 판정을 미루고 신청을 받으며, 이후 확인에서 운영하지 않는 시간대로 드러나면 그 신청은 감시만 계속되고 알림이 나가지 않는다'를 더하라. 거절을 유지하는 쪽을 고른다면 ErrorCode에 '아직 열리지 않은 날짜'를 가리키는 코드를 따로 두어, 영구히 안 되는 것과 나중에 되는 것을 클라이언트가 가를 수 있게 하라.",
+      "action": "relax",
+      "spec_anchor": "FR-1, FR-7, NFR-1, slot_ea97add0",
+      "severity": "high"
+    },
+    {
+      "id": "cr_dedup_omits_user_scope",
+      "kind": "proposal",
+      "pointer": "/paths/~1alerts/post/description",
+      "finding": "중복 신청을 다루는 문장이 '감시 중인 신청과 같은 코트·날짜·시간대로 다시 신청하면, 키가 달라도 새 신청을 만들지 않고 그 신청을 200으로 돌려준다'로 되어 있어 누구의 신청인지를 말하지 않는다. 문자 그대로 읽으면 남이 같은 조건을 감시 중일 때 그 신청을 돌려주라는 뜻이 되고, 그러면 alertId와 createdAt과 expiresAt이 남의 자원을 가리키게 되어 FR-2의 '남의 신청은 조회·해제할 수 없다'와 정면으로 부딪친다. 구현은 사용자 단위로 올바르게 걸렀지만(insertIfNotWatching이 ownedBy를 함께 본다) 그것은 계약이 아니라 명세를 읽은 결과다.",
+      "proposed_change": "그 문장의 주어를 '같은 사용자의 감시 중인 신청과 같은 코트·날짜·시간대로 다시 신청하면'으로 고쳐 FR-1의 원문과 같은 범위로 좁혀라. 같은 문단의 '이미 끝난 신청과 같은 조건이면 새 신청을 만든다'에도 같은 한정을 붙여라.",
+      "action": "tighten",
+      "spec_anchor": "FR-1, FR-2, slot_7afbe3b4",
+      "severity": "medium"
+    },
+    {
+      "id": "cr_replayed_header_on_dedup_200",
+      "kind": "proposal",
+      "pointer": "/components/headers/IdempotencyReplayed/description",
+      "finding": "헤더의 뜻은 '같은 키로 앞서 처리한 요청의 응답을 그대로 다시 돌려준 것인지'로 정의돼 있는데, 같은 조건을 감시 중이어서 기존 신청을 돌려주는 200은 그 정의의 어느 쪽인지 계약이 말하지 않는다. 아무것도 바꾸지 않았다는 점에서는 재생처럼 보이고, 이번 요청이 키를 처음 써서 판정한 결과라는 점에서는 재생이 아니다. 구현자가 후자로 정했고(d_replayed_false_on_existing_watch) 그 선택은 타당하지만, 계약이 비어 있는 한 다음 구현자가 반대로 고를 수 있고 두 서버가 같은 계약에서 다른 헤더를 낸다.",
+      "proposed_change": "헤더 설명에 '같은 조건을 감시 중인 신청을 돌려주는 200은 이번 요청이 판정한 결과이므로 false다. true는 같은 키로 앞서 보관한 응답을 그대로 돌려줄 때만이다'를 더하라.",
+      "action": "add",
+      "spec_anchor": "FR-1, V-1, slot_8663b240",
+      "severity": "medium"
+    },
+    {
+      "id": "cr_create_201_example_last_checked",
+      "kind": "proposal",
+      "pointer": "/paths/~1alerts/post/responses/201/content/application~1json/example",
+      "finding": "이번 판본이 신청 본문 설명에 '저장된 결과가 확인 간격보다 오래됐거나 없으면 이 요청이 확인을 일으킨다'를 더했는데, 같은 오퍼레이션의 201 예시는 lastCheckedAt을 null로 남겨 두었다. 확인을 일으킨 신청은 그 확인이 성공한 시각을 바로 갖게 되므로 예시가 그리는 모양은 오히려 드문 경우가 된다. 구현자도 이 어긋남을 d_create_may_trigger_check에서 스스로 지적했고 계약은 아직 고쳐지지 않았다.",
+      "proposed_change": "201 예시의 lastCheckedAt을 createdAt과 같거나 그 직전의 타임스탬프로 바꾸고, 예시 summary나 필드 설명에 '신청이 확인을 일으킨 경우 이 값은 신청 직후에도 널이 아니며, 확인 간격 안의 저장된 결과를 썼으면 그 결과의 시각이다'를 덧붙여라. 널이 나오는 경우를 남기고 싶으면 예시를 둘로 나눠라.",
+      "action": "add",
+      "spec_anchor": "FR-3, NFR-3, slot_dc9ce55b",
+      "severity": "medium"
+    },
+    {
+      "id": "cr_create_delivery_at_birth",
+      "kind": "proposal",
+      "pointer": "/paths/~1alerts/post/responses/201",
+      "finding": "신청이 확인을 일으키도록 계약이 바뀌었으므로, 신청을 만드는 그 순간 서버는 그 시간대가 비어 있는지를 알고 있다. 그런데 계약은 그 사실을 새 신청에 적용하는지를 말하지 않고, 201 예시는 delivery를 null로만 보여 준다. AlertDelivery 설명이 PENDING을 '빈자리를 확인해 발송 대기에 올랐고 아직 보내지 않았다'로 정의한 것과 합치면, 빈 시간대로 신청한 직후 delivery가 PENDING이어야 하는지 null이어야 하는지 두 읽기가 다 가능하다. 구현은 아무 말 없이 null 쪽을 골랐고, 그 결과 이미 비어 있는 자리에 대한 발송 대기가 다음 확인까지(조회가 없으면 영원히) 오르지 않는다.",
+      "proposed_change": "신청 본문 설명에 한 문장을 더해 둘 중 하나를 정하라. '신청이 일으킨 확인 결과에 그 시간대가 비어 있으면 응답의 delivery는 곧바로 PENDING이다' 또는 '신청 응답의 delivery는 언제나 null이며 발송 대기는 다음 확인에서 오른다'. 앞쪽을 고르면 201 예시에 PENDING 사례를 하나 더하라.",
+      "action": "add",
+      "spec_anchor": "FR-1, FR-4, slot_c733b457, slot_a51918dd",
+      "severity": "medium"
+    },
+    {
+      "id": "cr_create_triggers_check_review",
+      "kind": "prior_change_review",
+      "pointer": "/paths/~1alerts/post/description",
+      "finding": "cc_create_schedule_source는 신청이 예약처 확인을 일으킬 수 있다고 계약에 적었다. 명세는 '확인을 일으키는 것은 조회뿐이다'라고 못 박았으므로 이 변경은 명세 문장을 넘어선다. 되돌릴 일은 아니다. 그 문장이 금지하려던 것은 감시 중인 신청만 보고 예약처를 도는 주기 작업이고, 신청 한 건이 자기 조건을 판정하려 한 번 확인하는 것은 그 금지의 대상이 아니며, 확인하지 않으면 SLOT_NOT_SUPPORTED가 영원히 나가지 않는다. 문제는 계약이 넘어선 사실만 적고 넘지 않은 경계는 적지 않았다는 점이다. 지금 계약만 읽은 사람은 '서버가 필요하면 확인한다'로 읽어 주기 작업을 붙이는 것도 허용된다고 볼 수 있고, 그러면 아무도 조회하지 않는 코트·날짜는 확인도 알림도 없다는 이 설계의 전제가 조용히 뒤집힌다.",
+      "proposed_change": "",
+      "spec_anchor": "FR-3, FR-7, slot_7afbe3b4",
+      "severity": "medium"
+    },
+    {
+      "id": "cr_int_format_observation",
+      "kind": "observation_meaning",
+      "pointer": "/components/schemas/Problem/properties/status",
+      "finding": "게이트가 Problem.status·Problem.retryAfterSeconds·AlertDelivery.attemptCount에서 계약의 무형식 integer가 구현에서 int32로 좁아졌다고 관찰했고 해롭지 않다고 표시했다. 계약에 넣을 자리가 아니다. 계약의 호환성 규칙이 '타입이나 형식을 좁히는 것'을 호환 파괴로 꼽았으므로 format: int32를 계약에 더하는 것은 같은 주 버전 안에서 할 수 없고, 그 형식을 요구하는 요구사항도 없다. 코드에서 지울 수도 없다. 값의 현실적 범위가 32비트를 한참 밑돌아 클라이언트가 잘못 읽을 경로가 없으므로, 이 관찰은 양쪽 모두 그대로 두는 것이 맞다. 앞 iteration이 같은 판단으로 제안을 기각한 것(ignored_suggestions의 cr_integer_format_divergence)은 근거가 서 있다. 다음 iteration이 이 관찰을 다시 고치려 들지 않도록 그 기각을 유지하라.",
+      "proposed_change": "",
+      "spec_anchor": "slot_fd7db9b0",
+      "severity": "low"
+    },
+    {
+      "id": "cr_version_label_observation",
+      "kind": "observation_meaning",
+      "pointer": "/servers/0/url",
+      "finding": "게이트가 파일명의 판 번호 2와 계약의 주 버전 1이 어긋난다고 관찰했다. 계약을 고칠 자리가 아니다. 이 run에서 파일명의 번호는 작업 폴더 안의 계약 판본을 세는 번호이고 /v1은 밖에서 보이는 API 주 버전이며, 이번 판본의 변경 여섯은 모두 호환을 깨지 않으므로 주 버전을 올릴 근거가 없다. 주 버전을 따라 올리면 오히려 호환되는 변경에 파괴적 변경의 신호를 붙이게 된다. 다만 두 번호가 같은 자리에 보이면 읽는 사람이 API가 깨졌다고 읽을 수 있으므로, 판본 파일을 넘길 때 그 파일이 어느 주 버전의 몇 번째 판인지를 기록 쪽에 남겨 두라.",
+      "proposed_change": "",
+      "spec_anchor": "slot_fd7db9b0",
+      "severity": "low"
+    },
+    {
+      "id": "cr_create_503_two_waits",
+      "kind": "harmful_choice",
+      "pointer": "/components/responses/AlertCreateUnavailable",
+      "finding": "새로 만든 503 응답 하나가 서로 다른 대기를 가진 세 원인을 덮는다. UPSTREAM_UNAVAILABLE은 20초, STORAGE_TIMEOUT과 CONCURRENT_UPDATE_CONFLICT는 1초다. 계약 안에서는 합법이고 code로 가를 수 있지만, 상태 코드마다 백오프를 정해 두는 흔한 클라이언트는 503을 한 덩어리로 보고 한쪽 값을 스무 배 틀리게 쓴다. 1초로 잡으면 예약처 장애 동안 신청이 초당 한 번씩 되돌아오고, 20초로 잡으면 멱등 키 경합에서 물러난 요청이 스무 배 늦게 성공한다. 세 예시를 나란히 둔 것은 좋지만 그것만으로는 상태 코드로 분기하는 읽기를 막지 못한다.",
+      "proposed_change": "",
+      "spec_anchor": "slot_47c11736, slot_bca4f922, EF-1",
+      "severity": "low"
+    }
+  ],
+  "contested_decisions": [
+    {
+      "decision_id": "d_court_identity_read_fresh",
+      "objection": "결정이 든 근거는 '조회가 보여 준 링크와 알림에 실릴 링크가 갈리면 안 된다'인데, 정작 그 조회에 해당하는 getCourtAvailability:200은 blast_radius에 없고 구현도 그 표면에는 반대 정책(확인 시점 스냅숏)을 쓴다. 닿는 범위가 신고된 것보다 넓고, 좁게 적힌 탓에 결정이 막겠다던 어긋남이 결정을 지킨 뒤에도 그대로 남았다.",
+      "alternative": "blast_radius에 getCourtAvailability:200을 더하고, 코트 신원을 읽는 자리를 한 곳으로 모아 두 표면이 같은 시점의 값을 내게 하라. 조회 표면만 스냅숏을 유지하기로 한다면 왜 그 표면은 달라도 되는지를 결정 본문에 적어야 하며, 지금 근거로는 그 예외가 서지 않는다.",
+      "severity": "medium"
+    },
+    {
+      "decision_id": "d_delivery_pending_only",
+      "objection": "선택한 안의 결과로 'delivery가 널과 PENDING 사이만 오가 계약이 적은 범위를 정확히 채운다'고 적었지만, 구현에서 PENDING으로 가는 문은 예약처 확인에 새로 성공한 직후 하나뿐이다. 신청이 스스로 일으킨 확인의 결과는 자기 자신에게 적용되지 않고, 확인 간격 안의 저장된 결과를 쓰는 경로에서는 그 문이 아예 열리지 않는다. 채웠다고 신고한 범위가 실제로는 한쪽만 닿는다.",
+      "alternative": "결정에 '대기를 올리는 계기'를 명시하라. 계기가 새 확인 성공 하나뿐이면 그 사실과 그로 인해 생성 직후에는 PENDING이 나올 수 없다는 귀결을 적고, 그것이 의도가 아니면 생성 경로에도 같은 전이를 걸어라(w_new_alert_ignores_its_own_check).",
+      "severity": "medium"
+    },
+    {
+      "decision_id": "d_in_progress_key_yields_contention",
+      "objection": "처리 중인 자리에서 지문을 보지 않는 이유로 '판정의 근거가 되는 앞선 응답이 아직 없다'를 들었는데, 지문은 응답이 아니라 자리를 잡는 순간 Slot에 기록되므로 처리 중에도 알 수 있다. 근거가 사실과 어긋난다. 더 문제인 것은 그 결과 나가는 503의 detail이 '같은 요청을 그대로 다시 보내면 됩니다'라고 약속한다는 점이다. 지문이 다른 요청에는 그 약속이 거짓이고, 기다렸다 다시 보내면 409를 받는다.",
+      "alternative": "선택 자체(처리 중에는 503으로 물러난다)는 유지해도 좋다. 다만 근거를 '앞선 요청이 4xx로 끝나면 키가 기록되지 않아 아직 쓰였다고 말할 수 없다' 하나로 줄이고, 지문이 이미 다른 것을 알고 있는 경우의 detail에서 재시도 성공을 약속하지 마라. 또는 처리 중이면서 지문이 다른 경우를 409로 가르되 앞선 요청이 4xx로 끝났을 때의 되돌림을 함께 설계하라.",
+      "severity": "medium"
+    },
+    {
+      "decision_id": "d_create_may_trigger_check",
+      "objection": "결정이 적은 대가는 '이 오퍼레이션이 예약처 장애의 영향권에 들어간다'인데, 구현은 확인이 실패해도 저장된 마지막 성공 결과가 있으면 그 결과로 시간대를 판정한다. 그래서 실제 노출은 한 번도 확인된 적 없는 코트·날짜로 좁고, 대신 신고되지 않은 다른 결과가 생겼다. SLOT_NOT_SUPPORTED와 그 반대인 신청 수락이 임의로 오래된 운영 시간대 목록으로 판정될 수 있다는 것이다.",
+      "alternative": "결정 본문에 '확인이 실패하면 저장된 마지막 성공 결과로 판정하며, 그 결과의 나이에는 상한이 없다'를 적고 blast_radius에 createAlert:422를 그 이유로 명시하라. 오래된 목록으로 거절하는 것을 막고 싶으면, 확인이 실패했고 저장 결과가 오래됐을 때는 거절 대신 신청을 받는 쪽을 고려하라. 운영 시간대는 빈자리 여부보다 훨씬 느리게 변하므로 두 값의 유효 기간을 같게 둘 이유가 없다.",
+      "severity": "medium"
+    }
+  ],
+  "reader_risks": [
+    "도메인의 AlertStatus.WATCHING 주석은 여전히 '서버가 주기적으로 예약 상태를 확인한다'고 적혀 있다. 같은 iteration에서 계약의 같은 문장을 cc_watching_check_source로 지웠으므로, 저장소 안에 서로 반대인 두 문장이 남았다. 도메인부터 읽는 사람은 존재하지 않는 폴링 작업을 전제로 코드를 이해한다.",
+    "createAlert의 503이 20초 대기와 1초 대기를 함께 덮는다. 상태 코드만 보고 백오프를 정하는 클라이언트는 둘 중 하나를 스무 배 틀리게 기다린다.",
+    "예약처가 아직 열지 않은 날짜에 신청하면 detail이 '…에 운영하는 시간대가 없습니다'로 나간다. 사용자는 그 코트가 그 날짜에 영업하지 않는다고 읽고 그 날짜를 포기하지만, 사실은 나중에 열릴 날짜다.",
+    "실패 본문은 값이 없는 detail·instance·retryAfterSeconds·traceId의 키를 빼고, 성공 본문은 널을 허용하는 lastCheckedAt·delivery의 키를 남긴다. 두 규칙이 반대라서 하나의 역직렬화 규칙으로 두 본문을 다루는 클라이언트는 한쪽에서 '필드가 빠졌다'로 읽는다.",
+    "계약 파일 이름이 v2인데 경로의 주 버전은 v1이다. 파일 이름만 본 사람은 호환이 깨진 판본이라고 읽는다.",
+    "신청이 예약처 확인을 일으킨다는 사실이 계약에 들어왔으므로, NFR-1의 피크 예산을 조회 기준으로만 세워 둔 읽기는 더 이상 맞지 않는다. 쓰기 오퍼레이션이 예약처 조회를 유발한다는 것을 운영 쪽이 모를 수 있다.",
+    "신청 직후 응답의 lastCheckedAt이 널이 아닐 수 있는데 계약의 201 예시는 널이다. 예시를 계약으로 읽고 클라이언트를 만든 사람은 이 필드를 '신청 직후에는 언제나 널'로 다룬다."
+  ],
+  "critiqued_at": "2026-09-30T18:05:35+09:00",
+  "model": "claude-opus-5",
+  "metadata": {
+    "prompt_version": "critique_impl:v1",
+    "source_files": [
+      "b02d8689_input.json",
+      "b02d8689_iter-002_draft.json"
+    ]
+  }
+}

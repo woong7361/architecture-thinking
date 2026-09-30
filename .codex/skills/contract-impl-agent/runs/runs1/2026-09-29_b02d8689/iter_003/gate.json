@@ -1,0 +1,22 @@
+{
+  "iteration": "003",
+  "g0": "REJECT",
+  "g1": "SKIPPED",
+  "changes": "SKIPPED",
+  "violations": [
+    {
+      "rule": "g0.compile_failed",
+      "point": null,
+      "where": "mvnw test",
+      "detail": "[ERROR] COMPILATION ERROR : \n[ERROR] /C:/Users/PC-220627-03/AppData/Local/Temp/claude/c--Users-PC-220627-03-Desktop-project-task-architecture-thinking/862b7ff3-a396-4dc6-9b71-a200dcde2544/scratchpad/runs/2026-09-29_b02d8689/output/src/main/java/com/thinking/tennis/app/AvailabilityServiceConstructorWiringConfiguration.java:[17,21] cannot find symbol\n  symbol:   method setAutowireMode(int)\n  location: interface org.springframework.beans.factory.config.BeanDefinition\n[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.13.0:compile (default-compile) on project tennis-alert-skeleton: Compilation failure\n[ERROR] /C:/Users/PC-220627-03/AppData/Local/Temp/claude/c--Users-PC-220627-03-Desktop-project-task-architecture-thinking/862b7ff3-a396-4dc6-9b71-a200dcde2544/scratchpad/runs/2026-09-29_b02d8689/output/src/main/java/com/thinking/tennis/app/AvailabilityServiceConstructorWiringConfiguration.java:[17,21] cannot find symbol\n[ERROR]   symbol:   method setAutowireMode(int)\n[ERROR]   location: interface org.springframework.beans.factory.config.BeanDefinition\n[ERROR] -> [Help 1]\n[ERROR] \n[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.\n[ERROR] Re-run Maven using the -X switch to enable full debug logging.\n[ERROR] \n[ERROR] For more information about the errors and possible solutions, please read the following articles:\n[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException",
+      "verdict": "violation"
+    }
+  ],
+  "observations": [],
+  "errors": [],
+  "derived_spec": null,
+  "allow_missing_gates": false,
+  "log": [
+    "작업 폴더: C:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs\\2026-09-29_b02d8689\\output (target/ 재사용 예)\n$ C:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs\\2026-09-29_b02d8689\\output\\mvnw.cmd -B -q test → 1\n[ERROR] COMPILATION ERROR : \n[ERROR] /C:/Users/PC-220627-03/AppData/Local/Temp/claude/c--Users-PC-220627-03-Desktop-project-task-architecture-thinking/862b7ff3-a396-4dc6-9b71-a200dcde2544/scratchpad/runs/2026-09-29_b02d8689/output/src/main/java/com/thinking/tennis/app/AvailabilityServiceConstructorWiringConfiguration.java:[17,21] cannot find symbol\n  symbol:   method setAutowireMode(int)\n  location: interface org.springframework.beans.factory.config.BeanDefinition\n[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.13.0:compile (default-compile) on project tennis-alert-skeleton: Compilation failure\n[ERROR] /C:/Users/PC-220627-03/AppData/Local/Temp/claude/c--Users-PC-220627-03-Desktop-project-task-architecture-thinking/862b7ff3-a396-4dc6-9b71-a200dcde2544/scratchpad/runs/2026-09-29_b02d8689/output/src/main/java/com/thinking/tennis/app/AvailabilityServiceConstructorWiringConfiguration.java:[17,21] cannot find symbol\n[ERROR]   symbol:   method setAutowireMode(int)\n[ERROR]   location: interface org.springframework.beans.factory.config.BeanDefinition\n[ERROR] -> [Help 1]\n[ERROR] \n[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.\n[ERROR] Re-run Maven using the -X switch to enable full debug logging.\n[ERROR] \n[ERROR] For more information about the errors and possible solutions, please read the following articles:\n[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException"
+  ]
+}

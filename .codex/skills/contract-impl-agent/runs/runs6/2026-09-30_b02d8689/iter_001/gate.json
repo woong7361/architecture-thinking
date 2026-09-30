@@ -1,0 +1,75 @@
+{
+  "iteration": "001",
+  "g0": "REJECT",
+  "g1": "SKIPPED",
+  "changes": "SKIPPED",
+  "violations": [
+    {
+      "rule": "g0.compile_failed",
+      "point": null,
+      "where": "mvnw test",
+      "detail": "컴파일 오류 2건\nsrc/main/java/com/thinking/tennis/app/ApplicationException.java:5:71 interface expected here\nsrc/main/java/com/thinking/tennis/api/AvailabilityController.java:60:16 incompatible types: com.thinking.tennis.app.ApplicationException cannot be converted to com.thinking.tennis.app.ApiException",
+      "verdict": "violation"
+    }
+  ],
+  "observations": [],
+  "errors": [],
+  "derived_spec": null,
+  "allow_missing_gates": false,
+  "log": [
+    "작업 폴더: C:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs6\\2026-09-30_b02d8689\\output (target/ 재사용 예)\n$ C:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs6\\2026-09-30_b02d8689\\output\\mvnw.cmd -B -q test → 1\n[ERROR] COMPILATION ERROR : \n[ERROR] /C:/Users/PC-220627-03/AppData/Local/Temp/claude/c--Users-PC-220627-03-Desktop-project-task-architecture-thinking/862b7ff3-a396-4dc6-9b71-a200dcde2544/scratchpad/runs6/2026-09-30_b02d8689/output/src/main/java/com/thinking/tennis/app/ApplicationException.java:[5,71] interface expected here\n[ERROR] /C:/Users/PC-220627-03/AppData/Local/Temp/claude/c--Users-PC-220627-03-Desktop-project-task-architecture-thinking/862b7ff3-a396-4dc6-9b71-a200dcde2544/scratchpad/runs6/2026-09-30_b02d8689/output/src/main/java/com/thinking/tennis/api/AvailabilityController.java:[60,16] incompatible types: com.thinking.tennis.app.ApplicationException cannot be converted to com.thinking.tennis.app.ApiException\n[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.13.0:compile (default-compile) on project tennis-alert-skeleton: Compilation failure: Compilation failure: \n[ERROR] /C:/Users/PC-220627-03/AppData/Local/Temp/claude/c--Users-PC-220627-03-Desktop-project-task-architecture-thinking/862b7ff3-a396-4dc6-9b71-a200dcde2544/scratchpad/runs6/2026-09-30_b02d8689/output/src/main/java/com/thinking/tennis/app/ApplicationException.java:[5,71] interface expected here\n[ERROR] /C:/Users/PC-220627-03/AppData/Local/Temp/claude/c--Users-PC-220627-03-Desktop-project-task-architecture-thinking/862b7ff3-a396-4dc6-9b71-a200dcde2544/scratchpad/runs6/2026-09-30_b02d8689/output/src/main/java/com/thinking/tennis/api/AvailabilityController.java:[60,16] incompatible types: com.thinking.tennis.app.ApplicationException cannot be converted to com.thinking.tennis.app.ApiException\n[ERROR] -> [Help 1]\n[ERROR] \n[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.\n[ERROR] Re-run Maven using the -X switch to enable full debug logging.\n[ERROR] \n[ERROR] For more information about the errors and possible solutions, please read the following articles:\n[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException\n"
+  ],
+  "build_attempts": [
+    {
+      "attempt": 1,
+      "commit": "796e576c940781ce4b202d62950797f4bc60689d",
+      "index_declared": true,
+      "index_errors": [],
+      "failures": [
+        {
+          "rule": "g0.compile_failed",
+          "point": null,
+          "where": "mvnw test",
+          "detail": "컴파일 오류 5건\nsrc/main/java/com/thinking/tennis/api/AvailabilityController.java:58:13 cannot find symbol\nsrc/main/java/com/thinking/tennis/api/ApiExceptionHandler.java:21:23 cannot find symbol\nsrc/main/java/com/thinking/tennis/app/AlertService.java:123:23 cannot find symbol\nsrc/main/java/com/thinking/tennis/app/AlertService.java:133:23 cannot find symbol\nsrc/main/java/com/thinking/tennis/app/AlertService.java:197:23 cannot find symbol\n    symbol: class ApiException\n    location: class com.thinking.tennis.api.AvailabilityController\n    location: class com.thinking.tennis.api.ApiExceptionHandler\n    location: class com.thinking.tennis.app.AlertService",
+          "verdict": "violation"
+        }
+      ]
+    },
+    {
+      "attempt": 2,
+      "commit": "639e05b22f92cc516825cf40202ccd5caf813e57",
+      "index_declared": false,
+      "index_errors": [
+        "manifest.contract_version_missing: contract/tennis-alert-api.yaml-v1.yaml is not in the file manifest",
+        "manifest.contract_role_count: expected exactly one file with role=contract, found []"
+      ],
+      "failures": [
+        {
+          "rule": "g0.compile_failed",
+          "point": null,
+          "where": "mvnw test",
+          "detail": "컴파일 오류 2건\nsrc/main/java/com/thinking/tennis/api/AvailabilityController.java:58:13 cannot find symbol\nsrc/main/java/com/thinking/tennis/api/ApiExceptionHandler.java:21:23 cannot find symbol\n    symbol: class ApiException\n    location: class com.thinking.tennis.api.AvailabilityController\n    location: class com.thinking.tennis.api.ApiExceptionHandler",
+          "verdict": "violation"
+        }
+      ]
+    },
+    {
+      "attempt": 3,
+      "commit": "4db12e456da3785007e1782e14d6c65f2b9cc5a3",
+      "index_declared": false,
+      "index_errors": [
+        "manifest.contract_version_missing: contract/tennis-alert-api.yaml-v1.yaml is not in the file manifest",
+        "manifest.contract_role_count: expected exactly one file with role=contract, found []"
+      ],
+      "failures": [
+        {
+          "rule": "g0.compile_failed",
+          "point": null,
+          "where": "mvnw test",
+          "detail": "컴파일 오류 1건\nsrc/main/java/com/thinking/tennis/api/AvailabilityController.java:60:16 incompatible types: com.thinking.tennis.app.ApplicationException cannot be converted to com.thinking.tennis.app.ApiException",
+          "verdict": "violation"
+        }
+      ]
+    }
+  ]
+}

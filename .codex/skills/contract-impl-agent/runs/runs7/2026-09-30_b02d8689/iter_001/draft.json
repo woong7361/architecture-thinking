@@ -1,0 +1,376 @@
+{
+  "brief_hash": "b02d8689",
+  "iteration": "001",
+  "stage": "gen",
+  "files": [
+    {
+      "path": "contract/tennis-alert-api-v1.yaml",
+      "role": "contract"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/OperationId.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/ApiDtos.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/RequestValidation.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/Authentication.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/AlertController.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/FailureCode.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/ApplicationFailure.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/AlertCommand.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/CreateAlertResult.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/AvailabilityResult.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/AvailabilityService.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/AlertService.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/AlertStatus.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/DeliveryStatus.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/AlertDelivery.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/Alert.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/AvailabilitySnapshot.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/AvailabilityCacheEntry.java",
+      "role": "code"
+    }
+  ],
+  "contract_version": {
+    "path": "contract/tennis-alert-api-v1.yaml",
+    "from": "contract/tennis-alert-api-v1.yaml"
+  },
+  "claims": [
+    {
+      "point": "getCourtAvailability:200",
+      "note": "AvailabilityController returns the required CourtAvailability fields, including stale and staleReason."
+    },
+    {
+      "point": "getCourtAvailability:400",
+      "note": "Path and query validation failures map to VALIDATION_FAILED."
+    },
+    {
+      "point": "getCourtAvailability:404",
+      "note": "Unsupported path courts map to COURT_NOT_SUPPORTED."
+    },
+    {
+      "point": "getCourtAvailability:502",
+      "note": "Unreadable upstream responses map to UPSTREAM_RESPONSE_UNREADABLE with retry metadata."
+    },
+    {
+      "point": "getCourtAvailability:503",
+      "note": "Unavailable upstream responses map to UPSTREAM_UNAVAILABLE with retry metadata."
+    },
+    {
+      "point": "getCourtAvailability:504",
+      "note": "Upstream timeouts map to UPSTREAM_TIMEOUT with retry metadata."
+    },
+    {
+      "point": "getCourtAvailability:500",
+      "note": "Unexpected failures map to INTERNAL_ERROR with traceId and retry metadata."
+    },
+    {
+      "point": "createAlert:201",
+      "note": "New alerts are stored in memory, begin WATCHING, and return Location plus Idempotency-Replayed=false."
+    },
+    {
+      "point": "createAlert:200",
+      "note": "An existing WATCHING alert with the same owner and condition is returned without creating another alert."
+    },
+    {
+      "point": "createAlert:400",
+      "note": "Body, date/time, courtId, and Idempotency-Key validation failures map to VALIDATION_FAILED."
+    },
+    {
+      "point": "createAlert:401",
+      "note": "Bearer authentication is required for alert operations."
+    },
+    {
+      "point": "createAlert:409",
+      "note": "A retained idempotency key reused with a different request maps to IDEMPOTENCY_KEY_REUSED."
+    },
+    {
+      "point": "createAlert:422",
+      "note": "Unsupported body conditions map to COURT_NOT_SUPPORTED, SLOT_NOT_SUPPORTED, or ALERT_WINDOW_CLOSED."
+    },
+    {
+      "point": "createAlert:503",
+      "note": "Concurrent processing of the same idempotency key maps to CONCURRENT_UPDATE_CONFLICT with Retry-After."
+    },
+    {
+      "point": "listAlerts:200",
+      "note": "Only the authenticated owner's alerts are returned, newest first, with optional stored-status filtering."
+    },
+    {
+      "point": "getAlert:200",
+      "note": "The authenticated owner's alert is returned with nullable delivery and lastCheckedAt fields preserved."
+    },
+    {
+      "point": "getAlert:404",
+      "note": "Missing or foreign alerts are indistinguishable and map to ALERT_NOT_FOUND."
+    },
+    {
+      "point": "cancelAlert:200",
+      "note": "Cancellation is idempotent, preserves completed delivery, removes pending delivery, and retains the alert record."
+    },
+    {
+      "point": "cancelAlert:404",
+      "note": "Missing or foreign alerts map to ALERT_NOT_FOUND."
+    },
+    {
+      "point": "listAlerts:CODE",
+      "note": "Validation, authentication, internal, and storage failure mappings are declared by the shared API exception handler."
+    },
+    {
+      "point": "getAlert:CODE",
+      "note": "Validation, authentication, not-found, internal, and storage failure mappings are declared by the shared API exception handler."
+    },
+    {
+      "point": "cancelAlert:CODE",
+      "note": "Validation, authentication, not-found, and storage/contention failure mappings are declared by the shared API exception handler."
+    }
+  ],
+  "decisions": [
+    {
+      "id": "d_expiry_fallback_to_slot_start",
+      "point": "createAlert:201",
+      "where": "AlertService.create",
+      "question": "What expiry instant should be used when no earlier reservation-closing instant is available from the provided port?",
+      "considered": [
+        {
+          "choice": "Use the slot start instant in Asia/Seoul",
+          "consequence": "Implements the specified default expiry and keeps the alert window deterministic."
+        },
+        {
+          "choice": "Reject the request until an external closing instant is available",
+          "consequence": "Adds an unsupported failure path and prevents otherwise valid alerts."
+        }
+      ],
+      "chosen": "Use the slot start instant in Asia/Seoul.",
+      "basis": "spec_implication",
+      "rationale": "The requirement defines usage start as the expiry and the provided API exposes no earlier closing instant.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:201",
+        "createAlert:200",
+        "createAlert:422"
+      ],
+      "reversal_cost": "Change AlertService expiry calculation and add a source for earlier closing times.",
+      "supersedes": null
+    },
+    {
+      "id": "d_raw_bearer_token_identity",
+      "point": "createAlert:401",
+      "where": "Authentication.requireUser",
+      "question": "How is the user identity represented without an authentication provider in the provided API?",
+      "considered": [
+        {
+          "choice": "Use the non-empty Bearer token as the in-memory owner key",
+          "consequence": "Keeps ownership isolation deterministic without inventing an authentication endpoint or provider."
+        },
+        {
+          "choice": "Treat every authenticated request as one shared user",
+          "consequence": "Would violate the requirement that users cannot access one another's alerts."
+        }
+      ],
+      "chosen": "Use the non-empty Bearer token as the in-memory owner key.",
+      "basis": "least_harm",
+      "rationale": "The contract requires Bearer authentication but leaves the authentication mechanism outside scope.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:401",
+        "listAlerts:200",
+        "getAlert:200",
+        "getAlert:404",
+        "cancelAlert:200",
+        "cancelAlert:404"
+      ],
+      "reversal_cost": "Replace the authentication helper and propagate a resolved principal from the security boundary.",
+      "supersedes": null
+    },
+    {
+      "id": "d_no_cached_schedule_accepts_structural_slot",
+      "point": "createAlert:422",
+      "where": "AlertService.create",
+      "question": "How can slot support be checked before a cached availability result exists when the provided port has no schedule-only operation?",
+      "considered": [
+        {
+          "choice": "Accept the structurally valid slot until a cached schedule disproves it",
+          "consequence": "Allows creation without adding an upstream call or an undeclared create-time failure response."
+        },
+        {
+          "choice": "Call the upstream availability port during creation",
+          "consequence": "Introduces an upstream failure path not declared for createAlert and couples creation to an external refresh."
+        }
+      ],
+      "chosen": "Accept the structurally valid slot when no cached schedule exists; reject it when an available cached schedule proves it unsupported.",
+      "basis": "least_harm",
+      "rationale": "The provided API exposes only court lookup and full availability checks, while createAlert declares no upstream failure responses.",
+      "confidence": "low",
+      "blast_radius": [
+        "createAlert:200",
+        "createAlert:201",
+        "createAlert:422"
+      ],
+      "reversal_cost": "Add a schedule/support port or change create-time failure mapping, then update AlertService.",
+      "supersedes": null
+    },
+    {
+      "id": "d_trace_id_uuid",
+      "point": "getCourtAvailability:500",
+      "where": "ApiExceptionHandler.problem",
+      "question": "What traceId representation should be emitted for 5xx responses?",
+      "considered": [
+        {
+          "choice": "Generate a UUID string",
+          "consequence": "Provides a unique correlation value without adding a tracing dependency."
+        },
+        {
+          "choice": "Generate a ULID-like value",
+          "consequence": "Would require an additional generator or library not present in the implementation contract."
+        }
+      ],
+      "chosen": "Generate a UUID string.",
+      "basis": "convention",
+      "rationale": "The contract constrains presence and 5xx scope but does not constrain the traceId format.",
+      "confidence": "medium",
+      "blast_radius": [
+        "getCourtAvailability:500",
+        "getCourtAvailability:502",
+        "getCourtAvailability:503",
+        "getCourtAvailability:504",
+        "createAlert:500",
+        "listAlerts:500",
+        "getAlert:500"
+      ],
+      "reversal_cost": "Replace traceId generation in the shared exception handler.",
+      "supersedes": null
+    },
+    {
+      "id": "d_refresh_failure_reuse_window",
+      "point": "getCourtAvailability:503",
+      "where": "AvailabilityService.get",
+      "question": "How should concurrent callers observe a failed refresh after the first caller completes?",
+      "considered": [
+        {
+          "choice": "Reuse the same failure or stale result for the 20-second retry interval",
+          "consequence": "Prevents immediate duplicate upstream calls and gives concurrent callers the same outcome."
+        },
+        {
+          "choice": "Retry the upstream port for every waiting caller",
+          "consequence": "Violates the single-refresh behavior and can multiply upstream load."
+        }
+      ],
+      "chosen": "Reuse the recorded failure or stale result for 20 seconds.",
+      "basis": "contract_analogy",
+      "rationale": "The contract ties retryAfterSeconds to the 20-second confirmation interval and requires one refresh for concurrent callers.",
+      "confidence": "high",
+      "blast_radius": [
+        "getCourtAvailability:200",
+        "getCourtAvailability:502",
+        "getCourtAvailability:503",
+        "getCourtAvailability:504"
+      ],
+      "reversal_cost": "Change AvailabilityService failure caching and refresh locking.",
+      "supersedes": null
+    },
+    {
+      "id": "d_system_clock_for_contract_times",
+      "point": "createAlert:201",
+      "where": "AlertController and AlertService",
+      "question": "Which clock supplies createdAt, freshness, and delay calculations?",
+      "considered": [
+        {
+          "choice": "Use the system Instant clock at request handling time",
+          "consequence": "Keeps the implementation dependency-free and uses UTC Instants in the response model."
+        },
+        {
+          "choice": "Introduce an injectable clock",
+          "consequence": "Improves deterministic tests but adds an abstraction not required by the implementation contract."
+        }
+      ],
+      "chosen": "Use Instant.now() from the system clock.",
+      "basis": "convention",
+      "rationale": "The contract specifies UTC timestamps but does not require a clock abstraction.",
+      "confidence": "medium",
+      "blast_radius": [
+        "getCourtAvailability:200",
+        "createAlert:201",
+        "createAlert:200",
+        "listAlerts:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "reversal_cost": "Inject a Clock through both application services and controllers.",
+      "supersedes": null
+    }
+  ],
+  "contract_changes": [],
+  "generated_at": "2026-09-30T06:09:16+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "gen_impl:v1",
+    "source_files": [
+      "b02d8689_input.json"
+    ],
+    "token_usage": {
+      "input_tokens": 1683457,
+      "cached_input_tokens": 1584128,
+      "output_tokens": 29358,
+      "reasoning_output_tokens": 11441
+    }
+  },
+  "commit": "e7f0b354cd28f1fc69ba7ca9ff7e77d6a7f24b91"
+}

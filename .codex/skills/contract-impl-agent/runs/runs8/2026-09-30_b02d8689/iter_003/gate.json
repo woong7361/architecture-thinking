@@ -1,0 +1,2524 @@
+{
+  "iteration": "003",
+  "g0": "PASS",
+  "g1": "REJECT",
+  "changes": "REJECT",
+  "violations": [
+    {
+      "rule": "extract.blind",
+      "point": null,
+      "where": "security",
+      "detail": "계약은 인증 요구를 선언했는데 추출 스펙에는 그 조항에 대응하는 것이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "getCourtAvailability:200",
+      "where": "CourtAvailability",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['confirmedAt', 'courtId', 'courtName', 'date', 'reservationUrl', 'slots', 'stale', 'staleReason']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "getCourtAvailability:200",
+      "where": "CourtAvailability.slots[]",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['available', 'endTime', 'startTime']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:[",
+      "where": "responses.200",
+      "detail": "계약의 선언 밖이다 (200, [)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:]",
+      "where": "responses.200",
+      "detail": "계약의 선언 밖이다 (200, ])",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:400",
+      "where": "Problem.type",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:400",
+      "where": "Problem.title",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:400",
+      "where": "Problem.status",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:400",
+      "where": "Problem.detail",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:400",
+      "where": "Problem.instance",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:400",
+      "where": "Problem.code",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:400",
+      "where": "Problem.retryable",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:400",
+      "where": "Problem.retryAfterSeconds",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:400",
+      "where": "Problem.traceId",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "getCourtAvailability:400",
+      "where": "Problem",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['code', 'retryable', 'status', 'title', 'type']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:400",
+      "where": "Problem.courtId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:400",
+      "where": "Problem.courtName",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:400",
+      "where": "Problem.date",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:400",
+      "where": "Problem.confirmedAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:400",
+      "where": "Problem.stale",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:400",
+      "where": "Problem.staleReason",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:400",
+      "where": "Problem.reservationUrl",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:400",
+      "where": "Problem.slots",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_pair_missing",
+      "point": "getCourtAvailability:VALIDATION_FAILED",
+      "where": "responses.400",
+      "detail": "계약이 선언한 쌍이다 (400, VALIDATION_FAILED)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:[",
+      "where": "responses.400",
+      "detail": "계약의 선언 밖이다 (400, [)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:\"",
+      "where": "responses.400",
+      "detail": "계약의 선언 밖이다 (400, \")",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:V",
+      "where": "responses.400",
+      "detail": "계약의 선언 밖이다 (400, V)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:A",
+      "where": "responses.400",
+      "detail": "계약의 선언 밖이다 (400, A)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:L",
+      "where": "responses.400",
+      "detail": "계약의 선언 밖이다 (400, L)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:I",
+      "where": "responses.400",
+      "detail": "계약의 선언 밖이다 (400, I)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:D",
+      "where": "responses.400",
+      "detail": "계약의 선언 밖이다 (400, D)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:A",
+      "where": "responses.400",
+      "detail": "계약의 선언 밖이다 (400, A)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:T",
+      "where": "responses.400",
+      "detail": "계약의 선언 밖이다 (400, T)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:I",
+      "where": "responses.400",
+      "detail": "계약의 선언 밖이다 (400, I)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:O",
+      "where": "responses.400",
+      "detail": "계약의 선언 밖이다 (400, O)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:N",
+      "where": "responses.400",
+      "detail": "계약의 선언 밖이다 (400, N)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:_",
+      "where": "responses.400",
+      "detail": "계약의 선언 밖이다 (400, _)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:F",
+      "where": "responses.400",
+      "detail": "계약의 선언 밖이다 (400, F)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:A",
+      "where": "responses.400",
+      "detail": "계약의 선언 밖이다 (400, A)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:I",
+      "where": "responses.400",
+      "detail": "계약의 선언 밖이다 (400, I)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:L",
+      "where": "responses.400",
+      "detail": "계약의 선언 밖이다 (400, L)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:E",
+      "where": "responses.400",
+      "detail": "계약의 선언 밖이다 (400, E)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:D",
+      "where": "responses.400",
+      "detail": "계약의 선언 밖이다 (400, D)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:\"",
+      "where": "responses.400",
+      "detail": "계약의 선언 밖이다 (400, \")",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:]",
+      "where": "responses.400",
+      "detail": "계약의 선언 밖이다 (400, ])",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:404",
+      "where": "Problem.type",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:404",
+      "where": "Problem.title",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:404",
+      "where": "Problem.status",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:404",
+      "where": "Problem.detail",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:404",
+      "where": "Problem.instance",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:404",
+      "where": "Problem.code",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:404",
+      "where": "Problem.retryable",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:404",
+      "where": "Problem.retryAfterSeconds",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:404",
+      "where": "Problem.traceId",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "getCourtAvailability:404",
+      "where": "Problem",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['code', 'retryable', 'status', 'title', 'type']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:404",
+      "where": "Problem.courtId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:404",
+      "where": "Problem.courtName",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:404",
+      "where": "Problem.date",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:404",
+      "where": "Problem.confirmedAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:404",
+      "where": "Problem.stale",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:404",
+      "where": "Problem.staleReason",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:404",
+      "where": "Problem.reservationUrl",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:404",
+      "where": "Problem.slots",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_pair_missing",
+      "point": "getCourtAvailability:COURT_NOT_SUPPORTED",
+      "where": "responses.404",
+      "detail": "계약이 선언한 쌍이다 (404, COURT_NOT_SUPPORTED)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:[",
+      "where": "responses.404",
+      "detail": "계약의 선언 밖이다 (404, [)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:\"",
+      "where": "responses.404",
+      "detail": "계약의 선언 밖이다 (404, \")",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:C",
+      "where": "responses.404",
+      "detail": "계약의 선언 밖이다 (404, C)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:O",
+      "where": "responses.404",
+      "detail": "계약의 선언 밖이다 (404, O)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:U",
+      "where": "responses.404",
+      "detail": "계약의 선언 밖이다 (404, U)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:R",
+      "where": "responses.404",
+      "detail": "계약의 선언 밖이다 (404, R)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:T",
+      "where": "responses.404",
+      "detail": "계약의 선언 밖이다 (404, T)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:_",
+      "where": "responses.404",
+      "detail": "계약의 선언 밖이다 (404, _)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:N",
+      "where": "responses.404",
+      "detail": "계약의 선언 밖이다 (404, N)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:O",
+      "where": "responses.404",
+      "detail": "계약의 선언 밖이다 (404, O)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:T",
+      "where": "responses.404",
+      "detail": "계약의 선언 밖이다 (404, T)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:_",
+      "where": "responses.404",
+      "detail": "계약의 선언 밖이다 (404, _)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:S",
+      "where": "responses.404",
+      "detail": "계약의 선언 밖이다 (404, S)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:U",
+      "where": "responses.404",
+      "detail": "계약의 선언 밖이다 (404, U)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:P",
+      "where": "responses.404",
+      "detail": "계약의 선언 밖이다 (404, P)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:P",
+      "where": "responses.404",
+      "detail": "계약의 선언 밖이다 (404, P)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:O",
+      "where": "responses.404",
+      "detail": "계약의 선언 밖이다 (404, O)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:R",
+      "where": "responses.404",
+      "detail": "계약의 선언 밖이다 (404, R)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:T",
+      "where": "responses.404",
+      "detail": "계약의 선언 밖이다 (404, T)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:E",
+      "where": "responses.404",
+      "detail": "계약의 선언 밖이다 (404, E)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:D",
+      "where": "responses.404",
+      "detail": "계약의 선언 밖이다 (404, D)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:\"",
+      "where": "responses.404",
+      "detail": "계약의 선언 밖이다 (404, \")",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:]",
+      "where": "responses.404",
+      "detail": "계약의 선언 밖이다 (404, ])",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:500",
+      "where": "Problem.type",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:500",
+      "where": "Problem.title",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:500",
+      "where": "Problem.status",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:500",
+      "where": "Problem.detail",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:500",
+      "where": "Problem.instance",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:500",
+      "where": "Problem.code",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:500",
+      "where": "Problem.retryable",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:500",
+      "where": "Problem.retryAfterSeconds",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:500",
+      "where": "Problem.traceId",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "getCourtAvailability:500",
+      "where": "Problem",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['code', 'retryable', 'status', 'title', 'type']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:500",
+      "where": "Problem.courtId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:500",
+      "where": "Problem.courtName",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:500",
+      "where": "Problem.date",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:500",
+      "where": "Problem.confirmedAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:500",
+      "where": "Problem.stale",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:500",
+      "where": "Problem.staleReason",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:500",
+      "where": "Problem.reservationUrl",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:500",
+      "where": "Problem.slots",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_pair_missing",
+      "point": "getCourtAvailability:INTERNAL_ERROR",
+      "where": "responses.500",
+      "detail": "계약이 선언한 쌍이다 (500, INTERNAL_ERROR)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:[",
+      "where": "responses.500",
+      "detail": "계약의 선언 밖이다 (500, [)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:\"",
+      "where": "responses.500",
+      "detail": "계약의 선언 밖이다 (500, \")",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:I",
+      "where": "responses.500",
+      "detail": "계약의 선언 밖이다 (500, I)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:N",
+      "where": "responses.500",
+      "detail": "계약의 선언 밖이다 (500, N)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:T",
+      "where": "responses.500",
+      "detail": "계약의 선언 밖이다 (500, T)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:E",
+      "where": "responses.500",
+      "detail": "계약의 선언 밖이다 (500, E)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:R",
+      "where": "responses.500",
+      "detail": "계약의 선언 밖이다 (500, R)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:N",
+      "where": "responses.500",
+      "detail": "계약의 선언 밖이다 (500, N)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:A",
+      "where": "responses.500",
+      "detail": "계약의 선언 밖이다 (500, A)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:L",
+      "where": "responses.500",
+      "detail": "계약의 선언 밖이다 (500, L)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:_",
+      "where": "responses.500",
+      "detail": "계약의 선언 밖이다 (500, _)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:E",
+      "where": "responses.500",
+      "detail": "계약의 선언 밖이다 (500, E)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:R",
+      "where": "responses.500",
+      "detail": "계약의 선언 밖이다 (500, R)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:R",
+      "where": "responses.500",
+      "detail": "계약의 선언 밖이다 (500, R)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:O",
+      "where": "responses.500",
+      "detail": "계약의 선언 밖이다 (500, O)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:R",
+      "where": "responses.500",
+      "detail": "계약의 선언 밖이다 (500, R)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:\"",
+      "where": "responses.500",
+      "detail": "계약의 선언 밖이다 (500, \")",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:]",
+      "where": "responses.500",
+      "detail": "계약의 선언 밖이다 (500, ])",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:502",
+      "where": "Problem.type",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:502",
+      "where": "Problem.title",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:502",
+      "where": "Problem.status",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:502",
+      "where": "Problem.detail",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:502",
+      "where": "Problem.instance",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:502",
+      "where": "Problem.code",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:502",
+      "where": "Problem.retryable",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:502",
+      "where": "Problem.retryAfterSeconds",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:502",
+      "where": "Problem.traceId",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "getCourtAvailability:502",
+      "where": "Problem",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['code', 'retryable', 'status', 'title', 'type']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:502",
+      "where": "Problem.courtId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:502",
+      "where": "Problem.courtName",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:502",
+      "where": "Problem.date",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:502",
+      "where": "Problem.confirmedAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:502",
+      "where": "Problem.stale",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:502",
+      "where": "Problem.staleReason",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:502",
+      "where": "Problem.reservationUrl",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:502",
+      "where": "Problem.slots",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_pair_missing",
+      "point": "getCourtAvailability:UPSTREAM_RESPONSE_UNREADABLE",
+      "where": "responses.502",
+      "detail": "계약이 선언한 쌍이다 (502, UPSTREAM_RESPONSE_UNREADABLE)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:[",
+      "where": "responses.502",
+      "detail": "계약의 선언 밖이다 (502, [)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:\"",
+      "where": "responses.502",
+      "detail": "계약의 선언 밖이다 (502, \")",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:U",
+      "where": "responses.502",
+      "detail": "계약의 선언 밖이다 (502, U)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:P",
+      "where": "responses.502",
+      "detail": "계약의 선언 밖이다 (502, P)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:S",
+      "where": "responses.502",
+      "detail": "계약의 선언 밖이다 (502, S)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:T",
+      "where": "responses.502",
+      "detail": "계약의 선언 밖이다 (502, T)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:R",
+      "where": "responses.502",
+      "detail": "계약의 선언 밖이다 (502, R)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:E",
+      "where": "responses.502",
+      "detail": "계약의 선언 밖이다 (502, E)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:A",
+      "where": "responses.502",
+      "detail": "계약의 선언 밖이다 (502, A)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:M",
+      "where": "responses.502",
+      "detail": "계약의 선언 밖이다 (502, M)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:_",
+      "where": "responses.502",
+      "detail": "계약의 선언 밖이다 (502, _)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:R",
+      "where": "responses.502",
+      "detail": "계약의 선언 밖이다 (502, R)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:E",
+      "where": "responses.502",
+      "detail": "계약의 선언 밖이다 (502, E)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:S",
+      "where": "responses.502",
+      "detail": "계약의 선언 밖이다 (502, S)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:P",
+      "where": "responses.502",
+      "detail": "계약의 선언 밖이다 (502, P)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:O",
+      "where": "responses.502",
+      "detail": "계약의 선언 밖이다 (502, O)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:N",
+      "where": "responses.502",
+      "detail": "계약의 선언 밖이다 (502, N)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:S",
+      "where": "responses.502",
+      "detail": "계약의 선언 밖이다 (502, S)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:E",
+      "where": "responses.502",
+      "detail": "계약의 선언 밖이다 (502, E)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:_",
+      "where": "responses.502",
+      "detail": "계약의 선언 밖이다 (502, _)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:U",
+      "where": "responses.502",
+      "detail": "계약의 선언 밖이다 (502, U)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:N",
+      "where": "responses.502",
+      "detail": "계약의 선언 밖이다 (502, N)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:R",
+      "where": "responses.502",
+      "detail": "계약의 선언 밖이다 (502, R)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:E",
+      "where": "responses.502",
+      "detail": "계약의 선언 밖이다 (502, E)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:A",
+      "where": "responses.502",
+      "detail": "계약의 선언 밖이다 (502, A)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:D",
+      "where": "responses.502",
+      "detail": "계약의 선언 밖이다 (502, D)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:A",
+      "where": "responses.502",
+      "detail": "계약의 선언 밖이다 (502, A)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:B",
+      "where": "responses.502",
+      "detail": "계약의 선언 밖이다 (502, B)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:L",
+      "where": "responses.502",
+      "detail": "계약의 선언 밖이다 (502, L)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:E",
+      "where": "responses.502",
+      "detail": "계약의 선언 밖이다 (502, E)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:\"",
+      "where": "responses.502",
+      "detail": "계약의 선언 밖이다 (502, \")",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:]",
+      "where": "responses.502",
+      "detail": "계약의 선언 밖이다 (502, ])",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:503",
+      "where": "Problem.type",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:503",
+      "where": "Problem.title",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:503",
+      "where": "Problem.status",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:503",
+      "where": "Problem.detail",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:503",
+      "where": "Problem.instance",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:503",
+      "where": "Problem.code",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:503",
+      "where": "Problem.retryable",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:503",
+      "where": "Problem.retryAfterSeconds",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:503",
+      "where": "Problem.traceId",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "getCourtAvailability:503",
+      "where": "Problem",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['code', 'retryable', 'status', 'title', 'type']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:503",
+      "where": "Problem.courtId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:503",
+      "where": "Problem.courtName",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:503",
+      "where": "Problem.date",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:503",
+      "where": "Problem.confirmedAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:503",
+      "where": "Problem.stale",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:503",
+      "where": "Problem.staleReason",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:503",
+      "where": "Problem.reservationUrl",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:503",
+      "where": "Problem.slots",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_pair_missing",
+      "point": "getCourtAvailability:UPSTREAM_UNAVAILABLE",
+      "where": "responses.503",
+      "detail": "계약이 선언한 쌍이다 (503, UPSTREAM_UNAVAILABLE)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_pair_missing",
+      "point": "getCourtAvailability:STORAGE_TIMEOUT",
+      "where": "responses.503",
+      "detail": "계약이 선언한 쌍이다 (503, STORAGE_TIMEOUT)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:[",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, [)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:\"",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, \")",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:U",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, U)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:P",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, P)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:S",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, S)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:T",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, T)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:R",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, R)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:E",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, E)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:A",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, A)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:M",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, M)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:_",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, _)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:U",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, U)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:N",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, N)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:A",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, A)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:V",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, V)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:A",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, A)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:I",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, I)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:L",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, L)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:A",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, A)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:B",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, B)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:L",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, L)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:E",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, E)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:\"",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, \")",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:,",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, ,)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:\"",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, \")",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:S",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, S)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:T",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, T)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:O",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, O)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:R",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, R)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:A",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, A)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:G",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, G)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:E",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, E)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:_",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, _)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:T",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, T)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:I",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, I)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:M",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, M)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:E",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, E)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:O",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, O)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:U",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, U)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:T",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, T)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:\"",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, \")",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:]",
+      "where": "responses.503",
+      "detail": "계약의 선언 밖이다 (503, ])",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:504",
+      "where": "Problem.type",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:504",
+      "where": "Problem.title",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:504",
+      "where": "Problem.status",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:504",
+      "where": "Problem.detail",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:504",
+      "where": "Problem.instance",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:504",
+      "where": "Problem.code",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:504",
+      "where": "Problem.retryable",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:504",
+      "where": "Problem.retryAfterSeconds",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_missing",
+      "point": "getCourtAvailability:504",
+      "where": "Problem.traceId",
+      "detail": "계약이 응답에 담겠다고 선언한 필드다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.required_weakened",
+      "point": "getCourtAvailability:504",
+      "where": "Problem",
+      "detail": "계약이 항상 담겠다고 보장한 필드 ['code', 'retryable', 'status', 'title', 'type']",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:504",
+      "where": "Problem.courtId",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:504",
+      "where": "Problem.courtName",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:504",
+      "where": "Problem.date",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:504",
+      "where": "Problem.confirmedAt",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:504",
+      "where": "Problem.stale",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:504",
+      "where": "Problem.staleReason",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:504",
+      "where": "Problem.reservationUrl",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "response.field_extra_closed",
+      "point": "getCourtAvailability:504",
+      "where": "Problem.slots",
+      "detail": "계약이 닫아 둔 객체다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_pair_missing",
+      "point": "getCourtAvailability:UPSTREAM_TIMEOUT",
+      "where": "responses.504",
+      "detail": "계약이 선언한 쌍이다 (504, UPSTREAM_TIMEOUT)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:[",
+      "where": "responses.504",
+      "detail": "계약의 선언 밖이다 (504, [)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:\"",
+      "where": "responses.504",
+      "detail": "계약의 선언 밖이다 (504, \")",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:U",
+      "where": "responses.504",
+      "detail": "계약의 선언 밖이다 (504, U)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:P",
+      "where": "responses.504",
+      "detail": "계약의 선언 밖이다 (504, P)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:S",
+      "where": "responses.504",
+      "detail": "계약의 선언 밖이다 (504, S)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:T",
+      "where": "responses.504",
+      "detail": "계약의 선언 밖이다 (504, T)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:R",
+      "where": "responses.504",
+      "detail": "계약의 선언 밖이다 (504, R)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:E",
+      "where": "responses.504",
+      "detail": "계약의 선언 밖이다 (504, E)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:A",
+      "where": "responses.504",
+      "detail": "계약의 선언 밖이다 (504, A)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:M",
+      "where": "responses.504",
+      "detail": "계약의 선언 밖이다 (504, M)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:_",
+      "where": "responses.504",
+      "detail": "계약의 선언 밖이다 (504, _)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:T",
+      "where": "responses.504",
+      "detail": "계약의 선언 밖이다 (504, T)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:I",
+      "where": "responses.504",
+      "detail": "계약의 선언 밖이다 (504, I)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:M",
+      "where": "responses.504",
+      "detail": "계약의 선언 밖이다 (504, M)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:E",
+      "where": "responses.504",
+      "detail": "계약의 선언 밖이다 (504, E)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:O",
+      "where": "responses.504",
+      "detail": "계약의 선언 밖이다 (504, O)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:U",
+      "where": "responses.504",
+      "detail": "계약의 선언 밖이다 (504, U)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:T",
+      "where": "responses.504",
+      "detail": "계약의 선언 밖이다 (504, T)",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:\"",
+      "where": "responses.504",
+      "detail": "계약의 선언 밖이다 (504, \")",
+      "verdict": "violation"
+    },
+    {
+      "rule": "error.code_undeclared",
+      "point": "getCourtAvailability:]",
+      "where": "responses.504",
+      "detail": "계약의 선언 밖이다 (504, ])",
+      "verdict": "violation"
+    },
+    {
+      "rule": "surface.path_missing",
+      "point": "listAlerts",
+      "where": "/alerts",
+      "detail": "GET /alerts",
+      "verdict": "violation"
+    },
+    {
+      "rule": "surface.path_missing",
+      "point": "createAlert",
+      "where": "/alerts",
+      "detail": "POST /alerts",
+      "verdict": "violation"
+    },
+    {
+      "rule": "surface.path_missing",
+      "point": "getAlert",
+      "where": "/alerts/{alertId}",
+      "detail": "GET /alerts/{alertId}",
+      "verdict": "violation"
+    },
+    {
+      "rule": "surface.path_missing",
+      "point": "cancelAlert",
+      "where": "/alerts/{alertId}",
+      "detail": "DELETE /alerts/{alertId}",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/tags",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/info/description",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/info/x-out-of-scope",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1courts~1{courtId}~1availability/get/tags",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1courts~1{courtId}~1availability/get/summary",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1courts~1{courtId}~1availability/get/description",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1courts~1{courtId}~1availability/get/x-requirement",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1courts~1{courtId}~1availability/get/responses/200/description",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts/post/tags",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts/post/summary",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts/post/description",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts/post/x-requirement",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts/post/responses/201/description",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts/post/responses/200/description",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts/get/tags",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts/get/summary",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts/get/description",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts/get/x-requirement",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts/get/responses/200/description",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts~1{alertId}/get/tags",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts~1{alertId}/get/summary",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts~1{alertId}/get/description",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts~1{alertId}/get/x-requirement",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts~1{alertId}/get/responses/200/description",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts~1{alertId}/delete/tags",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts~1{alertId}/delete/summary",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts~1{alertId}/delete/description",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts~1{alertId}/delete/x-requirement",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/paths/~1alerts~1{alertId}/delete/responses/200/description",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/headers/Location/description",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/headers/IdempotencyReplayed/description",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/headers/RetryAfter/description",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/CourtName",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/AlertStatus/x-requirement",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/Alert/x-requirement",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/Alert/description",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/Alert/properties/courtName/type",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/Alert/properties/courtName/minLength",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/Alert/properties/courtName/$ref",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/Alert/properties/expiresAt/description",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/CourtAvailability/x-requirement",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/CourtAvailability/properties/courtName/type",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/CourtAvailability/properties/courtName/minLength",
+      "detail": "removed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/CourtAvailability/properties/courtName/$ref",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/ErrorCode/description",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/schemas/Problem/description",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/ValidationFailed/headers",
+      "detail": "added: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/ValidationFailed/description",
+      "detail": "changed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/AlertRequestInvalid/description",
+      "detail": "changed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/Unauthenticated/description",
+      "detail": "changed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/CourtNotSupported/description",
+      "detail": "changed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/AlertNotFound/description",
+      "detail": "changed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/IdempotencyKeyReused/description",
+      "detail": "changed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/AlertNotAcceptable/description",
+      "detail": "changed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/UpstreamUnreadable/description",
+      "detail": "changed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/UpstreamTimeout/description",
+      "detail": "changed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/AvailabilityUnavailable/description",
+      "detail": "changed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/StorageUnavailable/description",
+      "detail": "changed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/StorageOrContentionUnavailable/description",
+      "detail": "changed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "change.unjustified",
+      "point": null,
+      "where": "/components/responses/InternalError/description",
+      "detail": "changed: 이 자리의 변경에 기록이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "manifest.contract_version_missing",
+      "point": null,
+      "where": "iter_003 refine_output",
+      "detail": "manifest.contract_version_missing: contract/tennis-alert-api-v2.yaml is not in the file manifest",
+      "verdict": "violation"
+    },
+    {
+      "rule": "manifest.contract_role_count",
+      "point": null,
+      "where": "iter_003 refine_output",
+      "detail": "manifest.contract_role_count: expected exactly one file with role=contract, found []",
+      "verdict": "violation"
+    }
+  ],
+  "observations": [
+    {
+      "rule": "decision.unknown_point",
+      "point": "authentication",
+      "where": "src/main/java/com/thinking/tennis/api/ApiMapper.java",
+      "detail": "계약의 판정 지점이 아니다 (결정 d_user_identity)",
+      "verdict": "observation"
+    },
+    {
+      "rule": "decision.unknown_point",
+      "point": "availability-refresh-wait",
+      "where": "src/main/java/com/thinking/tennis/app/AvailabilityApplicationService.java",
+      "detail": "계약의 판정 지점이 아니다 (결정 d_refresh_shared_completion)",
+      "verdict": "observation"
+    },
+    {
+      "rule": "decision.unknown_point",
+      "point": "5xx-trace-id",
+      "where": "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+      "detail": "계약의 판정 지점이 아니다 (결정 d_trace_id_format)",
+      "verdict": "observation"
+    },
+    {
+      "rule": "decision.unknown_point",
+      "point": "AlertStatus:EXPIRED",
+      "where": "src/main/java/com/thinking/tennis/config/SchedulingConfig.java",
+      "detail": "계약의 판정 지점이 아니다 (결정 d_expiry_scheduler_cadence)",
+      "verdict": "observation"
+    },
+    {
+      "rule": "decision.unknown_point",
+      "point": "Alert.delivery",
+      "where": "src/main/java/com/thinking/tennis/app/AvailabilityApplicationService.java",
+      "detail": "계약의 판정 지점이 아니다 (결정 d_delivery_surface)",
+      "verdict": "observation"
+    },
+    {
+      "rule": "decision.unknown_point",
+      "point": "Alert.expiresAt",
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+      "detail": "계약의 판정 지점이 아니다 (결정 d_expiry_source_semantics)",
+      "verdict": "observation"
+    },
+    {
+      "rule": "decision.unknown_point",
+      "point": "alert-storage",
+      "where": "src/main/java/com/thinking/tennis/app/AlertApplicationService.java",
+      "detail": "계약의 판정 지점이 아니다 (결정 d_inmemory_alert_store)",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.diff",
+      "point": null,
+      "where": "*",
+      "detail": "달라진 좌표 60개: /tags, /info/description, /info/x-out-of-scope, /paths/~1courts~1{courtId}~1availability/get/tags, /paths/~1courts~1{courtId}~1availability/get/summary, /paths/~1courts~1{courtId}~1availability/get/description, /paths/~1courts~1{courtId}~1availability/get/x-requirement, /paths/~1courts~1{courtId}~1availability/get/responses/200/description, /paths/~1alerts/post/tags, /paths/~1alerts/post/summary, /paths/~1alerts/post/description, /paths/~1alerts/post/x-requirement, /paths/~1alerts/post/responses/201/description, /paths/~1alerts/post/responses/200/description, /paths/~1alerts/get/tags, /paths/~1alerts/get/summary, /paths/~1alerts/get/description, /paths/~1alerts/get/x-requirement, /paths/~1alerts/get/responses/200/description, /paths/~1alerts~1{alertId}/get/tags, /paths/~1alerts~1{alertId}/get/summary, /paths/~1alerts~1{alertId}/get/description, /paths/~1alerts~1{alertId}/get/x-requirement, /paths/~1alerts~1{alertId}/get/responses/200/description, /paths/~1alerts~1{alertId}/delete/tags, /paths/~1alerts~1{alertId}/delete/summary, /paths/~1alerts~1{alertId}/delete/description, /paths/~1alerts~1{alertId}/delete/x-requirement, /paths/~1alerts~1{alertId}/delete/responses/200/description, /components/headers/Location/description, /components/headers/IdempotencyReplayed/description, /components/headers/RetryAfter/description, /components/schemas/CourtName, /components/schemas/AlertStatus/x-requirement, /components/schemas/Alert/x-requirement, /components/schemas/Alert/description, /components/schemas/Alert/properties/courtName/type, /components/schemas/Alert/properties/courtName/minLength, /components/schemas/Alert/properties/courtName/$ref, /components/schemas/Alert/properties/expiresAt/description",
+      "verdict": "observation"
+    },
+    {
+      "rule": "change.version_label",
+      "point": null,
+      "where": "tennis-alert-api-v2.yaml",
+      "detail": "파일명의 판 번호 2과 계약의 주 버전 1이 어긋난다",
+      "verdict": "observation"
+    }
+  ],
+  "errors": [],
+  "derived_spec": "C:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs8\\2026-09-30_b02d8689\\iter_003\\api-docs.json",
+  "allow_missing_gates": false,
+  "log": [
+    "작업 폴더: C:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs8\\2026-09-30_b02d8689\\output (target/ 재사용 예)\n$ C:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs8\\2026-09-30_b02d8689\\output\\mvnw.cmd -B -q test → 0\n09:19:50.442 [main] INFO com.tngtech.archunit.core.PluginLoader -- Detected Java version 17.0.19\n\n$ dump_api_docs.py → 0\nC:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs8\\2026-09-30_b02d8689\\iter_003\\api-docs.json 에 저장했다. 포트 57845, 최상위 키 ['components', 'info', 'openapi', 'paths', 'servers'], paths 1개\n"
+  ],
+  "critique_source": "none:no_critique_in_iter_002",
+  "build_attempts": [
+    {
+      "attempt": 1,
+      "commit": "16732b0081df1c3e7398b00480f545e29cdef73d",
+      "index_declared": false,
+      "index_errors": [
+        "schema $.files: [] should be non-empty"
+      ],
+      "failures": [
+        {
+          "rule": "g0.compile_failed",
+          "point": null,
+          "where": "mvnw test",
+          "detail": "컴파일 오류 2건\nsrc/main/java/com/thinking/tennis/api/AlertController.java:233:86 illegal start of type\nsrc/main/java/com/thinking/tennis/api/AlertController.java:233:87 <identifier> expected",
+          "verdict": "violation"
+        }
+      ]
+    },
+    {
+      "attempt": 2,
+      "commit": "b5d2727cf8796c6b8e7d39ef738702d9c6cf980a",
+      "index_declared": true,
+      "index_errors": [],
+      "failures": [
+        {
+          "rule": "g0.compile_failed",
+          "point": null,
+          "where": "mvnw test",
+          "detail": "컴파일 오류 2건\nsrc/main/java/com/thinking/tennis/api/AlertController.java:233:86 illegal start of type\nsrc/main/java/com/thinking/tennis/api/AlertController.java:233:87 <identifier> expected",
+          "verdict": "violation"
+        }
+      ]
+    }
+  ],
+  "carried_violations": [
+    {
+      "rule": "manifest.contract_version_missing",
+      "point": null,
+      "where": "iter_003 refine_output",
+      "detail": "manifest.contract_version_missing: contract/tennis-alert-api-v2.yaml is not in the file manifest",
+      "verdict": "violation"
+    },
+    {
+      "rule": "manifest.contract_role_count",
+      "point": null,
+      "where": "iter_003 refine_output",
+      "detail": "manifest.contract_role_count: expected exactly one file with role=contract, found []",
+      "verdict": "violation"
+    }
+  ]
+}

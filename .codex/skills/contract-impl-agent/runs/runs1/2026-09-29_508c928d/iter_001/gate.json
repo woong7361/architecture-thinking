@@ -1,0 +1,100 @@
+{
+  "iteration": "001",
+  "g0": "PASS",
+  "g1": "REJECT",
+  "changes": "PASS",
+  "violations": [
+    {
+      "rule": "extract.blind",
+      "point": null,
+      "where": "x-error-codes",
+      "detail": "계약은 (상태 코드, 에러 코드) 쌍을 선언했는데 추출 스펙에는 그 조항에 대응하는 것이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "extract.blind",
+      "point": null,
+      "where": "security",
+      "detail": "계약은 인증 요구를 선언했는데 추출 스펙에는 그 조항에 대응하는 것이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "surface.path_missing",
+      "point": "getCourtAvailability",
+      "where": "/courts/{courtId}/availability",
+      "detail": "GET /courts/{courtId}/availability",
+      "verdict": "violation"
+    },
+    {
+      "rule": "surface.path_missing",
+      "point": "listAlerts",
+      "where": "/alerts",
+      "detail": "GET /alerts",
+      "verdict": "violation"
+    },
+    {
+      "rule": "surface.path_missing",
+      "point": "createAlert",
+      "where": "/alerts",
+      "detail": "POST /alerts",
+      "verdict": "violation"
+    },
+    {
+      "rule": "surface.path_missing",
+      "point": "getAlert",
+      "where": "/alerts/{alertId}",
+      "detail": "GET /alerts/{alertId}",
+      "verdict": "violation"
+    },
+    {
+      "rule": "surface.path_missing",
+      "point": "cancelAlert",
+      "where": "/alerts/{alertId}",
+      "detail": "DELETE /alerts/{alertId}",
+      "verdict": "violation"
+    }
+  ],
+  "observations": [
+    {
+      "rule": "surface.path_extra",
+      "point": null,
+      "where": "/v1/alerts",
+      "detail": "계약에 없는 경로다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "surface.path_extra",
+      "point": null,
+      "where": "/v1/alerts/{alertId}",
+      "detail": "계약에 없는 경로다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "surface.path_extra",
+      "point": null,
+      "where": "/v1/courts/{courtId}/availability",
+      "detail": "계약에 없는 경로다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "decision.unknown_point",
+      "point": "authentication:user_identity",
+      "where": "src/main/java/com/thinking/tennis/api/Authentication.java",
+      "detail": "계약의 판정 지점이 아니다 (결정 d_auth_token_identity)",
+      "verdict": "observation"
+    },
+    {
+      "rule": "decision.unknown_point",
+      "point": "failure_response:traceId",
+      "where": "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+      "detail": "계약의 판정 지점이 아니다 (결정 d_trace_id_format)",
+      "verdict": "observation"
+    }
+  ],
+  "errors": [],
+  "derived_spec": "C:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs\\2026-09-29_508c928d\\iter_001\\api-docs.json",
+  "allow_missing_gates": false,
+  "log": [
+    "작업 폴더: C:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs\\2026-09-29_508c928d\\output (target/ 재사용 아니오)\n$ C:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs\\2026-09-29_508c928d\\output\\mvnw.cmd -B -q test → 0\n18:43:08.149 [main] INFO com.tngtech.archunit.core.PluginLoader -- Detected Java version 17.0.19\n$ dump_api_docs.py → 0\nC:\\Users\\PC-220627-03\\AppData\\Local\\Temp\\claude\\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\\862b7ff3-a396-4dc6-9b71-a200dcde2544\\scratchpad\\runs\\2026-09-29_508c928d\\iter_001\\api-docs.json 에 저장했다. 포트 59363, 최상위 키 ['components', 'info', 'openapi', 'paths', 'servers'], paths 3개"
+  ]
+}

@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Evaluator Direct Output",
+  "description": "축 이름은 루브릭이 정한다. 이 스키마는 축을 열거하지 않고(검증용 1벌), 축 집합이 루브릭과 일치하는지는 validate_eval_contract가 대조한다.",
+  "type": "object",
+  "required": [
+    "brief_hash",
+    "iteration",
+    "rubric_name",
+    "rubric_scores",
+    "axis_rationales",
+    "calibration_note"
+  ],
+  "properties": {
+    "brief_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{8,}$"
+    },
+    "iteration": {
+      "type": "string",
+      "pattern": "^[0-9]{3}$"
+    },
+    "rubric_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rubric_scores": {
+      "type": "object",
+      "required": [
+        "scores",
+        "weights",
+        "weighted_total"
+      ],
+      "properties": {
+        "scores": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 5
+          }
+        },
+        "weights": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        },
+        "weighted_total": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 5
+        }
+      },
+      "additionalProperties": false
+    },
+    "axis_rationales": {
+      "type": "object",
+      "minProperties": 1,
+      "description": "점수의 근거 한 줄. 다음 초안에 대한 지시가 아니다. 적합성 축은 '열거 N개, 미충족 K개: [...]' 형태로 셀 수 있게 쓴다.",
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "slot_classifications": {
+      "type": "array",
+      "description": "기준선 prose_slots의 분류와 충족 여부. 분모는 슬롯 목록이 고정하고, 축 배분은 슬롯의 JSON 포인터가 정한다. 포인터로 갈리지 않는 슬롯만 모델이 분류하고 그 분류를 여기 신고한다.",
+      "items": {
+        "type": "object",
+        "required": [
+          "slot_id",
+          "classification",
+          "axis",
+          "met"
+        ],
+        "properties": {
+          "slot_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "classification": {
+            "type": "string",
+            "enum": [
+              "obligation",
+              "description"
+            ]
+          },
+          "axis": {
+            "type": "string",
+            "minLength": 1
+          },
+          "met": {
+            "type": "boolean"
+          },
+          "note": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "calibration_note": {
+      "type": "string"
+    },
+    "unmeasured_axes": {
+      "type": "array",
+      "description": "측정하지 못한 축의 이름. 작업 폴더의 코드를 읽지 못해 근거를 대지 못한 축을 여기 적는다. 측정하지 못한 것은 판정이 아니므로 runner가 그 채점을 판정에 쓰지 않는다. 모르는 것을 최저점으로 적지 말고 이 자리에 적어라.",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "additionalProperties": false
+}

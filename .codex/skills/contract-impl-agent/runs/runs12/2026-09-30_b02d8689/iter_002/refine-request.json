@@ -1,0 +1,1392 @@
+{
+  "brief_hash": "b02d8689",
+  "from_iteration": "002",
+  "to_iteration": "003",
+  "priority_order": [
+    "gate_violations",
+    "contract_version",
+    "standing_decisions",
+    "code_instructions"
+  ],
+  "open_causes": [
+    {
+      "id": "c_18ca1ca9",
+      "rule": "change.unjustified",
+      "where": "/components/schemas/AlertStatus/description",
+      "detail": "기록 cc_watching_check_source은 표현 변경인데 representation_basis가 비었다 (닫힌 값: interop, spec_implication, contract_consistency)",
+      "points": [],
+      "point_count": 1,
+      "evidence_count": 1
+    },
+    {
+      "id": "c_4dad40ff",
+      "rule": "change.unjustified",
+      "where": "/paths/~1alerts/post/description",
+      "detail": "기록 cc_create_schedule_source은 표현 변경인데 representation_basis가 비었다 (닫힌 값: interop, spec_implication, contract_consistency)",
+      "points": [],
+      "point_count": 1,
+      "evidence_count": 1
+    },
+    {
+      "id": "c_e64abfdf",
+      "rule": "change.unjustified",
+      "where": "/paths/~1alerts/post/responses/503",
+      "detail": "기록 cc_create_503_covers_upstream은 표현 변경인데 representation_basis가 비었다 (닫힌 값: interop, spec_implication, contract_consistency)",
+      "points": [],
+      "point_count": 1,
+      "evidence_count": 1
+    }
+  ],
+  "open_cause_count": 3,
+  "open_point_count": 3,
+  "rule_cards": {
+    "change.unjustified": "앞 판본과 달라진 자리에 신고가 없거나, 신고에 발의한 비평과 명세 근거 중 하나가 비었다."
+  },
+  "gate_observations": [
+    {
+      "rule": "response.value_narrowed",
+      "point": "getCourtAvailability:400",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ],
+      "cause_id": "c_a90f38d4"
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "getCourtAvailability:404",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ],
+      "cause_id": "c_a90f38d4"
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "getCourtAvailability:500",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ],
+      "cause_id": "c_a90f38d4"
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "getCourtAvailability:502",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ],
+      "cause_id": "c_a90f38d4"
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "getCourtAvailability:503",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ],
+      "cause_id": "c_a90f38d4"
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "getCourtAvailability:504",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ],
+      "cause_id": "c_a90f38d4"
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "listAlerts:200",
+      "where": "AlertList.items[].delivery",
+      "detail": "형식: attemptCount: 계약 None → 구현 int32",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: attemptCount: 계약 None → 구현 int32"
+      ],
+      "cause_id": "c_fb02d60d"
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "listAlerts:400",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ],
+      "cause_id": "c_a90f38d4"
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "listAlerts:401",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ],
+      "cause_id": "c_a90f38d4"
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "listAlerts:500",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ],
+      "cause_id": "c_a90f38d4"
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "listAlerts:503",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ],
+      "cause_id": "c_a90f38d4"
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "createAlert:201",
+      "where": "Alert.delivery",
+      "detail": "형식: attemptCount: 계약 None → 구현 int32",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: attemptCount: 계약 None → 구현 int32"
+      ],
+      "cause_id": "c_09989579"
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "createAlert:200",
+      "where": "Alert.delivery",
+      "detail": "형식: attemptCount: 계약 None → 구현 int32",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: attemptCount: 계약 None → 구현 int32"
+      ],
+      "cause_id": "c_09989579"
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "createAlert:400",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ],
+      "cause_id": "c_a90f38d4"
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "createAlert:401",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ],
+      "cause_id": "c_a90f38d4"
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "createAlert:409",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ],
+      "cause_id": "c_a90f38d4"
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "createAlert:422",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ],
+      "cause_id": "c_a90f38d4"
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "createAlert:500",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ],
+      "cause_id": "c_a90f38d4"
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "createAlert:502",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ],
+      "cause_id": "c_a90f38d4"
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "createAlert:503",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ],
+      "cause_id": "c_a90f38d4"
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "createAlert:504",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ],
+      "cause_id": "c_a90f38d4"
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "getAlert:200",
+      "where": "Alert.delivery",
+      "detail": "형식: attemptCount: 계약 None → 구현 int32",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: attemptCount: 계약 None → 구현 int32"
+      ],
+      "cause_id": "c_09989579"
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "getAlert:400",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ],
+      "cause_id": "c_a90f38d4"
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "getAlert:401",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ],
+      "cause_id": "c_a90f38d4"
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "getAlert:404",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ],
+      "cause_id": "c_a90f38d4"
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "getAlert:500",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ],
+      "cause_id": "c_a90f38d4"
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "getAlert:503",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ],
+      "cause_id": "c_a90f38d4"
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "cancelAlert:200",
+      "where": "Alert.delivery",
+      "detail": "형식: attemptCount: 계약 None → 구현 int32",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: attemptCount: 계약 None → 구현 int32"
+      ],
+      "cause_id": "c_09989579"
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "cancelAlert:400",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ],
+      "cause_id": "c_a90f38d4"
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "cancelAlert:401",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ],
+      "cause_id": "c_a90f38d4"
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "cancelAlert:404",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ],
+      "cause_id": "c_a90f38d4"
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "cancelAlert:500",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ],
+      "cause_id": "c_a90f38d4"
+    },
+    {
+      "rule": "response.value_narrowed",
+      "point": "cancelAlert:503",
+      "where": "Problem",
+      "detail": "형식: 2곳에서 좁혔다",
+      "verdict": "observation",
+      "label": "harmless_to_client",
+      "evidence": [
+        "형식: retryAfterSeconds: 계약 None → 구현 int32",
+        "형식: status: 계약 None → 구현 int32"
+      ],
+      "cause_id": "c_a90f38d4"
+    },
+    {
+      "rule": "change.diff",
+      "point": null,
+      "where": "기준선 대비",
+      "detail": "기준선과 달라진 좌표 6개: /paths/~1alerts/post/description, /paths/~1alerts/post/responses/502, /paths/~1alerts/post/responses/504, /paths/~1alerts/post/responses/503/$ref, /components/schemas/AlertStatus/description, /components/responses/AlertCreateUnavailable",
+      "verdict": "observation",
+      "kind": "representation",
+      "cause_id": "c_21abe8b8"
+    },
+    {
+      "rule": "change.diff",
+      "point": null,
+      "where": "*",
+      "detail": "달라진 좌표 6개: /paths/~1alerts/post/description, /paths/~1alerts/post/responses/502, /paths/~1alerts/post/responses/504, /paths/~1alerts/post/responses/503/$ref, /components/schemas/AlertStatus/description, /components/responses/AlertCreateUnavailable",
+      "verdict": "observation",
+      "kind": "representation",
+      "cause_id": "c_abc21322"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "createAlert:502",
+      "where": "-",
+      "detail": "판정 지점이 생겼다",
+      "verdict": "observation",
+      "kind": "representation",
+      "cause_id": "c_2a0cd662"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "createAlert:504",
+      "where": "-",
+      "detail": "판정 지점이 생겼다",
+      "verdict": "observation",
+      "kind": "representation",
+      "cause_id": "c_2a0cd662"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "createAlert:UPSTREAM_RESPONSE_UNREADABLE",
+      "where": "-",
+      "detail": "판정 지점이 생겼다",
+      "verdict": "observation",
+      "kind": "representation",
+      "cause_id": "c_2a0cd662"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "createAlert:UPSTREAM_TIMEOUT",
+      "where": "-",
+      "detail": "판정 지점이 생겼다",
+      "verdict": "observation",
+      "kind": "representation",
+      "cause_id": "c_2a0cd662"
+    },
+    {
+      "rule": "change.point_churn",
+      "point": "createAlert:UPSTREAM_UNAVAILABLE",
+      "where": "-",
+      "detail": "판정 지점이 생겼다",
+      "verdict": "observation",
+      "kind": "representation",
+      "cause_id": "c_2a0cd662"
+    },
+    {
+      "rule": "change.version_label",
+      "point": null,
+      "where": "tennis-alert-api-v2.yaml",
+      "detail": "파일명의 판 번호 2과 계약의 주 버전 1이 어긋난다",
+      "verdict": "observation",
+      "cause_id": "c_d89081ed"
+    }
+  ],
+  "gate_coverage": {
+    "g0": "PASS",
+    "g1": "PASS",
+    "contract_changes": "REJECT",
+    "allow_missing_gates": false
+  },
+  "current_contract_version": {
+    "path": "contract/tennis-alert-api-v2.yaml",
+    "from": "contract/tennis-alert-api-v1.yaml"
+  },
+  "standing_decisions": [
+    {
+      "id": "d_bearer_token_identity",
+      "point": "createAlert:UNAUTHENTICATED",
+      "where": "src/main/java/com/thinking/tennis/api/BearerTokens.java",
+      "question": "Bearer 토큰에서 사용자 식별자를 어떻게 얻는가.",
+      "considered": [
+        {
+          "choice": "토큰 문자열 자체를 사용자 식별자로 쓴다",
+          "consequence": "계약에 없는 토큰 형식을 지어내지 않고, 같은 토큰이면 같은 사용자라는 성질만으로 본인 것만 보이게 하는 요구를 지킬 수 있다"
+        },
+        {
+          "choice": "JWT로 파싱해 subject를 쓴다",
+          "consequence": "계약도 명세도 정하지 않은 토큰 구조와 서명 검증 규칙을 코드가 발명하게 되고, 그 규칙이 틀리면 모든 인증 오퍼레이션이 함께 틀린다"
+        },
+        {
+          "choice": "별도 사용자 조회 포트를 새로 만든다",
+          "consequence": "사람이 소유한 포트 목록에 없는 포트를 더하게 되고, 이 run의 판정 대상이 아닌 표면이 늘어난다"
+        }
+      ],
+      "chosen": "토큰 문자열 자체를 사용자 식별자로 쓴다. 헤더가 없거나 Bearer 스킴이 아니거나 토큰이 비면 401이다.",
+      "basis": "least_harm",
+      "rationale": "계약은 인증 방식 자체를 정하지 않고 사용자 식별이 필요한 까닭만 적었다. 식별자를 얻는 방법 중 계약이 검사할 수 있는 성질은 '같은 토큰이면 같은 사용자'뿐이라, 그 성질만 만족하는 가장 얇은 선택을 골랐다.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:401",
+        "listAlerts:401",
+        "getAlert:401",
+        "cancelAlert:401",
+        "getAlert:404",
+        "cancelAlert:404",
+        "listAlerts:200"
+      ],
+      "reversal_cost": "BearerTokens 한 파일을 고치면 된다. 유스케이스는 식별자 문자열만 받으므로 바뀌지 않는다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_authentication_before_validation",
+      "point": "createAlert:401",
+      "where": "src/main/java/com/thinking/tennis/api/AlertController.java",
+      "question": "토큰이 없고 요청 형식도 어긴 요청에 401과 400 중 무엇을 먼저 내는가.",
+      "considered": [
+        {
+          "choice": "본문을 값으로 옮기는 데 성공한 뒤부터 식별을 먼저 하고 401을 낸다",
+          "consequence": "인증되지 않은 요청에 값 수준의 검증 결과를 알려 주지 않는다. 다만 본문 자체를 읽지 못한 실패는 디스패치 단계에서 나므로 401보다 앞서 400으로 나간다"
+        },
+        {
+          "choice": "형식 검증을 먼저 하고 400을 낸다",
+          "consequence": "토큰 없이도 어떤 값이 유효한지 알아낼 수 있다"
+        },
+        {
+          "choice": "인증을 필터로 올려 디스패치 앞에 둔다",
+          "consequence": "규칙이 본문 역직렬화보다 앞서 완전히 관철되지만, 계약이 정하지 않은 필터 계층과 경로별 예외 규칙을 새로 만들게 된다"
+        }
+      ],
+      "chosen": "본문을 값으로 옮기는 데 성공한 뒤부터 식별을 먼저 한다. 본문을 읽지 못한 실패와 본문의 미디어 타입 실패는 식별보다 앞서 400 VALIDATION_FAILED로 나간다.",
+      "basis": "convention",
+      "rationale": "계약은 두 실패를 함께 선언하고 앞뒤를 정하지 않았다. 본인 것만 보이게 하려는 요구가 있는 표면에서 식별 전에 값을 판정해 알려 주면 그 요구가 새는 방향으로 기운다. 다만 본문 역직렬화는 컨트롤러 메서드가 불리기 전에 일어나므로 규칙이 그 앞까지 미치지 않는다. 그 사실을 감추지 않고 범위를 사실에 맞춰 적는다. 관철하려면 인증을 필터로 올려야 하는데, 계약에 없는 계층을 들이는 값이 그 정확도보다 크다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:400",
+        "createAlert:401",
+        "listAlerts:400",
+        "listAlerts:401",
+        "getAlert:400",
+        "getAlert:401",
+        "cancelAlert:400",
+        "cancelAlert:401"
+      ],
+      "reversal_cost": "각 컨트롤러 메서드에서 식별과 검증 두 줄의 순서를 바꾸면 된다. 완전한 관철은 필터를 더해야 한다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_version_prefix_in_emitted_uris",
+      "point": "createAlert:201",
+      "where": "src/main/java/com/thinking/tennis/api/ApiPaths.java",
+      "question": "응답에 실어 보내는 Location과 Problem.instance에 주 버전 접두사를 붙이는가.",
+      "considered": [
+        {
+          "choice": "붙인다. 받은 경로에 /v1을 앞세워 만든다",
+          "consequence": "클라이언트가 받은 값을 그대로 다시 부를 수 있고 계약의 예시와 같은 모양이 된다"
+        },
+        {
+          "choice": "붙이지 않는다. 컨트롤러가 받은 경로를 그대로 쓴다",
+          "consequence": "오퍼레이션 경로 규약과는 맞지만 돌려준 위치를 그대로 부를 수 없다"
+        }
+      ],
+      "chosen": "붙인다. Location은 /v1/alerts/{alertId}이고 instance는 /v1 + 요청 경로다.",
+      "basis": "contract_analogy",
+      "rationale": "계약의 Location 예시와 모든 Problem 예시의 instance가 /v1로 시작한다. 경로 접두사를 오퍼레이션 경로에 다시 넣지 말라는 규약은 요청을 받는 자리의 규약이고, 돌려주는 값은 밖에서 보이는 주소라 접두사가 붙은 모양이 맞다.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:201",
+        "createAlert:200",
+        "getCourtAvailability:400",
+        "getCourtAvailability:404",
+        "getAlert:404",
+        "cancelAlert:404",
+        "createAlert:409",
+        "createAlert:422"
+      ],
+      "reversal_cost": "ApiPaths의 접두사 상수를 비우면 두 자리가 함께 바뀐다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_trace_id_format",
+      "point": "getCourtAvailability:INTERNAL_ERROR",
+      "where": "src/main/java/com/thinking/tennis/api/Problems.java",
+      "question": "traceId를 어떤 형식의 문자열로 만드는가.",
+      "considered": [
+        {
+          "choice": "UUID를 쓴다",
+          "consequence": "표준 라이브러리로 만들 수 있고 새 의존이 필요 없다"
+        },
+        {
+          "choice": "계약 예시처럼 ULID를 쓴다",
+          "consequence": "stack에 없는 라이브러리를 끌어오거나 인코딩을 직접 구현해야 한다"
+        }
+      ],
+      "chosen": "UUID 문자열을 쓴다.",
+      "basis": "convention",
+      "rationale": "계약은 traceId를 형식 없는 문자열로 두고 로그에서 요청을 찾는 식별자라고만 적었다. 예시의 값은 ULID처럼 보이지만 스키마가 형식을 요구하지 않으므로, 새 의존 없이 충돌하지 않는 식별자를 쓰는 쪽을 골랐다.",
+      "confidence": "high",
+      "blast_radius": [
+        "getCourtAvailability:500",
+        "getCourtAvailability:502",
+        "getCourtAvailability:503",
+        "getCourtAvailability:504",
+        "createAlert:500",
+        "createAlert:502",
+        "createAlert:503",
+        "createAlert:504",
+        "listAlerts:500",
+        "listAlerts:503",
+        "getAlert:500",
+        "getAlert:503",
+        "cancelAlert:500",
+        "cancelAlert:503"
+      ],
+      "reversal_cost": "Problems의 식별자 생성 한 줄을 고치면 된다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_idempotency_fingerprint",
+      "point": "createAlert:IDEMPOTENCY_KEY_REUSED",
+      "where": "src/main/java/com/thinking/tennis/app/AlertCondition.java",
+      "question": "같은 멱등 키가 다른 내용의 요청에 쓰였는지를 무엇으로 견주는가.",
+      "considered": [
+        {
+          "choice": "정규화한 조건 셋(코트·날짜·시간대)을 지문으로 쓴다",
+          "consequence": "같은 뜻의 요청이 표기만 달라도 같은 요청으로 판정된다"
+        },
+        {
+          "choice": "받은 본문 바이트를 그대로 견준다",
+          "consequence": "공백이나 키 순서만 달라도 다른 요청이 되어 재시도가 409로 막힌다"
+        }
+      ],
+      "chosen": "정규화한 조건 셋을 지문으로 쓴다.",
+      "basis": "contract_analogy",
+      "rationale": "계약의 요청 본문은 조건 셋뿐이고 추가 필드를 두지 않았다. 재시도 안전이 이 키의 목적이라, 같은 뜻의 재시도가 막히지 않는 쪽으로 견준다.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:409",
+        "createAlert:201",
+        "createAlert:200",
+        "createAlert:503"
+      ],
+      "reversal_cost": "AlertCondition.fingerprint 한 메서드를 고치면 된다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_in_progress_key_yields_contention",
+      "point": "createAlert:CONCURRENT_UPDATE_CONFLICT",
+      "where": "src/main/java/com/thinking/tennis/app/store/InMemoryIdempotencyStore.java",
+      "question": "같은 멱등 키의 앞선 요청이 아직 처리 중인데 이번 요청의 지문이 다르면 409와 503 중 무엇으로 물러나는가.",
+      "considered": [
+        {
+          "choice": "지문을 보지 않고 503 CONCURRENT_UPDATE_CONFLICT로 물러난다",
+          "consequence": "판정의 근거가 되는 앞선 응답이 아직 없는 상태에서 되돌릴 수 없는 4xx를 내지 않는다. 클라이언트는 기다렸다 다시 보내 그때의 판정을 받는다"
+        },
+        {
+          "choice": "지문이 다르면 409 IDEMPOTENCY_KEY_REUSED를 낸다",
+          "consequence": "앞선 요청이 4xx로 끝나 키가 기록되지 않았을 경우, 아무 요청에도 쓰이지 않은 키를 이미 쓰였다고 말하게 된다"
+        }
+      ],
+      "chosen": "처리 중인 자리에서는 지문을 보지 않고 503으로 물러난다. 409는 2xx로 기록된 앞선 응답이 있을 때만 낸다.",
+      "basis": "contract_analogy",
+      "rationale": "계약은 409를 '같은 키가 다른 내용의 요청에 이미 쓰였다'로 적었고, 2xx로 끝난 응답만 보관한다고 적었다. 처리 중인 요청은 아직 쓰였다고 말할 수 없고, 계약은 같은 키의 앞선 요청이 처리 중이면 503으로 물러나라고 따로 적었다. 두 문장이 겹치는 자리에서 되돌릴 수 있는 쪽을 고른다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:503",
+        "createAlert:409",
+        "createAlert:201",
+        "createAlert:200"
+      ],
+      "reversal_cost": "claim의 판정 순서 두 줄을 바꾸면 된다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_create_may_trigger_check",
+      "point": "createAlert:SLOT_NOT_SUPPORTED",
+      "where": "src/main/java/com/thinking/tennis/app/AlertCommandService.java",
+      "question": "신청 조건을 판정할 운영 시간대를 어디서 얻는가. 저장된 결과가 없으면 확인을 일으키는가.",
+      "considered": [
+        {
+          "choice": "저장된 결과를 쓰고 확인 간격보다 오래됐거나 없으면 확인을 일으킨다",
+          "consequence": "조회를 거치지 않고 바로 신청해도 조건을 판정할 수 있고, 확인 간격 안이면 예약처를 다시 부르지 않는다. 그 대신 이 오퍼레이션이 예약처 장애의 영향권에 들어간다"
+        },
+        {
+          "choice": "저장된 결과만 쓰고 없으면 판정하지 않는다",
+          "consequence": "그 코트·날짜를 아무도 조회하지 않았으면 형식이 맞는 신청도 서버 사정으로 거절된다"
+        },
+        {
+          "choice": "운영 시간대를 확인하지 않고 신청을 받는다",
+          "consequence": "계약이 선언한 SLOT_NOT_SUPPORTED가 영원히 나가지 않아 판정 지점이 비어 버린다"
+        }
+      ],
+      "chosen": "저장된 결과를 먼저 쓰고, 확인 간격보다 오래됐거나 한 번도 없으면 조회와 같은 경로로 확인을 일으킨다.",
+      "basis": "spec_implication",
+      "rationale": "명세는 확인 간격과 코트·날짜 단위 확인을 정했고 계약은 신청이 지원하는 시간대인지 판정하라고 한다. 두 요구를 함께 지키는 방법은 조회가 쓰는 같은 확인 경로를 재사용하는 것이다. 이 선택은 '확인을 일으키는 것은 조회뿐이다'라는 명세 문장을 이 오퍼레이션이 넘어선다는 뜻이고, 그 결과 신청 직후 응답의 lastCheckedAt이 널이 아닐 수 있어 계약의 201 예시가 그리는 모양과 갈린다. 더 무거운 결과는 외부 장애가 신청 실패로 번지는 것이고, 그래서 그 실패를 말할 코드를 계약에 두는 발의를 이번 판본에 함께 반영했다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:422",
+        "createAlert:201",
+        "createAlert:200",
+        "createAlert:502",
+        "createAlert:503",
+        "createAlert:504",
+        "getCourtAvailability:200"
+      ],
+      "reversal_cost": "AlertCommandService가 부르는 조회 메서드를 저장된 결과만 읽는 것으로 바꾸면 되고, 그때 확인 결과가 없을 때의 응답을 다시 정해야 한다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_create_upstream_failure_codes",
+      "point": "createAlert:UPSTREAM_UNAVAILABLE",
+      "where": "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+      "question": "신청 처리 중 예약처 확인이 실패하고 저장된 성공 결과도 없을 때 무엇으로 내보내는가.",
+      "considered": [
+        {
+          "choice": "실패한 이유마다 502·504·503과 같은 이름의 UPSTREAM 코드로 낸다",
+          "consequence": "원인을 있는 대로 말하고, 기다릴 초가 확인 간격과 같아져 재시도 안내가 거짓이 되지 않는다"
+        },
+        {
+          "choice": "500 INTERNAL_ERROR로 접는다",
+          "consequence": "외부 장애가 서버 결함으로 보고되고, 5초 뒤 재시도가 구현의 20초 실패 창에 걸려 반드시 같은 실패를 받는다"
+        },
+        {
+          "choice": "422 SLOT_NOT_SUPPORTED로 접는다",
+          "consequence": "확인 실패를 지원하지 않는 시간대로 다루게 되어 확인 실패를 빈자리 없음처럼 취급하는 것과 같아진다"
+        }
+      ],
+      "chosen": "확인 실패의 이유를 예외에 담아 올리고, 예약 상태 조회와 같은 매핑으로 502·503·504와 같은 이름의 코드로 낸다.",
+      "basis": "contract_analogy",
+      "rationale": "앞 판본에는 이 오퍼레이션에 확인 실패를 말할 코드가 없어 남은 코드 중 가장 덜 나쁜 것을 골랐지만, 그 선택은 원인을 왜곡하고 재시도 안내를 거짓으로 만들었다. 리뷰어의 발의로 이번 판본이 같은 조건의 세 코드를 선언했으므로 구현은 그 코드를 그대로 쓴다. 기다릴 초는 계약이 확인 실패에 확인 간격을 따르라고 한 대로 20이다.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:502",
+        "createAlert:503",
+        "createAlert:504",
+        "createAlert:500",
+        "createAlert:422"
+      ],
+      "reversal_cost": "ScheduleUnknownException의 처리기 한 곳과 컨트롤러의 응답 선언 셋을 고치면 된다.",
+      "supersedes": "d_schedule_unknown_maps_to_internal"
+    },
+    {
+      "id": "d_delivery_pending_only",
+      "point": "getAlert:200",
+      "where": "src/main/java/com/thinking/tennis/app/AvailabilityQueryService.java",
+      "question": "이 표면이 발송 대기를 기록하는가. 기록한다면 어디까지 옮기는가.",
+      "considered": [
+        {
+          "choice": "확인 결과가 그 신청의 시간대를 빈자리로 말하면 PENDING 대기를 올리고, 뒤이은 결과에 빈자리가 없거나 신청이 해제·만료되면 그 대기를 버린다",
+          "consequence": "delivery가 널과 PENDING 사이만 오가 계약이 '감시 중인 신청의 delivery는 null이거나 PENDING'이라고 적은 범위를 정확히 채우고, EF-4와 V-6의 규칙이 이 표면으로 드러난다"
+        },
+        {
+          "choice": "대기를 만들지 않는다",
+          "consequence": "AlertDelivery 스키마 전체와 status=NOTIFIED 필터가 도달 불가능해지고, 대기를 버리는 규칙이 지켜지는지 이 표면으로 확인할 방법이 없다"
+        },
+        {
+          "choice": "대기를 만들고 SENT와 NOTIFIED까지 옮긴다",
+          "consequence": "보내지 않은 알림을 보냈다고 말하게 된다. 발송 경로는 이 run의 범위 밖이다"
+        }
+      ],
+      "chosen": "확인 성공 지점에서 PENDING 대기를 올리고 버리는 전이만 한다. SENT와 NOTIFIED로 옮기는 일은 발송 경로가 붙을 때까지 하지 않는다.",
+      "basis": "spec_implication",
+      "rationale": "FR-4는 '빈자리를 확인하면 발송 대기에 기록하고, 발송은 별도 작업이 맡는다'로 둘을 갈랐다. 범위 밖인 것은 보내는 일이고 기록하는 일은 이 표면의 몫이다. 꺼내는 쪽 없이 대기만 쌓인다는 앞 결정의 걱정에는 계약이 이미 답했다. PENDING 대기가 사라져 delivery가 다시 널이 되는 두 경우를 계약이 적어 두었고, 그중 하나가 최신 확인 결과에 빈자리가 없을 때다. 그 규칙은 발송 경로 없이도 이 표면 안에서 성립한다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "getAlert:200",
+        "listAlerts:200",
+        "cancelAlert:200",
+        "createAlert:201",
+        "createAlert:200",
+        "getCourtAvailability:200"
+      ],
+      "reversal_cost": "AvailabilityQueryService의 전이 메서드 하나를 지우면 대기가 다시 생기지 않는다. 도메인의 두 전이 메서드는 해제·만료가 쓰는 자리와 같아 남는다.",
+      "supersedes": "d_delivery_stays_absent"
+    },
+    {
+      "id": "d_expiry_sweep_interval",
+      "point": "getAlert:200",
+      "where": "src/main/java/com/thinking/tennis/app/AlertExpiryJob.java",
+      "question": "만료 시각이 지난 신청을 만료로 옮기는 작업을 얼마나 자주 도는가.",
+      "considered": [
+        {
+          "choice": "1초마다 훑는다",
+          "consequence": "만료 시각이 지났는데 감시 중으로 보이는 틈이 짧다"
+        },
+        {
+          "choice": "조회할 때 그 자리에서 만료로 옮긴다",
+          "consequence": "거르는 기준이 저장된 상태라는 계약의 문장과 어긋나고, 조회가 상태를 바꾸게 된다"
+        },
+        {
+          "choice": "만료 작업을 두지 않는다",
+          "consequence": "만료 상태가 응답에 영원히 나타나지 않아 계약이 선언한 상태 하나가 비어 버린다"
+        }
+      ],
+      "chosen": "1초 주기로 감시 중인 신청을 훑어 만료 시각이 지난 것을 만료로 옮긴다.",
+      "basis": "convention",
+      "rationale": "계약과 명세는 만료가 서버 작업의 몫이라는 것과 그 사이에 잠시 감시 중으로 보일 수 있다는 것까지만 정하고 주기를 정하지 않았다. 응답에 보이는 틈을 사람이 눈치채기 어려운 크기로 줄이는 쪽을 골랐다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "getAlert:200",
+        "listAlerts:200",
+        "cancelAlert:200",
+        "createAlert:201",
+        "createAlert:422"
+      ],
+      "reversal_cost": "AlertExpiryJob의 주기 문자열 하나를 고치면 된다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_expires_at_not_advanced",
+      "point": "getAlert:200",
+      "where": "src/main/java/com/thinking/tennis/app/AlertCommandService.java",
+      "question": "더 이른 예약 마감 시각이 확인되면 만료 시각을 그 시각으로 앞당긴다는 계약의 문장을 무엇으로 지키는가.",
+      "considered": [
+        {
+          "choice": "앞당기지 않고 이용 시작 시각을 만료 시각으로 둔다",
+          "consequence": "포트가 드러내지 않는 값을 지어내지 않는다. 마감이 더 이른 코트에서는 감시가 실제보다 늦게 끝난다"
+        },
+        {
+          "choice": "마감 시각을 추측해 앞당긴다",
+          "consequence": "계약과 명세에 없는 수치를 구현이 발명하고, 그 값이 틀리면 감시가 이유 없이 일찍 끝난다"
+        },
+        {
+          "choice": "포트에 마감 시각을 더한다",
+          "consequence": "사람이 소유한 포트의 시그니처를 고치게 된다"
+        }
+      ],
+      "chosen": "앞당기지 않는다. 만료 시각은 코트 지역 시간대로 읽은 이용 시작 시각이다.",
+      "basis": "least_harm",
+      "rationale": "계약은 더 이른 마감 시각이 '확인되면' 그 시각을 쓰라고 했고, 그 확인은 예약처에서 온다. 이 run의 포트는 마감 시각을 드러내지 않으므로 확인되는 일이 없다. 값을 지어내는 것보다 확인되지 않았다는 사실에 따라 이용 시작 시각을 쓰는 쪽이 계약과 어긋나지 않는다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:201",
+        "createAlert:422",
+        "getAlert:200",
+        "listAlerts:200",
+        "cancelAlert:200"
+      ],
+      "reversal_cost": "포트가 마감 시각을 드러내면 만료 시각 계산 한 메서드에서 더 이른 값을 고르면 된다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_replayed_false_on_existing_watch",
+      "point": "createAlert:200",
+      "where": "src/main/java/com/thinking/tennis/api/AlertController.java",
+      "question": "같은 조건을 감시 중인 신청을 새 키로 돌려줄 때 Idempotency-Replayed를 무엇으로 두는가.",
+      "considered": [
+        {
+          "choice": "false로 둔다",
+          "consequence": "이번 요청이 처리된 결과라는 뜻이 되고, 재생은 같은 키로 앞서 처리한 응답을 돌려줄 때만 true가 된다"
+        },
+        {
+          "choice": "true로 둔다",
+          "consequence": "아무것도 바꾸지 않았다는 사실은 맞지만, 같은 키의 앞선 응답을 돌려준 것이 아니어서 헤더의 뜻과 어긋난다"
+        }
+      ],
+      "chosen": "false로 둔다. 같은 키로 보관된 응답을 재생할 때만 true다.",
+      "basis": "contract_analogy",
+      "rationale": "계약은 이 헤더를 같은 키로 앞서 처리한 응답을 그대로 돌려준 것인지로 정의했다. 조건이 같아 기존 신청을 돌려주는 200은 이번 요청이 키를 처음 써서 처리한 결과이므로 재생이 아니다.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:200",
+        "createAlert:201"
+      ],
+      "reversal_cost": "컨트롤러가 헤더에 넣는 값 한 곳을 고치면 된다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_problem_optional_keys_absent",
+      "point": "getAlert:ALERT_NOT_FOUND",
+      "where": "src/main/java/com/thinking/tennis/api/Problems.java",
+      "question": "값이 없는 Problem의 선택 필드를 키까지 빼는가 널로 싣는가.",
+      "considered": [
+        {
+          "choice": "키를 빼고 보낸다. 실패 본문을 순서 있는 맵으로 만든다",
+          "consequence": "선택 필드가 자기 타입을 어기지 않고, 널을 남기는 전역 직렬화 설정을 덮어쓰지 않는다"
+        },
+        {
+          "choice": "널로 싣는다",
+          "consequence": "detail·instance·retryAfterSeconds·traceId가 널을 허용하지 않으므로 4xx 응답이 스키마를 어긴다"
+        },
+        {
+          "choice": "직렬화 설정을 이 타입에서만 덮어쓴다",
+          "consequence": "널을 지우는 설정이 계약이 널을 허용하며 필수로 둔 다른 필드까지 지울 위험을 들여온다"
+        }
+      ],
+      "chosen": "실패 본문을 순서 있는 맵으로 만들어 값이 없는 선택 필드의 키를 싣지 않는다. 스키마 선언은 그대로 Problem 타입이 한다.",
+      "basis": "contract_analogy",
+      "rationale": "Problem의 선택 필드는 널을 허용하지 않고, Alert의 lastCheckedAt처럼 널을 허용하면서 필수인 필드는 키가 남아야 한다. 스켈레톤이 소유한 설정이 널을 지우지 않는 쪽으로 고정돼 있어 그 필드들의 키는 응답에 남고, 실패 본문만 필드 단위로 만들어 두 요구를 함께 지킨다.",
+      "confidence": "high",
+      "blast_radius": [
+        "getCourtAvailability:400",
+        "getCourtAvailability:404",
+        "createAlert:401",
+        "createAlert:409",
+        "createAlert:422",
+        "listAlerts:401",
+        "getAlert:404",
+        "cancelAlert:404",
+        "getCourtAvailability:500"
+      ],
+      "reversal_cost": "Problems의 본문 조립 메서드 하나를 고치면 된다. 응답 타입 선언은 그대로다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_protocol_failures_outside_contract",
+      "point": "createAlert:VALIDATION_FAILED",
+      "where": "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+      "question": "계약이 선언하지 않은 프로토콜 수준 실패를 계약이 정한 실패 응답으로 옮기는가.",
+      "considered": [
+        {
+          "choice": "본문의 미디어 타입 실패만 계약의 400 VALIDATION_FAILED로 옮기고, 허용하지 않는 메서드와 받아들일 수 없는 응답 형식은 스프링 기본에 맡긴다",
+          "consequence": "본문을 값으로 옮기는 일의 실패는 계약이 코드를 둔 자리로 모이고, 요청 줄과 헤더의 실패는 계약이 말하지 않은 채로 남는다"
+        },
+        {
+          "choice": "모두 스프링 기본에 맡긴다",
+          "consequence": "계약을 읽고 부른 요청이 code도 retryable도 없는 본문으로 거절되어, 모든 실패에 코드가 있다고 읽고 만든 클라이언트가 그 자리에서 깨진다"
+        },
+        {
+          "choice": "모두 400 VALIDATION_FAILED로 접는다",
+          "consequence": "메서드와 Accept 헤더의 실패까지 요청 값의 문제로 바꿔 말하게 되고, 405와 406이 알려 주던 사실이 사라진다"
+        }
+      ],
+      "chosen": "본문의 미디어 타입 실패만 400 VALIDATION_FAILED로 옮긴다. 매핑에 consumes 조건을 걸지 않아 그 실패가 처리기까지 오게 하고, 요청 줄과 헤더의 프로토콜 실패는 스프링 기본에 맡긴다.",
+      "basis": "least_harm",
+      "rationale": "계약은 요청의 형식 위반을 VALIDATION_FAILED로 오게 했고 본문의 미디어 타입은 본문을 값으로 옮기는 일의 일부다. 반면 메서드와 Accept 헤더의 실패는 요청 줄을 고쳐야 풀리고 계약이 그 자리에 코드를 두지 않았다. 없는 코드를 지어내지 않고, 있는 코드가 덮는 자리만 덮는다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:400",
+        "listAlerts:400",
+        "getAlert:400",
+        "cancelAlert:400",
+        "getCourtAvailability:400"
+      ],
+      "reversal_cost": "처리기 하나를 지우면 스프링 기본으로 되돌아간다. 모두 옮기려면 ResponseEntityExceptionHandler를 상속해 계약에 없는 상태 코드의 본문만 따로 정해야 한다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_court_identity_read_fresh",
+      "point": "getAlert:200",
+      "where": "src/main/java/com/thinking/tennis/app/AlertViewFactory.java",
+      "question": "신청 응답의 코트 이름과 예약 화면 주소를 신청 시점의 값으로 내는가 읽는 시점의 값으로 내는가.",
+      "considered": [
+        {
+          "choice": "읽는 시점에 포트에서 읽고, 지원이 끊겨 빈 값이면 신청에 보관된 값으로 물러난다",
+          "consequence": "같은 코트를 가리키는 두 응답이 같은 말을 하고, 조회가 보여 준 링크와 알림에 실릴 링크가 갈리지 않는다"
+        },
+        {
+          "choice": "신청 시점에 복사해 둔 값을 그대로 낸다",
+          "consequence": "코트 이름이나 예약 주소가 바뀐 뒤 예약 상태 조회와 신청 조회가 같은 코트를 다르게 말하고, 링크가 낡으면 알림을 받고도 예약을 시도하지 못한다"
+        }
+      ],
+      "chosen": "읽는 시점에 포트에서 읽는다. 코트가 더 이상 지원되지 않으면 신청에 보관된 값으로 물러난다.",
+      "basis": "contract_analogy",
+      "rationale": "계약은 이 주소를 '알림에 담기는 링크와 같다'로 적었다. 알림은 보내는 시점의 코트 정보로 만들어지므로 조회도 그 시점의 값을 보여야 두 문장이 같은 것을 가리킨다. 지원이 끊긴 코트에는 읽을 값이 없고 계약은 이 필드를 필수로 두었으므로 보관된 값으로 물러난다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "getAlert:200",
+        "listAlerts:200",
+        "cancelAlert:200",
+        "createAlert:201",
+        "createAlert:200"
+      ],
+      "reversal_cost": "AlertViewFactory가 뷰를 만들 때 포트를 읽는 두 줄을 신청의 값으로 되돌리면 된다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_list_order_tiebreak",
+      "point": "listAlerts:200",
+      "where": "src/main/java/com/thinking/tennis/app/store/InMemoryAlertRepository.java",
+      "question": "신청 시각이 같은 두 신청의 앞뒤를 무엇으로 정하는가.",
+      "considered": [
+        {
+          "choice": "저장된 순서를 뒷순위 기준으로 쓴다",
+          "consequence": "같은 시각의 두 신청도 늘 같은 순서로 나와 목록이 요청마다 흔들리지 않는다"
+        },
+        {
+          "choice": "정하지 않는다",
+          "consequence": "같은 입력에 목록 순서가 달라져 최근 것이 앞에 온다는 약속을 확인할 수 없다"
+        }
+      ],
+      "chosen": "신청 시각으로 먼저 정렬하고, 같으면 저장된 순서가 나중인 것을 앞에 둔다.",
+      "basis": "convention",
+      "rationale": "계약은 최근에 신청한 것이 앞에 온다고만 적었고 시각이 같을 때를 정하지 않았다. 순서가 정해지지 않으면 같은 요청에 다른 목록이 나오므로 안정된 기준을 하나 더 둔다.",
+      "confidence": "high",
+      "blast_radius": [
+        "listAlerts:200"
+      ],
+      "reversal_cost": "저장소의 비교기 한 곳을 고치면 된다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_window_closed_before_dedup",
+      "point": "createAlert:ALERT_WINDOW_CLOSED",
+      "where": "src/main/java/com/thinking/tennis/app/AlertCommandService.java",
+      "question": "감시 중인 같은 조건의 신청이 있고 그 조건의 만료 시각이 이미 지났을 때 무엇을 내는가.",
+      "considered": [
+        {
+          "choice": "422 ALERT_WINDOW_CLOSED를 낸다",
+          "consequence": "지금 감시할 수 없는 조건을 감시 중인 신청으로 돌려주지 않는다"
+        },
+        {
+          "choice": "기존 신청을 200으로 돌려준다",
+          "consequence": "만료 작업이 아직 훑지 않은 신청을 지금도 감시되는 것처럼 돌려준다"
+        }
+      ],
+      "chosen": "조건 판정을 먼저 하고, 만료 시각이 지났으면 감시 중인 같은 조건이 있어도 422를 낸다.",
+      "basis": "contract_analogy",
+      "rationale": "두 문장이 같은 요청에 겹치고 계약은 앞뒤를 정하지 않았다. 만료 시각이 지난 조건은 감시할 수 없다는 것이 이 코드의 뜻이고, 계약도 이 시각이 지났는데 상태가 아직 감시 중이면 시각을 기준으로 판단하라고 적었다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:422",
+        "createAlert:200",
+        "createAlert:201"
+      ],
+      "reversal_cost": "신청 처리에서 조건 판정과 기존 신청 조회의 순서를 바꾸면 된다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_storage_timeout_declared_unreachable",
+      "point": "listAlerts:STORAGE_TIMEOUT",
+      "where": "src/main/java/com/thinking/tennis/app/error/StorageTimeoutException.java",
+      "question": "계약이 선언한 STORAGE_TIMEOUT을 실제로 던지는 경로를 이 run에서 두는가.",
+      "considered": [
+        {
+          "choice": "선언과 매핑만 두고 던지는 경로는 두지 않는다",
+          "consequence": "계약이 약속한 실패 모양과 기다릴 초가 표면에 남고, 저장소가 바뀌면 그 어댑터가 예외를 던지는 것만으로 이 자리가 살아난다"
+        },
+        {
+          "choice": "인메모리 저장에 인위적인 시간 초과를 심는다",
+          "consequence": "저장소 장애 주입이 이 run의 범위 밖인데 판정 대상이 아닌 동작을 더하게 되고, 같은 입력에 다른 응답이 나와 다른 판정이 흔들린다"
+        },
+        {
+          "choice": "선언에서 뺀다",
+          "consequence": "계약이 정한 실패 하나가 표면에서 사라진다. 계약을 깎아 위반을 지우는 것과 같다"
+        }
+      ],
+      "chosen": "선언과 매핑은 두고 도달 경로는 두지 않는다. 저장이 실제 저장소로 바뀌면 그 어댑터가 StorageTimeoutException을 던지고 처리기와 응답 선언은 그대로 쓴다.",
+      "basis": "least_harm",
+      "rationale": "저장소 장애 주입은 이 run의 범위 밖이고 저장은 인메모리다. 그래도 계약이 선언한 실패는 계약의 약속이므로 표면에서 지우지 않는다. 지금 비어 있는 것은 그 실패를 만드는 쪽이고, 받는 쪽은 준비돼 있다.",
+      "confidence": "high",
+      "blast_radius": [
+        "listAlerts:503",
+        "getAlert:503",
+        "cancelAlert:503",
+        "createAlert:503",
+        "getCourtAvailability:503"
+      ],
+      "reversal_cost": "저장 어댑터가 예외를 던지기 시작하면 고칠 것이 없다. 처리기와 선언이 이미 있다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_spec_declaration_scope",
+      "point": "getCourtAvailability:200",
+      "where": "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+      "question": "추출되는 스펙에 계약의 무엇까지 명시적으로 선언하는가.",
+      "considered": [
+        {
+          "choice": "오퍼레이션 식별자·상태 코드·필드 필수 여부·형식 제약·보안 요구·확장 키와 산문을 선언하고 응답 예시는 두지 않는다",
+          "consequence": "판정 대상이 되는 약속은 모두 코드에 남고, 예시만 스펙에 나타나지 않는다"
+        },
+        {
+          "choice": "응답 예시까지 애너테이션에 옮긴다",
+          "consequence": "같은 JSON을 계약과 코드 두 곳에 두게 되어 한쪽만 바뀌는 어긋남이 생긴다"
+        }
+      ],
+      "chosen": "예시는 요청 본문과 스칼라 필드에만 두고, 응답 예시는 계약에 맡긴다. 상태 코드·필수 여부·에러 코드 확장·보안 요구는 도구 기본값에 맡기지 않고 모두 선언한다. 배열 필드의 필수 여부는 도구가 배열 선언 안쪽의 값을 읽지 않는 자리가 있어 직렬화 애너테이션으로도 같은 말을 적는다.",
+      "basis": "convention",
+      "rationale": "구현 규약이 명시하라고 꼽은 것은 상태 코드와 필수 여부와 에러 코드 확장과 보안 요구다. 예시는 그 목록에 없고, 같은 값을 두 곳에 두면 어긋남을 만들 자리만 늘어난다. 다만 필수 여부는 도구가 어느 자리를 읽는지에 달려 있어, 읽히지 않는 선언 하나만으로는 약속이 스펙에 나타나지 않는다는 것이 지난 iteration에 드러났다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "getCourtAvailability:200",
+        "createAlert:201",
+        "createAlert:200",
+        "listAlerts:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "reversal_cost": "예시를 요구하면 각 응답 선언에 예시 블록을 더하면 된다. 코드 동작은 바뀌지 않는다.",
+      "supersedes": null
+    }
+  ],
+  "contract_changes": [
+    {
+      "id": "cc_watching_check_source",
+      "target": "/components/schemas/AlertStatus/description",
+      "action": "remove",
+      "what": "WATCHING 항목의 둘째 문장에서 '서버가 주기적으로 예약 상태를 확인한다'를 지우고, 확인은 예약 상태 조회가 일으키며 아무도 조회하지 않으면 확인도 일어나지 않고 그 상태가 checkDelayed로 드러난다는 문장으로 바꿨다.",
+      "why": "명세는 '확인을 일으키는 것은 조회뿐이다. 감시 중인 신청만 보고 예약처를 도는 주기 작업은 두지 않아, 아무도 조회하지 않는 코트·날짜는 확인도 알림도 일어나지 않는다'로 정했다. 계약의 문장이 그 반대를 말해 둘 중 하나가 틀린 상태였고, 출처가 명세이므로 계약을 고쳤다.",
+      "basis": "critique:cr_watching_says_periodic_check",
+      "spec_anchor": "FR-7, FR-3",
+      "representation_basis": "",
+      "compatibility": "compatible",
+      "migration": null,
+      "iteration": "002"
+    },
+    {
+      "id": "cc_create_schedule_source",
+      "target": "/paths/~1alerts/post/description",
+      "action": "add",
+      "what": "운영 시간대를 그 코트·날짜의 저장된 확인 결과로 판정하고, 저장된 결과가 확인 간격보다 오래됐거나 없으면 이 요청이 확인을 일으키며, 그 확인이 실패하고 저장된 성공 결과도 없으면 예약 상태 조회와 같은 조건으로 502·503·504 중 하나를 돌려준다는 문단을 더했다.",
+      "why": "계약은 SLOT_NOT_SUPPORTED로 거절하라고 하면서 그 판정의 근거와 근거를 얻지 못했을 때의 응답을 정하지 않았다. 운영 시간대의 유일한 출처는 확인 결과이고 그 확인은 실패할 수 있으므로, 판정 근거와 실패 시의 답을 계약이 말해야 한다.",
+      "basis": "critique:cr_create_upstream_failure",
+      "spec_anchor": "FR-1, FR-3, EF-1",
+      "representation_basis": "",
+      "compatibility": "compatible",
+      "migration": null,
+      "iteration": "002"
+    },
+    {
+      "id": "cc_create_upstream_unreadable",
+      "target": "/paths/~1alerts/post/responses/502",
+      "action": "add",
+      "what": "예약 상태 조회가 쓰는 UpstreamUnreadable 응답을 502로 더했다.",
+      "why": "확인이 실패했고 저장된 마지막 성공 결과도 없을 때 이 오퍼레이션에는 그 사실을 말할 코드가 없었다. 조회와 같은 조건이므로 같은 응답을 쓴다.",
+      "basis": "critique:cr_create_upstream_failure",
+      "spec_anchor": "EF-1",
+      "representation_basis": "",
+      "compatibility": "compatible",
+      "migration": null,
+      "iteration": "002"
+    },
+    {
+      "id": "cc_create_upstream_timeout",
+      "target": "/paths/~1alerts/post/responses/504",
+      "action": "add",
+      "what": "예약 상태 조회가 쓰는 UpstreamTimeout 응답을 504로 더했다.",
+      "why": "예약처가 제때 응답하지 않아 운영 시간대를 확인하지 못한 경우를 조회와 같은 상태 코드로 알린다.",
+      "basis": "critique:cr_create_upstream_failure",
+      "spec_anchor": "EF-1",
+      "representation_basis": "",
+      "compatibility": "compatible",
+      "migration": null,
+      "iteration": "002"
+    },
+    {
+      "id": "cc_create_503_covers_upstream",
+      "target": "/paths/~1alerts/post/responses/503",
+      "action": "relax",
+      "what": "503이 가리키는 응답을 StorageOrContentionUnavailable에서 AlertCreateUnavailable로 바꿨다. 같은 상태 코드가 예약처에 닿지 못한 실패까지 덮는다.",
+      "why": "예약처에 닿지 못한 실패는 조회에서 503이고, 이 오퍼레이션의 503이 이미 저장소와 경합을 덮고 있어 에러 코드만 합치면 된다. 상태 코드를 새로 만들지 않고 코드로 원인을 가른다.",
+      "basis": "critique:cr_create_upstream_failure",
+      "spec_anchor": "EF-1, FR-3",
+      "representation_basis": "",
+      "compatibility": "compatible",
+      "migration": null,
+      "iteration": "002"
+    },
+    {
+      "id": "cc_alert_create_unavailable_response",
+      "target": "/components/responses/AlertCreateUnavailable",
+      "action": "add",
+      "what": "신청 오퍼레이션의 503 응답을 새 components 항목으로 더했다. x-error-codes가 UPSTREAM_UNAVAILABLE·STORAGE_TIMEOUT·CONCURRENT_UPDATE_CONFLICT이고 예시 셋을 담는다.",
+      "why": "해제 오퍼레이션이 쓰는 StorageOrContentionUnavailable에 예약처 실패를 더하면 예약처를 부르지 않는 오퍼레이션까지 그 코드를 선언하게 된다. 신청 전용 응답을 따로 두어 오퍼레이션마다 선언이 사실과 같게 한다.",
+      "basis": "critique:cr_create_upstream_failure",
+      "spec_anchor": "EF-1, FR-1",
+      "representation_basis": "",
+      "compatibility": "compatible",
+      "migration": null,
+      "iteration": "002"
+    }
+  ],
+  "contested_decisions": [
+    {
+      "decision_id": "d_court_identity_read_fresh",
+      "objection": "결정이 든 근거는 '조회가 보여 준 링크와 알림에 실릴 링크가 갈리면 안 된다'인데, 정작 그 조회에 해당하는 getCourtAvailability:200은 blast_radius에 없고 구현도 그 표면에는 반대 정책(확인 시점 스냅숏)을 쓴다. 닿는 범위가 신고된 것보다 넓고, 좁게 적힌 탓에 결정이 막겠다던 어긋남이 결정을 지킨 뒤에도 그대로 남았다.",
+      "alternative": "blast_radius에 getCourtAvailability:200을 더하고, 코트 신원을 읽는 자리를 한 곳으로 모아 두 표면이 같은 시점의 값을 내게 하라. 조회 표면만 스냅숏을 유지하기로 한다면 왜 그 표면은 달라도 되는지를 결정 본문에 적어야 하며, 지금 근거로는 그 예외가 서지 않는다.",
+      "severity": "medium"
+    },
+    {
+      "decision_id": "d_delivery_pending_only",
+      "objection": "선택한 안의 결과로 'delivery가 널과 PENDING 사이만 오가 계약이 적은 범위를 정확히 채운다'고 적었지만, 구현에서 PENDING으로 가는 문은 예약처 확인에 새로 성공한 직후 하나뿐이다. 신청이 스스로 일으킨 확인의 결과는 자기 자신에게 적용되지 않고, 확인 간격 안의 저장된 결과를 쓰는 경로에서는 그 문이 아예 열리지 않는다. 채웠다고 신고한 범위가 실제로는 한쪽만 닿는다.",
+      "alternative": "결정에 '대기를 올리는 계기'를 명시하라. 계기가 새 확인 성공 하나뿐이면 그 사실과 그로 인해 생성 직후에는 PENDING이 나올 수 없다는 귀결을 적고, 그것이 의도가 아니면 생성 경로에도 같은 전이를 걸어라(w_new_alert_ignores_its_own_check).",
+      "severity": "medium"
+    },
+    {
+      "decision_id": "d_in_progress_key_yields_contention",
+      "objection": "처리 중인 자리에서 지문을 보지 않는 이유로 '판정의 근거가 되는 앞선 응답이 아직 없다'를 들었는데, 지문은 응답이 아니라 자리를 잡는 순간 Slot에 기록되므로 처리 중에도 알 수 있다. 근거가 사실과 어긋난다. 더 문제인 것은 그 결과 나가는 503의 detail이 '같은 요청을 그대로 다시 보내면 됩니다'라고 약속한다는 점이다. 지문이 다른 요청에는 그 약속이 거짓이고, 기다렸다 다시 보내면 409를 받는다.",
+      "alternative": "선택 자체(처리 중에는 503으로 물러난다)는 유지해도 좋다. 다만 근거를 '앞선 요청이 4xx로 끝나면 키가 기록되지 않아 아직 쓰였다고 말할 수 없다' 하나로 줄이고, 지문이 이미 다른 것을 알고 있는 경우의 detail에서 재시도 성공을 약속하지 마라. 또는 처리 중이면서 지문이 다른 경우를 409로 가르되 앞선 요청이 4xx로 끝났을 때의 되돌림을 함께 설계하라.",
+      "severity": "medium"
+    },
+    {
+      "decision_id": "d_create_may_trigger_check",
+      "objection": "결정이 적은 대가는 '이 오퍼레이션이 예약처 장애의 영향권에 들어간다'인데, 구현은 확인이 실패해도 저장된 마지막 성공 결과가 있으면 그 결과로 시간대를 판정한다. 그래서 실제 노출은 한 번도 확인된 적 없는 코트·날짜로 좁고, 대신 신고되지 않은 다른 결과가 생겼다. SLOT_NOT_SUPPORTED와 그 반대인 신청 수락이 임의로 오래된 운영 시간대 목록으로 판정될 수 있다는 것이다.",
+      "alternative": "결정 본문에 '확인이 실패하면 저장된 마지막 성공 결과로 판정하며, 그 결과의 나이에는 상한이 없다'를 적고 blast_radius에 createAlert:422를 그 이유로 명시하라. 오래된 목록으로 거절하는 것을 막고 싶으면, 확인이 실패했고 저장 결과가 오래됐을 때는 거절 대신 신청을 받는 쪽을 고려하라. 운영 시간대는 빈자리 여부보다 훨씬 느리게 변하므로 두 값의 유효 기간을 같게 둘 이유가 없다.",
+      "severity": "medium"
+    }
+  ],
+  "code_instructions": [
+    {
+      "id": "w_new_alert_ignores_its_own_check",
+      "axis": "state_continuity",
+      "issue": "AlertCommandService.process는 operatingSchedule로 그 코트·날짜의 확인 결과를 손에 쥐고도 schedule.operates만 보고 schedule.isAvailable(slot)은 보지 않는다. 새 신청은 delivery가 널인 채로 저장되고, PENDING으로 옮기는 전이는 AvailabilityQueryService가 예약처 확인에 새로 성공한 직후(applyToWatchingAlerts)에만 일어난다. 저장된 결과가 확인 간격 안이어서 resolve가 일찍 돌아오는 경로에서는 그 전이가 아예 불리지 않는다. 그래서 이미 비어 있는 시간대로 신청해도 발송 대기가 오르지 않고, 다음 기회는 누군가 그 코트·날짜를 확인 간격이 지난 뒤 다시 조회해 확인이 새로 성공할 때뿐이다. 조회가 끊긴 코트·날짜에서는 그 기회가 오지 않는다.",
+      "suggestion": "process가 operatingSchedule에서 받은 CourtDayAvailability를 신청 저장 직후에 그 신청 하나에도 적용하라. insertIfNotWatching으로 실제 저장된 신청이 새로 만든 것이고 schedule.isAvailable(condition.slot())이 참이면 deliveryPending 전이를 한 번 걸고, 그 전이가 실패하면(경합) 넘어간다. 확인 결과가 오래된 것(stale)일 때 대기를 올릴지는 갈림길이므로, 올리지 않기로 한다면 그 선택을 decision으로 신고하라. 함께, applyToWatchingAlerts가 '새로 확인에 성공했을 때'에만 불리는 사실을 코드 주석이 아니라 decision에 적어 다음 초안이 그 범위를 다시 추측하지 않게 하라.",
+      "severity": "high",
+      "target": {
+        "pointer": "/paths/~1alerts/post",
+        "action": "add",
+        "scope": "code"
+      }
+    },
+    {
+      "id": "w_court_identity_two_policies",
+      "axis": "response_fidelity",
+      "issue": "AlertViewFactory는 코트 이름과 예약 화면 주소를 읽는 시점에 포트에서 다시 읽는다(d_court_identity_read_fresh). 그런데 CourtAvailabilityResponse.of는 저장된 CourtDayAvailability에 박제된 courtName·reservationUrl을 그대로 내보내고, 그 값은 마지막으로 확인에 성공한 시점의 스냅숏이며 stale 응답에서는 임의로 오래된 값이다. 같은 코트에 대해 두 오퍼레이션이 서로 다른 시점의 이름과 링크를 말한다.",
+      "suggestion": "CourtDayAvailability에는 courtId와 확인 결과만 두고, 코트 이름과 예약 화면 주소는 응답을 만드는 시점에 CourtAvailabilityPort.findCourt로 읽어 채워라. 지원이 끊겨 빈 값이면 신청 쪽과 같은 규칙으로 저장된 값으로 물러나라. 두 표면이 같은 한 자리에서 코트 신원을 읽게 만드는 것이 목적이고, 저장 구조를 그대로 두더라도 최소한 두 응답 조립기가 같은 헬퍼를 지나게 하라.",
+      "severity": "medium",
+      "target": {
+        "pointer": "/components/schemas/CourtAvailability/properties/reservationUrl",
+        "action": "add",
+        "scope": "code"
+      }
+    },
+    {
+      "id": "w_failure_window_equals_retry_advice",
+      "axis": "failure_faithfulness",
+      "issue": "확인이 실패하면 AvailabilityQueryService가 실패를 저장하고, isRecent가 참인 동안(now가 failedAt+20초를 지나지 않은 동안) 예약처를 다시 부르지 않고 같은 실패를 돌려준다. 그 창의 길이가 확인 간격 20초이고 경계가 포함이며, 실패 응답이 클라이언트에게 알려 주는 retryAfterSeconds와 Retry-After도 정확히 20이다. 계약이 시킨 대로 20초를 기다렸다 다시 보낸 요청은 경계에 걸려 새 확인 없이 저장된 실패를 그대로 받는다.",
+      "suggestion": "실패 억제 창과 안내하는 대기 초를 같은 값으로 두지 마라. 억제 창을 확인 간격보다 짧게 잡거나 isRecent의 경계를 배타로 바꿔(now.isBefore(failedAt.plus(...))가 아니라 지난 시점부터 즉시 다시 시도하게), 안내한 시각에 도착한 요청이 반드시 새 확인을 일으키게 하라. 값을 고치면 그 값이 명세에서 온 것이 아니라 이 구현이 고른 것이므로 WatchPolicy에 이름을 붙여 두고 근거를 적어라.",
+      "severity": "medium",
+      "target": {
+        "pointer": "/components/schemas/Problem/properties/retryAfterSeconds",
+        "action": "relax",
+        "scope": "code"
+      }
+    },
+    {
+      "id": "w_negative_cache_undeclared",
+      "axis": "judgement_disclosure",
+      "issue": "확인 실패를 저장해 두고 확인 간격 동안 예약처를 다시 부르지 않는 동작(AvailabilityRepository.storeFailure/findLastFailure와 clearFailure)은 계약에도 명세에도 없고, 결정 목록에도 없다. d_create_upstream_failure_codes의 근거 문장에 '구현의 20초 실패 창'이라는 말로 스쳐 지나갈 뿐이다. 마찬가지로 코트·날짜마다 만들어지는 checkLocks 항목이 지워지지 않고 계속 쌓이는 것도 신고되지 않았다.",
+      "suggestion": "실패 억제 창을 독립한 decision으로 신고하라. 물음은 '확인이 실패한 뒤 다음 확인을 언제 허용하는가'이고, considered에는 잠금 안에 있던 요청에게만 같은 실패를 주는 안과 확인 간격만큼 새 시도를 막는 안을 두고, blast_radius에 getCourtAvailability의 502·503·504와 createAlert의 502·503·504를 모두 적어라. checkLocks가 자라기만 하는 사실도 같은 신고에 한 줄로 남겨 다음 초안이 그것을 새로 발견하지 않게 하라.",
+      "severity": "medium",
+      "target": null
+    }
+  ],
+  "contract_proposals": [
+    {
+      "id": "w_unopened_date_rejected_as_slot",
+      "axis": "request_tolerance",
+      "issue": "예약처가 아직 열지 않은 날짜는 확인이 성공하고 slots가 빈 배열로 온다. AlertCommandService는 그 경우 schedule.operates가 거짓이므로 422 SLOT_NOT_SUPPORTED로 거절하고, ApiExceptionHandler는 그 자리를 따로 알아채 '운영하는 시간대가 없습니다'라는 문장을 만든다. 즉 '아직 열리지 않은 날짜'와 '그 코트가 그 시간대를 운영하지 않음'이 같은 코드로 거절된다.",
+      "suggestion": "계약 쪽에서 먼저 풀어야 하므로 cr_unopened_date_cannot_subscribe를 근거로 인용해 판본을 고치고, 고치기 전까지는 이 거절이 의도된 것인지, 아니면 계약 문장을 따른 것일 뿐인지를 decision으로 신고하라. 계약이 열리지 않은 날짜의 신청을 받도록 바뀌면, 빈 slots를 '판정 불가'로 다루어 신청을 감시 중으로 받고 운영 시간대는 다음 확인에서 판정하도록 AlertCommandService의 분기를 나눠라.",
+      "severity": "high",
+      "target": {
+        "pointer": "/components/schemas/CourtAvailability/properties/slots",
+        "action": "relax",
+        "scope": "contract"
+      }
+    },
+    {
+      "id": "cr_unopened_date_cannot_subscribe",
+      "pointer": "/components/schemas/CourtAvailability/properties/slots",
+      "finding": "계약은 slots를 '그 날짜에 이 코트가 운영하는 시간대 전부'로 두면서 '여기에 없는 시간대로 알림을 신청하면 SLOT_NOT_SUPPORTED로 거절된다'와 '예약처가 아직 그 날짜를 열지 않았으면 빈 배열이다'를 나란히 적었다. 두 문장을 합치면 예약처가 열지 않은 날짜에는 어떤 시간대로도 알림을 신청할 수 없다는 뜻이 되고, 구현이 그대로 따라 422를 낸다. 그런데 예약이 열리기 전에 미리 걸어 두는 것이 이 서비스의 주된 쓰임이고 NFR-1도 피크를 예약 오픈 시각으로 잡았다. 계약이 자기 목적을 막는 자리다.",
+      "proposed_change": "slots의 산문에서 '여기에 없는 시간대로 신청하면 거절된다'는 규칙의 적용 범위를 slots가 비어 있지 않은 경우로 한정하고, slots가 빈 배열일 때는 운영 시간대를 아직 판정할 수 없다는 뜻이므로 신청을 감시 중으로 받는다고 적어라. 그에 맞춰 /paths/~1alerts/post/description에 '예약처가 그 날짜를 아직 열지 않았으면 시간대 판정을 미루고 신청을 받으며, 이후 확인에서 운영하지 않는 시간대로 드러나면 그 신청은 감시만 계속되고 알림이 나가지 않는다'를 더하라. 거절을 유지하는 쪽을 고른다면 ErrorCode에 '아직 열리지 않은 날짜'를 가리키는 코드를 따로 두어, 영구히 안 되는 것과 나중에 되는 것을 클라이언트가 가를 수 있게 하라.",
+      "action": "relax",
+      "spec_anchor": "FR-1, FR-7, NFR-1, slot_ea97add0",
+      "severity": "high"
+    },
+    {
+      "id": "cr_dedup_omits_user_scope",
+      "pointer": "/paths/~1alerts/post/description",
+      "finding": "중복 신청을 다루는 문장이 '감시 중인 신청과 같은 코트·날짜·시간대로 다시 신청하면, 키가 달라도 새 신청을 만들지 않고 그 신청을 200으로 돌려준다'로 되어 있어 누구의 신청인지를 말하지 않는다. 문자 그대로 읽으면 남이 같은 조건을 감시 중일 때 그 신청을 돌려주라는 뜻이 되고, 그러면 alertId와 createdAt과 expiresAt이 남의 자원을 가리키게 되어 FR-2의 '남의 신청은 조회·해제할 수 없다'와 정면으로 부딪친다. 구현은 사용자 단위로 올바르게 걸렀지만(insertIfNotWatching이 ownedBy를 함께 본다) 그것은 계약이 아니라 명세를 읽은 결과다.",
+      "proposed_change": "그 문장의 주어를 '같은 사용자의 감시 중인 신청과 같은 코트·날짜·시간대로 다시 신청하면'으로 고쳐 FR-1의 원문과 같은 범위로 좁혀라. 같은 문단의 '이미 끝난 신청과 같은 조건이면 새 신청을 만든다'에도 같은 한정을 붙여라.",
+      "action": "tighten",
+      "spec_anchor": "FR-1, FR-2, slot_7afbe3b4",
+      "severity": "medium"
+    },
+    {
+      "id": "cr_replayed_header_on_dedup_200",
+      "pointer": "/components/headers/IdempotencyReplayed/description",
+      "finding": "헤더의 뜻은 '같은 키로 앞서 처리한 요청의 응답을 그대로 다시 돌려준 것인지'로 정의돼 있는데, 같은 조건을 감시 중이어서 기존 신청을 돌려주는 200은 그 정의의 어느 쪽인지 계약이 말하지 않는다. 아무것도 바꾸지 않았다는 점에서는 재생처럼 보이고, 이번 요청이 키를 처음 써서 판정한 결과라는 점에서는 재생이 아니다. 구현자가 후자로 정했고(d_replayed_false_on_existing_watch) 그 선택은 타당하지만, 계약이 비어 있는 한 다음 구현자가 반대로 고를 수 있고 두 서버가 같은 계약에서 다른 헤더를 낸다.",
+      "proposed_change": "헤더 설명에 '같은 조건을 감시 중인 신청을 돌려주는 200은 이번 요청이 판정한 결과이므로 false다. true는 같은 키로 앞서 보관한 응답을 그대로 돌려줄 때만이다'를 더하라.",
+      "action": "add",
+      "spec_anchor": "FR-1, V-1, slot_8663b240",
+      "severity": "medium"
+    },
+    {
+      "id": "cr_create_201_example_last_checked",
+      "pointer": "/paths/~1alerts/post/responses/201/content/application~1json/example",
+      "finding": "이번 판본이 신청 본문 설명에 '저장된 결과가 확인 간격보다 오래됐거나 없으면 이 요청이 확인을 일으킨다'를 더했는데, 같은 오퍼레이션의 201 예시는 lastCheckedAt을 null로 남겨 두었다. 확인을 일으킨 신청은 그 확인이 성공한 시각을 바로 갖게 되므로 예시가 그리는 모양은 오히려 드문 경우가 된다. 구현자도 이 어긋남을 d_create_may_trigger_check에서 스스로 지적했고 계약은 아직 고쳐지지 않았다.",
+      "proposed_change": "201 예시의 lastCheckedAt을 createdAt과 같거나 그 직전의 타임스탬프로 바꾸고, 예시 summary나 필드 설명에 '신청이 확인을 일으킨 경우 이 값은 신청 직후에도 널이 아니며, 확인 간격 안의 저장된 결과를 썼으면 그 결과의 시각이다'를 덧붙여라. 널이 나오는 경우를 남기고 싶으면 예시를 둘로 나눠라.",
+      "action": "add",
+      "spec_anchor": "FR-3, NFR-3, slot_dc9ce55b",
+      "severity": "medium"
+    },
+    {
+      "id": "cr_create_delivery_at_birth",
+      "pointer": "/paths/~1alerts/post/responses/201",
+      "finding": "신청이 확인을 일으키도록 계약이 바뀌었으므로, 신청을 만드는 그 순간 서버는 그 시간대가 비어 있는지를 알고 있다. 그런데 계약은 그 사실을 새 신청에 적용하는지를 말하지 않고, 201 예시는 delivery를 null로만 보여 준다. AlertDelivery 설명이 PENDING을 '빈자리를 확인해 발송 대기에 올랐고 아직 보내지 않았다'로 정의한 것과 합치면, 빈 시간대로 신청한 직후 delivery가 PENDING이어야 하는지 null이어야 하는지 두 읽기가 다 가능하다. 구현은 아무 말 없이 null 쪽을 골랐고, 그 결과 이미 비어 있는 자리에 대한 발송 대기가 다음 확인까지(조회가 없으면 영원히) 오르지 않는다.",
+      "proposed_change": "신청 본문 설명에 한 문장을 더해 둘 중 하나를 정하라. '신청이 일으킨 확인 결과에 그 시간대가 비어 있으면 응답의 delivery는 곧바로 PENDING이다' 또는 '신청 응답의 delivery는 언제나 null이며 발송 대기는 다음 확인에서 오른다'. 앞쪽을 고르면 201 예시에 PENDING 사례를 하나 더하라.",
+      "action": "add",
+      "spec_anchor": "FR-1, FR-4, slot_c733b457, slot_a51918dd",
+      "severity": "medium"
+    }
+  ],
+  "weak_axes": [
+    "state_continuity",
+    "judgement_disclosure"
+  ],
+  "weak_axis_rationales": {
+    "state_continuity": "열거 24개, 미충족 1개: [slot_3b26d64c]. slot_3b26d64c는 WATCHING을 '서버가 주기적으로 예약 상태를 확인한다'로 적었고, 이 판본이 그 문장을 계약에서 고쳐 없앴다(contract/tennis-alert-api-v2.yaml의 AlertStatus description, cc_watching_check_source). 코드에도 그 확인을 도는 자리가 없다. app/AlertExpiryJob의 @Scheduled는 만료만 훑고, 확인은 app/AvailabilityQueryService.resolve가 조회·신청 경로에서만 일으킨다. 나머지는 지켜졌다. 멱등은 app/store/InMemoryIdempotencyStore.claim의 putIfAbsent가 자리를 한 번만 주고 complete가 2xx만 기록하며 AlertCommandService.create의 finally가 그 밖의 결과에서 release해 4xx·5xx가 남지 않는다. 재생 응답이 처음 시점의 내용인 것은 보관 대상이 불변 기록 app/AlertView이기 때문이다. 같은 조건 중복은 InMemoryAlertRepository.insertIfNotWatching이 조회와 저장을 한 호출로 묶어 하나로 만들고, 끝난 신청은 Alert.watches의 WATCHING 조건 때문에 되살지 않는다. 같은 코트·날짜의 동시 갱신은 AvailabilityQueryService의 checkLocks와 잠금 안 재확인으로 한 번만 예약처에 나가고, 실패도 같은 실패를 함께 받는다. PENDING 대기의 등록과 폐기는 applyToWatchingAlerts와 domain/Alert.deliveryPending·pendingDeliveryDiscarded·discardPendingDelivery가 계약이 적은 두 경우를 그대로 덮는다. 본인 것만 보이는 약속은 AlertQueryService의 ownedBy 필터와 AlertCommandService.cancel의 같은 필터가 지킨다. 미충족 한 건이 있어 상한 3이다.",
+    "judgement_disclosure": "신고 25건(decisions 19, contract_changes 6), 미신고 1건. 미신고는 app/AvailabilityQueryService.checkUnderLock의 findLastFailure+isRecent가 확인 실패 뒤 WatchPolicy.CHECK_INTERVAL 동안 예약처 재조회를 아예 막고 그 창 안의 모든 요청에 같은 실패를 되돌리는 정책이다. 계약(slot_218b9620)이 묶으라고 한 것은 '확인이 일어나는 동안' 들어온 요청이고, 저장된 성공 결과가 없으면 이 요청이 확인을 일으킨다고 적었다. 실패 뒤의 억제 창과 그 길이는 코드가 정했으며 d_create_upstream_failure_codes의 rationale에 '구현의 20초 실패 창'으로 스칠 뿐 자체 신고가 없다. 계약 판본의 움직임은 기록과 맞았다. 기준선과 contract/tennis-alert-api-v2.yaml을 견주어 찾은 차이는 AlertStatus description, /alerts post description, 502·504 추가, 503의 대상 교체, AlertCreateUnavailable 추가뿐이고 여섯 건 모두 CONTRACT_CHANGES_JSON에 why와 spec_anchor가 있다. 근거 품질은 contract_analogy 8건, spec_implication 2건, least_harm 4건, convention 5건이고 빈 근거는 없다. 관례에만 기댄 신고가 다섯 건(d_trace_id_format, d_expiry_sweep_interval, d_list_order_tiebreak, d_authentication_before_validation, d_spec_declaration_scope)이라 4의 조건을 넘고, 미신고 한 건이 상한을 3으로 정한다."
+  },
+  "priority": [
+    "c_18ca1ca9",
+    "c_4dad40ff",
+    "c_e64abfdf",
+    "contract:w_unopened_date_rejected_as_slot",
+    "contract:cr_unopened_date_cannot_subscribe",
+    "contract:cr_dedup_omits_user_scope",
+    "contract:cr_replayed_header_on_dedup_200",
+    "contract:cr_create_201_example_last_checked",
+    "contract:cr_create_delivery_at_birth",
+    "code:w_new_alert_ignores_its_own_check",
+    "axis:state_continuity",
+    "axis:judgement_disclosure"
+  ]
+}

@@ -1,0 +1,930 @@
+{
+  "brief_hash": "b02d8689",
+  "iteration": "001",
+  "stage": "gen",
+  "files": [
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/AlertStatus.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/DeliveryStatus.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/UpstreamFailureReason.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/TimeSlot.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/AlertDelivery.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/Alert.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/domain/CourtDayAvailability.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/WatchPolicy.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/AlertView.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/AvailabilityView.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/AlertCondition.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/AlertRepository.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/AvailabilityRepository.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/IdempotencyStore.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/error/UnsupportedCourtException.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/error/SlotNotSupportedException.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/error/AlertWindowClosedException.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/error/AlertNotFoundException.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/error/IdempotencyKeyReusedException.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/error/ConcurrentUpdateException.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/error/AvailabilityUnavailableException.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/error/ScheduleUnknownException.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/error/StorageTimeoutException.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/store/InMemoryAlertRepository.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/store/InMemoryAvailabilityRepository.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/store/InMemoryIdempotencyStore.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/AvailabilityQueryService.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/AlertViewFactory.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/AlertQueryService.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/AlertCommandService.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/AlertExpiryJob.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/app/ApplicationConfig.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/dto/AlertStatusValue.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/dto/DeliveryStatusValue.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/dto/UpstreamFailureReasonValue.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/dto/ErrorCodeValue.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/dto/TimeSlotPayload.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/dto/CreateAlertRequest.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/dto/AlertDeliveryResponse.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/dto/AlertResponse.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/dto/Payloads.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/dto/AlertListResponse.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/dto/AvailabilitySlotResponse.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/dto/CourtAvailabilityResponse.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/dto/ProblemResponse.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/Problems.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/ApiPaths.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/RequestValidationException.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/UnauthenticatedException.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/BearerTokens.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/RequestValues.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/OpenApiDeclaration.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/AlertController.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+      "role": "code"
+    }
+  ],
+  "contract_version": {
+    "path": "contract/tennis-alert-api-v1.yaml",
+    "from": "contract/tennis-alert-api-v1.yaml"
+  },
+  "claims": [
+    {
+      "point": "getCourtAvailability:200",
+      "note": "저장된 결과가 확인 간격 안이면 그대로, 아니면 확인을 일으켜 CourtAvailability를 돌려준다. 확인 실패에 저장된 성공 결과가 있으면 stale=true와 staleReason을 담아 200이다."
+    },
+    {
+      "point": "getCourtAvailability:400",
+      "note": "courtId 패턴·길이와 date 형식과 필수 여부를 RequestValues가 보고 어기면 VALIDATION_FAILED로 거절한다."
+    },
+    {
+      "point": "getCourtAvailability:404",
+      "note": "포트의 findCourt가 빈 값이면 경로에서 받은 식별자이므로 404 COURT_NOT_SUPPORTED다."
+    },
+    {
+      "point": "getCourtAvailability:500",
+      "note": "선언한 실패 어디에도 들지 않는 런타임 실패를 ApiExceptionHandler가 INTERNAL_ERROR로 옮긴다. traceId와 Retry-After를 함께 낸다."
+    },
+    {
+      "point": "getCourtAvailability:502",
+      "note": "CheckFailed(UPSTREAM_RESPONSE_UNREADABLE)이고 저장된 성공 결과가 없을 때만 502다."
+    },
+    {
+      "point": "getCourtAvailability:503",
+      "note": "CheckFailed(UPSTREAM_UNAVAILABLE)이고 저장된 성공 결과가 없을 때 503이다. STORAGE_TIMEOUT도 같은 상태 코드로 선언했다."
+    },
+    {
+      "point": "getCourtAvailability:504",
+      "note": "CheckFailed(UPSTREAM_TIMEOUT)이고 저장된 성공 결과가 없을 때만 504다."
+    },
+    {
+      "point": "getCourtAvailability:VALIDATION_FAILED",
+      "note": "detail에 어긴 항목 이름을 앞에 붙여 낸다. retryable=false이고 traceId를 싣지 않는다."
+    },
+    {
+      "point": "getCourtAvailability:COURT_NOT_SUPPORTED",
+      "note": "detail을 'courtId: <값>'으로 낸다. 같은 코드가 본문에서 왔을 때는 422로 나가도록 원인에 받은 자리를 담아 올린다."
+    },
+    {
+      "point": "getCourtAvailability:UPSTREAM_TIMEOUT",
+      "note": "retryable=true이고 retryAfterSeconds와 Retry-After가 확인 간격인 20이다."
+    },
+    {
+      "point": "getCourtAvailability:UPSTREAM_UNAVAILABLE",
+      "note": "retryable=true, retryAfterSeconds=20. 빈자리가 없다는 뜻이 아니라는 설명을 detail에 담는다."
+    },
+    {
+      "point": "getCourtAvailability:UPSTREAM_RESPONSE_UNREADABLE",
+      "note": "retryable=true, retryAfterSeconds=20."
+    },
+    {
+      "point": "getCourtAvailability:STORAGE_TIMEOUT",
+      "note": "503으로 옮기는 자리와 retryAfterSeconds=1을 선언했다. 저장이 인메모리라 이 실패는 이 iteration에서 일어나지 않는다."
+    },
+    {
+      "point": "getCourtAvailability:INTERNAL_ERROR",
+      "note": "retryable=true, retryAfterSeconds=5, traceId 있음."
+    },
+    {
+      "point": "createAlert:201",
+      "note": "감시 중인 같은 조건이 없으면 신청을 만들고 201에 Location과 Idempotency-Replayed=false를 함께 낸다."
+    },
+    {
+      "point": "createAlert:200",
+      "note": "감시 중인 같은 조건이 있으면 새 신청을 만들지 않고 그 신청을 200으로 낸다. 키가 달라도 같다."
+    },
+    {
+      "point": "createAlert:400",
+      "note": "Idempotency-Key의 누락과 UUID 위반, 본문 형식 위반을 모두 VALIDATION_FAILED로 낸다."
+    },
+    {
+      "point": "createAlert:401",
+      "note": "Bearer 토큰이 없거나 형식이 아니면 UNAUTHENTICATED다."
+    },
+    {
+      "point": "createAlert:409",
+      "note": "보관 중인 같은 키가 다른 지문의 요청에 쓰였으면 IDEMPOTENCY_KEY_REUSED다."
+    },
+    {
+      "point": "createAlert:422",
+      "note": "본문의 코트 미지원, 운영하지 않는 시간대, 지난 만료 시각을 형식이 맞는 요청의 거절로 낸다."
+    },
+    {
+      "point": "createAlert:500",
+      "note": "운영 시간대를 확인하지 못해 조건을 판정할 수 없을 때와 그 밖의 런타임 실패를 INTERNAL_ERROR로 낸다."
+    },
+    {
+      "point": "createAlert:503",
+      "note": "같은 키의 앞선 요청이 처리 중이면 CONCURRENT_UPDATE_CONFLICT로 물러난다. STORAGE_TIMEOUT도 같은 상태 코드로 선언했다."
+    },
+    {
+      "point": "createAlert:VALIDATION_FAILED",
+      "note": "멱등 키 누락의 detail을 계약의 예시와 같은 문장으로 낸다."
+    },
+    {
+      "point": "createAlert:UNAUTHENTICATED",
+      "note": "detail 없이 낸다. 4xx라 traceId도 없다."
+    },
+    {
+      "point": "createAlert:IDEMPOTENCY_KEY_REUSED",
+      "note": "새 키로 보내라는 설명을 detail에 담고 retryable=false다."
+    },
+    {
+      "point": "createAlert:COURT_NOT_SUPPORTED",
+      "note": "본문에서 받은 식별자이므로 422로 낸다."
+    },
+    {
+      "point": "createAlert:SLOT_NOT_SUPPORTED",
+      "note": "저장된 운영 시간대 목록에 없는 시간대면 거절한다. 예약처가 날짜를 열지 않아 목록이 비어 있을 때도 같다."
+    },
+    {
+      "point": "createAlert:ALERT_WINDOW_CLOSED",
+      "note": "만료 시각(코트 지역의 날짜와 시작 시각)이 이미 지났으면 거절한다."
+    },
+    {
+      "point": "createAlert:CONCURRENT_UPDATE_CONFLICT",
+      "note": "retryable=true, retryAfterSeconds=1. 그 시간 뒤 같은 키로 보내면 앞선 요청의 결과를 재생으로 받는다."
+    },
+    {
+      "point": "createAlert:STORAGE_TIMEOUT",
+      "note": "503과 retryAfterSeconds=1로 옮기는 자리를 선언했다. 인메모리 저장이라 일어나지 않는다."
+    },
+    {
+      "point": "createAlert:INTERNAL_ERROR",
+      "note": "멱등 키를 기록하지 않고 놓아 같은 키로 다시 보내면 새로 처리된다."
+    },
+    {
+      "point": "listAlerts:200",
+      "note": "본인의 신청만, 최근에 신청한 것부터 items에 담는다. 페이지를 나누지 않는다."
+    },
+    {
+      "point": "listAlerts:400",
+      "note": "status가 선언된 상태 값이 아니면 VALIDATION_FAILED다."
+    },
+    {
+      "point": "listAlerts:401",
+      "note": "토큰으로 사용자를 식별하지 못하면 UNAUTHENTICATED다."
+    },
+    {
+      "point": "listAlerts:500",
+      "note": "그 밖의 런타임 실패를 INTERNAL_ERROR로 낸다."
+    },
+    {
+      "point": "listAlerts:503",
+      "note": "STORAGE_TIMEOUT을 선언했다. 인메모리 저장이라 일어나지 않는다."
+    },
+    {
+      "point": "listAlerts:VALIDATION_FAILED",
+      "note": "detail에 'status: '를 앞에 붙인다."
+    },
+    {
+      "point": "listAlerts:UNAUTHENTICATED",
+      "note": "남의 신청이 목록에 섞이지 않도록 식별 실패는 처리 전에 거절한다."
+    },
+    {
+      "point": "listAlerts:STORAGE_TIMEOUT",
+      "note": "503과 retryAfterSeconds=1로 옮기는 자리를 선언했다."
+    },
+    {
+      "point": "listAlerts:INTERNAL_ERROR",
+      "note": "retryable=true, retryAfterSeconds=5, traceId 있음."
+    },
+    {
+      "point": "getAlert:200",
+      "note": "본인의 신청 하나를 낸다. lastCheckedAt과 checkDelayed는 그 코트·날짜의 저장된 확인 결과에서 계산한다."
+    },
+    {
+      "point": "getAlert:400",
+      "note": "alertId가 UUID 형식이 아니면 VALIDATION_FAILED다."
+    },
+    {
+      "point": "getAlert:401",
+      "note": "토큰이 없으면 UNAUTHENTICATED다."
+    },
+    {
+      "point": "getAlert:404",
+      "note": "없는 신청과 남의 신청을 같은 ALERT_NOT_FOUND로 낸다. 존재 여부가 드러나지 않는다."
+    },
+    {
+      "point": "getAlert:500",
+      "note": "그 밖의 런타임 실패를 INTERNAL_ERROR로 낸다."
+    },
+    {
+      "point": "getAlert:503",
+      "note": "STORAGE_TIMEOUT을 선언했다."
+    },
+    {
+      "point": "getAlert:VALIDATION_FAILED",
+      "note": "detail을 'alertId: UUID 형식이어야 합니다'로 낸다."
+    },
+    {
+      "point": "getAlert:UNAUTHENTICATED",
+      "note": "detail 없이 401로 낸다."
+    },
+    {
+      "point": "getAlert:ALERT_NOT_FOUND",
+      "note": "detail을 싣지 않아 어느 쪽인지 알려 주지 않는다."
+    },
+    {
+      "point": "getAlert:STORAGE_TIMEOUT",
+      "note": "503과 retryAfterSeconds=1로 옮기는 자리를 선언했다."
+    },
+    {
+      "point": "getAlert:INTERNAL_ERROR",
+      "note": "retryable=true, retryAfterSeconds=5, traceId 있음."
+    },
+    {
+      "point": "cancelAlert:200",
+      "note": "감시 중이면 해제하고 PENDING 대기를 버린다. 이미 끝난 신청은 상태를 바꾸지 않고 현재 상태를 낸다."
+    },
+    {
+      "point": "cancelAlert:400",
+      "note": "alertId가 UUID 형식이 아니면 VALIDATION_FAILED다."
+    },
+    {
+      "point": "cancelAlert:401",
+      "note": "토큰이 없으면 UNAUTHENTICATED다."
+    },
+    {
+      "point": "cancelAlert:404",
+      "note": "없는 신청과 남의 신청을 같은 ALERT_NOT_FOUND로 낸다."
+    },
+    {
+      "point": "cancelAlert:500",
+      "note": "그 밖의 런타임 실패를 INTERNAL_ERROR로 낸다."
+    },
+    {
+      "point": "cancelAlert:503",
+      "note": "저장된 신청이 읽은 뒤 바뀌었으면 CONCURRENT_UPDATE_CONFLICT로 물러난다."
+    },
+    {
+      "point": "cancelAlert:VALIDATION_FAILED",
+      "note": "detail에 'alertId: '를 앞에 붙인다."
+    },
+    {
+      "point": "cancelAlert:UNAUTHENTICATED",
+      "note": "detail 없이 401로 낸다."
+    },
+    {
+      "point": "cancelAlert:ALERT_NOT_FOUND",
+      "note": "여러 번 불러도 결과가 같아야 하므로 남의 신청도 같은 404다."
+    },
+    {
+      "point": "cancelAlert:CONCURRENT_UPDATE_CONFLICT",
+      "note": "retryable=true, retryAfterSeconds=1. 같은 요청을 그대로 다시 보내면 된다."
+    },
+    {
+      "point": "cancelAlert:STORAGE_TIMEOUT",
+      "note": "503과 retryAfterSeconds=1로 옮기는 자리를 선언했다."
+    },
+    {
+      "point": "cancelAlert:INTERNAL_ERROR",
+      "note": "retryable=true, retryAfterSeconds=5, traceId 있음."
+    }
+  ],
+  "decisions": [
+    {
+      "id": "d_bearer_token_identity",
+      "point": "createAlert:UNAUTHENTICATED",
+      "where": "src/main/java/com/thinking/tennis/api/BearerTokens.java",
+      "question": "Bearer 토큰에서 사용자 식별자를 어떻게 얻는가.",
+      "considered": [
+        {
+          "choice": "토큰 문자열 자체를 사용자 식별자로 쓴다",
+          "consequence": "계약에 없는 토큰 형식을 지어내지 않고, 같은 토큰이면 같은 사용자라는 성질만으로 본인 것만 보이게 하는 요구를 지킬 수 있다"
+        },
+        {
+          "choice": "JWT로 파싱해 subject를 쓴다",
+          "consequence": "계약도 명세도 정하지 않은 토큰 구조와 서명 검증 규칙을 코드가 발명하게 되고, 그 규칙이 틀리면 모든 인증 오퍼레이션이 함께 틀린다"
+        },
+        {
+          "choice": "별도 사용자 조회 포트를 새로 만든다",
+          "consequence": "사람이 소유한 포트 목록에 없는 포트를 더하게 되고, 이 run의 판정 대상이 아닌 표면이 늘어난다"
+        }
+      ],
+      "chosen": "토큰 문자열 자체를 사용자 식별자로 쓴다. 헤더가 없거나 Bearer 스킴이 아니거나 토큰이 비면 401이다.",
+      "basis": "least_harm",
+      "rationale": "계약은 인증 방식 자체를 정하지 않고 사용자 식별이 필요한 까닭만 적었다. 식별자를 얻는 방법 중 계약이 검사할 수 있는 성질은 '같은 토큰이면 같은 사용자'뿐이라, 그 성질만 만족하는 가장 얇은 선택을 골랐다.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:401",
+        "listAlerts:401",
+        "getAlert:401",
+        "cancelAlert:401",
+        "getAlert:404",
+        "cancelAlert:404",
+        "listAlerts:200"
+      ],
+      "reversal_cost": "BearerTokens 한 파일을 고치면 된다. 유스케이스는 식별자 문자열만 받으므로 바뀌지 않는다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_authentication_before_validation",
+      "point": "createAlert:401",
+      "where": "src/main/java/com/thinking/tennis/api/AlertController.java",
+      "question": "토큰이 없고 요청 형식도 어긴 요청에 401과 400 중 무엇을 먼저 내는가.",
+      "considered": [
+        {
+          "choice": "사용자 식별을 먼저 하고 401을 낸다",
+          "consequence": "인증되지 않은 요청에 본문 검증 결과를 알려 주지 않는다"
+        },
+        {
+          "choice": "형식 검증을 먼저 하고 400을 낸다",
+          "consequence": "토큰 없이도 어떤 값이 유효한지 알아낼 수 있다"
+        }
+      ],
+      "chosen": "사용자 식별을 먼저 한다. 인증 오퍼레이션은 401을 먼저 낸다.",
+      "basis": "convention",
+      "rationale": "계약은 두 실패를 함께 선언하고 앞뒤를 정하지 않았다. 본인 것만 보이게 하려는 요구가 있는 표면에서 식별 전에 요청 내용을 판정해 알려 주면 그 요구가 새는 방향으로 기운다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:400",
+        "createAlert:401",
+        "listAlerts:400",
+        "listAlerts:401",
+        "getAlert:400",
+        "getAlert:401",
+        "cancelAlert:400",
+        "cancelAlert:401"
+      ],
+      "reversal_cost": "각 컨트롤러 메서드에서 식별과 검증 두 줄의 순서를 바꾸면 된다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_version_prefix_in_emitted_uris",
+      "point": "createAlert:201",
+      "where": "src/main/java/com/thinking/tennis/api/ApiPaths.java",
+      "question": "응답에 실어 보내는 Location과 Problem.instance에 주 버전 접두사를 붙이는가.",
+      "considered": [
+        {
+          "choice": "붙인다. 받은 경로에 /v1을 앞세워 만든다",
+          "consequence": "클라이언트가 받은 값을 그대로 다시 부를 수 있고 계약의 예시와 같은 모양이 된다"
+        },
+        {
+          "choice": "붙이지 않는다. 컨트롤러가 받은 경로를 그대로 쓴다",
+          "consequence": "오퍼레이션 경로 규약과는 맞지만 돌려준 위치를 그대로 부를 수 없다"
+        }
+      ],
+      "chosen": "붙인다. Location은 /v1/alerts/{alertId}이고 instance는 /v1 + 요청 경로다.",
+      "basis": "contract_analogy",
+      "rationale": "계약의 Location 예시와 모든 Problem 예시의 instance가 /v1로 시작한다. 경로 접두사를 오퍼레이션 경로에 다시 넣지 말라는 규약은 요청을 받는 자리의 규약이고, 돌려주는 값은 밖에서 보이는 주소라 접두사가 붙은 모양이 맞다.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:201",
+        "createAlert:200",
+        "getCourtAvailability:400",
+        "getCourtAvailability:404",
+        "getAlert:404",
+        "cancelAlert:404",
+        "createAlert:409",
+        "createAlert:422"
+      ],
+      "reversal_cost": "ApiPaths의 접두사 상수를 비우면 두 자리가 함께 바뀐다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_trace_id_format",
+      "point": "getCourtAvailability:INTERNAL_ERROR",
+      "where": "src/main/java/com/thinking/tennis/api/Problems.java",
+      "question": "traceId를 어떤 형식의 문자열로 만드는가.",
+      "considered": [
+        {
+          "choice": "UUID를 쓴다",
+          "consequence": "표준 라이브러리로 만들 수 있고 새 의존이 필요 없다"
+        },
+        {
+          "choice": "계약 예시처럼 ULID를 쓴다",
+          "consequence": "stack에 없는 라이브러리를 끌어오거나 인코딩을 직접 구현해야 한다"
+        }
+      ],
+      "chosen": "UUID 문자열을 쓴다.",
+      "basis": "convention",
+      "rationale": "계약은 traceId를 형식 없는 문자열로 두고 로그에서 요청을 찾는 식별자라고만 적었다. 예시의 값은 ULID처럼 보이지만 스키마가 형식을 요구하지 않으므로, 새 의존 없이 충돌하지 않는 식별자를 쓰는 쪽을 골랐다.",
+      "confidence": "high",
+      "blast_radius": [
+        "getCourtAvailability:500",
+        "getCourtAvailability:502",
+        "getCourtAvailability:503",
+        "getCourtAvailability:504",
+        "createAlert:500",
+        "createAlert:503",
+        "listAlerts:500",
+        "listAlerts:503",
+        "getAlert:500",
+        "getAlert:503",
+        "cancelAlert:500",
+        "cancelAlert:503"
+      ],
+      "reversal_cost": "Problems의 식별자 생성 한 줄을 고치면 된다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_idempotency_fingerprint",
+      "point": "createAlert:IDEMPOTENCY_KEY_REUSED",
+      "where": "src/main/java/com/thinking/tennis/app/AlertCondition.java",
+      "question": "같은 멱등 키가 다른 내용의 요청에 쓰였는지를 무엇으로 견주는가.",
+      "considered": [
+        {
+          "choice": "정규화한 조건 셋(코트·날짜·시간대)을 지문으로 쓴다",
+          "consequence": "같은 뜻의 요청이 표기만 달라도 같은 요청으로 판정된다"
+        },
+        {
+          "choice": "받은 본문 바이트를 그대로 견준다",
+          "consequence": "공백이나 키 순서만 달라도 다른 요청이 되어 재시도가 409로 막힌다"
+        }
+      ],
+      "chosen": "정규화한 조건 셋을 지문으로 쓴다.",
+      "basis": "contract_analogy",
+      "rationale": "계약의 요청 본문은 조건 셋뿐이고 추가 필드를 두지 않았다. 재시도 안전이 이 키의 목적이라, 같은 뜻의 재시도가 막히지 않는 쪽으로 견준다.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:409",
+        "createAlert:201",
+        "createAlert:200",
+        "createAlert:503"
+      ],
+      "reversal_cost": "AlertCondition.fingerprint 한 메서드를 고치면 된다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_create_may_trigger_check",
+      "point": "createAlert:SLOT_NOT_SUPPORTED",
+      "where": "src/main/java/com/thinking/tennis/app/AlertCommandService.java",
+      "question": "신청 조건을 판정할 운영 시간대를 어디서 얻는가. 저장된 결과가 없으면 확인을 일으키는가.",
+      "considered": [
+        {
+          "choice": "저장된 결과를 쓰고 확인 간격보다 오래됐거나 없으면 확인을 일으킨다",
+          "consequence": "조회를 거치지 않고 바로 신청해도 조건을 판정할 수 있고, 확인 간격 안이면 예약처를 다시 부르지 않는다"
+        },
+        {
+          "choice": "저장된 결과만 쓰고 없으면 판정하지 않는다",
+          "consequence": "그 코트·날짜를 아무도 조회하지 않았으면 형식이 맞는 신청도 서버 사정으로 거절된다"
+        },
+        {
+          "choice": "운영 시간대를 확인하지 않고 신청을 받는다",
+          "consequence": "계약이 선언한 SLOT_NOT_SUPPORTED가 영원히 나가지 않아 판정 지점이 비어 버린다"
+        }
+      ],
+      "chosen": "저장된 결과를 먼저 쓰고, 확인 간격보다 오래됐거나 한 번도 없으면 조회와 같은 경로로 확인을 일으킨다.",
+      "basis": "spec_implication",
+      "rationale": "명세는 확인 간격과 코트·날짜 단위 확인을 정했고 계약은 신청이 지원하는 시간대인지 판정하라고 한다. 두 요구를 함께 지키는 방법은 조회가 쓰는 같은 확인 경로를 재사용하는 것이다. 다만 이 선택 때문에 신청 직후 응답의 lastCheckedAt이 널이 아닐 수 있다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:422",
+        "createAlert:201",
+        "createAlert:200",
+        "createAlert:500",
+        "getCourtAvailability:200"
+      ],
+      "reversal_cost": "AlertCommandService가 부르는 조회 메서드를 저장된 결과만 읽는 것으로 바꾸면 되고, 그때 확인 결과가 없을 때의 응답을 다시 정해야 한다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_schedule_unknown_maps_to_internal",
+      "point": "createAlert:INTERNAL_ERROR",
+      "where": "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+      "question": "신청 처리 중 예약처 확인이 실패하고 저장된 성공 결과도 없을 때 무엇으로 내보내는가.",
+      "considered": [
+        {
+          "choice": "500 INTERNAL_ERROR로 낸다",
+          "consequence": "재시도 가능으로 나가고 멱등 키가 있어 같은 요청을 그대로 다시 보낼 수 있다"
+        },
+        {
+          "choice": "503 STORAGE_TIMEOUT으로 낸다",
+          "consequence": "실패한 것은 저장소가 아니라 예약처이므로 코드가 원인을 잘못 가리킨다"
+        },
+        {
+          "choice": "422 SLOT_NOT_SUPPORTED로 낸다",
+          "consequence": "확인 실패를 지원하지 않는 시간대로 다루게 되어 확인 실패를 빈자리 없음처럼 취급하는 것과 같아진다"
+        }
+      ],
+      "chosen": "500 INTERNAL_ERROR로 낸다.",
+      "basis": "least_harm",
+      "rationale": "신청 오퍼레이션에는 예약처 확인 실패를 알리는 상태 코드가 선언되지 않았다. 남은 코드 중 재시도 가능하고 원인을 왜곡하지 않는 것은 서버 내부 실패뿐이고, 계약도 이 코드를 그런 나머지로 적었다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:500",
+        "createAlert:422"
+      ],
+      "reversal_cost": "ScheduleUnknownException의 처리기 한 곳을 고치면 된다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_delivery_stays_absent",
+      "point": "createAlert:201",
+      "where": "src/main/java/com/thinking/tennis/app/AlertCommandService.java",
+      "question": "빈자리를 확인했을 때 이 표면이 발송 대기를 만들어 delivery를 PENDING으로 올리는가.",
+      "considered": [
+        {
+          "choice": "만들지 않는다. delivery는 없는 상태로 둔다",
+          "consequence": "발송 경로가 붙을 때까지 신청은 감시 중으로 남고 상태와 발송 결과가 어긋나지 않는다"
+        },
+        {
+          "choice": "조회가 빈자리를 보면 PENDING 대기를 만든다",
+          "consequence": "꺼내 보내는 쪽이 없어 PENDING이 영원히 남고, 신청 하나에 알림 한 건이라는 약속을 지킬 주체가 없다"
+        }
+      ],
+      "chosen": "발송 대기를 만들지 않는다. delivery는 널이고 상태 전이는 해제와 만료만 일어난다.",
+      "basis": "least_harm",
+      "rationale": "발송 경로는 이 run의 범위 밖이고 계약도 그 경로에 엔드포인트를 두지 않았다. 꺼내는 쪽 없이 대기만 쌓으면 상태와 발송 결과를 함께 읽으라는 약속이 지켜지지 않는 상태가 계속 남는다. 대기가 없는 동안의 모양은 계약이 널로 적어 두었다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:201",
+        "createAlert:200",
+        "getAlert:200",
+        "listAlerts:200",
+        "cancelAlert:200"
+      ],
+      "reversal_cost": "발송 경로가 붙을 때 도메인의 대기 생성과 꺼내는 작업을 함께 더해야 한다. 응답 모양은 이미 발송 결과를 담을 수 있어 표면은 바뀌지 않는다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_expiry_sweep_interval",
+      "point": "getAlert:200",
+      "where": "src/main/java/com/thinking/tennis/app/AlertExpiryJob.java",
+      "question": "만료 시각이 지난 신청을 만료로 옮기는 작업을 얼마나 자주 도는가.",
+      "considered": [
+        {
+          "choice": "1초마다 훑는다",
+          "consequence": "만료 시각이 지났는데 감시 중으로 보이는 틈이 짧다"
+        },
+        {
+          "choice": "조회할 때 그 자리에서 만료로 옮긴다",
+          "consequence": "거르는 기준이 저장된 상태라는 계약의 문장과 어긋나고, 조회가 상태를 바꾸게 된다"
+        },
+        {
+          "choice": "만료 작업을 두지 않는다",
+          "consequence": "만료 상태가 응답에 영원히 나타나지 않아 계약이 선언한 상태 하나가 비어 버린다"
+        }
+      ],
+      "chosen": "1초 주기로 감시 중인 신청을 훑어 만료 시각이 지난 것을 만료로 옮긴다.",
+      "basis": "convention",
+      "rationale": "계약과 명세는 만료가 서버 작업의 몫이라는 것과 그 사이에 잠시 감시 중으로 보일 수 있다는 것까지만 정하고 주기를 정하지 않았다. 응답에 보이는 틈을 사람이 눈치채기 어려운 크기로 줄이는 쪽을 골랐다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "getAlert:200",
+        "listAlerts:200",
+        "cancelAlert:200",
+        "createAlert:201",
+        "createAlert:422"
+      ],
+      "reversal_cost": "AlertExpiryJob의 주기 문자열 하나를 고치면 된다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_replayed_false_on_existing_watch",
+      "point": "createAlert:200",
+      "where": "src/main/java/com/thinking/tennis/api/AlertController.java",
+      "question": "같은 조건을 감시 중인 신청을 새 키로 돌려줄 때 Idempotency-Replayed를 무엇으로 두는가.",
+      "considered": [
+        {
+          "choice": "false로 둔다",
+          "consequence": "이번 요청이 처리된 결과라는 뜻이 되고, 재생은 같은 키로 앞서 처리한 응답을 돌려줄 때만 true가 된다"
+        },
+        {
+          "choice": "true로 둔다",
+          "consequence": "아무것도 바꾸지 않았다는 사실은 맞지만, 같은 키의 앞선 응답을 돌려준 것이 아니어서 헤더의 뜻과 어긋난다"
+        }
+      ],
+      "chosen": "false로 둔다. 같은 키로 보관된 응답을 재생할 때만 true다.",
+      "basis": "contract_analogy",
+      "rationale": "계약은 이 헤더를 같은 키로 앞서 처리한 응답을 그대로 돌려준 것인지로 정의했다. 조건이 같아 기존 신청을 돌려주는 200은 이번 요청이 키를 처음 써서 처리한 결과이므로 재생이 아니다.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:200",
+        "createAlert:201"
+      ],
+      "reversal_cost": "컨트롤러가 헤더에 넣는 값 한 곳을 고치면 된다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_problem_optional_keys_absent",
+      "point": "getAlert:ALERT_NOT_FOUND",
+      "where": "src/main/java/com/thinking/tennis/api/Problems.java",
+      "question": "값이 없는 Problem의 선택 필드를 키까지 빼는가 널로 싣는가.",
+      "considered": [
+        {
+          "choice": "키를 빼고 보낸다. 실패 본문을 순서 있는 맵으로 만든다",
+          "consequence": "선택 필드가 자기 타입을 어기지 않고, 널을 남기는 전역 직렬화 설정을 덮어쓰지 않는다"
+        },
+        {
+          "choice": "널로 싣는다",
+          "consequence": "detail·instance·retryAfterSeconds·traceId가 널을 허용하지 않으므로 4xx 응답이 스키마를 어긴다"
+        },
+        {
+          "choice": "직렬화 설정을 이 타입에서만 덮어쓴다",
+          "consequence": "널을 지우는 설정이 계약이 널을 허용하며 필수로 둔 다른 필드까지 지울 위험을 들여온다"
+        }
+      ],
+      "chosen": "실패 본문을 순서 있는 맵으로 만들어 값이 없는 선택 필드의 키를 싣지 않는다. 스키마 선언은 그대로 Problem 타입이 한다.",
+      "basis": "contract_analogy",
+      "rationale": "Problem의 선택 필드는 널을 허용하지 않고, Alert의 lastCheckedAt처럼 널을 허용하면서 필수인 필드는 키가 남아야 한다. 두 요구가 한 직렬화 설정으로 동시에 지켜지지 않으므로, 전역 설정을 건드리지 않고 실패 본문만 필드 단위로 만든다.",
+      "confidence": "high",
+      "blast_radius": [
+        "getCourtAvailability:400",
+        "getCourtAvailability:404",
+        "createAlert:401",
+        "createAlert:409",
+        "createAlert:422",
+        "listAlerts:401",
+        "getAlert:404",
+        "cancelAlert:404",
+        "getCourtAvailability:500"
+      ],
+      "reversal_cost": "Problems의 본문 조립 메서드 하나를 고치면 된다. 응답 타입 선언은 그대로다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_list_order_tiebreak",
+      "point": "listAlerts:200",
+      "where": "src/main/java/com/thinking/tennis/app/store/InMemoryAlertRepository.java",
+      "question": "신청 시각이 같은 두 신청의 앞뒤를 무엇으로 정하는가.",
+      "considered": [
+        {
+          "choice": "저장된 순서를 뒷순위 기준으로 쓴다",
+          "consequence": "같은 시각의 두 신청도 늘 같은 순서로 나와 목록이 요청마다 흔들리지 않는다"
+        },
+        {
+          "choice": "정하지 않는다",
+          "consequence": "같은 입력에 목록 순서가 달라져 최근 것이 앞에 온다는 약속을 확인할 수 없다"
+        }
+      ],
+      "chosen": "신청 시각으로 먼저 정렬하고, 같으면 저장된 순서가 나중인 것을 앞에 둔다.",
+      "basis": "convention",
+      "rationale": "계약은 최근에 신청한 것이 앞에 온다고만 적었고 시각이 같을 때를 정하지 않았다. 순서가 정해지지 않으면 같은 요청에 다른 목록이 나오므로 안정된 기준을 하나 더 둔다.",
+      "confidence": "high",
+      "blast_radius": [
+        "listAlerts:200"
+      ],
+      "reversal_cost": "저장소의 비교기 한 곳을 고치면 된다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_window_closed_before_dedup",
+      "point": "createAlert:ALERT_WINDOW_CLOSED",
+      "where": "src/main/java/com/thinking/tennis/app/AlertCommandService.java",
+      "question": "감시 중인 같은 조건의 신청이 있고 그 조건의 만료 시각이 이미 지났을 때 무엇을 내는가.",
+      "considered": [
+        {
+          "choice": "422 ALERT_WINDOW_CLOSED를 낸다",
+          "consequence": "지금 감시할 수 없는 조건을 감시 중인 신청으로 돌려주지 않는다"
+        },
+        {
+          "choice": "기존 신청을 200으로 돌려준다",
+          "consequence": "만료 작업이 아직 훑지 않은 신청을 지금도 감시되는 것처럼 돌려준다"
+        }
+      ],
+      "chosen": "조건 판정을 먼저 하고, 만료 시각이 지났으면 감시 중인 같은 조건이 있어도 422를 낸다.",
+      "basis": "contract_analogy",
+      "rationale": "두 문장이 같은 요청에 겹치고 계약은 앞뒤를 정하지 않았다. 만료 시각이 지난 조건은 감시할 수 없다는 것이 이 코드의 뜻이고, 계약도 이 시각이 지났는데 상태가 아직 감시 중이면 시각을 기준으로 판단하라고 적었다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:422",
+        "createAlert:200",
+        "createAlert:201"
+      ],
+      "reversal_cost": "신청 처리에서 조건 판정과 기존 신청 조회의 순서를 바꾸면 된다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_spec_declaration_scope",
+      "point": "getCourtAvailability:200",
+      "where": "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+      "question": "추출되는 스펙에 계약의 무엇까지 명시적으로 선언하는가.",
+      "considered": [
+        {
+          "choice": "오퍼레이션 식별자·상태 코드·필드 필수 여부·형식 제약·보안 요구·확장 키와 산문을 선언하고 응답 예시는 두지 않는다",
+          "consequence": "판정 대상이 되는 약속은 모두 코드에 남고, 예시만 스펙에 나타나지 않는다"
+        },
+        {
+          "choice": "응답 예시까지 애너테이션에 옮긴다",
+          "consequence": "같은 JSON을 계약과 코드 두 곳에 두게 되어 한쪽만 바뀌는 어긋남이 생긴다"
+        }
+      ],
+      "chosen": "예시는 요청 본문과 스칼라 필드에만 두고, 응답 예시는 계약에 맡긴다. 상태 코드·필수 여부·에러 코드 확장·보안 요구는 도구 기본값에 맡기지 않고 모두 선언한다.",
+      "basis": "convention",
+      "rationale": "구현 규약이 명시하라고 꼽은 것은 상태 코드와 필수 여부와 에러 코드 확장과 보안 요구다. 예시는 그 목록에 없고, 같은 값을 두 곳에 두면 어긋남을 만들 자리만 늘어난다.",
+      "confidence": "low",
+      "blast_radius": [
+        "getCourtAvailability:200",
+        "createAlert:201",
+        "createAlert:200",
+        "listAlerts:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "reversal_cost": "예시를 요구하면 각 응답 선언에 예시 블록을 더하면 된다. 코드 동작은 바뀌지 않는다.",
+      "supersedes": null
+    }
+  ],
+  "contract_changes": [],
+  "generated_at": "2026-09-30T17:13:28+09:00",
+  "model": "claude-opus-5",
+  "metadata": {
+    "prompt_version": "gen_impl:v1",
+    "source_files": [
+      "b02d8689_input.json"
+    ]
+  },
+  "commit": "d6db0b58971ce9274551079df5ede6d7ed241b7b"
+}

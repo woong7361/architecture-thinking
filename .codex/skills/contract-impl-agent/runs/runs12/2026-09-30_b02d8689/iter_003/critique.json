@@ -1,0 +1,167 @@
+{
+  "brief_hash": "b02d8689",
+  "iteration": "003",
+  "summary": "이번 초안은 계약이 정한 갈림길 대부분을 코드 안에서 실제로 지나간다. 확인 실패와 저장된 성공 결과를 가르는 자리(200 stale 대 5xx), 확인이 실패했을 때 발송 대기를 만들지 않는 자리(V-3), 잠금 안에서 저장된 결과를 다시 읽어 몰린 요청이 예약처를 다시 부르지 않게 한 자리(V-4), 실패 억제 창의 경계를 배타로 돌려 Retry-After 안내를 참으로 만든 자리가 그렇다. DRAFT_FILES_JSON의 omitted는 비어 있었고 v2·v3 계약 원문과 모든 구현 파일이 실려 왔으므로 읽지 못해 확인하지 못한 자리는 없다. 다만 Eval 결과·게이트 위반 목록·사람이 쓴 테스트는 받지 않았으므로 실행으로 확인한 것은 아무것도 없고, 아래 지적은 모두 계약 원문과 코드를 대조해 얻은 것이다. 이번 판본에서 가장 값비싼 자리는 판정 순서다. 신청 처리가 만료 시각이라는 순전히 지역적이고 결정적인 거절을 외부 예약처 확인 뒤로 미뤄 두어, 되돌릴 수 없는 422가 예약처 장애 때 재시도 가능한 5xx로 바뀐다. 그리고 이번 iteration이 계약에 새로 적은 201의 lastCheckedAt 문장이 같은 iteration의 서 있는 결정(오래된 결과의 나이에 상한을 두지 않는다)과 어긋나, 계약이 구현보다 좁게 약속한 상태로 남았다.",
+  "strengths": [
+    "확인 실패를 저장된 마지막 성공 결과의 유무로 갈라 200 stale과 5xx로 내보내는 자리가 코드에 실제로 있다. AvailabilityQueryService.failed가 Optional을 받아 있으면 stale 뷰로, 없으면 예외로 갈린다. slot_aff3f79a와 EF-1이 요구한 갈림길이 표현이 아니라 제어 흐름으로 남았다.",
+    "확인이 실패한 경로에서는 발송 대기를 건드리지 않는다. applyToWatchingAlerts가 checkAvailability 성공 직후에만 불리므로 V-3('확인 실패만으로는 알림이 생기지 않는다')이 코드 구조로 보장된다. 다음 초안에서 이 자리를 실패 경로로 옮기지 마라.",
+    "checkUnderLock가 잠금을 얻은 뒤 저장된 결과를 다시 읽어, 기다리던 요청이 예약처를 따로 부르지 않고 같은 결과를 받는다. V-4와 slot_218b9620의 '기다리던 요청은 모두 같은 내용을 받는다'를 이중 검사로 지켰다.",
+    "실패 억제 창의 경계를 배타로 둔 것(isWithinFailureWindow). 창의 길이가 Retry-After가 안내하는 초와 같으므로, 포함으로 두었으면 안내한 시각에 정확히 도착한 요청이 반드시 같은 실패를 받아 retryable의 뜻이 거짓이 됐을 자리다.",
+    "Problem의 선택 필드를 널 대신 키 누락으로 내보내는 자리(Problems.body). 계약이 detail·instance·retryAfterSeconds·traceId에 널을 허용하지 않으면서 필수로도 두지 않은 모양을 정확히 지켰다.",
+    "요청을 계약보다 좁게 받는 자리가 보이지 않는다. RequestValues의 검사는 모두 계약이 스키마로 적은 pattern·maxLength·format을 그대로 옮긴 것이고, 계약에 없는 조건(startTime<endTime 같은 것)을 더하지 않았다."
+  ],
+  "weaknesses": [
+    {
+      "id": "cr_window_closed_after_upstream",
+      "axis": "failure_faithfulness",
+      "issue": "AlertCommandService.process가 만료 시각 판정을 외부 예약처 확인 뒤에 둔다. court를 찾고 → operatingSchedule로 확인을 일으키고 → 시간대를 판정하고 → 그 다음에야 expiresAt을 지금과 견준다. 만료 시각은 요청 본문의 date와 slot.startTime과 코트 지역 시간대만으로 계산되는 값이라 바깥에 아무것도 묻지 않고 결론이 나는데, 예약처가 닿지 않는 동안 이미 지나간 시간대로 신청하면 422 ALERT_WINDOW_CLOSED 대신 ScheduleUnknownException이 먼저 올라가 502·503·504가 나간다.",
+      "why_it_matters": "그 5xx는 retryable=true에 retryAfterSeconds=20을 함께 싣는다. 계약은 retryable을 '같은 요청을 그대로 다시 보내 결과가 달라질 수 있으면 true'로 정의했는데(slot_8e8d68a1), 만료 시각이 지난 조건은 20초 뒤에도 20분 뒤에도 같은 거절을 받는다. 클라이언트는 영원히 성공하지 않을 요청을 계약이 시킨 대로 되풀이하고, 그 재시도가 다시 실패 억제 창을 지나 예약처로 나가려 한다. 되돌릴 수 없는 4xx를 되돌릴 수 있는 5xx로 바꿔 말하는 것은 실패의 종류 자체를 틀리게 말하는 것이다.",
+      "suggestion": "AlertCommandService.process에서 expiresAt 계산과 AlertWindowClosedException 판정을 operatingSchedule 호출보다 앞으로 올려라. 바깥 자원을 부르지 않고 결론이 나는 거절(만료 시각, 그리고 findCourt가 이미 그렇게 놓여 있는 코트 미지원)을 먼저 놓고, 예약처를 부르는 판정은 그 뒤에 남긴다. 그러면 이 오퍼레이션의 5xx는 '판정할 재료를 얻지 못했다'는 뜻만 갖게 된다.",
+      "severity": "high",
+      "target": {
+        "pointer": "/paths/~1alerts/post/responses/422",
+        "action": "tighten",
+        "scope": "code"
+      }
+    },
+    {
+      "id": "cr_201_last_checked_overclaim",
+      "axis": "response_fidelity",
+      "issue": "이번 iteration이 cc_create_201_state_note로 201 설명에 적은 문장은 경우를 둘로 나눈다. '이 요청이 확인을 일으켰으면 그 확인이 성공한 시각, 확인 간격 안의 저장된 결과를 썼으면 그 결과의 시각, 한 번도 확인에 성공하지 못한 코트·날짜에서만 null.' 그런데 같은 iteration의 d_create_may_trigger_check는 확인이 실패해도 저장된 마지막 성공 결과가 있으면 그 결과로 판정하고 그 결과의 나이에 상한을 두지 않는다고 적었다. 그 경로에서 신청은 만들어지고 AlertViewFactory가 붙이는 lastCheckedAt은 임의로 오래된 성공 시각이다. 세 경우 중 어디에도 들지 않는다. 같은 문장이 AlertController의 @ApiResponse에도 그대로 복사돼 추출되는 스펙까지 같은 말을 한다.",
+      "why_it_matters": "계약이 구현보다 좁게 약속하면 그 응답은 계약을 어긴 것이 된다. 그리고 이 필드는 checkDelayed와 함께 읽히는 값이라, 클라이언트가 '신청 직후의 lastCheckedAt은 확인 간격 안'이라고 읽고 만들면 예약처 장애 중에 만들어진 신청에서 그 가정이 조용히 깨진다. 계약이 스스로 만든 세 갈래 중 실제로 가장 설명이 필요한 갈래가 빠졌다.",
+      "suggestion": "201 설명의 열거에 네 번째 경우를 더해라. '이 요청이 일으킨 확인이 실패했고 저장된 마지막 성공 결과로 조건을 판정했으면 lastCheckedAt은 그 성공 결과의 시각이며 확인 간격보다 오래됐을 수 있다'는 한 문장이면 된다. 그 문장을 계약과 AlertController의 같은 선언에 함께 적어 두 곳이 갈리지 않게 한다.",
+      "severity": "medium",
+      "target": {
+        "pointer": "/paths/~1alerts/post/responses/201/description",
+        "action": "relax",
+        "scope": "contract"
+      }
+    },
+    {
+      "id": "cr_terminal_alert_check_fields",
+      "axis": "response_fidelity",
+      "issue": "AlertViewFactory.of가 신청의 상태를 보지 않고 lastCheckedAt과 checkDelayed를 계산한다. 그래서 해제되거나 만료된 신청도 그 코트·날짜를 누가 조회할 때마다 lastCheckedAt이 계속 앞으로 움직이고, 아무도 조회하지 않으면 checkDelayed가 시간이 갈수록 true로 굳는다. 계약은 checkDelayed를 '확인이 밀리고 있는지 여부'로 적었는데(slot_98b55c8f), 해제된 신청은 계약 스스로 '확인과 발송을 멈춘다'고 적은 상태다(slot_3b26d64c).",
+      "why_it_matters": "끝난 신청에 붙은 checkDelayed: true는 '이 신청이 감시돼야 하는데 밀리고 있다'로 읽힌다. 사용자가 스스로 해제한 신청 목록 전체가 지연 표시를 달고 나타나면 그 표시가 가리키던 신호가 무뎌진다. 명세가 확인 지연을 한 주기가 아니라 세 주기로 정한 이유가 바로 신호를 무디게 하지 않기 위해서였는데, 끝난 신청까지 세는 것은 그 조정을 되돌린다. lastCheckedAt은 계약 문장이 코트·날짜 기준이라 문자 그대로는 참이지만, 해제 뒤에도 값이 움직이는 것이 무엇을 뜻하는지는 계약 어디에도 없다.",
+      "suggestion": "계약이 이 두 필드가 끝난 신청에서 무엇을 뜻하는지 한 문단으로 정해라. 권하는 쪽은 checkDelayed를 감시 중인 신청에만 뜻이 있는 값으로 못 박고 끝난 신청에서는 언제나 false로 두는 것이다. 그렇게 정하면 AlertViewFactory에서 alert.status().isTerminal()일 때 false를 내도록 한 줄을 더하면 되고, lastCheckedAt은 코트·날짜 기준이라는 현재 문장 그대로 두되 '신청이 끝난 뒤에도 그 코트·날짜의 확인에 따라 계속 움직인다'를 덧붙인다.",
+      "severity": "medium",
+      "target": {
+        "pointer": "/components/schemas/Alert/properties/checkDelayed",
+        "action": "add",
+        "scope": "contract"
+      }
+    },
+    {
+      "id": "cr_cancel_lost_cas_to_expiry",
+      "axis": "state_continuity",
+      "issue": "AlertCommandService.cancel은 compareAndSet이 실패하면 곧바로 ConcurrentUpdateException으로 물러난다. 다시 읽어 보지 않는다. 그런데 이 저장소에서 감시 중인 신청을 고치는 쪽은 사용자의 해제만이 아니다. AlertExpiryJob이 1초마다 findAllWatching을 훑으며 만료 시각이 지난 신청을 만료로 옮기고(d_expiry_sweep_interval), 예약 상태 조회의 applyToWatchingAlerts가 확인에 성공할 때마다 같은 코트·날짜의 감시 중인 신청 전부에 발송 대기를 올리거나 버린다. 사용자가 해제를 누른 그 순간 그 신청에 확인 결과가 적용되면 CAS가 밀려 503이 나간다.",
+      "why_it_matters": "계약은 이 오퍼레이션을 '여러 번 불러도 결과가 같다'로 선언했고(slot_9231bb2f), 이미 끝난 신청에는 상태를 바꾸지 않고 현재 상태를 돌려주라고 적어 두었다. 그 문장이 다루려던 것이 바로 지금 같은 경합인데, 구현은 경합을 만나면 그 문장이 정해 둔 답 대신 503으로 빠진다. 더 나쁜 것은 만료 작업에 밀린 경우다. 그때 신청은 이미 끝났으므로 계약이 답을 정해 둔 자리인데도 사용자는 재시도 안내를 받고, 다시 보내야 비로소 200 EXPIRED를 받는다. 피크에 같은 코트·날짜의 확인이 20초마다 감시 중인 신청 전부를 훑으므로 이 경합은 드문 일이 아니다.",
+      "suggestion": "cancel에서 compareAndSet이 실패하면 신청을 한 번 다시 읽어라. 다시 읽은 신청이 이미 끝난 상태면 계약이 정한 대로 상태를 바꾸지 않고 그 상태를 200으로 돌려주고, 여전히 감시 중이면 그때만 CONCURRENT_UPDATE_CONFLICT로 물러난다. 다시 읽는 횟수를 한 번으로 묶으면 무한 재시도가 되지 않는다.",
+      "severity": "medium",
+      "target": {
+        "pointer": "/paths/~1alerts~1{alertId}/delete/responses/200",
+        "action": "relax",
+        "scope": "code"
+      }
+    },
+    {
+      "id": "cr_retryable_derived_from_table",
+      "axis": "judgement_disclosure",
+      "issue": "Problems.of가 retryable을 RETRY_AFTER 표에 항목이 있는지로만 정한다(retryable = retryAfterSeconds != null). 계약은 두 값을 한 방향으로만 묶었다. 'retryable이 true이면 retryAfterSeconds와 Retry-After 헤더가 반드시 함께 온다'(slot_47c11736). 구현은 그 함의를 동치로 바꿔 놓았고, 그 치환은 decisions 어디에도 적혀 있지 않다. 지금은 두 집합이 우연히 일치해 응답이 계약과 같지만, 그 일치를 지탱하는 것은 판단이 아니라 표 한 장이다.",
+      "why_it_matters": "'같은 요청을 그대로 다시 보내 결과가 달라질 수 있는가'는 실패마다 사람이 내려야 하는 판단이다. 그것을 '기다릴 초를 정해 뒀는가'로 대신하면, 대기 초를 정할 수 없지만 재시도가 뜻 있는 실패나 그 반대가 생기는 순간 코드가 조용히 계약과 어긋난다. 신고되지 않았으므로 다음 구현자는 이 표에 줄을 더하거나 빼는 일이 retryable을 함께 뒤집는다는 사실을 모른 채 만진다. 실제로 이번 판본에서 UPSTREAM 세 코드의 대기 초를 확인 간격에 묶은 변경이 있었고, 그 변경이 retryable까지 정하고 있었다는 사실은 어디에도 남지 않았다.",
+      "suggestion": "decisions에 이 치환을 판단으로 신고해라. 무엇을 골랐는지(계약의 함의를 동치로 구현했다), 근거가 무엇에 기대는지(지금 계약이 선언한 열세 코드에서 두 집합이 일치한다는 사실), 그리고 되돌리는 값(코드마다 retryable을 따로 적은 표를 두면 된다)을 적는다. 신고만으로 충분하고 지금 코드를 바꿀 필요는 없다.",
+      "severity": "medium"
+    }
+  ],
+  "revision_directions": [
+    "판정 순서를 값의 출처로 정렬해라. 요청 본문과 지역 시간대만으로 결론이 나는 거절을 먼저 놓고, 저장된 결과를 읽어야 아는 판정을 그 다음에, 바깥 자원을 부를 수 있는 판정을 마지막에 둔다. 그렇게 놓으면 한 오퍼레이션의 5xx가 '판정할 재료를 얻지 못했다'는 한 가지 뜻만 갖게 되고, 재시도 안내가 거짓이 될 경로가 구조적으로 닫힌다.",
+    "계약에 새 문장을 더할 때 그 문장이 서 있는 결정 전부에서 참인지 대조해라. 이번 판본의 201 설명은 같은 iteration의 결정 하나와 어긋난 채로 들어갔다. 계약 변경을 적는 자리에서 STANDING_DECISIONS의 어느 항목이 그 문장의 경우를 나누는지 한 줄로 짚어 두면 이런 어긋남이 쓰는 순간에 드러난다.",
+    "'지금 진행 중'을 뜻하는 값(확인 지연, 발송 대기)을 끝난 자원에도 계속 붙일 때는 그 값이 그 자원에서 무엇을 뜻하는지 계약이 먼저 정하게 해라. 구현이 상태를 보지 않고 계산하는 것 자체가 나쁜 것이 아니라, 그 결과의 뜻이 계약에 없는 것이 문제다.",
+    "구현이 계약의 한쪽 방향 함의를 동치로 구현하는 자리는 신고 대상이다. 지금은 맞더라도 그 일치를 지탱하는 것이 판단이 아니라 우연이면, 그 사실이 decisions에 남아야 다음 사람이 표를 만질 때 함께 움직이는 것을 안다."
+  ],
+  "contract_review": [
+    {
+      "id": "cr_create_local_rejections_first",
+      "kind": "proposal",
+      "pointer": "/paths/~1alerts/post/description",
+      "finding": "이 오퍼레이션에 502·503·504가 들어오면서(cc_create_upstream_unreadable, cc_create_upstream_timeout, cc_create_503_covers_upstream) 422와 5xx가 같은 요청에 모두 닿을 수 있게 됐는데, 계약은 둘의 앞뒤를 정하지 않았다. 그 결과 만료 시각이 이미 지난 조건처럼 바깥에 아무것도 묻지 않고 결론이 나는 거절이, 예약처가 닿지 않는 동안 재시도 가능한 5xx로 나가는 것이 계약 안에서 합법이 된다. 실제로 이번 구현이 그렇게 동작한다.",
+      "proposed_change": "신청 판정의 순서를 한 문단으로 못 박는다. '코트가 지원되는지와 만료 시각이 지났는지는 요청만으로 판정하므로 예약처를 부르기 전에 먼저 판정한다. 그 둘로 거절되는 요청은 예약처의 상태와 무관하게 언제나 422다. 502·503·504는 그 둘을 통과한 요청의 운영 시간대를 판정할 재료를 얻지 못했을 때만 나간다.' 이 문단을 createAlert 설명의 운영 시간대 문단 바로 앞에 둔다.",
+      "action": "add",
+      "spec_anchor": "FR-1, EF-1, slot_7afbe3b4",
+      "severity": "medium"
+    },
+    {
+      "id": "cr_info_version_never_moves",
+      "kind": "proposal",
+      "pointer": "/info/version",
+      "finding": "계약이 세 판본을 지나는 동안 info.version이 1.0.0에 머물러 있다. 호환성 절은 경로의 /v1을 주 버전으로 정하고 호환을 깨는 변경만 다루므로, 호환되는 변경이 쌓일 때 판본을 가리킬 좌표가 계약 안에 하나도 없다. 그 사이 CONTRACT_CHANGES_JSON에는 열세 건의 변경이 기록됐고 그중 여럿이 오퍼레이션의 응답 목록과 헤더의 뜻을 바꿨다. 지금 계약 원문만 손에 든 사람은 자기가 어느 판본을 읽는지 알 수 없고, 두 사람이 서로 다른 판본을 보며 같은 1.0.0을 말한다.",
+      "proposed_change": "호환되는 변경이 들어갈 때마다 info.version의 부 버전을 올린다. 이번 판본을 1.2.0으로 두고(002의 변경이 1.1.0), 호환성 절에 한 줄을 더한다. '경로의 주 버전과 달리 info.version은 호환되는 변경마다 부 버전을 올린다. 클라이언트는 이 값으로 자기가 읽은 판본을 가리킨다.' 파일명의 판 번호는 이 run의 작업 흔적이므로 그대로 둔다.",
+      "action": "add",
+      "spec_anchor": "slot_fd7db9b0",
+      "severity": "medium"
+    },
+    {
+      "id": "cr_version_label_meaning",
+      "kind": "observation_meaning",
+      "pointer": "/info/version",
+      "finding": "게이트의 change.version_label 관찰(파일명의 판 번호 3과 주 버전 1이 어긋난다)은 그 자체로는 고칠 것이 아니다. 앞 iteration의 판단대로 이번 판본의 변경은 모두 호환되므로 /v1을 올릴 근거가 없고, 올리면 호환되는 변경에 파괴적 변경의 신호를 붙이게 된다. 다만 이 관찰이 세 판본 연속 나오는 이유는 파일명이 움직이는 동안 계약 안에서 움직이는 판본 표시가 하나도 없기 때문이다. 관찰의 뜻은 '주 버전을 올려라'가 아니라 '계약 안에 부 버전이 없다'이며, 그 자리는 cr_info_version_never_moves가 가리킨다.",
+      "proposed_change": "",
+      "spec_anchor": "slot_fd7db9b0",
+      "severity": "low"
+    },
+    {
+      "id": "cr_int_format_meaning",
+      "kind": "observation_meaning",
+      "pointer": "/components/schemas/Problem/properties/status",
+      "finding": "response.value_narrowed로 기록된 int32 관찰(Problem.status, Problem.retryAfterSeconds, AlertDelivery.attemptCount)은 코드에서 지울 것도 계약에 format을 더할 것도 아니다. 자바의 정수 타입이 32비트인 것은 stack이 정한 사실이고, 계약에 format: int32를 더하는 것은 호환성 절이 파괴적 변경으로 꼽은 '형식을 좁히는 것'에 그대로 걸린다. 세 iteration 연속 같은 기록이 나오는 것은 어느 쪽이 잘못해서가 아니라 계약이 정수의 표현 범위를 한 번도 말하지 않아 관찰이 닫히지 않기 때문이다. 세 값 모두 현실적 범위가 32비트를 한참 밑돌아 클라이언트가 잘못 읽을 경로는 없다.",
+      "proposed_change": "",
+      "spec_anchor": "slot_fd7db9b0",
+      "severity": "low"
+    },
+    {
+      "id": "cr_slot_endtime_midnight",
+      "kind": "harmful_choice",
+      "pointer": "/components/schemas/TimeSlot/properties/endTime",
+      "finding": "endTime의 pattern이 23:59까지만 허용한다. TimeSlot의 산문은 '코트가 운영하는 시간대와 정확히 일치해야 한다'고 적었는데(slot_bff96712), 자정에 끝나는 시간대를 가진 코트는 그 요구를 만족시킬 표기가 없다. 00:00으로 적으면 startTime보다 이른 값이 되어 읽는 사람마다 '다음 날 자정'과 '잘못된 요청' 중 어느 쪽으로도 읽을 수 있고, 계약은 그 둘을 가르는 문장을 두지 않았다. 만료 시각이 startTime으로만 계산되므로 이 모호함이 지금 당장 무엇을 깨뜨리지는 않지만, 그 시간대를 가진 코트가 예약처에서 오면 구현은 목록에 담을 수 없거나 담고도 신청을 받을 수 없다. 명세가 자정에 끝나는 시간대를 요구한 적은 없으므로 여기서 스키마를 넓히라고 발의하지 않는다. 지금 적어 둘 것은 계약이 그 경우를 만나면 두 읽기가 다 가능하다는 사실이고, 실제 코트 목록이 들어오는 시점에 사람이 정할 자리다.",
+      "proposed_change": "",
+      "spec_anchor": "FR-1, slot_bff96712",
+      "severity": "low"
+    }
+  ],
+  "contested_decisions": [
+    {
+      "decision_id": "d_bearer_token_identity",
+      "objection": "닿는 범위가 신고된 것보다 넓다. 결정은 '계약이 검사할 수 있는 성질은 같은 토큰이면 같은 사용자뿐'이라고 적었지만, FR-2가 실제로 요구하는 것은 그 역방향이다. 같은 사용자가 다른 요청에서도 자기 신청을 볼 수 있어야 한다. 토큰 문자열을 그대로 사용자 식별자로 쓰면 그 역방향이 '같은 사용자면 언제나 같은 토큰'을 요구하게 되는데, Bearer 토큰은 만료되고 갱신되는 것이 정상이다. 토큰이 한 번 바뀌면 그 사용자의 모든 신청이 listAlerts에서 사라지고 getAlert·cancelAlert는 자기 신청에 404 ALERT_NOT_FOUND를 받는다. 계약이 그 404를 '없는 신청과 남의 신청을 구분해 알리지 않는다'로 적었으므로 사용자는 자기 신청이 사라진 것인지 자기가 남이 된 것인지조차 알 수 없다. blast_radius에 listAlerts:200과 두 404가 실려 있지만 그것이 토큰 회전 하나로 통째로 뒤집힌다는 사실은 적혀 있지 않고, reversal_cost도 'BearerTokens 한 파일'로 적혀 있으나 그때는 이미 저장된 모든 Alert.userId가 옛 토큰 값이라 되돌릴 수 없다.",
+      "alternative": "선택 자체는 이 run에서 유지해도 된다. 고칠 것은 신고다. blast_radius에 '저장된 신청의 소유자 식별자가 토큰 값 그 자체이므로 토큰이 바뀌면 그 사용자의 모든 신청이 접근 불가가 된다'를 적고, reversal_cost를 '코드 한 파일이 아니라 저장된 소유자 값의 이전까지 필요하다'로 고쳐라. 값을 조금 들여 줄이고 싶으면 BearerTokens가 토큰을 그대로 넘기지 말고 안정된 식별자로 한 번 옮기는 자리를 두고(지금은 항등 함수여도 된다), 그 자리가 바뀔 지점이라는 것을 이름으로 드러내라.",
+      "severity": "medium"
+    },
+    {
+      "decision_id": "d_create_may_trigger_check",
+      "objection": "닿는 범위가 신고된 것보다 넓다. rationale은 '예약처 장애에 실제로 노출되는 것은 한 번도 확인된 적 없는 코트·날짜뿐'이라고 적었는데, 이 결정이 실제로 노출시킨 것은 그보다 넓다. 첫째, 이 결정 때문에 신청 처리가 예약처를 부르게 되면서 만료 시각이라는 순전히 지역적인 거절이 외부 호출 뒤로 밀렸고(cr_window_closed_after_upstream), 그 결과 되돌릴 수 없는 422가 재시도 가능한 5xx로 바뀌는 경로가 생겼다. 그 파급은 blast_radius의 createAlert:422에 이름만 실려 있을 뿐 '422가 5xx에 가려진다'는 뜻으로는 적혀 있지 않다. 둘째, d_failure_suppression_window와 겹쳐 한 번도 확인된 적 없는 코트·날짜에서 확인이 한 번 실패하면 그 뒤 20초 동안 들어오는 모든 신청이 예약처를 부르지도 못한 채 저장된 실패를 그대로 받는다. 예약 오픈 시각처럼 새 날짜가 처음 열리는 순간이 정확히 '한 번도 확인된 적 없는 코트·날짜'이고 NFR-1이 피크로 지목한 시각이라, 노출 면적이 가장 작다고 본 자리가 실은 가장 붐비는 자리다.",
+      "alternative": "선택을 뒤집을 필요는 없다. 두 가지를 하라. 만료 시각 판정을 확인 앞으로 올려 이 결정이 422를 가리지 않게 하고, blast_radius와 rationale에 '한 번도 확인된 적 없는 코트·날짜는 예약 오픈 시각과 겹치며 그때 실패 억제 창이 신청 전체를 20초 단위로 묶는다'를 사실대로 적어라.",
+      "severity": "medium"
+    },
+    {
+      "decision_id": "d_pending_at_creation",
+      "objection": "결정의 내용에 대한 반박이다. rationale은 '오래된 결과였다면 다음 확인이 빈자리가 없다고 말할 때 그 대기가 버려진다'를 안전장치로 들었는데, 이 서비스에서 다음 확인은 오지 않을 수 있다. 확인을 일으키는 것은 조회뿐이고(cc_watching_check_source가 계약에 그렇게 적었다), 아무도 그 코트·날짜를 조회하지 않으면 확인도 일어나지 않는다. 그러면 delivery는 임의로 오래된 사실을 근거로 PENDING에 머무는데, 계약의 DeliveryStatus는 PENDING을 '빈자리를 확인해 발송 대기에 올랐고 아직 보내지 않았다'로 적었다(slot_061df20e). 사용자는 그 문장을 지금 빈자리가 있다는 뜻으로 읽는다. 같은 서버가 예약 상태 조회에서는 같은 사실에 stale: true와 confirmedAt을 붙여 신선도를 드러내면서, 신청 표면에서는 그 경고 없이 PENDING만 보여 준다. 두 표면이 같은 사실에 다른 경고 수준을 붙인다.",
+      "alternative": "대기를 올리는 것 자체는 유지하되 신선도를 응답에서 읽을 수 있게 하라. 가장 값싼 길은 계약이 이미 가진 필드를 쓰는 것이다. lastCheckedAt이 그 대기의 근거가 된 확인 시각과 같음을 계약에 못 박고, delivery의 산문에 '이 대기가 근거로 삼은 확인 시각은 lastCheckedAt이며 확인 간격보다 오래됐을 수 있다'를 더하면 사용자가 PENDING을 현재형으로 읽는 자리가 닫힌다. 그 문장을 더하지 않겠다면 대안은 확인 간격 안의 결과일 때만 생성 경로에서 대기를 올리는 것인데, 그러면 신청을 받아들인 근거와 대기를 올린 근거가 갈린다는 이 결정의 반박이 다시 서므로 앞쪽을 권한다.",
+      "severity": "medium"
+    }
+  ],
+  "reader_risks": [
+    "delivery: PENDING을 '지금 그 시간대가 비어 있다'로 읽는다. 계약의 DeliveryStatus 산문이 그렇게 읽히고, 구현은 확인 간격보다 임의로 오래된 성공 결과로도 그 값을 올린다. 그 대기의 신선도를 알려 주는 것은 같은 응답의 lastCheckedAt뿐인데 두 필드를 함께 읽으라는 문장이 계약에 없다.",
+    "201 설명의 lastCheckedAt 약속을 그대로 믿고 '신청 직후의 확인 시각은 확인 간격 안'이라고 가정한다. 예약처 장애 중에 만들어진 신청에서는 며칠 전 값이 올 수 있고, 그 경우가 계약의 세 갈래 어디에도 없다.",
+    "해제하거나 만료된 신청에 붙은 checkDelayed: true를 '이 신청의 감시가 밀리고 있다'로 읽는다. 그 신청은 계약이 정한 대로 확인을 멈춘 상태이고, 밀릴 것이 애초에 없다. 해제한 신청이 쌓일수록 목록 전체가 지연 표시를 달게 되어 이 신호가 쓸모를 잃는다.",
+    "createAlert에서 받은 503 UPSTREAM_UNAVAILABLE의 retryable: true와 Retry-After: 20을 보고 20초마다 되풀이한다. 그 요청의 시간대가 이미 지났으면 몇 번을 보내도 같은 실패이고, 만료 시각 판정이 확인 뒤에 있는 한 그 사실은 응답 어디에도 나타나지 않는다.",
+    "info.version이 세 판본에 걸쳐 1.0.0이라, 계약 원문을 주고받은 두 사람이 서로 다른 판본을 보면서 같은 버전을 말한다. createAlert의 응답 목록과 Idempotency-Replayed의 뜻이 그 사이에 바뀌었으므로 어긋남이 조용하지 않다.",
+    "CreateAlertRequest의 자바독은 '계약이 정하지 않은 필드를 더 받아도 무시한다'고 적혀 있는데 바로 아래 @Schema는 additionalProperties를 FALSE로 선언한다. 이 파일을 읽는 사람은 서버가 추가 필드를 거절하는지 무시하는지 두 줄 사이에서 고를 수 없고, 추출된 스펙만 읽는 사람은 거절한다고 믿는다."
+  ],
+  "critiqued_at": "2026-09-30T18:40:05+09:00",
+  "model": "claude-opus-5",
+  "metadata": {
+    "prompt_version": "critique_impl:v1",
+    "source_files": [
+      "b02d8689_input.json",
+      "b02d8689_iter-003_draft.json"
+    ]
+  }
+}

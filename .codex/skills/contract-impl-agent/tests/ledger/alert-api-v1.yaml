@@ -1,0 +1,73 @@
+# 원장 픽스처의 계약 판본 v1. 실제 계약은 원장 하나를 확인하기엔 크므로 같은 표기만 남긴 작은 조각을 쓴다.
+# 널 허용의 3.1 표기, `$ref`로 공유되는 컴포넌트, 상태 코드에 붙은 `x-error-codes`가 여기 다 들어 있다.
+openapi: 3.1.0
+info:
+  title: 빈자리 알림 API (원장 픽스처)
+  version: 1.0.0
+servers:
+  - url: https://example.test/v1
+paths:
+  /alerts:
+    post:
+      operationId: createAlert
+      summary: 빈자리 알림을 신청한다
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlertRequest'
+      responses:
+        '201':
+          description: 신청을 받았다
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alert'
+        '422':
+          description: 본문이 계약과 다르다
+          x-error-codes:
+            - INVALID_BODY
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+components:
+  schemas:
+    AlertRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - courtId
+      properties:
+        courtId:
+          type: string
+        note:
+          type: string
+    Alert:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - status
+        - lastCheckedAt
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          enum:
+            - ACTIVE
+            - CANCELLED
+        lastCheckedAt:
+          type:
+            - string
+            - 'null'
+          format: date-time
+    Problem:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string

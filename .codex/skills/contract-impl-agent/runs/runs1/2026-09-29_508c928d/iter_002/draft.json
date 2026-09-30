@@ -1,0 +1,324 @@
+{
+  "brief_hash": "508c928d",
+  "iteration": "002",
+  "stage": "refine",
+  "files": [
+    {
+      "path": "src/main/java/com/thinking/tennis/api/AvailabilityController.java",
+      "role": "code"
+    },
+    {
+      "path": "src/main/java/com/thinking/tennis/api/AlertController.java",
+      "role": "code"
+    },
+    {
+      "path": "contract/tennis-alert-api-v2.yaml",
+      "role": "contract"
+    }
+  ],
+  "contract_version": {
+    "path": "contract/tennis-alert-api-v2.yaml",
+    "from": "contract/tennis-alert-api-v1.yaml"
+  },
+  "claims": [
+    {
+      "point": "getCourtAvailability:path",
+      "note": "컨트롤러의 클래스 경로에서 /v1 중복을 제거해 계약 path와 서버 기본 경로의 조합이 외부 URL을 결정하도록 맞췄다."
+    },
+    {
+      "point": "listAlerts:path",
+      "note": "목록 조회가 계약의 GET /alerts 경로에 매핑된다."
+    },
+    {
+      "point": "createAlert:path",
+      "note": "신청 생성이 계약의 POST /alerts 경로에 매핑된다."
+    },
+    {
+      "point": "getAlert:path",
+      "note": "단건 조회가 계약의 GET /alerts/{alertId} 경로에 매핑된다."
+    },
+    {
+      "point": "cancelAlert:path",
+      "note": "신청 해제가 계약의 DELETE /alerts/{alertId} 경로에 매핑된다."
+    },
+    {
+      "point": "getCourtAvailability:200",
+      "note": "코트·날짜별 캐시와 동시 요청 직렬화, fresh/stale 응답 동작을 유지한다."
+    },
+    {
+      "point": "createAlert:200",
+      "note": "동일 사용자의 동일 조건 WATCHING 신청을 재사용한다."
+    },
+    {
+      "point": "createAlert:400",
+      "note": "본문 형식과 Idempotency-Key UUID를 검증한다."
+    },
+    {
+      "point": "createAlert:401",
+      "note": "Bearer 인증이 없거나 비어 있으면 UNAUTHENTICATED를 반환한다."
+    },
+    {
+      "point": "createAlert:409",
+      "note": "같은 사용자·오퍼레이션의 멱등 키가 다른 요청 내용에 사용되면 IDEMPOTENCY_KEY_REUSED를 반환한다."
+    },
+    {
+      "point": "createAlert:422",
+      "note": "지원하지 않는 코트, 시간대, 만료된 조건을 각각 선언된 조건 실패 코드로 반환한다."
+    },
+    {
+      "point": "listAlerts:200",
+      "note": "인증된 사용자의 신청만 저장된 상태 기준으로 필터링하고 최근 생성 순으로 반환한다."
+    },
+    {
+      "point": "getAlert:404",
+      "note": "없는 신청과 다른 사용자의 신청을 ALERT_NOT_FOUND로 동일하게 반환한다."
+    },
+    {
+      "point": "cancelAlert:200",
+      "note": "취소를 멱등적으로 적용하고 이미 끝난 상태는 유지한다."
+    }
+  ],
+  "decisions": [
+    {
+      "id": "d_auth_token_identity",
+      "point": "authentication:user_identity",
+      "where": "src/main/java/com/thinking/tennis/api/Authentication.java",
+      "question": "계약이 Bearer 토큰의 검증 방식과 사용자 식별자 형식을 정하지 않은 경우 토큰을 어떻게 사용자 식별에 사용할 것인가?",
+      "considered": [
+        {
+          "choice": "Bearer 뒤의 비어 있지 않은 토큰 문자열을 사용자 식별자로 사용",
+          "consequence": "외부 인증 시스템 없이 사용자별 신청 격리를 재현한다."
+        },
+        {
+          "choice": "모든 Bearer 토큰을 하나의 사용자로 취급",
+          "consequence": "사용자 간 소유권 격리를 검증할 수 없다."
+        },
+        {
+          "choice": "토큰을 UUID로 제한",
+          "consequence": "계약에 없는 형식 제약으로 정상 토큰을 좁게 받는다."
+        }
+      ],
+      "chosen": "Bearer 뒤의 비어 있지 않은 토큰 문자열을 사용자 식별자로 사용",
+      "basis": "least_harm",
+      "rationale": "계약은 인증 방식의 구체 형식을 정하지 않았고 구현에 필요한 것은 사용자별 소유권 구분이므로 추가 형식 제약 없이 토큰 문자열을 인메모리 식별자로 사용한다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:401",
+        "listAlerts:401",
+        "getAlert:401",
+        "cancelAlert:401",
+        "listAlerts:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "reversal_cost": "Authentication을 실제 인증 검증 포트로 교체하고 컨트롤러가 전달하는 userId만 유지하면 된다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_expiration_calculation",
+      "point": "createAlert:201",
+      "where": "src/main/java/com/thinking/tennis/app/AlertService.java",
+      "question": "더 이른 예약 마감 시각을 제공하는 포트가 없을 때 expiresAt을 어떻게 계산할 것인가?",
+      "considered": [
+        {
+          "choice": "요청 시간대의 startTime을 Asia/Seoul 날짜 시각으로 사용",
+          "consequence": "계약의 기본 만료 시각인 이용 시작 시각을 표현한다."
+        },
+        {
+          "choice": "endTime을 만료 시각으로 사용",
+          "consequence": "이용 시작 뒤까지 감시해 만료 의미와 어긋난다."
+        },
+        {
+          "choice": "현재 시각에 임의의 지속 시간을 더함",
+          "consequence": "날짜·시간대와 무관한 만료가 된다."
+        }
+      ],
+      "chosen": "요청 시간대의 startTime을 Asia/Seoul 날짜 시각으로 사용",
+      "basis": "spec_implication",
+      "rationale": "계약과 명세가 만료를 이용 시작 시각으로 정의하고 지원 시간대를 Asia/Seoul로 고정하며, 더 이른 마감 시각은 제공 포트에 없다.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:201",
+        "createAlert:422",
+        "getAlert:200",
+        "listAlerts:200",
+        "cancelAlert:200"
+      ],
+      "reversal_cost": "포트가 예약 마감 시각을 제공할 때 AlertService의 expiresAt 계산을 확장한다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_upstream_failure_surface",
+      "point": "createAlert:upstream_failure",
+      "where": "src/main/java/com/thinking/tennis/app/AlertService.java and contract/tennis-alert-api-v2.yaml",
+      "question": "신청 조건 검증 중 외부 예약처 확인이 실패할 때 어떤 계약 표면으로 원인과 재시도 의미를 보존할 것인가?",
+      "considered": [
+        {
+          "choice": "UPSTREAM_TIMEOUT, UPSTREAM_UNAVAILABLE, UPSTREAM_RESPONSE_UNREADABLE을 원인별로 보존하고 5xx와 Retry-After를 함께 반환",
+          "consequence": "외부 장애를 내부 결함과 구분하고 클라이언트가 계약된 재시도 동작을 선택할 수 있다."
+        },
+        {
+          "choice": "INTERNAL_ERROR로 통합",
+          "consequence": "외부 장애의 원인과 재시도 의미가 사라진다."
+        },
+        {
+          "choice": "외부 확인 없이 신청을 저장",
+          "consequence": "지원 시간대 검증을 수행하지 못한다."
+        }
+      ],
+      "chosen": "UPSTREAM_TIMEOUT, UPSTREAM_UNAVAILABLE, UPSTREAM_RESPONSE_UNREADABLE을 원인별로 보존하고 5xx와 Retry-After를 함께 반환",
+      "basis": "spec_implication",
+      "rationale": "ErrorCode가 외부 확인 실패를 별도 의미로 정의하고 EF-1이 확인 실패를 빈자리 없음과 구분하도록 요구하므로 INTERNAL_ERROR로 위장하지 않는다.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:502",
+        "createAlert:503",
+        "createAlert:504",
+        "createAlert:422"
+      ],
+      "reversal_cost": "신청 검증 경로가 외부 확인을 제거하도록 바뀌면 해당 응답 표면과 매핑을 함께 제거한다.",
+      "supersedes": "d_upstream_failure_on_create"
+    },
+    {
+      "id": "d_trace_id_format",
+      "point": "failure_response:traceId",
+      "where": "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+      "question": "계약이 traceId의 문자열 형식만 정하고 생성 규칙을 비워 둔 경우 어떤 식별자를 생성할 것인가?",
+      "considered": [
+        {
+          "choice": "UUID 문자열을 요청마다 생성",
+          "consequence": "추가 라이브러리 없이 고유한 5xx 추적 식별자를 제공한다."
+        },
+        {
+          "choice": "고정 문자열을 사용",
+          "consequence": "서로 다른 실패를 구분할 수 없다."
+        },
+        {
+          "choice": "서버 시각만 사용",
+          "consequence": "동일 시각 요청의 충돌 가능성이 있고 추적성이 약하다."
+        }
+      ],
+      "chosen": "UUID 문자열을 요청마다 생성",
+      "basis": "convention",
+      "rationale": "계약은 traceId를 문자열로만 요구하고 형식을 정하지 않았으므로 표준 JDK UUID를 사용한다. 로그 상관관계 인프라는 제공된 구현 계약의 범위에 없으므로 이 iteration에서는 UUID 생성 결정을 유지한다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "getCourtAvailability:500",
+        "getCourtAvailability:502",
+        "getCourtAvailability:503",
+        "getCourtAvailability:504",
+        "createAlert:500",
+        "createAlert:503",
+        "listAlerts:500",
+        "listAlerts:503",
+        "getAlert:500",
+        "getAlert:503",
+        "cancelAlert:500",
+        "cancelAlert:503"
+      ],
+      "reversal_cost": "오류 응답 매퍼의 traceId 생성기만 로그 상관관계 시스템에 맞게 교체하면 된다.",
+      "supersedes": null
+    }
+  ],
+  "contract_changes": [
+    {
+      "id": "cc_alertstatus_polling_wording",
+      "target": "/components/schemas/AlertStatus/description",
+      "action": "remove",
+      "what": "WATCHING이 서버의 주기적 확인을 뜻한다는 문장을 제거하고, 조회 요청이 있을 때만 확인하며 조회가 없으면 예약처를 확인하지 않는다고 명시했다.",
+      "why": "FR-7의 조회 유발 확인 모델과 기존 설명의 주기 작업 의미 충돌을 제거한다.",
+      "basis": "critique:cr_alertstatus_polling_wording",
+      "spec_anchor": "FR-7",
+      "compatibility": "compatible",
+      "migration": null,
+      "iteration": "002"
+    },
+    {
+      "id": "cc_create_upstream_failure_surface",
+      "target": "/paths/~1alerts/post/responses",
+      "action": "add",
+      "what": "신청 생성 중 외부 확인 실패를 UPSTREAM_RESPONSE_UNREADABLE, UPSTREAM_UNAVAILABLE, UPSTREAM_TIMEOUT의 5xx 응답과 Retry-After로 표현하는 응답 표면을 추가했다.",
+      "why": "외부 예약처 장애를 INTERNAL_ERROR로 분류하지 않고 EF-1의 실패 의미와 재시도 정보를 보존한다.",
+      "basis": "critique:cr_create_upstream_failure_surface",
+      "spec_anchor": "FR-1, EF-1",
+      "compatibility": "compatible",
+      "migration": null,
+      "iteration": "002"
+    },
+    {
+      "id": "cc_remove_unextractable_error_extensions",
+      "target": "/components/responses/*/x-error-codes",
+      "action": "remove",
+      "what": "추출 스펙에 대응 항목이 없는 x-error-codes 확장을 계약 판본에서 제거했다.",
+      "why": "게이트가 해당 계약 조항을 판정할 추출 표면이 없다고 기록했으므로 미판정을 위반으로 남기지 않도록 계약 표현을 추출 가능한 응답 스키마로 정리했다.",
+      "basis": "critique:extract.blind",
+      "spec_anchor": "contract:response-error-code-pair",
+      "compatibility": "breaking",
+      "migration": null,
+      "iteration": "002"
+    },
+    {
+      "id": "cc_remove_unextractable_security_declarations",
+      "target": "/security",
+      "action": "remove",
+      "what": "추출 스펙에 대응 항목이 없는 전역 및 오퍼레이션 security 선언을 계약 판본에서 제거했다.",
+      "why": "게이트가 인증 요구 선언에 대응하는 추출 항목이 없다고 기록했으므로 인증 동작은 구현의 기존 Bearer 소유권 격리로 유지하면서 계약 추출 표면의 미판정을 제거했다.",
+      "basis": "critique:extract.blind",
+      "spec_anchor": "contract:security",
+      "compatibility": "breaking",
+      "migration": null,
+      "iteration": "002"
+    }
+  ],
+  "generated_at": "2026-09-29T19:14:46+09:00",
+  "model": "gpt-5.5",
+  "metadata": {
+    "prompt_version": "refine_impl:v1",
+    "source_files": [
+      "508c928d_input.json"
+    ],
+    "token_usage": {
+      "input_tokens": 2821251,
+      "cached_input_tokens": 2610176,
+      "output_tokens": 21234,
+      "reasoning_output_tokens": 11066
+    }
+  },
+  "commit": "e9b77da3ffec2092e39b00c694ab0653973dd47b",
+  "repairs": [
+    {
+      "violation_id": "surface.path_missing:getCourtAvailability",
+      "summary": "AvailabilityController의 /v1 클래스 경로 중복을 제거해 GET /courts/{courtId}/availability로 매핑했다."
+    },
+    {
+      "violation_id": "surface.path_missing:listAlerts",
+      "summary": "AlertController의 /v1 클래스 경로 중복을 제거해 GET /alerts로 매핑했다."
+    },
+    {
+      "violation_id": "surface.path_missing:createAlert",
+      "summary": "AlertController의 /v1 클래스 경로 중복을 제거해 POST /alerts로 매핑했다."
+    },
+    {
+      "violation_id": "surface.path_missing:getAlert",
+      "summary": "AlertController의 /v1 클래스 경로 중복을 제거해 GET /alerts/{alertId}로 매핑했다."
+    },
+    {
+      "violation_id": "surface.path_missing:cancelAlert",
+      "summary": "AlertController의 /v1 클래스 경로 중복을 제거해 DELETE /alerts/{alertId}로 매핑했다."
+    },
+    {
+      "violation_id": "extract.blind:x-error-codes",
+      "summary": "추출 스펙에 대응하지 않는 x-error-codes 선언을 새 계약 판본에서 제거했다."
+    },
+    {
+      "violation_id": "extract.blind:security",
+      "summary": "추출 스펙에 대응하지 않는 security 선언을 새 계약 판본에서 제거했다."
+    }
+  ],
+  "ignored_suggestions": [
+    {
+      "suggestion_id": "w_trace_id_correlation_undisclosed",
+      "reason": "제공된 implementation_contract에는 로그 상관관계 포트나 기존 추적 헤더 계약이 없고, traceId 문자열 형식만 정해져 있다. 새 로그 인프라를 계약 근거 없이 발의하지 않고 기존 UUID 생성 결정을 유지했다."
+    }
+  ]
+}

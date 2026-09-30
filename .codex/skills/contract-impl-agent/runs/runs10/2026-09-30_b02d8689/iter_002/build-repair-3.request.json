@@ -1,0 +1,28 @@
+{
+  "brief_hash": "b02d8689",
+  "iteration": "002",
+  "purpose": "build_repair",
+  "attempt": 3,
+  "max_attempts": 3,
+  "scope": "build_only",
+  "instruction": "컴파일과 부팅만 고쳐라. 계약 적합성은 아직 판정되지 않았으므로 그 자리를 건드리지 마라. 구현을 크게 바꾸지 말고 빌드 실패의 원인만 고쳐라. 계약 판본은 그대로 둔다.",
+  "priority_order": [
+    "gate_violations"
+  ],
+  "open_causes": [
+    {
+      "id": "c_fe3cac77",
+      "rule": "g0.compile_failed",
+      "where": "mvnw test",
+      "detail": "컴파일 오류 7건\n(앞 6건만 적는다)\nsrc/main/java/com/thinking/tennis/domain/Alert.java:140:102 cannot find symbol\nsrc/main/java/com/thinking/tennis/domain/AlertDelivery.java:10:12 recursive constructor invocation\nsrc/main/java/com/thinking/tennis/api/TennisAlertController.java:232:19 no suitable constructor found for UseCaseException(int,java.lang.String,java.lang.String,boolean,<nulltype>)\nsrc/main/java/com/thinking/tennis/api/TennisAlertController.java:236:19 no suitable constructor found for UseCaseException(int,java.lang.String,java.lang.String,boolean,<nulltype>)\nsrc/main/java/com/thinking/tennis/api/TennisAlertController.java:283:16 no suitable constructor found for UseCaseException(int,java.lang.String,java.lang.String,boolean,<nulltype>)\nsrc/main/java/com/thinking/tennis/app/AlertApplicationService.java:201:82 incompatible types: long cannot be converted to java.lang.Integer\n    symbol: method copy()\n    location: variable delivery of type com.thinking.tennis.domain.AlertDelivery\n    constructor com.thinking.tennis.app.UseCaseException.UseCaseException(java.lang.String,int,boolean,java.lang.Integer,java.lang.String) is not applicable\n    (argument mismatch; int cannot be converted to java.lang.String)\n    constructor com.thinking.tennis.app.UseCaseException.UseCaseException(java.lang.String,java.lang.String,int,boolean,java.lang.Integer) is not applicable\n    constructor com.thinking.tennis.app.UseCaseException.UseCaseException(java.lang.Object,int,boolean,java.lang.Integer,java.lang.String) is not applicable",
+      "points": [],
+      "point_count": 1,
+      "evidence_count": 1
+    }
+  ],
+  "rule_cards": {},
+  "current_contract_version": {
+    "path": "contract/tennis-alert-api-v1.yaml",
+    "from": "contract/tennis-alert-api-v1.yaml"
+  }
+}

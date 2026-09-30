@@ -1,0 +1,355 @@
+{
+  "brief_hash": "508c928d",
+  "from_iteration": "001",
+  "to_iteration": "002",
+  "priority_order": [
+    "gate_violations",
+    "contract_version",
+    "standing_decisions",
+    "code_instructions"
+  ],
+  "open_violations": [
+    {
+      "rule": "extract.blind",
+      "point": null,
+      "where": "x-error-codes",
+      "detail": "계약은 (상태 코드, 에러 코드) 쌍을 선언했는데 추출 스펙에는 그 조항에 대응하는 것이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "extract.blind",
+      "point": null,
+      "where": "security",
+      "detail": "계약은 인증 요구를 선언했는데 추출 스펙에는 그 조항에 대응하는 것이 없다",
+      "verdict": "violation"
+    },
+    {
+      "rule": "surface.path_missing",
+      "point": "getCourtAvailability",
+      "where": "/courts/{courtId}/availability",
+      "detail": "GET /courts/{courtId}/availability",
+      "verdict": "violation"
+    },
+    {
+      "rule": "surface.path_missing",
+      "point": "listAlerts",
+      "where": "/alerts",
+      "detail": "GET /alerts",
+      "verdict": "violation"
+    },
+    {
+      "rule": "surface.path_missing",
+      "point": "createAlert",
+      "where": "/alerts",
+      "detail": "POST /alerts",
+      "verdict": "violation"
+    },
+    {
+      "rule": "surface.path_missing",
+      "point": "getAlert",
+      "where": "/alerts/{alertId}",
+      "detail": "GET /alerts/{alertId}",
+      "verdict": "violation"
+    },
+    {
+      "rule": "surface.path_missing",
+      "point": "cancelAlert",
+      "where": "/alerts/{alertId}",
+      "detail": "DELETE /alerts/{alertId}",
+      "verdict": "violation"
+    }
+  ],
+  "rule_cards": {
+    "extract.blind": "추출한 스펙에 계약의 그 조항에 대응하는 것이 아예 없다. 미판정은 통과가 아니므로 위반으로 센다.",
+    "surface.path_missing": "계약이 선언한 경로가 구현에 없다."
+  },
+  "gate_observations": [
+    {
+      "rule": "surface.path_extra",
+      "point": null,
+      "where": "/v1/alerts",
+      "detail": "계약에 없는 경로다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "surface.path_extra",
+      "point": null,
+      "where": "/v1/alerts/{alertId}",
+      "detail": "계약에 없는 경로다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "surface.path_extra",
+      "point": null,
+      "where": "/v1/courts/{courtId}/availability",
+      "detail": "계약에 없는 경로다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "decision.unknown_point",
+      "point": "authentication:user_identity",
+      "where": "src/main/java/com/thinking/tennis/api/Authentication.java",
+      "detail": "계약의 판정 지점이 아니다 (결정 d_auth_token_identity)",
+      "verdict": "observation"
+    },
+    {
+      "rule": "decision.unknown_point",
+      "point": "failure_response:traceId",
+      "where": "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+      "detail": "계약의 판정 지점이 아니다 (결정 d_trace_id_format)",
+      "verdict": "observation"
+    }
+  ],
+  "gate_coverage": {
+    "g0": "PASS",
+    "g1": "REJECT",
+    "contract_changes": "PASS",
+    "allow_missing_gates": false
+  },
+  "current_contract_version": {
+    "path": "contract/tennis-alert-api-v1.yaml",
+    "from": "contract/tennis-alert-api-v1.yaml"
+  },
+  "standing_decisions": [
+    {
+      "id": "d_auth_token_identity",
+      "point": "authentication:user_identity",
+      "where": "src/main/java/com/thinking/tennis/api/Authentication.java",
+      "question": "계약이 Bearer 토큰의 검증 방식과 사용자 식별자 형식을 정하지 않은 경우 토큰을 어떻게 사용자 식별에 사용할 것인가?",
+      "considered": [
+        {
+          "choice": "Bearer 뒤의 비어 있지 않은 토큰 문자열을 사용자 식별자로 사용",
+          "consequence": "외부 인증 시스템 없이 사용자별 신청 격리를 재현한다."
+        },
+        {
+          "choice": "모든 Bearer 토큰을 하나의 사용자로 취급",
+          "consequence": "사용자 간 소유권 격리를 검증할 수 없다."
+        },
+        {
+          "choice": "토큰을 UUID로 제한",
+          "consequence": "계약에 없는 형식 제약으로 정상 토큰을 좁게 받는다."
+        }
+      ],
+      "chosen": "Bearer 뒤의 비어 있지 않은 토큰 문자열을 사용자 식별자로 사용",
+      "basis": "least_harm",
+      "rationale": "계약은 인증 방식의 구체 형식을 정하지 않았고 구현에 필요한 것은 사용자별 소유권 구분이므로 추가 형식 제약 없이 토큰 문자열을 인메모리 식별자로 사용한다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:401",
+        "listAlerts:401",
+        "getAlert:401",
+        "cancelAlert:401",
+        "listAlerts:200",
+        "getAlert:200",
+        "cancelAlert:200"
+      ],
+      "reversal_cost": "Authentication을 실제 인증 검증 포트로 교체하고 컨트롤러가 전달하는 userId만 유지하면 된다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_expiration_calculation",
+      "point": "createAlert:201",
+      "where": "src/main/java/com/thinking/tennis/app/AlertService.java",
+      "question": "더 이른 예약 마감 시각을 제공하는 포트가 없을 때 expiresAt을 어떻게 계산할 것인가?",
+      "considered": [
+        {
+          "choice": "요청 시간대의 startTime을 Asia/Seoul 날짜 시각으로 사용",
+          "consequence": "계약의 기본 만료 시각인 이용 시작 시각을 표현한다."
+        },
+        {
+          "choice": "endTime을 만료 시각으로 사용",
+          "consequence": "이용 시작 뒤까지 감시해 만료 의미와 어긋난다."
+        },
+        {
+          "choice": "현재 시각에 임의의 지속 시간을 더함",
+          "consequence": "날짜·시간대와 무관한 만료가 된다."
+        }
+      ],
+      "chosen": "요청 시간대의 startTime을 Asia/Seoul 날짜 시각으로 사용",
+      "basis": "spec_implication",
+      "rationale": "계약과 명세가 만료를 이용 시작 시각으로 정의하고 지원 시간대를 Asia/Seoul로 고정하며, 더 이른 마감 시각은 제공 포트에 없다.",
+      "confidence": "high",
+      "blast_radius": [
+        "createAlert:201",
+        "createAlert:422",
+        "getAlert:200",
+        "listAlerts:200",
+        "cancelAlert:200"
+      ],
+      "reversal_cost": "포트가 예약 마감 시각을 제공할 때 AlertService의 expiresAt 계산을 확장한다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_upstream_failure_on_create",
+      "point": "createAlert:500",
+      "where": "src/main/java/com/thinking/tennis/app/AlertService.java",
+      "question": "신청 검증 중 외부 예약처 확인이 실패하고 createAlert에 upstream 전용 응답이 없을 때 어떤 코드로 매핑할 것인가?",
+      "considered": [
+        {
+          "choice": "INTERNAL_ERROR로 매핑",
+          "consequence": "계약에 선언된 createAlert 500 표면을 사용하고 외부 실패를 신청 성공으로 오인하지 않는다."
+        },
+        {
+          "choice": "STORAGE_TIMEOUT으로 매핑",
+          "consequence": "외부 예약처 실패를 저장소 장애로 잘못 표현한다."
+        },
+        {
+          "choice": "신청을 저장하고 슬롯 검증을 생략",
+          "consequence": "SLOT_NOT_SUPPORTED 검증을 수행하지 못한다."
+        }
+      ],
+      "chosen": "INTERNAL_ERROR로 매핑",
+      "basis": "least_harm",
+      "rationale": "createAlert에는 외부 확인 실패 응답이 선언되어 있지 않고 슬롯 지원 여부 확인이 필요하므로 성공이나 저장소 장애로 위장하지 않고 선언된 내부 실패로 전달한다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "createAlert:500",
+        "createAlert:422"
+      ],
+      "reversal_cost": "신청 검증용 포트 또는 응답이 추가되면 AlertService의 예외 변환만 변경한다.",
+      "supersedes": null
+    },
+    {
+      "id": "d_trace_id_format",
+      "point": "failure_response:traceId",
+      "where": "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java",
+      "question": "계약이 traceId의 문자열 형식만 정하고 생성 규칙을 비워 둔 경우 어떤 식별자를 생성할 것인가?",
+      "considered": [
+        {
+          "choice": "UUID 문자열을 요청마다 생성",
+          "consequence": "추가 라이브러리 없이 고유한 5xx 추적 식별자를 제공한다."
+        },
+        {
+          "choice": "고정 문자열을 사용",
+          "consequence": "서로 다른 실패를 구분할 수 없다."
+        },
+        {
+          "choice": "서버 시각만 사용",
+          "consequence": "동일 시각 요청의 충돌 가능성이 있고 추적성이 약하다."
+        }
+      ],
+      "chosen": "UUID 문자열을 요청마다 생성",
+      "basis": "convention",
+      "rationale": "계약은 traceId를 문자열로만 요구하고 형식을 정하지 않았으므로 표준 JDK UUID를 사용한다.",
+      "confidence": "medium",
+      "blast_radius": [
+        "getCourtAvailability:500",
+        "getCourtAvailability:502",
+        "getCourtAvailability:503",
+        "getCourtAvailability:504",
+        "createAlert:500",
+        "createAlert:503",
+        "listAlerts:500",
+        "listAlerts:503",
+        "getAlert:500",
+        "getAlert:503",
+        "cancelAlert:500",
+        "cancelAlert:503"
+      ],
+      "reversal_cost": "오류 응답 매퍼의 traceId 생성기만 로그 상관관계 시스템에 맞게 교체하면 된다.",
+      "supersedes": null
+    }
+  ],
+  "contract_changes": [],
+  "contested_decisions": [
+    {
+      "decision_id": "d_upstream_failure_on_create",
+      "objection": "계약이 INTERNAL_ERROR를 미분류 내부 실패로 정의하고 외부 확인 실패에는 별도 UPSTREAM_* 코드를 부여했으므로, 외부 실패를 INTERNAL_ERROR로 고르는 근거가 약하다. 이는 단순한 구현 편의가 아니라 클라이언트의 재시도와 장애 분류를 바꾼다.",
+      "alternative": "생성 시 외부 확인을 하지 않는 흐름으로 바꾸거나, 외부 확인을 유지할 경우 POST /alerts에 upstream 실패 응답과 Retry-After 규칙을 계약으로 추가한 뒤 해당 코드를 그대로 전달한다.",
+      "severity": "high"
+    },
+    {
+      "decision_id": "d_trace_id_format",
+      "objection": "UUID라는 문자열 형식은 traceId가 서버 로그에서 요청을 찾게 된다는 계약 의미를 보장하지 않는다. 현재 결정은 생성 형식만 다루고 로그와의 상관관계를 비워 둔다.",
+      "alternative": "요청 컨텍스트에 traceId를 바인딩해 같은 값을 로그와 응답에 사용하고, 기존 추적 헤더를 채택할 경우 우선순위와 생성 규칙을 함께 기록한다.",
+      "severity": "medium"
+    }
+  ],
+  "code_instructions": [
+    {
+      "id": "w_route_base_path_duplication",
+      "axis": "request_tolerance",
+      "issue": "게이트 관찰에는 구현 경로가 /v1/alerts, /v1/alerts/{alertId}, /v1/courts/{courtId}/availability로 기록되어 있다. 계약의 paths는 /alerts, /alerts/{alertId}, /courts/{courtId}/availability이고 /v1은 servers.url에 이미 포함되어 있다.",
+      "suggestion": "컨트롤러 매핑과 서버 기본 경로 중 한 곳만 /v1을 소유하도록 정리하고, 최종 외부 URL이 계약의 servers.url과 paths를 합친 값과 정확히 일치하는지 확인한다.",
+      "severity": "high",
+      "target": {
+        "pointer": "src/main/java/com/thinking/tennis/api/AvailabilityController.java 및 AlertController.java의 클래스 경로 매핑",
+        "action": "remove",
+        "scope": "code"
+      }
+    },
+    {
+      "id": "w_create_upstream_failure_mapping",
+      "axis": "failure_faithfulness",
+      "issue": "초안의 d_upstream_failure_on_create와 claims는 신청 생성 중 외부 예약처 확인 실패를 createAlert의 INTERNAL_ERROR 500으로 매핑한다.",
+      "suggestion": "생성 과정에서 외부 확인을 계속 수행한다면 그 실패를 계약에 명시된 upstream 응답과 재시도 정보로 보존하고, 그렇지 않다면 생성 경로에서 실시간 외부 확인을 제거해 INTERNAL_ERROR로 위장하지 않는다.",
+      "severity": "high",
+      "target": {
+        "pointer": "src/main/java/com/thinking/tennis/app/AlertService.java의 createAlert 외부 확인 실패 변환",
+        "action": "remove",
+        "scope": "code"
+      }
+    },
+    {
+      "id": "w_trace_id_correlation_undisclosed",
+      "axis": "judgement_disclosure",
+      "issue": "d_trace_id_format은 UUID 문자열을 생성한다는 형식만 결정했지만, 그 값이 실제 서버 로그에서 요청을 찾는 식별자로 어떻게 연결되는지는 결정하거나 주장에 남기지 않았다.",
+      "suggestion": "요청별 traceId를 로그 컨텍스트와 함께 전달하거나 기존 추적 식별자를 재사용하고, 응답 값과 로그 검색 값의 연결 방식을 결정 기록에 명시한다.",
+      "severity": "medium",
+      "target": {
+        "pointer": "src/main/java/com/thinking/tennis/api/ApiExceptionHandler.java의 traceId 생성·로그 상관관계",
+        "action": "add",
+        "scope": "code"
+      }
+    }
+  ],
+  "contract_proposals": [
+    {
+      "id": "cr_alertstatus_polling_wording",
+      "pointer": "/components/schemas/AlertStatus/description",
+      "finding": "WATCHING 설명은 서버가 주기적으로 예약 상태를 확인한다고 말하지만, FR-7과 GET availability 설명은 확인을 조회가 일으키며 아무도 조회하지 않으면 확인하지 않는다고 규정한다.",
+      "proposed_change": "주기적 확인을 뜻하는 문장을 제거하고, 조회 요청이 있을 때만 확인이 일어나며 조회가 없으면 감시 중이어도 예약처를 확인하지 않는다고 명시한다.",
+      "action": "remove",
+      "spec_anchor": "FR-7",
+      "severity": "high"
+    },
+    {
+      "id": "cr_create_upstream_failure_surface",
+      "pointer": "/paths/~1alerts/post/responses",
+      "finding": "현재 POST /alerts는 슬롯 검증을 위해 외부 확인을 수행할 수 있다는 구현 판단과 그 확인 실패를 받을 HTTP 표면을 계약에 함께 정의하지 않는다. 초안은 이를 INTERNAL_ERROR로 처리하지만 이는 ErrorCode의 의미와 맞지 않는다.",
+      "proposed_change": "생성 시 외부 확인을 계약상 허용할 경우 UPSTREAM_TIMEOUT, UPSTREAM_UNAVAILABLE, UPSTREAM_RESPONSE_UNREADABLE 중 해당 코드를 보존하는 5xx 응답과 Retry-After 규칙을 POST /alerts에 추가한다.",
+      "action": "add",
+      "spec_anchor": "FR-1, EF-1",
+      "severity": "high"
+    }
+  ],
+  "weak_axes": [
+    "request_tolerance",
+    "response_fidelity",
+    "state_continuity",
+    "judgement_disclosure"
+  ],
+  "weak_axis_rationales": {
+    "request_tolerance": "열거 8개, 미충족 1개: [slot_a24a09dd]. `src/main/java/com/thinking/tennis/api/RequestParsing.java`의 요청·UUID 파싱과 `AlertController#createAlert` 경로는 날짜, 상태 필터, UUID 경로값, 코트·시간대 요청을 받는다. 그러나 `src/main/java/com/thinking/tennis/app/AlertService.java`의 멱등 스냅샷 보관 경로에서 동일 키의 24시간 보관 후 새 요청으로 처리하는 만료 경로를 확인할 수 없다.",
+    "response_fidelity": "열거 24개, 미충족 1개: [slot_dc9ce55b]. `src/main/java/com/thinking/tennis/api/ApiMapper.java#toAlertResponse`, `AlertController`의 목록·단건·해제 응답, `AvailabilityController`와 `AvailabilityService`의 fresh/stale 매핑은 계약의 필드 의미와 정렬·상태 표현을 대체로 유지한다. 다만 `src/main/java/com/thinking/tennis/app/AlertService.java`의 조회 경로와 `Alert` 저장 상태에는 이후 코트·날짜 확인 성공 시 신청의 `lastCheckedAt`을 갱신해 재생하는 경로가 없어, 신청별 마지막 성공 확인 시각의 의미를 계속 보장하지 못한다.",
+    "state_continuity": "열거 12개, 미충족 2개: [slot_7afbe3b4, slot_3b26d64c]. `AvailabilityService`의 코트·날짜 캐시와 동시 확인 억제, `AlertService`의 사용자·조건 중복 처리, `AlertSnapshot` 기반 재생, `Alert`의 해제 상태 보존 경로는 확인된다. 그러나 멱등 재생 기록의 24시간 후 폐기 경로가 없고, `Alert`·`AlertService`에 감시 중 신청을 만료 또는 알림 완료로 자동 전이시키는 지속 실행 경로가 확인되지 않는다.",
+    "judgement_disclosure": "신고된 standing decisions 4건, contract changes 0건, 미신고 판단 1건이다. 인증 토큰 식별, expiresAt 계산, createAlert의 외부 확인 실패 매핑, traceId 생성은 각각 `Authentication.java`, `AlertService.java`, `ApiExceptionHandler.java`와 신고 기록이 대응한다. 반면 `AlertService`의 멱등 기록 수명과 24시간 이후 재사용 정책을 구현 선택으로 정하면서 별도 판단 기록이 없다."
+  },
+  "priority": [
+    "gate:extract.blind@None",
+    "gate:extract.blind@None",
+    "gate:surface.path_missing@getCourtAvailability",
+    "gate:surface.path_missing@listAlerts",
+    "gate:surface.path_missing@createAlert",
+    "gate:surface.path_missing@getAlert",
+    "gate:surface.path_missing@cancelAlert",
+    "contract:cr_alertstatus_polling_wording",
+    "contract:cr_create_upstream_failure_surface",
+    "code:w_route_base_path_duplication",
+    "code:w_create_upstream_failure_mapping",
+    "axis:request_tolerance",
+    "axis:response_fidelity",
+    "axis:state_continuity",
+    "axis:judgement_disclosure"
+  ]
+}
