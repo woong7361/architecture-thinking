@@ -30,6 +30,23 @@
 
 ## 답안
 
+하네스는 [contract-impl-agent](https://github.com/woong7361/architecture-thinking/tree/main/.codex/skills/contract-impl-agent)에 있다. 제출물의 자리는 이렇다.
+
+| 제출물 | 자리 |
+| --- | --- |
+| 파이프라인 코드 | [pipeline/](https://github.com/woong7361/architecture-thinking/tree/main/.codex/skills/contract-impl-agent/pipeline) |
+| 프롬프트 4벌 | [prompts/](https://github.com/woong7361/architecture-thinking/tree/main/.codex/skills/contract-impl-agent/pipeline/prompts) |
+| 스키마 11벌 | [schemas/](https://github.com/woong7361/architecture-thinking/tree/main/.codex/skills/contract-impl-agent/pipeline/schemas) |
+| 루브릭 `impl:v1` | [impl.rubric.yaml](https://github.com/woong7361/architecture-thinking/blob/main/.codex/skills/contract-impl-agent/pipeline/rubrics/impl.rubric.yaml) |
+| 결정적 게이트 (G0·G1·판본 대조) | [gates/](https://github.com/woong7361/architecture-thinking/tree/main/.codex/skills/contract-impl-agent/pipeline/gates) |
+| 규칙 카드 | [conformance_rules.yaml](https://github.com/woong7361/architecture-thinking/blob/main/.codex/skills/contract-impl-agent/rules/conformance_rules.yaml) |
+| 설계 | [v0-design.md](https://github.com/woong7361/architecture-thinking/blob/main/.codex/skills/contract-impl-agent/docs/v0-design.md) |
+| 명세 먼저 쓴 계약 테스트 | [feature/](https://github.com/woong7361/architecture-thinking/tree/main/phase2/taskE/task5/feature) · [steps/](https://github.com/woong7361/architecture-thinking/tree/main/phase2/taskE/task5/steps) |
+| 그 테스트가 계약을 얼마나 덮는지 | [gate/](https://github.com/woong7361/architecture-thinking/tree/main/phase2/taskE/task5/gate) |
+| 하네스가 낸 판정 기록 | [REPORT.md](https://github.com/woong7361/architecture-thinking/blob/main/.codex/skills/contract-impl-agent/runs/runs12/2026-09-30_b02d8689/REPORT.md) · [run 12개](https://github.com/woong7361/architecture-thinking/blob/main/.codex/skills/contract-impl-agent/runs/INDEX.md) |
+
+AI 구현을 그 테스트로 판정한 결과는 4절에 적었다.
+
 ### 1. 판정 기준을 만드는 순서
 
 기획을 요구사항 명세로 고친 뒤 경계 행동을 feature로 먼저 쓰고, 거기에 step을 붙여 계약과 대응시킨다.
@@ -90,3 +107,80 @@ run의 기준선이 된다.
 
 막지 못한 자리는 사람이 리포트를 읽지 않는 경우다. 그때는 계약이 조용히 깎인다. 원본 대비 사라진 약속의 수를
 위험 지표로 세어 두는 데까지만 했다.
+
+### 4. 계약 테스트로 판정한 결과
+
+#### 어떻게 판정했나
+
+하네스를 한 번 돌린 것을 run이라 한다. run은 계약을 받아 구현 초안을 만들고 그 초안을 스스로 판정한다.
+판정은 두 가지다. 초안을 빌드해서 띄우고 거기서 뽑아낸 API 선언을 계약과 하나씩 비교하고, 그다음 루브릭으로
+점수를 낸다. 이번 run은 계약에 고칠 자리가 있다고 보고 계약을 세 번 고쳤고 마지막 iteration을 통과로
+판정했다. 그 초안을 내가 쓴 feature로 다시 판정했다.
+
+feature의 시나리오를 펼치면 47행이고 43행이 통과했다. 통과하지 못한 자리에서 셋을 배웠다. 자세한 내역은
+하네스가 낸 리포트에 있다(`.codex/skills/contract-impl-agent/runs/runs12/2026-09-30_b02d8689/REPORT.md`).
+
+#### 기계 판정은 선언에 없는 것을 보지 못한다
+
+기계 판정을 모두 통과한 구현에서 계약을 어긴 자리가 나왔다. `Accept` 헤더를 계약이 금지하지 않은 값으로
+보내면 계약에 없는 406이 돌아오고, 본문은 계약이 정한 오류 모양이 아닌데 `Content-Type`은 그 모양이라고
+말한다. 계약을 읽고 만든 클라이언트는 이 응답에서 깨진다.
+
+세 장치가 모두 놓쳤다. 이유가 각각 다르다. 선언을 비교하는 검사는 406이 계약에도 없고 구현의 선언에도 없어서
+비교할 대상이 없었다. 루브릭은 이 자리를 보고 점수를 깎았지만 문턱은 넘겨 통과시켰다. 내 테스트에는 `Accept`를
+바꿔 보내는 시나리오가 없었다.
+
+여기서 선언 비교의 한계는 규칙을 더 넣어서 메울 수 있는 것이 아니다. 선언에 없는 실패는 선언을 비교해서
+찾을 수 없고, 그것이 그 방식 자체의 한계다. 점수도 최종 판정이 되기 어렵다. 본 것도 통과시킬 수 있기
+때문이다. 그래서 최종 게이트는 테스트여야 한다. 실제로 요청을 보내고 돌아온 응답을 계약과 비교하는 것만이
+선언 밖에서 생긴 실패를 드러낸다. 다만 테스트도 보내지 않은 요청은 아무것도 말해 주지 않는다. 이 406을 찾은
+것도 feature가 아니라 헤더를 바꿔 본 별도의 측정이었다.
+
+#### 계약이 움직이면 판정 기준이 둘이 된다
+
+AI가 계약을 고칠 수 있게 했으므로 run이 끝나면 계약이 둘이 된다. 내가 테스트를 쓸 때 본 계약과, run이 고친
+계약이다. 이번에 응답 필드 하나가 그 둘 사이에서 어긋났다. AI는 고친 계약을 기준으로 통과라 했고 내 테스트는
+처음 계약을 기준으로 실패라 했다. 값을 잘못 읽은 쪽은 없었다.
+
+그래서 어긋남을 보면 누가 틀렸는지를 묻기 전에 어느 계약이 기준인지를 정해야 한다. 계약의 출처는 요구사항
+명세이므로 명세로 돌아갔다. 명세는 "확인을 일으키는 것은 조회뿐이다"라고 적어 두었는데 이 변경은 신청에도
+확인을 일으키게 했다. 명세가 허락하지 않는 변경이다. 그래서 테스트를 고치는 대신 계약을 되돌린다.
+
+하네스가 이것을 막지 못한 이유가 중요하다. 계약을 고칠 때 근거가 되는 명세 항목을 적게 했고, 하네스는 그
+항목이 명세에 실재하는지까지 검사한다. 그 항목이 이 변경을 정말 허락하는지는 검사하지 않는다. 앞은 기계가
+할 수 있고 뒤는 읽어야 한다.
+
+그래도 계약을 고치는 권한은 그대로 둔다. 이번에 고친 13건 중에는 명세와 정반대를 말하던 문장을 지운 것처럼
+명세가 그렇게 하라고 하는 수정도 있었다. 권한을 거두면 그런 수정도 함께 막힌다. 구현해 보면 계약이 틀린 자리가
+드러나는 것이 정상이고 사람도 만들면서 생각이 바뀐다. 대신 순서를 지킨다. 계약이 바뀌면 테스트도 따라가야
+하지만, 따라가기 전에 그 변경이 명세를 넘었는지 내가 먼저 읽는다. 테스트를 계약에 먼저 맞추면 어긋남은
+사라지고 명세를 넘은 계약만 남는다. 1-3에서 게이트가 오답에 GREEN을 준 것과 같은 일이 된다.
+
+#### 약속만 적으면 확인할 수 없는 자리가 남는다
+
+판정을 아예 하지 못한 자리가 있었다. 계약이 만료 시각을 더 이른 예약 마감 시각으로 앞당긴다고 약속했는데,
+그 예약 마감 시각을 담는 필드가 계약에도 내 포트 인터페이스에도 없다. 값이 들어올 곳이 없으니 구현도 그 약속을
+지킬 수 없고 테스트도 지켰는지 볼 수 없다.
+
+세세하게 쓰지 않아서 빈 것이 아니다. 그 조항은 오히려 자세하다. 약속을 적으면서 그 약속을 확인할 방법을 같이
+정하지 않은 것이 문제였다. 같은 일이 내가 쓴 `deferred.yaml`에도 있다. 그 파일은 이번 테스트가 보지 않기로 한
+자리와 그 이유를 적는 곳인데, 거기서 여덟 자리를 "G3가 판정한다"고 적어 미뤘다. G3는 설계에서 다음 판으로
+미뤄 둔 장치라 지금 없다. 이유를 쓰게는 했지만 그 이유에 적힌 장치가 정말 있는지는 아무도 확인하지 않았다.
+
+그래서 약속을 적을 때 그것을 확인할 장치를 함께 정하고, 그 장치가 실재하는지 확인해야 한다. 지금 보지 않기로
+한 자리도 "아무도 보지 않는다"로 적어야 한다. 실제로 이번에 범위 밖이라 판정할 수 없던 자리들은 feature에서
+빼고, 왜 뺐는지와 어느 계약이 그것을 맡을지를 README에 적었다.
+
+덮는 범위도 수로 남겨 둔다. 계약이 오퍼레이션마다 선언한 (상태 코드, 에러 코드) 쌍을 세면 63개이고, 내
+feature가 보는 것은 28개다. 43행이 통과했다는 말은 그 28개 안에서 통과했다는 뜻이다.
+
+#### 검토까지 AI에게 넘길 수 있나
+
+아직 이르다. 이번에 기계가 할 수 있는 일과 할 수 없는 일의 선이 드러났다. 선언이 계약과 같은지, 신고 없이
+바뀐 자리가 있는지, 적어 낸 명세 항목이 실재하는지는 기계가 사람보다 빠짐없이 했다. 그 명세 항목이 변경을
+정말 허락하는지, 선언 밖에서 생긴 실패가 클라이언트에 무엇을 하는지는 읽어야 알 수 있었다. 이번에 찾은 두
+지점이 모두 그 선 위에 있다.
+
+대신 사람이 읽어야 할 양은 줄일 수 있다. 리포트가 바뀐 자리마다 무엇을 왜 고쳤는지, 그리고 위반을 코드로
+고쳐 없앴는지 계약을 고쳐 없앴는지를 갈라 적는다. 계약 전체를 다시 읽는 대신 바뀐 자리 열 곳과 그 근거만
+읽으면 된다. 이번에 내가 읽은 것도 그 열 곳이다.
