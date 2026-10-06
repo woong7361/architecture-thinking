@@ -1,0 +1,42 @@
+﻿[
+    {
+        "scenario":  "NEW_SEQUENTIAL",
+        "completed":  100,
+        "duplicates":  0,
+        "requestErrors":  0,
+        "medianStartGapUs":  7179.5,
+        "medianCallMs":  5.359
+    },
+    {
+        "scenario":  "NEW_TOGETHER",
+        "completed":  100,
+        "duplicates":  100,
+        "requestErrors":  0,
+        "medianStartGapUs":  3,
+        "medianCallMs":  7.266
+    },
+    {
+        "scenario":  "NEW_UNCOORDINATED",
+        "completed":  100,
+        "duplicates":  100,
+        "requestErrors":  0,
+        "medianStartGapUs":  2,
+        "medianCallMs":  6.589
+    },
+    {
+        "scenario":  "EXISTING_TOGETHER",
+        "completed":  100,
+        "duplicates":  0,
+        "requestErrors":  0,
+        "medianStartGapUs":  3,
+        "medianCallMs":  2.548
+    },
+    {
+        "scenario":  "DIFFERENT_USERS",
+        "completed":  100,
+        "duplicates":  0,
+        "requestErrors":  0,
+        "medianStartGapUs":  3,
+        "medianCallMs":  6.252
+    }
+]

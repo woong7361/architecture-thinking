@@ -1,0 +1,221 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------------< com.thinking:alert-kata >-----------------------
+[INFO] Building alert-kata 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ alert-kata ---
+[INFO] skip non existing resourceDirectory C:\Users\PC-220627-03\Desktop\project\task\architecture-thinking\phase2\taskF\alert-kata\src\main\resources
+[INFO] skip non existing resourceDirectory C:\Users\PC-220627-03\Desktop\project\task\architecture-thinking\phase2\taskF\alert-kata\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ alert-kata ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 6 source files with javac [debug parameters release 25] to target\classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ alert-kata ---
+[INFO] Copying 2 resources from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ alert-kata ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 1 source file with javac [debug parameters release 25] to target\test-classes
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ alert-kata ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.thinking.tennis.kata.AlertSubscriptionTest
+12:30:37.633 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.thinking.tennis.kata.AlertSubscriptionTest]: AlertSubscriptionTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+12:30:37.718 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.thinking.tennis.kata.KataApplication for test class com.thinking.tennis.kata.AlertSubscriptionTest
+12:30:37.802 [main] INFO org.testcontainers.images.PullPolicy -- Image pull policy will be performed by: DefaultPullPolicy()
+12:30:37.804 [main] INFO org.testcontainers.utility.ImageNameSubstitutor -- Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+12:30:37.836 [main] INFO org.testcontainers.DockerClientFactory -- Testcontainers version: 2.0.5
+12:30:38.015 [main] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+12:30:38.300 [main] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+12:30:38.302 [main] INFO org.testcontainers.DockerClientFactory -- Docker host IP address is localhost
+12:30:38.315 [main] INFO org.testcontainers.DockerClientFactory -- Connected to docker: 
+  Server Version: 29.6.2
+  API Version: 1.55
+  Operating System: Docker Desktop
+  Total Memory: 32001 MB
+  Labels: 
+    com.docker.desktop.address=npipe://\\.\pipe\docker_cli
+12:30:38.414 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Creating container for image: testcontainers/ryuk:0.14.0
+12:30:38.475 [main] INFO org.testcontainers.utility.RegistryAuthLocator -- Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+12:30:38.577 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Container testcontainers/ryuk:0.14.0 is starting: 6bab635f939c3c87b66ebeb8df0c28218103d4b41ecdf8c1551a792132c36e93
+12:30:38.866 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Container testcontainers/ryuk:0.14.0 started in PT0.4517443S
+12:30:38.871 [main] INFO org.testcontainers.utility.RyukResourceReaper -- Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+12:30:38.871 [main] INFO org.testcontainers.DockerClientFactory -- Checking the system...
+12:30:38.871 [main] INFO org.testcontainers.DockerClientFactory -- ?? Docker server version should be at least 1.6.0
+12:30:38.872 [main] INFO tc.mysql:8.4.8 -- Creating container for image: mysql:8.4.8
+12:30:38.920 [main] INFO tc.mysql:8.4.8 -- Container mysql:8.4.8 is starting: 8178bf819f76c7a5214f829d3722187905db44b1c26d3600ec6d744ffa0c7825
+12:30:39.112 [main] INFO tc.mysql:8.4.8 -- Waiting for database connection to become available at jdbc:mysql://localhost:56179/alert_kata using query 'SELECT 1'
+12:30:46.320 [main] INFO tc.mysql:8.4.8 -- Container mysql:8.4.8 started in PT7.4486211S
+12:30:46.321 [main] INFO tc.mysql:8.4.8 -- Container is started (JDBC URL: jdbc:mysql://localhost:56179/alert_kata)
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (C:\Users\PC-220627-03\.m2\repository\net\bytebuddy\byte-buddy-agent\1.17.8\byte-buddy-agent-1.17.8.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+ENV image=mysql:8.4.8 java=25.0.4.1 database={version=8.4.8, isolation_level=REPEATABLE-READ} tables=[{TABLE_NAME=alert_subscriptions, ENGINE=InnoDB}, {TABLE_NAME=kata_users, ENGINE=InnoDB}]
+ROUND round=1 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=4, error=null], RequestResult[request=2, alertId=3, error=null]]
+ROUND round=2 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=5, error=null], RequestResult[request=2, alertId=6, error=null]]
+ROUND round=3 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=8, error=null], RequestResult[request=2, alertId=7, error=null]]
+ROUND round=4 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=10, error=null], RequestResult[request=2, alertId=9, error=null]]
+ROUND round=5 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=12, error=null], RequestResult[request=2, alertId=11, error=null]]
+ROUND round=6 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=13, error=null], RequestResult[request=2, alertId=14, error=null]]
+ROUND round=7 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=16, error=null], RequestResult[request=2, alertId=15, error=null]]
+ROUND round=8 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=18, error=null], RequestResult[request=2, alertId=17, error=null]]
+ROUND round=9 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=19, error=null], RequestResult[request=2, alertId=20, error=null]]
+ROUND round=10 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=21, error=null], RequestResult[request=2, alertId=22, error=null]]
+ROUND round=11 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=24, error=null], RequestResult[request=2, alertId=23, error=null]]
+ROUND round=12 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=26, error=null], RequestResult[request=2, alertId=25, error=null]]
+ROUND round=13 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=27, error=null], RequestResult[request=2, alertId=28, error=null]]
+ROUND round=14 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=29, error=null], RequestResult[request=2, alertId=30, error=null]]
+ROUND round=15 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=32, error=null], RequestResult[request=2, alertId=31, error=null]]
+ROUND round=16 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=33, error=null], RequestResult[request=2, alertId=34, error=null]]
+ROUND round=17 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=36, error=null], RequestResult[request=2, alertId=35, error=null]]
+ROUND round=18 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=38, error=null], RequestResult[request=2, alertId=37, error=null]]
+ROUND round=19 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=40, error=null], RequestResult[request=2, alertId=39, error=null]]
+ROUND round=20 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=42, error=null], RequestResult[request=2, alertId=41, error=null]]
+ROUND round=21 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=43, error=null], RequestResult[request=2, alertId=44, error=null]]
+ROUND round=22 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=45, error=null], RequestResult[request=2, alertId=46, error=null]]
+ROUND round=23 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=48, error=null], RequestResult[request=2, alertId=47, error=null]]
+ROUND round=24 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=50, error=null], RequestResult[request=2, alertId=49, error=null]]
+ROUND round=25 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=52, error=null], RequestResult[request=2, alertId=51, error=null]]
+ROUND round=26 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=54, error=null], RequestResult[request=2, alertId=53, error=null]]
+ROUND round=27 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=55, error=null], RequestResult[request=2, alertId=56, error=null]]
+ROUND round=28 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=57, error=null], RequestResult[request=2, alertId=58, error=null]]
+ROUND round=29 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=60, error=null], RequestResult[request=2, alertId=59, error=null]]
+ROUND round=30 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=62, error=null], RequestResult[request=2, alertId=61, error=null]]
+ROUND round=31 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=63, error=null], RequestResult[request=2, alertId=64, error=null]]
+ROUND round=32 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=65, error=null], RequestResult[request=2, alertId=66, error=null]]
+ROUND round=33 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=68, error=null], RequestResult[request=2, alertId=67, error=null]]
+ROUND round=34 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=69, error=null], RequestResult[request=2, alertId=70, error=null]]
+ROUND round=35 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=72, error=null], RequestResult[request=2, alertId=71, error=null]]
+ROUND round=36 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=74, error=null], RequestResult[request=2, alertId=73, error=null]]
+ROUND round=37 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=75, error=null], RequestResult[request=2, alertId=76, error=null]]
+ROUND round=38 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=77, error=null], RequestResult[request=2, alertId=78, error=null]]
+ROUND round=39 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=79, error=null], RequestResult[request=2, alertId=80, error=null]]
+ROUND round=40 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=81, error=null], RequestResult[request=2, alertId=82, error=null]]
+ROUND round=41 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=84, error=null], RequestResult[request=2, alertId=83, error=null]]
+ROUND round=42 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=86, error=null], RequestResult[request=2, alertId=85, error=null]]
+ROUND round=43 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=87, error=null], RequestResult[request=2, alertId=88, error=null]]
+ROUND round=44 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=89, error=null], RequestResult[request=2, alertId=90, error=null]]
+ROUND round=45 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=92, error=null], RequestResult[request=2, alertId=91, error=null]]
+ROUND round=46 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=93, error=null], RequestResult[request=2, alertId=94, error=null]]
+ROUND round=47 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=96, error=null], RequestResult[request=2, alertId=95, error=null]]
+ROUND round=48 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=97, error=null], RequestResult[request=2, alertId=98, error=null]]
+ROUND round=49 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=99, error=null], RequestResult[request=2, alertId=100, error=null]]
+ROUND round=50 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=101, error=null], RequestResult[request=2, alertId=102, error=null]]
+ROUND round=51 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=104, error=null], RequestResult[request=2, alertId=103, error=null]]
+ROUND round=52 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=106, error=null], RequestResult[request=2, alertId=105, error=null]]
+ROUND round=53 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=108, error=null], RequestResult[request=2, alertId=107, error=null]]
+ROUND round=54 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=110, error=null], RequestResult[request=2, alertId=109, error=null]]
+ROUND round=55 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=112, error=null], RequestResult[request=2, alertId=111, error=null]]
+ROUND round=56 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=113, error=null], RequestResult[request=2, alertId=114, error=null]]
+ROUND round=57 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=115, error=null], RequestResult[request=2, alertId=116, error=null]]
+ROUND round=58 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=117, error=null], RequestResult[request=2, alertId=118, error=null]]
+ROUND round=59 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=119, error=null], RequestResult[request=2, alertId=120, error=null]]
+ROUND round=60 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=122, error=null], RequestResult[request=2, alertId=121, error=null]]
+ROUND round=61 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=124, error=null], RequestResult[request=2, alertId=123, error=null]]
+ROUND round=62 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=126, error=null], RequestResult[request=2, alertId=125, error=null]]
+ROUND round=63 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=128, error=null], RequestResult[request=2, alertId=127, error=null]]
+ROUND round=64 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=129, error=null], RequestResult[request=2, alertId=130, error=null]]
+ROUND round=65 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=131, error=null], RequestResult[request=2, alertId=132, error=null]]
+ROUND round=66 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=134, error=null], RequestResult[request=2, alertId=133, error=null]]
+ROUND round=67 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=135, error=null], RequestResult[request=2, alertId=136, error=null]]
+ROUND round=68 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=137, error=null], RequestResult[request=2, alertId=138, error=null]]
+ROUND round=69 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=140, error=null], RequestResult[request=2, alertId=139, error=null]]
+ROUND round=70 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=142, error=null], RequestResult[request=2, alertId=141, error=null]]
+ROUND round=71 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=143, error=null], RequestResult[request=2, alertId=144, error=null]]
+ROUND round=72 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=145, error=null], RequestResult[request=2, alertId=146, error=null]]
+ROUND round=73 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=147, error=null], RequestResult[request=2, alertId=148, error=null]]
+ROUND round=74 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=150, error=null], RequestResult[request=2, alertId=149, error=null]]
+ROUND round=75 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=151, error=null], RequestResult[request=2, alertId=152, error=null]]
+ROUND round=76 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=153, error=null], RequestResult[request=2, alertId=154, error=null]]
+ROUND round=77 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=156, error=null], RequestResult[request=2, alertId=155, error=null]]
+ROUND round=78 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=157, error=null], RequestResult[request=2, alertId=158, error=null]]
+ROUND round=79 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=159, error=null], RequestResult[request=2, alertId=160, error=null]]
+ROUND round=80 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=162, error=null], RequestResult[request=2, alertId=161, error=null]]
+ROUND round=81 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=164, error=null], RequestResult[request=2, alertId=163, error=null]]
+ROUND round=82 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=166, error=null], RequestResult[request=2, alertId=165, error=null]]
+ROUND round=83 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=168, error=null], RequestResult[request=2, alertId=167, error=null]]
+ROUND round=84 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=169, error=null], RequestResult[request=2, alertId=170, error=null]]
+ROUND round=85 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=171, error=null], RequestResult[request=2, alertId=172, error=null]]
+ROUND round=86 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=174, error=null], RequestResult[request=2, alertId=173, error=null]]
+ROUND round=87 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=176, error=null], RequestResult[request=2, alertId=175, error=null]]
+ROUND round=88 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=177, error=null], RequestResult[request=2, alertId=178, error=null]]
+ROUND round=89 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=179, error=null], RequestResult[request=2, alertId=180, error=null]]
+ROUND round=90 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=181, error=null], RequestResult[request=2, alertId=182, error=null]]
+ROUND round=91 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=183, error=null], RequestResult[request=2, alertId=184, error=null]]
+ROUND round=92 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=185, error=null], RequestResult[request=2, alertId=186, error=null]]
+ROUND round=93 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=188, error=null], RequestResult[request=2, alertId=187, error=null]]
+ROUND round=94 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=189, error=null], RequestResult[request=2, alertId=190, error=null]]
+ROUND round=95 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=192, error=null], RequestResult[request=2, alertId=191, error=null]]
+ROUND round=96 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=194, error=null], RequestResult[request=2, alertId=193, error=null]]
+ROUND round=97 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=196, error=null], RequestResult[request=2, alertId=195, error=null]]
+ROUND round=98 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=198, error=null], RequestResult[request=2, alertId=197, error=null]]
+ROUND round=99 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=200, error=null], RequestResult[request=2, alertId=199, error=null]]
+ROUND round=100 requests=2 committed=2 expected=1 actual=2 outcome=DUPLICATE results=[RequestResult[request=1, alertId=201, error=null], RequestResult[request=2, alertId=202, error=null]]
+SUMMARY rounds=100 requestsPerRound=2 normal=0 duplicates=100 errors=0 unexpected=0
+[ERROR] Tests run: 6, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 13.03 s <<< FAILURE! -- in com.thinking.tennis.kata.AlertSubscriptionTest
+[ERROR] com.thinking.tennis.kata.AlertSubscriptionTest.concurrentDuplicatesMustLeaveOneActiveSubscription -- Time elapsed: 1.377 s <<< FAILURE!
+org.opentest4j.MultipleFailuresError: 
+Multiple Failures (1 failure)
+	org.opentest4j.AssertionFailedError: Duplicate rounds out of 100 ==> expected: <0> but was: <100>
+	at org.junit.jupiter.api.AssertAll.assertAll(AssertAll.java:80)
+	at org.junit.jupiter.api.AssertAll.assertAll(AssertAll.java:44)
+	at org.junit.jupiter.api.AssertAll.assertAll(AssertAll.java:38)
+	at org.junit.jupiter.api.Assertions.assertAll(Assertions.java:2944)
+	at com.thinking.tennis.kata.AlertSubscriptionTest.concurrentDuplicatesMustLeaveOneActiveSubscription(AlertSubscriptionTest.java:157)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	Suppressed: org.opentest4j.AssertionFailedError: Duplicate rounds out of 100 ==> expected: <0> but was: <100>
+		at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+		at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+		at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+		at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+		at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:563)
+		at com.thinking.tennis.kata.AlertSubscriptionTest.lambda$concurrentDuplicatesMustLeaveOneActiveSubscription$3(AlertSubscriptionTest.java:160)
+		at org.junit.jupiter.api.AssertAll.lambda$assertAll$0(AssertAll.java:68)
+		at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:214)
+		at java.base/java.util.Spliterators$ArraySpliterator.forEachRemaining(Spliterators.java:1024)
+		at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
+		at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
+		at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+		at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
+		at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:723)
+		at org.junit.jupiter.api.AssertAll.assertAll(AssertAll.java:77)
+		... 7 more
+
+[INFO] 
+[INFO] Results:
+[INFO] 
+[ERROR] Failures: 
+[ERROR]   AlertSubscriptionTest.concurrentDuplicatesMustLeaveOneActiveSubscription:157 Multiple Failures (1 failure)
+	org.opentest4j.AssertionFailedError: Duplicate rounds out of 100 ==> expected: <0> but was: <100>
+[INFO] 
+[ERROR] Tests run: 6, Failures: 1, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  15.547 s
+[INFO] Finished at: 2026-10-06T12:30:50+09:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.6:test (default-test) on project alert-kata: There are test failures.
+[ERROR] 
+[ERROR] See C:\Users\PC-220627-03\Desktop\project\task\architecture-thinking\phase2\taskF\alert-kata\target\surefire-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

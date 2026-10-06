@@ -1,0 +1,181 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------------< com.thinking:alert-kata >-----------------------
+[INFO] Building alert-kata 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ alert-kata ---
+[INFO] skip non existing resourceDirectory C:\Users\PC-220627-03\Desktop\project\task\architecture-thinking\phase2\taskF\alert-kata\src\main\resources
+[INFO] skip non existing resourceDirectory C:\Users\PC-220627-03\Desktop\project\task\architecture-thinking\phase2\taskF\alert-kata\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ alert-kata ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ alert-kata ---
+[INFO] Copying 2 resources from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ alert-kata ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ alert-kata ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.thinking.tennis.kata.AlertSubscriptionTest
+12:16:35.605 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.thinking.tennis.kata.AlertSubscriptionTest]: AlertSubscriptionTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+12:16:35.688 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.thinking.tennis.kata.KataApplication for test class com.thinking.tennis.kata.AlertSubscriptionTest
+12:16:35.784 [main] INFO org.testcontainers.images.PullPolicy -- Image pull policy will be performed by: DefaultPullPolicy()
+12:16:35.786 [main] INFO org.testcontainers.utility.ImageNameSubstitutor -- Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+12:16:35.814 [main] INFO org.testcontainers.DockerClientFactory -- Testcontainers version: 2.0.5
+12:16:35.992 [main] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+12:16:36.265 [main] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+12:16:36.267 [main] INFO org.testcontainers.DockerClientFactory -- Docker host IP address is localhost
+12:16:36.281 [main] INFO org.testcontainers.DockerClientFactory -- Connected to docker: 
+  Server Version: 29.6.2
+  API Version: 1.55
+  Operating System: Docker Desktop
+  Total Memory: 32001 MB
+  Labels: 
+    com.docker.desktop.address=npipe://\\.\pipe\docker_cli
+12:16:36.374 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Creating container for image: testcontainers/ryuk:0.14.0
+12:16:36.432 [main] INFO org.testcontainers.utility.RegistryAuthLocator -- Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+12:16:36.544 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Container testcontainers/ryuk:0.14.0 is starting: a749b90c17bb3f13aee69fc4754f570d1ec574140bc09a6f18ba654b02894fd7
+12:16:36.814 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Container testcontainers/ryuk:0.14.0 started in PT0.440054S
+12:16:36.820 [main] INFO org.testcontainers.utility.RyukResourceReaper -- Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+12:16:36.820 [main] INFO org.testcontainers.DockerClientFactory -- Checking the system...
+12:16:36.820 [main] INFO org.testcontainers.DockerClientFactory -- ?? Docker server version should be at least 1.6.0
+12:16:36.821 [main] INFO tc.mysql:8.4.8 -- Creating container for image: mysql:8.4.8
+12:16:36.884 [main] INFO tc.mysql:8.4.8 -- Container mysql:8.4.8 is starting: 8a1caab642439fedc097e0f934ac7cd98326ce350653305c2627629187bc3a91
+12:16:37.091 [main] INFO tc.mysql:8.4.8 -- Waiting for database connection to become available at jdbc:mysql://localhost:55572/alert_kata using query 'SELECT 1'
+12:16:45.239 [main] INFO tc.mysql:8.4.8 -- Container mysql:8.4.8 started in PT8.4187088S
+12:16:45.240 [main] INFO tc.mysql:8.4.8 -- Container is started (JDBC URL: jdbc:mysql://localhost:55572/alert_kata)
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (C:\Users\PC-220627-03\.m2\repository\net\bytebuddy\byte-buddy-agent\1.17.8\byte-buddy-agent-1.17.8.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+ENV repetition=1 image=mysql:8.4.8 java=25.0.4.1 database={version=8.4.8, isolation_level=REPEATABLE-READ} tables=[{TABLE_NAME=alert_subscriptions, ENGINE=InnoDB}, {TABLE_NAME=kata_users, ENGINE=InnoDB}]
+READ thread=pool-3-thread-1 connection=9 found=false
+READ thread=pool-3-thread-2 connection=10 found=false
+RESULT request=1 committed=true alertId=3 error=null
+RESULT request=2 committed=true alertId=4 error=null
+OBSERVED repetition=1 requests=2 committed=2 connections=[9, 10] expected=1 actual=2
+ROWS [{id=3, user_id=1, court_id=10, play_date=2026-10-10, time_slot=09:00-10:00, status=WATCHING}, {id=4, user_id=1, court_id=10, play_date=2026-10-10, time_slot=09:00-10:00, status=WATCHING}]
+ENV repetition=2 image=mysql:8.4.8 java=25.0.4.1 database={version=8.4.8, isolation_level=REPEATABLE-READ} tables=[{TABLE_NAME=alert_subscriptions, ENGINE=InnoDB}, {TABLE_NAME=kata_users, ENGINE=InnoDB}]
+READ thread=pool-4-thread-1 connection=10 found=false
+READ thread=pool-4-thread-2 connection=9 found=false
+RESULT request=1 committed=true alertId=6 error=null
+RESULT request=2 committed=true alertId=5 error=null
+OBSERVED repetition=2 requests=2 committed=2 connections=[9, 10] expected=1 actual=2
+ROWS [{id=5, user_id=1, court_id=10, play_date=2026-10-10, time_slot=09:00-10:00, status=WATCHING}, {id=6, user_id=1, court_id=10, play_date=2026-10-10, time_slot=09:00-10:00, status=WATCHING}]
+ENV repetition=3 image=mysql:8.4.8 java=25.0.4.1 database={version=8.4.8, isolation_level=REPEATABLE-READ} tables=[{TABLE_NAME=alert_subscriptions, ENGINE=InnoDB}, {TABLE_NAME=kata_users, ENGINE=InnoDB}]
+READ thread=pool-5-thread-2 connection=9 found=false
+READ thread=pool-5-thread-1 connection=10 found=false
+RESULT request=1 committed=true alertId=7 error=null
+RESULT request=2 committed=true alertId=8 error=null
+OBSERVED repetition=3 requests=2 committed=2 connections=[9, 10] expected=1 actual=2
+ROWS [{id=7, user_id=1, court_id=10, play_date=2026-10-10, time_slot=09:00-10:00, status=WATCHING}, {id=8, user_id=1, court_id=10, play_date=2026-10-10, time_slot=09:00-10:00, status=WATCHING}]
+[ERROR] Tests run: 8, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 12.76 s <<< FAILURE! -- in com.thinking.tennis.kata.AlertSubscriptionTest
+[ERROR] com.thinking.tennis.kata.AlertSubscriptionTest.concurrentDuplicatesMustLeaveOneActiveSubscription(RepetitionInfo)[1] -- Time elapsed: 0.042 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Same user and condition must have only one WATCHING subscription ==> expected: <1> but was: <2>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:563)
+	at com.thinking.tennis.kata.AlertSubscriptionTest.concurrentDuplicatesMustLeaveOneActiveSubscription(AlertSubscriptionTest.java:135)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:186)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:214)
+	at java.base/java.util.stream.IntPipeline$1$1.accept(IntPipeline.java:180)
+	at java.base/java.util.stream.Streams$RangeIntSpliterator.forEachRemaining(Streams.java:104)
+	at java.base/java.util.Spliterator$OfInt.forEachRemaining(Spliterator.java:710)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:153)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:176)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:632)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+[ERROR] com.thinking.tennis.kata.AlertSubscriptionTest.concurrentDuplicatesMustLeaveOneActiveSubscription(RepetitionInfo)[2] -- Time elapsed: 0.034 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Same user and condition must have only one WATCHING subscription ==> expected: <1> but was: <2>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:563)
+	at com.thinking.tennis.kata.AlertSubscriptionTest.concurrentDuplicatesMustLeaveOneActiveSubscription(AlertSubscriptionTest.java:135)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:186)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:214)
+	at java.base/java.util.stream.IntPipeline$1$1.accept(IntPipeline.java:180)
+	at java.base/java.util.stream.Streams$RangeIntSpliterator.forEachRemaining(Streams.java:104)
+	at java.base/java.util.Spliterator$OfInt.forEachRemaining(Spliterator.java:710)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:153)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:176)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:632)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+[ERROR] com.thinking.tennis.kata.AlertSubscriptionTest.concurrentDuplicatesMustLeaveOneActiveSubscription(RepetitionInfo)[3] -- Time elapsed: 0.032 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Same user and condition must have only one WATCHING subscription ==> expected: <1> but was: <2>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:563)
+	at com.thinking.tennis.kata.AlertSubscriptionTest.concurrentDuplicatesMustLeaveOneActiveSubscription(AlertSubscriptionTest.java:135)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:186)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:214)
+	at java.base/java.util.stream.IntPipeline$1$1.accept(IntPipeline.java:180)
+	at java.base/java.util.stream.Streams$RangeIntSpliterator.forEachRemaining(Streams.java:108)
+	at java.base/java.util.Spliterator$OfInt.forEachRemaining(Spliterator.java:710)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:153)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:176)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:632)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+[INFO] 
+[INFO] Results:
+[INFO] 
+[ERROR] Failures: 
+[ERROR]   AlertSubscriptionTest.concurrentDuplicatesMustLeaveOneActiveSubscription:135 Same user and condition must have only one WATCHING subscription ==> expected: <1> but was: <2>
+[ERROR]   AlertSubscriptionTest.concurrentDuplicatesMustLeaveOneActiveSubscription:135 Same user and condition must have only one WATCHING subscription ==> expected: <1> but was: <2>
+[ERROR]   AlertSubscriptionTest.concurrentDuplicatesMustLeaveOneActiveSubscription:135 Same user and condition must have only one WATCHING subscription ==> expected: <1> but was: <2>
+[INFO] 
+[ERROR] Tests run: 8, Failures: 3, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  14.476 s
+[INFO] Finished at: 2026-10-06T12:16:48+09:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.6:test (default-test) on project alert-kata: There are test failures.
+[ERROR] 
+[ERROR] See C:\Users\PC-220627-03\Desktop\project\task\architecture-thinking\phase2\taskF\alert-kata\target\surefire-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

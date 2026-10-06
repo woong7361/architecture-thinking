@@ -1,0 +1,31 @@
+package com.thinking.tennis.kata;
+
+import jakarta.persistence.EntityManager;
+import java.util.Optional;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
+
+@TestConfiguration(proxyBeanMethods = false)
+class ObservationConfiguration {
+    @Bean
+    ReadBarrier readBarrier() {
+        return new ReadBarrier();
+    }
+
+    @Bean
+    @Primary
+    AlertRepository observedRepository(EntityManager entityManager, ReadBarrier barrier) {
+        return new AlertRepository(entityManager) {
+            @Override
+            public Optional<AlertSubscription> findActive(SubscribeCommand command) {
+                Optional<AlertSubscription> result = super.findActive(command);
+                long connectionId = ((Number) entityManager
+                        .createNativeQuery("SELECT CONNECTION_ID()")
+                        .getSingleResult()).longValue();
+                barrier.afterRead(result.isPresent(), connectionId);
+                return result;
+            }
+        };
+    }
+}

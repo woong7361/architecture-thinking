@@ -1,0 +1,50 @@
+package com.thinking.tennis.kata;
+
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
+/** 실제 조회 결과는 유지하고 두 요청의 조회가 끝난 시점만 맞춘다. */
+class ReadBarrier {
+    static final int WORKERS = 2;
+    static final int TIMEOUT_SECONDS = 15;
+
+    private volatile CountDownLatch reads;
+    private final Set<Long> connections = ConcurrentHashMap.newKeySet();
+
+    void arm() {
+        connections.clear();
+        reads = new CountDownLatch(WORKERS);
+    }
+
+    void disarm() {
+        reads = null;
+    }
+
+    void afterRead(boolean found, long connectionId) {
+        CountDownLatch active = reads;
+        if (active == null) {
+            return;
+        }
+        if (found) {
+            throw new IllegalStateException("Race fixture must start without an active subscription");
+        }
+        connections.add(connectionId);
+        System.out.printf("READ thread=%s connection=%d found=false%n",
+                Thread.currentThread().getName(), connectionId);
+        active.countDown();
+        try {
+            if (!active.await(TIMEOUT_SECONDS, TimeUnit.SECONDS)) {
+                throw new IllegalStateException("Both reads did not finish before the deadline");
+            }
+        } catch (InterruptedException error) {
+            Thread.currentThread().interrupt();
+            throw new IllegalStateException("Read barrier interrupted", error);
+        }
+    }
+
+    Set<Long> connectionIds() {
+        return Set.copyOf(connections);
+    }
+}
