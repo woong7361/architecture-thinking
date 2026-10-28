@@ -1,0 +1,294 @@
+{
+  "claims": [
+    {
+      "id": "claim-01",
+      "source_says": "Dialect.getForUpdateString() 이 \" for update\" 를 돌려주는 것은 맞다. 다만 PESSIMISTIC_WRITE 가 그 값을 그대로 쓰는 것은 timeout 이 WAIT_FOREVER 이고 별칭을 넘기지 않은 호출일 때뿐이다. Dialect.getForUpdateString(LockMode,int) 은 PESSIMISTIC_WRITE 를 getWriteLockString(timeout) 으로 보내고, MySQLDialect 는 그것을 withTimeout( getForUpdateString(), timeout ) 으로 받는다. MySQLDialect 는 supportsNoWait()·supportsSkipLocked() 가 true 이므로 NO_WAIT 는 \" for update nowait\", SKIP_LOCKED 는 \" for update skip locked\" 가 되고, supportsWait() 가 false 이므로 수치 타임아웃은 조각에 반영되지 않고 조용히 사라진다. 별칭 경로에서는 getWriteLockString(aliases,timeout) → getForUpdateString(aliases) 가 \" for update of <aliases>\" 를 만들며, MySQLDialect.getWriteRowLockStrategy() 가 RowLockStrategy.TABLE 을 돌려주므로 이 경로는 죽은 길이 아니다. 또 \"MySQL 방언\" 을 클래스 계열로 읽으면 MariaDBDialect 와 TiDBDialect 가 MySQLDialect 를 상속하면서 supportsWait() 를 true 로 뒤집어 \" for update wait n\" 을 만든다.",
+      "limiting_clauses": [
+        {
+          "path": "hibernate-orm-6.6.53.Final/org/hibernate/dialect/MySQLDialect.java",
+          "quote": "\t@Override\n\tpublic boolean supportsSkipLocked() {\n\t\treturn true;\n\t}\n\n\t@Override\n\tpublic boolean supportsNoWait() {\n\t\treturn true;\n\t}\n\n\t@Override\n\tpublic boolean supportsWait() {\n\t\t//only supported on MariaDB\n\t\treturn false;\n\t}",
+          "limits": "Gen 이 인용한 withTimeout 의 어느 가지가 살아 있는지를 정하는 자리다. MySQL 에서 NO_WAIT 와 SKIP_LOCKED 가지는 참이라 조각이 \" for update nowait\"·\" for update skip locked\" 가 되고, 수치 타임아웃 가지는 거짓이라 타임아웃이 조각에서 사라진다. 따라서 조각이 \" for update\" 인 것은 타임아웃이 WAIT_FOREVER 일 때로 한정된다."
+        },
+        {
+          "path": "hibernate-orm-6.6.53.Final/org/hibernate/dialect/MySQLDialect.java",
+          "quote": "\t@Override\n\tpublic String getForUpdateString(String aliases) {\n\t\treturn supportsAliasLocks()\n\t\t\t\t? \" for update of \" + aliases\n\t\t\t\t// fall back to locking all aliases\n\t\t\t\t: getForUpdateString();\n\t}",
+          "limits": "별칭을 넘기는 호출(getWriteLockString(String aliases, int timeout))에서는 조각이 \" for update of <aliases>\" 다. MySQLDialect 는 supportsAliasLocks() 가 true 이고 getWriteRowLockStrategy() 가 RowLockStrategy.TABLE 을 돌려주므로, 별칭 경로를 쓰지 않는다는 조건이 주장에 빠져 있다."
+        },
+        {
+          "path": "hibernate-orm-6.6.53.Final/org/hibernate/dialect/TiDBDialect.java",
+          "quote": "public class TiDBDialect extends MySQLDialect {",
+          "limits": "\"MySQL 방언\" 을 클래스 계열로 읽으면 주장이 깨진다. TiDBDialect 는 getWriteLockString(int timeout) 을 덮어써 timeout > 0 에서 getForUpdateString() + \" wait \" + ... 를 만들고, MariaDBDialect 도 MySQLDialect 를 상속하면서 supportsWait() 를 true 로 돌려준다. 주장은 MySQLDialect 인스턴스 자신으로 범위를 좁혀야 한다."
+        }
+      ],
+      "searched": [
+        "hibernate-orm-6.6.53.Final/org/hibernate/dialect/Dialect.java",
+        "hibernate-orm-6.6.53.Final/org/hibernate/dialect/MySQLDialect.java",
+        "hibernate-orm-6.6.53.Final/org/hibernate/dialect/MariaDBDialect.java",
+        "hibernate-orm-6.6.53.Final/org/hibernate/dialect/TiDBDialect.java",
+        "hibernate-orm-6.6.53.Final/org/hibernate/dialect/lock/AbstractSelectLockingStrategy.java",
+        "hibernate-orm-6.6.53.Final/org/hibernate/dialect/RowLockStrategy.java"
+      ],
+      "deeper_anchor": {
+        "path": "hibernate-orm-6.6.53.Final/org/hibernate/dialect/lock/AbstractSelectLockingStrategy.java",
+        "quote": "\tprotected String generateLockString(int lockTimeout) {\n\t\tfinal SessionFactoryImplementor factory = lockable.getFactory();\n\t\tfinal LockOptions lockOptions = new LockOptions( lockMode );\n\t\tlockOptions.setTimeOut( lockTimeout );\n\t\tfinal SimpleSelect select =\n\t\t\t\tnew SimpleSelect( factory )\n\t\t\t\t\t\t.setLockOptions( lockOptions )\n\t\t\t\t\t\t.setTableName( lockable.getRootTableName() )\n\t\t\t\t\t\t.addColumn( lockable.getRootTableIdentifierColumnNames()[0] )\n\t\t\t\t\t\t.addRestriction( lockable.getRootTableIdentifierColumnNames() );\n\t\t\tif ( lockable.isVersioned() ) {\n\t\t\tselect.addRestriction( lockable.getVersionColumnName() );\n\t\t}",
+        "why": "Gen 의 인용 셋은 모두 문자열을 만드는 자리이고, 그 문자열이 어떤 타임아웃으로 어떤 문장에 붙는지는 정하지 않는다. 이 자리는 LockOptions 를 세워 조각을 고르고(determineSql 이 WAIT_FOREVER/NO_WAIT/SKIP_LOCKED 로 갈라 캐시한다) 그 문장에 버전 컬럼 제한까지 함께 붙인다. 즉 \"PESSIMISTIC_WRITE 가 만드는 SQL\" 의 참·거짓은 조각 상수가 아니라 여기서 갈린다. 다만 SQL AST 렌더링 쪽(org/hibernate/sql/ast)은 제공된 루트에 없어 로딩 시 잠금 경로는 이 루트로 확인할 수 없다."
+      },
+      "amendment_proposal": {
+        "sentence": "MySQLDialect 에서 PESSIMISTIC_WRITE 잠금 모드는 타임아웃이 WAIT_FOREVER 이고 별칭을 넘기지 않은 호출에서 \" for update\" 조각을 만든다. NO_WAIT 는 \" for update nowait\", SKIP_LOCKED 는 \" for update skip locked\" 가 되고, 수치 타임아웃은 supportsWait() 가 false 라 조각에 반영되지 않는다.",
+        "because": "limiting_clauses 의 MySQLDialect supportsSkipLocked/supportsNoWait/supportsWait 인용. 이 셋이 Gen 자신이 인용한 withTimeout 의 어느 가지가 실행되는지를 정하므로, 조각이 하나로 고정된다는 서술은 타임아웃 조건 없이는 성립하지 않는다."
+      }
+    },
+    {
+      "id": "claim-02",
+      "source_says": "코드를 직접 읽으면 두 구현이 kata_users 행을 기본키로 잠그고 그 호출을 findActive 앞에 두는 것은 맞다. 두 자리에서 서술이 실제보다 고르다. 첫째, alert-kata 의 lockUserForUpdate 는 find 의 반환을 버리므로 사용자 행이 없어도 예외 없이 지나가고, run3 의 lockSubscriber 는 null 이면 IllegalStateException 을 던진다. 둘째, alert-kata 에는 잠그지 않는 세 번째 경로가 있다 — AlertService.subscribe(site-05) 가 같은 AlertRepository 로 같은 테이블에 조회·INSERT 한다. failure 칸이 전제로 든 \"모든 경로가 같은 행을 같은 순서로 잠근다\" 는 이 저장소 안에서 이미 성립하지 않는다.",
+      "limiting_clauses": [
+        {
+          "path": "phase2/taskF/alert-kata/src/main/java/com/thinking/tennis/kata/AlertService.java",
+          "quote": "    @Transactional\n    public long subscribe(SubscribeCommand command) {\n        return repository.findActive(command)\n                .orElseGet(() -> repository.save(new AlertSubscription(command)))\n                .id();\n    }",
+          "limits": "\"두 구현\" 밖에 같은 테이블에 쓰는 세 번째 경로가 같은 모듈에 살아 있다. failure 칸의 \"모든 경로가 같은 행을 같은 순서로 잠그지 않으면 교착이 생긴다\" 와 complexity 칸의 줄 세우기 전제는 이 경로를 세지 않는다."
+        },
+        {
+          "path": "phase2/taskF/alert-kata/src/main/java/com/thinking/tennis/kata/AlertRepository.java",
+          "quote": "    public void lockUserForUpdate(long userId) {\n        entityManager.find(KataUser.class, userId, LockModeType.PESSIMISTIC_WRITE);\n    }",
+          "limits": "\"이미 커밋된 행을 기본키로 잠근다\" 가 성립하지 않는 경우(행 없음)에 두 구현의 동작이 갈린다. 이쪽은 잠금 없이 조회·INSERT 로 계속 진행하므로 줄 세우기가 조용히 사라진다. run3 의 lockSubscriber 만 그 경우를 예외로 끊는다."
+        },
+        {
+          "path": "hibernate-orm-6.6.53.Final/org/hibernate/dialect/lock/AbstractSelectLockingStrategy.java",
+          "quote": "\t\t\tif ( lockable.isVersioned() ) {\n\t\t\tselect.addRestriction( lockable.getVersionColumnName() );\n\t\t}",
+          "limits": "find 가 그 트랜잭션에서 KataUser 를 처음 접근할 때만 \"조회 앞의 잠금\" 이 단순한 잠금 SELECT 다. 엔티티가 이미 영속 컨텍스트에 있으면 잠금 승급 경로를 타고, KataUser 는 @Version 을 가지므로 잠금 SELECT 에 버전 컬럼 제한이 붙으며 행을 못 찾으면 StaleObjectStateException 이 된다. 주장은 이 조건을 달고 있지 않다."
+        }
+      ],
+      "searched": [
+        "phase2/taskF/alert-kata/src/main/java/com/thinking/tennis/kata/AlertRepository.java",
+        "phase2/taskF/alert-kata/src/main/java/com/thinking/tennis/kata/AlertService.java",
+        "phase2/taskF/alert-kata/src/main/java/com/thinking/tennis/kata/PessimisticAlertService.java",
+        "phase2/taskF/task4/step1/run3/impl/AlertRepository.java",
+        "phase2/taskF/task4/step1/run3/impl/AlertRegistrar.java",
+        "phase2/taskF/alert-kata/evidence/lock-comparison-results.md",
+        "phase2/taskF/task4/step1/run3/verdict.md"
+      ],
+      "code_mismatch": "latency·resource 칸의 수치는 alert-kata 의 PessimisticAlertService 를 LockComparisonTest 로 잰 것이고(lock-comparison-results.md), failure 칸의 0건은 run3 구현을 AlertSubscriptionTest 로 돌린 별도 실행이다(run3/verdict.md:37). 주장은 두 구현을 한 문장으로 묶지만, 묶인 수치는 각각 한쪽만 거쳤다. run3 구현의 지연과 연결 점유는 측정되지 않았다. 또 latency 칸이 가리키는 lock-comparison-results.md:16 은 표의 2회차 행이고, 문장이 쓴 11.831ms/12.963ms 를 \"세 번의 중앙값\" 으로 정리한 문장은 19행이다."
+    },
+    {
+      "id": "claim-03",
+      "source_says": "REQUIRES_NEW 가 기존 트랜잭션을 보류하고 새 트랜잭션을 시작하는 분기는 handleExistingTransaction 안에 있고, 그 메서드는 getTransaction 이 isExistingTransaction(transaction) 을 참으로 볼 때만 호출된다. isExistingTransaction 의 기본 구현은 false 이므로 \"진행 중인 트랜잭션\" 은 그 트랜잭션 매니저가 자기 자원으로 인식하는 것에 한정된다. 보류 자체도 선언이 아니라 suspend() → doSuspend() 에 맡겨지고, AbstractPlatformTransactionManager 의 기본 doSuspend 는 TransactionSuspensionNotSupportedException 을 던진다. 즉 \"보류하고 새로 시작한다\" 는 doSuspend 를 구현한 매니저에서만 성립하며, 실패하면 보류 대신 예외가 나간다.",
+      "limiting_clauses": [
+        {
+          "path": "spring-framework-6.2.19/org/springframework/transaction/support/AbstractPlatformTransactionManager.java",
+          "quote": "\t\tif (isExistingTransaction(transaction)) {\n\t\t\t// Existing transaction found -> check propagation behavior to find out how to behave.\n\t\t\treturn handleExistingTransaction(def, transaction, debugEnabled);\n\t\t}",
+          "limits": "Gen 이 인용한 REQUIRES_NEW 분기는 이 조건 아래에서만 실행된다. \"진행 중인 트랜잭션이 있으면\" 은 호출 스택에 트랜잭션이 있다는 뜻이 아니라 isExistingTransaction 이 참이라는 뜻이고, 그 기본 구현은 false 다."
+        },
+        {
+          "path": "spring-framework-6.2.19/org/springframework/transaction/support/AbstractPlatformTransactionManager.java",
+          "quote": "\tprotected Object doSuspend(Object transaction) throws TransactionException {\n\t\tthrow new TransactionSuspensionNotSupportedException(\n\t\t\t\t\"Transaction manager [\" + getClass().getName() + \"] does not support transaction suspension\");\n\t}",
+          "limits": "주장의 \"보류한다\" 는 템플릿 메서드에 위임된 동작이고 기본값은 예외다. 보류가 실제로 일어나는지는 전파 설정이 아니라 쓰고 있는 트랜잭션 매니저가 정한다."
+        },
+        {
+          "path": "spring-framework-6.2.19/org/springframework/transaction/support/AbstractPlatformTransactionManager.java",
+          "quote": "\tprotected final SuspendedResourcesHolder suspend(@Nullable Object transaction) throws TransactionException {\n\t\tif (TransactionSynchronizationManager.isSynchronizationActive()) {\n\t\t\tList<TransactionSynchronization> suspendedSynchronizations = doSuspendSynchronization();\n\t\t\ttry {\n\t\t\t\tObject suspendedResources = null;\n\t\t\t\tif (transaction != null) {\n\t\t\t\t\tsuspendedResources = doSuspend(transaction);\n\t\t\t\t}",
+          "limits": "보류되는 것은 트랜잭션 자원만이 아니라 동기화·이름·읽기전용·격리수준이 함께다. 반대로 동기화도 트랜잭션도 없으면 suspend 는 null 을 돌려주고 아무것도 보류하지 않는다 — Gen 이 두 번째로 인용한 suspend(null) 경로가 그 경우다."
+        }
+      ],
+      "searched": [
+        "spring-framework-6.2.19/org/springframework/transaction/support/AbstractPlatformTransactionManager.java",
+        "spring-framework-6.2.19/org/springframework/transaction/annotation/Propagation.java",
+        "spring-framework-6.2.19/org/springframework/transaction/TransactionDefinition.java",
+        "spring-framework-6.2.19/org/springframework/transaction/interceptor/TransactionAspectSupport.java"
+      ]
+    },
+    {
+      "id": "claim-04",
+      "source_says": "computeTransactionAttribute 가 allowPublicMethodsOnly() 와 Modifier.isPublic 으로 null 을 돌려주는 것, AnnotationTransactionAttributeSource 의 publicMethodsOnly 기본값이 true 인 것은 원문 그대로다. 다만 이 셋은 \"속성을 얻지 못한다\" 까지만 말한다. 그 null 이 동작이 되는 자리는 둘이다. TransactionAttributeSourcePointcut.matches 는 속성이 없으면 어드바이스를 붙이지 않으므로, 클래스의 @Transactional 메서드가 전부 비public 이면 프록시가 아예 서지 않는다. TransactionAspectSupport.invokeWithinTransaction 은 \"If the transaction attribute is null, the method is non-transactional\" 이라고 적고 트랜잭션 없이 대상 메서드를 호출한다. 또 기본값은 고정이 아니라 6.2 에서 setPublicMethodsOnly 로 바꿀 수 있고, 상위 클래스의 기본은 false 다.",
+      "limiting_clauses": [
+        {
+          "path": "spring-framework-6.2.19/org/springframework/transaction/interceptor/AbstractFallbackTransactionAttributeSource.java",
+          "quote": "\t/**\n\t * Should only public methods be allowed to have transactional semantics?\n\t * <p>The default implementation returns {@code false}.\n\t */\n\tprotected boolean allowPublicMethodsOnly() {\n\t\treturn false;\n\t}",
+          "limits": "public 제한은 Spring 의 트랜잭션 속성 조회 전체의 성질이 아니라 AnnotationTransactionAttributeSource 가 덮어쓴 값이다. 다른 TransactionAttributeSource 를 쓰면 비public 메서드도 속성을 얻는다."
+        },
+        {
+          "path": "spring-framework-6.2.19/org/springframework/transaction/annotation/AnnotationTransactionAttributeSource.java",
+          "quote": "\t * @param publicMethodsOnly whether to support public methods that carry\n\t * the {@code Transactional} annotation only (typically for use\n\t * with proxy-based AOP), or protected/private methods as well\n\t * (typically used with AspectJ class weaving)\n\t * @see #setPublicMethodsOnly\n\t */\n\tpublic AnnotationTransactionAttributeSource(boolean publicMethodsOnly) {",
+          "limits": "주장의 \"기본 설정에서는\" 이라는 단서가 전부를 떠받친다. 생성자 인자나 6.2 의 setPublicMethodsOnly 로 false 가 되면 같은 코드에서 비public 메서드도 속성을 얻으며, 원문은 AspectJ 클래스 위빙을 그 전형적 사용처로 적는다."
+        }
+      ],
+      "searched": [
+        "spring-framework-6.2.19/org/springframework/transaction/interceptor/AbstractFallbackTransactionAttributeSource.java",
+        "spring-framework-6.2.19/org/springframework/transaction/annotation/AnnotationTransactionAttributeSource.java",
+        "spring-framework-6.2.19/org/springframework/transaction/annotation/SpringTransactionAnnotationParser.java",
+        "spring-framework-6.2.19/org/springframework/transaction/interceptor/TransactionAttributeSourcePointcut.java",
+        "spring-framework-6.2.19/org/springframework/transaction/interceptor/TransactionAspectSupport.java",
+        "spring-framework-6.2.19/org/springframework/transaction/annotation/ProxyTransactionManagementConfiguration.java"
+      ],
+      "deeper_anchor": {
+        "path": "spring-framework-6.2.19/org/springframework/transaction/interceptor/TransactionAspectSupport.java",
+        "quote": "\t\t// If the transaction attribute is null, the method is non-transactional.\n\t\tTransactionAttributeSource tas = getTransactionAttributeSource();\n\t\tfinal TransactionAttribute txAttr = (tas != null ? tas.getTransactionAttribute(method, targetClass) : null);",
+        "why": "Gen 의 인용 셋은 속성 조회가 null 을 돌려준다는 것까지만 정한다. 이 지점(site-08~10)에서 사람이 알고 싶은 것은 그 메서드가 새 트랜잭션에서 도는가인데, 그 참·거짓은 여기서 갈린다 — txAttr 이 null 이면 createTransactionIfNecessary 가 트랜잭션 없는 TransactionInfo 를 만들고 Propagation.REQUIRES_NEW 는 읽히지도 않는다. 한 단계 앞의 TransactionAttributeSourcePointcut.matches 는 \"this.transactionAttributeSource.hasTransactionAttribute(method, targetClass)\" 로 어드바이스 부착 자체를 가른다."
+      },
+      "code_mismatch": "이 주장이 site-08~10 에 그대로 적용되면 대상 코드와 측정 기록이 충돌한다. OptimisticSubscriptionAttempt 의 선언은 \"long subscribe(SubscribeCommand command)\" 로 public 이 아니므로 속성이 null 이 되고, 그 호출은 트랜잭션 없이 실행된다. 그런데 같은 흐름이 부르는 AlertRepository.save 는 entityManager.persist 를 쓰고, Spring 의 공유 EntityManager 는 persist 를 활성 트랜잭션 없이 호출하면 예외를 던진다 — SharedEntityManagerCreator 의 transactionRequiringMethods 에 \"persist\" 가 들어 있고, 조건이 맞으면 \"No EntityManager with actual transaction available for current thread\" 로 TransactionRequiredException 이 난다. 반면 lock-comparison-results.md 는 같은 경로로 100회를 돌려 요청 오류 0회·충돌 100회를 적는다. 둘이 같이 참일 수는 없으므로, 측정이 지금 소스와 다른 코드에서 나왔거나 속성 조회가 null 이 아니었거나 둘 중 하나다. 이 자리를 사람이 먼저 열어 보는 것이 맞다."
+    },
+    {
+      "id": "claim-05",
+      "source_says": "NOT_SUPPORTED 분기는 handleExistingTransaction 안에 있으므로 기존 트랜잭션이 있을 때만 탄다. 주장은 그 조건을 달고 있어 원문과 어긋나지 않는다. 원문이 더 말하는 것은 그 반대쪽이다 — 기존 트랜잭션이 없으면 getTransaction 은 NOT_SUPPORTED 를 MANDATORY/REQUIRED 계열 어디에도 넣지 않고 마지막 else 로 보내, 실제 트랜잭션 없는 \"빈\" 상태를 만든다. 보류 역시 suspend() → doSuspend() 에 위임되고 기본 구현은 예외다.",
+      "limiting_clauses": [
+        {
+          "path": "spring-framework-6.2.19/org/springframework/transaction/support/AbstractPlatformTransactionManager.java",
+          "quote": "\t\telse {\n\t\t\t// Create \"empty\" transaction: no actual transaction, but potentially synchronization.\n\t\t\tif (def.getIsolationLevel() != TransactionDefinition.ISOLATION_DEFAULT && logger.isWarnEnabled()) {\n\t\t\t\tlogger.warn(\"Custom isolation level specified but no actual transaction initiated; \" +\n\t\t\t\t\t\t\"isolation level will effectively be ignored: \" + def);\n\t\t\t}\n\t\t\tboolean newSynchronization = (getTransactionSynchronization() == SYNCHRONIZATION_ALWAYS);\n\t\t\treturn prepareTransactionStatus(def, null, true, newSynchronization, debugEnabled, null);\n\t\t}",
+          "limits": "기존 트랜잭션이 없을 때 NOT_SUPPORTED 가 가는 자리다. 주장은 보류 쪽만 적고 있어, 대상 코드가 실제로 기대는 쪽(보류할 것이 없고 트랜잭션도 열리지 않는다)을 다루지 않는다."
+        },
+        {
+          "path": "spring-framework-6.2.19/org/springframework/transaction/support/AbstractPlatformTransactionManager.java",
+          "quote": "\tprotected Object doSuspend(Object transaction) throws TransactionException {\n\t\tthrow new TransactionSuspensionNotSupportedException(\n\t\t\t\t\"Transaction manager [\" + getClass().getName() + \"] does not support transaction suspension\");\n\t}",
+          "limits": "\"보류하고\" 는 매니저가 doSuspend 를 구현했을 때만 성립한다. 구현이 없으면 NOT_SUPPORTED 호출은 트랜잭션 없이 실행되는 대신 예외로 끝난다."
+        }
+      ],
+      "searched": [
+        "spring-framework-6.2.19/org/springframework/transaction/support/AbstractPlatformTransactionManager.java",
+        "spring-framework-6.2.19/org/springframework/transaction/annotation/Propagation.java",
+        "spring-framework-6.2.19/org/springframework/transaction/TransactionDefinition.java"
+      ],
+      "code_mismatch": "site-20~22 의 AlertService.subscribe 는 run3 에서 테스트가 직접 부르는 최외곽 진입점이고, 트랜잭션을 여는 것은 그 안쪽의 AlertRegistrar.register(REQUIRES_NEW) 다. 즉 이 코드가 실제로 기대는 것은 \"진행 중인 트랜잭션을 보류한다\" 가 아니라 \"재시도 루프가 트랜잭션 밖에서 돈다\" 이고, 그것은 기존 트랜잭션이 없는 쪽 분기가 보장한다. 보류 동작은 이 호출 경로에서 한 번도 실행되지 않는다. findings.md:56 도 같은 문장을 테스트가 가르지 않는 주장으로 적는다."
+    },
+    {
+      "id": "claim-06",
+      "source_says": "Transactional.propagation 의 기본값이 Propagation.REQUIRED 이고 그 열거 상수가 TransactionDefinition.PROPAGATION_REQUIRED 를 들고 있는 것은 원문 그대로다. 애노테이션의 기본값이 트랜잭션 정의로 옮겨 붙는 자리는 SpringTransactionAnnotationParser 가 attributes.getEnum(\"propagation\") 을 읽어 RuleBasedTransactionAttribute 에 setPropagationBehavior 하는 지점이다. 한 가지 덧붙일 것은 Gen 의 세 번째 인용이 PROPAGATION_REQUIRED 의 절반만 보여 준다는 점이다 — 그 가지는 기존 트랜잭션이 없을 때만이고, 있으면 \"regular participation in existing transaction\" 쪽으로 간다. 기본 전파가 \"새 트랜잭션을 만든다\" 로 읽히지 않게 해야 한다.",
+      "limiting_clauses": [
+        {
+          "path": "spring-framework-6.2.19/org/springframework/transaction/support/AbstractPlatformTransactionManager.java",
+          "quote": "\t\t// PROPAGATION_REQUIRED, PROPAGATION_SUPPORTS, PROPAGATION_MANDATORY:\n\t\t// regular participation in existing transaction.\n\t\tif (debugEnabled) {\n\t\t\tlogger.debug(\"Participating in existing transaction\");\n\t\t}",
+          "limits": "Gen 이 인용한 startTransaction 가지는 기존 트랜잭션이 없을 때의 절반이다. PROPAGATION_REQUIRED 의 나머지 절반은 새 트랜잭션을 만들지 않고 참여하는 것이며, site-05·site-11 처럼 다른 트랜잭션 안에서 불릴 수 있는 메서드에서는 이쪽이 실제 동작이다."
+        }
+      ],
+      "searched": [
+        "spring-framework-6.2.19/org/springframework/transaction/annotation/Transactional.java",
+        "spring-framework-6.2.19/org/springframework/transaction/annotation/Propagation.java",
+        "spring-framework-6.2.19/org/springframework/transaction/annotation/SpringTransactionAnnotationParser.java",
+        "spring-framework-6.2.19/org/springframework/transaction/support/AbstractPlatformTransactionManager.java",
+        "spring-framework-6.2.19/org/springframework/transaction/support/DefaultTransactionDefinition.java"
+      ],
+      "deeper_anchor": {
+        "path": "spring-framework-6.2.19/org/springframework/transaction/annotation/SpringTransactionAnnotationParser.java",
+        "quote": "\tprotected TransactionAttribute parseTransactionAnnotation(AnnotationAttributes attributes) {\n\t\tRuleBasedTransactionAttribute rbta = new RuleBasedTransactionAttribute();\n\n\t\tPropagation propagation = attributes.getEnum(\"propagation\");\n\t\trbta.setPropagationBehavior(propagation.value());",
+        "why": "Gen 은 애노테이션의 기본값 선언과 열거 상수의 값을 인용했는데, 둘 다 선언이다. 애노테이션에 적히지 않은 값이 실제 TransactionDefinition 의 전파 행동이 되는 것은 파서가 해석된 애노테이션 속성에서 enum 을 읽어 넣는 이 자리이고, 메타 애노테이션이나 클래스 수준 선언으로 값이 달라질 수 있는지도 여기서 갈린다."
+      }
+    },
+    {
+      "id": "claim-07",
+      "source_says": "delayIdentityInserts 는 세 조건의 논리곱이고, 트랜잭션이 진행 중이면 첫 항이 거짓이 되어 지연이 꺼지는 것은 맞다. 원문을 더 읽으면 두 가지가 붙는다. 첫째, 이 플래그는 useIdentityColumn(=generatedOnExecution) 이 참일 때 만들어지는 EntityIdentityInsertAction 에만 전달되고, 그 밖의 경로에서 만들어지는 EntityInsertAction 에는 전달되지 않는다 — 즉 플래그 자체가 IDENTITY 경로 전용이다. 둘째, persist 경로는 requiresImmediateIdAccess=false 로 들어오므로 남는 변수는 트랜잭션 유무뿐이다. \"지연 대상에서 빠진다\" 가 \"그 자리에서 INSERT 가 DB 로 나간다\" 로 이어지는지는 insert.isEarlyInsert() 를 읽는 handleGeneratedId 와 ActionQueue 가 정하는데, ActionQueue 와 EntityIdentityInsertAction 은 제공된 출처 루트에 없어 이 루트만으로는 끝까지 확인되지 않는다.",
+      "limiting_clauses": [
+        {
+          "path": "hibernate-orm-6.6.53.Final/org/hibernate/event/internal/AbstractSaveEventListener.java",
+          "quote": "\t\tif ( useIdentityColumn ) {\n\t\t\tfinal EntityIdentityInsertAction insert = new EntityIdentityInsertAction(\n\t\t\t\t\tvalues,\n\t\t\t\t\tentity,\n\t\t\t\t\tpersister,\n\t\t\t\t\tisVersionIncrementDisabled(),\n\t\t\t\t\tsource,\n\t\t\t\t\tdelayIdentityInserts\n\t\t\t);\n\t\t\tsource.getActionQueue().addAction( insert );\n\t\t\treturn insert;\n\t\t}",
+          "limits": "플래그가 전달되는 유일한 자리다. 식별자를 미리 받는 경로(할당 ID, 시퀀스)에서는 EntityInsertAction 이 만들어지고 플래그가 쓰이지 않으므로, 주장은 IDENTITY 생성 엔티티로 범위가 닫혀 있어야 한다."
+        },
+        {
+          "path": "hibernate-orm-6.6.53.Final/org/hibernate/event/internal/AbstractSaveEventListener.java",
+          "quote": "\t\tfinal Generator generator = persister.getGenerator();\n\t\tfinal boolean generatedOnExecution = generator.generatedOnExecution( entity, source );",
+          "limits": "주장의 \"IDENTITY INSERT\" 는 애노테이션의 선언이 아니라 generator.generatedOnExecution(entity, source) 의 런타임 판정으로 정해진다. 엔티티 인스턴스에 따라 달라질 수 있는 호출이므로, 매핑 선언만으로 참이라고 할 수 없다."
+        }
+      ],
+      "searched": [
+        "hibernate-orm-6.6.53.Final/org/hibernate/event/internal/AbstractSaveEventListener.java",
+        "hibernate-orm-6.6.53.Final/org/hibernate/event/internal/DefaultPersistEventListener.java",
+        "hibernate-orm-6.6.53.Final/org/hibernate/event/internal/AbstractFlushingEventListener.java",
+        "hibernate-orm-6.6.53.Final/org/hibernate/persister/entity/AbstractEntityPersister.java",
+        "hibernate-orm-6.6.53.Final (org/hibernate/engine/spi/ActionQueue.java, org/hibernate/action/internal/EntityIdentityInsertAction.java — 루트에 없음)"
+      ],
+      "deeper_anchor": {
+        "path": "hibernate-orm-6.6.53.Final/org/hibernate/event/internal/AbstractSaveEventListener.java",
+        "quote": "\tprivate static Object handleGeneratedId(boolean useIdentityColumn, Object id, AbstractEntityInsertAction insert) {\n\t\tif ( useIdentityColumn && insert.isEarlyInsert() ) {\n\t\t\tif ( insert instanceof EntityIdentityInsertAction ) {\n\t\t\t\tfinal Object generatedId = ((EntityIdentityInsertAction) insert).getGeneratedId();",
+        "why": "Gen 은 플래그를 계산하는 자리를 인용했다. 그 플래그가 관측 가능한 사실 — persist 가 돌아올 때 식별자가 이미 채워져 있는가, 곧 INSERT 가 이미 실행되었는가 — 로 바뀌는 자리는 여기다. isEarlyInsert() 가 참이어야 생성된 키를 읽어 돌려주므로, \"지연 대상에서 빠진다\" 가 \"이 자리에서 INSERT 가 나갔다\" 를 뜻하는지는 이 호출과 그 아래 ActionQueue 가 가른다."
+      }
+    },
+    {
+      "id": "claim-08",
+      "source_says": "코드는 주장대로다. currentUserVersion 이 네이티브 SELECT 로 version 을 읽고 advanceUserVersion 이 조건부 UPDATE 로 올리며, 갱신 행수가 1이 아니면 OptimisticConflictException 이 난다. 덧붙일 것 둘. 첫째, KataUser 의 @Version 은 이 저장소에서 어떤 경로도 쓰지 않는다 — KataUser 에는 세터도 변경 메서드도 없고, 낙관 경로는 KataUser 를 find 조차 하지 않는다(find 는 비관 경로 전용인 lockUserForUpdate 에만 있다). 따라서 complexity 칸의 \"버전을 올리는 주체가 둘로 갈린다\" 에서 두 번째 주체는 현재 코드에 없다. 둘째, 그 칸이 좌표로 든 AbstractSelectLockingStrategy 는 이미 영속 컨텍스트에 있는 엔티티의 잠금 승급에서 쓰이는 자리이고, 두 서비스 모두 트랜잭션의 첫 접근으로 find(…, PESSIMISTIC_WRITE) 를 하므로 그 경로를 타지 않는다. 맞물림은 코드에 있는 사실이 아니라 앞으로의 조건이다.",
+      "limiting_clauses": [
+        {
+          "path": "phase2/taskF/alert-kata/src/main/java/com/thinking/tennis/kata/KataUser.java",
+          "quote": "@Entity\n@Table(name = \"kata_users\")\npublic class KataUser {\n    @Id\n    private Long id;\n\n    // F-3에서 이미 존재하는 사용자 행을 대상으로 충돌을 감지할 수 있게 준비한다.\n    @Version\n    private long version;\n\n    protected KataUser() {\n    }\n}",
+          "limits": "@Version 이 관리할 변경 자체가 없다. 세터도 없고 JPA 로 이 엔티티를 수정하는 코드가 저장소에 없으므로, complexity 칸의 \"같은 컬럼을 @Version 과 네이티브 UPDATE 가 함께 다룬다\" 는 현재 코드의 사실이 아니라 전제가 생겼을 때의 이야기다."
+        },
+        {
+          "path": "hibernate-orm-6.6.53.Final/org/hibernate/dialect/lock/AbstractSelectLockingStrategy.java",
+          "quote": "\tprotected AbstractSelectLockingStrategy(Lockable lockable, LockMode lockMode) {\n\t\tthis.lockable = lockable;\n\t\tthis.lockMode = lockMode;\n\t\tthis.waitForeverSql = generateLockString( LockOptions.WAIT_FOREVER );\n\t}",
+          "limits": "버전 제한이 붙은 잠금 SELECT 와 StaleObjectStateException 은 이 잠금 전략을 탈 때만 나온다. 낙관 경로는 KataUser 를 아예 로드하지 않고, 비관 경로는 트랜잭션의 첫 접근에서 잠금과 함께 로드하므로 이 전략이 끼어들 자리가 없다. complexity 칸이 든 맞물림의 범위가 그만큼 좁다."
+        },
+        {
+          "path": "spring-framework-6.2.19/org/springframework/orm/jpa/SharedEntityManagerCreator.java",
+          "quote": "\tprivate static final Set<String> transactionRequiringMethods = Set.of(\n\t\t\t\"joinTransaction\",\n\t\t\t\"flush\",\n\t\t\t\"persist\",\n\t\t\t\"merge\",\n\t\t\t\"remove\",\n\t\t\t\"refresh\");",
+          "limits": "이 경로가 설명대로 돌려면 시도마다 실제 트랜잭션이 열려 있어야 한다. 공유 EntityManager 는 활성 트랜잭션 없이 persist 가 불리면 TransactionRequiredException 을 던지므로, REQUIRES_NEW 가 적용되지 않는 경우 낙관 경로는 충돌 재시도가 아니라 persist 예외로 끝난다. claim-04 의 code_mismatch 와 같은 자리다."
+        }
+      ],
+      "searched": [
+        "phase2/taskF/alert-kata/src/main/java/com/thinking/tennis/kata/AlertRepository.java",
+        "phase2/taskF/alert-kata/src/main/java/com/thinking/tennis/kata/KataUser.java",
+        "phase2/taskF/alert-kata/src/main/java/com/thinking/tennis/kata/OptimisticSubscriptionAttempt.java",
+        "phase2/taskF/alert-kata/src/main/java/com/thinking/tennis/kata/OptimisticAlertService.java",
+        "hibernate-orm-6.6.53.Final/org/hibernate/dialect/lock/AbstractSelectLockingStrategy.java",
+        "spring-framework-6.2.19/org/springframework/orm/jpa/SharedEntityManagerCreator.java"
+      ],
+      "code_mismatch": "complexity 칸은 \"버전을 올리는 주체가 둘로 갈린다\" 를 현재 상태로 적지만, 이 코드에서 version 을 올리는 주체는 네이티브 UPDATE 하나뿐이다. 또 그 칸이 든 Hibernate 경로(버전 제한이 붙은 잠금 SELECT → StaleObjectStateException)는 낙관 경로가 KataUser 를 로드하지 않으므로 실행될 자리가 없다. 리포트용 기록이다."
+    },
+    {
+      "id": "claim-09",
+      "source_says": "상수와 루프는 주장대로다. 두 구현의 \"재시도\" 가 같은 것을 세지 않는다는 점이 서술에서 빠져 있다. 낙관 경로의 5회는 OptimisticConflictException 만 잡으므로 애플리케이션이 만든 CAS 실패만 재시도하고, 교착·잠금 대기 초과 같은 DB 쪽 경쟁 실패는 그대로 올라간다. run3 의 3회는 DataIntegrityViolationException 과 ConcurrencyFailureException 을 잡으므로 경쟁이 아닌 무결성 위반(예: 외래키 위반)도 같은 예산을 세 번 태운 뒤에야 실패한다. 반대로 run3 의 lockSubscriber 가 던지는 IllegalStateException 은 catch 밖이라 예산과 무관하게 즉시 나간다. 상한을 \"고정 횟수\" 하나로 묶으면 이 차이가 보이지 않는다.",
+      "limiting_clauses": [
+        {
+          "path": "phase2/taskF/task4/step1/run3/impl/AlertService.java",
+          "quote": "            } catch (DataIntegrityViolationException | ConcurrencyFailureException conflict) {\n                // 유일 제약 위반, 교착, 잠금 대기 초과는 경쟁의 결과이므로 새 트랜잭션에서 다시 판단한다.\n                lastFailure = conflict;\n            }",
+          "limits": "예산이 걸리는 대상이 \"경쟁\" 이 아니라 두 예외 계열 전체다. 재시도해도 결과가 같은 무결성 위반(외래키 위반 등)도 3회를 소모하고, 주장의 \"재시도를 고정 횟수로 한정한다\" 는 그 경우 지연만 세 배로 만든다."
+        },
+        {
+          "path": "phase2/taskF/alert-kata/src/main/java/com/thinking/tennis/kata/OptimisticAlertService.java",
+          "quote": "            } catch (OptimisticConflictException conflict) {\n                conflictCount.incrementAndGet();\n                if (attemptNumber == MAX_ATTEMPTS) {\n                    throw conflict;\n                }\n            }",
+          "limits": "낙관 경로의 5회는 자기가 던진 CAS 실패에만 적용된다. 두 구현의 상수 5와 3은 서로 다른 실패 집합의 예산이므로 같은 축에서 비교되지 않는다."
+        },
+        {
+          "path": "phase2/taskF/task4/step1/run3/impl/AlertRepository.java",
+          "quote": "        KataUser subscriber = entityManager.find(KataUser.class, userId, LockModeType.PESSIMISTIC_WRITE);\n        if (subscriber == null) {\n            throw new IllegalStateException(\"Unknown subscriber: \" + userId);\n        }",
+          "limits": "같은 루프 안에서 던져지지만 catch 에 걸리지 않는 경로가 있다. 상한이 모든 실패를 덮는다는 인상을 주장이 주는데, 이 예외는 1회 시도에서 바로 호출자에게 나간다."
+        }
+      ],
+      "searched": [
+        "phase2/taskF/alert-kata/src/main/java/com/thinking/tennis/kata/OptimisticAlertService.java",
+        "phase2/taskF/alert-kata/src/main/java/com/thinking/tennis/kata/OptimisticSubscriptionAttempt.java",
+        "phase2/taskF/task4/step1/run3/impl/AlertService.java",
+        "phase2/taskF/task4/step1/run3/impl/AlertRepository.java",
+        "phase2/taskF/task4/step1/findings.md",
+        "phase2/taskF/task4/step1/run3/verdict.md"
+      ],
+      "amendment_proposal": {
+        "sentence": "재시도를 고정 횟수 상수로 한정한다. 낙관 경로는 자기가 던진 버전 충돌만 5회까지, run3 구현은 DataIntegrityViolationException·ConcurrencyFailureException 계열을 3회까지 재시도하고, 그 밖의 예외는 예산과 무관하게 바로 호출자에게 나간다.",
+        "because": "limiting_clauses 의 run3 AlertService catch 절 인용과 OptimisticAlertService catch 절 인용. 두 인용이 예산의 적용 대상이 서로 다른 예외 집합임을 보이므로, \"5회·3회\" 를 같은 축의 두 값으로 적은 문장은 원문보다 넓다."
+      }
+    },
+    {
+      "id": "claim-10",
+      "source_says": "스키마 파일은 주장대로다. 생성 컬럼 watching_marker 가 STORED 로 선언되고 유일 제약의 마지막 열로 들어가 있다. 다만 주장이 성립하는 이유 — \"유일 인덱스가 NULL 을 서로 다른 값으로 본다\" — 는 제공된 1차 출처 루트 안에 근거가 없다. SOURCES_JSON 이 가리키는 copies 디렉터리는 존재하지 않아 허용 호스트의 MySQL 문서 사본이 하나도 없고, Hibernate·Spring·JDK 루트에 그 동작을 정하는 자리는 없다. 지금 이 주장을 받치는 것은 같은 스키마 파일의 주석(= 대상 코드 자신)과, findings.md 가 적은 \"run 1 이 별도 컨테이너로 따로 확인했다\" 는 측정 기록뿐이다. 1차 출처 인용으로는 아직 닫히지 않았다.",
+      "limiting_clauses": [],
+      "searched": [
+        ".codex/skills/source-evidence-agent/copies (디렉터리 없음 — 파일 0개)",
+        "hibernate-orm-6.6.53.Final/org/hibernate/dialect/MySQLDialect.java",
+        "hibernate-orm-6.6.53.Final/org/hibernate/dialect/Dialect.java",
+        "phase2/taskF/task4/step1/run3/impl/schema.sql",
+        "phase2/taskF/task4/step1/findings.md",
+        "phase2/taskF/task4/step1/run3/test.log"
+      ],
+      "code_mismatch": "주장의 두 번째 인용은 schema.sql 의 주석이다. 주석은 대상 코드이지 출처가 아니므로, \"MySQL 의 유일 인덱스는 NULL 을 서로 다른 값으로 본다\" 는 지금 자기 자신으로 증명되고 있다. findings.md:55 는 같은 문장을 \"테스트가 가르지 않는다. run 1 이 별도 컨테이너로 따로 확인했다\" 로 분류한다. 측정 좌표들(test.log:575 의 10/10·20.27s, findings.md:34·38)은 확인했고 적힌 대로였다."
+    }
+  ],
+  "missing_sites": [
+    {
+      "site": "site-18",
+      "why": "claim-07 이 이 지점을 달고 있지만 다루는 것은 persist 시점의 IDENTITY INSERT 지연이고, flush 가 무엇을 하는지는 어떤 주장도 말하지 않는다. run3 의 save() 는 persist 뒤에 flush() 를 부르며 주석은 \"persist 시점에 INSERT 가 나간다\" 고 적는다. 두 문장이 같이 참이면 그 flush() 는 이 INSERT 에 대해 할 일이 없고, 거짓이면 유일 제약 위반이 드러나는 자리가 flush() 다. 구현의 안전망이 어디서 발화하는지가 여기서 갈리므로 별도 사실 주장이 필요하다."
+    },
+    {
+      "site": "site-06",
+      "why": "@Version 이 달린 지점인데 claim-08 은 \"@Version 관리에 맡기지 않는다\" 는 선택만 적고, @Version 선언 자체가 이 코드에서 무엇을 켜는지는 아무 주장도 말하지 않는다. 실제로는 KataUser 를 잠글 때 잠금 SELECT 에 버전 컬럼 제한을 붙이는 경로를 켜고, 그 경로는 애플리케이션이 네이티브로 올린 버전과 맞물릴 수 있다. 선언을 지워도 되는지를 가르는 사실 주장이 비어 있다."
+    },
+    {
+      "site": "site-03",
+      "why": "네이티브 쿼리가 영속 컨텍스트와 어떻게 맞물리는지를 가르는 주장이 없다. claim-08 은 이 호출을 선택으로만 다루는데, 네이티브 SELECT 가 보류 중인 JPA 변경을 플러시한 뒤 읽는지, 1차 캐시를 우회하는지에 따라 같은 트랜잭션 안에서 읽는 version 값이 달라진다. 충돌 감지의 정확성이 그 동작에 직접 달려 있다."
+    }
+  ]
+}

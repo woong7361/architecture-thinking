@@ -1,0 +1,172 @@
+{
+  "sites": [
+    {
+      "site": "phase2/taskF/alert-kata/src/main/java/com/thinking/tennis/kata/AlertRepository.java:34",
+      "rule": "entity_manager_op",
+      "api": "find",
+      "line": "entityManager.find(KataUser.class, userId, LockModeType.PESSIMISTIC_WRITE);",
+      "id": "site-01"
+    },
+    {
+      "site": "phase2/taskF/alert-kata/src/main/java/com/thinking/tennis/kata/AlertRepository.java:34",
+      "rule": "lock_mode",
+      "api": "PESSIMISTIC_WRITE",
+      "line": "entityManager.find(KataUser.class, userId, LockModeType.PESSIMISTIC_WRITE);",
+      "id": "site-02"
+    },
+    {
+      "site": "phase2/taskF/alert-kata/src/main/java/com/thinking/tennis/kata/AlertRepository.java:38",
+      "rule": "entity_manager_op",
+      "api": "createNativeQuery",
+      "line": "Number version = (Number) entityManager.createNativeQuery(\"SELECT version FROM kata_users WHERE id = ?\")",
+      "id": "site-03"
+    },
+    {
+      "site": "phase2/taskF/alert-kata/src/main/java/com/thinking/tennis/kata/AlertRepository.java:57",
+      "rule": "entity_manager_op",
+      "api": "persist",
+      "line": "entityManager.persist(subscription);",
+      "id": "site-04"
+    },
+    {
+      "site": "phase2/taskF/alert-kata/src/main/java/com/thinking/tennis/kata/AlertService.java:14",
+      "rule": "transactional",
+      "api": "Transactional",
+      "line": "@Transactional",
+      "id": "site-05"
+    },
+    {
+      "site": "phase2/taskF/alert-kata/src/main/java/com/thinking/tennis/kata/KataUser.java:15",
+      "rule": "jpa_version",
+      "api": "Version",
+      "line": "@Version",
+      "id": "site-06"
+    },
+    {
+      "site": "phase2/taskF/alert-kata/src/main/java/com/thinking/tennis/kata/OptimisticAlertService.java:8",
+      "rule": "retry_budget",
+      "api": "MAX_ATTEMPTS",
+      "line": "private static final int MAX_ATTEMPTS = 5;",
+      "id": "site-07"
+    },
+    {
+      "site": "phase2/taskF/alert-kata/src/main/java/com/thinking/tennis/kata/OptimisticSubscriptionAttempt.java:15",
+      "rule": "propagation_value",
+      "api": "REQUIRES_NEW",
+      "line": "@Transactional(propagation = Propagation.REQUIRES_NEW)",
+      "id": "site-08"
+    },
+    {
+      "site": "phase2/taskF/alert-kata/src/main/java/com/thinking/tennis/kata/OptimisticSubscriptionAttempt.java:15",
+      "rule": "transaction_attribute",
+      "api": "propagation",
+      "line": "@Transactional(propagation = Propagation.REQUIRES_NEW)",
+      "id": "site-09"
+    },
+    {
+      "site": "phase2/taskF/alert-kata/src/main/java/com/thinking/tennis/kata/OptimisticSubscriptionAttempt.java:15",
+      "rule": "transactional",
+      "api": "Transactional",
+      "line": "@Transactional(propagation = Propagation.REQUIRES_NEW)",
+      "id": "site-10"
+    },
+    {
+      "site": "phase2/taskF/alert-kata/src/main/java/com/thinking/tennis/kata/PessimisticAlertService.java:14",
+      "rule": "transactional",
+      "api": "Transactional",
+      "line": "@Transactional",
+      "id": "site-11"
+    },
+    {
+      "site": "phase2/taskF/task4/step1/run3/impl/AlertRegistrar.java:19",
+      "rule": "propagation_value",
+      "api": "REQUIRES_NEW",
+      "line": "@Transactional(propagation = Propagation.REQUIRES_NEW)",
+      "id": "site-12"
+    },
+    {
+      "site": "phase2/taskF/task4/step1/run3/impl/AlertRegistrar.java:19",
+      "rule": "transaction_attribute",
+      "api": "propagation",
+      "line": "@Transactional(propagation = Propagation.REQUIRES_NEW)",
+      "id": "site-13"
+    },
+    {
+      "site": "phase2/taskF/task4/step1/run3/impl/AlertRegistrar.java:19",
+      "rule": "transactional",
+      "api": "Transactional",
+      "line": "@Transactional(propagation = Propagation.REQUIRES_NEW)",
+      "id": "site-14"
+    },
+    {
+      "site": "phase2/taskF/task4/step1/run3/impl/AlertRepository.java:21",
+      "rule": "entity_manager_op",
+      "api": "find",
+      "line": "KataUser subscriber = entityManager.find(KataUser.class, userId, LockModeType.PESSIMISTIC_WRITE);",
+      "id": "site-15"
+    },
+    {
+      "site": "phase2/taskF/task4/step1/run3/impl/AlertRepository.java:21",
+      "rule": "lock_mode",
+      "api": "PESSIMISTIC_WRITE",
+      "line": "KataUser subscriber = entityManager.find(KataUser.class, userId, LockModeType.PESSIMISTIC_WRITE);",
+      "id": "site-16"
+    },
+    {
+      "site": "phase2/taskF/task4/step1/run3/impl/AlertRepository.java:45",
+      "rule": "entity_manager_op",
+      "api": "persist",
+      "line": "entityManager.persist(subscription);",
+      "id": "site-17"
+    },
+    {
+      "site": "phase2/taskF/task4/step1/run3/impl/AlertRepository.java:47",
+      "rule": "entity_manager_op",
+      "api": "flush",
+      "line": "entityManager.flush();",
+      "id": "site-18"
+    },
+    {
+      "site": "phase2/taskF/task4/step1/run3/impl/AlertService.java:11",
+      "rule": "retry_budget",
+      "api": "MAX_ATTEMPTS",
+      "line": "private static final int MAX_ATTEMPTS = 3;",
+      "id": "site-19"
+    },
+    {
+      "site": "phase2/taskF/task4/step1/run3/impl/AlertService.java:23",
+      "rule": "propagation_value",
+      "api": "NOT_SUPPORTED",
+      "line": "@Transactional(propagation = Propagation.NOT_SUPPORTED)",
+      "id": "site-20"
+    },
+    {
+      "site": "phase2/taskF/task4/step1/run3/impl/AlertService.java:23",
+      "rule": "transaction_attribute",
+      "api": "propagation",
+      "line": "@Transactional(propagation = Propagation.NOT_SUPPORTED)",
+      "id": "site-21"
+    },
+    {
+      "site": "phase2/taskF/task4/step1/run3/impl/AlertService.java:23",
+      "rule": "transactional",
+      "api": "Transactional",
+      "line": "@Transactional(propagation = Propagation.NOT_SUPPORTED)",
+      "id": "site-22"
+    },
+    {
+      "site": "phase2/taskF/task4/step1/run3/impl/schema.sql:19",
+      "rule": "sql_generated_column",
+      "api": "GENERATED ALWAYS AS",
+      "line": "GENERATED ALWAYS AS (CASE WHEN status = 'WATCHING' THEN 1 ELSE NULL END) STORED,",
+      "id": "site-23"
+    },
+    {
+      "site": "phase2/taskF/task4/step1/run3/impl/schema.sql:22",
+      "rule": "sql_unique_constraint",
+      "api": "UNIQUE",
+      "line": "UNIQUE (user_id, court_id, play_date, time_slot, watching_marker),",
+      "id": "site-24"
+    }
+  ]
+}

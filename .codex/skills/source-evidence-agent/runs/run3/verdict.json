@@ -1,0 +1,50 @@
+{
+  "status": "READY",
+  "violations": [],
+  "unmeasured": [],
+  "below": [],
+  "observations": [
+    {
+      "rule": "limiting_clause_missed",
+      "point": "claim-01",
+      "where": "spring-framework-6.2.19/org/springframework/transaction/annotation/AnnotationTransactionAttributeSource.java",
+      "detail": "Critique 이 가져온 제한 조항을 Gen 이 가져오지 않았다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "limiting_clause_missed",
+      "point": "claim-05",
+      "where": "hibernate-orm-6.6.53.Final/org/hibernate/dialect/lock/PessimisticWriteUpdateLockingStrategy.java",
+      "detail": "Critique 이 가져온 제한 조항을 Gen 이 가져오지 않았다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "limiting_clause_missed",
+      "point": "claim-05",
+      "where": "hibernate-orm-6.6.53.Final/org/hibernate/persister/entity/AbstractEntityPersister.java",
+      "detail": "Critique 이 가져온 제한 조항을 Gen 이 가져오지 않았다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "limiting_clause_missed",
+      "point": "claim-07",
+      "where": "hibernate-orm-6.6.53.Final/org/hibernate/event/internal/DefaultFlushEventListener.java",
+      "detail": "Critique 이 가져온 제한 조항을 Gen 이 가져오지 않았다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "limiting_clause_missed",
+      "point": "claim-08",
+      "where": "hibernate-orm-6.6.53.Final/org/hibernate/dialect/Dialect.java",
+      "detail": "Critique 이 가져온 제한 조항을 Gen 이 가져오지 않았다",
+      "verdict": "observation"
+    },
+    {
+      "rule": "limiting_clause_missed",
+      "point": "claim-09",
+      "where": "phase2/taskF/task4/step1/run3/impl/AlertRegistrar.java",
+      "detail": "Critique 이 가져온 제한 조항을 Gen 이 가져오지 않았다",
+      "verdict": "observation"
+    }
+  ]
+}

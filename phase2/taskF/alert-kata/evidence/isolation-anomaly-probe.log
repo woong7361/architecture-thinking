@@ -1,0 +1,169 @@
+ENV java=17 database=8.4.8 driver=mysql-connector-j-9.7.0 (Revision: 0aade1f13bcc98faf7dda5c02e782481eb291f62)
+LEVEL requested=READ UNCOMMITTED readerSession=READ-UNCOMMITTED writerSession=READ-UNCOMMITTED
+ROUND probe=dirtyRead level=READ UNCOMMITTED round=1 outcome=VISIBLE writeNote=null
+ROUND probe=phantom level=READ UNCOMMITTED round=1 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ UNCOMMITTED round=2 outcome=VISIBLE writeNote=null
+ROUND probe=phantom level=READ UNCOMMITTED round=2 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ UNCOMMITTED round=3 outcome=VISIBLE writeNote=null
+ROUND probe=phantom level=READ UNCOMMITTED round=3 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ UNCOMMITTED round=4 outcome=VISIBLE writeNote=null
+ROUND probe=phantom level=READ UNCOMMITTED round=4 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ UNCOMMITTED round=5 outcome=VISIBLE writeNote=null
+ROUND probe=phantom level=READ UNCOMMITTED round=5 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ UNCOMMITTED round=6 outcome=VISIBLE writeNote=null
+ROUND probe=phantom level=READ UNCOMMITTED round=6 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ UNCOMMITTED round=7 outcome=VISIBLE writeNote=null
+ROUND probe=phantom level=READ UNCOMMITTED round=7 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ UNCOMMITTED round=8 outcome=VISIBLE writeNote=null
+ROUND probe=phantom level=READ UNCOMMITTED round=8 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ UNCOMMITTED round=9 outcome=VISIBLE writeNote=null
+ROUND probe=phantom level=READ UNCOMMITTED round=9 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ UNCOMMITTED round=10 outcome=VISIBLE writeNote=null
+ROUND probe=phantom level=READ UNCOMMITTED round=10 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ UNCOMMITTED round=11 outcome=VISIBLE writeNote=null
+ROUND probe=phantom level=READ UNCOMMITTED round=11 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ UNCOMMITTED round=12 outcome=VISIBLE writeNote=null
+ROUND probe=phantom level=READ UNCOMMITTED round=12 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ UNCOMMITTED round=13 outcome=VISIBLE writeNote=null
+ROUND probe=phantom level=READ UNCOMMITTED round=13 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ UNCOMMITTED round=14 outcome=VISIBLE writeNote=null
+ROUND probe=phantom level=READ UNCOMMITTED round=14 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ UNCOMMITTED round=15 outcome=VISIBLE writeNote=null
+ROUND probe=phantom level=READ UNCOMMITTED round=15 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ UNCOMMITTED round=16 outcome=VISIBLE writeNote=null
+ROUND probe=phantom level=READ UNCOMMITTED round=16 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ UNCOMMITTED round=17 outcome=VISIBLE writeNote=null
+ROUND probe=phantom level=READ UNCOMMITTED round=17 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ UNCOMMITTED round=18 outcome=VISIBLE writeNote=null
+ROUND probe=phantom level=READ UNCOMMITTED round=18 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ UNCOMMITTED round=19 outcome=VISIBLE writeNote=null
+ROUND probe=phantom level=READ UNCOMMITTED round=19 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ UNCOMMITTED round=20 outcome=VISIBLE writeNote=null
+ROUND probe=phantom level=READ UNCOMMITTED round=20 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+SUMMARY level=READ UNCOMMITTED rounds=20 dirtyRead={VISIBLE=20} phantom={VISIBLE/rows=1=20}
+LEVEL requested=READ COMMITTED readerSession=READ-COMMITTED writerSession=READ-COMMITTED
+ROUND probe=dirtyRead level=READ COMMITTED round=1 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=READ COMMITTED round=1 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ COMMITTED round=2 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=READ COMMITTED round=2 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ COMMITTED round=3 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=READ COMMITTED round=3 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ COMMITTED round=4 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=READ COMMITTED round=4 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ COMMITTED round=5 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=READ COMMITTED round=5 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ COMMITTED round=6 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=READ COMMITTED round=6 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ COMMITTED round=7 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=READ COMMITTED round=7 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ COMMITTED round=8 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=READ COMMITTED round=8 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ COMMITTED round=9 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=READ COMMITTED round=9 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ COMMITTED round=10 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=READ COMMITTED round=10 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ COMMITTED round=11 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=READ COMMITTED round=11 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ COMMITTED round=12 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=READ COMMITTED round=12 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ COMMITTED round=13 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=READ COMMITTED round=13 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ COMMITTED round=14 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=READ COMMITTED round=14 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ COMMITTED round=15 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=READ COMMITTED round=15 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ COMMITTED round=16 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=READ COMMITTED round=16 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ COMMITTED round=17 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=READ COMMITTED round=17 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ COMMITTED round=18 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=READ COMMITTED round=18 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ COMMITTED round=19 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=READ COMMITTED round=19 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=READ COMMITTED round=20 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=READ COMMITTED round=20 outcome=VISIBLE firstRead=0 secondRead=1 rowsAfterReaderInsert=1 writeNote=null readerInsertNote=null
+SUMMARY level=READ COMMITTED rounds=20 dirtyRead={NOT_VISIBLE=20} phantom={VISIBLE/rows=1=20}
+LEVEL requested=REPEATABLE READ readerSession=REPEATABLE-READ writerSession=REPEATABLE-READ
+ROUND probe=dirtyRead level=REPEATABLE READ round=1 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=REPEATABLE READ round=1 outcome=NOT_VISIBLE firstRead=0 secondRead=0 rowsAfterReaderInsert=2 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=REPEATABLE READ round=2 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=REPEATABLE READ round=2 outcome=NOT_VISIBLE firstRead=0 secondRead=0 rowsAfterReaderInsert=2 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=REPEATABLE READ round=3 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=REPEATABLE READ round=3 outcome=NOT_VISIBLE firstRead=0 secondRead=0 rowsAfterReaderInsert=2 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=REPEATABLE READ round=4 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=REPEATABLE READ round=4 outcome=NOT_VISIBLE firstRead=0 secondRead=0 rowsAfterReaderInsert=2 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=REPEATABLE READ round=5 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=REPEATABLE READ round=5 outcome=NOT_VISIBLE firstRead=0 secondRead=0 rowsAfterReaderInsert=2 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=REPEATABLE READ round=6 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=REPEATABLE READ round=6 outcome=NOT_VISIBLE firstRead=0 secondRead=0 rowsAfterReaderInsert=2 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=REPEATABLE READ round=7 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=REPEATABLE READ round=7 outcome=NOT_VISIBLE firstRead=0 secondRead=0 rowsAfterReaderInsert=2 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=REPEATABLE READ round=8 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=REPEATABLE READ round=8 outcome=NOT_VISIBLE firstRead=0 secondRead=0 rowsAfterReaderInsert=2 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=REPEATABLE READ round=9 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=REPEATABLE READ round=9 outcome=NOT_VISIBLE firstRead=0 secondRead=0 rowsAfterReaderInsert=2 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=REPEATABLE READ round=10 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=REPEATABLE READ round=10 outcome=NOT_VISIBLE firstRead=0 secondRead=0 rowsAfterReaderInsert=2 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=REPEATABLE READ round=11 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=REPEATABLE READ round=11 outcome=NOT_VISIBLE firstRead=0 secondRead=0 rowsAfterReaderInsert=2 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=REPEATABLE READ round=12 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=REPEATABLE READ round=12 outcome=NOT_VISIBLE firstRead=0 secondRead=0 rowsAfterReaderInsert=2 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=REPEATABLE READ round=13 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=REPEATABLE READ round=13 outcome=NOT_VISIBLE firstRead=0 secondRead=0 rowsAfterReaderInsert=2 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=REPEATABLE READ round=14 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=REPEATABLE READ round=14 outcome=NOT_VISIBLE firstRead=0 secondRead=0 rowsAfterReaderInsert=2 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=REPEATABLE READ round=15 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=REPEATABLE READ round=15 outcome=NOT_VISIBLE firstRead=0 secondRead=0 rowsAfterReaderInsert=2 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=REPEATABLE READ round=16 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=REPEATABLE READ round=16 outcome=NOT_VISIBLE firstRead=0 secondRead=0 rowsAfterReaderInsert=2 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=REPEATABLE READ round=17 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=REPEATABLE READ round=17 outcome=NOT_VISIBLE firstRead=0 secondRead=0 rowsAfterReaderInsert=2 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=REPEATABLE READ round=18 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=REPEATABLE READ round=18 outcome=NOT_VISIBLE firstRead=0 secondRead=0 rowsAfterReaderInsert=2 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=REPEATABLE READ round=19 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=REPEATABLE READ round=19 outcome=NOT_VISIBLE firstRead=0 secondRead=0 rowsAfterReaderInsert=2 writeNote=null readerInsertNote=null
+ROUND probe=dirtyRead level=REPEATABLE READ round=20 outcome=NOT_VISIBLE writeNote=null
+ROUND probe=phantom level=REPEATABLE READ round=20 outcome=NOT_VISIBLE firstRead=0 secondRead=0 rowsAfterReaderInsert=2 writeNote=null readerInsertNote=null
+SUMMARY level=REPEATABLE READ rounds=20 dirtyRead={NOT_VISIBLE=20} phantom={NOT_VISIBLE/rows=2=20}
+LEVEL requested=SERIALIZABLE readerSession=SERIALIZABLE writerSession=SERIALIZABLE
+ROUND probe=dirtyRead level=SERIALIZABLE round=1 outcome=READ_BLOCKED:Lock wait timeout exceeded; try restarting transaction writeNote=null
+ROUND probe=phantom level=SERIALIZABLE round=1 outcome=WRITE_BLOCKED firstRead=0 secondRead=0 rowsAfterReaderInsert=1 writeNote=Lock wait timeout exceeded; try restarting transaction readerInsertNote=null
+ROUND probe=dirtyRead level=SERIALIZABLE round=2 outcome=READ_BLOCKED:Lock wait timeout exceeded; try restarting transaction writeNote=null
+ROUND probe=phantom level=SERIALIZABLE round=2 outcome=WRITE_BLOCKED firstRead=0 secondRead=0 rowsAfterReaderInsert=1 writeNote=Lock wait timeout exceeded; try restarting transaction readerInsertNote=null
+ROUND probe=dirtyRead level=SERIALIZABLE round=3 outcome=READ_BLOCKED:Lock wait timeout exceeded; try restarting transaction writeNote=null
+ROUND probe=phantom level=SERIALIZABLE round=3 outcome=WRITE_BLOCKED firstRead=0 secondRead=0 rowsAfterReaderInsert=1 writeNote=Lock wait timeout exceeded; try restarting transaction readerInsertNote=null
+ROUND probe=dirtyRead level=SERIALIZABLE round=4 outcome=READ_BLOCKED:Lock wait timeout exceeded; try restarting transaction writeNote=null
+ROUND probe=phantom level=SERIALIZABLE round=4 outcome=WRITE_BLOCKED firstRead=0 secondRead=0 rowsAfterReaderInsert=1 writeNote=Lock wait timeout exceeded; try restarting transaction readerInsertNote=null
+ROUND probe=dirtyRead level=SERIALIZABLE round=5 outcome=READ_BLOCKED:Lock wait timeout exceeded; try restarting transaction writeNote=null
+ROUND probe=phantom level=SERIALIZABLE round=5 outcome=WRITE_BLOCKED firstRead=0 secondRead=0 rowsAfterReaderInsert=1 writeNote=Lock wait timeout exceeded; try restarting transaction readerInsertNote=null
+ROUND probe=dirtyRead level=SERIALIZABLE round=6 outcome=READ_BLOCKED:Lock wait timeout exceeded; try restarting transaction writeNote=null
+ROUND probe=phantom level=SERIALIZABLE round=6 outcome=WRITE_BLOCKED firstRead=0 secondRead=0 rowsAfterReaderInsert=1 writeNote=Lock wait timeout exceeded; try restarting transaction readerInsertNote=null
+ROUND probe=dirtyRead level=SERIALIZABLE round=7 outcome=READ_BLOCKED:Lock wait timeout exceeded; try restarting transaction writeNote=null
+ROUND probe=phantom level=SERIALIZABLE round=7 outcome=WRITE_BLOCKED firstRead=0 secondRead=0 rowsAfterReaderInsert=1 writeNote=Lock wait timeout exceeded; try restarting transaction readerInsertNote=null
+ROUND probe=dirtyRead level=SERIALIZABLE round=8 outcome=READ_BLOCKED:Lock wait timeout exceeded; try restarting transaction writeNote=null
+ROUND probe=phantom level=SERIALIZABLE round=8 outcome=WRITE_BLOCKED firstRead=0 secondRead=0 rowsAfterReaderInsert=1 writeNote=Lock wait timeout exceeded; try restarting transaction readerInsertNote=null
+ROUND probe=dirtyRead level=SERIALIZABLE round=9 outcome=READ_BLOCKED:Lock wait timeout exceeded; try restarting transaction writeNote=null
+ROUND probe=phantom level=SERIALIZABLE round=9 outcome=WRITE_BLOCKED firstRead=0 secondRead=0 rowsAfterReaderInsert=1 writeNote=Lock wait timeout exceeded; try restarting transaction readerInsertNote=null
+ROUND probe=dirtyRead level=SERIALIZABLE round=10 outcome=READ_BLOCKED:Lock wait timeout exceeded; try restarting transaction writeNote=null
+ROUND probe=phantom level=SERIALIZABLE round=10 outcome=WRITE_BLOCKED firstRead=0 secondRead=0 rowsAfterReaderInsert=1 writeNote=Lock wait timeout exceeded; try restarting transaction readerInsertNote=null
+ROUND probe=dirtyRead level=SERIALIZABLE round=11 outcome=READ_BLOCKED:Lock wait timeout exceeded; try restarting transaction writeNote=null
+ROUND probe=phantom level=SERIALIZABLE round=11 outcome=WRITE_BLOCKED firstRead=0 secondRead=0 rowsAfterReaderInsert=1 writeNote=Lock wait timeout exceeded; try restarting transaction readerInsertNote=null
+ROUND probe=dirtyRead level=SERIALIZABLE round=12 outcome=READ_BLOCKED:Lock wait timeout exceeded; try restarting transaction writeNote=null
+ROUND probe=phantom level=SERIALIZABLE round=12 outcome=WRITE_BLOCKED firstRead=0 secondRead=0 rowsAfterReaderInsert=1 writeNote=Lock wait timeout exceeded; try restarting transaction readerInsertNote=null
+ROUND probe=dirtyRead level=SERIALIZABLE round=13 outcome=READ_BLOCKED:Lock wait timeout exceeded; try restarting transaction writeNote=null
+ROUND probe=phantom level=SERIALIZABLE round=13 outcome=WRITE_BLOCKED firstRead=0 secondRead=0 rowsAfterReaderInsert=1 writeNote=Lock wait timeout exceeded; try restarting transaction readerInsertNote=null
+ROUND probe=dirtyRead level=SERIALIZABLE round=14 outcome=READ_BLOCKED:Lock wait timeout exceeded; try restarting transaction writeNote=null
+ROUND probe=phantom level=SERIALIZABLE round=14 outcome=WRITE_BLOCKED firstRead=0 secondRead=0 rowsAfterReaderInsert=1 writeNote=Lock wait timeout exceeded; try restarting transaction readerInsertNote=null
+ROUND probe=dirtyRead level=SERIALIZABLE round=15 outcome=READ_BLOCKED:Lock wait timeout exceeded; try restarting transaction writeNote=null
+ROUND probe=phantom level=SERIALIZABLE round=15 outcome=WRITE_BLOCKED firstRead=0 secondRead=0 rowsAfterReaderInsert=1 writeNote=Lock wait timeout exceeded; try restarting transaction readerInsertNote=null
+ROUND probe=dirtyRead level=SERIALIZABLE round=16 outcome=READ_BLOCKED:Lock wait timeout exceeded; try restarting transaction writeNote=null
+ROUND probe=phantom level=SERIALIZABLE round=16 outcome=WRITE_BLOCKED firstRead=0 secondRead=0 rowsAfterReaderInsert=1 writeNote=Lock wait timeout exceeded; try restarting transaction readerInsertNote=null
+ROUND probe=dirtyRead level=SERIALIZABLE round=17 outcome=READ_BLOCKED:Lock wait timeout exceeded; try restarting transaction writeNote=null
+ROUND probe=phantom level=SERIALIZABLE round=17 outcome=WRITE_BLOCKED firstRead=0 secondRead=0 rowsAfterReaderInsert=1 writeNote=Lock wait timeout exceeded; try restarting transaction readerInsertNote=null
+ROUND probe=dirtyRead level=SERIALIZABLE round=18 outcome=READ_BLOCKED:Lock wait timeout exceeded; try restarting transaction writeNote=null
+ROUND probe=phantom level=SERIALIZABLE round=18 outcome=WRITE_BLOCKED firstRead=0 secondRead=0 rowsAfterReaderInsert=1 writeNote=Lock wait timeout exceeded; try restarting transaction readerInsertNote=null
+ROUND probe=dirtyRead level=SERIALIZABLE round=19 outcome=READ_BLOCKED:Lock wait timeout exceeded; try restarting transaction writeNote=null
+ROUND probe=phantom level=SERIALIZABLE round=19 outcome=WRITE_BLOCKED firstRead=0 secondRead=0 rowsAfterReaderInsert=1 writeNote=Lock wait timeout exceeded; try restarting transaction readerInsertNote=null
+ROUND probe=dirtyRead level=SERIALIZABLE round=20 outcome=READ_BLOCKED:Lock wait timeout exceeded; try restarting transaction writeNote=null
+ROUND probe=phantom level=SERIALIZABLE round=20 outcome=WRITE_BLOCKED firstRead=0 secondRead=0 rowsAfterReaderInsert=1 writeNote=Lock wait timeout exceeded; try restarting transaction readerInsertNote=null
+SUMMARY level=SERIALIZABLE rounds=20 dirtyRead={READ_BLOCKED:Lock wait timeout exceeded; try restarting transaction=20} phantom={WRITE_BLOCKED/rows=1=20}

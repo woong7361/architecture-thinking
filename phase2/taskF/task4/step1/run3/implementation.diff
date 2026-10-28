@@ -1,0 +1,115 @@
+diff --git a/src/main/java/com/thinking/tennis/kata/AlertRepository.java b/src/main/java/com/thinking/tennis/kata/AlertRepository.java
+index b714361..e2691dd 100644
+--- a/src/main/java/com/thinking/tennis/kata/AlertRepository.java
++++ b/src/main/java/com/thinking/tennis/kata/AlertRepository.java
+@@ -1,6 +1,7 @@
+ package com.thinking.tennis.kata;
+ 
+ import jakarta.persistence.EntityManager;
++import jakarta.persistence.LockModeType;
+ import java.util.Optional;
+ import org.springframework.stereotype.Repository;
+ 
+@@ -12,6 +13,17 @@ public class AlertRepository {
+         this.entityManager = entityManager;
+     }
+ 
++    /**
++     * 신청자 행을 쓰기 잠금으로 선점한다. 같은 사용자의 신청은 이 지점부터 한 줄로 세워진다.
++     * 이미 커밋되어 존재하는 행을 잠그므로 갭 잠금이 생기지 않고, 다른 사용자끼리는 서로 기다리지 않는다.
++     */
++    public void lockSubscriber(long userId) {
++        KataUser subscriber = entityManager.find(KataUser.class, userId, LockModeType.PESSIMISTIC_WRITE);
++        if (subscriber == null) {
++            throw new IllegalStateException("Unknown subscriber: " + userId);
++        }
++    }
++
+     public Optional<AlertSubscription> findActive(SubscribeCommand command) {
+         return entityManager.createQuery("""
+                 select a from AlertSubscription a
+@@ -31,6 +43,8 @@ public class AlertRepository {
+ 
+     public AlertSubscription save(AlertSubscription subscription) {
+         entityManager.persist(subscription);
++        // IDENTITY 키라 persist 시점에 INSERT 가 나가고, 유일 제약 위반도 이 자리에서 드러난다.
++        entityManager.flush();
+         return subscription;
+     }
+ }
+diff --git a/src/main/java/com/thinking/tennis/kata/AlertService.java b/src/main/java/com/thinking/tennis/kata/AlertService.java
+index b659706..82763da 100644
+--- a/src/main/java/com/thinking/tennis/kata/AlertService.java
++++ b/src/main/java/com/thinking/tennis/kata/AlertService.java
+@@ -1,20 +1,36 @@
+ package com.thinking.tennis.kata;
+ 
++import org.springframework.dao.ConcurrencyFailureException;
++import org.springframework.dao.DataIntegrityViolationException;
+ import org.springframework.stereotype.Service;
++import org.springframework.transaction.annotation.Propagation;
+ import org.springframework.transaction.annotation.Transactional;
+ 
+ @Service
+ public class AlertService {
+-    private final AlertRepository repository;
++    private static final int MAX_ATTEMPTS = 3;
+ 
+-    public AlertService(AlertRepository repository) {
+-        this.repository = repository;
++    private final AlertRegistrar registrar;
++
++    public AlertService(AlertRegistrar registrar) {
++        this.registrar = registrar;
+     }
+ 
+-    @Transactional
++    /**
++     * 재시도는 트랜잭션 밖에서 돌린다. 시도들이 한 트랜잭션에 함께 들어가면
++     * 실패한 시도의 롤백이 다음 시도까지 끌고 가고, 재조회도 같은 스냅샷을 다시 볼 뿐이다.
++     */
++    @Transactional(propagation = Propagation.NOT_SUPPORTED)
+     public long subscribe(SubscribeCommand command) {
+-        return repository.findActive(command)
+-                .orElseGet(() -> repository.save(new AlertSubscription(command)))
+-                .id();
++        RuntimeException lastFailure = null;
++        for (int attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
++            try {
++                return registrar.register(command);
++            } catch (DataIntegrityViolationException | ConcurrencyFailureException conflict) {
++                // 유일 제약 위반, 교착, 잠금 대기 초과는 경쟁의 결과이므로 새 트랜잭션에서 다시 판단한다.
++                lastFailure = conflict;
++            }
++        }
++        throw lastFailure;
+     }
+ }
+diff --git a/src/test/resources/schema.sql b/src/test/resources/schema.sql
+index 05ee271..2fbb0dd 100644
+--- a/src/test/resources/schema.sql
++++ b/src/test/resources/schema.sql
+@@ -3,7 +3,11 @@ CREATE TABLE kata_users (
+     version BIGINT NOT NULL DEFAULT 0
+ ) ENGINE=InnoDB;
+ 
+--- 현재 중복 판단은 서비스의 기존 신청 조회로 수행한다.
++-- 중복 판단은 서비스의 조회와 아래 유일 제약이 함께 보장한다.
++-- watching_marker 는 감시 중인 행에서만 1 이고 그 밖에는 NULL 이다.
++-- MySQL 의 유일 인덱스는 NULL 을 서로 다른 값으로 보므로
++-- 감시 중인 신청만 (사용자, 코트, 날짜, 시간대) 하나로 제한되고
++-- 종료된 신청은 같은 조건으로 몇 건이든 남을 수 있다.
+ CREATE TABLE alert_subscriptions (
+     id BIGINT AUTO_INCREMENT PRIMARY KEY,
+     user_id BIGINT NOT NULL,
+@@ -11,6 +15,10 @@ CREATE TABLE alert_subscriptions (
+     play_date DATE NOT NULL,
+     time_slot VARCHAR(32) NOT NULL,
+     status VARCHAR(16) NOT NULL,
++    watching_marker TINYINT
++        GENERATED ALWAYS AS (CASE WHEN status = 'WATCHING' THEN 1 ELSE NULL END) STORED,
+     CONSTRAINT fk_alert_user FOREIGN KEY (user_id) REFERENCES kata_users(id),
++    CONSTRAINT uq_watching_subscription
++        UNIQUE (user_id, court_id, play_date, time_slot, watching_marker),
+     INDEX idx_active_lookup (user_id, court_id, play_date, time_slot, status)
+ ) ENGINE=InnoDB;

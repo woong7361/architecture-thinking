@@ -1,0 +1,74 @@
+# 1차 출처 스냅샷 명세
+#
+# 판본은 짐작하지 않고 대상 코드의 `mvn dependency:list`가 출력한 해석된 값을 적는다.
+# 루트 이름과 실제 판본이 어긋나면 인용이 다른 판본을 가리킨다.
+#
+# grade 는 출처 등급이다. 설계 §5의 표를 집행한다.
+#   primary  — 사실 주장의 근거와 전제의 좌표에 모두 쓸 수 있다
+#   measured — 전제의 좌표에만 쓸 수 있다. 사실 주장의 근거로 쓰면 위반이다
+
+resolved_from: phase2/taskF/alert-kata
+
+roots:
+  - root: jdk-25.0.4.1
+    artifact: jdk
+    grade: primary
+    kind: zip
+    archive: ${JAVA_HOME}/lib/src.zip
+    include:
+      - java.base/java/util/concurrent/
+
+  - root: spring-framework-6.2.19
+    artifact: spring-framework
+    grade: primary
+    kind: maven
+    coords:
+      - org.springframework:spring-tx:6.2.19
+      - org.springframework:spring-jdbc:6.2.19
+      - org.springframework:spring-orm:6.2.19
+    include:
+      - org/springframework/transaction/
+      - org/springframework/jdbc/datasource/
+      - org/springframework/orm/jpa/
+
+  - root: hibernate-orm-6.6.53.Final
+    artifact: hibernate-orm
+    grade: primary
+    kind: maven
+    coords:
+      - org.hibernate.orm:hibernate-core:6.6.53.Final
+    include:
+      - org/hibernate/dialect/
+      - org/hibernate/event/internal/
+      - org/hibernate/engine/jdbc/
+      - org/hibernate/persister/entity/
+      - org/hibernate/resource/transaction/
+
+# 웹에서 받는 문서는 수집 시점에 사본으로 떠서 해시를 남긴다. 받는 곳을 미리 못 박아
+# 그 밖의 도메인에서 온 인용이 primary 로 올라오지 못하게 한다.
+copies:
+  grade: primary
+  allowed_hosts:
+    - dev.mysql.com
+    - docs.spring.io
+    - docs.oracle.com
+    - redis.io
+    - jakarta.ee
+    - openjdk.org
+
+# 대상 코드. 선택 주장의 인용 대상이다. "이 방식을 택했다"의 증거는 코드이므로, 코드를 인용에서 막으면
+# 선택 주장이 근거를 댈 자리가 없어진다. 사실 주장의 인용으로는 쓸 수 없다.
+target:
+  grade: target
+  roots:
+    - phase2/taskF/alert-kata/src/main/java
+    - phase2/taskF/alert-kata/src/test/resources
+    - phase2/taskF/task4/step1/run3/impl
+
+# 본인의 측정 로그. 전제의 좌표로만 쓴다. 어느 종류의 인용에도 쓸 수 없다.
+measured:
+  grade: measured
+  roots:
+    - phase2/taskF/alert-kata/evidence/
+    - phase2/taskF/task4/step0/
+    - phase2/taskF/task4/step1/

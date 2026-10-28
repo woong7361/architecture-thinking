@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Critique 산출 — 반대 조사",
+  "description": "점수를 내지 않고 수정을 반영하지 않는다. 산문 비평만 허용하면 반증할 수 없는 문장이 나오므로 인용으로 말한다.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["claims"],
+  "properties": {
+    "claims": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "limiting_clauses", "source_says"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^claim-[0-9]{2}$" },
+          "source_says": {
+            "type": "string",
+            "minLength": 10,
+            "description": "원문이 말하는 것을 Gen의 서술과 독립으로 다시 적는다. 두 서술이 어긋나는 자리가 사람이 먼저 열어 볼 자리다."
+          },
+          "limiting_clauses": {
+            "type": "array",
+            "description": "주장을 제한하는 조항. 못 찾았으면 빈 배열로 두고 searched에 뒤진 경로를 적는다.",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["path", "quote", "limits"],
+              "properties": {
+                "path": { "type": "string", "minLength": 3 },
+                "quote": { "type": "string", "minLength": 5 },
+                "limits": {
+                  "type": "string",
+                  "minLength": 10,
+                  "description": "이 조항이 주장의 어느 범위를 깎는지."
+                }
+              }
+            }
+          },
+          "searched": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "뒤진 1차 출처 경로. limiting_clauses가 비면 반드시 채운다."
+          },
+          "deeper_anchor": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "quote", "why"],
+            "properties": {
+              "path": { "type": "string" },
+              "quote": { "type": "string" },
+              "why": {
+                "type": "string",
+                "description": "Gen의 인용보다 이 자리가 왜 참·거짓을 더 가르는지."
+              }
+            },
+            "description": "Gen이 얕은 자리를 앵커로 잡았을 때 더 깊은 자리를 인용으로 지목한다."
+          },
+          "code_mismatch": {
+            "type": "string",
+            "description": "주장이 대상 코드가 실제로 의존하는 전제가 아닌 자리. 거절로 이어지지 않고 리포트에만 실린다."
+          },
+          "amendment_proposal": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sentence", "because"],
+            "properties": {
+              "sentence": { "type": "string", "description": "고쳐 적을 주장 문장의 발의." },
+              "because": { "type": "string", "description": "위 limiting_clauses 중 어느 인용이 근거인지." }
+            },
+            "description": "발의만 한다. 반영은 Refine이 하고 신고해야 한다."
+          }
+        }
+      }
+    },
+    "missing_sites": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["site", "why"],
+        "properties": {
+          "site": { "type": "string", "pattern": "^site-[0-9]{2}$" },
+          "why": { "type": "string", "description": "이 지점에 왜 주장이 필요한지." }
+        }
+      },
+      "description": "주장이 비껴간 지점. 커버리지 게이트가 기계로 세지만, 왜 필요한지는 여기 적는다."
+    }
+  }
+}

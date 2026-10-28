@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Eval 산출 — 주장별 축 판정",
+  "description": "채점자는 칸과 근거만 낸다. 발의도 반영도 통과 판정도 하지 않는다. 축 평균이나 총점 칸을 두지 않는 것은 분모가 하네스 산출이기 때문이다.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["claims"],
+  "properties": {
+    "claims": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "axes"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^claim-[0-9]{2}$" },
+          "axes": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["grounding", "depth"],
+            "properties": {
+              "grounding": { "$ref": "#/$defs/box4" },
+              "depth": { "$ref": "#/$defs/box4" },
+              "tradeoff_coverage": { "$ref": "#/$defs/box5" },
+              "tradeoff_validity": { "$ref": "#/$defs/box5" }
+            },
+            "description": "fact 주장은 앞의 두 축만 낸다. 트레이드오프 두 축은 해당없음이고 미충족이 아니다."
+          },
+          "unreadable": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "열지 못한 출처나 코드 경로. 비어 있지 않으면 그 주장은 미판정이다. 측정 실패를 점수로 쓰지 않는다."
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "box4": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["box", "basis"],
+      "properties": {
+        "box": { "type": "integer", "minimum": 1, "maximum": 4 },
+        "basis": {
+          "type": "string",
+          "minLength": 15,
+          "description": "산출물을 인용해 적는다. 축 이름을 되풀이한 근거는 조건을 보지 않은 것이다."
+        }
+      }
+    },
+    "box5": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["box", "basis"],
+      "properties": {
+        "box": { "type": "integer", "minimum": 1, "maximum": 5 },
+        "basis": { "type": "string", "minLength": 15 }
+      }
+    }
+  }
+}

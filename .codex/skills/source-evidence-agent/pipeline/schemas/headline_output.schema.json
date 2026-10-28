@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "머리글 — 리포트를 읽기 위한 표시층",
+  "description": "판단이 아니라 표시다. 주장도 근거도 점수도 바꾸지 않는다. 그래서 파이프라인의 네 단계에 넣지 않고 리포트를 만들기 전에 따로 돌린다. 출처와 코드를 받지 않으므로 새 근거를 만들 수 없다.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["claims"],
+  "properties": {
+    "claims": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "headline", "bites"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^claim-[0-9]{2}$" },
+          "headline": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 70,
+            "description": "주장을 짧고 평이한 한 문장으로. 한정과 조건은 넣지 않는다."
+          },
+          "bites": {
+            "type": "string",
+            "minLength": 20,
+            "maxLength": 120,
+            "description": "이 주장이 참이 아니면 대상 코드에서 무엇이 어긋나는지."
+          }
+        }
+      }
+    }
+  }
+}

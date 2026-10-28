@@ -1,0 +1,64 @@
+# 동시성 API 사용 지점 규칙
+#
+# 커버리지 게이트의 분모를 만드는 규칙이다. 추출기 코드는 이 파일을 읽어 돌 뿐이므로, 다음 대상에서는
+# 이 파일만 갈아끼운다. 규칙 본문에 특정 클래스 이름을 박으면 그 대상에서만 도는 추출기가 된다.
+#
+# 규칙 하나는 셋을 적는다.
+#   id      — 커버리지 보고에 쓰는 이름
+#   pattern — 그 지점을 찾는 정규식. 괄호 묶음 1번이 있으면 그것이 api 가 된다
+#   unit    — 지점 단위. line 이면 줄마다, file 이면 파일마다 한 지점
+#
+# 속성마다 지점을 세는 것과 선언 하나로 세는 것 중 전자를 택했다. `@Transactional` 의 전파와 격리는
+# 서로 다른 것을 걸므로, 선언 하나로 묶으면 주장 하나가 둘을 덮은 것으로 세어진다.
+
+targets:
+  include:
+    - "**/*.java"
+    - "**/*.sql"
+  exclude:
+    - "**/target/**"
+    - "**/*Test.java"
+
+rules:
+  - id: transactional
+    pattern: '@(Transactional)\b'
+    unit: line
+  - id: transaction_attribute
+    pattern: '\b(propagation|isolation|readOnly|timeout)\s*='
+    unit: line
+  - id: propagation_value
+    pattern: '\bPropagation\.([A-Z_]+)'
+    unit: line
+  - id: isolation_value
+    pattern: '\bIsolation\.([A-Z_]+)'
+    unit: line
+  - id: lock_mode
+    pattern: '\bLockModeType\.([A-Z_]+)'
+    unit: line
+  - id: jpa_version
+    pattern: '@(Version)\b'
+    unit: line
+  - id: entity_manager_op
+    pattern: '\bentityManager\.(find|persist|flush|lock|refresh|createNativeQuery)\b'
+    unit: symbol
+  - id: sql_locking_read
+    pattern: '(?i)\b(for\s+update|lock\s+in\s+share\s+mode|for\s+share)\b'
+    unit: line
+  - id: sql_unique_constraint
+    pattern: '(?i)\b(unique)\s*(?:key|index)?\s*[`\w]*\s*\('
+    unit: line
+  - id: sql_generated_column
+    pattern: '(?i)\b(generated\s+always\s+as)\b'
+    unit: line
+  - id: atomic_cas
+    pattern: '\b(compareAndSet|getAndIncrement|getAndSet|compareAndExchange)\b'
+    unit: symbol
+  - id: jvm_wait_signal
+    pattern: '\b(CountDownLatch|Condition|ReentrantLock|await|signalAll|countDown)\b'
+    unit: symbol
+  - id: synchronized_block
+    pattern: '\b(synchronized)\b'
+    unit: symbol
+  - id: retry_budget
+    pattern: '\b(MAX_ATTEMPTS|maxAttempts|maxRetries|RETRY)\b'
+    unit: symbol

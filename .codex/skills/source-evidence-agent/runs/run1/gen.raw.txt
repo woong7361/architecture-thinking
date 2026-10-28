@@ -1,0 +1,351 @@
+{
+  "claims": [
+    {
+      "id": "claim-01",
+      "kind": "fact",
+      "sentence": "`PESSIMISTIC_WRITE` 로 요청한 행 잠금은 MySQL 방언에서 조회문 뒤에 `for update` 를 붙여 획득된다.",
+      "sites": ["site-01", "site-02", "site-15", "site-16"],
+      "decides_at": {
+        "kind": "source",
+        "symbols": ["PESSIMISTIC_WRITE", "getWriteLockString", "getForUpdateString"]
+      },
+      "citations": [
+        {
+          "path": "hibernate-orm-6.6.53.Final/org/hibernate/dialect/Dialect.java",
+          "quote": "\t\t\tcase PESSIMISTIC_WRITE: {\n\t\t\t\treturn getWriteLockString( timeout );\n\t\t\t}"
+        },
+        {
+          "path": "hibernate-orm-6.6.53.Final/org/hibernate/dialect/MySQLDialect.java",
+          "quote": "\tpublic String getWriteLockString(int timeout) {\n\t\treturn withTimeout( getForUpdateString(), timeout );"
+        },
+        {
+          "path": "hibernate-orm-6.6.53.Final/org/hibernate/dialect/Dialect.java",
+          "quote": "\tpublic String getForUpdateString() {\n\t\treturn \" for update\";\n\t}"
+        }
+      ],
+      "source_says": "Dialect 는 LockMode 가 PESSIMISTIC_WRITE 일 때 for-update 조각을 getWriteLockString 으로 넘기고, MySQLDialect 의 getWriteLockString 은 기본 for-update 문자열 \" for update\" 에 타임아웃 표현만 덧붙인다. 원문의 범위는 잠금 모드와 SQL 조각의 대응까지다.",
+      "claim_delta": "원문은 Hibernate 의 `LockMode` 를 말한다. `jakarta.persistence.LockModeType.PESSIMISTIC_WRITE` 가 그 LockMode 로 매핑되는 자리(org/hibernate/internal, org/hibernate/LockMode)는 출처 루트의 포함 범위 밖이라 인용으로 잇지 못했다. 그 `for update` 가 InnoDB 에서 어떤 행과 갭을 잠그는지도 인용이 말하지 않는다.",
+      "searched": [
+        "hibernate-orm-6.6.53.Final/org/hibernate/dialect/Dialect.java",
+        "hibernate-orm-6.6.53.Final/org/hibernate/dialect/MySQLDialect.java",
+        "hibernate-orm-6.6.53.Final/org/hibernate/dialect/lock/PessimisticWriteSelectLockingStrategy.java"
+      ]
+    },
+    {
+      "id": "claim-02",
+      "kind": "fact",
+      "sentence": "속성을 적지 않은 `@Transactional` 의 전파는 REQUIRED 이고, REQUIRED 는 진행 중인 트랜잭션이 있으면 참여하고 없으면 새로 시작한다.",
+      "sites": ["site-05", "site-11"],
+      "decides_at": {
+        "kind": "source",
+        "symbols": ["propagation", "REQUIRED", "PROPAGATION_REQUIRED"]
+      },
+      "citations": [
+        {
+          "path": "spring-framework-6.2.19/org/springframework/transaction/annotation/Transactional.java",
+          "quote": "\t * The transaction propagation type.\n\t * <p>Defaults to {@link Propagation#REQUIRED}.\n\t * @see org.springframework.transaction.interceptor.TransactionAttribute#getPropagationBehavior()\n\t */\n\tPropagation propagation() default Propagation.REQUIRED;"
+        },
+        {
+          "path": "spring-framework-6.2.19/org/springframework/transaction/annotation/Propagation.java",
+          "quote": "\t/**\n\t * Support a current transaction, create a new one if none exists.\n\t * Analogous to EJB transaction attribute of the same name.\n\t * <p>This is the default setting of a transaction annotation.\n\t */\n\tREQUIRED(TransactionDefinition.PROPAGATION_REQUIRED),"
+        }
+      ],
+      "source_says": "애너테이션 속성의 기본값이 `Propagation.REQUIRED` 라는 것과, REQUIRED 가 현재 트랜잭션을 지원하고 없으면 하나를 만든다는 의미까지가 원문의 범위다.",
+      "claim_delta": "원문은 애너테이션의 기본값과 전파 의미만 말한다. 그 메서드가 실제로 프록시를 거쳐 호출되는지(자기 호출은 프록시를 타지 않는다), 어떤 트랜잭션 매니저가 붙는지는 인용 범위 밖이다."
+    },
+    {
+      "id": "claim-03",
+      "kind": "fact",
+      "sentence": "`Propagation.REQUIRES_NEW` 는 진행 중인 트랜잭션을 보류시키고 새 트랜잭션을 시작한다.",
+      "sites": ["site-08", "site-09", "site-10", "site-12", "site-13", "site-14"],
+      "decides_at": {
+        "kind": "source",
+        "symbols": ["PROPAGATION_REQUIRES_NEW", "suspend", "startTransaction"]
+      },
+      "citations": [
+        {
+          "path": "spring-framework-6.2.19/org/springframework/transaction/annotation/Propagation.java",
+          "quote": "\t * Create a new transaction, and suspend the current transaction if one exists.\n\t * Analogous to the EJB transaction attribute of the same name."
+        },
+        {
+          "path": "spring-framework-6.2.19/org/springframework/transaction/support/AbstractPlatformTransactionManager.java",
+          "quote": "\t\tif (definition.getPropagationBehavior() == TransactionDefinition.PROPAGATION_REQUIRES_NEW) {"
+        },
+        {
+          "path": "spring-framework-6.2.19/org/springframework/transaction/support/AbstractPlatformTransactionManager.java",
+          "quote": "\t\t\tSuspendedResourcesHolder suspendedResources = suspend(transaction);\n\t\t\ttry {\n\t\t\t\treturn startTransaction(definition, transaction, false, debugEnabled, suspendedResources);"
+        }
+      ],
+      "source_says": "전파 상수의 의미는 '현재 트랜잭션이 있으면 보류하고 새 트랜잭션을 만든다'이고, 구현에서는 REQUIRES_NEW 분기가 `suspend(transaction)` 을 호출한 뒤 `startTransaction` 으로 새 트랜잭션을 연다. 원문은 또한 보류가 모든 트랜잭션 매니저에서 바로 동작하지는 않는다고 덧붙인다.",
+      "claim_delta": "인용한 분기는 `handleExistingTransaction` 안에 있어 이미 트랜잭션이 있을 때만 실행된다. 바깥에 트랜잭션이 없으면 보류 없이 새 트랜잭션이 하나 열릴 뿐이다. 새 트랜잭션이 새 DB 커넥션과 새 읽기 스냅샷을 쓴다는 결론은 커넥션 바인딩과 격리 수준 쪽 사안이라 이 인용이 말하지 않는다.",
+      "searched": [
+        "spring-framework-6.2.19/org/springframework/transaction/support/AbstractPlatformTransactionManager.java",
+        "spring-framework-6.2.19/org/springframework/transaction/annotation/Propagation.java",
+        "spring-framework-6.2.19/org/springframework/transaction/TransactionDefinition.java"
+      ]
+    },
+    {
+      "id": "claim-04",
+      "kind": "fact",
+      "sentence": "`Propagation.NOT_SUPPORTED` 는 진행 중인 트랜잭션을 보류시키고 트랜잭션 없이 실행한다.",
+      "sites": ["site-20", "site-21", "site-22"],
+      "decides_at": {
+        "kind": "source",
+        "symbols": ["PROPAGATION_NOT_SUPPORTED", "suspend"]
+      },
+      "citations": [
+        {
+          "path": "spring-framework-6.2.19/org/springframework/transaction/annotation/Propagation.java",
+          "quote": "\t * Execute non-transactionally, suspend the current transaction if one exists.\n\t * Analogous to EJB transaction attribute of the same name."
+        },
+        {
+          "path": "spring-framework-6.2.19/org/springframework/transaction/support/AbstractPlatformTransactionManager.java",
+          "quote": "\t\tif (definition.getPropagationBehavior() == TransactionDefinition.PROPAGATION_NOT_SUPPORTED) {\n\t\t\tif (debugEnabled) {\n\t\t\t\tlogger.debug(\"Suspending current transaction\");\n\t\t\t}\n\t\t\tObject suspendedResources = suspend(transaction);"
+        }
+      ],
+      "source_says": "전파 상수의 의미는 '트랜잭션 없이 실행하고, 현재 트랜잭션이 있으면 보류한다'이고, 구현의 NOT_SUPPORTED 분기는 `suspend(transaction)` 으로 보류한 뒤 트랜잭션 없는 상태를 만들어 반환한다.",
+      "claim_delta": "이 분기도 `handleExistingTransaction` 안이라 바깥 트랜잭션이 있을 때만 보류가 일어난다. 재시도 루프를 트랜잭션 밖에 두어 시도마다 스냅샷이 새로 잡힌다는 대상 코드의 효과는 이 인용이 아니라 전파 조합과 격리 수준에서 나오고, 원문 범위 밖이다."
+    },
+    {
+      "id": "claim-05",
+      "kind": "fact",
+      "sentence": "식별자가 데이터베이스 실행 시점에 생성되는 엔터티는 트랜잭션이 진행 중일 때 identity INSERT 를 뒤로 미루지 않는다.",
+      "sites": ["site-04", "site-17"],
+      "decides_at": {
+        "kind": "source",
+        "symbols": ["delayIdentityInserts", "EntityIdentityInsertAction", "isEarlyInsert"]
+      },
+      "citations": [
+        {
+          "path": "hibernate-orm-6.6.53.Final/org/hibernate/event/internal/AbstractSaveEventListener.java",
+          "quote": "\t\tfinal boolean delayIdentityInserts =\n\t\t\t\t!source.isTransactionInProgress()\n\t\t\t\t\t\t&& !requiresImmediateIdAccess\n\t\t\t\t\t\t&& generatedOnExecution;"
+        },
+        {
+          "path": "hibernate-orm-6.6.53.Final/org/hibernate/event/internal/AbstractSaveEventListener.java",
+          "quote": "\t\tif ( useIdentityColumn ) {\n\t\t\tfinal EntityIdentityInsertAction insert = new EntityIdentityInsertAction("
+        },
+        {
+          "path": "hibernate-orm-6.6.53.Final/org/hibernate/event/internal/AbstractSaveEventListener.java",
+          "quote": "\t\tif ( useIdentityColumn && insert.isEarlyInsert() ) {\n\t\t\tif ( insert instanceof EntityIdentityInsertAction ) {\n\t\t\t\tfinal Object generatedId = ((EntityIdentityInsertAction) insert).getGeneratedId();"
+        }
+      ],
+      "source_says": "저장 처리에서 `delayIdentityInserts` 는 세 조건을 모두 만족할 때만 참이고, 그중 하나가 '트랜잭션이 진행 중이 아님'이다. identity 열을 쓰는 경로는 `EntityIdentityInsertAction` 을 만들고, 이른 삽입(`isEarlyInsert`)이면 그 액션에서 생성된 식별자를 읽어 반환한다. 원문의 범위는 지연 여부의 판정과 액션 선택까지다.",
+      "claim_delta": "주장은 'INSERT 문이 persist 호출 안에서 데이터베이스로 나간다'까지 가고 싶지만, 액션을 실제로 실행하는 자리(`ActionQueue`, `EntityIdentityInsertAction#execute`)는 출처 루트의 포함 범위 밖이라 인용하지 못했다. 인용이 말하는 것은 '미루지 않는다'와 '그 액션에서 식별자를 바로 읽는다'까지다.",
+      "searched": [
+        "hibernate-orm-6.6.53.Final/org/hibernate/event/internal/AbstractSaveEventListener.java",
+        "hibernate-orm-6.6.53.Final/org/hibernate/event/internal/DefaultPersistEventListener.java",
+        "hibernate-orm-6.6.53.Final/org/hibernate/persister/entity/AbstractEntityPersister.java"
+      ]
+    },
+    {
+      "id": "claim-06",
+      "kind": "fact",
+      "sentence": "`flush` 는 보류된 액션 큐를 그 자리에서 실행한다.",
+      "sites": ["site-18"],
+      "decides_at": {
+        "kind": "source",
+        "symbols": ["performExecutions", "executeActions", "flushEverythingToExecutions"]
+      },
+      "citations": [
+        {
+          "path": "hibernate-orm-6.6.53.Final/org/hibernate/event/internal/DefaultFlushEventListener.java",
+          "quote": "\t\t\t\tflushEverythingToExecutions( event );\n\t\t\t\tperformExecutions( source );\n\t\t\t\tpostFlush( source );"
+        },
+        {
+          "path": "hibernate-orm-6.6.53.Final/org/hibernate/event/internal/AbstractFlushingEventListener.java",
+          "quote": "\t\t\tfinal ActionQueue actionQueue = session.getActionQueue();\n\t\t\tactionQueue.prepareActions();\n\t\t\tactionQueue.executeActions();"
+        }
+      ],
+      "source_says": "flush 이벤트 처리는 변경을 실행 큐로 옮긴 뒤(`flushEverythingToExecutions`) `performExecutions` 를 호출하고, 그 안에서 `actionQueue.executeActions()` 가 실행된다. 원문의 범위는 flush 가 큐를 실행한다는 것까지다.",
+      "claim_delta": "원문은 어떤 SQL 이 언제 커밋되는지, 제약 위반이 이 자리에서 예외로 올라오는지는 말하지 않는다. 대상 코드가 `flush` 로 기대하는 '유일 제약 위반이 persist 자리에서 드러난다'는 결론은 큐 실행이 JDBC 에서 어떻게 보고되는지에 달려 있고, 그 자리는 이 인용 밖이다."
+    },
+    {
+      "id": "claim-07",
+      "kind": "fact",
+      "sentence": "낙관적 잠금 방식이 VERSION 일 때 버전 속성은 UPDATE 문의 제약 조건에 항상 포함된다.",
+      "sites": ["site-06"],
+      "decides_at": {
+        "kind": "source",
+        "symbols": ["OptimisticLockStyle", "versionMapping", "StaleObjectStateException"]
+      },
+      "citations": [
+        {
+          "path": "hibernate-orm-6.6.53.Final/org/hibernate/persister/entity/mutation/UpdateCoordinatorStandard.java",
+          "quote": "\t\tif ( optimisticLockStyle == OptimisticLockStyle.VERSION\n\t\t\t\t&& versionMapping != null\n\t\t\t\t&& attributeMapping == versionMapping.getVersionAttribute() ) {\n\t\t\treturn true;\n\t\t}"
+        },
+        {
+          "path": "hibernate-orm-6.6.53.Final/org/hibernate/persister/entity/AbstractEntityPersister.java",
+          "quote": "throw new StaleObjectStateException( getEntityName(), id );"
+        }
+      ],
+      "source_says": "UPDATE 제약에 어떤 속성을 넣을지 판정하는 자리에서, 잠금 방식이 VERSION 이고 그 속성이 버전 속성이면 무조건 포함한다고 돌려준다. 기대한 행 수와 어긋나면 `StaleObjectStateException` 을 던진다.",
+      "claim_delta": "원문은 `optimisticLockStyle` 이 VERSION 인 경우를 말한다. `@Version` 애너테이션이 그 방식을 고른다는 매핑 단계(org/hibernate/mapping, org/hibernate/boot)는 출처 루트의 포함 범위 밖이라 인용으로 잇지 못했다. 또한 대상 코드는 `KataUser` 를 JPA UPDATE 로 바꾸지 않으므로 이 경로가 실행되지 않는다.",
+      "searched": [
+        "hibernate-orm-6.6.53.Final/org/hibernate/persister/entity/mutation/UpdateCoordinatorStandard.java",
+        "hibernate-orm-6.6.53.Final/org/hibernate/persister/entity/mutation/DeleteCoordinatorStandard.java",
+        "hibernate-orm-6.6.53.Final/org/hibernate/persister/entity/AbstractEntityPersister.java"
+      ]
+    },
+    {
+      "id": "claim-08",
+      "kind": "choice",
+      "sentence": "대상 코드의 낙관적 경로는 `@Version` 의 공급자 자동 검사 대신 네이티브 SQL 로 version 을 읽고 조건부 UPDATE 로 충돌을 판정하는 방식을 택했다.",
+      "sites": ["site-03", "site-06"],
+      "decides_at": {
+        "kind": "source",
+        "symbols": ["version", "REQUIRES_NEW"]
+      },
+      "citations": [
+        {
+          "path": "phase2/taskF/alert-kata/evidence/lock-comparison-results.md",
+          "quote": "[낙관적 락 구현](../src/main/java/com/thinking/tennis/kata/OptimisticAlertService.java)은 사용자 `version`을 조건부로 증가시키는 SQL과 별도 `REQUIRES_NEW` 트랜잭션, 최대 재시도 횟수를 함께 사용한다."
+        },
+        {
+          "path": "hibernate-orm-6.6.53.Final/org/hibernate/persister/entity/mutation/UpdateCoordinatorStandard.java",
+          "quote": "\t\tif ( optimisticLockStyle == OptimisticLockStyle.VERSION\n\t\t\t\t&& versionMapping != null\n\t\t\t\t&& attributeMapping == versionMapping.getVersionAttribute() ) {\n\t\t\treturn true;\n\t\t}"
+        }
+      ],
+      "source_says": "1차 출처는 버전 속성을 UPDATE 제약에 넣는 공급자 쪽 경로가 있다는 것까지만 말한다. 어느 방식을 쓸지는 말하지 않는다. 측정 기록은 이 구현이 조건부 version 증가 SQL, 별도 `REQUIRES_NEW` 트랜잭션, 최대 재시도를 함께 쓴다고 적는다.",
+      "claim_delta": "주장은 선택이고, 출처는 선택을 말해 주지 않는다. 또한 네이티브 쿼리가 영속성 컨텍스트를 거치지 않는다는 점은 `org/hibernate/query` 가 출처 루트에 없어 인용으로 확인하지 못했다.",
+      "tradeoffs": [
+        {
+          "dimension": "latency",
+          "statement": "잠금 대기를 없애는 대신 충돌한 요청이 트랜잭션을 한 번 더 실행한다. 충돌이 매회 일어난 조건에서 요청 중앙값은 비관적 11.831ms, 낙관적 15.569ms 였다.",
+          "coordinate": "phase2/taskF/alert-kata/evidence/lock-comparison-results.md:15-19",
+          "premise": "같은 사용자에게 두 요청이 항상 겹쳐 충돌률이 100% 였다",
+          "inverts_at": "충돌률이 낮아져 (재시도 비용 × 충돌률) 이 잠금 대기 시간보다 작아지는 지점부터 순서가 뒤집힌다. 이 측정에서는 재시도 1회가 요청당 약 3.7ms 를 더했으므로 대기가 그보다 긴 부하에서 낙관 쪽이 앞선다"
+        },
+        {
+          "dimension": "resource",
+          "statement": "별도 인프라 없이 공유 DB 의 version 열만 쓰는 대신, 시도마다 version 조회 1회와 조건부 UPDATE 1회가 더 나가고 충돌 시 트랜잭션과 커넥션을 다시 잡는다. 100회 모두 재시도가 일어났다.",
+          "coordinate": "phase2/taskF/alert-kata/evidence/lock-comparison-results.md:15-17",
+          "premise": "충돌률 100%, 요청 2개 동시, 단일 인스턴스"
+        },
+        {
+          "dimension": "failure",
+          "statement": "잠금 대기와 교착 대신 충돌 예외와 재시도 소진 실패로 양상이 바뀐다. 측정 조건에서는 요청 오류 0회로 재시도 안에서 모두 수렴했다.",
+          "coordinate": "phase2/taskF/alert-kata/evidence/lock-comparison-results.md:21",
+          "premise": "동시 요청 2개이고 재시도 예산 안에서 수렴했다",
+          "inverts_at": "같은 사용자에 몰리는 동시 요청 수가 재시도 예산을 넘으면 요청 오류가 0 을 벗어난다"
+        },
+        {
+          "dimension": "complexity",
+          "statement": "공급자가 UPDATE 제약으로 자동 처리하는 일을 손으로 적는다. 조건부 UPDATE, 충돌 예외, 새 트랜잭션, 최대 재시도와 소진 처리가 코드에 생긴다.",
+          "coordinate": "hibernate-orm-6.6.53.Final/org/hibernate/persister/entity/mutation/UpdateCoordinatorStandard.java:1247"
+        }
+      ]
+    },
+    {
+      "id": "claim-09",
+      "kind": "choice",
+      "sentence": "대상 코드는 재시도를 고정 상수로 제한하고 예산을 다 쓰면 마지막 실패를 그대로 올리는 방식을 택했다.",
+      "sites": ["site-07", "site-19"],
+      "decides_at": {
+        "kind": "source",
+        "symbols": ["MAX_ATTEMPTS"]
+      },
+      "citations": [
+        {
+          "path": "phase2/taskF/task4/step1/findings.md",
+          "quote": "| `MAX_ATTEMPTS = 3` | 1, 3 | 아니다. 구현자가 근거 없이 골랐다고 적었다 |"
+        },
+        {
+          "path": "phase2/taskF/task4/step1/run3/self-assessment.md",
+          "quote": "- **재시도 3회라는 숫자.** 두 요청 경합에서 1회면 수렴한다는 판단에서 여유를 둔 값이고, 측정해서 고른 값이 아니다."
+        },
+        {
+          "path": "phase2/taskF/alert-kata/evidence/lock-comparison-results.md",
+          "quote": "이번처럼 같은 사용자에게 두 요청이 항상 겹치는 조건에서는 낙관적 락이 매회 한 번 충돌하고 트랜잭션을 다시 실행하므로 더 느렸다."
+        }
+      ],
+      "source_says": "기록은 이 상수가 측정에서 나온 값이 아니라 '두 요청 경합이면 1회로 수렴한다'는 판단에 여유를 더한 값이라고 적고, 테스트가 이 숫자의 참·거짓을 가르지 않는다고 적는다. 1차 출처에는 재시도 횟수를 정해 주는 문장이 없다.",
+      "claim_delta": "주장은 코드의 선택이고 출처는 선택을 말하지 않는다. 두 구현의 값이 다르다는 점(5 와 3)도 기록이 설명하지 않는다.",
+      "tradeoffs": [
+        {
+          "dimension": "latency",
+          "statement": "무한 재시도 대비 최악 지연에 상한을 두지만, 충돌이 이어지면 예산만큼의 트랜잭션이 직렬로 실행되어 최악 지연이 시도 수에 비례해 늘어난다. 측정에서는 2번째 시도에서 끝나 요청 중앙값이 15.569ms 였다.",
+          "coordinate": "phase2/taskF/alert-kata/evidence/lock-comparison-results.md:15-19",
+          "premise": "동시 요청 2개에서 충돌이 1회로 수렴했다",
+          "inverts_at": "같은 사용자에 대한 동시 요청이 예산(3 또는 5)을 넘으면 마지막 시도까지 쓰는 요청이 생겨 상한이 그대로 지연이 된다"
+        },
+        {
+          "dimension": "resource",
+          "statement": "시도마다 트랜잭션과 커넥션을 새로 잡는다. 대기 중에도 커넥션을 붙잡으므로 경합이 커지면 풀이 먼저 마른다.",
+          "coordinate": "phase2/taskF/task4/step1/run3/self-assessment.md:42-43",
+          "premise": "커넥션 풀 4, 작업 스레드 2",
+          "inverts_at": "같은 사용자의 동시 요청 수가 풀 크기를 넘는 순간부터 재시도보다 커넥션 획득이 먼저 막힌다"
+        },
+        {
+          "dimension": "failure",
+          "statement": "무한 재시도 대비 실패를 유한하게 만드는 대신, 예산을 넘긴 경합은 요청 오류로 끝난다. 측정 구간에서는 재시도 경로 자체가 한 번도 실행되지 않아 이 실패 양상이 관측되지 않았다.",
+          "coordinate": "phase2/taskF/task4/step1/run3/self-assessment.md:90-93",
+          "premise": "잠금이 먼저 줄을 세워 제약 위반·교착·잠금 대기 초과가 0건이었다"
+        },
+        {
+          "dimension": "complexity",
+          "statement": "상수 하나로 끝나므로 코드는 거의 늘지 않지만, 값을 정당화하려면 충돌률과 시도 분포를 관측해야 한다. 지금은 관측 없이 고른 값이라 운영에서 조정 근거가 없다.",
+          "coordinate": "phase2/taskF/task4/step1/run3/self-assessment.md:80"
+        }
+      ]
+    },
+    {
+      "id": "claim-10",
+      "kind": "choice",
+      "sentence": "대상 코드는 감시 중인 신청만 유일하게 하려고 status 에서 파생한 STORED 생성 열을 유일 제약의 열로 넣는 방식을 택했다.",
+      "sites": ["site-23", "site-24"],
+      "decides_at": {
+        "kind": "source",
+        "symbols": ["generatedAs"]
+      },
+      "citations": [
+        {
+          "path": "hibernate-orm-6.6.53.Final/org/hibernate/dialect/Dialect.java",
+          "quote": "\tpublic String generatedAs(String generatedAs) {\n\t\treturn \" generated always as (\" + generatedAs + \") stored\";\n\t}"
+        },
+        {
+          "path": "hibernate-orm-6.6.53.Final/org/hibernate/dialect/unique/UniqueDelegate.java",
+          "quote": " * Hibernate specifies that a unique constraint on a nullable column considers null values to be\n * distinct. Some databases default to the opposite semantic, where null values are considered\n * equal for the purpose of determining uniqueness."
+        },
+        {
+          "path": "phase2/taskF/task4/step1/run3/self-assessment.md",
+          "quote": "MySQL 유일 인덱스는 NULL을 서로 다른 값으로 보므로, 감시 중인 신청만 하나로 제한되고 종료된 신청은 같은 조건으로 여러 건 남을 수 있다."
+        }
+      ],
+      "source_says": "1차 출처는 둘만 말한다. 생성 열의 기본 DDL 형태가 `generated always as (...) stored` 라는 것, 그리고 nullable 열이 든 유일 제약에서 두 NULL 을 서로 다른 값으로 보는 의미를 Hibernate 가 전제하지만 반대 의미를 기본으로 하는 DB 도 있다는 것이다.",
+      "claim_delta": "주장은 코드의 선택이고 출처는 선택을 말하지 않는다. 더 중요한 차이는 MySQL 이 어느 쪽인지다. 인용한 Hibernate 문장은 반대 의미의 예로 Sybase·SQL Server·DB2 만 들고 MySQL 을 분류하지 않는다. MySQL 쪽 1차 출처(dev.mysql.com 사본)는 payload 의 `copies` 경로가 존재하지 않아 인용할 수 없었고, 그래서 'MySQL 유일 인덱스가 NULL 을 구분한다'는 전제는 측정 기록의 진술로만 남아 있다.",
+      "searched": [
+        "hibernate-orm-6.6.53.Final/org/hibernate/dialect/unique/UniqueDelegate.java",
+        "hibernate-orm-6.6.53.Final/org/hibernate/dialect/unique/AlterTableUniqueIndexDelegate.java",
+        "hibernate-orm-6.6.53.Final/org/hibernate/dialect/unique/SkipNullableUniqueDelegate.java",
+        "hibernate-orm-6.6.53.Final/org/hibernate/dialect/MySQLDialect.java",
+        "copies (디렉터리 없음 — MySQL 문서 사본이 준비되지 않았다)"
+      ],
+      "tradeoffs": [
+        {
+          "dimension": "latency",
+          "statement": "조회 한 번에만 의존하지 않고 중복을 DB 가 거절하게 만드는 대신, 정상 경로의 모든 INSERT 가 유일 인덱스 검사를 한 번 더 통과한다. STORED 열이라 값 계산도 읽을 때가 아니라 쓸 때 일어난다.",
+          "coordinate": "hibernate-orm-6.6.53.Final/org/hibernate/dialect/Dialect.java:5226-5227",
+          "premise": "쓰기보다 읽기가 잦은 분포에서 쓰기 쪽으로 비용을 옮기는 교환이다"
+        },
+        {
+          "dimension": "resource",
+          "statement": "테이블에 파생 열 하나와 유일 인덱스 하나가 더 유지된다. 대신 중복을 막기 위한 추가 잠금이나 외부 인프라는 쓰지 않는다.",
+          "coordinate": "hibernate-orm-6.6.53.Final/org/hibernate/dialect/Dialect.java:5226-5227"
+        },
+        {
+          "dimension": "failure",
+          "statement": "잠금을 거치지 않은 쓰기 경로까지 막는 대신, 그 실패가 중복 키 오류로 나타나 예외 번역과 재시도가 받아 주어야 요청 실패가 되지 않는다. 측정 구간에서는 중복 키·제약 위반이 0건이어서 이 경로가 실행되지 않았다.",
+          "coordinate": "phase2/taskF/task4/step1/findings.md:34-36",
+          "premise": "사용자 행 잠금이 먼저 줄을 세워 제약까지 내려오는 요청이 없었다"
+        },
+        {
+          "dimension": "complexity",
+          "statement": "부분 유일성을 직접 쓸 수 없어 파생 열을 하나 두고 NULL 을 서로 다른 값으로 보는 의미에 기대야 한다. 그 의미가 다른 DB 로 옮기면 제약을 다시 써야 한다.",
+          "coordinate": "hibernate-orm-6.6.53.Final/org/hibernate/dialect/unique/UniqueDelegate.java:37-39",
+          "premise": "유일 인덱스가 NULL 을 서로 다른 값으로 보는 DB 에서만 성립한다",
+          "inverts_at": "NULL 을 같다고 보는 DB(원문이 드는 예: Sybase, SQL Server)로 옮기면 종료된 신청 두 건이 같은 조합으로 남지 못해 제약이 반대로 작동한다"
+        }
+      ]
+    }
+  ]
+}

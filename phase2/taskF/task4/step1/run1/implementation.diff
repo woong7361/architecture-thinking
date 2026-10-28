@@ -1,0 +1,100 @@
+diff --git a/src/main/java/com/thinking/tennis/kata/AlertService.java b/src/main/java/com/thinking/tennis/kata/AlertService.java
+index b659706..ec6feec 100644
+--- a/src/main/java/com/thinking/tennis/kata/AlertService.java
++++ b/src/main/java/com/thinking/tennis/kata/AlertService.java
+@@ -1,20 +1,67 @@
+ package com.thinking.tennis.kata;
+ 
++import java.sql.SQLIntegrityConstraintViolationException;
++import org.springframework.dao.DataIntegrityViolationException;
+ import org.springframework.stereotype.Service;
++import org.springframework.transaction.PlatformTransactionManager;
++import org.springframework.transaction.TransactionDefinition;
++import org.springframework.transaction.annotation.Propagation;
+ import org.springframework.transaction.annotation.Transactional;
++import org.springframework.transaction.support.TransactionTemplate;
+ 
+ @Service
+ public class AlertService {
++    private static final int MAX_ATTEMPTS = 3;
++
+     private final AlertRepository repository;
++    private final TransactionTemplate attemptTransaction;
+ 
+-    public AlertService(AlertRepository repository) {
++    public AlertService(AlertRepository repository, PlatformTransactionManager transactionManager) {
+         this.repository = repository;
++        this.attemptTransaction = new TransactionTemplate(transactionManager);
++        this.attemptTransaction.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+     }
+ 
+-    @Transactional
++    /**
++     * 재시도 루프는 트랜잭션 밖에서 돈다. 유니크 제약에 걸린 시도는 트랜잭션을 되돌려야 하고,
++     * 되돌린 뒤 상대가 커밋한 행을 보려면 새 트랜잭션에서 다시 읽어야 한다. 루프가 트랜잭션을
++     * 열어 두면 되돌릴 수 없고 커넥션도 시도마다 두 개씩 잡는다.
++     */
++    @Transactional(propagation = Propagation.NOT_SUPPORTED)
+     public long subscribe(SubscribeCommand command) {
++        RuntimeException conflict = null;
++        for (int attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
++            try {
++                return attemptTransaction.execute(status -> registerOnce(command));
++            } catch (RuntimeException failure) {
++                if (!isWatchingConflict(failure)) {
++                    throw failure;
++                }
++                conflict = failure;
++            }
++        }
++        throw conflict;
++    }
++
++    /**
++     * 사용자 행을 먼저 잠근다. 같은 사용자의 두 요청 중 뒤에 들어온 쪽은 이 자리에서 멈추고,
++     * 앞선 요청이 커밋해 잠금을 놓은 다음에야 기존 신청을 조회한다. 그래서 조회와 생성 사이에
++     * 다른 요청이 끼어들지 못한다.
++     */
++    private long registerOnce(SubscribeCommand command) {
++        repository.lockUserForUpdate(command.userId());
+         return repository.findActive(command)
+                 .orElseGet(() -> repository.save(new AlertSubscription(command)))
+                 .id();
+     }
++
++    private boolean isWatchingConflict(Throwable failure) {
++        for (Throwable cause = failure; cause != null && cause != cause.getCause(); cause = cause.getCause()) {
++            if (cause instanceof DataIntegrityViolationException
++                    || cause instanceof SQLIntegrityConstraintViolationException) {
++                return true;
++            }
++        }
++        return false;
++    }
+ }
+diff --git a/src/test/resources/schema.sql b/src/test/resources/schema.sql
+index 05ee271..06ca74d 100644
+--- a/src/test/resources/schema.sql
++++ b/src/test/resources/schema.sql
+@@ -3,7 +3,9 @@ CREATE TABLE kata_users (
+     version BIGINT NOT NULL DEFAULT 0
+ ) ENGINE=InnoDB;
+ 
+--- 현재 중복 판단은 서비스의 기존 신청 조회로 수행한다.
++-- 중복 판단의 최종 근거는 DB 제약이다. 감시 중(WATCHING)인 행만 watching_marker 가 1 이고
++-- 그 밖의 상태는 NULL 이므로, 유니크 인덱스가 조건당 감시 중 한 건만 허용하면서
++-- 종료된 신청은 같은 조건으로 여러 건 남을 수 있다.
+ CREATE TABLE alert_subscriptions (
+     id BIGINT AUTO_INCREMENT PRIMARY KEY,
+     user_id BIGINT NOT NULL,
+@@ -11,6 +13,9 @@ CREATE TABLE alert_subscriptions (
+     play_date DATE NOT NULL,
+     time_slot VARCHAR(32) NOT NULL,
+     status VARCHAR(16) NOT NULL,
++    watching_marker TINYINT GENERATED ALWAYS AS (CASE WHEN status = 'WATCHING' THEN 1 ELSE NULL END) VIRTUAL,
+     CONSTRAINT fk_alert_user FOREIGN KEY (user_id) REFERENCES kata_users(id),
+-    INDEX idx_active_lookup (user_id, court_id, play_date, time_slot, status)
++    INDEX idx_active_lookup (user_id, court_id, play_date, time_slot, status),
++    CONSTRAINT uq_watching_subscription
++        UNIQUE (user_id, court_id, play_date, time_slot, watching_marker)
+ ) ENGINE=InnoDB;

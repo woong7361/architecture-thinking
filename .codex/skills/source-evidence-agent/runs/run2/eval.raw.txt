@@ -1,0 +1,166 @@
+{
+  "claims": [
+    {
+      "id": "claim-01",
+      "axes": {
+        "grounding": {
+          "box": 3,
+          "basis": "인용한 세 조각을 이으면 PESSIMISTIC_WRITE → getWriteLockString(timeout) → withTimeout(\" for update\", timeout)가 되고, Dialect.java:2269-2271의 \"return \\\" for update\\\";\"로 조각이 확정된다. 다만 같은 인용의 withTimeout이 \"lockString + \\\" nowait\\\"\", \"lockString + \\\" wait \\\" + getTimeoutInSeconds( timeout )\"도 돌려주므로 조각이 그대로 \" for update\"인 것은 WAIT_FOREVER 분기(또는 supports* 거짓)에서만이다. 주장 문장에는 그 timeout 조건이 들어 있지 않고 claim_delta에만 적혀 있어 4가 아니다."
+        },
+        "depth": {
+          "box": 4,
+          "basis": "MySQLDialect.java:1409-1425의 withTimeout/getWriteLockString과 Dialect.java:2231-2250의 switch, 2269-2271의 반환문이 그 문자열을 실제로 만드는 자리다. 조각이 \" for update\"가 아니라면 2270행의 반환 리터럴이나 1424행의 getForUpdateString() 전달이 달라야 한다. 설명 주석이나 javadoc이 아니라 반환식에 닿았다."
+        }
+      }
+    },
+    {
+      "id": "claim-02",
+      "axes": {
+        "grounding": {
+          "box": 2,
+          "basis": "인용은 두 저장소의 잠금 메서드와 run3의 register만 보여 준다. \"조회 앞에서 잠근다\"가 인용으로 확인되는 것은 run3의 \"repository.lockSubscriber(...); return repository.findActive(command)\" 하나뿐이고, alert-kata 쪽 호출 순서를 정하는 자리(PessimisticAlertService.subscribe)는 인용에 없어 \"두 구현은 … 조회 앞에서\"의 절반이 함의되지 않는다. 또 주장 문장이 든 이유 \"잠글 신청 행이 아직 없다\"는 세 인용문 어디에도 적혀 있지 않다(source_says도 \"run3 코드 주석과 사람이 쓴 답안의 서술\"이라고 인정한다). 같은 주제의 코드에 닿았지만 주장 문장 전체를 함의하지는 않는다."
+        },
+        "depth": {
+          "box": 4,
+          "basis": "lockSubscriber의 \"entityManager.find(KataUser.class, userId, LockModeType.PESSIMISTIC_WRITE)\"와 register의 21-22행 호출 순서가 잠금 대상·잠금 모드·순서를 결정하는 구현 자체다. 기본키 대신 다른 조건으로 찾거나 findActive 뒤로 옮기면 주장이 거짓이 되고, 그 변경은 바로 이 인용문의 문장을 바꾼다."
+        },
+        "tradeoff_coverage": {
+          "box": 5,
+          "basis": "latency(\"잠금 지점부터 직렬화되어 뒤 요청은 앞 요청의 커밋까지 기다린다\"), resource(\"대기하는 요청이 … DB 연결을 점유한다\"), failure(\"중복 대신 대기가 실패 양상이 되고 … 교착이 생긴다\"), complexity(\"재시도 코드가 필요 없어 구현은 짧아지지만 …\") 네 항목이 모두 얻는 것과 치르는 것을 적었다. 지정된 차원 네 개가 전부 채워졌다."
+        },
+        "tradeoff_validity": {
+          "box": 2,
+          "basis": "네 항목 모두 좌표가 있지만 latency의 좌표가 항목을 뒷받침하지 않는다. lock-comparison-results.md:16은 실행 2행 \"| 2 | 11.831ms | 12.963ms | 16.070ms | 20.053ms | 100회 |\"이어서 비관적 수치는 맞지만, 항목이 괄호로 적은 낙관적 값 \"(15.569ms / 18.561ms)\"은 그 줄에 없고 그 줄의 낙관적 값은 16.070/20.053이다. 그 비교 수치가 있는 자리는 19행(\"비관적 락은 요청 11.831ms, 회차 12.963ms였고 낙관적 락은 요청 15.569ms, 회차 18.561ms\")이다. resource는 :21의 \"잠금을 얻을 때까지 DB 연결을 점유하며\", failure는 verdict.md:37의 \"로그에 중복 키 위반과 교착이 0건\", complexity는 verdict.md:29의 \"설계를 가른 근거인데 테스트가 판정하지 않았다\"로 좌표가 맞는다."
+        }
+      }
+    },
+    {
+      "id": "claim-03",
+      "axes": {
+        "grounding": {
+          "box": 3,
+          "basis": "AbstractPlatformTransactionManager.java:445-458 인용이 \"SuspendedResourcesHolder suspendedResources = suspend(transaction);\" 뒤 \"return startTransaction(...)\"으로 보류와 새 시작을 그대로 보이고, Propagation.java:68의 \"REQUIRES_NEW(TransactionDefinition.PROPAGATION_REQUIRES_NEW)\"가 애너테이션 값과 상수를 잇는다. 다만 같은 파일 Propagation.java:61-65가 \"Actual transaction suspension will not work out-of-the-box on all transaction managers\"라는 조건을 달고 있고 주장 문장에는 그 한정이 없다(claim_delta에만 적혀 있다)."
+        },
+        "depth": {
+          "box": 4,
+          "basis": "handleExistingTransaction의 PROPAGATION_REQUIRES_NEW 분기(445-458행)가 보류 여부와 새 트랜잭션 시작을 실제로 가르는 구현이다. 주장이 거짓이라면 450행의 suspend(transaction) 또는 452행의 startTransaction 호출이 달라야 한다. 상수 선언만이 아니라 분기 본문에 닿았다."
+        }
+      }
+    },
+    {
+      "id": "claim-04",
+      "axes": {
+        "grounding": {
+          "box": 4,
+          "basis": "\"if (allowPublicMethodsOnly() && !Modifier.isPublic(method.getModifiers())) { return null; }\"(AbstractFallbackTransactionAttributeSource.java:167-169)과 ATAS의 \"return this.publicMethodsOnly;\"(218-219행), \"private boolean publicMethodsOnly = true;\"(74행)를 이으면 주장이 그대로 나온다. 원문이 단 조건은 설정 가능성(\"as configured\", setPublicMethodsOnly)인데 주장 문장이 \"기본 설정에서는\"으로 그 한정을 안고 있고, 적용 범위를 AnnotationTransactionAttributeSource로 좁혀 기반 클래스의 기본값 false(230-231행)와 섞지 않았다."
+        },
+        "depth": {
+          "box": 4,
+          "basis": "167행의 조건식이 애너테이션을 읽기 전에 null을 돌려주는 바로 그 자리이고, 74행의 초기값이 그 조건의 참·거짓을 정한다. 초기값이 false였다면 주장이 거짓이 되므로 이 두 줄이 판정을 쥔다. javadoc 설명(105-110행)이 아니라 조건식과 필드 초기화에 닿았다."
+        }
+      }
+    },
+    {
+      "id": "claim-05",
+      "axes": {
+        "grounding": {
+          "box": 3,
+          "basis": "인용한 435-443행이 \"Object suspendedResources = suspend(transaction);\" 뒤 \"prepareTransactionStatus(definition, null, false, ...)\"로 트랜잭션 객체 자리에 null을 넘기므로 보류 후 트랜잭션 없이 실행이 함의된다. 다만 인용한 Propagation.java의 NOT_SUPPORTED 자리에는 \"Actual transaction suspension will not work out-of-the-box on all transaction managers\"(73-78행)라는 조건이 붙어 있고 주장 문장은 그 한정을 담지 않았다. claim_delta는 다른 이야기(지점이 이 분기를 지나지 않는다는 것)만 적었다."
+        },
+        "depth": {
+          "box": 4,
+          "basis": "handleExistingTransaction의 PROPAGATION_NOT_SUPPORTED 분기(435-443행)가 \"기존 트랜잭션이 있을 때\"의 처리를 결정하는 구현이다. 주장이 거짓이라면 439행 suspend(transaction)이나 441-442행의 null/false 인자가 달라야 한다. 주장 문장 자체가 \"진행 중인 트랜잭션 안에서\"로 한정되어 있어 이 분기가 참·거짓을 가르는 자리다."
+        }
+      }
+    },
+    {
+      "id": "claim-06",
+      "axes": {
+        "grounding": {
+          "box": 4,
+          "basis": "Transactional.java:175의 \"Propagation propagation() default Propagation.REQUIRED;\"와 Propagation.java:37의 \"REQUIRED(TransactionDefinition.PROPAGATION_REQUIRED)\"가 생략 시의 값과 그 값이 가리키는 상수를 모두 보인다. 두 줄로 주장 문장이 그대로 나오고, 원문이 이 기본값에 다른 조건을 달지 않는다(javadoc도 \"Defaults to Propagation.REQUIRED\"뿐이다). 주장은 기본값까지만 말하고 참여 분기까지 넓히지 않았다."
+        },
+        "depth": {
+          "box": 4,
+          "basis": "기본값 주장의 참·거짓은 175행의 default 절과 37행의 상수 대응이 정한다. 그 줄이 Propagation.SUPPORTS였다면 주장이 곧 거짓이 되므로 요약이나 문서가 아니라 값이 결정되는 자리다. 셋째 인용(AbstractPlatformTransactionManager.java:397-411)은 그 값의 처리까지 덧붙인 것이고 주장을 가르는 자리는 앞의 두 줄이다."
+        }
+      }
+    },
+    {
+      "id": "claim-07",
+      "axes": {
+        "grounding": {
+          "box": 4,
+          "basis": "\"final boolean delayIdentityInserts = !source.isTransactionInProgress() && !requiresImmediateIdAccess && generatedOnExecution;\"는 논리곱이므로 트랜잭션이 진행 중이면 첫 항이 거짓이 되어 지연이 꺼진다. 주장이 건 조건 셋이 모두 문장에 들어 있다: \"persist로 저장하는\"은 DefaultPersistEventListener.java:177의 \"saveWithGeneratedId( entity, ..., false )\"가 requiresImmediateIdAccess에 false를 넘기는 경로이고, \"IDENTITY INSERT\"가 generatedOnExecution 자리, \"트랜잭션이 진행 중이면\"이 첫 항이다. 주장은 지연 플래그까지만 말하고 실행 시점으로 넓히지 않았다."
+        },
+        "depth": {
+          "box": 4,
+          "basis": "AbstractSaveEventListener.java:132-136이 그 플래그를 계산해 performSave로 넘기는 식 자체이고, 아래 384-393행에서 같은 값이 EntityIdentityInsertAction 생성자로 들어간다. 주장이 거짓이라면 133행의 \"!source.isTransactionInProgress()\" 항이 그 곱에 없어야 한다."
+        }
+      }
+    },
+    {
+      "id": "claim-08",
+      "axes": {
+        "grounding": {
+          "box": 3,
+          "basis": "인용이 \"SELECT version FROM kata_users WHERE id = ?\"와 \"UPDATE kata_users SET version = version + 1 WHERE id = ? AND version = ?\" + \"return updated == 1;\", 그리고 \"if (!repository.advanceUserVersion(command.userId(), version)) throw new OptimisticConflictException\"을 보이므로 감지를 애플리케이션 SQL이 한다는 것은 함의된다. 다만 같은 인용의 KataUser에 \"@Version private long version;\"이 그대로 선언돼 있어 \"@Version 관리에 맡기지 않고\"는 선언 사실과 나란히 읽히고, JPA 경로가 이 컬럼을 올리지 않는다는 조건은 주장 문장에 들어 있지 않다(claim_delta만 \"코드만으로는 확정되지 않는다\"고 적었다)."
+        },
+        "depth": {
+          "box": 4,
+          "basis": "currentUserVersion/advanceUserVersion의 네이티브 쿼리 본문과 OptimisticSubscriptionAttempt:17-20의 호출·분기가 충돌을 판정하는 구현이다. WHERE 절에서 version 조건을 빼거나 updated==1 비교를 지우면 주장이 거짓이 되므로 이 자리가 참·거짓을 쥔다."
+        },
+        "tradeoff_coverage": {
+          "box": 5,
+          "basis": "latency(\"시도마다 SELECT와 UPDATE 두 왕복을 쓰고 충돌하면 트랜잭션을 처음부터 다시 실행한다\"), resource(\"트랜잭션과 연결 점유 횟수가 충돌 수만큼 늘어난다\"), failure(\"버전 불일치와 재시도 소진으로 바뀐다\"), complexity(\"버전을 올리는 주체가 둘로 갈린다\") 네 항목이 모두 얻는 것과 치르는 것을 적었다."
+        },
+        "tradeoff_validity": {
+          "box": 4,
+          "basis": "좌표가 모두 항목을 받친다. latency의 :19는 \"비관적 락은 요청 11.831ms … 낙관적 락은 요청 15.569ms … 트랜잭션을 다시 실행하므로 더 느렸다\"로 수치까지 일치하고, resource의 :23은 \"충돌한 시도는 전체 트랜잭션을 롤백하고 새 트랜잭션에서 … 추가 Redis나 분산 락 인프라는 필요하지 않고 … version 컬럼만 있으면 된다\", complexity의 AbstractSelectLockingStrategy.java:64-100은 \"if (lockable.isVersioned()) select.addRestriction(getVersionColumnName())\"과 \"if (!rs.next()) … throw new StaleObjectStateException\"으로 맞물림을 보인다(failure의 :17은 \"100회\"는 그 줄에 있으나 \"요청 오류는 0회\"는 :21에 있는 부수 수치다). 항목마다 전제가 붙었다(\"충돌 빈도\", \"충돌한 트랜잭션이 롤백 뒤 같은 연결 풀에서 다시 시작한다는 것\" 등). 5가 아닌 이유는 뒤집히는 값을 지목하지 못한 항목이 있기 때문이다: latency는 \"그 값이 이 기록 안에 없다\"고 스스로 적고, resource도 \"충돌률이 높아 평균 시도 수가 늘면\"까지만이다."
+        }
+      }
+    },
+    {
+      "id": "claim-09",
+      "axes": {
+        "grounding": {
+          "box": 4,
+          "basis": "인용이 \"private static final int MAX_ATTEMPTS = 5;\"와 \"for (int attemptNumber = 1; attemptNumber <= MAX_ATTEMPTS; attemptNumber++)\" + \"if (attemptNumber == MAX_ATTEMPTS) throw conflict;\", 그리고 run3의 \"MAX_ATTEMPTS = 3\"과 같은 모양의 루프·\"throw lastFailure;\"를 모두 담아 5회/3회 상한이 문장 그대로 나온다. 주장은 상한 값과 고정 상수라는 것까지만 말하고 백오프나 값의 적정성으로 넓히지 않았다."
+        },
+        "depth": {
+          "box": 4,
+          "basis": "상수 선언과 루프 조건이 시도 횟수를 결정하는 자리다. MAX_ATTEMPTS를 바꾸거나 루프 조건을 \"<\"로 바꾸면 주장의 숫자가 곧 거짓이 되므로 두 인용이 참·거짓을 쥔다."
+        },
+        "tradeoff_coverage": {
+          "box": 5,
+          "basis": "latency(\"최악의 응답 시간이 시도 횟수의 배수로 묶이지만 그만큼 늦게 실패한다\"), resource(\"백오프가 없으므로 … 연결을 연달아 회전시킨다\"), failure(\"무한 재시도 대신 요청 오류로 끝나 실패가 유한해진다\"), complexity(\"상수 하나와 루프지만 그 값이 맞는지는 … 관측해야 알 수 있다\") 네 항목이 다 있다."
+        },
+        "tradeoff_validity": {
+          "box": 4,
+          "basis": "좌표가 항목을 받친다. complexity의 findings.md:60은 \"| MAX_ATTEMPTS = 3 | 1, 3 | 아니다. 구현자가 근거 없이 골랐다고 적었다 |\"로 문장과 정확히 같고, latency의 :17은 실행 3행의 충돌·재시도 \"100회\"(100회차)로 회차당 1회 충돌을 받치며, failure의 verdict.md:37-38은 \"재시도 경로가 한 번도 돌지 않았다\"를 적는다(같은 항목의 \"요청 오류는 0회\"는 lock-comparison-results.md:21에 있는 부수 수치다). 네 항목 모두 전제가 붙었다. 5가 아닌 이유는 뒤집히는 값을 지목하지 못한 항목이 있다는 것이다: resource는 \"동시 충돌 요청이 많아지면\", failure는 \"요청의 일정 비율을 넘어\"까지만이고 넘는 수치를 적지 않았다."
+        }
+      }
+    },
+    {
+      "id": "claim-10",
+      "axes": {
+        "grounding": {
+          "box": 3,
+          "basis": "schema.sql의 \"watching_marker TINYINT GENERATED ALWAYS AS (CASE WHEN status = 'WATCHING' THEN 1 ELSE NULL END) STORED\"와 \"CONSTRAINT uq_watching_subscription UNIQUE (user_id, court_id, play_date, time_slot, watching_marker)\"가 구조를 그대로 보이고, 둘째 인용의 주석이 \"감시 중인 신청만 … 하나로 제한되고\"까지 적는다. 그러나 주석이 그 효력에 단 조건 \"MySQL 의 유일 인덱스는 NULL 을 서로 다른 값으로 보므로\"가 주장 문장에는 없고 claim_delta에만 있다. copies 루트를 열어 보니 파일이 하나도 없어 그 조건의 1차 출처는 이 산출물에 없다는 claim_delta의 서술과 일치한다."
+        },
+        "depth": {
+          "box": 4,
+          "basis": "인용한 DDL 자체가 생성 컬럼의 식과 유일 키의 열 목록을 정하는 자리다. CASE 식에서 ELSE NULL을 0으로 바꾸거나 유일 키에서 watching_marker를 빼면 주장이 거짓이 되므로 이 선언이 참·거짓을 쥔다(효력을 최종적으로 정하는 MySQL의 NULL 취급 조항에는 닿지 못했고, 그것은 grounding 쪽에서 셌다)."
+        },
+        "tradeoff_coverage": {
+          "box": 5,
+          "basis": "latency, failure, complexity에 교환이 적혔고 resource는 \"이 차원에서는 요청당 교환이 없다\"는 선언에 이유(\"제약 검사가 … INSERT 문장과 같은 실행 안에서 일어나고, 트랜잭션이 진행 중이면 그 INSERT는 지연 대상에서 빠지므로\")가 붙어 있다. 규칙대로 이유 있는 '없음' 선언도 명시로 세어 네 차원 전부다."
+        },
+        "tradeoff_validity": {
+          "box": 4,
+          "basis": "'교환 없음' 선언까지 네 항목 모두 좌표가 있고 받친다. failure의 findings.md:34-35는 \"로그에 1062 중복 키 위반과 교착이 0건이고, 반환 ID가 조건마다 최솟값부터 최댓값까지 정확히 100칸\"과 \"실패한 INSERT도 AUTO_INCREMENT를 소비하므로\"를 그대로 담고, complexity의 findings.md:38-39는 \"같은 테스트가 안전망이 있는 구현과 없는 구현을 구별하지 못한다\"를, latency의 test.log:575는 \"Tests run: 10, Failures: 0 … Time elapsed: 20.27 s\"를, resource 선언의 AbstractSaveEventListener.java:132-136은 지연 플래그 식을 보인다. 항목마다 전제가 적혀 있다. 5가 아닌 이유는 뒤집히는 값을 지목하지 못한 항목이 있다는 것이다: latency는 \"제약 위반이 요청의 상당 비율을 차지하면\", failure는 \"번역이 어긋나 예외가 catch 절을 벗어나면\"까지만이고 넘는 수치가 없다."
+        }
+      }
+    }
+  ]
+}

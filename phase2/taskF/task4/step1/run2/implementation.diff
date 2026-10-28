@@ -1,0 +1,15 @@
+diff --git a/src/main/java/com/thinking/tennis/kata/AlertService.java b/src/main/java/com/thinking/tennis/kata/AlertService.java
+index b659706..47aad06 100644
+--- a/src/main/java/com/thinking/tennis/kata/AlertService.java
++++ b/src/main/java/com/thinking/tennis/kata/AlertService.java
+@@ -13,6 +13,10 @@ public class AlertService {
+ 
+     @Transactional
+     public long subscribe(SubscribeCommand command) {
++        // 같은 사용자의 신청을 한 번에 하나씩만 처리하도록 사용자 행에 쓰기 잠금을 먼저 건다.
++        // 트랜잭션의 첫 조회가 이 잠금 조회이므로, 잠금을 기다려 풀린 뒤에야 이어지는
++        // findActive 조회가 스냅샷을 뜨고, 그 스냅샷은 먼저 커밋된 다른 신청을 포함한다.
++        repository.lockUserForUpdate(command.userId());
+         return repository.findActive(command)
+                 .orElseGet(() -> repository.save(new AlertSubscription(command)))
+                 .id();

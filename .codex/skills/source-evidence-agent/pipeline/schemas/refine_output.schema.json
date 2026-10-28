@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Refine 산출 — 보강한 주장 묶음과 변경 신고",
+  "description": "Gen 산출과 같은 모양에 변경 신고가 붙는다. 지우는 것을 막지 않고 지운 사실을 숨기지 못하게 한다. 축 점수 칸은 없다. 점수는 방향 없는 목표라 측정값을 움직이는 가장 싼 경로를 고르게 한다.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["claims", "claim_changes"],
+  "properties": {
+    "claims": { "$ref": "gen_output.schema.json#/properties/claims" },
+    "claim_changes": {
+      "type": "array",
+      "description": "앞 iteration 대비 주장의 삭제와 문장 수정. 신고에 없는 변경은 게이트가 탈락시킨다. 바꾼 것이 없으면 빈 배열이다.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "action", "reason"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^claim-[0-9]{2}$" },
+          "action": { "enum": ["withdrawn", "amended"] },
+          "reason": {
+            "type": "string",
+            "minLength": 15,
+            "description": "근거. Critique의 어느 인용이 이 변경을 받치는지 적는다. 근거가 빈 신고는 탈락한다."
+          },
+          "previous_sentence": { "type": "string" }
+        }
+      }
+    },
+    "repairs": {
+      "type": "array",
+      "description": "게이트 위반을 어떻게 닫았는지. 위반의 규칙 id를 인용한다.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["rule", "point", "how"],
+        "properties": {
+          "rule": { "type": "string" },
+          "point": { "type": "string" },
+          "how": { "type": "string", "minLength": 10 }
+        }
+      }
+    }
+  }
+}
