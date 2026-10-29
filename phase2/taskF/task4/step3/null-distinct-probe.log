@@ -1,0 +1,18 @@
+NULLPROBE --- 
+NULLPROBE watching#1 OK
+NULLPROBE watching#2 SQLIntegrityConstraintViolationException / Duplicate entry '1-10-2026-10-10-09:00-10:00-1' for key 'alert_subscriptions.uq_watching_subscription'
+NULLPROBE --- 
+NULLPROBE ended#1 OK
+NULLPROBE ended#2 OK
+NULLPROBE ended#3 OK
+NULLPROBE rows status=ENDED marker=null count=3
+NULLPROBE rows status=WATCHING marker=1 count=1
+NULLPROBE --- 
+NULLPROBE index seq=1 column=user_id nullable=
+NULLPROBE index seq=2 column=court_id nullable=
+NULLPROBE index seq=3 column=play_date nullable=
+NULLPROBE index seq=4 column=time_slot nullable=
+NULLPROBE index seq=5 column=watching_marker nullable=YES
+NULLPROBE --- 
+NULLPROBE afterEnded watching#3 OK
+NULLPROBE final watching=1 total=5

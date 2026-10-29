@@ -1,0 +1,203 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------------< com.thinking:alert-kata >-----------------------
+[INFO] Building alert-kata 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ alert-kata ---
+[INFO] skip non existing resourceDirectory C:\Users\PC-220627-03\AppData\Local\Temp\claude\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\41ce40f5-9d4c-4a5d-b087-8634f628611d\scratchpad\tx-probe-run3\src\main\resources
+[INFO] skip non existing resourceDirectory C:\Users\PC-220627-03\AppData\Local\Temp\claude\c--Users-PC-220627-03-Desktop-project-task-architecture-thinking\41ce40f5-9d4c-4a5d-b087-8634f628611d\scratchpad\tx-probe-run3\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ alert-kata ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 7 source files with javac [debug parameters release 25] to target\classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ alert-kata ---
+[INFO] Copying 2 resources from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ alert-kata ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 1 source file with javac [debug parameters release 25] to target\test-classes
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ alert-kata ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.thinking.tennis.kata.AlertSubscriptionTest
+16:11:48.641 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.thinking.tennis.kata.AlertSubscriptionTest]: AlertSubscriptionTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+16:11:48.729 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.thinking.tennis.kata.KataApplication for test class com.thinking.tennis.kata.AlertSubscriptionTest
+16:11:48.825 [main] INFO org.testcontainers.images.PullPolicy -- Image pull policy will be performed by: DefaultPullPolicy()
+16:11:48.827 [main] INFO org.testcontainers.utility.ImageNameSubstitutor -- Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+16:11:48.855 [main] INFO org.testcontainers.DockerClientFactory -- Testcontainers version: 2.0.5
+16:11:49.062 [main] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+16:11:49.363 [main] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+16:11:49.365 [main] INFO org.testcontainers.DockerClientFactory -- Docker host IP address is localhost
+16:11:49.379 [main] INFO org.testcontainers.DockerClientFactory -- Connected to docker: 
+  Server Version: 29.6.2
+  API Version: 1.55
+  Operating System: Docker Desktop
+  Total Memory: 32001 MB
+  Labels: 
+    com.docker.desktop.address=npipe://\\.\pipe\docker_cli
+16:11:49.492 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Creating container for image: testcontainers/ryuk:0.14.0
+16:11:49.550 [main] INFO org.testcontainers.utility.RegistryAuthLocator -- Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+16:11:49.657 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Container testcontainers/ryuk:0.14.0 is starting: b0d0c9071692842e664c3936f24ad572f6a3269202d49c660dd972a9559391e2
+16:11:49.943 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Container testcontainers/ryuk:0.14.0 started in PT0.4514856S
+16:11:49.949 [main] INFO org.testcontainers.utility.RyukResourceReaper -- Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+16:11:49.949 [main] INFO org.testcontainers.DockerClientFactory -- Checking the system...
+16:11:49.950 [main] INFO org.testcontainers.DockerClientFactory -- ?? Docker server version should be at least 1.6.0
+16:11:49.950 [main] INFO tc.mysql:8.4.8 -- Creating container for image: mysql:8.4.8
+16:11:50.003 [main] INFO tc.mysql:8.4.8 -- Container mysql:8.4.8 is starting: 08c966adf6cf84b7a41d6ef60f4b21adbc408e649b9ebd8910fd3738298eda05
+16:11:50.215 [main] INFO tc.mysql:8.4.8 -- Waiting for database connection to become available at jdbc:mysql://localhost:53607/alert_kata using query 'SELECT 1'
+16:11:57.386 [main] INFO tc.mysql:8.4.8 -- Container mysql:8.4.8 started in PT7.4355091S
+16:11:57.386 [main] INFO tc.mysql:8.4.8 -- Container is started (JDBC URL: jdbc:mysql://localhost:53607/alert_kata)
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::allocateMemory has been called by io.netty.util.internal.PlatformDependent0$2 (file:/C:/Users/PC-220627-03/.m2/repository/io/netty/netty-common/4.1.135.Final/netty-common-4.1.135.Final.jar)
+WARNING: Please consider reporting this to the maintainers of class io.netty.util.internal.PlatformDependent0$2
+WARNING: sun.misc.Unsafe::allocateMemory will be removed in a future release
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (C:\Users\PC-220627-03\.m2\repository\net\bytebuddy\byte-buddy-agent\1.17.8\byte-buddy-agent-1.17.8.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+2026-10-29T16:11:59.970+09:00 TRACE 35196 --- [           main] o.s.t.i.TransactionInterceptor           : Getting transaction for [com.thinking.tennis.kata.AlertService.subscribe]
+2026-10-29T16:11:59.972+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.thinking.tennis.kata.AlertRegistrar.register]: PROPAGATION_REQUIRES_NEW,ISOLATION_DEFAULT
+2026-10-29T16:11:59.993+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Opened new EntityManager [SessionImpl(2112817404<open>)] for JPA transaction
+2026-10-29T16:11:59.999+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@7fb70e94]
+2026-10-29T16:11:59.999+09:00 TRACE 35196 --- [           main] o.s.t.i.TransactionInterceptor           : Getting transaction for [com.thinking.tennis.kata.AlertRegistrar.register]
+2026-10-29T16:12:00.021+09:00 DEBUG 35196 --- [           main] org.hibernate.SQL                        : select ku1_0.id,ku1_0.version from kata_users ku1_0 where ku1_0.id=? for update
+2026-10-29T16:12:00.228+09:00 DEBUG 35196 --- [           main] org.hibernate.SQL                        : select as1_0.id,as1_0.court_id,as1_0.play_date,as1_0.status,as1_0.time_slot,as1_0.user_id from alert_subscriptions as1_0 where as1_0.user_id=? and as1_0.court_id=? and as1_0.play_date=? and as1_0.time_slot=? and as1_0.status=? order by as1_0.id limit ?
+2026-10-29T16:12:00.241+09:00 DEBUG 35196 --- [           main] org.hibernate.SQL                        : insert into alert_subscriptions (court_id,play_date,status,time_slot,user_id) values (?,?,?,?,?)
+2026-10-29T16:12:00.251+09:00 TRACE 35196 --- [           main] o.s.t.i.TransactionInterceptor           : Completing transaction for [com.thinking.tennis.kata.AlertRegistrar.register]
+2026-10-29T16:12:00.251+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2026-10-29T16:12:00.251+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(2112817404<open>)]
+2026-10-29T16:12:00.257+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Closing JPA EntityManager [SessionImpl(2112817404<open>)] after transaction
+2026-10-29T16:12:00.257+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Resuming suspended transaction after completion of inner transaction
+2026-10-29T16:12:00.257+09:00 TRACE 35196 --- [           main] o.s.t.i.TransactionInterceptor           : Completing transaction for [com.thinking.tennis.kata.AlertService.subscribe]
+2026-10-29T16:12:00.257+09:00 TRACE 35196 --- [           main] o.s.t.i.TransactionInterceptor           : Getting transaction for [com.thinking.tennis.kata.AlertService.subscribe]
+2026-10-29T16:12:00.257+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.thinking.tennis.kata.AlertRegistrar.register]: PROPAGATION_REQUIRES_NEW,ISOLATION_DEFAULT
+2026-10-29T16:12:00.258+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Opened new EntityManager [SessionImpl(1242117288<open>)] for JPA transaction
+2026-10-29T16:12:00.258+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@4cf66f73]
+2026-10-29T16:12:00.258+09:00 TRACE 35196 --- [           main] o.s.t.i.TransactionInterceptor           : Getting transaction for [com.thinking.tennis.kata.AlertRegistrar.register]
+2026-10-29T16:12:00.259+09:00 DEBUG 35196 --- [           main] org.hibernate.SQL                        : select ku1_0.id,ku1_0.version from kata_users ku1_0 where ku1_0.id=? for update
+2026-10-29T16:12:00.263+09:00 DEBUG 35196 --- [           main] org.hibernate.SQL                        : select as1_0.id,as1_0.court_id,as1_0.play_date,as1_0.status,as1_0.time_slot,as1_0.user_id from alert_subscriptions as1_0 where as1_0.user_id=? and as1_0.court_id=? and as1_0.play_date=? and as1_0.time_slot=? and as1_0.status=? order by as1_0.id limit ?
+2026-10-29T16:12:00.266+09:00 DEBUG 35196 --- [           main] org.hibernate.SQL                        : insert into alert_subscriptions (court_id,play_date,status,time_slot,user_id) values (?,?,?,?,?)
+2026-10-29T16:12:00.269+09:00 TRACE 35196 --- [           main] o.s.t.i.TransactionInterceptor           : Completing transaction for [com.thinking.tennis.kata.AlertRegistrar.register]
+2026-10-29T16:12:00.269+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2026-10-29T16:12:00.269+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1242117288<open>)]
+2026-10-29T16:12:00.274+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Closing JPA EntityManager [SessionImpl(1242117288<open>)] after transaction
+2026-10-29T16:12:00.274+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Resuming suspended transaction after completion of inner transaction
+2026-10-29T16:12:00.275+09:00 TRACE 35196 --- [           main] o.s.t.i.TransactionInterceptor           : Completing transaction for [com.thinking.tennis.kata.AlertService.subscribe]
+2026-10-29T16:12:00.304+09:00 TRACE 35196 --- [           main] o.s.t.i.TransactionInterceptor           : Getting transaction for [com.thinking.tennis.kata.AlertService.subscribe]
+2026-10-29T16:12:00.304+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.thinking.tennis.kata.AlertRegistrar.register]: PROPAGATION_REQUIRES_NEW,ISOLATION_DEFAULT
+2026-10-29T16:12:00.304+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Opened new EntityManager [SessionImpl(1927581788<open>)] for JPA transaction
+2026-10-29T16:12:00.305+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@279b83ea]
+2026-10-29T16:12:00.305+09:00 TRACE 35196 --- [           main] o.s.t.i.TransactionInterceptor           : Getting transaction for [com.thinking.tennis.kata.AlertRegistrar.register]
+2026-10-29T16:12:00.305+09:00 DEBUG 35196 --- [           main] org.hibernate.SQL                        : select ku1_0.id,ku1_0.version from kata_users ku1_0 where ku1_0.id=? for update
+2026-10-29T16:12:00.307+09:00 DEBUG 35196 --- [           main] org.hibernate.SQL                        : select as1_0.id,as1_0.court_id,as1_0.play_date,as1_0.status,as1_0.time_slot,as1_0.user_id from alert_subscriptions as1_0 where as1_0.user_id=? and as1_0.court_id=? and as1_0.play_date=? and as1_0.time_slot=? and as1_0.status=? order by as1_0.id limit ?
+2026-10-29T16:12:00.308+09:00 DEBUG 35196 --- [           main] org.hibernate.SQL                        : insert into alert_subscriptions (court_id,play_date,status,time_slot,user_id) values (?,?,?,?,?)
+2026-10-29T16:12:00.309+09:00 TRACE 35196 --- [           main] o.s.t.i.TransactionInterceptor           : Completing transaction for [com.thinking.tennis.kata.AlertRegistrar.register]
+2026-10-29T16:12:00.309+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2026-10-29T16:12:00.309+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1927581788<open>)]
+2026-10-29T16:12:00.314+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Closing JPA EntityManager [SessionImpl(1927581788<open>)] after transaction
+2026-10-29T16:12:00.314+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Resuming suspended transaction after completion of inner transaction
+2026-10-29T16:12:00.314+09:00 TRACE 35196 --- [           main] o.s.t.i.TransactionInterceptor           : Completing transaction for [com.thinking.tennis.kata.AlertService.subscribe]
+2026-10-29T16:12:00.331+09:00 TRACE 35196 --- [           main] o.s.t.i.TransactionInterceptor           : Getting transaction for [com.thinking.tennis.kata.AlertService.subscribe]
+2026-10-29T16:12:00.331+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.thinking.tennis.kata.AlertRegistrar.register]: PROPAGATION_REQUIRES_NEW,ISOLATION_DEFAULT
+2026-10-29T16:12:00.331+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Opened new EntityManager [SessionImpl(60134824<open>)] for JPA transaction
+2026-10-29T16:12:00.332+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@26169be3]
+2026-10-29T16:12:00.332+09:00 TRACE 35196 --- [           main] o.s.t.i.TransactionInterceptor           : Getting transaction for [com.thinking.tennis.kata.AlertRegistrar.register]
+2026-10-29T16:12:00.333+09:00 DEBUG 35196 --- [           main] org.hibernate.SQL                        : select ku1_0.id,ku1_0.version from kata_users ku1_0 where ku1_0.id=? for update
+2026-10-29T16:12:00.334+09:00 DEBUG 35196 --- [           main] org.hibernate.SQL                        : select as1_0.id,as1_0.court_id,as1_0.play_date,as1_0.status,as1_0.time_slot,as1_0.user_id from alert_subscriptions as1_0 where as1_0.user_id=? and as1_0.court_id=? and as1_0.play_date=? and as1_0.time_slot=? and as1_0.status=? order by as1_0.id limit ?
+2026-10-29T16:12:00.336+09:00 DEBUG 35196 --- [           main] org.hibernate.SQL                        : insert into alert_subscriptions (court_id,play_date,status,time_slot,user_id) values (?,?,?,?,?)
+2026-10-29T16:12:00.338+09:00 TRACE 35196 --- [           main] o.s.t.i.TransactionInterceptor           : Completing transaction for [com.thinking.tennis.kata.AlertRegistrar.register]
+2026-10-29T16:12:00.338+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2026-10-29T16:12:00.338+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(60134824<open>)]
+2026-10-29T16:12:00.341+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Closing JPA EntityManager [SessionImpl(60134824<open>)] after transaction
+2026-10-29T16:12:00.341+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Resuming suspended transaction after completion of inner transaction
+2026-10-29T16:12:00.341+09:00 TRACE 35196 --- [           main] o.s.t.i.TransactionInterceptor           : Completing transaction for [com.thinking.tennis.kata.AlertService.subscribe]
+2026-10-29T16:12:00.346+09:00 TRACE 35196 --- [           main] o.s.t.i.TransactionInterceptor           : Getting transaction for [com.thinking.tennis.kata.AlertService.subscribe]
+2026-10-29T16:12:00.346+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.thinking.tennis.kata.AlertRegistrar.register]: PROPAGATION_REQUIRES_NEW,ISOLATION_DEFAULT
+2026-10-29T16:12:00.347+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Opened new EntityManager [SessionImpl(285144794<open>)] for JPA transaction
+2026-10-29T16:12:00.348+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@1da77a43]
+2026-10-29T16:12:00.349+09:00 TRACE 35196 --- [           main] o.s.t.i.TransactionInterceptor           : Getting transaction for [com.thinking.tennis.kata.AlertRegistrar.register]
+2026-10-29T16:12:00.349+09:00 DEBUG 35196 --- [           main] org.hibernate.SQL                        : select ku1_0.id,ku1_0.version from kata_users ku1_0 where ku1_0.id=? for update
+2026-10-29T16:12:00.350+09:00 DEBUG 35196 --- [           main] org.hibernate.SQL                        : select as1_0.id,as1_0.court_id,as1_0.play_date,as1_0.status,as1_0.time_slot,as1_0.user_id from alert_subscriptions as1_0 where as1_0.user_id=? and as1_0.court_id=? and as1_0.play_date=? and as1_0.time_slot=? and as1_0.status=? order by as1_0.id limit ?
+2026-10-29T16:12:00.352+09:00 DEBUG 35196 --- [           main] org.hibernate.SQL                        : insert into alert_subscriptions (court_id,play_date,status,time_slot,user_id) values (?,?,?,?,?)
+2026-10-29T16:12:00.353+09:00 TRACE 35196 --- [           main] o.s.t.i.TransactionInterceptor           : Completing transaction for [com.thinking.tennis.kata.AlertRegistrar.register]
+2026-10-29T16:12:00.353+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2026-10-29T16:12:00.353+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(285144794<open>)]
+2026-10-29T16:12:00.356+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Closing JPA EntityManager [SessionImpl(285144794<open>)] after transaction
+2026-10-29T16:12:00.356+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Resuming suspended transaction after completion of inner transaction
+2026-10-29T16:12:00.356+09:00 TRACE 35196 --- [           main] o.s.t.i.TransactionInterceptor           : Completing transaction for [com.thinking.tennis.kata.AlertService.subscribe]
+2026-10-29T16:12:00.373+09:00 TRACE 35196 --- [           main] o.s.t.i.TransactionInterceptor           : Getting transaction for [com.thinking.tennis.kata.AlertService.subscribe]
+2026-10-29T16:12:00.373+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.thinking.tennis.kata.AlertRegistrar.register]: PROPAGATION_REQUIRES_NEW,ISOLATION_DEFAULT
+2026-10-29T16:12:00.373+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Opened new EntityManager [SessionImpl(2080803963<open>)] for JPA transaction
+2026-10-29T16:12:00.374+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@31906cb2]
+2026-10-29T16:12:00.374+09:00 TRACE 35196 --- [           main] o.s.t.i.TransactionInterceptor           : Getting transaction for [com.thinking.tennis.kata.AlertRegistrar.register]
+2026-10-29T16:12:00.374+09:00 DEBUG 35196 --- [           main] org.hibernate.SQL                        : select ku1_0.id,ku1_0.version from kata_users ku1_0 where ku1_0.id=? for update
+2026-10-29T16:12:00.376+09:00 DEBUG 35196 --- [           main] org.hibernate.SQL                        : select as1_0.id,as1_0.court_id,as1_0.play_date,as1_0.status,as1_0.time_slot,as1_0.user_id from alert_subscriptions as1_0 where as1_0.user_id=? and as1_0.court_id=? and as1_0.play_date=? and as1_0.time_slot=? and as1_0.status=? order by as1_0.id limit ?
+2026-10-29T16:12:00.377+09:00 DEBUG 35196 --- [           main] org.hibernate.SQL                        : insert into alert_subscriptions (court_id,play_date,status,time_slot,user_id) values (?,?,?,?,?)
+2026-10-29T16:12:00.380+09:00 TRACE 35196 --- [           main] o.s.t.i.TransactionInterceptor           : Completing transaction for [com.thinking.tennis.kata.AlertRegistrar.register]
+2026-10-29T16:12:00.381+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2026-10-29T16:12:00.381+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(2080803963<open>)]
+2026-10-29T16:12:00.384+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Closing JPA EntityManager [SessionImpl(2080803963<open>)] after transaction
+2026-10-29T16:12:00.384+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Resuming suspended transaction after completion of inner transaction
+2026-10-29T16:12:00.384+09:00 TRACE 35196 --- [           main] o.s.t.i.TransactionInterceptor           : Completing transaction for [com.thinking.tennis.kata.AlertService.subscribe]
+2026-10-29T16:12:00.385+09:00 TRACE 35196 --- [           main] o.s.t.i.TransactionInterceptor           : Getting transaction for [com.thinking.tennis.kata.AlertService.subscribe]
+2026-10-29T16:12:00.385+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.thinking.tennis.kata.AlertRegistrar.register]: PROPAGATION_REQUIRES_NEW,ISOLATION_DEFAULT
+2026-10-29T16:12:00.385+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Opened new EntityManager [SessionImpl(1050434029<open>)] for JPA transaction
+2026-10-29T16:12:00.385+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@365ad794]
+2026-10-29T16:12:00.385+09:00 TRACE 35196 --- [           main] o.s.t.i.TransactionInterceptor           : Getting transaction for [com.thinking.tennis.kata.AlertRegistrar.register]
+2026-10-29T16:12:00.386+09:00 DEBUG 35196 --- [           main] org.hibernate.SQL                        : select ku1_0.id,ku1_0.version from kata_users ku1_0 where ku1_0.id=? for update
+2026-10-29T16:12:00.387+09:00 DEBUG 35196 --- [           main] org.hibernate.SQL                        : select as1_0.id,as1_0.court_id,as1_0.play_date,as1_0.status,as1_0.time_slot,as1_0.user_id from alert_subscriptions as1_0 where as1_0.user_id=? and as1_0.court_id=? and as1_0.play_date=? and as1_0.time_slot=? and as1_0.status=? order by as1_0.id limit ?
+2026-10-29T16:12:00.388+09:00 DEBUG 35196 --- [           main] org.hibernate.SQL                        : insert into alert_subscriptions (court_id,play_date,status,time_slot,user_id) values (?,?,?,?,?)
+2026-10-29T16:12:00.389+09:00 TRACE 35196 --- [           main] o.s.t.i.TransactionInterceptor           : Completing transaction for [com.thinking.tennis.kata.AlertRegistrar.register]
+2026-10-29T16:12:00.390+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2026-10-29T16:12:00.390+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1050434029<open>)]
+2026-10-29T16:12:00.393+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Closing JPA EntityManager [SessionImpl(1050434029<open>)] after transaction
+2026-10-29T16:12:00.393+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Resuming suspended transaction after completion of inner transaction
+2026-10-29T16:12:00.394+09:00 TRACE 35196 --- [           main] o.s.t.i.TransactionInterceptor           : Completing transaction for [com.thinking.tennis.kata.AlertService.subscribe]
+2026-10-29T16:12:00.410+09:00 TRACE 35196 --- [           main] o.s.t.i.TransactionInterceptor           : Getting transaction for [com.thinking.tennis.kata.AlertService.subscribe]
+2026-10-29T16:12:00.410+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.thinking.tennis.kata.AlertRegistrar.register]: PROPAGATION_REQUIRES_NEW,ISOLATION_DEFAULT
+2026-10-29T16:12:00.410+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Opened new EntityManager [SessionImpl(285723608<open>)] for JPA transaction
+2026-10-29T16:12:00.411+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@610640e3]
+2026-10-29T16:12:00.411+09:00 TRACE 35196 --- [           main] o.s.t.i.TransactionInterceptor           : Getting transaction for [com.thinking.tennis.kata.AlertRegistrar.register]
+2026-10-29T16:12:00.412+09:00 DEBUG 35196 --- [           main] org.hibernate.SQL                        : select ku1_0.id,ku1_0.version from kata_users ku1_0 where ku1_0.id=? for update
+2026-10-29T16:12:00.414+09:00 DEBUG 35196 --- [           main] org.hibernate.SQL                        : select as1_0.id,as1_0.court_id,as1_0.play_date,as1_0.status,as1_0.time_slot,as1_0.user_id from alert_subscriptions as1_0 where as1_0.user_id=? and as1_0.court_id=? and as1_0.play_date=? and as1_0.time_slot=? and as1_0.status=? order by as1_0.id limit ?
+2026-10-29T16:12:00.416+09:00 DEBUG 35196 --- [           main] org.hibernate.SQL                        : insert into alert_subscriptions (court_id,play_date,status,time_slot,user_id) values (?,?,?,?,?)
+2026-10-29T16:12:00.418+09:00 TRACE 35196 --- [           main] o.s.t.i.TransactionInterceptor           : Completing transaction for [com.thinking.tennis.kata.AlertRegistrar.register]
+2026-10-29T16:12:00.418+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2026-10-29T16:12:00.418+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(285723608<open>)]
+2026-10-29T16:12:00.422+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Closing JPA EntityManager [SessionImpl(285723608<open>)] after transaction
+2026-10-29T16:12:00.422+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Resuming suspended transaction after completion of inner transaction
+2026-10-29T16:12:00.422+09:00 TRACE 35196 --- [           main] o.s.t.i.TransactionInterceptor           : Completing transaction for [com.thinking.tennis.kata.AlertService.subscribe]
+2026-10-29T16:12:00.422+09:00 TRACE 35196 --- [           main] o.s.t.i.TransactionInterceptor           : Getting transaction for [com.thinking.tennis.kata.AlertService.subscribe]
+2026-10-29T16:12:00.422+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.thinking.tennis.kata.AlertRegistrar.register]: PROPAGATION_REQUIRES_NEW,ISOLATION_DEFAULT
+2026-10-29T16:12:00.422+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Opened new EntityManager [SessionImpl(2042959076<open>)] for JPA transaction
+2026-10-29T16:12:00.422+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@233d40da]
+2026-10-29T16:12:00.422+09:00 TRACE 35196 --- [           main] o.s.t.i.TransactionInterceptor           : Getting transaction for [com.thinking.tennis.kata.AlertRegistrar.register]
+2026-10-29T16:12:00.423+09:00 DEBUG 35196 --- [           main] org.hibernate.SQL                        : select ku1_0.id,ku1_0.version from kata_users ku1_0 where ku1_0.id=? for update
+2026-10-29T16:12:00.424+09:00 DEBUG 35196 --- [           main] org.hibernate.SQL                        : select as1_0.id,as1_0.court_id,as1_0.play_date,as1_0.status,as1_0.time_slot,as1_0.user_id from alert_subscriptions as1_0 where as1_0.user_id=? and as1_0.court_id=? and as1_0.play_date=? and as1_0.time_slot=? and as1_0.status=? order by as1_0.id limit ?
+2026-10-29T16:12:00.426+09:00 TRACE 35196 --- [           main] o.s.t.i.TransactionInterceptor           : Completing transaction for [com.thinking.tennis.kata.AlertRegistrar.register]
+2026-10-29T16:12:00.426+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2026-10-29T16:12:00.426+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(2042959076<open>)]
+2026-10-29T16:12:00.427+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Closing JPA EntityManager [SessionImpl(2042959076<open>)] after transaction
+2026-10-29T16:12:00.427+09:00 DEBUG 35196 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Resuming suspended transaction after completion of inner transaction
+2026-10-29T16:12:00.428+09:00 TRACE 35196 --- [           main] o.s.t.i.TransactionInterceptor           : Completing transaction for [com.thinking.tennis.kata.AlertService.subscribe]
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 12.31 s -- in com.thinking.tennis.kata.AlertSubscriptionTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  15.270 s
+[INFO] Finished at: 2026-10-29T16:12:01+09:00
+[INFO] ------------------------------------------------------------------------

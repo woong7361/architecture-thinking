@@ -1,0 +1,5 @@
+PROBE rounds=30 maxAttempts=5
+PROBE workers=2 rounds=30 conflictsTotal=30 conflictsPerRound=1.00 conflictsPerRequest=0.50 requestErrors=0 duplicateRounds=0
+PROBE workers=3 rounds=30 conflictsTotal=90 conflictsPerRound=3.00 conflictsPerRequest=1.00 requestErrors=0 duplicateRounds=0
+PROBE workers=5 rounds=30 conflictsTotal=270 conflictsPerRound=9.00 conflictsPerRequest=1.80 requestErrors=0 duplicateRounds=0
+PROBE workers=8 rounds=30 conflictsTotal=510 conflictsPerRound=17.00 conflictsPerRequest=2.13 requestErrors=58 duplicateRounds=0

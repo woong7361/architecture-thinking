@@ -40,42 +40,38 @@ for stream in (sys.stdout, sys.stderr):
 REPO_ROOT = SKILL_ROOT.parents[2]
 SOURCES = SKILL_ROOT / "sources"
 
-ROOTS = {
-    "spring-framework-6.2.19": SOURCES / "spring-framework-6.2.19",
-    "jdk-25.0.4.1": SOURCES / "jdk-25.0.4.1",
-    "hibernate-orm-6.6.53.Final": SOURCES / "hibernate-orm-6.6.53.Final",
-    "evidence": REPO_ROOT / "phase2/taskF/alert-kata/evidence",
-}
-GRADES = {
-    "spring-framework-6.2.19": "primary",
-    "jdk-25.0.4.1": "primary",
-    "hibernate-orm-6.6.53.Final": "primary",
-    "evidence": "measured",
-    "phase2/taskF/alert-kata/evidence": "measured",
-    "phase2/taskF/task4/step1": "measured",
-    "phase2/taskF/task4/step1/run3/impl": "target",
-}
-ROOTS.update({
-    "phase2/taskF/alert-kata/evidence": REPO_ROOT / "phase2/taskF/alert-kata/evidence",
-    "phase2/taskF/task4/step1": REPO_ROOT / "phase2/taskF/task4/step1",
-    "phase2/taskF/task4/step1/run3/impl": REPO_ROOT / "phase2/taskF/task4/step1/run3/impl",
-})
-MEASURED_COORD_RANGE = "phase2/taskF/alert-kata/evidence/lock-comparison-results.md:14-18"
-CODE_PATH = "phase2/taskF/task4/step1/run3/impl/AlertRepository.java"
+# 루트 표를 손으로 만들지 않고 **파이프라인이 쓰는 것을 그대로 가져온다.**
+#
+# 전에는 리허설 전용 표를 따로 썼고 거기에는 `evidence` 처럼 실제로 존재하지 않는 루트 이름이 있었다.
+# 그래서 게이트 함수는 검사되는데 그 함수에 무엇을 먹이는 배선은 검사되지 않았다. 실제로 겹치는 루트를
+# 잘못 고르는 버그가 그 배선에 있었고 리허설은 그동안 계속 통과했다.
+import runner as R  # noqa: E402
+
+MANIFEST = R.read_yaml(R.RULES_DIR / "sources.yaml")
+ROOTS, GRADES = R.source_roots(MANIFEST)
+
+EVIDENCE_ROOT = "phase2/taskF/alert-kata/evidence"
+CODE_ROOT = "phase2/taskF/task4/step1/run3/impl"
+MEASURED_COORD = f"{EVIDENCE_ROOT}/lock-comparison-results.md:14"
+MEASURED_COORD_RANGE = f"{EVIDENCE_ROOT}/lock-comparison-results.md:14-18"
+CODE_PATH = f"{CODE_ROOT}/AlertRepository.java"
 
 SPRING_TX_PATH = "spring-framework-6.2.19/org/springframework/jdbc/datasource/DataSourceUtils.java"
 JDK_LOCK_PATH = "jdk-25.0.4.1/java.base/java/util/concurrent/locks/ReentrantLock.java"
-MEASURED_COORD = "phase2/taskF/alert-kata/evidence/lock-comparison-results.md:14"
 
 
 def golden_claims() -> list[dict]:
-    """사람이 손으로 쓴 정답 묶음. 사실 주장 하나와 선택 주장 하나."""
+    """사람이 손으로 쓴 정답 묶음. 사실 주장 하나와 선택 주장 하나.
+
+    `sites` 는 담지 않는다. 인용과 좌표 검사가 쓰지 않는 칸이고, 커버리지 리허설은 추출기가 뽑은
+    실제 지점으로 자기 입력을 만든다. 쓰이지 않는 지점 id 를 적어 두면 대상 코드가 바뀔 때 조용히
+    밀리고 아무도 모른다.
+    """
     return [
         {
             "id": "claim-01",
             "kind": "fact",
             "sentence": "Spring은 트랜잭션을 열 때 커넥션의 격리 수준을 지정된 값으로 바꾼다.",
-            "sites": ["site-19"],
             "citations": [
                 {
                     "path": SPRING_TX_PATH,
@@ -88,7 +84,6 @@ def golden_claims() -> list[dict]:
             "id": "claim-02",
             "kind": "choice",
             "sentence": "같은 사용자 행을 PESSIMISTIC_WRITE로 먼저 잠그는 방식을 택했다.",
-            "sites": ["site-15"],
             "citations": [
                 {
                     "path": JDK_LOCK_PATH,
@@ -116,6 +111,18 @@ def rule_ids(result: dict) -> set[str]:
     return {v["rule"] for v in result["violations"]}
 
 
+def only(result: dict, rule: str, point: str) -> tuple[bool, str]:
+    """겨냥한 규칙이 겨냥한 주장에서 **한 건만** 나왔는지 본다.
+
+    규칙 이름 집합만 보면 엉뚱한 주장에서 같은 규칙이 함께 터져도 통과한다. "그 규칙으로만 탈락한다"는
+    말을 지키려면 규칙과 자리와 건수를 다 봐야 한다.
+    """
+    items = result["violations"]
+    got = [(v["rule"], v["point"]) for v in items]
+    ok = got == [(rule, point)]
+    return ok, f"나온 것 {got or '없음'}"
+
+
 # 규칙마다 그 규칙만 깨뜨리는 입력을 만든다. 반환값은 (규칙 id, 변형 함수) 쌍이다.
 
 def _break_claim_uncovered(claims: list[dict]) -> list[dict]:
@@ -139,7 +146,8 @@ def _break_source_out_of_scope_root(claims: list[dict]) -> list[dict]:
 
 
 def _break_source_out_of_scope_grade(claims: list[dict]) -> list[dict]:
-    claims[0]["citations"][0]["path"] = "evidence/lock-comparison-results.md"
+    """사실 주장이 측정 로그를 인용했다. 등급이 measured 라 어느 종류의 인용에도 쓸 수 없다."""
+    claims[0]["citations"][0]["path"] = f"{EVIDENCE_ROOT}/lock-comparison-results.md"
     claims[0]["citations"][0]["quote"] = "#"
     return claims
 
@@ -240,14 +248,14 @@ def run() -> int:
     for rule, mutate in CITATION_CASES:
         claims = mutate(copy.deepcopy(golden_claims()))
         result = check_citations(claims, ROOTS, GRADES)
-        ids = rule_ids(result)
-        check(f"{rule} / {mutate.__name__}", ids == {rule}, f"나온 규칙 {ids or '없음'}")
+        ok, detail = only(result, rule, "claim-01")
+        check(f"{rule} / {mutate.__name__}", ok, detail)
 
     for rule, mutate in COORDINATE_CASES:
         claims = mutate(copy.deepcopy(golden_claims()))
         result = check_coordinates(claims, ROOTS, GRADES)
-        ids = rule_ids(result)
-        check(f"{rule} / {mutate.__name__}", ids == {rule}, f"나온 규칙 {ids or '없음'}")
+        ok, detail = only(result, rule, "claim-02")
+        check(f"{rule} / {mutate.__name__}", ok, detail)
 
     # 커버리지 게이트. 지점 목록을 실제 대상에서 뽑아 쓴다.
     rules = load_rules(SKILL_ROOT / "rules" / "concurrency_sites.yaml")

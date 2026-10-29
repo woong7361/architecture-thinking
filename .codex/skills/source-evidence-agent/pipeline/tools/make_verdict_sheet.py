@@ -113,10 +113,23 @@ def main() -> int:
     parser.add_argument("run_dir")
     parser.add_argument("out")
     parser.add_argument("--report", default="REPORT.md")
+    parser.add_argument("--force", action="store_true",
+                        help="사람이 쓴 판정이 있어도 덮어쓴다")
     args = parser.parse_args()
 
+    out = Path(args.out)
+    # 사람이 쓴 판정을 덮지 않는다. 그 판정이 이 하네스의 산출물이고 다시 만들 수 없다.
+    if out.exists() and not args.force:
+        existing = out.read_text(encoding="utf-8")
+        filled = [line for line in existing.splitlines()
+                  if line.startswith("판정 — ") and line.strip() != "판정 —"]
+        if filled:
+            print(f"{out} 에 사람이 쓴 판정 {len(filled)}건이 있다. 덮지 않는다. "
+                  f"정말 다시 만들려면 --force 를 준다.", file=sys.stderr)
+            return 1
+
     text = build(Path(args.run_dir), args.report)
-    Path(args.out).write_text(text, encoding="utf-8")
+    out.write_text(text, encoding="utf-8")
     print(f"판정 시트: {args.out} ({len(text.splitlines())}줄)")
     return 0
 
