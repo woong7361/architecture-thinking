@@ -32,7 +32,6 @@
 | 서비스 코드 | [AlertService.java](https://github.com/woong7361/architecture-thinking/blob/main/phase2/taskF/alert-kata/src/main/java/com/thinking/tennis/kata/AlertService.java) |
 | 재현 테스트 코드 | [AlertSubscriptionTest.java](https://github.com/woong7361/architecture-thinking/blob/main/phase2/taskF/alert-kata/src/test/java/com/thinking/tennis/kata/AlertSubscriptionTest.java) |
 | 실행 방법과 환경 | [README](https://github.com/woong7361/architecture-thinking/blob/main/phase2/taskF/alert-kata/README.md) |
-| 완료 기준 | [작업 계획](../../../.omx/plans/taskf-2-kata.md) |
 
 ### 제출물 2: 관찰 결과와 원인
 

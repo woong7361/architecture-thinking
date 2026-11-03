@@ -1,0 +1,257 @@
+ENV java=17.0.19 database=8.4.8 driver=mysql-connector-j-9.7.0 (Revision: 0aade1f13bcc98faf7dda5c02e782481eb291f62) rounds=20
+LEVEL requested=READ UNCOMMITTED session1=READ-UNCOMMITTED session2=READ-UNCOMMITTED
+ROUND level=READ UNCOMMITTED order=BOTH_READ_FIRST round=1 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ UNCOMMITTED order=BOTH_READ_FIRST round=2 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ UNCOMMITTED order=BOTH_READ_FIRST round=3 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ UNCOMMITTED order=BOTH_READ_FIRST round=4 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ UNCOMMITTED order=BOTH_READ_FIRST round=5 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ UNCOMMITTED order=BOTH_READ_FIRST round=6 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ UNCOMMITTED order=BOTH_READ_FIRST round=7 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ UNCOMMITTED order=BOTH_READ_FIRST round=8 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ UNCOMMITTED order=BOTH_READ_FIRST round=9 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ UNCOMMITTED order=BOTH_READ_FIRST round=10 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ UNCOMMITTED order=BOTH_READ_FIRST round=11 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ UNCOMMITTED order=BOTH_READ_FIRST round=12 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ UNCOMMITTED order=BOTH_READ_FIRST round=13 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ UNCOMMITTED order=BOTH_READ_FIRST round=14 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ UNCOMMITTED order=BOTH_READ_FIRST round=15 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ UNCOMMITTED order=BOTH_READ_FIRST round=16 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ UNCOMMITTED order=BOTH_READ_FIRST round=17 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ UNCOMMITTED order=BOTH_READ_FIRST round=18 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ UNCOMMITTED order=BOTH_READ_FIRST round=19 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ UNCOMMITTED order=BOTH_READ_FIRST round=20 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+SUMMARY level=READ UNCOMMITTED order=BOTH_READ_FIRST rounds=20 duplicateRounds=20 outcomes={DUPLICATE/rows=2=20}
+ROUND level=READ UNCOMMITTED order=READ_BEFORE_COMMIT round=1 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_BEFORE_COMMIT round=2 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_BEFORE_COMMIT round=3 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_BEFORE_COMMIT round=4 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_BEFORE_COMMIT round=5 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_BEFORE_COMMIT round=6 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_BEFORE_COMMIT round=7 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_BEFORE_COMMIT round=8 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_BEFORE_COMMIT round=9 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_BEFORE_COMMIT round=10 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_BEFORE_COMMIT round=11 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_BEFORE_COMMIT round=12 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_BEFORE_COMMIT round=13 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_BEFORE_COMMIT round=14 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_BEFORE_COMMIT round=15 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_BEFORE_COMMIT round=16 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_BEFORE_COMMIT round=17 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_BEFORE_COMMIT round=18 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_BEFORE_COMMIT round=19 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_BEFORE_COMMIT round=20 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+SUMMARY level=READ UNCOMMITTED order=READ_BEFORE_COMMIT rounds=20 duplicateRounds=0 outcomes={EXISTING_RETURNED/rows=1=20}
+ROUND level=READ UNCOMMITTED order=READ_AFTER_COMMIT round=1 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_AFTER_COMMIT round=2 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_AFTER_COMMIT round=3 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_AFTER_COMMIT round=4 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_AFTER_COMMIT round=5 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_AFTER_COMMIT round=6 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_AFTER_COMMIT round=7 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_AFTER_COMMIT round=8 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_AFTER_COMMIT round=9 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_AFTER_COMMIT round=10 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_AFTER_COMMIT round=11 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_AFTER_COMMIT round=12 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_AFTER_COMMIT round=13 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_AFTER_COMMIT round=14 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_AFTER_COMMIT round=15 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_AFTER_COMMIT round=16 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_AFTER_COMMIT round=17 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_AFTER_COMMIT round=18 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_AFTER_COMMIT round=19 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ UNCOMMITTED order=READ_AFTER_COMMIT round=20 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+SUMMARY level=READ UNCOMMITTED order=READ_AFTER_COMMIT rounds=20 duplicateRounds=0 outcomes={EXISTING_RETURNED/rows=1=20}
+LEVEL requested=READ COMMITTED session1=READ-COMMITTED session2=READ-COMMITTED
+ROUND level=READ COMMITTED order=BOTH_READ_FIRST round=1 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=BOTH_READ_FIRST round=2 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=BOTH_READ_FIRST round=3 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=BOTH_READ_FIRST round=4 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=BOTH_READ_FIRST round=5 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=BOTH_READ_FIRST round=6 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=BOTH_READ_FIRST round=7 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=BOTH_READ_FIRST round=8 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=BOTH_READ_FIRST round=9 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=BOTH_READ_FIRST round=10 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=BOTH_READ_FIRST round=11 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=BOTH_READ_FIRST round=12 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=BOTH_READ_FIRST round=13 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=BOTH_READ_FIRST round=14 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=BOTH_READ_FIRST round=15 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=BOTH_READ_FIRST round=16 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=BOTH_READ_FIRST round=17 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=BOTH_READ_FIRST round=18 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=BOTH_READ_FIRST round=19 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=BOTH_READ_FIRST round=20 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+SUMMARY level=READ COMMITTED order=BOTH_READ_FIRST rounds=20 duplicateRounds=20 outcomes={DUPLICATE/rows=2=20}
+ROUND level=READ COMMITTED order=READ_BEFORE_COMMIT round=1 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=READ_BEFORE_COMMIT round=2 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=READ_BEFORE_COMMIT round=3 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=READ_BEFORE_COMMIT round=4 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=READ_BEFORE_COMMIT round=5 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=READ_BEFORE_COMMIT round=6 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=READ_BEFORE_COMMIT round=7 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=READ_BEFORE_COMMIT round=8 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=READ_BEFORE_COMMIT round=9 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=READ_BEFORE_COMMIT round=10 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=READ_BEFORE_COMMIT round=11 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=READ_BEFORE_COMMIT round=12 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=READ_BEFORE_COMMIT round=13 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=READ_BEFORE_COMMIT round=14 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=READ_BEFORE_COMMIT round=15 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=READ_BEFORE_COMMIT round=16 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=READ_BEFORE_COMMIT round=17 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=READ_BEFORE_COMMIT round=18 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=READ_BEFORE_COMMIT round=19 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=READ COMMITTED order=READ_BEFORE_COMMIT round=20 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+SUMMARY level=READ COMMITTED order=READ_BEFORE_COMMIT rounds=20 duplicateRounds=20 outcomes={DUPLICATE/rows=2=20}
+ROUND level=READ COMMITTED order=READ_AFTER_COMMIT round=1 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ COMMITTED order=READ_AFTER_COMMIT round=2 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ COMMITTED order=READ_AFTER_COMMIT round=3 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ COMMITTED order=READ_AFTER_COMMIT round=4 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ COMMITTED order=READ_AFTER_COMMIT round=5 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ COMMITTED order=READ_AFTER_COMMIT round=6 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ COMMITTED order=READ_AFTER_COMMIT round=7 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ COMMITTED order=READ_AFTER_COMMIT round=8 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ COMMITTED order=READ_AFTER_COMMIT round=9 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ COMMITTED order=READ_AFTER_COMMIT round=10 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ COMMITTED order=READ_AFTER_COMMIT round=11 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ COMMITTED order=READ_AFTER_COMMIT round=12 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ COMMITTED order=READ_AFTER_COMMIT round=13 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ COMMITTED order=READ_AFTER_COMMIT round=14 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ COMMITTED order=READ_AFTER_COMMIT round=15 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ COMMITTED order=READ_AFTER_COMMIT round=16 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ COMMITTED order=READ_AFTER_COMMIT round=17 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ COMMITTED order=READ_AFTER_COMMIT round=18 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ COMMITTED order=READ_AFTER_COMMIT round=19 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=READ COMMITTED order=READ_AFTER_COMMIT round=20 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+SUMMARY level=READ COMMITTED order=READ_AFTER_COMMIT rounds=20 duplicateRounds=0 outcomes={EXISTING_RETURNED/rows=1=20}
+LEVEL requested=REPEATABLE READ session1=REPEATABLE-READ session2=REPEATABLE-READ
+ROUND level=REPEATABLE READ order=BOTH_READ_FIRST round=1 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=BOTH_READ_FIRST round=2 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=BOTH_READ_FIRST round=3 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=BOTH_READ_FIRST round=4 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=BOTH_READ_FIRST round=5 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=BOTH_READ_FIRST round=6 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=BOTH_READ_FIRST round=7 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=BOTH_READ_FIRST round=8 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=BOTH_READ_FIRST round=9 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=BOTH_READ_FIRST round=10 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=BOTH_READ_FIRST round=11 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=BOTH_READ_FIRST round=12 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=BOTH_READ_FIRST round=13 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=BOTH_READ_FIRST round=14 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=BOTH_READ_FIRST round=15 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=BOTH_READ_FIRST round=16 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=BOTH_READ_FIRST round=17 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=BOTH_READ_FIRST round=18 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=BOTH_READ_FIRST round=19 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=BOTH_READ_FIRST round=20 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+SUMMARY level=REPEATABLE READ order=BOTH_READ_FIRST rounds=20 duplicateRounds=20 outcomes={DUPLICATE/rows=2=20}
+ROUND level=REPEATABLE READ order=READ_BEFORE_COMMIT round=1 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=READ_BEFORE_COMMIT round=2 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=READ_BEFORE_COMMIT round=3 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=READ_BEFORE_COMMIT round=4 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=READ_BEFORE_COMMIT round=5 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=READ_BEFORE_COMMIT round=6 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=READ_BEFORE_COMMIT round=7 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=READ_BEFORE_COMMIT round=8 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=READ_BEFORE_COMMIT round=9 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=READ_BEFORE_COMMIT round=10 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=READ_BEFORE_COMMIT round=11 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=READ_BEFORE_COMMIT round=12 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=READ_BEFORE_COMMIT round=13 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=READ_BEFORE_COMMIT round=14 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=READ_BEFORE_COMMIT round=15 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=READ_BEFORE_COMMIT round=16 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=READ_BEFORE_COMMIT round=17 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=READ_BEFORE_COMMIT round=18 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=READ_BEFORE_COMMIT round=19 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+ROUND level=REPEATABLE READ order=READ_BEFORE_COMMIT round=20 read1=0 insert1=null read2=0 insert2=null rows=2 outcome=DUPLICATE/rows=2
+SUMMARY level=REPEATABLE READ order=READ_BEFORE_COMMIT rounds=20 duplicateRounds=20 outcomes={DUPLICATE/rows=2=20}
+ROUND level=REPEATABLE READ order=READ_AFTER_COMMIT round=1 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=REPEATABLE READ order=READ_AFTER_COMMIT round=2 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=REPEATABLE READ order=READ_AFTER_COMMIT round=3 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=REPEATABLE READ order=READ_AFTER_COMMIT round=4 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=REPEATABLE READ order=READ_AFTER_COMMIT round=5 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=REPEATABLE READ order=READ_AFTER_COMMIT round=6 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=REPEATABLE READ order=READ_AFTER_COMMIT round=7 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=REPEATABLE READ order=READ_AFTER_COMMIT round=8 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=REPEATABLE READ order=READ_AFTER_COMMIT round=9 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=REPEATABLE READ order=READ_AFTER_COMMIT round=10 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=REPEATABLE READ order=READ_AFTER_COMMIT round=11 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=REPEATABLE READ order=READ_AFTER_COMMIT round=12 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=REPEATABLE READ order=READ_AFTER_COMMIT round=13 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=REPEATABLE READ order=READ_AFTER_COMMIT round=14 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=REPEATABLE READ order=READ_AFTER_COMMIT round=15 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=REPEATABLE READ order=READ_AFTER_COMMIT round=16 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=REPEATABLE READ order=READ_AFTER_COMMIT round=17 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=REPEATABLE READ order=READ_AFTER_COMMIT round=18 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=REPEATABLE READ order=READ_AFTER_COMMIT round=19 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=REPEATABLE READ order=READ_AFTER_COMMIT round=20 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+SUMMARY level=REPEATABLE READ order=READ_AFTER_COMMIT rounds=20 duplicateRounds=0 outcomes={EXISTING_RETURNED/rows=1=20}
+LEVEL requested=SERIALIZABLE session1=SERIALIZABLE session2=SERIALIZABLE
+ROUND level=SERIALIZABLE order=BOTH_READ_FIRST round=1 read1=0 insert1=Lock wait timeout exceeded; try restarting transaction read2=0 insert2=Lock wait timeout exceeded; try restarting transaction rows=0 outcome=WRITE_BLOCKED/rows=0
+ROUND level=SERIALIZABLE order=BOTH_READ_FIRST round=2 read1=0 insert1=Lock wait timeout exceeded; try restarting transaction read2=0 insert2=Lock wait timeout exceeded; try restarting transaction rows=0 outcome=WRITE_BLOCKED/rows=0
+ROUND level=SERIALIZABLE order=BOTH_READ_FIRST round=3 read1=0 insert1=Lock wait timeout exceeded; try restarting transaction read2=0 insert2=Lock wait timeout exceeded; try restarting transaction rows=0 outcome=WRITE_BLOCKED/rows=0
+ROUND level=SERIALIZABLE order=BOTH_READ_FIRST round=4 read1=0 insert1=Lock wait timeout exceeded; try restarting transaction read2=0 insert2=Lock wait timeout exceeded; try restarting transaction rows=0 outcome=WRITE_BLOCKED/rows=0
+ROUND level=SERIALIZABLE order=BOTH_READ_FIRST round=5 read1=0 insert1=Lock wait timeout exceeded; try restarting transaction read2=0 insert2=Lock wait timeout exceeded; try restarting transaction rows=0 outcome=WRITE_BLOCKED/rows=0
+ROUND level=SERIALIZABLE order=BOTH_READ_FIRST round=6 read1=0 insert1=Lock wait timeout exceeded; try restarting transaction read2=0 insert2=Lock wait timeout exceeded; try restarting transaction rows=0 outcome=WRITE_BLOCKED/rows=0
+ROUND level=SERIALIZABLE order=BOTH_READ_FIRST round=7 read1=0 insert1=Lock wait timeout exceeded; try restarting transaction read2=0 insert2=Lock wait timeout exceeded; try restarting transaction rows=0 outcome=WRITE_BLOCKED/rows=0
+ROUND level=SERIALIZABLE order=BOTH_READ_FIRST round=8 read1=0 insert1=Lock wait timeout exceeded; try restarting transaction read2=0 insert2=Lock wait timeout exceeded; try restarting transaction rows=0 outcome=WRITE_BLOCKED/rows=0
+ROUND level=SERIALIZABLE order=BOTH_READ_FIRST round=9 read1=0 insert1=Lock wait timeout exceeded; try restarting transaction read2=0 insert2=Lock wait timeout exceeded; try restarting transaction rows=0 outcome=WRITE_BLOCKED/rows=0
+ROUND level=SERIALIZABLE order=BOTH_READ_FIRST round=10 read1=0 insert1=Lock wait timeout exceeded; try restarting transaction read2=0 insert2=Lock wait timeout exceeded; try restarting transaction rows=0 outcome=WRITE_BLOCKED/rows=0
+ROUND level=SERIALIZABLE order=BOTH_READ_FIRST round=11 read1=0 insert1=Lock wait timeout exceeded; try restarting transaction read2=0 insert2=Lock wait timeout exceeded; try restarting transaction rows=0 outcome=WRITE_BLOCKED/rows=0
+ROUND level=SERIALIZABLE order=BOTH_READ_FIRST round=12 read1=0 insert1=Lock wait timeout exceeded; try restarting transaction read2=0 insert2=Lock wait timeout exceeded; try restarting transaction rows=0 outcome=WRITE_BLOCKED/rows=0
+ROUND level=SERIALIZABLE order=BOTH_READ_FIRST round=13 read1=0 insert1=Lock wait timeout exceeded; try restarting transaction read2=0 insert2=Lock wait timeout exceeded; try restarting transaction rows=0 outcome=WRITE_BLOCKED/rows=0
+ROUND level=SERIALIZABLE order=BOTH_READ_FIRST round=14 read1=0 insert1=Lock wait timeout exceeded; try restarting transaction read2=0 insert2=Lock wait timeout exceeded; try restarting transaction rows=0 outcome=WRITE_BLOCKED/rows=0
+ROUND level=SERIALIZABLE order=BOTH_READ_FIRST round=15 read1=0 insert1=Lock wait timeout exceeded; try restarting transaction read2=0 insert2=Lock wait timeout exceeded; try restarting transaction rows=0 outcome=WRITE_BLOCKED/rows=0
+ROUND level=SERIALIZABLE order=BOTH_READ_FIRST round=16 read1=0 insert1=Lock wait timeout exceeded; try restarting transaction read2=0 insert2=Lock wait timeout exceeded; try restarting transaction rows=0 outcome=WRITE_BLOCKED/rows=0
+ROUND level=SERIALIZABLE order=BOTH_READ_FIRST round=17 read1=0 insert1=Lock wait timeout exceeded; try restarting transaction read2=0 insert2=Lock wait timeout exceeded; try restarting transaction rows=0 outcome=WRITE_BLOCKED/rows=0
+ROUND level=SERIALIZABLE order=BOTH_READ_FIRST round=18 read1=0 insert1=Lock wait timeout exceeded; try restarting transaction read2=0 insert2=Lock wait timeout exceeded; try restarting transaction rows=0 outcome=WRITE_BLOCKED/rows=0
+ROUND level=SERIALIZABLE order=BOTH_READ_FIRST round=19 read1=0 insert1=Lock wait timeout exceeded; try restarting transaction read2=0 insert2=Lock wait timeout exceeded; try restarting transaction rows=0 outcome=WRITE_BLOCKED/rows=0
+ROUND level=SERIALIZABLE order=BOTH_READ_FIRST round=20 read1=0 insert1=Lock wait timeout exceeded; try restarting transaction read2=0 insert2=Lock wait timeout exceeded; try restarting transaction rows=0 outcome=WRITE_BLOCKED/rows=0
+SUMMARY level=SERIALIZABLE order=BOTH_READ_FIRST rounds=20 duplicateRounds=0 outcomes={WRITE_BLOCKED/rows=0=20}
+ROUND level=SERIALIZABLE order=READ_BEFORE_COMMIT round=1 read1=0 insert1=null read2=blocked insert2=notReached rows=1 outcome=READ_BLOCKED/rows=1
+ROUND level=SERIALIZABLE order=READ_BEFORE_COMMIT round=2 read1=0 insert1=null read2=blocked insert2=notReached rows=1 outcome=READ_BLOCKED/rows=1
+ROUND level=SERIALIZABLE order=READ_BEFORE_COMMIT round=3 read1=0 insert1=null read2=blocked insert2=notReached rows=1 outcome=READ_BLOCKED/rows=1
+ROUND level=SERIALIZABLE order=READ_BEFORE_COMMIT round=4 read1=0 insert1=null read2=blocked insert2=notReached rows=1 outcome=READ_BLOCKED/rows=1
+ROUND level=SERIALIZABLE order=READ_BEFORE_COMMIT round=5 read1=0 insert1=null read2=blocked insert2=notReached rows=1 outcome=READ_BLOCKED/rows=1
+ROUND level=SERIALIZABLE order=READ_BEFORE_COMMIT round=6 read1=0 insert1=null read2=blocked insert2=notReached rows=1 outcome=READ_BLOCKED/rows=1
+ROUND level=SERIALIZABLE order=READ_BEFORE_COMMIT round=7 read1=0 insert1=null read2=blocked insert2=notReached rows=1 outcome=READ_BLOCKED/rows=1
+ROUND level=SERIALIZABLE order=READ_BEFORE_COMMIT round=8 read1=0 insert1=null read2=blocked insert2=notReached rows=1 outcome=READ_BLOCKED/rows=1
+ROUND level=SERIALIZABLE order=READ_BEFORE_COMMIT round=9 read1=0 insert1=null read2=blocked insert2=notReached rows=1 outcome=READ_BLOCKED/rows=1
+ROUND level=SERIALIZABLE order=READ_BEFORE_COMMIT round=10 read1=0 insert1=null read2=blocked insert2=notReached rows=1 outcome=READ_BLOCKED/rows=1
+ROUND level=SERIALIZABLE order=READ_BEFORE_COMMIT round=11 read1=0 insert1=null read2=blocked insert2=notReached rows=1 outcome=READ_BLOCKED/rows=1
+ROUND level=SERIALIZABLE order=READ_BEFORE_COMMIT round=12 read1=0 insert1=null read2=blocked insert2=notReached rows=1 outcome=READ_BLOCKED/rows=1
+ROUND level=SERIALIZABLE order=READ_BEFORE_COMMIT round=13 read1=0 insert1=null read2=blocked insert2=notReached rows=1 outcome=READ_BLOCKED/rows=1
+ROUND level=SERIALIZABLE order=READ_BEFORE_COMMIT round=14 read1=0 insert1=null read2=blocked insert2=notReached rows=1 outcome=READ_BLOCKED/rows=1
+ROUND level=SERIALIZABLE order=READ_BEFORE_COMMIT round=15 read1=0 insert1=null read2=blocked insert2=notReached rows=1 outcome=READ_BLOCKED/rows=1
+ROUND level=SERIALIZABLE order=READ_BEFORE_COMMIT round=16 read1=0 insert1=null read2=blocked insert2=notReached rows=1 outcome=READ_BLOCKED/rows=1
+ROUND level=SERIALIZABLE order=READ_BEFORE_COMMIT round=17 read1=0 insert1=null read2=blocked insert2=notReached rows=1 outcome=READ_BLOCKED/rows=1
+ROUND level=SERIALIZABLE order=READ_BEFORE_COMMIT round=18 read1=0 insert1=null read2=blocked insert2=notReached rows=1 outcome=READ_BLOCKED/rows=1
+ROUND level=SERIALIZABLE order=READ_BEFORE_COMMIT round=19 read1=0 insert1=null read2=blocked insert2=notReached rows=1 outcome=READ_BLOCKED/rows=1
+ROUND level=SERIALIZABLE order=READ_BEFORE_COMMIT round=20 read1=0 insert1=null read2=blocked insert2=notReached rows=1 outcome=READ_BLOCKED/rows=1
+SUMMARY level=SERIALIZABLE order=READ_BEFORE_COMMIT rounds=20 duplicateRounds=0 outcomes={READ_BLOCKED/rows=1=20}
+ROUND level=SERIALIZABLE order=READ_AFTER_COMMIT round=1 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=SERIALIZABLE order=READ_AFTER_COMMIT round=2 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=SERIALIZABLE order=READ_AFTER_COMMIT round=3 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=SERIALIZABLE order=READ_AFTER_COMMIT round=4 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=SERIALIZABLE order=READ_AFTER_COMMIT round=5 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=SERIALIZABLE order=READ_AFTER_COMMIT round=6 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=SERIALIZABLE order=READ_AFTER_COMMIT round=7 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=SERIALIZABLE order=READ_AFTER_COMMIT round=8 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=SERIALIZABLE order=READ_AFTER_COMMIT round=9 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=SERIALIZABLE order=READ_AFTER_COMMIT round=10 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=SERIALIZABLE order=READ_AFTER_COMMIT round=11 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=SERIALIZABLE order=READ_AFTER_COMMIT round=12 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=SERIALIZABLE order=READ_AFTER_COMMIT round=13 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=SERIALIZABLE order=READ_AFTER_COMMIT round=14 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=SERIALIZABLE order=READ_AFTER_COMMIT round=15 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=SERIALIZABLE order=READ_AFTER_COMMIT round=16 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=SERIALIZABLE order=READ_AFTER_COMMIT round=17 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=SERIALIZABLE order=READ_AFTER_COMMIT round=18 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=SERIALIZABLE order=READ_AFTER_COMMIT round=19 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+ROUND level=SERIALIZABLE order=READ_AFTER_COMMIT round=20 read1=0 insert1=null read2=1 insert2=skipped rows=1 outcome=EXISTING_RETURNED/rows=1
+SUMMARY level=SERIALIZABLE order=READ_AFTER_COMMIT rounds=20 duplicateRounds=0 outcomes={EXISTING_RETURNED/rows=1=20}
