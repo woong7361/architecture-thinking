@@ -1,0 +1,1359 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------------< com.thinking:alert-kata >-----------------------
+[INFO] Building alert-kata 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ alert-kata ---
+[INFO] skip non existing resourceDirectory C:\Users\PC-220627-03\Desktop\project\task\architecture-thinking\phase2\taskF\alert-kata\src\main\resources
+[INFO] skip non existing resourceDirectory C:\Users\PC-220627-03\Desktop\project\task\architecture-thinking\phase2\taskF\alert-kata\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ alert-kata ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ alert-kata ---
+[INFO] Copying 2 resources from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ alert-kata ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ alert-kata ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.thinking.tennis.kata.AlertSubscriptionTest
+14:45:04.957 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.thinking.tennis.kata.AlertSubscriptionTest]: AlertSubscriptionTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+14:45:05.040 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.thinking.tennis.kata.KataApplication for test class com.thinking.tennis.kata.AlertSubscriptionTest
+14:45:05.120 [main] INFO org.testcontainers.images.PullPolicy -- Image pull policy will be performed by: DefaultPullPolicy()
+14:45:05.122 [main] INFO org.testcontainers.utility.ImageNameSubstitutor -- Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+14:45:05.148 [main] INFO org.testcontainers.DockerClientFactory -- Testcontainers version: 2.0.5
+14:45:05.335 [main] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+14:45:05.605 [main] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+14:45:05.607 [main] INFO org.testcontainers.DockerClientFactory -- Docker host IP address is localhost
+14:45:05.620 [main] INFO org.testcontainers.DockerClientFactory -- Connected to docker: 
+  Server Version: 29.6.2
+  API Version: 1.55
+  Operating System: Docker Desktop
+  Total Memory: 32001 MB
+  Labels: 
+    com.docker.desktop.address=npipe://\\.\pipe\docker_cli
+14:45:05.740 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Creating container for image: testcontainers/ryuk:0.14.0
+14:45:05.800 [main] INFO org.testcontainers.utility.RegistryAuthLocator -- Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+14:45:05.895 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Container testcontainers/ryuk:0.14.0 is starting: 9a4dc55a49811f68a7f37277362073cba47e2fc290e10f41f44ffb8842729485
+14:45:06.206 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Container testcontainers/ryuk:0.14.0 started in PT0.4664069S
+14:45:06.211 [main] INFO org.testcontainers.utility.RyukResourceReaper -- Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+14:45:06.211 [main] INFO org.testcontainers.DockerClientFactory -- Checking the system...
+14:45:06.211 [main] INFO org.testcontainers.DockerClientFactory -- ?? Docker server version should be at least 1.6.0
+14:45:06.212 [main] INFO tc.mysql:8.4.8 -- Creating container for image: mysql:8.4.8
+14:45:06.259 [main] INFO tc.mysql:8.4.8 -- Container mysql:8.4.8 is starting: 8cfdac2a9f18313ccf69d9f53def4a42241f6ab23c71bb45be1202eb81d37deb
+14:45:06.448 [main] INFO tc.mysql:8.4.8 -- Waiting for database connection to become available at jdbc:mysql://localhost:54653/alert_kata using query 'SELECT 1'
+14:45:14.613 [main] INFO tc.mysql:8.4.8 -- Container mysql:8.4.8 started in PT8.4006481S
+14:45:14.613 [main] INFO tc.mysql:8.4.8 -- Container is started (JDBC URL: jdbc:mysql://localhost:54653/alert_kata)
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::allocateMemory has been called by io.netty.util.internal.PlatformDependent0$2 (file:/C:/Users/PC-220627-03/.m2/repository/io/netty/netty-common/4.1.135.Final/netty-common-4.1.135.Final.jar)
+WARNING: Please consider reporting this to the maintainers of class io.netty.util.internal.PlatformDependent0$2
+WARNING: sun.misc.Unsafe::allocateMemory will be removed in a future release
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (C:\Users\PC-220627-03\.m2\repository\net\bytebuddy\byte-buddy-agent\1.17.8\byte-buddy-agent-1.17.8.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 12.93 s -- in com.thinking.tennis.kata.AlertSubscriptionTest
+[INFO] Running com.thinking.tennis.kata.AlertWorkDurationTest
+TTL_WORK_ENV mysqlImage=mysql:8.4.8 redisImage=redis:7.4-alpine java=25.0.4.1 lease=30000ms acquireWait=20000ms redisPingMedianMs=0.531
+TTL_WORK_SUMMARY condition=sequential calls=50 p50=7.417 p95=9.579 p99=11.575 max=11.575 maxCallIndex=0 firstCall=11.575 p99WithoutFirst=10.926 maxWithoutFirst=10.926
+TTL_WORK_SUMMARY condition=concurrent calls=50 p50=7.565 p95=10.046 p99=11.837 max=11.837 maxCallIndex=12 firstCall=6.960 p99WithoutFirst=11.837 maxWithoutFirst=11.837
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 16.09 s -- in com.thinking.tennis.kata.AlertWorkDurationTest
+[INFO] Running com.thinking.tennis.kata.FairQueueResourceComparisonTest
+FAIR_ENV java=25.0.4.1 os=Windows 10 logicalCpus=20 redis=7.4.11 image=redis:7.4-alpine@sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499 participants=100 rounds=50 trials=3 warmup=10 holdMs=20 payloadBytes=25 workerThreads=100 subscriberConnections=100 publisherConnections=1 setupMs=353.062
+FAIR_SUMMARY trial=1 strategy=SPIN rounds=50 requests=5000 winners=50 losers=4950 observations=5000 elapsedMs=1814.074 medianRoundMs=26.514 p95RoundMs=96.902 javaCpuMs=34046.875 redisCpuMs=6.234 javaOneCorePct=1876.819 redisOneCorePct=0.344 combinedCapacityPct=93.858 redisInputBytes=14 redisOutputBytes=5558 spinChecks=982375572 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=1 winners=1 losers=99 observations=100 wallMs=28.770200 spinChecks=496401 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=2 winners=1 losers=99 observations=100 wallMs=26.018900 spinChecks=599237 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=3 winners=1 losers=99 observations=100 wallMs=22.156500 spinChecks=11667803 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=4 winners=1 losers=99 observations=100 wallMs=21.826700 spinChecks=11625766 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=5 winners=1 losers=99 observations=100 wallMs=46.898800 spinChecks=26638549 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=6 winners=1 losers=99 observations=100 wallMs=83.294700 spinChecks=47891596 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=7 winners=1 losers=99 observations=100 wallMs=21.221900 spinChecks=11409907 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=8 winners=1 losers=99 observations=100 wallMs=21.877200 spinChecks=12055335 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=9 winners=1 losers=99 observations=100 wallMs=24.048300 spinChecks=13310400 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=10 winners=1 losers=99 observations=100 wallMs=21.347300 spinChecks=11715349 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=11 winners=1 losers=99 observations=100 wallMs=32.903200 spinChecks=18408440 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=12 winners=1 losers=99 observations=100 wallMs=25.424400 spinChecks=14337758 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=13 winners=1 losers=99 observations=100 wallMs=21.007200 spinChecks=11407999 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=14 winners=1 losers=99 observations=100 wallMs=25.391700 spinChecks=14218656 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=15 winners=1 losers=99 observations=100 wallMs=32.985600 spinChecks=18354453 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=16 winners=1 losers=99 observations=100 wallMs=64.414900 spinChecks=36988106 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=17 winners=1 losers=99 observations=100 wallMs=65.387000 spinChecks=37420797 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=18 winners=1 losers=99 observations=100 wallMs=21.814600 spinChecks=11903219 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=19 winners=1 losers=99 observations=100 wallMs=22.804000 spinChecks=12432580 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=20 winners=1 losers=99 observations=100 wallMs=33.858500 spinChecks=19065890 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=21 winners=1 losers=99 observations=100 wallMs=32.544100 spinChecks=18192188 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=22 winners=1 losers=99 observations=100 wallMs=24.436900 spinChecks=13387740 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=23 winners=1 losers=99 observations=100 wallMs=138.653800 spinChecks=80250852 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=24 winners=1 losers=99 observations=100 wallMs=21.907000 spinChecks=11866144 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=25 winners=1 losers=99 observations=100 wallMs=21.784200 spinChecks=12049915 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=26 winners=1 losers=99 observations=100 wallMs=31.955900 spinChecks=17987503 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=27 winners=1 losers=99 observations=100 wallMs=21.506800 spinChecks=12043570 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=28 winners=1 losers=99 observations=100 wallMs=32.980600 spinChecks=18640859 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=29 winners=1 losers=99 observations=100 wallMs=26.127300 spinChecks=13407905 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=30 winners=1 losers=99 observations=100 wallMs=99.348200 spinChecks=54380351 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=31 winners=1 losers=99 observations=100 wallMs=32.349100 spinChecks=17432011 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=32 winners=1 losers=99 observations=100 wallMs=21.992100 spinChecks=11930351 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=33 winners=1 losers=99 observations=100 wallMs=21.810200 spinChecks=11478134 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=34 winners=1 losers=99 observations=100 wallMs=73.908600 spinChecks=42305900 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=35 winners=1 losers=99 observations=100 wallMs=23.262200 spinChecks=12996880 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=36 winners=1 losers=99 observations=100 wallMs=21.697600 spinChecks=11932110 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=37 winners=1 losers=99 observations=100 wallMs=23.915100 spinChecks=13277705 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=38 winners=1 losers=99 observations=100 wallMs=32.194400 spinChecks=18019547 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=39 winners=1 losers=99 observations=100 wallMs=32.880900 spinChecks=18607279 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=40 winners=1 losers=99 observations=100 wallMs=33.076200 spinChecks=18374840 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=41 winners=1 losers=99 observations=100 wallMs=21.836900 spinChecks=12190024 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=42 winners=1 losers=99 observations=100 wallMs=32.414500 spinChecks=18039666 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=43 winners=1 losers=99 observations=100 wallMs=96.902400 spinChecks=55463444 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=44 winners=1 losers=99 observations=100 wallMs=22.133100 spinChecks=12146779 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=45 winners=1 losers=99 observations=100 wallMs=27.812000 spinChecks=15518108 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=46 winners=1 losers=99 observations=100 wallMs=21.948700 spinChecks=12021655 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=47 winners=1 losers=99 observations=100 wallMs=26.900500 spinChecks=14973352 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=48 winners=1 losers=99 observations=100 wallMs=33.597900 spinChecks=18565848 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=49 winners=1 losers=99 observations=100 wallMs=33.419300 spinChecks=17929982 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=SPIN round=50 winners=1 losers=99 observations=100 wallMs=61.165800 spinChecks=35016689 conditionAwaits=0
+FAIR_SUMMARY trial=1 strategy=CONDITION rounds=50 requests=5000 winners=50 losers=4950 observations=5000 elapsedMs=1133.312 medianRoundMs=22.452 p95RoundMs=23.225 javaCpuMs=93.750 redisCpuMs=4.060 javaOneCorePct=8.272 redisOneCorePct=0.358 combinedCapacityPct=0.432 redisInputBytes=14 redisOutputBytes=5553 spinChecks=0 conditionAwaits=4950
+FAIR_ROUND trial=1 strategy=CONDITION round=1 winners=1 losers=99 observations=100 wallMs=22.084000 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=2 winners=1 losers=99 observations=100 wallMs=22.993100 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=3 winners=1 losers=99 observations=100 wallMs=21.289000 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=4 winners=1 losers=99 observations=100 wallMs=21.452100 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=5 winners=1 losers=99 observations=100 wallMs=22.117500 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=6 winners=1 losers=99 observations=100 wallMs=21.345300 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=7 winners=1 losers=99 observations=100 wallMs=22.849300 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=8 winners=1 losers=99 observations=100 wallMs=22.470600 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=9 winners=1 losers=99 observations=100 wallMs=21.364300 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=10 winners=1 losers=99 observations=100 wallMs=21.895500 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=11 winners=1 losers=99 observations=100 wallMs=22.600600 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=12 winners=1 losers=99 observations=100 wallMs=22.531200 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=13 winners=1 losers=99 observations=100 wallMs=22.412800 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=14 winners=1 losers=99 observations=100 wallMs=22.504400 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=15 winners=1 losers=99 observations=100 wallMs=22.133000 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=16 winners=1 losers=99 observations=100 wallMs=22.502400 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=17 winners=1 losers=99 observations=100 wallMs=22.609200 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=18 winners=1 losers=99 observations=100 wallMs=22.521000 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=19 winners=1 losers=99 observations=100 wallMs=22.184500 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=20 winners=1 losers=99 observations=100 wallMs=22.579100 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=21 winners=1 losers=99 observations=100 wallMs=22.433600 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=22 winners=1 losers=99 observations=100 wallMs=22.072600 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=23 winners=1 losers=99 observations=100 wallMs=31.860300 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=24 winners=1 losers=99 observations=100 wallMs=23.224800 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=25 winners=1 losers=99 observations=100 wallMs=21.638300 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=26 winners=1 losers=99 observations=100 wallMs=22.359300 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=27 winners=1 losers=99 observations=100 wallMs=22.715100 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=28 winners=1 losers=99 observations=100 wallMs=22.527000 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=29 winners=1 losers=99 observations=100 wallMs=23.103200 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=30 winners=1 losers=99 observations=100 wallMs=22.598300 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=31 winners=1 losers=99 observations=100 wallMs=22.192500 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=32 winners=1 losers=99 observations=100 wallMs=23.053400 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=33 winners=1 losers=99 observations=100 wallMs=22.762500 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=34 winners=1 losers=99 observations=100 wallMs=22.047400 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=35 winners=1 losers=99 observations=100 wallMs=22.342400 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=36 winners=1 losers=99 observations=100 wallMs=22.601500 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=37 winners=1 losers=99 observations=100 wallMs=22.487000 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=38 winners=1 losers=99 observations=100 wallMs=22.221300 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=39 winners=1 losers=99 observations=100 wallMs=22.529600 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=40 winners=1 losers=99 observations=100 wallMs=22.205400 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=41 winners=1 losers=99 observations=100 wallMs=21.879400 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=42 winners=1 losers=99 observations=100 wallMs=22.801000 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=43 winners=1 losers=99 observations=100 wallMs=21.844600 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=44 winners=1 losers=99 observations=100 wallMs=23.042200 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=45 winners=1 losers=99 observations=100 wallMs=22.319800 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=46 winners=1 losers=99 observations=100 wallMs=22.428000 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=47 winners=1 losers=99 observations=100 wallMs=23.959200 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=48 winners=1 losers=99 observations=100 wallMs=21.854600 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=49 winners=1 losers=99 observations=100 wallMs=22.876500 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=1 strategy=CONDITION round=50 winners=1 losers=99 observations=100 wallMs=22.237100 spinChecks=0 conditionAwaits=99
+FAIR_SUMMARY trial=1 strategy=REDIS rounds=50 requests=5000 winners=50 losers=4950 observations=5000 elapsedMs=1249.517 medianRoundMs=24.638 p95RoundMs=27.110 javaCpuMs=968.750 redisCpuMs=33.063 javaOneCorePct=77.530 redisOneCorePct=2.646 combinedCapacityPct=4.009 redisInputBytes=3614 redisOutputBytes=365855 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=1 winners=1 losers=99 observations=100 wallMs=25.512300 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=2 winners=1 losers=99 observations=100 wallMs=24.314100 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=3 winners=1 losers=99 observations=100 wallMs=25.092100 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=4 winners=1 losers=99 observations=100 wallMs=24.048700 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=5 winners=1 losers=99 observations=100 wallMs=25.833400 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=6 winners=1 losers=99 observations=100 wallMs=23.870200 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=7 winners=1 losers=99 observations=100 wallMs=25.866400 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=8 winners=1 losers=99 observations=100 wallMs=25.485900 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=9 winners=1 losers=99 observations=100 wallMs=24.821000 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=10 winners=1 losers=99 observations=100 wallMs=25.693700 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=11 winners=1 losers=99 observations=100 wallMs=24.290200 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=12 winners=1 losers=99 observations=100 wallMs=23.678600 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=13 winners=1 losers=99 observations=100 wallMs=25.832100 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=14 winners=1 losers=99 observations=100 wallMs=23.453500 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=15 winners=1 losers=99 observations=100 wallMs=24.827000 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=16 winners=1 losers=99 observations=100 wallMs=25.697900 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=17 winners=1 losers=99 observations=100 wallMs=23.508200 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=18 winners=1 losers=99 observations=100 wallMs=27.071900 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=19 winners=1 losers=99 observations=100 wallMs=24.571500 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=20 winners=1 losers=99 observations=100 wallMs=23.790700 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=21 winners=1 losers=99 observations=100 wallMs=27.110100 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=22 winners=1 losers=99 observations=100 wallMs=26.722400 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=23 winners=1 losers=99 observations=100 wallMs=24.961400 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=24 winners=1 losers=99 observations=100 wallMs=25.160800 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=25 winners=1 losers=99 observations=100 wallMs=24.247200 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=26 winners=1 losers=99 observations=100 wallMs=24.498900 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=27 winners=1 losers=99 observations=100 wallMs=28.825700 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=28 winners=1 losers=99 observations=100 wallMs=23.436100 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=29 winners=1 losers=99 observations=100 wallMs=23.345500 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=30 winners=1 losers=99 observations=100 wallMs=23.767300 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=31 winners=1 losers=99 observations=100 wallMs=27.279400 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=32 winners=1 losers=99 observations=100 wallMs=24.266400 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=33 winners=1 losers=99 observations=100 wallMs=24.627000 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=34 winners=1 losers=99 observations=100 wallMs=24.084900 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=35 winners=1 losers=99 observations=100 wallMs=23.806900 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=36 winners=1 losers=99 observations=100 wallMs=26.218200 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=37 winners=1 losers=99 observations=100 wallMs=24.230000 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=38 winners=1 losers=99 observations=100 wallMs=23.276600 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=39 winners=1 losers=99 observations=100 wallMs=24.652200 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=40 winners=1 losers=99 observations=100 wallMs=23.848700 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=41 winners=1 losers=99 observations=100 wallMs=25.701900 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=42 winners=1 losers=99 observations=100 wallMs=24.306800 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=43 winners=1 losers=99 observations=100 wallMs=24.941800 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=44 winners=1 losers=99 observations=100 wallMs=24.111400 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=45 winners=1 losers=99 observations=100 wallMs=27.066700 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=46 winners=1 losers=99 observations=100 wallMs=24.648500 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=47 winners=1 losers=99 observations=100 wallMs=24.618300 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=48 winners=1 losers=99 observations=100 wallMs=24.541800 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=49 winners=1 losers=99 observations=100 wallMs=25.175500 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=1 strategy=REDIS round=50 winners=1 losers=99 observations=100 wallMs=25.157900 spinChecks=0 conditionAwaits=0
+FAIR_SUMMARY trial=2 strategy=CONDITION rounds=50 requests=5000 winners=50 losers=4950 observations=5000 elapsedMs=1120.635 medianRoundMs=22.120 p95RoundMs=23.842 javaCpuMs=93.750 redisCpuMs=3.453 javaOneCorePct=8.366 redisOneCorePct=0.308 combinedCapacityPct=0.434 redisInputBytes=14 redisOutputBytes=5558 spinChecks=0 conditionAwaits=4950
+FAIR_ROUND trial=2 strategy=CONDITION round=1 winners=1 losers=99 observations=100 wallMs=21.768000 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=2 winners=1 losers=99 observations=100 wallMs=22.864200 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=3 winners=1 losers=99 observations=100 wallMs=22.260200 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=4 winners=1 losers=99 observations=100 wallMs=23.196200 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=5 winners=1 losers=99 observations=100 wallMs=21.818300 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=6 winners=1 losers=99 observations=100 wallMs=21.882200 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=7 winners=1 losers=99 observations=100 wallMs=22.752000 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=8 winners=1 losers=99 observations=100 wallMs=23.258300 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=9 winners=1 losers=99 observations=100 wallMs=22.337100 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=10 winners=1 losers=99 observations=100 wallMs=22.472200 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=11 winners=1 losers=99 observations=100 wallMs=21.440300 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=12 winners=1 losers=99 observations=100 wallMs=21.822500 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=13 winners=1 losers=99 observations=100 wallMs=21.975100 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=14 winners=1 losers=99 observations=100 wallMs=21.848300 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=15 winners=1 losers=99 observations=100 wallMs=21.677400 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=16 winners=1 losers=99 observations=100 wallMs=22.794200 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=17 winners=1 losers=99 observations=100 wallMs=21.662600 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=18 winners=1 losers=99 observations=100 wallMs=21.928000 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=19 winners=1 losers=99 observations=100 wallMs=21.953400 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=20 winners=1 losers=99 observations=100 wallMs=22.506400 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=21 winners=1 losers=99 observations=100 wallMs=24.267800 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=22 winners=1 losers=99 observations=100 wallMs=24.223500 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=23 winners=1 losers=99 observations=100 wallMs=21.089300 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=24 winners=1 losers=99 observations=100 wallMs=22.028200 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=25 winners=1 losers=99 observations=100 wallMs=22.390500 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=26 winners=1 losers=99 observations=100 wallMs=22.072500 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=27 winners=1 losers=99 observations=100 wallMs=22.892300 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=28 winners=1 losers=99 observations=100 wallMs=22.632700 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=29 winners=1 losers=99 observations=100 wallMs=22.079700 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=30 winners=1 losers=99 observations=100 wallMs=22.389600 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=31 winners=1 losers=99 observations=100 wallMs=22.757000 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=32 winners=1 losers=99 observations=100 wallMs=21.951600 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=33 winners=1 losers=99 observations=100 wallMs=21.904800 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=34 winners=1 losers=99 observations=100 wallMs=22.575800 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=35 winners=1 losers=99 observations=100 wallMs=21.818700 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=36 winners=1 losers=99 observations=100 wallMs=22.128900 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=37 winners=1 losers=99 observations=100 wallMs=21.720200 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=38 winners=1 losers=99 observations=100 wallMs=22.111100 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=39 winners=1 losers=99 observations=100 wallMs=23.080500 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=40 winners=1 losers=99 observations=100 wallMs=21.732600 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=41 winners=1 losers=99 observations=100 wallMs=23.842300 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=42 winners=1 losers=99 observations=100 wallMs=22.790000 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=43 winners=1 losers=99 observations=100 wallMs=21.862600 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=44 winners=1 losers=99 observations=100 wallMs=22.509800 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=45 winners=1 losers=99 observations=100 wallMs=22.400500 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=46 winners=1 losers=99 observations=100 wallMs=22.006400 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=47 winners=1 losers=99 observations=100 wallMs=22.547500 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=48 winners=1 losers=99 observations=100 wallMs=21.980600 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=49 winners=1 losers=99 observations=100 wallMs=21.667700 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=2 strategy=CONDITION round=50 winners=1 losers=99 observations=100 wallMs=23.502200 spinChecks=0 conditionAwaits=99
+FAIR_SUMMARY trial=2 strategy=REDIS rounds=50 requests=5000 winners=50 losers=4950 observations=5000 elapsedMs=1221.858 medianRoundMs=24.471 p95RoundMs=25.948 javaCpuMs=250.000 redisCpuMs=29.288 javaOneCorePct=20.461 redisOneCorePct=2.397 combinedCapacityPct=1.143 redisInputBytes=3614 redisOutputBytes=365858 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=1 winners=1 losers=99 observations=100 wallMs=24.105700 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=2 winners=1 losers=99 observations=100 wallMs=25.055500 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=3 winners=1 losers=99 observations=100 wallMs=23.734200 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=4 winners=1 losers=99 observations=100 wallMs=25.777400 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=5 winners=1 losers=99 observations=100 wallMs=25.161600 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=6 winners=1 losers=99 observations=100 wallMs=24.490800 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=7 winners=1 losers=99 observations=100 wallMs=25.069400 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=8 winners=1 losers=99 observations=100 wallMs=24.900800 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=9 winners=1 losers=99 observations=100 wallMs=23.499400 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=10 winners=1 losers=99 observations=100 wallMs=24.332500 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=11 winners=1 losers=99 observations=100 wallMs=24.455300 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=12 winners=1 losers=99 observations=100 wallMs=23.150100 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=13 winners=1 losers=99 observations=100 wallMs=23.787800 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=14 winners=1 losers=99 observations=100 wallMs=23.939500 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=15 winners=1 losers=99 observations=100 wallMs=23.214900 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=16 winners=1 losers=99 observations=100 wallMs=23.217900 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=17 winners=1 losers=99 observations=100 wallMs=25.926000 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=18 winners=1 losers=99 observations=100 wallMs=26.576400 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=19 winners=1 losers=99 observations=100 wallMs=26.026700 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=20 winners=1 losers=99 observations=100 wallMs=24.846000 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=21 winners=1 losers=99 observations=100 wallMs=25.114400 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=22 winners=1 losers=99 observations=100 wallMs=25.016200 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=23 winners=1 losers=99 observations=100 wallMs=25.948400 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=24 winners=1 losers=99 observations=100 wallMs=24.537100 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=25 winners=1 losers=99 observations=100 wallMs=24.844100 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=26 winners=1 losers=99 observations=100 wallMs=23.092800 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=27 winners=1 losers=99 observations=100 wallMs=24.739900 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=28 winners=1 losers=99 observations=100 wallMs=23.490300 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=29 winners=1 losers=99 observations=100 wallMs=24.943300 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=30 winners=1 losers=99 observations=100 wallMs=24.486200 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=31 winners=1 losers=99 observations=100 wallMs=24.642400 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=32 winners=1 losers=99 observations=100 wallMs=24.294200 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=33 winners=1 losers=99 observations=100 wallMs=24.054400 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=34 winners=1 losers=99 observations=100 wallMs=24.784100 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=35 winners=1 losers=99 observations=100 wallMs=22.541200 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=36 winners=1 losers=99 observations=100 wallMs=23.113900 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=37 winners=1 losers=99 observations=100 wallMs=23.042200 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=38 winners=1 losers=99 observations=100 wallMs=22.740700 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=39 winners=1 losers=99 observations=100 wallMs=24.791700 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=40 winners=1 losers=99 observations=100 wallMs=24.979400 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=41 winners=1 losers=99 observations=100 wallMs=25.615100 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=42 winners=1 losers=99 observations=100 wallMs=24.166300 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=43 winners=1 losers=99 observations=100 wallMs=23.888400 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=44 winners=1 losers=99 observations=100 wallMs=23.884000 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=45 winners=1 losers=99 observations=100 wallMs=23.966200 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=46 winners=1 losers=99 observations=100 wallMs=23.369100 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=47 winners=1 losers=99 observations=100 wallMs=25.074100 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=48 winners=1 losers=99 observations=100 wallMs=24.311200 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=49 winners=1 losers=99 observations=100 wallMs=24.908200 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=REDIS round=50 winners=1 losers=99 observations=100 wallMs=23.605400 spinChecks=0 conditionAwaits=0
+FAIR_SUMMARY trial=2 strategy=SPIN rounds=50 requests=5000 winners=50 losers=4950 observations=5000 elapsedMs=1799.851 medianRoundMs=26.737 p95RoundMs=84.549 javaCpuMs=34390.625 redisCpuMs=6.082 javaOneCorePct=1910.748 redisOneCorePct=0.338 combinedCapacityPct=95.554 redisInputBytes=14 redisOutputBytes=5560 spinChecks=986078477 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=1 winners=1 losers=99 observations=100 wallMs=35.758900 spinChecks=11095324 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=2 winners=1 losers=99 observations=100 wallMs=33.379600 spinChecks=16918488 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=3 winners=1 losers=99 observations=100 wallMs=84.549400 spinChecks=47701477 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=4 winners=1 losers=99 observations=100 wallMs=22.253500 spinChecks=11471014 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=5 winners=1 losers=99 observations=100 wallMs=33.499400 spinChecks=18384791 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=6 winners=1 losers=99 observations=100 wallMs=49.761900 spinChecks=26061237 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=7 winners=1 losers=99 observations=100 wallMs=21.947100 spinChecks=11639448 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=8 winners=1 losers=99 observations=100 wallMs=24.665700 spinChecks=12716190 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=9 winners=1 losers=99 observations=100 wallMs=21.338700 spinChecks=10772399 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=10 winners=1 losers=99 observations=100 wallMs=21.955900 spinChecks=11615003 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=11 winners=1 losers=99 observations=100 wallMs=32.507600 spinChecks=18012197 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=12 winners=1 losers=99 observations=100 wallMs=33.052100 spinChecks=18699686 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=13 winners=1 losers=99 observations=100 wallMs=32.937000 spinChecks=18605546 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=14 winners=1 losers=99 observations=100 wallMs=21.505200 spinChecks=11992450 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=15 winners=1 losers=99 observations=100 wallMs=23.417500 spinChecks=13000946 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=16 winners=1 losers=99 observations=100 wallMs=32.591000 spinChecks=18326963 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=17 winners=1 losers=99 observations=100 wallMs=21.921600 spinChecks=12012909 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=18 winners=1 losers=99 observations=100 wallMs=24.613600 spinChecks=13323688 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=19 winners=1 losers=99 observations=100 wallMs=21.299500 spinChecks=11750051 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=20 winners=1 losers=99 observations=100 wallMs=25.419500 spinChecks=14338566 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=21 winners=1 losers=99 observations=100 wallMs=26.997600 spinChecks=15040093 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=22 winners=1 losers=99 observations=100 wallMs=80.696000 spinChecks=46211249 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=23 winners=1 losers=99 observations=100 wallMs=26.784100 spinChecks=14890448 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=24 winners=1 losers=99 observations=100 wallMs=66.984800 spinChecks=38343307 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=25 winners=1 losers=99 observations=100 wallMs=33.005300 spinChecks=18429439 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=26 winners=1 losers=99 observations=100 wallMs=21.895700 spinChecks=12076473 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=27 winners=1 losers=99 observations=100 wallMs=20.940500 spinChecks=10995144 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=28 winners=1 losers=99 observations=100 wallMs=26.690000 spinChecks=14023787 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=29 winners=1 losers=99 observations=100 wallMs=29.345300 spinChecks=15085383 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=30 winners=1 losers=99 observations=100 wallMs=21.518900 spinChecks=11826010 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=31 winners=1 losers=99 observations=100 wallMs=110.823600 spinChecks=63450125 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=32 winners=1 losers=99 observations=100 wallMs=64.536600 spinChecks=36669512 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=33 winners=1 losers=99 observations=100 wallMs=21.125300 spinChecks=11383458 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=34 winners=1 losers=99 observations=100 wallMs=21.911900 spinChecks=12058869 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=35 winners=1 losers=99 observations=100 wallMs=97.837700 spinChecks=56113044 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=36 winners=1 losers=99 observations=100 wallMs=22.702900 spinChecks=12541660 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=37 winners=1 losers=99 observations=100 wallMs=33.960900 spinChecks=18591763 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=38 winners=1 losers=99 observations=100 wallMs=41.058000 spinChecks=23296206 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=39 winners=1 losers=99 observations=100 wallMs=25.901800 spinChecks=14513010 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=40 winners=1 losers=99 observations=100 wallMs=21.430000 spinChecks=11914213 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=41 winners=1 losers=99 observations=100 wallMs=22.000000 spinChecks=12005654 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=42 winners=1 losers=99 observations=100 wallMs=65.638600 spinChecks=36948673 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=43 winners=1 losers=99 observations=100 wallMs=33.402100 spinChecks=18155994 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=44 winners=1 losers=99 observations=100 wallMs=21.543900 spinChecks=11887485 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=45 winners=1 losers=99 observations=100 wallMs=25.422300 spinChecks=14165845 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=46 winners=1 losers=99 observations=100 wallMs=21.659200 spinChecks=11321662 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=47 winners=1 losers=99 observations=100 wallMs=21.328800 spinChecks=10344602 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=48 winners=1 losers=99 observations=100 wallMs=59.938200 spinChecks=33868388 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=49 winners=1 losers=99 observations=100 wallMs=58.882700 spinChecks=33553770 conditionAwaits=0
+FAIR_ROUND trial=2 strategy=SPIN round=50 winners=1 losers=99 observations=100 wallMs=33.102300 spinChecks=17934838 conditionAwaits=0
+FAIR_SUMMARY trial=3 strategy=REDIS rounds=50 requests=5000 winners=50 losers=4950 observations=5000 elapsedMs=1225.077 medianRoundMs=24.201 p95RoundMs=25.994 javaCpuMs=328.125 redisCpuMs=29.821 javaOneCorePct=26.784 redisOneCorePct=2.434 combinedCapacityPct=1.461 redisInputBytes=3614 redisOutputBytes=365856 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=1 winners=1 losers=99 observations=100 wallMs=22.960900 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=2 winners=1 losers=99 observations=100 wallMs=23.075200 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=3 winners=1 losers=99 observations=100 wallMs=25.037000 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=4 winners=1 losers=99 observations=100 wallMs=22.823900 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=5 winners=1 losers=99 observations=100 wallMs=23.289100 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=6 winners=1 losers=99 observations=100 wallMs=26.783700 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=7 winners=1 losers=99 observations=100 wallMs=24.791600 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=8 winners=1 losers=99 observations=100 wallMs=25.993900 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=9 winners=1 losers=99 observations=100 wallMs=23.495500 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=10 winners=1 losers=99 observations=100 wallMs=23.344100 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=11 winners=1 losers=99 observations=100 wallMs=23.980000 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=12 winners=1 losers=99 observations=100 wallMs=24.365500 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=13 winners=1 losers=99 observations=100 wallMs=24.303200 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=14 winners=1 losers=99 observations=100 wallMs=24.525100 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=15 winners=1 losers=99 observations=100 wallMs=23.790500 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=16 winners=1 losers=99 observations=100 wallMs=24.971500 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=17 winners=1 losers=99 observations=100 wallMs=25.738400 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=18 winners=1 losers=99 observations=100 wallMs=25.542100 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=19 winners=1 losers=99 observations=100 wallMs=25.257200 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=20 winners=1 losers=99 observations=100 wallMs=25.951200 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=21 winners=1 losers=99 observations=100 wallMs=25.546700 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=22 winners=1 losers=99 observations=100 wallMs=24.256200 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=23 winners=1 losers=99 observations=100 wallMs=23.351500 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=24 winners=1 losers=99 observations=100 wallMs=24.488400 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=25 winners=1 losers=99 observations=100 wallMs=23.672300 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=26 winners=1 losers=99 observations=100 wallMs=24.078900 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=27 winners=1 losers=99 observations=100 wallMs=24.774400 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=28 winners=1 losers=99 observations=100 wallMs=24.143400 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=29 winners=1 losers=99 observations=100 wallMs=23.985200 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=30 winners=1 losers=99 observations=100 wallMs=22.900800 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=31 winners=1 losers=99 observations=100 wallMs=24.082200 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=32 winners=1 losers=99 observations=100 wallMs=25.573200 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=33 winners=1 losers=99 observations=100 wallMs=24.104400 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=34 winners=1 losers=99 observations=100 wallMs=24.007800 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=35 winners=1 losers=99 observations=100 wallMs=25.151200 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=36 winners=1 losers=99 observations=100 wallMs=25.257300 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=37 winners=1 losers=99 observations=100 wallMs=24.182300 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=38 winners=1 losers=99 observations=100 wallMs=25.333600 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=39 winners=1 losers=99 observations=100 wallMs=25.442800 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=40 winners=1 losers=99 observations=100 wallMs=23.970600 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=41 winners=1 losers=99 observations=100 wallMs=26.627000 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=42 winners=1 losers=99 observations=100 wallMs=23.844200 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=43 winners=1 losers=99 observations=100 wallMs=24.219000 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=44 winners=1 losers=99 observations=100 wallMs=25.193400 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=45 winners=1 losers=99 observations=100 wallMs=24.919900 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=46 winners=1 losers=99 observations=100 wallMs=23.860800 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=47 winners=1 losers=99 observations=100 wallMs=23.461900 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=48 winners=1 losers=99 observations=100 wallMs=23.823000 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=49 winners=1 losers=99 observations=100 wallMs=23.817800 spinChecks=0 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=REDIS round=50 winners=1 losers=99 observations=100 wallMs=24.166600 spinChecks=0 conditionAwaits=0
+FAIR_SUMMARY trial=3 strategy=SPIN rounds=50 requests=5000 winners=50 losers=4950 observations=5000 elapsedMs=2141.443 medianRoundMs=32.222 p95RoundMs=128.959 javaCpuMs=38968.750 redisCpuMs=7.057 javaOneCorePct=1819.742 redisOneCorePct=0.330 combinedCapacityPct=91.004 redisInputBytes=14 redisOutputBytes=5562 spinChecks=1192245703 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=1 winners=1 losers=99 observations=100 wallMs=35.490600 spinChecks=11348646 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=2 winners=1 losers=99 observations=100 wallMs=56.405100 spinChecks=30926167 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=3 winners=1 losers=99 observations=100 wallMs=24.062500 spinChecks=12816542 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=4 winners=1 losers=99 observations=100 wallMs=138.540400 spinChecks=79371156 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=5 winners=1 losers=99 observations=100 wallMs=34.807000 spinChecks=19111187 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=6 winners=1 losers=99 observations=100 wallMs=30.980900 spinChecks=17165607 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=7 winners=1 losers=99 observations=100 wallMs=21.398100 spinChecks=11727384 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=8 winners=1 losers=99 observations=100 wallMs=25.527000 spinChecks=13871080 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=9 winners=1 losers=99 observations=100 wallMs=21.848100 spinChecks=11759150 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=10 winners=1 losers=99 observations=100 wallMs=32.025800 spinChecks=17810605 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=11 winners=1 losers=99 observations=100 wallMs=24.971600 spinChecks=13790038 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=12 winners=1 losers=99 observations=100 wallMs=21.964900 spinChecks=11799848 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=13 winners=1 losers=99 observations=100 wallMs=21.465000 spinChecks=11593248 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=14 winners=1 losers=99 observations=100 wallMs=65.473500 spinChecks=37558835 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=15 winners=1 losers=99 observations=100 wallMs=32.998200 spinChecks=18554370 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=16 winners=1 losers=99 observations=100 wallMs=21.654300 spinChecks=11905953 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=17 winners=1 losers=99 observations=100 wallMs=23.696900 spinChecks=13177948 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=18 winners=1 losers=99 observations=100 wallMs=21.002600 spinChecks=11394390 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=19 winners=1 losers=99 observations=100 wallMs=20.938900 spinChecks=11425445 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=20 winners=1 losers=99 observations=100 wallMs=128.958600 spinChecks=74395352 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=21 winners=1 losers=99 observations=100 wallMs=22.753000 spinChecks=12229330 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=22 winners=1 losers=99 observations=100 wallMs=22.150500 spinChecks=12344683 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=23 winners=1 losers=99 observations=100 wallMs=106.428200 spinChecks=61519056 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=24 winners=1 losers=99 observations=100 wallMs=55.653700 spinChecks=31833923 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=25 winners=1 losers=99 observations=100 wallMs=27.061900 spinChecks=15191691 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=26 winners=1 losers=99 observations=100 wallMs=38.865100 spinChecks=21965238 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=27 winners=1 losers=99 observations=100 wallMs=27.152500 spinChecks=15158740 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=28 winners=1 losers=99 observations=100 wallMs=32.813200 spinChecks=18043872 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=29 winners=1 losers=99 observations=100 wallMs=21.510500 spinChecks=11977133 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=30 winners=1 losers=99 observations=100 wallMs=96.321200 spinChecks=55741663 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=31 winners=1 losers=99 observations=100 wallMs=33.130200 spinChecks=18613807 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=32 winners=1 losers=99 observations=100 wallMs=36.867700 spinChecks=20806769 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=33 winners=1 losers=99 observations=100 wallMs=22.687100 spinChecks=12571692 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=34 winners=1 losers=99 observations=100 wallMs=157.023100 spinChecks=91187998 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=35 winners=1 losers=99 observations=100 wallMs=32.870900 spinChecks=18549401 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=36 winners=1 losers=99 observations=100 wallMs=32.538300 spinChecks=18289908 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=37 winners=1 losers=99 observations=100 wallMs=21.879200 spinChecks=12167401 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=38 winners=1 losers=99 observations=100 wallMs=24.446500 spinChecks=13581093 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=39 winners=1 losers=99 observations=100 wallMs=34.233000 spinChecks=18054688 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=40 winners=1 losers=99 observations=100 wallMs=27.126400 spinChecks=13807221 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=41 winners=1 losers=99 observations=100 wallMs=35.649600 spinChecks=18140421 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=42 winners=1 losers=99 observations=100 wallMs=21.709000 spinChecks=11477267 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=43 winners=1 losers=99 observations=100 wallMs=21.203400 spinChecks=11481584 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=44 winners=1 losers=99 observations=100 wallMs=109.117700 spinChecks=61160290 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=45 winners=1 losers=99 observations=100 wallMs=32.892000 spinChecks=17589041 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=46 winners=1 losers=99 observations=100 wallMs=23.880800 spinChecks=13244107 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=47 winners=1 losers=99 observations=100 wallMs=32.418200 spinChecks=18351530 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=48 winners=1 losers=99 observations=100 wallMs=119.384600 spinChecks=69063920 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=49 winners=1 losers=99 observations=100 wallMs=32.767100 spinChecks=18365094 conditionAwaits=0
+FAIR_ROUND trial=3 strategy=SPIN round=50 winners=1 losers=99 observations=100 wallMs=32.459600 spinChecks=18234191 conditionAwaits=0
+FAIR_SUMMARY trial=3 strategy=CONDITION rounds=50 requests=5000 winners=50 losers=4950 observations=5000 elapsedMs=1124.384 medianRoundMs=22.339 p95RoundMs=23.488 javaCpuMs=187.500 redisCpuMs=3.813 javaOneCorePct=16.676 redisOneCorePct=0.339 combinedCapacityPct=0.851 redisInputBytes=14 redisOutputBytes=5559 spinChecks=0 conditionAwaits=4950
+FAIR_ROUND trial=3 strategy=CONDITION round=1 winners=1 losers=99 observations=100 wallMs=21.903700 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=2 winners=1 losers=99 observations=100 wallMs=21.910400 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=3 winners=1 losers=99 observations=100 wallMs=22.447000 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=4 winners=1 losers=99 observations=100 wallMs=22.993500 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=5 winners=1 losers=99 observations=100 wallMs=23.114600 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=6 winners=1 losers=99 observations=100 wallMs=22.700500 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=7 winners=1 losers=99 observations=100 wallMs=21.586900 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=8 winners=1 losers=99 observations=100 wallMs=21.501300 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=9 winners=1 losers=99 observations=100 wallMs=22.793700 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=10 winners=1 losers=99 observations=100 wallMs=21.939900 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=11 winners=1 losers=99 observations=100 wallMs=21.834000 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=12 winners=1 losers=99 observations=100 wallMs=21.461900 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=13 winners=1 losers=99 observations=100 wallMs=23.087100 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=14 winners=1 losers=99 observations=100 wallMs=21.828000 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=15 winners=1 losers=99 observations=100 wallMs=23.797200 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=16 winners=1 losers=99 observations=100 wallMs=22.168200 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=17 winners=1 losers=99 observations=100 wallMs=22.563100 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=18 winners=1 losers=99 observations=100 wallMs=21.963500 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=19 winners=1 losers=99 observations=100 wallMs=22.766400 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=20 winners=1 losers=99 observations=100 wallMs=22.060100 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=21 winners=1 losers=99 observations=100 wallMs=23.469700 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=22 winners=1 losers=99 observations=100 wallMs=21.928600 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=23 winners=1 losers=99 observations=100 wallMs=22.113900 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=24 winners=1 losers=99 observations=100 wallMs=22.231100 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=25 winners=1 losers=99 observations=100 wallMs=22.483500 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=26 winners=1 losers=99 observations=100 wallMs=23.488000 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=27 winners=1 losers=99 observations=100 wallMs=21.595400 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=28 winners=1 losers=99 observations=100 wallMs=21.745500 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=29 winners=1 losers=99 observations=100 wallMs=23.354500 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=30 winners=1 losers=99 observations=100 wallMs=22.862400 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=31 winners=1 losers=99 observations=100 wallMs=21.920100 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=32 winners=1 losers=99 observations=100 wallMs=22.047300 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=33 winners=1 losers=99 observations=100 wallMs=24.583800 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=34 winners=1 losers=99 observations=100 wallMs=21.230900 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=35 winners=1 losers=99 observations=100 wallMs=22.517200 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=36 winners=1 losers=99 observations=100 wallMs=22.671600 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=37 winners=1 losers=99 observations=100 wallMs=21.823000 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=38 winners=1 losers=99 observations=100 wallMs=22.791500 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=39 winners=1 losers=99 observations=100 wallMs=22.667000 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=40 winners=1 losers=99 observations=100 wallMs=23.039400 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=41 winners=1 losers=99 observations=100 wallMs=21.894300 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=42 winners=1 losers=99 observations=100 wallMs=23.074800 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=43 winners=1 losers=99 observations=100 wallMs=23.098100 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=44 winners=1 losers=99 observations=100 wallMs=22.644100 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=45 winners=1 losers=99 observations=100 wallMs=21.974800 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=46 winners=1 losers=99 observations=100 wallMs=22.142700 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=47 winners=1 losers=99 observations=100 wallMs=22.924000 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=48 winners=1 losers=99 observations=100 wallMs=21.711200 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=49 winners=1 losers=99 observations=100 wallMs=22.067100 spinChecks=0 conditionAwaits=99
+FAIR_ROUND trial=3 strategy=CONDITION round=50 winners=1 losers=99 observations=100 wallMs=23.380400 spinChecks=0 conditionAwaits=99
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 14.64 s -- in com.thinking.tennis.kata.FairQueueResourceComparisonTest
+[INFO] Running com.thinking.tennis.kata.LockComparisonTest
+LOCK_SUMMARY strategy=PESSIMISTIC rounds=100 duplicates=0 requestErrors=0 medianRequestMs=8.040 medianRoundMs=8.911 optimisticConflicts=0
+LOCK_SUMMARY strategy=OPTIMISTIC rounds=100 duplicates=0 requestErrors=0 medianRequestMs=12.347 medianRoundMs=13.638 optimisticConflicts=100
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 11.91 s -- in com.thinking.tennis.kata.LockComparisonTest
+[INFO] Running com.thinking.tennis.kata.QueueWaitComparisonTest
+QUEUE_SUMMARY strategy=SPIN rounds=20 contenders=100 winners=1 losers=99 medianRoundMs=36.564 medianSpinChecks=1478887 medianPubSubWaits=0
+QUEUE_SUMMARY strategy=PUB_SUB rounds=20 contenders=100 winners=1 losers=99 medianRoundMs=25.416 medianSpinChecks=0 medianPubSubWaits=99
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.324 s -- in com.thinking.tennis.kata.QueueWaitComparisonTest
+[INFO] Running com.thinking.tennis.kata.RedisPubSubQueueWaitComparisonTest
+REDIS_QUEUE_SUMMARY image=redis:7.4-alpine rounds=20 contenders=100 winners=1 losers=99 medianRoundMs=50.088 messages=2000 redisInputBytes=443610 redisOutputBytes=628473 subscriberConnections=2000
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.766 s -- in com.thinking.tennis.kata.RedisPubSubQueueWaitComparisonTest
+[INFO] Running com.thinking.tennis.kata.RedisSpinLockTest
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.098 s -- in com.thinking.tennis.kata.RedisSpinLockTest
+[INFO] Running com.thinking.tennis.kata.TtlFirstCallTest
+TTL_FIRST_CALL leaseMs=100 firstWorkMs=10.078 firstOwnedAtExit=true firstRelease=RELEASED_OWN secondWorkMs=46.105 secondOwnedAtExit=true secondRelease=RELEASED_OWN
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 14.47 s -- in com.thinking.tennis.kata.TtlFirstCallTest
+[INFO] Running com.thinking.tennis.kata.TtlOverrunTest
+TTL_OVERRUN_RETRY ttlMs=1000 rounds=2 waiters=10 completed=20 lockoutMillisPerRound=[993.5, 1033.0] longestWaitPerRound=[1459.9, 1500.9]
+TTL_OVERRUN_RETRY ttlMs=3000 rounds=2 waiters=10 completed=20 lockoutMillisPerRound=[3022.8, 3039.4] longestWaitPerRound=[3488.6, 3505.7]
+2026-11-18T14:46:56.388+09:00  WARN 20900 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@23f12ec5 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-11-18T14:47:01.611+09:00  WARN 20900 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@ddb3156 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-11-18T14:47:05.275+09:00  WARN 20900 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@4b0d5fba (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-11-18T14:47:05.360+09:00  WARN 20900 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@c8430a4 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-11-18T14:47:06.331+09:00  WARN 20900 --- [l-2:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-2 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@1a813e14 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-11-18T14:47:07.198+09:00  WARN 20900 --- [l-2:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-2 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@5bbc342f (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-11-18T14:47:07.551+09:00  WARN 20900 --- [l-2:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-2 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@79cfdc16 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+TTL_OVERRUN_RETRY ttlMs=10000 rounds=2 waiters=10 completed=20 lockoutMillisPerRound=[10030.8, 10029.5] longestWaitPerRound=[10499.4, 10450.6]
+2026-11-18T14:47:12.606+09:00  WARN 20900 --- [l-2:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-2 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@6a2d2ca5 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-11-18T14:47:38.893+09:00  WARN 20900 --- [l-3:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@5f7cc675 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-11-18T14:47:41.700+09:00  WARN 20900 --- [l-3:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@1e41cc4e (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-11-18T14:47:44.595+09:00  WARN 20900 --- [l-3:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@16e3d706 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-11-18T14:47:55.098+09:00  WARN 20900 --- [l-3:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@2f15f4c1 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-11-18T14:47:56.658+09:00  WARN 20900 --- [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Pool is empty, failed to create/setup connection (feea5394-56c5-4da9-b197-c8ce2b9794b5)
+
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:165) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:55) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:840) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:416) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:237) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:370) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:207) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731) ~[HikariCP-6.3.3.jar:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:483) ~[na:na]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:52) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:95) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:140) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:156) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:79) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:142) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:964) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:828) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	... 13 common frames omitted
+Caused by: java.net.ConnectException: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:543) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:659) ~[na:na]
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:144) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:53) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	... 16 common frames omitted
+
+2026-11-18T14:48:06.439+09:00  WARN 20900 --- [l-4:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-4 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@1bccb0de (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-11-18T14:48:06.637+09:00  WARN 20900 --- [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-2 - Pool is empty, failed to create/setup connection (deef6e68-4b5f-44fb-8724-a2f9899592cc)
+
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:165) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:55) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:840) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:416) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:237) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:370) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:207) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731) ~[HikariCP-6.3.3.jar:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:483) ~[na:na]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:52) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:95) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:140) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:156) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:79) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:142) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:964) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:828) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	... 13 common frames omitted
+Caused by: java.net.ConnectException: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:543) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:659) ~[na:na]
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:144) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:53) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	... 16 common frames omitted
+
+TTL_OVERRUN_RETRY ttlMs=30000 rounds=2 waiters=10 completed=20 lockoutMillisPerRound=[30010.6, 29994.3] longestWaitPerRound=[30476.6, 30464.1]
+2026-11-18T14:48:18.344+09:00  WARN 20900 --- [l-4:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-4 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@5af1bae5 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-11-18T14:48:18.529+09:00  WARN 20900 --- [l-4:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-4 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@6be166b4 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-11-18T14:48:19.463+09:00  WARN 20900 --- [l-4:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-4 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@6d2ffc78 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+TTL_OVERRUN_KILL leaseMs=3000 repetitions=3 remainingAtKillMs=[2978, 2981, 2980] lockoutMillis=[2987.6, 2987.2, 2988.1]
+TTL_OVERRUN_FAILFAST ttlMs=1000 rounds=2 pollIntervalMs=100 rejectionsPerRound=[10, 10] lockoutMillisPerRound=[1027.0, 1024.5]
+TTL_OVERRUN_FAILFAST ttlMs=3000 rounds=2 pollIntervalMs=100 rejectionsPerRound=[30, 30] lockoutMillisPerRound=[3064.7, 3067.4]
+2026-11-18T14:48:39.203+09:00  WARN 20900 --- [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Pool is empty, failed to create/setup connection (ed7a5beb-4855-414a-bcf7-0d6c8ce924b3)
+
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:165) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:55) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:840) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:416) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:237) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:370) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:207) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731) ~[HikariCP-6.3.3.jar:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:483) ~[na:na]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:52) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:95) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:140) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:156) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:79) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:142) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:964) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:828) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	... 13 common frames omitted
+Caused by: java.net.ConnectException: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:543) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:659) ~[na:na]
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:144) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:53) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	... 16 common frames omitted
+
+TTL_OVERRUN_FAILFAST ttlMs=10000 rounds=2 pollIntervalMs=100 rejectionsPerRound=[99, 99] lockoutMillisPerRound=[10096.1, 10085.7]
+2026-11-18T14:49:01.795+09:00  WARN 20900 --- [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Pool is empty, failed to create/setup connection (09ba1855-d892-4ba7-bbe2-1118ff8e4d6a)
+
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:165) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:55) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:840) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:416) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:237) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:370) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:207) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731) ~[HikariCP-6.3.3.jar:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:483) ~[na:na]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:52) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:95) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:140) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:156) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:79) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:142) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:964) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:828) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	... 13 common frames omitted
+Caused by: java.net.ConnectException: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:543) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:659) ~[na:na]
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:144) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:53) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	... 16 common frames omitted
+
+2026-11-18T14:49:06.815+09:00  WARN 20900 --- [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-4 - Pool is empty, failed to create/setup connection (330fe867-1168-4ba2-aeed-9df06078e1f1)
+
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:165) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:55) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:840) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:416) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:237) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:370) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:207) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731) ~[HikariCP-6.3.3.jar:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:483) ~[na:na]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:52) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:95) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:140) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:156) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:79) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:142) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:964) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:828) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	... 13 common frames omitted
+Caused by: java.net.ConnectException: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:543) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:659) ~[na:na]
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:144) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:53) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	... 16 common frames omitted
+
+2026-11-18T14:49:11.712+09:00  WARN 20900 --- [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-2 - Pool is empty, failed to create/setup connection (d7a243b2-e473-4ae9-a4fa-99bcd46bc14d)
+
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:165) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:55) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:840) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:416) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:237) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:370) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:207) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731) ~[HikariCP-6.3.3.jar:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:483) ~[na:na]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:52) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:95) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:140) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:156) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:79) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:142) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:964) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:828) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	... 13 common frames omitted
+Caused by: java.net.ConnectException: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:543) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:659) ~[na:na]
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:144) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:53) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	... 16 common frames omitted
+
+2026-11-18T14:49:44.263+09:00  WARN 20900 --- [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Pool is empty, failed to create/setup connection (4ebf8d3c-c3af-434e-9e25-29bb70c569c5)
+
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:165) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:55) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:840) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:416) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:237) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:370) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:207) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731) ~[HikariCP-6.3.3.jar:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:483) ~[na:na]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:52) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:95) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:140) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:156) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:79) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:142) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:964) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:828) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	... 13 common frames omitted
+Caused by: java.net.ConnectException: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:543) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:659) ~[na:na]
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:144) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:53) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	... 16 common frames omitted
+
+TTL_OVERRUN_FAILFAST ttlMs=30000 rounds=2 pollIntervalMs=100 rejectionsPerRound=[295, 295] lockoutMillisPerRound=[30069.7, 30057.8]
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 206.0 s -- in com.thinking.tennis.kata.TtlOverrunTest
+[INFO] Running com.thinking.tennis.kata.TtlUnderrunTest
+2026-11-18T14:49:59.860+09:00  WARN 20900 --- [l-5:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-5 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@302ad7aa (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+TTL_UNDERRUN_PLAIN ttlMs=5 delayMs=0 release=TOKEN_CHECKED rounds=20 calls=40 maxInSection=2 concurrentRounds=7 duplicateRounds=1 distinctIdRounds=1 ownershipLost=17 notAcquired=0 releasedOwn=20 releasedForeign=0 notReleased=20 keyAbsent=0
+TTL_UNDERRUN_PLAIN ttlMs=10 delayMs=0 release=TOKEN_CHECKED rounds=20 calls=40 maxInSection=1 concurrentRounds=0 duplicateRounds=0 distinctIdRounds=0 ownershipLost=0 notAcquired=0 releasedOwn=40 releasedForeign=0 notReleased=0 keyAbsent=0
+TTL_UNDERRUN_PLAIN ttlMs=20 delayMs=0 release=TOKEN_CHECKED rounds=20 calls=40 maxInSection=1 concurrentRounds=0 duplicateRounds=0 distinctIdRounds=0 ownershipLost=0 notAcquired=0 releasedOwn=40 releasedForeign=0 notReleased=0 keyAbsent=0
+TTL_UNDERRUN_PLAIN ttlMs=50 delayMs=0 release=TOKEN_CHECKED rounds=20 calls=40 maxInSection=1 concurrentRounds=0 duplicateRounds=0 distinctIdRounds=0 ownershipLost=0 notAcquired=0 releasedOwn=40 releasedForeign=0 notReleased=0 keyAbsent=0
+TTL_UNDERRUN_PLAIN ttlMs=200 delayMs=0 release=TOKEN_CHECKED rounds=20 calls=40 maxInSection=1 concurrentRounds=0 duplicateRounds=0 distinctIdRounds=0 ownershipLost=0 notAcquired=0 releasedOwn=40 releasedForeign=0 notReleased=0 keyAbsent=0
+2026-11-18T14:50:06.729+09:00  WARN 20900 --- [l-5:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-5 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@7117dd91 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-11-18T14:50:06.908+09:00  WARN 20900 --- [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Pool is empty, failed to create/setup connection (1179e8d8-eae3-42a0-96a3-1d16bab83299)
+
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:165) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:55) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:840) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:416) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:237) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:370) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:207) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731) ~[HikariCP-6.3.3.jar:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:483) ~[na:na]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:52) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:95) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:140) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:156) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:79) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:142) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:964) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:828) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	... 13 common frames omitted
+Caused by: java.net.ConnectException: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:543) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:659) ~[na:na]
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:144) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:53) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	... 16 common frames omitted
+
+2026-11-18T14:50:11.157+09:00  WARN 20900 --- [l-5:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-5 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@40ac4c54 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-11-18T14:50:11.929+09:00  WARN 20900 --- [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-4 - Pool is empty, failed to create/setup connection (5b32814b-027a-4c19-91b5-58c8f8382bcf)
+
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:165) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:55) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:840) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:416) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:237) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:370) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:207) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731) ~[HikariCP-6.3.3.jar:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:483) ~[na:na]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:52) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:95) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:140) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:156) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:79) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:142) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:964) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:828) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	... 13 common frames omitted
+Caused by: java.net.ConnectException: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:543) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:659) ~[na:na]
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:144) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:53) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	... 16 common frames omitted
+
+TTL_UNDERRUN_DELAYED ttlMs=100 delayMs=300 release=TOKEN_CHECKED rounds=20 calls=40 maxInSection=2 concurrentRounds=20 duplicateRounds=0 distinctIdRounds=0 ownershipLost=40 notAcquired=0 releasedOwn=0 releasedForeign=0 notReleased=40 keyAbsent=0
+2026-11-18T14:50:16.858+09:00  WARN 20900 --- [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-2 - Pool is empty, failed to create/setup connection (191ccd09-d213-4881-b521-af8856d3e582)
+
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:165) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:55) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:840) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:416) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:237) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:370) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:207) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731) ~[HikariCP-6.3.3.jar:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:483) ~[na:na]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:52) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:95) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:140) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:156) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:79) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:142) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:964) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:828) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	... 13 common frames omitted
+Caused by: java.net.ConnectException: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:543) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:659) ~[na:na]
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:144) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:53) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	... 16 common frames omitted
+
+TTL_UNDERRUN_DELAYED ttlMs=200 delayMs=300 release=TOKEN_CHECKED rounds=20 calls=40 maxInSection=2 concurrentRounds=20 duplicateRounds=0 distinctIdRounds=0 ownershipLost=40 notAcquired=0 releasedOwn=0 releasedForeign=0 notReleased=40 keyAbsent=0
+2026-11-18T14:50:35.963+09:00  WARN 20900 --- [l-5:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-5 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@5e8c87cb (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+TTL_UNDERRUN_DELAYED ttlMs=300 delayMs=300 release=TOKEN_CHECKED rounds=20 calls=40 maxInSection=2 concurrentRounds=18 duplicateRounds=0 distinctIdRounds=0 ownershipLost=40 notAcquired=0 releasedOwn=0 releasedForeign=0 notReleased=40 keyAbsent=0
+2026-11-18T14:50:49.444+09:00  WARN 20900 --- [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Pool is empty, failed to create/setup connection (e18b519e-886c-4e5b-9738-bf09a50949f9)
+
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:165) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:55) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:840) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:416) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:237) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:370) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:207) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731) ~[HikariCP-6.3.3.jar:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:483) ~[na:na]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:52) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:95) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:140) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:156) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:79) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:142) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:964) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:828) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	... 13 common frames omitted
+Caused by: java.net.ConnectException: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:543) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:659) ~[na:na]
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:144) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:53) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	... 16 common frames omitted
+
+TTL_UNDERRUN_DELAYED ttlMs=500 delayMs=300 release=TOKEN_CHECKED rounds=20 calls=40 maxInSection=1 concurrentRounds=0 duplicateRounds=0 distinctIdRounds=0 ownershipLost=0 notAcquired=0 releasedOwn=40 releasedForeign=0 notReleased=0 keyAbsent=0
+2026-11-18T14:51:00.182+09:00  WARN 20900 --- [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-5 - Pool is empty, failed to create/setup connection (63ffd1c1-01df-4275-ab09-ce9af13e69ce)
+
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:165) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:55) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:840) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:416) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:237) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:370) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:207) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731) ~[HikariCP-6.3.3.jar:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:483) ~[na:na]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:52) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:95) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:140) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:156) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:79) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:142) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:964) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:828) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	... 13 common frames omitted
+Caused by: java.net.ConnectException: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:543) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:659) ~[na:na]
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:144) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:53) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	... 16 common frames omitted
+
+TTL_UNDERRUN_DELAYED ttlMs=1000 delayMs=300 release=TOKEN_CHECKED rounds=20 calls=40 maxInSection=1 concurrentRounds=0 duplicateRounds=0 distinctIdRounds=0 ownershipLost=0 notAcquired=0 releasedOwn=40 releasedForeign=0 notReleased=0 keyAbsent=0
+2026-11-18T14:51:12.099+09:00  WARN 20900 --- [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Pool is empty, failed to create/setup connection (c85f68c3-fb71-40fa-9441-834425c725ba)
+
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:165) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:55) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:840) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:416) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:237) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:370) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:207) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731) ~[HikariCP-6.3.3.jar:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:483) ~[na:na]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:52) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:95) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:140) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:156) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:79) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:142) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:964) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:828) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	... 13 common frames omitted
+Caused by: java.net.ConnectException: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:543) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:659) ~[na:na]
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:144) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:53) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	... 16 common frames omitted
+
+TTL_UNDERRUN_DELAYED ttlMs=3000 delayMs=300 release=TOKEN_CHECKED rounds=20 calls=40 maxInSection=1 concurrentRounds=0 duplicateRounds=0 distinctIdRounds=0 ownershipLost=0 notAcquired=0 releasedOwn=40 releasedForeign=0 notReleased=0 keyAbsent=0
+2026-11-18T14:51:17.161+09:00  WARN 20900 --- [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-4 - Pool is empty, failed to create/setup connection (04a3607a-e6cc-45b4-a2a7-736c8d1ec077)
+
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:165) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:55) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:840) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:416) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:237) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:370) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:207) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731) ~[HikariCP-6.3.3.jar:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:483) ~[na:na]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:52) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:95) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:140) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:156) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:79) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:142) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:964) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:828) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	... 13 common frames omitted
+Caused by: java.net.ConnectException: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:543) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:659) ~[na:na]
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:144) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:53) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	... 16 common frames omitted
+
+2026-11-18T14:51:21.992+09:00  WARN 20900 --- [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-2 - Pool is empty, failed to create/setup connection (f82002d0-4a8f-4bb0-8f77-0f0e282afe49)
+
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:165) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:55) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:840) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:416) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:237) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:370) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:207) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731) ~[HikariCP-6.3.3.jar:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:483) ~[na:na]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:52) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:95) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:140) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:156) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:79) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:142) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:964) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:828) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	... 13 common frames omitted
+Caused by: java.net.ConnectException: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:543) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:659) ~[na:na]
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:144) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:53) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	... 16 common frames omitted
+
+TTL_RELEASE_MODE ttlMs=100 delayMs=300 release=TOKEN_CHECKED rounds=20 calls=40 maxInSection=2 concurrentRounds=20 duplicateRounds=0 distinctIdRounds=0 ownershipLost=40 notAcquired=0 releasedOwn=0 releasedForeign=0 notReleased=40 keyAbsent=0
+TTL_RELEASE_MODE ttlMs=100 delayMs=300 release=UNCONDITIONAL rounds=20 calls=40 maxInSection=2 concurrentRounds=20 duplicateRounds=0 distinctIdRounds=0 ownershipLost=40 notAcquired=0 releasedOwn=0 releasedForeign=0 notReleased=0 keyAbsent=40
+TTL_RELEASE_MODE ttlMs=200 delayMs=300 release=TOKEN_CHECKED rounds=20 calls=40 maxInSection=2 concurrentRounds=20 duplicateRounds=0 distinctIdRounds=0 ownershipLost=40 notAcquired=0 releasedOwn=0 releasedForeign=0 notReleased=40 keyAbsent=0
+TTL_RELEASE_MODE ttlMs=200 delayMs=300 release=UNCONDITIONAL rounds=20 calls=40 maxInSection=2 concurrentRounds=20 duplicateRounds=0 distinctIdRounds=0 ownershipLost=40 notAcquired=0 releasedOwn=0 releasedForeign=20 notReleased=0 keyAbsent=20
+2026-11-18T14:51:54.637+09:00  WARN 20900 --- [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Pool is empty, failed to create/setup connection (e8ff94dc-766e-4c82-8616-c090baef59fd)
+
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:165) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:55) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:840) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:416) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:237) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:370) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:207) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731) ~[HikariCP-6.3.3.jar:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:483) ~[na:na]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:52) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:95) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:140) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:156) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:79) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:142) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:964) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:828) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	... 13 common frames omitted
+Caused by: java.net.ConnectException: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:543) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:659) ~[na:na]
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:144) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:53) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	... 16 common frames omitted
+
+[INFO] Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 123.6 s -- in com.thinking.tennis.kata.TtlUnderrunTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 45, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  07:16 min
+[INFO] Finished at: 2026-11-18T14:52:19+09:00
+[INFO] ------------------------------------------------------------------------

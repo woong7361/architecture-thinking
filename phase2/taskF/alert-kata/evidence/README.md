@@ -1,5 +1,11 @@
 # 실행 증거
 
+## Station 2-3 G-1: TTL 과소·과대 관찰
+
+알림 신청 락에 기한을 걸고 그 값을 바꿔 가며 측정한 결과는 [TTL 관찰 기록](ttl-observation.md)에 있다. 조건마다 3회씩 실행했고 원본 로그는 작업 시간이 `ttl-work-duration-run*.log`, 과소가 `ttl-underrun-run*.log`, 과대와 강제 종료가 `ttl-overrun-run*.log`, 첫 호출이 `ttl-first-call-run*.log`다. `ttl-underrun-first.log`와 `ttl-overrun-first.log`는 조건을 확정하기 전의 탐색 실행이므로 결과 표에 합산하지 않는다.
+
+측정 후 전체 테스트는 [full-test-after-ttl.log](full-test-after-ttl.log)에서 45개가 모두 통과했고 종료 코드는 0이다.
+
 ## 최신 결과: 사전 검토 후 다섯 조건 재시험
 
 현재 코드의 실행 결과는 [review-rerun.log](review-rerun.log), [JUnit 결과](review-rerun-junit.txt), [집계 JSON](review-rerun-summary.json)에 있다. 조건별 중복은 순차 신규 0/100, 공통 시작 신규 100/100, 시작 신호 없는 신규 100/100, 기존 신청 재사용 0/100, 다른 사용자 0/100이다. 요청 오류는 모든 조건에서 0회이며 JUnit은 10개 중 2개 실패했다.

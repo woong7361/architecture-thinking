@@ -18,7 +18,7 @@ mvn test
 mvn -Pkata-red test
 ```
 
-`mvn test`는 기본 동작 5개와 F-3의 비관적·낙관적 락 3개, 단일 JVM Spin·Condition 비교 2개, Redis Pub/Sub 비교 1개를 실행한다. 모든 테스트를 실행하려면 Docker가 실행 중이어야 한다.
+`mvn test`는 45개를 실행하며 7분 16초가 걸렸다. 기본 동작 5개, F-3의 비관적·낙관적 락 3개, 단일 JVM Spin·Condition 비교 2개, Redis Pub/Sub 비교 1개, 세 방식 자원 비교 1개, G-1의 TTL 실험 33개다. 시간은 대부분 TTL 과대 실험이 기한을 기다리는 데 쓰인다. 모든 테스트를 실행하려면 Docker가 실행 중이어야 한다.
 
 세 방식의 자원 사용량을 같은 조건으로 비교하려면 다음 테스트를 실행한다. 작업자 100개, 방식마다 50회씩 3묶음, 회차마다 100개 요청을 사용하며 Redis 연결은 미리 만들어 재사용한다.
 
@@ -33,6 +33,19 @@ python evidence/summarize-fair-queue.py
 
 2026-10-06 재시험에서는 순차 신규·기존 신청 재사용·다른 사용자 조건의 중복이 각각 0/100회였고, 같은 조건의 신규 신청 두 요청은 시작 신호 유무 모두 100/100회 중복됐다. 요청 오류는 없었으며 JUnit 결과는 10개 중 2개 실패다. [사전 검토와 재시험 결과](evidence/review-results.md), [실행 증거](evidence/README.md)에 상세 조건과 로그를 정리했다.
 
+## Station 2-3 G-1의 TTL 실험
+
+알림 신청 락에 기한을 걸고 그 기한을 너무 짧게 또는 너무 길게 잡았을 때 무엇이 깨지는지 측정한다. 네 테스트는 서로 다른 조건을 재므로 따로 실행한다. 첫 호출 테스트는 준비가 끝나지 않은 JVM의 첫 호출만 관찰하기 때문에 다른 테스트와 같은 JVM에서 실행하면 의미가 없다.
+
+```powershell
+mvn -B -ntp '-Dtest=AlertWorkDurationTest' test
+mvn -B -ntp '-Dtest=TtlUnderrunTest' test
+mvn -B -ntp '-Dtest=TtlOverrunTest' test
+mvn -B -ntp '-Dtest=TtlFirstCallTest' test
+```
+
+과대 실험은 기한이 다할 때까지 기다리므로 한 번에 3분 반쯤 걸린다. 결과 표와 해석은 [TTL 관찰 기록](evidence/ttl-observation.md)에, 측정 설계와 그 설계의 타당성 검토는 [실험 설계](../../taskG/task1/plan.md)에 있다.
+
 ## 코드 읽는 순서
 
 1. [AlertService](src/main/java/com/thinking/tennis/kata/AlertService.java)는 기존 신청을 조회하고, 있으면 같은 ID를 반환하며 없으면 생성한다.
@@ -41,6 +54,8 @@ python evidence/summarize-fair-queue.py
 4. [AlertSubscriptionTest](src/test/java/com/thinking/tennis/kata/AlertSubscriptionTest.java)와 [LockComparisonTest](src/test/java/com/thinking/tennis/kata/LockComparisonTest.java)는 업무 규칙과 최종 DB 건수를 검사한다.
 5. [QueueWaitComparisonTest](src/test/java/com/thinking/tennis/kata/QueueWaitComparisonTest.java)와 [RedisPubSubQueueWaitComparisonTest](src/test/java/com/thinking/tennis/kata/RedisPubSubQueueWaitComparisonTest.java)는 99명의 대기 방식을 비교한다.
 6. [FairQueueResourceComparisonTest](src/test/java/com/thinking/tennis/kata/FairQueueResourceComparisonTest.java)는 세 방식을 같은 요청 수와 재사용된 실행 자원으로 비교한다.
+7. [RedisSpinLock](src/main/java/com/thinking/tennis/kata/RedisSpinLock.java)은 기한이 붙은 Redis 락이고, [DistributedAlertService](src/main/java/com/thinking/tennis/kata/DistributedAlertService.java)는 그 락으로 조회와 저장을 감싼다.
+8. [RedisSpinLockTest](src/test/java/com/thinking/tennis/kata/RedisSpinLockTest.java)는 락의 기본 동작을, [TtlUnderrunTest](src/test/java/com/thinking/tennis/kata/TtlUnderrunTest.java)와 [TtlOverrunTest](src/test/java/com/thinking/tennis/kata/TtlOverrunTest.java)는 기한을 잘못 잡았을 때의 결과를 관찰한다.
 
 동시 시작 조건은 서비스 호출 직전에만 `CountDownLatch`로 출발 신호를 맞춘다. 시작 신호 없는 조건은 두 작업을 실행기에 연달아 제출하고, 순차 조건은 첫 호출의 반환을 기다린 뒤 다음 작업을 제출한다. 실제 Spring 서비스와 저장소를 그대로 사용하며 서비스 내부에는 대기나 관찰용 SQL을 넣지 않는다. 연결 풀은 최대 4개이며 호출 직전·직후 시간은 SQL 실행 구간과 구분해 기록한다.
 

@@ -1,0 +1,94 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------------< com.thinking:alert-kata >-----------------------
+[INFO] Building alert-kata 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ alert-kata ---
+[INFO] skip non existing resourceDirectory C:\Users\PC-220627-03\Desktop\project\task\architecture-thinking\phase2\taskF\alert-kata\src\main\resources
+[INFO] skip non existing resourceDirectory C:\Users\PC-220627-03\Desktop\project\task\architecture-thinking\phase2\taskF\alert-kata\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ alert-kata ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ alert-kata ---
+[INFO] Copying 2 resources from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ alert-kata ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ alert-kata ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.thinking.tennis.kata.TtlUnderrunTest
+14:14:20.614 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.thinking.tennis.kata.TtlUnderrunTest]: TtlUnderrunTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+14:14:20.705 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.thinking.tennis.kata.KataApplication for test class com.thinking.tennis.kata.TtlUnderrunTest
+14:14:20.786 [main] INFO org.testcontainers.images.PullPolicy -- Image pull policy will be performed by: DefaultPullPolicy()
+14:14:20.788 [main] INFO org.testcontainers.utility.ImageNameSubstitutor -- Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+14:14:20.821 [main] INFO org.testcontainers.DockerClientFactory -- Testcontainers version: 2.0.5
+14:14:21.007 [main] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+14:14:21.271 [main] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+14:14:21.272 [main] INFO org.testcontainers.DockerClientFactory -- Docker host IP address is localhost
+14:14:21.288 [main] INFO org.testcontainers.DockerClientFactory -- Connected to docker: 
+  Server Version: 29.6.2
+  API Version: 1.55
+  Operating System: Docker Desktop
+  Total Memory: 32001 MB
+  Labels: 
+    com.docker.desktop.address=npipe://\\.\pipe\docker_cli
+14:14:21.399 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Creating container for image: testcontainers/ryuk:0.14.0
+14:14:21.458 [main] INFO org.testcontainers.utility.RegistryAuthLocator -- Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+14:14:21.557 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Container testcontainers/ryuk:0.14.0 is starting: 0330225030de51a43f4020d59ab31e69642056f8d1b66978c89e7e8b7255b7d2
+14:14:21.858 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Container testcontainers/ryuk:0.14.0 started in PT0.4587181S
+14:14:21.862 [main] INFO org.testcontainers.utility.RyukResourceReaper -- Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+14:14:21.863 [main] INFO org.testcontainers.DockerClientFactory -- Checking the system...
+14:14:21.863 [main] INFO org.testcontainers.DockerClientFactory -- ?? Docker server version should be at least 1.6.0
+14:14:21.863 [main] INFO tc.mysql:8.4.8 -- Creating container for image: mysql:8.4.8
+14:14:21.910 [main] INFO tc.mysql:8.4.8 -- Container mysql:8.4.8 is starting: 0cf8515db372f1de021790db5953b3f1cd5fe2c8605932c7adfaa55e556a0e5b
+14:14:22.113 [main] INFO tc.mysql:8.4.8 -- Waiting for database connection to become available at jdbc:mysql://localhost:52952/alert_lock_kata using query 'SELECT 1'
+14:14:29.199 [main] INFO tc.mysql:8.4.8 -- Container mysql:8.4.8 started in PT7.3361081S
+14:14:29.199 [main] INFO tc.mysql:8.4.8 -- Container is started (JDBC URL: jdbc:mysql://localhost:52952/alert_lock_kata)
+14:14:29.199 [main] INFO tc.redis:7.4-alpine -- Creating container for image: redis:7.4-alpine
+14:14:29.253 [main] INFO tc.redis:7.4-alpine -- Container redis:7.4-alpine is starting: 86222fd8d45a30e47b4a68245245c72c9c9549da39a1f1ff416240f3c9bc31dc
+14:14:29.538 [main] INFO tc.redis:7.4-alpine -- Container redis:7.4-alpine started in PT0.3386409S
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::allocateMemory has been called by io.netty.util.internal.PlatformDependent0$2 (file:/C:/Users/PC-220627-03/.m2/repository/io/netty/netty-common/4.1.135.Final/netty-common-4.1.135.Final.jar)
+WARNING: Please consider reporting this to the maintainers of class io.netty.util.internal.PlatformDependent0$2
+WARNING: sun.misc.Unsafe::allocateMemory will be removed in a future release
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (C:\Users\PC-220627-03\.m2\repository\net\bytebuddy\byte-buddy-agent\1.17.8\byte-buddy-agent-1.17.8.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+TTL_UNDERRUN_PLAIN ttlMs=5 delayMs=0 release=TOKEN_CHECKED rounds=20 calls=40 maxInSection=2 concurrentRounds=20 duplicateRounds=2 distinctIdRounds=2 ownershipLost=28 notAcquired=0 releasedOwn=7 releasedForeign=0 notReleased=33 keyAbsent=0
+TTL_UNDERRUN_PLAIN ttlMs=10 delayMs=0 release=TOKEN_CHECKED rounds=20 calls=40 maxInSection=1 concurrentRounds=0 duplicateRounds=0 distinctIdRounds=0 ownershipLost=1 notAcquired=0 releasedOwn=39 releasedForeign=0 notReleased=1 keyAbsent=0
+TTL_UNDERRUN_PLAIN ttlMs=20 delayMs=0 release=TOKEN_CHECKED rounds=20 calls=40 maxInSection=1 concurrentRounds=0 duplicateRounds=0 distinctIdRounds=0 ownershipLost=0 notAcquired=0 releasedOwn=40 releasedForeign=0 notReleased=0 keyAbsent=0
+TTL_UNDERRUN_PLAIN ttlMs=50 delayMs=0 release=TOKEN_CHECKED rounds=20 calls=40 maxInSection=1 concurrentRounds=0 duplicateRounds=0 distinctIdRounds=0 ownershipLost=0 notAcquired=0 releasedOwn=40 releasedForeign=0 notReleased=0 keyAbsent=0
+TTL_UNDERRUN_PLAIN ttlMs=200 delayMs=0 release=TOKEN_CHECKED rounds=20 calls=40 maxInSection=1 concurrentRounds=0 duplicateRounds=0 distinctIdRounds=0 ownershipLost=0 notAcquired=0 releasedOwn=40 releasedForeign=0 notReleased=0 keyAbsent=0
+TTL_UNDERRUN_DELAYED ttlMs=100 delayMs=300 release=TOKEN_CHECKED rounds=20 calls=40 maxInSection=2 concurrentRounds=20 duplicateRounds=0 distinctIdRounds=0 ownershipLost=40 notAcquired=0 releasedOwn=0 releasedForeign=0 notReleased=40 keyAbsent=0
+TTL_UNDERRUN_DELAYED ttlMs=200 delayMs=300 release=TOKEN_CHECKED rounds=20 calls=40 maxInSection=2 concurrentRounds=20 duplicateRounds=0 distinctIdRounds=0 ownershipLost=40 notAcquired=0 releasedOwn=0 releasedForeign=0 notReleased=40 keyAbsent=0
+TTL_UNDERRUN_DELAYED ttlMs=300 delayMs=300 release=TOKEN_CHECKED rounds=20 calls=40 maxInSection=2 concurrentRounds=14 duplicateRounds=0 distinctIdRounds=0 ownershipLost=40 notAcquired=0 releasedOwn=0 releasedForeign=0 notReleased=40 keyAbsent=0
+TTL_UNDERRUN_DELAYED ttlMs=500 delayMs=300 release=TOKEN_CHECKED rounds=20 calls=40 maxInSection=1 concurrentRounds=0 duplicateRounds=0 distinctIdRounds=0 ownershipLost=0 notAcquired=0 releasedOwn=40 releasedForeign=0 notReleased=0 keyAbsent=0
+TTL_UNDERRUN_DELAYED ttlMs=1000 delayMs=300 release=TOKEN_CHECKED rounds=20 calls=40 maxInSection=1 concurrentRounds=0 duplicateRounds=0 distinctIdRounds=0 ownershipLost=0 notAcquired=0 releasedOwn=40 releasedForeign=0 notReleased=0 keyAbsent=0
+TTL_UNDERRUN_DELAYED ttlMs=3000 delayMs=300 release=TOKEN_CHECKED rounds=20 calls=40 maxInSection=1 concurrentRounds=0 duplicateRounds=0 distinctIdRounds=0 ownershipLost=0 notAcquired=0 releasedOwn=40 releasedForeign=0 notReleased=0 keyAbsent=0
+TTL_RELEASE_MODE ttlMs=100 delayMs=300 release=TOKEN_CHECKED rounds=20 calls=40 maxInSection=2 concurrentRounds=20 duplicateRounds=0 distinctIdRounds=0 ownershipLost=40 notAcquired=0 releasedOwn=0 releasedForeign=0 notReleased=40 keyAbsent=0
+TTL_RELEASE_MODE ttlMs=100 delayMs=300 release=UNCONDITIONAL rounds=20 calls=40 maxInSection=2 concurrentRounds=20 duplicateRounds=0 distinctIdRounds=0 ownershipLost=40 notAcquired=0 releasedOwn=0 releasedForeign=0 notReleased=0 keyAbsent=40
+TTL_RELEASE_MODE ttlMs=200 delayMs=300 release=TOKEN_CHECKED rounds=20 calls=40 maxInSection=2 concurrentRounds=20 duplicateRounds=0 distinctIdRounds=0 ownershipLost=40 notAcquired=0 releasedOwn=0 releasedForeign=0 notReleased=40 keyAbsent=0
+TTL_RELEASE_MODE ttlMs=200 delayMs=300 release=UNCONDITIONAL rounds=20 calls=40 maxInSection=2 concurrentRounds=20 duplicateRounds=0 distinctIdRounds=0 ownershipLost=40 notAcquired=0 releasedOwn=0 releasedForeign=20 notReleased=0 keyAbsent=20
+[INFO] Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 127.5 s -- in com.thinking.tennis.kata.TtlUnderrunTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 15, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  02:09 min
+[INFO] Finished at: 2026-11-18T14:16:28+09:00
+[INFO] ------------------------------------------------------------------------
