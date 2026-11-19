@@ -1,6 +1,8 @@
 package com.thinking.tennis.kata;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import io.lettuce.core.RedisClient;
@@ -21,6 +23,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -151,6 +154,36 @@ class TtlUnderrunTest {
             assertEquals(0, observation.releasedForeign(), "토큰을 확인하는 해제는 남의 락을 지우지 않는다");
         }
         assertEquals(ROUNDS * WORKERS, observation.calls(), "모든 호출의 결과를 수집해야 한다");
+    }
+
+    @Test
+    void refusesToStartWhenTheRemainingLeaseIsShorterThanTheWorkNeeds() throws Exception {
+        Duration needed = Duration.ofMillis(500);
+        SubscribeOutcome tooShort = guardedService(Duration.ofMillis(100), needed).subscribe(SAME_REQUEST);
+        int rowsAfterRefusal = activeRows();
+        SubscribeOutcome longEnough = guardedService(Duration.ofSeconds(3), needed).subscribe(SAME_REQUEST);
+
+        System.out.printf("TTL_LEASE_GUARD neededMs=%d shortLeaseStatus=%s shortLeaseRelease=%s "
+                        + "rowsAfterRefusal=%d longLeaseStatus=%s rowsAfterCompletion=%d%n",
+                needed.toMillis(), tooShort.status(), tooShort.releaseResult(), rowsAfterRefusal,
+                longEnough.status(), activeRows());
+
+        assertAll(
+                () -> assertEquals(SubscribeOutcome.Status.LEASE_TOO_SHORT, tooShort.status(),
+                        "남은 기한이 필요한 작업 시간보다 짧으면 작업을 시작하지 않는다"),
+                () -> assertNull(tooShort.subscriptionId()),
+                () -> assertEquals(ReleaseResult.RELEASED_OWN, tooShort.releaseResult(),
+                        "작업을 시작하지 않은 요청은 자기 락을 해제한다"),
+                () -> assertEquals(0, rowsAfterRefusal, "거절된 요청은 아무것도 저장하지 않는다"),
+                () -> assertEquals(SubscribeOutcome.Status.COMPLETED, longEnough.status()),
+                () -> assertEquals(1, activeRows()));
+    }
+
+    private DistributedAlertService guardedService(Duration lease, Duration leaseGuard) {
+        RedisSpinLock lock = new RedisSpinLock(
+                connections.get(0).sync(), lease, SLOW_RETRY, ReleaseMode.TOKEN_CHECKED);
+        return new DistributedAlertService(
+                alertService, lock, ACQUIRE_WAIT, leaseGuard, LockedSectionHook.NONE);
     }
 
     private Observation run(long ttlMillis, Duration delay, Duration retryInterval, ReleaseMode releaseMode)
