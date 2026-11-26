@@ -1,0 +1,386 @@
+{
+  "RESPONSIVE/NONE/2": {
+    "attempts": 60.0,
+    "conflictRate": 0.3333,
+    "retryPeakPerMean": 1.0,
+    "emptyBucketRatio": 0.0,
+    "requestP50Ms": 15.6,
+    "requestP95Ms": 23.9,
+    "requestMaxMs": 362.7,
+    "perRequestWaitMs": 0.0,
+    "exhaustedTotal": 0.0,
+    "attemptsPerRun": [
+      60.0,
+      60.0,
+      60.0
+    ]
+  },
+  "RESPONSIVE/FIXED/2": {
+    "attempts": 60.0,
+    "conflictRate": 0.3333,
+    "retryPeakPerMean": 1.0,
+    "emptyBucketRatio": 0.0,
+    "requestP50Ms": 11.9,
+    "requestP95Ms": 230.1,
+    "requestMaxMs": 233.3,
+    "perRequestWaitMs": 103.49249999999999,
+    "exhaustedTotal": 0.0,
+    "attemptsPerRun": [
+      60.0,
+      60.0,
+      60.0
+    ]
+  },
+  "RESPONSIVE/FIXED_JITTER/2": {
+    "attempts": 60.0,
+    "conflictRate": 0.3333,
+    "retryPeakPerMean": 1.0,
+    "emptyBucketRatio": 0.0,
+    "requestP50Ms": 10.6,
+    "requestP95Ms": 193.7,
+    "requestMaxMs": 212.1,
+    "perRequestWaitMs": 50.785000000000004,
+    "exhaustedTotal": 0.0,
+    "attemptsPerRun": [
+      60.0,
+      60.0,
+      60.0
+    ]
+  },
+  "RESPONSIVE/EXPONENTIAL/2": {
+    "attempts": 60.0,
+    "conflictRate": 0.3333,
+    "retryPeakPerMean": 1.0,
+    "emptyBucketRatio": 0.0,
+    "requestP50Ms": 9.0,
+    "requestP95Ms": 45.4,
+    "requestMaxMs": 49.7,
+    "perRequestWaitMs": 14.425,
+    "exhaustedTotal": 0.0,
+    "attemptsPerRun": [
+      60.0,
+      60.0,
+      60.0
+    ]
+  },
+  "RESPONSIVE/EQUAL_JITTER/2": {
+    "attempts": 60.0,
+    "conflictRate": 0.3333,
+    "retryPeakPerMean": 1.0,
+    "emptyBucketRatio": 0.0,
+    "requestP50Ms": 8.6,
+    "requestP95Ms": 35.6,
+    "requestMaxMs": 47.4,
+    "perRequestWaitMs": 8.2925,
+    "exhaustedTotal": 0.0,
+    "attemptsPerRun": [
+      60.0,
+      60.0,
+      60.0
+    ]
+  },
+  "RESPONSIVE/FULL_JITTER/2": {
+    "attempts": 60.0,
+    "conflictRate": 0.3333,
+    "retryPeakPerMean": 1.0,
+    "emptyBucketRatio": 0.0,
+    "requestP50Ms": 9.8,
+    "requestP95Ms": 33.1,
+    "requestMaxMs": 41.5,
+    "perRequestWaitMs": 5.9775,
+    "exhaustedTotal": 0.0,
+    "attemptsPerRun": [
+      60.0,
+      60.0,
+      60.0
+    ]
+  },
+  "RESPONSIVE/NONE/10": {
+    "attempts": 1100.0,
+    "conflictRate": 0.8182,
+    "retryPeakPerMean": 1.6,
+    "emptyBucketRatio": 0.0,
+    "requestP50Ms": 48.8,
+    "requestP95Ms": 82.4,
+    "requestMaxMs": 98.1,
+    "perRequestWaitMs": 0.0,
+    "exhaustedTotal": 0.0,
+    "attemptsPerRun": [
+      1100.0,
+      1100.0,
+      1100.0
+    ]
+  },
+  "RESPONSIVE/FIXED/10": {
+    "attempts": 912.0,
+    "conflictRate": 0.7807,
+    "retryPeakPerMean": 33.08,
+    "emptyBucketRatio": 0.932,
+    "requestP50Ms": 675.8,
+    "requestP95Ms": 1744.3,
+    "requestMaxMs": 1971.4,
+    "perRequestWaitMs": 735.2885000000001,
+    "exhaustedTotal": 0.0,
+    "attemptsPerRun": [
+      925.0,
+      912.0,
+      890.0
+    ]
+  },
+  "RESPONSIVE/FIXED_JITTER/10": {
+    "attempts": 418.0,
+    "conflictRate": 0.5215,
+    "retryPeakPerMean": 4.55,
+    "emptyBucketRatio": 0.6,
+    "requestP50Ms": 118.9,
+    "requestP95Ms": 275.8,
+    "requestMaxMs": 356.9,
+    "perRequestWaitMs": 107.5545,
+    "exhaustedTotal": 0.0,
+    "attemptsPerRun": [
+      423.0,
+      416.0,
+      418.0
+    ]
+  },
+  "RESPONSIVE/EXPONENTIAL/10": {
+    "attempts": 919.0,
+    "conflictRate": 0.7824,
+    "retryPeakPerMean": 25.53,
+    "emptyBucketRatio": 0.91,
+    "requestP50Ms": 216.3,
+    "requestP95Ms": 1249.1,
+    "requestMaxMs": 1484.5,
+    "perRequestWaitMs": 365.624,
+    "exhaustedTotal": 0.0,
+    "attemptsPerRun": [
+      922.0,
+      881.0,
+      919.0
+    ]
+  },
+  "RESPONSIVE/EQUAL_JITTER/10": {
+    "attempts": 599.0,
+    "conflictRate": 0.6661,
+    "retryPeakPerMean": 7.89,
+    "emptyBucketRatio": 0.667,
+    "requestP50Ms": 69.9,
+    "requestP95Ms": 262.2,
+    "requestMaxMs": 395.8,
+    "perRequestWaitMs": 65.875,
+    "exhaustedTotal": 0.0,
+    "attemptsPerRun": [
+      599.0,
+      602.0,
+      597.0
+    ]
+  },
+  "RESPONSIVE/FULL_JITTER/10": {
+    "attempts": 544.0,
+    "conflictRate": 0.6324,
+    "retryPeakPerMean": 3.47,
+    "emptyBucketRatio": 0.333,
+    "requestP50Ms": 44.8,
+    "requestP95Ms": 126.6,
+    "requestMaxMs": 212.0,
+    "perRequestWaitMs": 33.5765,
+    "exhaustedTotal": 0.0,
+    "attemptsPerRun": [
+      541.0,
+      544.0,
+      562.0
+    ]
+  },
+  "RESPONSIVE/NONE/30": {
+    "attempts": 9264.0,
+    "conflictRate": 0.9352,
+    "retryPeakPerMean": 1.59,
+    "emptyBucketRatio": 0.0,
+    "requestP50Ms": 220.9,
+    "requestP95Ms": 337.7,
+    "requestMaxMs": 381.0,
+    "perRequestWaitMs": 0.0,
+    "exhaustedTotal": 0.0,
+    "attemptsPerRun": [
+      9246.0,
+      9264.0,
+      9264.0
+    ]
+  },
+  "RESPONSIVE/FIXED/30": {
+    "attempts": 5048.0,
+    "conflictRate": 0.8811,
+    "retryPeakPerMean": 36.63,
+    "emptyBucketRatio": 0.906,
+    "requestP50Ms": 1547.0,
+    "requestP95Ms": 3340.8,
+    "requestMaxMs": 4445.7,
+    "perRequestWaitMs": 1533.078,
+    "exhaustedTotal": 0.0,
+    "attemptsPerRun": [
+      5132.0,
+      5048.0,
+      4745.0
+    ]
+  },
+  "RESPONSIVE/FIXED_JITTER/30": {
+    "attempts": 1518.0,
+    "conflictRate": 0.6047,
+    "retryPeakPerMean": 4.25,
+    "emptyBucketRatio": 0.4,
+    "requestP50Ms": 170.4,
+    "requestP95Ms": 394.6,
+    "requestMaxMs": 569.3,
+    "perRequestWaitMs": 154.2245,
+    "exhaustedTotal": 0.0,
+    "attemptsPerRun": [
+      1518.0,
+      1500.0,
+      1552.0
+    ]
+  },
+  "RESPONSIVE/EXPONENTIAL/30": {
+    "attempts": 5182.0,
+    "conflictRate": 0.8842,
+    "retryPeakPerMean": 33.09,
+    "emptyBucketRatio": 0.904,
+    "requestP50Ms": 1078.8,
+    "requestP95Ms": 3030.3,
+    "requestMaxMs": 3896.3,
+    "perRequestWaitMs": 1131.2691666666667,
+    "exhaustedTotal": 0.0,
+    "attemptsPerRun": [
+      5181.0,
+      5264.0,
+      5182.0
+    ]
+  },
+  "RESPONSIVE/EQUAL_JITTER/30": {
+    "attempts": 2424.0,
+    "conflictRate": 0.7525,
+    "retryPeakPerMean": 9.51,
+    "emptyBucketRatio": 0.511,
+    "requestP50Ms": 151.2,
+    "requestP95Ms": 464.9,
+    "requestMaxMs": 630.8,
+    "perRequestWaitMs": 155.7973333333333,
+    "exhaustedTotal": 0.0,
+    "attemptsPerRun": [
+      2436.0,
+      2410.0,
+      2424.0
+    ]
+  },
+  "RESPONSIVE/FULL_JITTER/30": {
+    "attempts": 2434.0,
+    "conflictRate": 0.7535,
+    "retryPeakPerMean": 6.0,
+    "emptyBucketRatio": 0.351,
+    "requestP50Ms": 120.2,
+    "requestP95Ms": 326.9,
+    "requestMaxMs": 519.4,
+    "perRequestWaitMs": 105.22366666666666,
+    "exhaustedTotal": 0.0,
+    "attemptsPerRun": [
+      2411.0,
+      2445.0,
+      2434.0
+    ]
+  },
+  "TOLERANT/NONE/30": {
+    "attempts": 2325.0,
+    "conflictRate": 0.9355,
+    "retryPeakPerMean": 1.52,
+    "emptyBucketRatio": 0.0,
+    "requestP50Ms": 210.8,
+    "requestP95Ms": 307.3,
+    "requestMaxMs": 325.3,
+    "perRequestWaitMs": 0.0,
+    "exhaustedTotal": 0.0,
+    "attemptsPerRun": [
+      2325.0,
+      2325.0,
+      2325.0
+    ]
+  },
+  "TOLERANT/FIXED/30": {
+    "attempts": 1275.0,
+    "conflictRate": 0.8824,
+    "retryPeakPerMean": 19.52,
+    "emptyBucketRatio": 0.889,
+    "requestP50Ms": 14158.0,
+    "requestP95Ms": 32367.3,
+    "requestMaxMs": 36433.6,
+    "perRequestWaitMs": 15057.350666666667,
+    "exhaustedTotal": 0.0,
+    "attemptsPerRun": [
+      1226.0,
+      1275.0,
+      1298.0
+    ]
+  },
+  "TOLERANT/FIXED_JITTER/30": {
+    "attempts": 314.0,
+    "conflictRate": 0.5223,
+    "retryPeakPerMean": 2.33,
+    "emptyBucketRatio": 0.133,
+    "requestP50Ms": 1110.3,
+    "requestP95Ms": 2387.7,
+    "requestMaxMs": 3818.4,
+    "perRequestWaitMs": 1109.2559999999999,
+    "exhaustedTotal": 0.0,
+    "attemptsPerRun": [
+      304.0,
+      317.0,
+      314.0
+    ]
+  },
+  "TOLERANT/EXPONENTIAL/30": {
+    "attempts": 1256.0,
+    "conflictRate": 0.8806,
+    "retryPeakPerMean": 18.78,
+    "emptyBucketRatio": 0.885,
+    "requestP50Ms": 10980.5,
+    "requestP95Ms": 31204.7,
+    "requestMaxMs": 37282.2,
+    "perRequestWaitMs": 11832.596666666666,
+    "exhaustedTotal": 0.0,
+    "attemptsPerRun": [
+      1256.0,
+      1239.0,
+      1330.0
+    ]
+  },
+  "TOLERANT/EQUAL_JITTER/30": {
+    "attempts": 365.0,
+    "conflictRate": 0.589,
+    "retryPeakPerMean": 7.07,
+    "emptyBucketRatio": 0.417,
+    "requestP50Ms": 390.6,
+    "requestP95Ms": 1665.2,
+    "requestMaxMs": 2620.2,
+    "perRequestWaitMs": 612.792,
+    "exhaustedTotal": 0.0,
+    "attemptsPerRun": [
+      359.0,
+      365.0,
+      368.0
+    ]
+  },
+  "TOLERANT/FULL_JITTER/30": {
+    "attempts": 339.0,
+    "conflictRate": 0.5575,
+    "retryPeakPerMean": 2.77,
+    "emptyBucketRatio": 0.0,
+    "requestP50Ms": 298.0,
+    "requestP95Ms": 972.1,
+    "requestMaxMs": 1474.7,
+    "perRequestWaitMs": 326.44866666666667,
+    "exhaustedTotal": 0.0,
+    "attemptsPerRun": [
+      337.0,
+      339.0,
+      347.0
+    ]
+  }
+}

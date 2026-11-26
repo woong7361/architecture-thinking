@@ -1,0 +1,79 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------------< com.thinking:alert-kata >-----------------------
+[INFO] Building alert-kata 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ alert-kata ---
+[INFO] skip non existing resourceDirectory C:\Users\PC-220627-03\Desktop\project\task\architecture-thinking\phase2\taskF\alert-kata\src\main\resources
+[INFO] skip non existing resourceDirectory C:\Users\PC-220627-03\Desktop\project\task\architecture-thinking\phase2\taskF\alert-kata\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ alert-kata ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ alert-kata ---
+[INFO] Copying 2 resources from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ alert-kata ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ alert-kata ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.thinking.tennis.kata.RetryJitterComparisonTest
+17:55:54.638 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.thinking.tennis.kata.RetryJitterComparisonTest]: RetryJitterComparisonTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+17:55:54.751 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.thinking.tennis.kata.KataApplication for test class com.thinking.tennis.kata.RetryJitterComparisonTest
+17:55:54.859 [main] INFO org.testcontainers.images.PullPolicy -- Image pull policy will be performed by: DefaultPullPolicy()
+17:55:54.862 [main] INFO org.testcontainers.utility.ImageNameSubstitutor -- Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+17:55:54.900 [main] INFO org.testcontainers.DockerClientFactory -- Testcontainers version: 2.0.5
+17:55:55.073 [main] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+17:55:55.346 [main] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+17:55:55.347 [main] INFO org.testcontainers.DockerClientFactory -- Docker host IP address is localhost
+17:55:55.361 [main] INFO org.testcontainers.DockerClientFactory -- Connected to docker: 
+  Server Version: 29.6.2
+  API Version: 1.55
+  Operating System: Docker Desktop
+  Total Memory: 32001 MB
+  Labels: 
+    com.docker.desktop.address=npipe://\\.\pipe\docker_cli
+17:55:55.480 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Creating container for image: testcontainers/ryuk:0.14.0
+17:55:55.542 [main] INFO org.testcontainers.utility.RegistryAuthLocator -- Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+17:55:55.638 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Container testcontainers/ryuk:0.14.0 is starting: 1001959c968445b02283221be94d2dbb0b8f6c100e01f23dbed867b496adc311
+17:55:55.938 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Container testcontainers/ryuk:0.14.0 started in PT0.4580275S
+17:55:55.942 [main] INFO org.testcontainers.utility.RyukResourceReaper -- Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+17:55:55.942 [main] INFO org.testcontainers.DockerClientFactory -- Checking the system...
+17:55:55.942 [main] INFO org.testcontainers.DockerClientFactory -- ?? Docker server version should be at least 1.6.0
+17:55:55.943 [main] INFO tc.mysql:8.4.8 -- Creating container for image: mysql:8.4.8
+17:55:55.991 [main] INFO tc.mysql:8.4.8 -- Container mysql:8.4.8 is starting: d0c6f5905467370b4573070948a717b4a0f0a0079206e34859de37ba09dff70b
+17:55:56.166 [main] INFO tc.mysql:8.4.8 -- Waiting for database connection to become available at jdbc:mysql://localhost:56762/alert_retry_kata using query 'SELECT 1'
+17:56:03.945 [main] INFO tc.mysql:8.4.8 -- Container mysql:8.4.8 started in PT8.0017726S
+17:56:03.945 [main] INFO tc.mysql:8.4.8 -- Container is started (JDBC URL: jdbc:mysql://localhost:56762/alert_retry_kata)
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+RETRY_SUMMARY backoff=NONE workers=2 rounds=30 attempts=90 conflicts=30 conflictRate=0.3333 exhausted=0 failedRequests=0 totalWaitMs=0.0 medianRoundMs=16.061 duplicateRounds=0 emptyRounds=0
+RETRY_SUMMARY backoff=NONE workers=10 rounds=30 attempts=1650 conflicts=1350 conflictRate=0.8182 exhausted=0 failedRequests=0 totalWaitMs=0.0 medianRoundMs=70.368 duplicateRounds=0 emptyRounds=0
+RETRY_SUMMARY backoff=NONE workers=30 rounds=30 attempts=13896 conflicts=12996 conflictRate=0.9352 exhausted=0 failedRequests=0 totalWaitMs=0.0 medianRoundMs=305.816 duplicateRounds=0 emptyRounds=0
+RETRY_SUMMARY backoff=EXPONENTIAL workers=2 rounds=30 attempts=90 conflicts=30 conflictRate=0.3333 exhausted=0 failedRequests=0 totalWaitMs=862.5 medianRoundMs=42.790 duplicateRounds=0 emptyRounds=0
+RETRY_SUMMARY backoff=EXPONENTIAL workers=10 rounds=30 attempts=1276 conflicts=976 conflictRate=0.7649 exhausted=0 failedRequests=0 totalWaitMs=92378.3 medianRoundMs=1033.204 duplicateRounds=0 emptyRounds=0
+RETRY_SUMMARY backoff=EXPONENTIAL workers=30 rounds=30 attempts=7934 conflicts=7034 conflictRate=0.8866 exhausted=0 failedRequests=0 totalWaitMs=1047682.9 medianRoundMs=3037.305 duplicateRounds=0 emptyRounds=0
+RETRY_SUMMARY backoff=EQUAL_JITTER workers=2 rounds=30 attempts=90 conflicts=30 conflictRate=0.3333 exhausted=0 failedRequests=0 totalWaitMs=494.6 medianRoundMs=28.340 duplicateRounds=0 emptyRounds=0
+RETRY_SUMMARY backoff=EQUAL_JITTER workers=10 rounds=30 attempts=876 conflicts=576 conflictRate=0.6575 exhausted=0 failedRequests=0 totalWaitMs=18607.5 medianRoundMs=159.595 duplicateRounds=0 emptyRounds=0
+RETRY_SUMMARY backoff=EQUAL_JITTER workers=30 rounds=30 attempts=3605 conflicts=2705 conflictRate=0.7503 exhausted=0 failedRequests=0 totalWaitMs=137284.8 medianRoundMs=490.628 duplicateRounds=0 emptyRounds=0
+RETRY_SUMMARY backoff=FULL_JITTER workers=2 rounds=30 attempts=90 conflicts=30 conflictRate=0.3333 exhausted=0 failedRequests=0 totalWaitMs=397.3 medianRoundMs=25.551 duplicateRounds=0 emptyRounds=0
+RETRY_SUMMARY backoff=FULL_JITTER workers=10 rounds=30 attempts=842 conflicts=542 conflictRate=0.6437 exhausted=0 failedRequests=0 totalWaitMs=11490.0 medianRoundMs=139.556 duplicateRounds=0 emptyRounds=0
+RETRY_SUMMARY backoff=FULL_JITTER workers=30 rounds=30 attempts=3665 conflicts=2765 conflictRate=0.7544 exhausted=0 failedRequests=0 totalWaitMs=93695.2 medianRoundMs=374.263 duplicateRounds=0 emptyRounds=0
+[INFO] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 191.1 s -- in com.thinking.tennis.kata.RetryJitterComparisonTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  03:13 min
+[INFO] Finished at: 2026-11-23T17:59:06+09:00
+[INFO] ------------------------------------------------------------------------

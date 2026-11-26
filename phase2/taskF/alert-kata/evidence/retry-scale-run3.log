@@ -1,0 +1,115 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------------< com.thinking:alert-kata >-----------------------
+[INFO] Building alert-kata 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ alert-kata ---
+[INFO] skip non existing resourceDirectory C:\Users\PC-220627-03\Desktop\project\task\architecture-thinking\phase2\taskF\alert-kata\src\main\resources
+[INFO] skip non existing resourceDirectory C:\Users\PC-220627-03\Desktop\project\task\architecture-thinking\phase2\taskF\alert-kata\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ alert-kata ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ alert-kata ---
+[INFO] Copying 2 resources from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ alert-kata ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ alert-kata ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.thinking.tennis.kata.RetryJitterComparisonTest
+09:48:55.147 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.thinking.tennis.kata.RetryJitterComparisonTest]: RetryJitterComparisonTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+09:48:55.275 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.thinking.tennis.kata.KataApplication for test class com.thinking.tennis.kata.RetryJitterComparisonTest
+09:48:55.373 [main] INFO org.testcontainers.images.PullPolicy -- Image pull policy will be performed by: DefaultPullPolicy()
+09:48:55.376 [main] INFO org.testcontainers.utility.ImageNameSubstitutor -- Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+09:48:55.418 [main] INFO org.testcontainers.DockerClientFactory -- Testcontainers version: 2.0.5
+09:48:55.608 [main] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+09:48:55.901 [main] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+09:48:55.902 [main] INFO org.testcontainers.DockerClientFactory -- Docker host IP address is localhost
+09:48:55.918 [main] INFO org.testcontainers.DockerClientFactory -- Connected to docker: 
+  Server Version: 29.6.2
+  API Version: 1.55
+  Operating System: Docker Desktop
+  Total Memory: 32001 MB
+  Labels: 
+    com.docker.desktop.address=npipe://\\.\pipe\docker_cli
+09:48:56.035 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Creating container for image: testcontainers/ryuk:0.14.0
+09:48:56.096 [main] INFO org.testcontainers.utility.RegistryAuthLocator -- Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+09:48:56.198 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Container testcontainers/ryuk:0.14.0 is starting: 22f1c0dcd13c3f5dd13c2e0f15229ca58ca4d6a5c5f998c8db3fb73daa6ebf17
+09:48:56.479 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Container testcontainers/ryuk:0.14.0 started in PT0.4444871S
+09:48:56.482 [main] INFO org.testcontainers.utility.RyukResourceReaper -- Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+09:48:56.483 [main] INFO org.testcontainers.DockerClientFactory -- Checking the system...
+09:48:56.483 [main] INFO org.testcontainers.DockerClientFactory -- ?? Docker server version should be at least 1.6.0
+09:48:56.484 [main] INFO tc.mysql:8.4.8 -- Creating container for image: mysql:8.4.8
+09:48:56.542 [main] INFO tc.mysql:8.4.8 -- Container mysql:8.4.8 is starting: a4af0d7a9e6dfd4f65d2666ef0fd43b514596bf112e8a3560fa0e68adc2e9504
+09:48:56.733 [main] INFO tc.mysql:8.4.8 -- Waiting for database connection to become available at jdbc:mysql://localhost:52656/alert_retry_kata using query 'SELECT 1'
+09:49:04.741 [main] INFO tc.mysql:8.4.8 -- Container mysql:8.4.8 started in PT8.2568592S
+09:49:04.741 [main] INFO tc.mysql:8.4.8 -- Container is started (JDBC URL: jdbc:mysql://localhost:52656/alert_retry_kata)
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+RETRY_SUMMARY scale=RESPONSIVE backoff=NONE workers=2 rounds=20 attempts=60 conflicts=20 conflictRate=0.3333 exhausted=0 failedRequests=0 totalWaitMs=0.0 medianRoundMs=17.2 duplicateRounds=0
+RETRY_SHAPE scale=RESPONSIVE backoff=NONE workers=2 bucketMs=10 retryPeakMedian=1.0 retryPeakMax=1.0 retryPeakPerMeanMedian=1.00 emptyBucketRatioMedian=0.000 requestP50Ms=15.0 requestP95Ms=21.7 requestMaxMs=390.1
+RETRY_SUMMARY scale=RESPONSIVE backoff=NONE workers=10 rounds=20 attempts=1100 conflicts=900 conflictRate=0.8182 exhausted=0 failedRequests=0 totalWaitMs=0.0 medianRoundMs=78.9 duplicateRounds=0
+RETRY_SHAPE scale=RESPONSIVE backoff=NONE workers=10 bucketMs=10 retryPeakMedian=11.0 retryPeakMax=14.0 retryPeakPerMeanMedian=1.60 emptyBucketRatioMedian=0.000 requestP50Ms=47.3 requestP95Ms=81.1 requestMaxMs=94.6
+RETRY_SUMMARY scale=RESPONSIVE backoff=NONE workers=30 rounds=20 attempts=9264 conflicts=8664 conflictRate=0.9352 exhausted=0 failedRequests=0 totalWaitMs=0.0 medianRoundMs=326.2 duplicateRounds=0
+RETRY_SHAPE scale=RESPONSIVE backoff=NONE workers=30 bucketMs=10 retryPeakMedian=22.0 retryPeakMax=23.0 retryPeakPerMeanMedian=1.57 emptyBucketRatioMedian=0.000 requestP50Ms=220.8 requestP95Ms=336.5 requestMaxMs=383.3
+RETRY_SUMMARY scale=RESPONSIVE backoff=FIXED workers=2 rounds=20 attempts=60 conflicts=20 conflictRate=0.3333 exhausted=0 failedRequests=0 totalWaitMs=4117.1 medianRoundMs=225.8 duplicateRounds=0
+RETRY_SHAPE scale=RESPONSIVE backoff=FIXED workers=2 bucketMs=10 retryPeakMedian=1.0 retryPeakMax=1.0 retryPeakPerMeanMedian=1.00 emptyBucketRatioMedian=0.000 requestP50Ms=11.9 requestP95Ms=232.1 requestMaxMs=233.5
+RETRY_SUMMARY scale=RESPONSIVE backoff=FIXED workers=10 rounds=20 attempts=890 conflicts=690 conflictRate=0.7753 exhausted=0 failedRequests=0 totalWaitMs=142226.8 medianRoundMs=1543.7 duplicateRounds=0
+RETRY_SHAPE scale=RESPONSIVE backoff=FIXED workers=10 bucketMs=10 retryPeakMedian=9.0 retryPeakMax=9.0 retryPeakPerMeanMedian=33.30 emptyBucketRatioMedian=0.932 requestP50Ms=674.2 requestP95Ms=1556.5 requestMaxMs=1971.0
+RETRY_SUMMARY scale=RESPONSIVE backoff=FIXED workers=30 rounds=20 attempts=4745 conflicts=4145 conflictRate=0.8736 exhausted=0 failedRequests=0 totalWaitMs=857199.6 medianRoundMs=3302.2 duplicateRounds=0
+RETRY_SHAPE scale=RESPONSIVE backoff=FIXED workers=30 bucketMs=10 retryPeakMedian=24.0 retryPeakMax=29.0 retryPeakPerMeanMedian=37.65 emptyBucketRatioMedian=0.903 requestP50Ms=1354.4 requestP95Ms=3128.9 requestMaxMs=4216.2
+RETRY_SUMMARY scale=RESPONSIVE backoff=FIXED_JITTER workers=2 rounds=20 attempts=60 conflicts=20 conflictRate=0.3333 exhausted=0 failedRequests=0 totalWaitMs=2100.1 medianRoundMs=116.0 duplicateRounds=0
+RETRY_SHAPE scale=RESPONSIVE backoff=FIXED_JITTER workers=2 bucketMs=10 retryPeakMedian=1.0 retryPeakMax=1.0 retryPeakPerMeanMedian=1.00 emptyBucketRatioMedian=0.000 requestP50Ms=9.8 requestP95Ms=205.0 requestMaxMs=217.2
+RETRY_SUMMARY scale=RESPONSIVE backoff=FIXED_JITTER workers=10 rounds=20 attempts=418 conflicts=218 conflictRate=0.5215 exhausted=0 failedRequests=0 totalWaitMs=21510.9 medianRoundMs=264.3 duplicateRounds=0
+RETRY_SHAPE scale=RESPONSIVE backoff=FIXED_JITTER workers=10 bucketMs=10 retryPeakMedian=2.0 retryPeakMax=4.0 retryPeakPerMeanMedian=4.44 emptyBucketRatioMedian=0.600 requestP50Ms=118.6 requestP95Ms=275.8 requestMaxMs=356.9
+RETRY_SUMMARY scale=RESPONSIVE backoff=FIXED_JITTER workers=30 rounds=20 attempts=1552 conflicts=952 conflictRate=0.6134 exhausted=0 failedRequests=0 totalWaitMs=97963.5 medianRoundMs=470.1 duplicateRounds=0
+RETRY_SHAPE scale=RESPONSIVE backoff=FIXED_JITTER workers=30 bucketMs=10 retryPeakMedian=5.0 retryPeakMax=8.0 retryPeakPerMeanMedian=4.25 emptyBucketRatioMedian=0.400 requestP50Ms=175.5 requestP95Ms=421.8 requestMaxMs=569.3
+RETRY_SUMMARY scale=RESPONSIVE backoff=EXPONENTIAL workers=2 rounds=20 attempts=60 conflicts=20 conflictRate=0.3333 exhausted=0 failedRequests=0 totalWaitMs=549.5 medianRoundMs=41.5 duplicateRounds=0
+RETRY_SHAPE scale=RESPONSIVE backoff=EXPONENTIAL workers=2 bucketMs=10 retryPeakMedian=1.0 retryPeakMax=1.0 retryPeakPerMeanMedian=1.00 emptyBucketRatioMedian=0.000 requestP50Ms=8.3 requestP95Ms=45.4 requestMaxMs=47.9
+RETRY_SUMMARY scale=RESPONSIVE backoff=EXPONENTIAL workers=10 rounds=20 attempts=919 conflicts=719 conflictRate=0.7824 exhausted=0 failedRequests=0 totalWaitMs=73124.8 medianRoundMs=1051.5 duplicateRounds=0
+RETRY_SHAPE scale=RESPONSIVE backoff=EXPONENTIAL workers=10 bucketMs=10 retryPeakMedian=9.0 retryPeakMax=9.0 retryPeakPerMeanMedian=25.71 emptyBucketRatioMedian=0.910 requestP50Ms=224.6 requestP95Ms=1249.1 requestMaxMs=1500.9
+RETRY_SUMMARY scale=RESPONSIVE backoff=EXPONENTIAL workers=30 rounds=20 attempts=5182 conflicts=4582 conflictRate=0.8842 exhausted=0 failedRequests=0 totalWaitMs=677728.7 medianRoundMs=3241.6 duplicateRounds=0
+RETRY_SHAPE scale=RESPONSIVE backoff=EXPONENTIAL workers=30 bucketMs=10 retryPeakMedian=24.0 retryPeakMax=29.0 retryPeakPerMeanMedian=33.00 emptyBucketRatioMedian=0.906 requestP50Ms=1070.9 requestP95Ms=3030.3 requestMaxMs=3896.3
+RETRY_SUMMARY scale=RESPONSIVE backoff=EQUAL_JITTER workers=2 rounds=20 attempts=60 conflicts=20 conflictRate=0.3333 exhausted=0 failedRequests=0 totalWaitMs=331.7 medianRoundMs=30.9 duplicateRounds=0
+RETRY_SHAPE scale=RESPONSIVE backoff=EQUAL_JITTER workers=2 bucketMs=10 retryPeakMedian=1.0 retryPeakMax=1.0 retryPeakPerMeanMedian=1.00 emptyBucketRatioMedian=0.000 requestP50Ms=9.0 requestP95Ms=35.6 requestMaxMs=41.5
+RETRY_SUMMARY scale=RESPONSIVE backoff=EQUAL_JITTER workers=10 rounds=20 attempts=597 conflicts=397 conflictRate=0.6650 exhausted=0 failedRequests=0 totalWaitMs=13553.4 medianRoundMs=258.0 duplicateRounds=0
+RETRY_SHAPE scale=RESPONSIVE backoff=EQUAL_JITTER workers=10 bucketMs=10 retryPeakMedian=8.0 retryPeakMax=9.0 retryPeakPerMeanMedian=7.89 emptyBucketRatioMedian=0.667 requestP50Ms=69.5 requestP95Ms=273.8 requestMaxMs=485.6
+RETRY_SUMMARY scale=RESPONSIVE backoff=EQUAL_JITTER workers=30 rounds=20 attempts=2424 conflicts=1824 conflictRate=0.7525 exhausted=0 failedRequests=0 totalWaitMs=93478.4 medianRoundMs=503.6 duplicateRounds=0
+RETRY_SHAPE scale=RESPONSIVE backoff=EQUAL_JITTER workers=30 bucketMs=10 retryPeakMedian=17.0 retryPeakMax=26.0 retryPeakPerMeanMedian=9.51 emptyBucketRatioMedian=0.511 requestP50Ms=152.1 requestP95Ms=464.3 requestMaxMs=622.1
+RETRY_SUMMARY scale=RESPONSIVE backoff=FULL_JITTER workers=2 rounds=20 attempts=60 conflicts=20 conflictRate=0.3333 exhausted=0 failedRequests=0 totalWaitMs=272.4 medianRoundMs=27.0 duplicateRounds=0
+RETRY_SHAPE scale=RESPONSIVE backoff=FULL_JITTER workers=2 bucketMs=10 retryPeakMedian=1.0 retryPeakMax=1.0 retryPeakPerMeanMedian=1.00 emptyBucketRatioMedian=0.000 requestP50Ms=8.0 requestP95Ms=36.4 requestMaxMs=41.6
+RETRY_SUMMARY scale=RESPONSIVE backoff=FULL_JITTER workers=10 rounds=20 attempts=562 conflicts=362 conflictRate=0.6441 exhausted=0 failedRequests=0 totalWaitMs=7057.4 medianRoundMs=130.4 duplicateRounds=0
+RETRY_SHAPE scale=RESPONSIVE backoff=FULL_JITTER workers=10 bucketMs=10 retryPeakMedian=5.0 retryPeakMax=9.0 retryPeakPerMeanMedian=3.42 emptyBucketRatioMedian=0.364 requestP50Ms=48.2 requestP95Ms=139.1 requestMaxMs=198.5
+RETRY_SUMMARY scale=RESPONSIVE backoff=FULL_JITTER workers=30 rounds=20 attempts=2434 conflicts=1834 conflictRate=0.7535 exhausted=0 failedRequests=0 totalWaitMs=63134.2 medianRoundMs=386.6 duplicateRounds=0
+RETRY_SHAPE scale=RESPONSIVE backoff=FULL_JITTER workers=30 bucketMs=10 retryPeakMedian=15.0 retryPeakMax=23.0 retryPeakPerMeanMedian=6.22 emptyBucketRatioMedian=0.353 requestP50Ms=121.8 requestP95Ms=351.5 requestMaxMs=542.0
+RETRY_SUMMARY scale=TOLERANT backoff=NONE workers=30 rounds=5 attempts=2325 conflicts=2175 conflictRate=0.9355 exhausted=0 failedRequests=0 totalWaitMs=0.0 medianRoundMs=313.0 duplicateRounds=0
+RETRY_SHAPE scale=TOLERANT backoff=NONE workers=30 bucketMs=200 retryPeakMedian=330.0 retryPeakMax=335.0 retryPeakPerMeanMedian=1.52 emptyBucketRatioMedian=0.000 requestP50Ms=211.4 requestP95Ms=307.3 requestMaxMs=338.9
+RETRY_SUMMARY scale=TOLERANT backoff=FIXED workers=30 rounds=5 attempts=1298 conflicts=1148 conflictRate=0.8844 exhausted=0 failedRequests=0 totalWaitMs=2305016.7 medianRoundMs=34376.7 duplicateRounds=0
+RETRY_SHAPE scale=TOLERANT backoff=FIXED workers=30 bucketMs=200 retryPeakMedian=29.0 retryPeakMax=29.0 retryPeakPerMeanMedian=20.50 emptyBucketRatioMedian=0.889 requestP50Ms=14181.8 requestP95Ms=34375.3 requestMaxMs=40494.3
+RETRY_SUMMARY scale=TOLERANT backoff=FIXED_JITTER workers=30 rounds=5 attempts=314 conflicts=164 conflictRate=0.5223 exhausted=0 failedRequests=0 totalWaitMs=166388.4 medianRoundMs=2596.2 duplicateRounds=0
+RETRY_SHAPE scale=TOLERANT backoff=FIXED_JITTER workers=30 bucketMs=200 retryPeakMedian=5.0 retryPeakMax=8.0 retryPeakPerMeanMedian=2.50 emptyBucketRatioMedian=0.231 requestP50Ms=1013.6 requestP95Ms=2501.5 requestMaxMs=3916.5
+RETRY_SUMMARY scale=TOLERANT backoff=EXPONENTIAL workers=30 rounds=5 attempts=1330 conflicts=1180 conflictRate=0.8872 exhausted=0 failedRequests=0 totalWaitMs=1920223.0 medianRoundMs=35234.2 duplicateRounds=0
+RETRY_SHAPE scale=TOLERANT backoff=EXPONENTIAL workers=30 bucketMs=200 retryPeakMedian=29.0 retryPeakMax=29.0 retryPeakPerMeanMedian=20.22 emptyBucketRatioMedian=0.885 requestP50Ms=10983.5 requestP95Ms=31204.7 requestMaxMs=37282.2
+RETRY_SUMMARY scale=TOLERANT backoff=EQUAL_JITTER workers=30 rounds=5 attempts=368 conflicts=218 conflictRate=0.5924 exhausted=0 failedRequests=0 totalWaitMs=93133.2 medianRoundMs=2096.6 duplicateRounds=0
+RETRY_SHAPE scale=TOLERANT backoff=EQUAL_JITTER workers=30 bucketMs=200 retryPeakMedian=29.0 retryPeakMax=29.0 retryPeakPerMeanMedian=7.07 emptyBucketRatioMedian=0.417 requestP50Ms=403.7 requestP95Ms=1665.2 requestMaxMs=2620.2
+RETRY_SUMMARY scale=TOLERANT backoff=FULL_JITTER workers=30 rounds=5 attempts=347 conflicts=197 conflictRate=0.5677 exhausted=0 failedRequests=0 totalWaitMs=53299.5 medianRoundMs=1381.9 duplicateRounds=0
+RETRY_SHAPE scale=TOLERANT backoff=FULL_JITTER workers=30 bucketMs=200 retryPeakMedian=17.0 retryPeakMax=19.0 retryPeakPerMeanMedian=2.77 emptyBucketRatioMedian=0.143 requestP50Ms=298.6 requestP95Ms=1041.4 requestMaxMs=1580.2
+[INFO] Tests run: 24, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 624.8 s -- in com.thinking.tennis.kata.RetryJitterComparisonTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 24, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  10:26 min
+[INFO] Finished at: 2026-11-24T09:59:20+09:00
+[INFO] ------------------------------------------------------------------------
